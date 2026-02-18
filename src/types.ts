@@ -1,4 +1,3 @@
-
 export interface Product {
   id: string;
   name: string;
@@ -22,11 +21,4 @@ export interface Category {
   name: string;
   slug: string;
   icon: string;
-}
-
-export enum PageType {
-  HOME = 'home',
-  REVIEW = 'review',
-  BEST_OF = 'best_of',
-  GUIDE = 'guide'
 }
