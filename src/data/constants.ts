@@ -1,6 +1,4 @@
-
-import React from 'react';
-import { Product, Category } from './types';
+import type { Product, Category } from '../types';
 
 export const CATEGORIES: Category[] = [
   { id: '1', name: 'Smart Home', slug: 'smart-home', icon: '🏠' },
@@ -57,8 +55,8 @@ export const PRODUCTS: Product[] = [
 ];
 
 export const BRAND_COLORS = {
-  primary: '#FF4500', // Bright Orange/Red CTA
-  secondary: '#1E90FF', // Teal/Blue Accent
+  primary: '#FF4500',
+  secondary: '#1E90FF',
   text: '#333333',
   bg: '#FFFFFF'
 };
