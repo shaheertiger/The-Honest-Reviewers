@@ -6,6 +6,12 @@ import ScarcityBadge from "../components/ScarcityBadge.astro";
 import UrgencyTimer from "../components/UrgencyTimer";
 import ProductGallery from "../components/ProductGallery";
 
+function formatMarkdown(text: string): string {
+  return text
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>');
+}
+
 const PRODUCTS = [
   {
     id: "mangroomer-platinum",
@@ -425,7 +431,7 @@ const schema = {
       "@type": "Product",
       name: product.name,
       image: product.images[0],
-      description: product.descriptionParagraphs.join(" "),
+      description: product.descriptionParagraphs.join(" ").replace(/\*\*(.+?)\*\*/g, '$1').replace(/\*(.+?)\*/g, '$1'),
       brand: {
         "@type": "Brand",
         name: product.name.split(" ")[0],
@@ -1358,7 +1364,7 @@ const schema = {
                   </div>
                   <div class="prose prose-lg text-gray-600 mb-8 space-y-4">
                     {product.descriptionParagraphs.map((para: string) => (
-                      <p>{para}</p>
+                      <p set:html={formatMarkdown(para)} />
                     ))}
                   </div>
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
