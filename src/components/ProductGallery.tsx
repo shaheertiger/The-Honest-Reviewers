@@ -25,6 +25,8 @@ export default function ProductGallery({ images, productName, badge }: ProductGa
                     src={images[activeIndex]}
                     alt={`${productName} view ${activeIndex + 1}`}
                     className="w-full h-full object-contain p-4"
+                    loading="lazy"
+                    decoding="async"
                 />
             </div>
 
@@ -43,6 +45,8 @@ export default function ProductGallery({ images, productName, badge }: ProductGa
                                 src={img}
                                 alt={`${productName} thumbnail ${idx + 1}`}
                                 className="w-full h-16 object-cover"
+                                loading="lazy"
+                                decoding="async"
                             />
                         </button>
                     ))}
