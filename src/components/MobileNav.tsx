@@ -24,6 +24,13 @@ export default function MobileNav() {
                   <p className="text-xs text-gray-400">4 picks · Tested 90 days</p>
                 </div>
               </a>
+              <a href="/braun-type-5544-vs-series-7" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 py-2 no-underline mt-2">
+                <span className="text-xl">⚡</span>
+                <div>
+                  <p className="text-base font-semibold text-gray-900">Braun 5544 vs Series 7</p>
+                  <p className="text-xs text-gray-400">High-performance duel</p>
+                </div>
+              </a>
             </div>
             <a href="#" onClick={() => setIsMenuOpen(false)} className="text-left text-lg font-semibold py-2 border-t pt-4 text-[#FF4500]">Trending Deals</a>
           </nav>
