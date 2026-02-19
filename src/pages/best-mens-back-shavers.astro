@@ -4,6 +4,7 @@ import TrustBadge from '../components/TrustBadge.astro';
 import SocialProof from '../components/SocialProof.astro';
 import ScarcityBadge from '../components/ScarcityBadge.astro';
 import UrgencyTimer from '../components/UrgencyTimer';
+import ProductGallery from '../components/ProductGallery';
 
 const PRODUCTS = [
   {
@@ -14,7 +15,7 @@ const PRODUCTS = [
     rating: 4.8,
     reviewCount: 12450,
     badge: 'Best Overall',
-    imageUrl: 'https://placehold.co/600x400/1E90FF/white?text=Mangroomer+Ultimate+Pro',
+    images: Array.from({ length: 12 }, (_, i) => `/images/mangroomer/gallery-${i + 1}.jpg`),
     amazonUrl: 'https://amzn.to/4hFfjcg',
     pros: ['Extendable arm reaches essentially anywhere', 'Shock absorber flex neck preventing irritation', 'Two distinct heads: Trimmer & Foil', 'Power boost button for thick patches'],
     cons: ['Charging can take up to 8 hours', 'Plastic build feels slightly hollow'],
@@ -35,7 +36,7 @@ const PRODUCTS = [
     rating: 4.5,
     reviewCount: 3200,
     badge: 'Best Budget Pick',
-    imageUrl: 'https://placehold.co/600x400/333333/white?text=Bro+Shaver+3.0',
+    images: ['https://placehold.co/600x400/333333/white?text=Bro+Shaver+3.0'],
     amazonUrl: 'https://amzn.to/4j3Y9Gy',
     pros: ['Uses standard DE safety razor blades (cheap refills)', 'Widest cutting head in class', 'Zero battery anxiety', 'Waterproof (because it’s manual)'],
     cons: ['Higher learning curve (can nick if careless)', 'No flex neck'],
@@ -56,7 +57,7 @@ const PRODUCTS = [
     rating: 4.7,
     reviewCount: 8500,
     badge: 'Smoothest Shave',
-    imageUrl: 'https://placehold.co/600x400/FF4500/white?text=bakblade+2.0',
+    images: ['https://placehold.co/600x400/FF4500/white?text=bakblade+2.0'],
     amazonUrl: 'https://amzn.to/4j0CSNP',
     pros: ['DRYglide blades allow dry shaving without irritation', 'S-shaped ergonomic handle', 'Blades detach to use on chest/arms', 'Safety teeth technology'],
     cons: ['Proprietary blades are pricey', 'Bulky head can miss contours'],
@@ -77,7 +78,7 @@ const PRODUCTS = [
     rating: 4.6,
     reviewCount: 35000,
     badge: 'Best For Sensitive Skin',
-    imageUrl: 'https://placehold.co/600x400/228B22/white?text=Philips+Bodygroom+5000',
+    images: ['https://placehold.co/600x400/228B22/white?text=Philips+Bodygroom+5000'],
     amazonUrl: 'https://amzn.to/4iDcI3V',
     pros: ['Truly waterproof (shower safe)', 'Rounded tips prevent scratches', 'Dual-sided design', ' Lithium-ion battery (1 hour run time)'],
     cons: ['Back attachment is a bit shorter than others', 'Takes longer than wide-blade manuals'],
@@ -142,7 +143,7 @@ const schema = {
     ...PRODUCTS.map((product, index) => ({
       "@type": "Product",
       "name": product.name,
-      "image": product.imageUrl,
+      "image": product.images[0],
       "description": product.description,
       "brand": {
         "@type": "Brand",
@@ -178,7 +179,7 @@ const schema = {
         <main class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
           <div class="sm:text-center lg:text-left">
             <TrustBadge />
-            <h1 class="mt-4 text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+            <h1 class="mt-4 text-3xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
               <span class="block xl:inline">Ban Back Hair</span>
               <span class="block text-[#1E90FF] xl:inline">Without the Contortions</span>
             </h1>
@@ -202,7 +203,7 @@ const schema = {
       </div>
     </div>
     <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-      <img class="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full" src="https://placehold.co/800x600/333333/white?text=Confident+Man+Smiling" alt="Man with smooth back smiling confidently" />
+      <img class="h-64 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full" src="https://placehold.co/800x600/333333/white?text=Confident+Man+Smiling" alt="Man with smooth back smiling confidently" />
     </div>
   </div>
 
@@ -247,18 +248,16 @@ const schema = {
     <div class="space-y-32">
       {PRODUCTS.map((product, index) => (
         <section id={product.id} class="scroll-mt-24">
-          <div class="relative grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          <div class="relative grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             
             <!-- Sticky Image Column -->
             <div class="lg:col-span-5 lg:sticky lg:top-24">
-              <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
-                <div class="absolute top-4 left-4 z-10">
-                  <span class="bg-[#1E90FF] text-white px-4 py-1.5 rounded-full text-sm font-black uppercase tracking-widest shadow-sm">
-                    {product.badge}
-                  </span>
-                </div>
-                <img src={product.imageUrl} alt={product.name} class="w-full h-auto object-cover" />
-              </div>
+              <ProductGallery 
+                client:visible 
+                images={product.images} 
+                productName={product.name} 
+                badge={product.badge} 
+              />
               
               <div class="mt-8 bg-gray-50 rounded-2xl p-6 border border-gray-200">
                 <h4 class="font-bold text-gray-900 mb-4 uppercase tracking-widest text-xs">Technical Specs</h4>
@@ -275,8 +274,8 @@ const schema = {
 
             <!-- Content Column -->
             <div class="lg:col-span-7">
-              <div class="flex items-center gap-4 mb-4">
-                 <h2 class="text-4xl font-black text-gray-900 tracking-tight">{product.name}</h2>
+              <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-4">
+                 <h2 class="text-3xl sm:text-4xl font-black text-gray-900 tracking-tight">{product.name}</h2>
               </div>
 
                <div class="flex items-center gap-4 mb-8">
