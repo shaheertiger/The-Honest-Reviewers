@@ -1,42 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import TrustBadge from '../components/TrustBadge.astro';
-import UrgencyTimer from '../components/UrgencyTimer';
-import { PRODUCTS, CATEGORIES } from '../data/constants';
+import { CATEGORIES } from '../data/constants';
 
-const itemListSchema = {
+const siteSchema = {
   '@context': 'https://schema.org',
-  '@type': 'ItemList',
-  name: 'Expert Product Reviews',
-  description: 'Top-rated products reviewed and tested by our expert team.',
-  itemListElement: PRODUCTS.map((product, idx) => ({
-    '@type': 'ListItem',
-    position: idx + 1,
-    item: {
-      '@type': 'Product',
-      name: product.name,
-      image: product.imageUrl,
-      description: product.description,
-      brand: { '@type': 'Brand', name: product.brand },
-      offers: {
-        '@type': 'Offer',
-        price: product.price,
-        priceCurrency: 'USD',
-        availability: 'https://schema.org/InStock',
-        url: product.amazonUrl,
-      },
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: product.rating,
-        reviewCount: product.reviewCount,
-        bestRating: 5,
-        worstRating: 1,
-      },
-    },
-  })),
+  '@type': 'WebSite',
+  name: 'The Honest Reviewers',
+  url: 'https://thehonestreviewers.com',
+  description: 'Unbiased, expert-led men\'s grooming and lifestyle product reviews.',
 };
 ---
-<Layout jsonLd={itemListSchema}>
+<Layout jsonLd={siteSchema}>
   <div class="space-y-20">
     <!-- Hero Section -->
     <section class="relative overflow-hidden pt-16 pb-24 lg:pt-32 lg:pb-40 bg-gradient-to-br from-white to-gray-50">
@@ -77,11 +52,11 @@ const itemListSchema = {
               <div class="absolute bottom-6 left-6 right-6">
                 <div class="bg-white/90 backdrop-blur p-4 rounded-xl border border-white/50 shadow-lg flex items-center justify-between">
                   <div>
-                    <p class="text-xs font-bold text-[#1E90FF] uppercase">Latest Review</p>
-                    <h3 class="font-bold text-gray-900">UltraVision Pro OLED 4K</h3>
+                    <p class="text-xs font-bold text-[#1E90FF] uppercase">#1 Guide</p>
+                    <h3 class="font-bold text-gray-900">Best Men's Back Shavers 2026</h3>
                   </div>
                   <a
-                    href="/review/p1"
+                    href="/best-mens-back-shavers"
                     class="bg-[#FF4500] text-white p-2 rounded-lg no-underline"
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg>
@@ -116,61 +91,6 @@ const itemListSchema = {
             <p class="text-gray-400 text-sm mt-2">120+ Reviews</p>
           </div>
         ))}
-      </div>
-    </section>
-
-    <!-- Featured Reviews -->
-    <section class="bg-gray-50 py-24">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-16">
-          <UrgencyTimer client:load />
-          <h2 class="text-4xl font-bold mt-6">Expert Verdicts: Top Picks Today</h2>
-          <p class="text-gray-500 mt-4 text-lg max-w-2xl mx-auto">
-            We've spent 2,400+ hours testing these products to ensure they deliver exactly what they promise.
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {PRODUCTS.map(product => (
-            <div
-              class="bg-white rounded-3xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-2xl transition-all group"
-            >
-              <div class="relative aspect-[16/9] overflow-hidden">
-                <img src={product.imageUrl} alt={product.name} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                <div class="absolute top-4 left-4 flex gap-2">
-                  {product.badges?.map(badge => (
-                    <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest text-[#1E90FF] border border-[#1E90FF]/20 shadow-sm">
-                      {badge}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div class="p-8">
-                <div class="flex items-center gap-1 text-[#FFB800] mb-2">
-                  {[...Array(5)].map((_, i) => (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill={i < Math.floor(product.rating) ? "currentColor" : "none"} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                  ))}
-                  <span class="text-gray-400 text-xs ml-2 font-bold">{product.reviewCount.toLocaleString()} Verified Reviews</span>
-                </div>
-                <h3 class="text-2xl font-bold mb-3">{product.name}</h3>
-                <p class="text-gray-600 mb-6 line-clamp-2">{product.description}</p>
-
-                <div class="flex items-center justify-between pt-6 border-t border-gray-100">
-                  <div>
-                    <span class="text-3xl font-black text-[#333333]">${product.price}</span>
-                    <p class="text-xs text-green-600 font-bold uppercase tracking-widest">In Stock - Ships Fast</p>
-                  </div>
-                  <a
-                    href={`/review/${product.id}`}
-                    class="bg-[#333333] hover:bg-black text-white px-6 py-3 rounded-xl font-bold transition-all no-underline"
-                  >
-                    Read Full Review
-                  </a>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
 
