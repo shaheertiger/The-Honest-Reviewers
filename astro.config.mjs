@@ -33,6 +33,10 @@ export default defineConfig({
           item.changefreq = 'monthly';
           item.lastmod = new Date().toISOString();
           item.priority = 0.7;
+        } else if (url === `${base}/buzz-cut-guide`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.8;
         } else {
           item.changefreq = 'monthly';
           item.lastmod = new Date().toISOString();
