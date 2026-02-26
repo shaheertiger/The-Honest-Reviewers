@@ -37,6 +37,10 @@ export default defineConfig({
           item.changefreq = 'monthly';
           item.lastmod = new Date().toISOString();
           item.priority = 0.8;
+        } else if (url === `${base}/haircut-numbers`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.8;
         } else {
           item.changefreq = 'monthly';
           item.lastmod = new Date().toISOString();
