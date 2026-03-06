@@ -49,6 +49,14 @@ export default defineConfig({
           item.changefreq = 'monthly';
           item.lastmod = new Date().toISOString();
           item.priority = 0.8;
+        } else if (url === `${base}/best-asphalt-sealer`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.8;
+        } else if (url === `${base}/best-cinder-block-sealer-reviews`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.8;
         } else {
           item.changefreq = 'monthly';
           item.lastmod = new Date().toISOString();

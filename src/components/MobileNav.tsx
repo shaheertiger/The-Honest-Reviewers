@@ -39,6 +39,23 @@ export default function MobileNav() {
                 </div>
               </a>
             </div>
+            <div className="border-t border-gray-100 pt-4">
+              <p className="text-xs font-black uppercase tracking-widest text-gray-400 mb-3">Home & DIY</p>
+              <a href="/best-asphalt-sealer" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 py-2 no-underline">
+                <span className="text-xl">🛣️</span>
+                <div>
+                  <p className="text-base font-semibold text-gray-900">Best Asphalt Sealer</p>
+                  <p className="text-xs text-gray-400">Protect your driveway</p>
+                </div>
+              </a>
+              <a href="/best-cinder-block-sealer-reviews" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 py-2 no-underline mt-2">
+                <span className="text-xl">🧱</span>
+                <div>
+                  <p className="text-base font-semibold text-gray-900">Best Cinder Block Sealer</p>
+                  <p className="text-xs text-gray-400">Stop leaks fast</p>
+                </div>
+              </a>
+            </div>
             <a href="#" onClick={() => setIsMenuOpen(false)} className="text-left text-lg font-semibold py-2 border-t pt-4 text-[#FF4500]">Trending Deals</a>
           </nav>
         </div>
