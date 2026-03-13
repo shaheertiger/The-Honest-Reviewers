@@ -55,6 +55,13 @@ export default function MobileNav() {
                   <p className="text-xs text-gray-400">Stop leaks fast</p>
                 </div>
               </a>
+              <a href="/best-marble-sealer" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-3 py-2 no-underline mt-2">
+                <span className="text-xl">💎</span>
+                <div>
+                  <p className="text-base font-semibold text-gray-900">Best Marble Sealer</p>
+                  <p className="text-xs text-gray-400">Deep stone protection</p>
+                </div>
+              </a>
             </div>
             <a href="#" onClick={() => setIsMenuOpen(false)} className="text-left text-lg font-semibold py-2 border-t pt-4 text-[#FF4500]">Trending Deals</a>
           </nav>
