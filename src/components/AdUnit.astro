@@ -1,31 +1,37 @@
 ---
 interface Props {
-  variant?: "in-article" | "display";
+  variant?: "in-article" | "display" | "top";
   slot?: string;
   style?: string;
 }
 
 const { variant = "in-article", slot, style } = Astro.props;
 
-const isDisplay = variant === "display";
-const resolvedSlot = slot ?? (isDisplay ? "9188237028" : "2786025951");
-const resolvedStyle = style ?? (isDisplay ? "display:block" : "display:block; text-align:center;");
+const slotDefaults = {
+  "in-article": "2786025951",
+  display: "9188237028",
+  top: "4293779479",
+} as const;
+
+const resolvedSlot = slot ?? slotDefaults[variant];
+const resolvedStyle = style ?? (variant === "in-article" ? "display:block; text-align:center;" : "display:block");
+const isFluid = variant === "in-article";
 ---
 
-{isDisplay ? (
-  <ins class="adsbygoogle"
-       style={resolvedStyle}
-       data-ad-client="ca-pub-2128579868272786"
-       data-ad-slot={resolvedSlot}
-       data-ad-format="auto"
-       data-full-width-responsive="true"></ins>
-) : (
+{isFluid ? (
   <ins class="adsbygoogle"
        style={resolvedStyle}
        data-ad-layout="in-article"
        data-ad-format="fluid"
        data-ad-client="ca-pub-2128579868272786"
        data-ad-slot={resolvedSlot}></ins>
+) : (
+  <ins class="adsbygoogle"
+       style={resolvedStyle}
+       data-ad-client="ca-pub-2128579868272786"
+       data-ad-slot={resolvedSlot}
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
 )}
 <script is:inline>
      (adsbygoogle = window.adsbygoogle || []).push({});
