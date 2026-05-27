@@ -57,6 +57,18 @@ export default defineConfig({
           item.changefreq = 'monthly';
           item.lastmod = new Date().toISOString();
           item.priority = 0.8;
+        } else if (url === `${base}/best-paint-sprayer`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.9;
+        } else if (url === `${base}/best-deck-paint`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.9;
+        } else if (url === `${base}/best-ceiling-paint`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.9;
         } else {
           item.changefreq = 'monthly';
           item.lastmod = new Date().toISOString();
