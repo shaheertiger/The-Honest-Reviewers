@@ -69,6 +69,18 @@ export default defineConfig({
           item.changefreq = 'monthly';
           item.lastmod = new Date().toISOString();
           item.priority = 0.9;
+        } else if (url === `${base}/best-deck-sealant`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.9;
+        } else if (url === `${base}/paint-sprayer-rental`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.9;
+        } else if (url === `${base}/best-paint-brushes`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.9;
         } else {
           item.changefreq = 'monthly';
           item.lastmod = new Date().toISOString();
