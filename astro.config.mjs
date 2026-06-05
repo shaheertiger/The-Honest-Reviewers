@@ -53,6 +53,22 @@ export default defineConfig({
           item.changefreq = 'monthly';
           item.lastmod = new Date().toISOString();
           item.priority = 0.8;
+        } else if (url === `${base}/asphalt-repair`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.9;
+        } else if (url === `${base}/best-asphalt-crack-filler`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.9;
+        } else if (url === `${base}/best-concrete-sealer`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.9;
+        } else if (url === `${base}/asphalt-sealcoating`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.8;
         } else if (url === `${base}/best-cinder-block-sealer-reviews`) {
           item.changefreq = 'monthly';
           item.lastmod = new Date().toISOString();
