@@ -3,7 +3,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 
-const HOST = 'thehonestreviewers.com';
+const HOST = 'www.thehonestreviewers.com';
 const SITE = `https://${HOST}`;
 const KEY = process.env.INDEXNOW_KEY || '5b1fe331d1c7c76f34d0aec1619a649e';
 const KEY_LOCATION = `${SITE}/${KEY}.txt`;

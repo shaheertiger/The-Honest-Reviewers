@@ -4,14 +4,14 @@ import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://thehonestreviewers.com',
+  site: 'https://www.thehonestreviewers.com',
   integrations: [
     react(),
     tailwind(),
     sitemap({
       serialize(item) {
         const url = item.url.replace(/\/$/, '');
-        const base = 'https://thehonestreviewers.com';
+        const base = 'https://www.thehonestreviewers.com';
 
         if (url === base || url === `${base}/`) {
           item.changefreq = 'weekly';
