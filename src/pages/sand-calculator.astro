@@ -1,0 +1,576 @@
+---
+import Layout from "../layouts/Layout.astro";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import SandCalculator from "../components/SandCalculator.tsx";
+import productImages from "../data/product-images.json";
+
+const title = "Paver Sand Calculator: How Many Bags Do You Actually Need? (2026)";
+const description =
+  "Free paver sand calculator for polymeric jointing sand and paver base sand. Enter your dimensions to get bags needed, cost, and cubic yards — plus a full guide to every sand type.";
+
+const RECOMMENDED = [
+  {
+    id: "gator-maxx-g2",
+    name: "Alliance Gator Maxx G2",
+    badge: "Best for Joints",
+    amazonUrl: "https://www.amazon.com/dp/B0GTBWXFQJ?tag=sktiger-20&linkCode=osi&th=1&psc=1",
+    blurb: "Cross-linked polymeric jointing sand rated for 1/16\" to 2\" joints with low-haze activation.",
+  },
+  {
+    id: "sek-surebond-sb",
+    name: "SEK Surebond SB Polymeric Sand",
+    badge: "Best Budget Pick",
+    amazonUrl: "https://www.amazon.com/dp/B079TCJFM5?tag=sktiger-20&linkCode=osi&th=1&psc=1",
+    blurb: "The lowest cost-per-bag polymeric sand we've tested that still holds up on standard 1/8\"-1.5\" joints.",
+  },
+  {
+    id: "dominator-1-jointing-sand",
+    name: "DOMINATOR #1 Polymeric Jointing Sand",
+    badge: "Best for Wide Joints",
+    amazonUrl: "https://www.amazon.com/dp/B09SZM2SDR?tag=sktiger-20&linkCode=osi&th=1&psc=1",
+    blurb: "High-polymer, coarse-grain formula built for flagstone and cobblestone joints up to 2-3 inches.",
+  },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://www.thehonestreviewers.com/" },
+        { "@type": "ListItem", position: 2, name: "Home & DIY", item: "https://www.thehonestreviewers.com/best-of/" },
+        { "@type": "ListItem", position: 3, name: "Paver Sand Calculator", item: "https://www.thehonestreviewers.com/sand-calculator/" },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "How many bags of paver sand do I need per square foot?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "For polymeric jointing sand at a standard 1/4-inch joint width and 1.5-inch depth, a 50-lb bag covers roughly 40-50 square feet, so most residential patios need one bag per 40-50 square feet plus about 15% extra for compaction settling and waste. Wider or deeper joints reduce coverage significantly — a 1-inch-wide flagstone joint can drop coverage to under 15 square feet per bag. For paver base/bedding sand at a standard 1-inch compacted layer, plan on roughly 0.5 cubic feet, or about one 50-lb bag, per 12 square feet.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What is the difference between paver sand and polymeric sand?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "\"Paver sand\" is a broad term that can refer to either bedding sand (the leveling layer pavers rest on, usually coarse concrete sand) or jointing sand (the material swept into the gaps between pavers). Polymeric sand is a specific type of jointing sand blended with a polymer binder that hardens when misted with water, locking joints in place and resisting weeds and washout. Plain bedding sand is never used in the joints of a finished installation, and polymeric sand should never be used as the base layer under pavers — they serve entirely different structural roles.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What is polymeric sand made of?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Polymeric sand is a blend of graded silica sand and a dry polymer binder, typically an acrylic or cross-linked polymer compound. When the swept-in sand is misted with water, the polymer dissolves briefly, coats the sand grains, and then cures into a semi-rigid matrix that binds the joint together — unlike plain sand, which has no binding agent and simply sits loose in the gap.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can I use regular sand or play sand instead of paver sand?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "You can use regular, unpolymerized sand for paver joints, but it isn't recommended for anything but a temporary or budget installation, since it washes out under rain and foot traffic within a season or two. Play sand specifically is the wrong choice — it's washed and rounded for softness and safety, not compaction, so it has poor angularity and won't lock together the way angular paver bedding sand or concrete sand does. Use a jointing-specific or polymeric sand for joints, and a coarse, angular concrete/bedding sand for the base layer.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Where can I buy polymeric sand?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Polymeric sand is widely stocked at Home Depot, Lowe's, and Menards in the US, at Bunnings Warehouse in Australia, and at most independent landscape supply and masonry yards. Big-box stores typically carry mid-range brands like Sakrete and Quikrete on the shelf, while premium brands such as Techniseal, Alliance Gator Maxx, and SEK Surebond are more often found through professional hardscape suppliers or ordered online.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How much does a ton of paver sand cover?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "A ton of sand covers roughly 80-100 square feet at a standard 3-inch depth, or about 240-300 square feet at a 1-inch bedding depth, though exact coverage varies with the sand's density and moisture content. As a rule of thumb, one cubic yard of sand weighs approximately 1.3-1.5 tons and covers 324 square feet at a 1-inch depth. For any project needing more than about a cubic yard of bedding sand, ordering bulk by the ton from a landscape supplier is almost always cheaper than buying dozens of bags.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What sand should I use to lay pavers?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Use coarse, angular concrete sand (sometimes called bedding sand or paving sand) as the 1-inch leveling layer that pavers are set into — never use fine play sand or beach sand for this layer, since rounded grains don't compact or lock together. After the pavers are laid and leveled, fill the joints between them with polymeric sand, which is specifically formulated to bind, resist weeds, and prevent washout.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Does joint width and depth really change how much sand I need?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes, significantly. Coverage per bag scales roughly with the total volume of the joints, which is a function of both width and depth. Doubling either the joint width or the joint depth roughly halves the square footage a single bag will cover. This is why a wide-joint flagstone patio can require two to three times more polymeric sand per square foot than a standard concrete paver patio with narrow 1/8-inch joints.",
+          },
+        },
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: { "@type": "Person", name: "Alex Rivers" },
+      datePublished: "2026-08-11",
+      dateModified: "2026-08-11",
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+  ],
+};
+---
+
+<Layout
+  title={`${title} | The Honest Reviewers`}
+  description={description}
+  ogImage="https://placehold.co/1200x630/374151/white?text=Paver+Sand+Calculator"
+  ogType="article"
+  article={{
+    publishedTime: "2026-08-11",
+    modifiedTime: "2026-08-11",
+    author: "Alex Rivers",
+    section: "Home Improvement",
+    tags: [
+      "sand calculator",
+      "paver sand calculator",
+      "polymeric sand",
+      "paving sand",
+      "concrete sand",
+      "washed sand",
+      "how much sand for pavers",
+      "paver base sand",
+    ],
+  }}
+  jsonLd={schema}
+  stickyCta={{ text: "Use the Calculator", link: "#calculator" }}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div
+        class="absolute inset-0 opacity-10"
+        style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"
+      ></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Free Tool
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated August 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The <span class="text-[#38BDF8]">Paver Sand Calculator</span>: How Many Bags Do You Need?
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Buying too little sand means a second trip to the store mid-project. Buying too much wastes money on material you can't return once the bag is opened. Plug in your dimensions below and get an exact bag count for polymeric jointing sand or paver base sand — plus a full breakdown of which sand type your project actually needs.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#calculator"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            Jump to Calculator
+          </a>
+          <a
+            href="#sand-types"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Which Sand Do I Need?
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-full bg-gray-100 overflow-hidden">
+            <img src="https://i.pravatar.cc/150?img=33" alt="Alex Rivers" class="w-full h-full object-cover" />
+          </div>
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">August 11, 2026</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="8.9k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E90FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#calculator" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Sand Calculator</a>
+          <a href="#how-to-measure" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. How to Measure Your Project</a>
+          <a href="#sand-types" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Which Sand Type Do You Need?</a>
+          <a href="#coverage-chart" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Coverage Chart by Joint Size</a>
+          <a href="#where-to-buy" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Where to Buy Paver Sand</a>
+          <a href="#recommended" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Recommended Products</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Every paver calculator question boils down to the same math problem: area times depth divided by however much material actually fits in a single bag. The tricky part is that "how much sand do I need" has a different answer depending on whether you're filling the joints between pavers or laying the bedding layer underneath them — and most online calculators don't distinguish between the two. Ours does.
+        </p>
+
+        <!-- SECTION 1: Calculator -->
+        <div id="calculator" class="scroll-mt-24 not-prose">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6 font-sans">
+            1. Paver Sand Calculator
+          </h2>
+          <p class="text-gray-700 leading-relaxed mb-6">
+            Choose whether you're calculating <strong>jointing sand</strong> (the polymeric sand swept between finished pavers) or <strong>bedding sand</strong> (the leveling layer pavers are set into before laying), enter your measurements, and the calculator will estimate the number of 50-lb bags, total weight, and cost — with a 15% waste buffer already built in.
+          </p>
+          <SandCalculator client:load />
+        </div>
+
+        <!-- SECTION 2: How to Measure -->
+        <div id="how-to-measure" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. How to Measure Your Project Before You Buy
+          </h2>
+
+          <p>
+            Getting an accurate bag count starts with accurate measurements, and the two numbers that matter most — joint width and joint depth — are the ones DIYers most often guess at instead of measure. Here's the process we use before every project.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Step 1: Measure Total Square Footage</h3>
+          <p>
+            For a rectangular patio or walkway, multiply length by width in feet. For an irregular shape, break the area into rectangles and triangles, calculate each separately, and add them together, or measure the longest length and widest point and treat it as a rectangle — you'll overestimate slightly, which is safer than running short mid-project. If you're working on multiple disconnected areas (a patio plus a walkway, for example), measure and calculate each one separately, then add the totals before ordering.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Step 2: Measure Joint Width With a Ruler, Not a Guess</h3>
+          <p>
+            Joint width has an outsized effect on how much jointing sand you'll need, because coverage scales with the volume of the joint, not just the surface area of the patio. Measure at three or four different spots across the installation, since paver spacing often varies slightly across a large job, and use the widest measurement you find rather than an average — it's better to have a little extra sand than to run short on the widest section.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Step 3: Measure Joint Depth (or Paver Thickness)</h3>
+          <p>
+            Joint depth is usually close to the thickness of your paver, typically 1.5 to 2.375 inches for standard concrete pavers. If you can see down into an empty joint before sanding, measure it directly with a small ruler or tape measure. If the pavers are already installed with old sand in the joints that you're replacing, measure the paver thickness from a spare or broken piece as a proxy.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Step 4: For Bedding Sand, Confirm Your Compacted Depth</h3>
+          <p>
+            Paver base/bedding sand is typically screeded to a 1-inch depth before pavers are set into it, regardless of paver size — this is a near-universal industry standard, not something you need to measure on an existing patio. If your project also requires a compacted gravel base beneath the sand (recommended for driveways and heavy-traffic areas), calculate that separately using a gravel calculator, since gravel and sand have different weights and coverage rates.
+          </p>
+          <p>
+            It's also worth deciding upfront whether you're buying bagged sand or ordering bulk. Bagged sand is easier to transport in a regular car, easier to store leftover material from, and there's no minimum order — but it costs meaningfully more per pound once you're past a couple dozen bags. Bulk sand, sold by the cubic yard or by the ton, needs a truck or trailer with a tarp (or paid delivery), and most suppliers have a minimum order of half a yard to a full yard. As a rough cutoff, projects under about 15-20 bags are usually cheaper and more convenient in bags; anything larger almost always favors bulk delivery once you factor in the extra trips a car-load purchase would require.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">Always Round Up</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p class="text-3xl font-black text-white">+15%</p>
+                <p class="text-gray-400 text-xs mt-1">Waste buffer for compaction settling, spillage, and touch-ups</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">Keep the Receipt</p>
+                <p class="text-gray-400 text-xs mt-1">Most retailers accept unopened bag returns if you overbuy</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 3: Sand Types -->
+        <div id="sand-types" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Which Sand Type Do You Actually Need?
+          </h2>
+
+          <p>
+            "Sand" is not a single product, and the biggest source of failed paver projects isn't a bad calculation — it's using the wrong type of sand for the job. Here's how the main categories differ and where each one belongs.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Polymeric Sand (Jointing Sand)</h3>
+          <p>
+            <strong>What it is:</strong> Fine sand blended with a polymer binder that hardens when misted with water. <strong>Where it goes:</strong> Swept into the finished gaps between pavers, never underneath them. <strong>Why it matters:</strong> It's the only jointing material that resists weed growth, ant tunneling, and washout from rain — plain sand in the same joints will wash out within a season or two. This is what most people mean when they search "what is polymeric sand" or "polymeric sand for pavers," and it's the sand type our jointing-sand calculator mode above is built around.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Paving Sand / Bedding Sand</h3>
+          <p>
+            <strong>What it is:</strong> Coarse, angular, washed sand — sometimes labeled "paving sand," "bedding sand," or simply "coarse sand." <strong>Where it goes:</strong> Screeded into a level 1-inch layer that pavers are set directly into during installation. <strong>Why it matters:</strong> Its angular grain shape locks together under compaction to create a stable, level surface, unlike rounded sands that shift and settle unevenly. This is the sand our bedding-sand calculator mode above is built around.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Concrete Sand</h3>
+          <p>
+            <strong>What it is:</strong> A coarse, washed, ASTM C-33-graded sand originally formulated as a concrete aggregate. <strong>Where it goes:</strong> Frequently used interchangeably with bedding/paving sand for the base layer under pavers, since the grading requirements overlap closely. <strong>Why it matters:</strong> If a supplier doesn't stock a product specifically labeled "paver base sand," concrete sand is the standard substitute — just confirm it's washed and free of clay or organic material before buying.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Washed Sand / Fine Sand</h3>
+          <p>
+            <strong>What it is:</strong> Generic terms covering a range of sands that have been rinsed of silt, clay, and organic debris (washed) or that have a smaller grain size (fine). <strong>Where it goes:</strong> Depends entirely on the specific product — fine washed sand can work for leveling small stepping-stone gaps, but it is not a substitute for angular bedding sand under a full paver installation, and it is not a substitute for polymer-bound jointing sand either. <strong>Why it matters:</strong> These labels alone don't guarantee suitability for hardscaping — always check the bag for an explicit "paver," "hardscape," or "ASTM C-33" designation before buying based on the word "fine" or "washed" alone.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Play Sand</h3>
+          <p>
+            <strong>What it is:</strong> Extremely fine, rounded, washed sand sold for sandboxes, sold specifically for softness and safety around children. <strong>Where it goes:</strong> Sandboxes only. <strong>Why it matters:</strong> Its rounded grain shape is the opposite of what compaction requires — it won't lock together as a stable paver base, and it won't hold in joints the way angular jointing sand does. If you've landed here searching something like "magic sand" or a sandbox-play-sand product, that's a different category of product entirely from anything used in a hardscape installation, and none of the coverage math on this page applies to it.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Sand Type</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Used For</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Grain Shape</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Polymeric Sand</td>
+                  <td class="px-4 py-4 text-gray-700">Paver joints (final fill)</td>
+                  <td class="px-4 py-4 text-gray-700">Fine, polymer-coated</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Bedding / Paving Sand</td>
+                  <td class="px-4 py-4 text-gray-700">1" base layer under pavers</td>
+                  <td class="px-4 py-4 text-gray-700">Coarse, angular</td>
+                </tr>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Concrete Sand</td>
+                  <td class="px-4 py-4 text-gray-700">Base layer substitute</td>
+                  <td class="px-4 py-4 text-gray-700">Coarse, ASTM C-33</td>
+                </tr>
+                <tr class="bg-gray-50">
+                  <td class="px-4 py-4 font-black text-gray-900">Play Sand</td>
+                  <td class="px-4 py-4 text-gray-700">Sandboxes only</td>
+                  <td class="px-4 py-4 text-gray-700">Fine, rounded</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- SECTION 4: Coverage Chart -->
+        <div id="coverage-chart" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Coverage Chart: Sq Ft Per Bag by Joint Size
+          </h2>
+          <p>
+            If you'd rather do the math by hand, or want to sanity-check the calculator above, here's approximately how far a single 50-lb bag of polymeric jointing sand goes at common joint widths, assuming a standard 1.5-inch joint depth.
+          </p>
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Joint Width</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Approx. Coverage per 50-lb Bag</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">1/8"</td>
+                  <td class="px-4 py-4 text-gray-700">~90 sq ft</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">1/4"</td>
+                  <td class="px-4 py-4 text-gray-700">~45 sq ft</td>
+                </tr>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">1/2"</td>
+                  <td class="px-4 py-4 text-gray-700">~22 sq ft</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">1"</td>
+                  <td class="px-4 py-4 text-gray-700">~11 sq ft</td>
+                </tr>
+                <tr class="bg-white">
+                  <td class="px-4 py-4 font-black text-gray-900">2" (flagstone)</td>
+                  <td class="px-4 py-4 text-gray-700">~6 sq ft</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            For paver base sand, coverage is simpler because it doesn't depend on joint geometry: a 50-lb bag spread at the standard 1-inch depth covers roughly 12 square feet. A 1,000-square-foot driveway base, for comparison, would need over 80 bags — well past the point where ordering bulk sand by the ton from a landscape supplier is dramatically cheaper than buying individual bags at a home improvement store.
+          </p>
+        </div>
+
+        <!-- SECTION 5: Where to Buy -->
+        <div id="where-to-buy" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Where to Buy Paver Sand
+          </h2>
+          <p>
+            In the United States, <strong>Home Depot, Lowe's, and Menards</strong> all stock polymeric sand and bedding sand year-round in most regions, typically carrying Sakrete, Quikrete, and store-brand options on the shelf alongside a smaller selection of premium brands like Techniseal. Big-box stores are the fastest option for a same-day small or mid-size project, but their bulk-order and delivery options for large volumes are usually more limited than a dedicated supplier's.
+          </p>
+          <p>
+            In Australia and New Zealand, <strong>Bunnings Warehouse</strong> is the equivalent go-to retailer, stocking bagged washed sand, paving sand, and polymeric jointing products, along with bulk bags for larger projects. As with US big-box stores, Bunnings is convenient for small jobs but a dedicated landscape or masonry supply yard will typically beat their per-ton pricing on bulk bedding sand for larger driveways and patios.
+          </p>
+          <p>
+            For premium and specialty polymeric sand brands — including the products we recommend below — a dedicated hardscape supplier or online ordering is often the more reliable route, since big-box inventory of higher-end brands varies significantly by region and season. If you're buying more than roughly 20-30 bags of any sand type, call ahead to confirm in-stock quantity before making the trip; polymeric sand in particular tends to sell out locally during peak spring and summer installation season.
+          </p>
+          <p>
+            One more thing worth checking before you drive to any of these retailers: buy every bag for a single project from the same manufacturing lot or batch number if you can. Sand color and polymer ratio can shift subtly between production runs, and a visible seam between an older bag and a freshly opened one is one of the most common cosmetic complaints we hear from DIYers who bought their sand across two separate trips. If a store is short on stock, it's usually worth waiting a few days for a matching restock rather than mixing batches on a visible patio or walkway.
+          </p>
+        </div>
+
+        <!-- SECTION 6: Recommended Products -->
+        <div id="recommended" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Recommended Polymeric Sand for Your Project
+          </h2>
+          <p>
+            Once you know how many bags you need, here are the three polymeric sands from our full testing roundup that we'd actually buy, covering the most common use cases.
+          </p>
+          <div class="grid grid-cols-1 gap-4 my-8 not-prose">
+            {RECOMMENDED.map((product) => (
+              <div class="bg-white border border-gray-200 rounded-2xl p-5 flex items-center gap-4 shadow-sm hover:shadow-md transition-shadow">
+                {productImages[product.id] && (
+                  <img
+                    src={productImages[product.id]}
+                    alt={product.name}
+                    loading="lazy"
+                    class="w-16 h-16 rounded-lg bg-gray-50 object-contain p-1 shrink-0"
+                  />
+                )}
+                <div class="flex-grow">
+                  <p class="text-xs font-black uppercase tracking-widest text-[#1E90FF] mb-1">{product.badge}</p>
+                  <p class="text-gray-900 font-bold">{product.name}</p>
+                  <p class="text-gray-500 text-sm mt-1">{product.blurb}</p>
+                </div>
+                <a
+                  href={product.amazonUrl}
+                  target="_blank"
+                  rel="sponsored nofollow noopener"
+                  class="shrink-0 px-5 py-3 bg-[#FF4500] hover:bg-[#E63E00] text-white text-center rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-xs"
+                >
+                  Buy Now
+                </a>
+              </div>
+            ))}
+          </div>
+          <p>
+            For the full breakdown of how these and four other products performed on haze resistance, joint-width range, and freeze-thaw durability, see our complete <a href="/best-polymeric-sand">Best Polymeric Sand</a> testing roundup.
+          </p>
+        </div>
+
+        <!-- SECTION 7: FAQ -->
+        <div id="faq" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How many bags of paver sand do I need per square foot?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For polymeric jointing sand at a standard 1/4-inch joint width and 1.5-inch depth, a 50-lb bag covers roughly 40-50 square feet, so most residential patios need one bag per 40-50 square feet plus about 15% extra for compaction settling and waste. Wider or deeper joints reduce coverage significantly — a 1-inch-wide flagstone joint can drop coverage to under 15 square feet per bag. For paver base/bedding sand at a standard 1-inch compacted layer, plan on roughly one 50-lb bag per 12 square feet.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the difference between paver sand and polymeric sand?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                "Paver sand" is a broad term that can refer to either bedding sand (the leveling layer pavers rest on, usually coarse concrete sand) or jointing sand (the material swept into the gaps between pavers). Polymeric sand is a specific type of jointing sand blended with a polymer binder that hardens when misted with water, locking joints in place and resisting weeds and washout. Plain bedding sand is never used in the joints of a finished installation, and polymeric sand should never be used as the base layer under pavers.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is polymeric sand made of?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Polymeric sand is a blend of graded silica sand and a dry polymer binder, typically an acrylic or cross-linked polymer compound. When the swept-in sand is misted with water, the polymer dissolves briefly, coats the sand grains, and then cures into a semi-rigid matrix that binds the joint together — unlike plain sand, which has no binding agent and simply sits loose in the gap.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I use regular sand or play sand instead of paver sand?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                You can use regular, unpolymerized sand for paver joints, but it isn't recommended for anything but a temporary or budget installation, since it washes out under rain and foot traffic within a season or two. Play sand specifically is the wrong choice — it's washed and rounded for softness and safety, not compaction, so it won't lock together the way angular paver bedding sand or concrete sand does. See our full <a href="/paver-sand-vs-play-sand">Paver Sand vs. Play Sand comparison</a> for the complete breakdown.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Where can I buy polymeric sand?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Polymeric sand is widely stocked at Home Depot, Lowe's, and Menards in the US, at Bunnings Warehouse in Australia, and at most independent landscape supply and masonry yards. Big-box stores typically carry mid-range brands like Sakrete and Quikrete on the shelf, while premium brands such as Techniseal, Alliance Gator Maxx, and SEK Surebond are more often found through professional hardscape suppliers or ordered online.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How much does a ton of paver sand cover?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A ton of sand covers roughly 80-100 square feet at a standard 3-inch depth, or about 240-300 square feet at a 1-inch bedding depth, though exact coverage varies with the sand's density and moisture content. As a rule of thumb, one cubic yard of sand weighs approximately 1.3-1.5 tons and covers 324 square feet at a 1-inch depth. For any project needing more than about a cubic yard of bedding sand, ordering bulk by the ton is almost always cheaper than buying dozens of bags.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What sand should I use to lay pavers?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Use coarse, angular concrete sand (sometimes called bedding sand or paving sand) as the 1-inch leveling layer that pavers are set into — never use fine play sand or beach sand for this layer, since rounded grains don't compact or lock together. After the pavers are laid and leveled, fill the joints between them with polymeric sand. For the full step-by-step installation process once your joints are sanded, see our <a href="/how-to-use-polymeric-sand">How to Use Polymeric Sand</a> guide.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Does joint width and depth really change how much sand I need?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes, significantly. Coverage per bag scales roughly with the total volume of the joints, which is a function of both width and depth. Doubling either the joint width or the joint depth roughly halves the square footage a single bag will cover. This is why a wide-joint flagstone patio can require two to three times more polymeric sand per square foot than a standard concrete paver patio with narrow joints.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16 border-t border-gray-100 pt-12">
+          <h3 class="text-2xl font-black text-gray-900 mb-6">Related Guides</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-polymeric-sand" class="bg-gray-50 border border-gray-200 rounded-2xl p-5 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h4 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Polymeric Sand</h4>
+              <p class="text-gray-500 text-sm mt-2">Know how many bags you need? See which products actually held up in our testing.</p>
+            </a>
+            <a href="/how-to-use-polymeric-sand" class="bg-gray-50 border border-gray-200 rounded-2xl p-5 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">DIY Guide</p>
+              <h4 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">How to Use Polymeric Sand</h4>
+              <p class="text-gray-500 text-sm mt-2">Sand purchased — now the step-by-step application process to avoid haze and cracking.</p>
+            </a>
+            <a href="/polymeric-sand-vs-regular-sand-for-pavers" class="bg-gray-50 border border-gray-200 rounded-2xl p-5 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Comparison</p>
+              <h4 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Polymeric vs. Regular Sand</h4>
+              <p class="text-gray-500 text-sm mt-2">Still deciding if polymeric sand is worth the extra cost? Compare both side by side.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Getting your <strong class="text-white">sand quantity right</strong> comes down to two numbers most people skip measuring: joint width and joint depth for jointing sand, or your compacted layer depth for bedding sand. Plug real measurements — not guesses — into the calculator above, add the built-in waste buffer, and buy accordingly. It's cheaper to have one unopened bag left over than to halt a project mid-install for a second store run.
+          </p>
+          <p class="text-gray-300 leading-relaxed">
+            If you're still deciding which product to buy once you know your bag count, our <strong class="text-white">Best Polymeric Sand</strong> roundup has the full head-to-head testing across haze resistance, joint-width range, and climate durability.
+          </p>
+        </div>
+      </div>
+    </div>
+  </article>
+</Layout>
