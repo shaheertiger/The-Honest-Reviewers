@@ -1,14 +1,25 @@
 // Applies the ASIN lookup report (scripts/asin-lookup-report.json) to the
-// .astro pages. Only "matched" entries with confidence "ok" are applied
-// automatically. "LOW_CONFIDENCE", "no_match", "error", and "exception"
-// entries are left untouched (still on their amazon.com/s?k= search-link
-// fallback) and listed at the end for manual review.
+// .astro pages. A direct product link is only applied automatically when:
+//   - status is "matched"
+//   - title similarity is >= MIN_SIMILARITY (raised from the lookup script's
+//     0.35 "ok" bar — spot-checking showed 0.35-0.59 matches include real
+//     wrong-product mismatches, e.g. a mower model matched to a tune-up kit
+//     accessory for it, or a specific sealer matched to a different product
+//     from the same brand)
+//   - the product name doesn't look like a rental/service company (these
+//     aren't purchasable Amazon products at all — e.g. "Sunbelt Rentals"
+//     scored a perfect 1.00 similarity match to an unrelated NASCAR trading
+//     card, purely because both share the word "Rentals")
+// Everything else is left on its existing amazon.com/s?k= search-link
+// fallback (already real, already tagged) and listed for manual review.
 
 import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { join } from 'path';
 
 const ROOT = join(import.meta.dirname, '..');
 const REPORT_PATH = join(ROOT, 'scripts', 'asin-lookup-report.json');
+const MIN_SIMILARITY = 0.6;
+const SERVICE_NAME_PATTERN = /\brental(s)?\b/i;
 
 if (!existsSync(REPORT_PATH)) {
   console.error(`No report found at ${REPORT_PATH}. Run lookup-real-asins.mjs first.`);
@@ -32,7 +43,10 @@ for (const [file, entries] of byFile) {
   let changed = false;
 
   for (const entry of entries) {
-    if (entry.status === 'matched' && entry.confidence === 'ok') {
+    const isServiceName = SERVICE_NAME_PATTERN.test(entry.name);
+    const highConfidence = entry.status === 'matched' && entry.similarity >= MIN_SIMILARITY;
+
+    if (highConfidence && !isServiceName) {
       const oldLine = `amazonUrl: "${entry.oldUrl}"`;
       const newLine = `amazonUrl: "${entry.newUrl}"`;
       if (content.includes(oldLine)) {
@@ -42,8 +56,10 @@ for (const [file, entries] of byFile) {
       } else {
         skipped.push({ ...entry, reason: 'old_url_not_found_verbatim' });
       }
+    } else if (isServiceName) {
+      skipped.push({ ...entry, reason: 'service_not_a_product' });
     } else {
-      skipped.push({ ...entry, reason: entry.status === 'matched' ? 'low_confidence' : entry.status });
+      skipped.push({ ...entry, reason: entry.status === 'matched' ? `below_similarity_threshold(${entry.similarity})` : entry.status });
     }
   }
 
