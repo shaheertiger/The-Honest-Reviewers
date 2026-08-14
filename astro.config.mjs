@@ -97,6 +97,66 @@ export default defineConfig({
           item.changefreq = 'monthly';
           item.lastmod = new Date().toISOString();
           item.priority = 0.9;
+        } else if (url === `${base}/basement-crack-repair`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.9;
+        } else if (url === `${base}/basement-waterproofing-cost`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.9;
+        } else if (url === `${base}/polyaspartic-floor-coating`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.9;
+        } else if (url === `${base}/cold-patch-asphalt`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.8;
+        } else if (url === `${base}/wet-basement-solutions`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.8;
+        } else if (url === `${base}/polyurea-garage-floor-coating`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.8;
+        } else if (url === `${base}/can-you-stain-pressure-treated-wood`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.8;
+        } else if (url === `${base}/driveway-crack-repair`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.7;
+        } else if (url === `${base}/epoxy-floor-colors`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.7;
+        } else if (url === `${base}/garage-floor-coating-cost`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.7;
+        } else if (url === `${base}/best-garage-floor-paint`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.7;
+        } else if (url === `${base}/best-deck-cleaner`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.7;
+        } else if (url === `${base}/asphalt-driveway-maintenance`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.6;
+        } else if (url === `${base}/garage-floor-epoxy-colors`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.6;
+        } else if (url === `${base}/basement-floor-sealer`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.6;
         } else {
           item.changefreq = 'monthly';
           item.lastmod = new Date().toISOString();
