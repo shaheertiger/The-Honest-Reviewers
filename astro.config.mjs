@@ -177,6 +177,30 @@ export default defineConfig({
           item.changefreq = 'monthly';
           item.lastmod = new Date().toISOString();
           item.priority = 0.7;
+        } else if (url === `${base}/best-chainsaw`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.8;
+        } else if (url === `${base}/best-cordless-drills`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.8;
+        } else if (url === `${base}/best-dishwasher`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.8;
+        } else if (url === `${base}/best-water-softener-system`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.7;
+        } else if (url === `${base}/best-water-filtration-system-for-home`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.7;
+        } else if (url === `${base}/best-water-filter-pitcher`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.6;
         } else {
           item.changefreq = 'monthly';
           item.lastmod = new Date().toISOString();
