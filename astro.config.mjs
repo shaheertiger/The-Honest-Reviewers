@@ -157,6 +157,26 @@ export default defineConfig({
           item.changefreq = 'monthly';
           item.lastmod = new Date().toISOString();
           item.priority = 0.6;
+        } else if (url === `${base}/best-gas-lawn-mowers`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.9;
+        } else if (url === `${base}/interior-basement-waterproofing`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.9;
+        } else if (url === `${base}/best-basement-floor-paint`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.8;
+        } else if (url === `${base}/blacktop-sealer-cost`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.7;
+        } else if (url === `${base}/best-oil-based-deck-stain`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.7;
         } else {
           item.changefreq = 'monthly';
           item.lastmod = new Date().toISOString();
