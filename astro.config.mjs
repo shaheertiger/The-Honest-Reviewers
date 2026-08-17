@@ -201,6 +201,18 @@ export default defineConfig({
           item.changefreq = 'monthly';
           item.lastmod = new Date().toISOString();
           item.priority = 0.6;
+        } else if (url === `${base}/best-ceiling-fans-with-lights`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.8;
+        } else if (url === `${base}/best-air-purifier-for-home`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.8;
+        } else if (url === `${base}/best-cordless-drill-for-home-use`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.6;
         } else {
           item.changefreq = 'monthly';
           item.lastmod = new Date().toISOString();
