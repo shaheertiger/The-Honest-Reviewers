@@ -10,6 +10,17 @@ const KEY_LOCATION = `${SITE}/${KEY}.txt`;
 const ENDPOINT = 'https://api.indexnow.org/IndexNow';
 const DIST = join(process.cwd(), 'dist');
 
+// Set by the `postbuild` hook so this runs unattended after every `npm run build`.
+// In that mode we only submit on real Vercel production deploys (never local/CI builds
+// or preview deploys), and we never fail the build.
+const AUTO = process.env.INDEXNOW_AUTO === '1';
+const IS_VERCEL_PRODUCTION = process.env.VERCEL === '1' && process.env.VERCEL_ENV === 'production';
+
+if (AUTO && !IS_VERCEL_PRODUCTION) {
+  console.log(`[indexnow] Skipping auto-submit (VERCEL=${process.env.VERCEL}, VERCEL_ENV=${process.env.VERCEL_ENV})`);
+  process.exit(0);
+}
+
 async function extractUrlsFromSitemaps() {
   if (!existsSync(DIST)) return [];
   const files = (await readdir(DIST)).filter((f) => f.startsWith('sitemap-') && f.endsWith('.xml'));
@@ -39,13 +50,18 @@ async function submit(urlList) {
   return { status: res.status, text: await res.text().catch(() => '') };
 }
 
-const urls = await extractUrlsFromSitemaps();
-if (urls.length === 0) {
-  console.error('[indexnow] No URLs found. Run `astro build` first.');
-  process.exit(1);
-}
+try {
+  const urls = await extractUrlsFromSitemaps();
+  if (urls.length === 0) {
+    throw new Error('No URLs found. Run `astro build` first.');
+  }
 
-console.log(`[indexnow] Submitting ${urls.length} URLs to ${ENDPOINT}`);
-const { status, text } = await submit(urls);
-console.log(`[indexnow] Response ${status}${text ? `: ${text}` : ''}`);
-if (status >= 400) process.exit(1);
+  console.log(`[indexnow] Submitting ${urls.length} URLs to ${ENDPOINT}`);
+  const { status, text } = await submit(urls);
+  console.log(`[indexnow] Response ${status}${text ? `: ${text}` : ''}`);
+  if (status >= 400) throw new Error(`IndexNow returned ${status}`);
+} catch (err) {
+  console.error(`[indexnow] ${err.message}`);
+  // Never fail the deploy over an IndexNow hiccup; manual runs should still report failure.
+  process.exit(AUTO ? 0 : 1);
+}
