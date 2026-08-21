@@ -5,6 +5,9 @@ import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
   site: 'https://www.thehonestreviewers.com',
+  // Canonical URLs, sitemap entries and internal links all use a trailing slash;
+  // Vercel 308-redirects the slash-less form (see trailingSlash in vercel.json).
+  trailingSlash: 'always',
   integrations: [
     react(),
     tailwind(),
