@@ -16,9 +16,22 @@ const DIST = join(process.cwd(), 'dist');
 const AUTO = process.env.INDEXNOW_AUTO === '1';
 const IS_VERCEL_PRODUCTION = process.env.VERCEL === '1' && process.env.VERCEL_ENV === 'production';
 
+// `npm run indexnow -- --live` reads the sitemap already published on
+// www.thehonestreviewers.com instead of the local `dist/`, so a manual run only
+// ever submits URLs that are really live. Use it to catch the site up after a
+// deploy that ran before the postbuild hook existed (or that never happened).
+const LIVE = !AUTO && process.argv.includes('--live');
+
 if (AUTO && !IS_VERCEL_PRODUCTION) {
   console.log(`[indexnow] Skipping auto-submit (VERCEL=${process.env.VERCEL}, VERCEL_ENV=${process.env.VERCEL_ENV})`);
   process.exit(0);
+}
+
+function collectLocs(xml, urls) {
+  for (const m of xml.matchAll(/<loc>([^<]+)<\/loc>/g)) {
+    const url = m[1].trim();
+    if (url.startsWith(SITE) && !url.endsWith('.xml')) urls.add(url);
+  }
 }
 
 async function extractUrlsFromSitemaps() {
@@ -26,11 +39,23 @@ async function extractUrlsFromSitemaps() {
   const files = (await readdir(DIST)).filter((f) => f.startsWith('sitemap-') && f.endsWith('.xml'));
   const urls = new Set();
   for (const file of files) {
-    const xml = await readFile(join(DIST, file), 'utf8');
-    for (const m of xml.matchAll(/<loc>([^<]+)<\/loc>/g)) {
-      const url = m[1].trim();
-      if (url.startsWith(SITE) && !url.endsWith('.xml')) urls.add(url);
-    }
+    collectLocs(await readFile(join(DIST, file), 'utf8'), urls);
+  }
+  return [...urls];
+}
+
+async function fetchXml(url) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`GET ${url} returned ${res.status}`);
+  return res.text();
+}
+
+async function extractUrlsFromLiveSitemaps() {
+  const index = await fetchXml(`${SITE}/sitemap-index.xml`);
+  const sitemaps = [...index.matchAll(/<loc>([^<]+\.xml)<\/loc>/g)].map((m) => m[1].trim());
+  const urls = new Set();
+  for (const sitemap of sitemaps) {
+    collectLocs(await fetchXml(sitemap), urls);
   }
   return [...urls];
 }
@@ -51,12 +76,14 @@ async function submit(urlList) {
 }
 
 try {
-  const urls = await extractUrlsFromSitemaps();
+  const urls = LIVE ? await extractUrlsFromLiveSitemaps() : await extractUrlsFromSitemaps();
   if (urls.length === 0) {
-    throw new Error('No URLs found. Run `astro build` first.');
+    throw new Error(
+      LIVE ? `No URLs found in ${SITE}/sitemap-index.xml.` : 'No URLs found. Run `astro build` first.'
+    );
   }
 
-  console.log(`[indexnow] Submitting ${urls.length} URLs to ${ENDPOINT}`);
+  console.log(`[indexnow] Submitting ${urls.length} URLs from the ${LIVE ? 'live' : 'built'} sitemap to ${ENDPOINT}`);
   const { status, text } = await submit(urls);
   console.log(`[indexnow] Response ${status}${text ? `: ${text}` : ''}`);
   if (status >= 400) throw new Error(`IndexNow returned ${status}`);
