@@ -3,6 +3,35 @@ import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
 
+// Buyer's guides that target high-volume search terms. They get a higher
+// sitemap priority than the 0.5 default so crawlers reach them sooner.
+const priorityGuides = new Set([
+  'best-weed-killer',
+  'best-pressure-washer',
+  'best-electric-pressure-washer',
+  'best-stud-finder',
+  'best-electric-lawn-mower',
+  'best-dehumidifier-for-basement',
+  'best-garden-hose',
+  'best-snow-blower',
+  'best-leaf-blower',
+  'best-cordless-leaf-blower',
+  'best-string-trimmer',
+  'best-shop-vac',
+  'best-riding-lawn-mower',
+  'best-battery-powered-lawn-mower',
+  'best-push-mower',
+  'best-portable-power-station',
+  'best-grass-seed',
+  'best-fertilizer-for-grass',
+  'best-electric-snow-blower',
+  'best-laser-level',
+  'best-weed-eater',
+  'best-torque-wrench',
+  'best-expandable-garden-hose',
+  'best-hose-reel',
+]);
+
 export default defineConfig({
   site: 'https://www.thehonestreviewers.com',
   // Canonical URLs, sitemap entries and internal links all use a trailing slash;
@@ -216,6 +245,10 @@ export default defineConfig({
           item.changefreq = 'monthly';
           item.lastmod = new Date().toISOString();
           item.priority = 0.6;
+        } else if (priorityGuides.has(url.slice(base.length + 1))) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.8;
         } else {
           item.changefreq = 'monthly';
           item.lastmod = new Date().toISOString();
