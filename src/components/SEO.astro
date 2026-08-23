@@ -27,6 +27,14 @@ const {
   noindex = false,
 } = Astro.props;
 
+// Search engines truncate titles past roughly 70 characters, so the brand suffix
+// is only appended when the finished title still fits. Pages pass a bare title
+// and this decides whether there is room to brand it.
+const BRAND_SUFFIX = ' | The Honest Reviewers';
+const TITLE_MAX = 70;
+const pageTitle =
+  title.length + BRAND_SUFFIX.length <= TITLE_MAX ? `${title}${BRAND_SUFFIX}` : title;
+
 const siteUrl = Astro.site?.toString() ?? 'https://www.thehonestreviewers.com';
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteUrl).toString();
 
@@ -62,8 +70,8 @@ if (jsonLd) {
 }
 ---
 <!-- Primary Meta Tags -->
-<title>{title}</title>
-<meta name="title" content={title} />
+<title>{pageTitle}</title>
+<meta name="title" content={pageTitle} />
 <meta name="description" content={description} />
 <link rel="canonical" href={canonicalUrl} />
 {noindex && <meta name="robots" content="noindex, nofollow" />}
@@ -71,7 +79,7 @@ if (jsonLd) {
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content={ogType} />
 <meta property="og:url" content={canonicalUrl} />
-<meta property="og:title" content={title} />
+<meta property="og:title" content={pageTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={ogImage} />
 <meta property="og:site_name" content="The Honest Reviewers" />
@@ -86,7 +94,7 @@ if (jsonLd) {
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
 <meta property="twitter:url" content={canonicalUrl} />
-<meta property="twitter:title" content={title} />
+<meta property="twitter:title" content={pageTitle} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={ogImage} />
 
