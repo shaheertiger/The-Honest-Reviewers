@@ -57,6 +57,22 @@ const priorityGuides = new Set([
   'best-framing-hammer',
   'best-bench-vise',
   'best-wire-stripper',
+
+  // August 2026 batch: generators, mowers, waterproofing and concrete coatings.
+  'best-zero-turn-mower',
+  'best-robotic-lawn-mower',
+  'best-inverter-generator',
+  'best-dual-fuel-inverter-generator',
+  'best-dual-fuel-generator',
+  'best-tri-fuel-generator',
+  'best-natural-gas-generator',
+  'best-whole-house-generator',
+  'best-concrete-floor-coating',
+  'best-exterior-wood-sealer',
+  'driveway-resurfacing-cost',
+  'waterproofing-basement-walls-from-outside',
+  'how-to-get-oil-out-of-concrete',
+  'leaf-filter-reviews',
 ]);
 
 export default defineConfig({
@@ -272,6 +288,10 @@ export default defineConfig({
           item.changefreq = 'monthly';
           item.lastmod = new Date().toISOString();
           item.priority = 0.6;
+        } else if (url === `${base}/generac-generator-cost`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.9;
         } else if (priorityGuides.has(url.slice(base.length + 1))) {
           item.changefreq = 'monthly';
           item.lastmod = new Date().toISOString();
