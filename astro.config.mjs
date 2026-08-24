@@ -30,6 +30,33 @@ const priorityGuides = new Set([
   'best-torque-wrench',
   'best-expandable-garden-hose',
   'best-hose-reel',
+
+  // August 2026 batch: water heaters, flooring, home systems and workshop tools.
+  'best-tankless-water-heater',
+  'best-gas-water-heater',
+  'best-laminate-flooring',
+  'best-vinyl-plank-flooring',
+  'best-underlayment-for-vinyl-plank-flooring',
+  'best-tile-leveling-system',
+  'best-grout-sealer',
+  'best-air-purifier-for-smoke',
+  'best-whole-house-fan',
+  'best-whole-house-surge-protector',
+  'best-circuit-breaker-finder',
+  'best-drain-snake',
+  'best-belt-sander',
+  'best-drywall-sander',
+  'best-palm-sander',
+  'best-telescoping-ladder',
+  'best-attic-ladder',
+  'best-jigsaw',
+  'best-wood-router',
+  'best-router-table',
+  'best-drill-press',
+  'best-benchtop-planer',
+  'best-framing-hammer',
+  'best-bench-vise',
+  'best-wire-stripper',
 ]);
 
 export default defineConfig({
