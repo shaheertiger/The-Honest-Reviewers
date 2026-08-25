@@ -73,6 +73,7 @@ const priorityGuides = new Set([
   'waterproofing-basement-walls-from-outside',
   'how-to-get-oil-out-of-concrete',
   'leaf-filter-reviews',
+  'best-natural-deodorants',
 ]);
 
 export default defineConfig({
