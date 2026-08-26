@@ -73,6 +73,18 @@ const priorityGuides = new Set([
   'waterproofing-basement-walls-from-outside',
   'how-to-get-oil-out-of-concrete',
   'leaf-filter-reviews',
+  // August 2026 publishing batch: epoxy floor how-tos, generator sizing,
+  // sealing troubleshooting, basement water and mower maintenance.
+  'how-to-clean-epoxy-garage-floor',
+  'how-to-seal-epoxy-garage-floor',
+  'how-to-prepare-concrete-for-epoxy',
+  'garage-floor-epoxy-drying-time',
+  'what-size-generator-do-i-need-for-my-house',
+  'rain-after-driveway-sealing',
+  'deck-stain-drying-time',
+  'why-paver-sealer-turns-white',
+  'water-coming-through-basement-floor',
+  'how-often-to-sharpen-mower-blades',
 ]);
 
 export default defineConfig({
@@ -289,6 +301,18 @@ export default defineConfig({
           item.lastmod = new Date().toISOString();
           item.priority = 0.6;
         } else if (url === `${base}/generac-generator-cost`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.9;
+        } else if (url === `${base}/what-size-generator-do-i-need-for-my-house`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.9;
+        } else if (url === `${base}/how-to-prepare-concrete-for-epoxy`) {
+          item.changefreq = 'monthly';
+          item.lastmod = new Date().toISOString();
+          item.priority = 0.9;
+        } else if (url === `${base}/water-coming-through-basement-floor`) {
           item.changefreq = 'monthly';
           item.lastmod = new Date().toISOString();
           item.priority = 0.9;
