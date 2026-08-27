@@ -9,8 +9,11 @@ const content = {};
 for (const file of readdirSync(dir).filter((f) => f.endsWith('.mjs')).sort()) {
   const batch = (await import(join(dir, file))).default;
   for (const [slug, value] of Object.entries(batch)) {
-    if (content[slug]) throw new Error(`${slug} appears in more than one batch`);
-    content[slug] = value;
+    const existing = (content[slug] ??= {});
+    for (const [section, body] of Object.entries(value)) {
+      if (existing[section]) throw new Error(`${slug}.${section} is authored in more than one batch`);
+      existing[section] = body;
+    }
   }
 }
 
