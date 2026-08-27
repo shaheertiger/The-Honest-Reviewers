@@ -6,6 +6,30 @@ import { PAGES_DIR, read, indentAt, reindent, proseChildren, matchingDivEnd, tai
 
 const CARD_ACCENTS = ['text-[#FF4500]', 'text-[#1E90FF]', 'text-green-600'];
 
+export function faqBlock(items) {
+  const cards = items
+    .map(
+      ({ question, answer }) => `    <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+      <h3 class="text-lg font-bold text-gray-900 mb-2">${question}</h3>
+      <p class="text-gray-700 text-sm leading-relaxed">
+        ${answer}
+      </p>
+    </div>`
+    )
+    .join('\n');
+  return `<!-- FAQ -->
+<div id="faq" class="scroll-mt-24">
+  <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+    Frequently Asked Questions
+  </h2>
+
+  <div class="space-y-6">
+${cards}
+  </div>
+</div>
+`;
+}
+
 export function mistakesBlock({ heading, intro, items }) {
   const cards = items
     .map(
@@ -90,6 +114,13 @@ function insertAt(source, at, block) {
 /** Add the closing sections a page is missing, each in its canonical position. */
 export function applyTail(slug, content) {
   let source = read(slug);
+
+  if (content.faqs && !/id="faq"/.test(source)) {
+    const before = [/Common Mistakes/i, /Related [\w &]*Guides/i, /The Bottom Line/i];
+    let at = -1;
+    for (const p of before) if (at === -1) at = sectionAt(source, p);
+    source = insertAt(source, at === -1 ? tailInsertPoint(source) : at, faqBlock(content.faqs));
+  }
 
   if (content.mistakes && !/Common Mistakes/i.test(source)) {
     const before = [/Related [\w &]*Guides/i, /The Bottom Line/i];
