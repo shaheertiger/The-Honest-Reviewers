@@ -85,6 +85,9 @@ const priorityGuides = new Set([
   'why-paver-sealer-turns-white',
   'water-coming-through-basement-floor',
   'how-often-to-sharpen-mower-blades',
+
+  // August 2026: home gym and garage fit-out.
+  'best-home-gym-equipment-on-a-budget',
 ]);
 
 export default defineConfig({
