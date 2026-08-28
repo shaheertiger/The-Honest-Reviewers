@@ -86,8 +86,9 @@ const priorityGuides = new Set([
   'water-coming-through-basement-floor',
   'how-often-to-sharpen-mower-blades',
 
-  // August 2026: home gym and garage fit-out.
+  // August 2026: home gym, garage fit-out and outdoor gear.
   'best-home-gym-equipment-on-a-budget',
+  'best-crash-pad-for-bouldering-outdoors',
 ]);
 
 export default defineConfig({
