@@ -1,5 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
 import SocialProof from "../components/SocialProof.astro";
 import TrustBadge from "../components/TrustBadge.astro";
 import productImages from "../data/product-images.json";
@@ -277,10 +281,21 @@ const schema = {
     {
       "@type": "Article",
       headline: title,
-      author: { "@type": "Person", name: "Alex Rivers" },
+      author: authorSchema(),
       datePublished: "2026-03-15",
       dateModified: "2026-03-15",
       publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
     },
     ...PRODUCTS.map((product) => ({
       "@type": "Product",
@@ -368,9 +383,7 @@ const schema = {
     <div class="max-w-3xl mx-auto px-4 pt-12">
       <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
         <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-full bg-gray-100 overflow-hidden">
-            <img src="https://i.pravatar.cc/150?img=33" alt="Alex Rivers" class="w-full h-full object-cover" />
-          </div>
+          <AuthorAvatar size={48} />
           <div>
             <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
             <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
@@ -414,6 +427,8 @@ const schema = {
         <p class="text-2xl font-medium text-gray-900 mb-8 italic border-l-4 border-[#38BDF8] pl-6 bg-gray-50 py-4 rounded-r-xl">
           Water-based paver sealers used to be a compromise product — something you settled for when you could not tolerate the fumes of solvent-based alternatives. That era is over. The latest generation of water-based formulas delivers genuine color enhancement, serious durability, and professional-grade protection, all without the toxic vapors, flammability hazards, and environmental concerns that make solvent-based products increasingly problematic.
         </p>
+
+        <QuickPicks products={PRODUCTS} />
 
         <p>
           If you have spent thousands of dollars on a beautiful paver patio, driveway, or pool deck, the sealer you choose will determine whether that investment ages gracefully or deteriorates into a faded, stained, weed-infested disappointment within a few short years. Paver sealers protect against UV fading, staining from oil and organic matter, water infiltration that causes freeze-thaw damage, and even the erosion of polymeric sand from between the joints. They are not optional — they are essential maintenance for any serious hardscape investment.
@@ -560,6 +575,8 @@ const schema = {
                         src={productImages[product.id]}
                         alt={product.name}
                         loading="lazy"
+                        width="40"
+                        height="40"
                         class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
                       />
                     )}
@@ -782,6 +799,8 @@ const schema = {
             See Our #1 Pick Again
           </a>
         </div>
+
+        <AuthorBio />
       </div>
     </div>
   </article>

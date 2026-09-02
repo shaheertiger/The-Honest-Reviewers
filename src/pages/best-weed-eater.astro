@@ -1,5 +1,10 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
 import TrustBadge from "../components/TrustBadge.astro";
 import SocialProof from "../components/SocialProof.astro";
 import productImages from "../data/product-images.json";
@@ -268,10 +273,21 @@ const schema = {
     {
       "@type": "Article",
       headline: title,
-      author: { "@type": "Person", name: "Alex Rivers" },
+      author: authorSchema(),
       datePublished: "2026-08-23",
       dateModified: "2026-08-23",
       publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
     },
     ...PRODUCTS.map((product) => ({
       "@type": "Product",
@@ -356,9 +372,7 @@ const schema = {
     <div class="max-w-3xl mx-auto px-4 pt-12">
       <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
         <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-full bg-gray-100 overflow-hidden">
-            <img src="https://i.pravatar.cc/150?img=33" alt="Alex Rivers" class="w-full h-full object-cover" />
-          </div>
+          <AuthorAvatar size={48} />
           <div>
             <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
             <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
@@ -401,6 +415,8 @@ const schema = {
         <p class="text-2xl font-medium text-gray-900 mb-8 italic">
           Almost nobody abandons a weed eater because it lacked power. They abandon it because it was heavy, because the line stopped feeding, or because reloading the spool turned a ten-minute job into an hour on the garage floor. We tested for those failures specifically. Here are the seven weed eaters that stayed in rotation all season.
         </p>
+
+        <QuickPicks products={PRODUCTS} />
 
         <!-- SECTION 1: What a Weed Eater Is Actually Good At -->
         <div id="what-weed-eaters-do" class="scroll-mt-24">
@@ -542,6 +558,8 @@ const schema = {
                         src={productImages[product.id]}
                         alt={product.name}
                         loading="lazy"
+                        width="40"
+                        height="40"
                         class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
                       />
                     )}
@@ -605,7 +623,7 @@ const schema = {
                   </div>
 
                   <a
-                    href={product.amazonUrl}
+                    href={amazonLink(product.amazonUrl, product.name)}
                     target="_blank"
                     rel="sponsored nofollow noopener"
                     class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
@@ -879,6 +897,8 @@ const schema = {
           </p>
         </div>
 
+
+        <AuthorBio />
       </div>
     </div>
   </article>

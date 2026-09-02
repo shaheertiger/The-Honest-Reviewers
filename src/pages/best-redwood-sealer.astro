@@ -1,5 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
 import TrustBadge from "../components/TrustBadge.astro";
 import SocialProof from "../components/SocialProof.astro";
 import productImages from "../data/product-images.json";
@@ -285,10 +289,21 @@ const schema = {
     {
       "@type": "Article",
       headline: title,
-      author: { "@type": "Person", name: "Alex Rivers" },
+      author: authorSchema(),
       datePublished: "2026-03-06",
       dateModified: "2026-03-06",
       publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
     },
     ...PRODUCTS.map((product) => ({
       "@type": "Product",
@@ -383,9 +398,7 @@ const schema = {
     <div class="max-w-3xl mx-auto px-4 pt-12">
       <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
         <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-full bg-gray-100 overflow-hidden">
-            <img src="https://i.pravatar.cc/150?img=33" alt="Alex Rivers" class="w-full h-full object-cover" />
-          </div>
+          <AuthorAvatar size={48} />
           <div>
             <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
             <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
@@ -427,6 +440,8 @@ const schema = {
         <p class="text-2xl font-medium text-gray-900 mb-8 italic">
           Redwood is one of the most beautiful and naturally durable woods on earth — but it's not invincible. Without a quality sealer, your gorgeous redwood deck, fence, or furniture will fade to a dull silver-gray within a single season. UV rays break down the surface fibers. Rain cycles cause cracking and cupping. Mildew creeps in. The best redwood sealer stops all of this while enhancing the wood's natural warmth. After 8 months of real-world testing, here's exactly what we recommend.
         </p>
+
+        <QuickPicks products={PRODUCTS} />
 
         <!-- SECTION 1: Does Redwood Need Sealing? -->
         <div id="does-redwood-need-sealing" class="scroll-mt-24">
@@ -562,6 +577,8 @@ const schema = {
                         src={productImages[product.id]}
                         alt={product.name}
                         loading="lazy"
+                        width="40"
+                        height="40"
                         class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
                       />
                     )}
@@ -907,6 +924,8 @@ const schema = {
           </p>
         </div>
 
+
+        <AuthorBio />
       </div>
     </div>
   </article>

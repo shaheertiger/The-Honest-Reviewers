@@ -1,5 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
 import TrustBadge from "../components/TrustBadge.astro";
 import SocialProof from "../components/SocialProof.astro";
 import productImages from "../data/product-images.json";
@@ -201,10 +205,21 @@ const schema = {
     {
       "@type": "Article",
       headline: title,
-      author: { "@type": "Person", name: "Alex Rivers" },
+      author: authorSchema(),
       datePublished: "2026-07-09",
       dateModified: "2026-07-09",
       publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
     },
     ...PRODUCTS.map((product) => ({
       "@type": "Product",
@@ -255,7 +270,7 @@ const schema = {
     <div class="max-w-3xl mx-auto px-4 pt-12">
       <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
         <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-full bg-gray-100 overflow-hidden"><img src="https://i.pravatar.cc/150?img=33" alt="Alex Rivers" class="w-full h-full object-cover" /></div>
+          <div class="w-12 h-12 rounded-full bg-gray-100 overflow-hidden"><AuthorAvatar size={48} /></div>
           <div><p class="text-sm font-bold text-gray-900">Alex Rivers</p><p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p></div>
         </div>
         <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
@@ -268,9 +283,7 @@ const schema = {
     <div class="max-w-3xl mx-auto px-4 pt-12">
       <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
         <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-full bg-gray-100 overflow-hidden">
-            <img src="https://i.pravatar.cc/150?img=33" alt="Alex Rivers" class="w-full h-full object-cover" />
-          </div>
+          <AuthorAvatar size={48} />
           <div>
             <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
             <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
@@ -317,6 +330,8 @@ const schema = {
           Menards' driveway sealer aisle skews toward a slightly different mix of brands than the bigger national chains — some overlap, some regional names you won't see everywhere. Here's which of what's actually on the shelf is worth buying, and how to buy it well.
         </p>
 
+        <QuickPicks products={PRODUCTS} />
+
         <p class="text-sm text-gray-500 mb-8">
           A quick, honest note: these are products commonly stocked at Menards, and that's the lens for this guide. Availability varies by store and season, so confirm current stock before making the trip for a specific product.
         </p>
@@ -339,6 +354,8 @@ const schema = {
                       src={productImages[product.id]}
                       alt={product.name}
                       loading="lazy"
+                        width="40"
+                        height="40"
                       class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
                     />
                   )}
@@ -619,6 +636,8 @@ const schema = {
             See Our Top Driveway Sealer
           </a>
         </div>
+
+        <AuthorBio />
       </div>
     </div>
   </article>

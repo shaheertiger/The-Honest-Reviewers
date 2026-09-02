@@ -1,5 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
 import SocialProof from "../components/SocialProof.astro";
 import TrustBadge from "../components/TrustBadge.astro";
 import productImages from "../data/product-images.json";
@@ -277,10 +281,21 @@ const schema = {
     {
       "@type": "Article",
       headline: title,
-      author: { "@type": "Person", name: "Alex Rivers" },
+      author: authorSchema(),
       datePublished: "2026-03-14",
       dateModified: "2026-03-14",
       publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
     },
     ...PRODUCTS.map((product) => ({
       "@type": "Product",
@@ -368,9 +383,7 @@ const schema = {
     <div class="max-w-3xl mx-auto px-4 pt-12">
       <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
         <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-full bg-gray-100 overflow-hidden">
-            <img src="https://i.pravatar.cc/150?img=33" alt="Alex Rivers" class="w-full h-full object-cover" />
-          </div>
+          <AuthorAvatar size={48} />
           <div>
             <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
             <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
@@ -414,6 +427,8 @@ const schema = {
         <p class="text-2xl font-medium text-gray-900 mb-8 italic border-l-4 border-[#38BDF8] pl-6 bg-gray-50 py-4 rounded-r-xl">
           Brick is one of the most durable building materials ever invented — structures built with fired clay brick have survived for thousands of years. But water is brick's kryptonite. When moisture infiltrates the pore structure, it triggers a cascade of damage mechanisms including efflorescence, freeze-thaw spalling, mortar erosion, and biological growth that can degrade even the finest brickwork within decades.
         </p>
+
+        <QuickPicks products={PRODUCTS} />
 
         <p>
           If you have ever noticed white powdery deposits on a brick wall, crumbling mortar joints on a chimney, or surface chips flaking off brick faces after a harsh winter, you have witnessed the damage that water causes to unprotected masonry. These are not just cosmetic issues — they are progressive failure mechanisms that worsen with each year of water exposure. Efflorescence indicates that soluble salts are being leached from within the masonry, weakening the internal structure. Spalling indicates that freeze-thaw cycling is physically shattering the brick face. Mortar erosion indicates that the water-soluble compounds in the mortar paste are being dissolved and carried away, opening joints that allow even more water to penetrate deeper into the wall assembly.
@@ -533,6 +548,8 @@ const schema = {
                         src={productImages[product.id]}
                         alt={product.name}
                         loading="lazy"
+                        width="40"
+                        height="40"
                         class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
                       />
                     )}
@@ -756,6 +773,8 @@ const schema = {
             See Our #1 Pick Again
           </a>
         </div>
+
+        <AuthorBio />
       </div>
     </div>
   </article>
