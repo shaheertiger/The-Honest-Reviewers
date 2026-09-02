@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
 import { authorSchema } from "../data/authors";
 import AuthorAvatar from "../components/AuthorAvatar.astro";
 import QuickPicks from "../components/QuickPicks.astro";
@@ -11,6 +12,12 @@ import productImages from "../data/product-images.json";
 import { pageDates } from "../data/dates";
 
 
+
+const moreInCategory = [
+    { title: "Best Battery Powered Lawn Mowers", url: "/best-battery-powered-lawn-mower/" },
+    { title: "Best Electric Lawn Mowers", url: "/best-electric-lawn-mower/" },
+    { title: "Best Expandable Garden Hoses", url: "/best-expandable-garden-hose/" },
+];
 const dates = pageDates(Astro.url.pathname, { published: "2026-08-23", modified: "2026-08-23" });
 const title = "7 Best Riding Lawn Mowers in 2026: Tractors & Zero-Turns";
 const description =
@@ -300,10 +307,11 @@ const schema = {
         "@type": "Brand",
         name: product.name.split(" ")[0],
       },
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: product.rating,
-        reviewCount: product.reviewCount,
+      review: {
+        "@type": "Review",
+        reviewBody: product.bottomLine,
+        author: authorSchema(),
+        publisher: { "@type": "Organization", name: "The Honest Reviewers" },
       },
     })),
   ],
@@ -590,7 +598,7 @@ const schema = {
                       ))}
                     </div>
                     <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
-                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings on Amazon)</span>
                   </div>
 
                   <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
@@ -905,6 +913,8 @@ const schema = {
           </p>
         </div>
 
+
+        <MoreInCategory category="Lawn & Yard Care" links={moreInCategory} />
 
         <AuthorBio />
       </div>

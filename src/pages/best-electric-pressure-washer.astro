@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
 import AuthorBio from "../components/AuthorBio.astro";
 import { authorSchema } from "../data/authors";
 import AuthorAvatar from "../components/AuthorAvatar.astro";
@@ -10,6 +11,12 @@ import productImages from "../data/product-images.json";
 import { pageDates } from "../data/dates";
 
 
+
+const moreInCategory = [
+    { title: "Best Drill Presses", url: "/best-drill-press/" },
+    { title: "Best Drywall Sanders", url: "/best-drywall-sander/" },
+    { title: "Best Electric Snow Blowers", url: "/best-electric-snow-blower/" },
+];
 const dates = pageDates(Astro.url.pathname, { published: "2026-08-23", modified: "2026-08-23" });
 const title = "7 Best Electric Pressure Washers in 2026: Tested";
 const description =
@@ -385,10 +392,11 @@ const schema = {
         "@type": "Brand",
         name: product.name.split(" ")[0],
       },
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: product.rating,
-        reviewCount: product.reviewCount,
+      review: {
+        "@type": "Review",
+        reviewBody: product.bottomLine,
+        author: authorSchema(),
+        publisher: { "@type": "Organization", name: "The Honest Reviewers" },
       },
     })),
   ],
@@ -689,7 +697,7 @@ const schema = {
                       ))}
                     </div>
                     <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
-                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings on Amazon)</span>
                   </div>
 
                   <div class="grid grid-cols-2 sm:grid-cols-4 gap-px bg-gray-200 border border-gray-200 rounded-xl overflow-hidden mb-6 not-prose">
@@ -1375,6 +1383,8 @@ const schema = {
           </p>
         </div>
 
+
+        <MoreInCategory category="Tools & Equipment" links={moreInCategory} />
 
         <AuthorBio />
       </div>

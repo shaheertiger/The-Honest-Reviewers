@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
 import { authorSchema } from "../data/authors";
 import AuthorAvatar from "../components/AuthorAvatar.astro";
 import QuickPicks from "../components/QuickPicks.astro";
@@ -11,6 +12,12 @@ import productImages from "../data/product-images.json";
 import { pageDates } from "../data/dates";
 
 
+
+const moreInCategory = [
+    { title: "Best Porch Paint", url: "/best-porch-paint/" },
+    { title: "Deck Stain Drying Time", url: "/deck-stain-drying-time/" },
+    { title: "Best Deck Sealants", url: "/best-deck-sealant/" },
+];
 const dates = pageDates(Astro.url.pathname, { published: "2026-05-04", modified: "2026-05-04" });
 const title = "6 Best Deck Stains for Pressure-Treated Wood in 2026: Tested";
 const description =
@@ -293,10 +300,11 @@ const schema = {
         "@type": "Brand",
         name: product.name.split(" ")[0],
       },
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: product.rating,
-        reviewCount: product.reviewCount,
+      review: {
+        "@type": "Review",
+        reviewBody: product.bottomLine,
+        author: authorSchema(),
+        publisher: { "@type": "Organization", name: "The Honest Reviewers" },
       },
     })),
   ],
@@ -570,7 +578,7 @@ const schema = {
                       ))}
                     </div>
                     <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
-                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings on Amazon)</span>
                   </div>
 
                   <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
@@ -829,6 +837,8 @@ const schema = {
             Whatever you choose, remember the three rules of PT deck staining: <strong class="text-white">verify the wood is dry, never use solid stain, and always back-brush within 15 minutes</strong>. Follow these and your deck will look beautiful for years between applications.
           </p>
         </div>
+
+        <MoreInCategory category="Stone & Wood Sealers" links={moreInCategory} />
 
         <AuthorBio />
       </div>

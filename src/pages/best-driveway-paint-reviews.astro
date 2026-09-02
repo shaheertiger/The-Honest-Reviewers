@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
 import { authorSchema } from "../data/authors";
 import AuthorAvatar from "../components/AuthorAvatar.astro";
 import QuickPicks from "../components/QuickPicks.astro";
@@ -10,6 +11,12 @@ import productImages from "../data/product-images.json";
 import { pageDates } from "../data/dates";
 
 
+
+const moreInCategory = [
+    { title: "Best Driveway Sealer at Menards (2026): 5 Picks Worth Buying", url: "/driveway-sealer-menards/" },
+    { title: "Epoxy Floor Colors", url: "/epoxy-floor-colors/" },
+    { title: "Epoxy vs Polyurea Garage Floor Coating", url: "/epoxy-vs-polyurea-garage-floor-coating/" },
+];
 const dates = pageDates(Astro.url.pathname, { published: "2026-04-15", modified: "2026-04-15" });
 const title = "7 Best Driveway Paints & Sealers in 2026: Tested";
 const description =
@@ -340,10 +347,11 @@ const schema = {
         "@type": "Brand",
         name: product.name.split(" ")[0],
       },
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: product.rating,
-        reviewCount: product.reviewCount,
+      review: {
+        "@type": "Review",
+        reviewBody: product.bottomLine,
+        author: authorSchema(),
+        publisher: { "@type": "Organization", name: "The Honest Reviewers" },
       },
     })),
   ],
@@ -656,7 +664,7 @@ const schema = {
                       ))}
                     </div>
                     <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
-                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings on Amazon)</span>
                   </div>
 
                   <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
@@ -856,6 +864,8 @@ const schema = {
             See Our Top Pick
           </a>
         </div>
+
+        <MoreInCategory category="Driveway & Concrete Sealers" links={moreInCategory} />
 
         <AuthorBio />
       </div>

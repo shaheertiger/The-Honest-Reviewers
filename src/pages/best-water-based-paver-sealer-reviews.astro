@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
 import { authorSchema } from "../data/authors";
 import AuthorAvatar from "../components/AuthorAvatar.astro";
 import QuickPicks from "../components/QuickPicks.astro";
@@ -10,6 +11,12 @@ import productImages from "../data/product-images.json";
 import { pageDates } from "../data/dates";
 
 
+
+const moreInCategory = [
+    { title: "Armor AR350 Concrete Sealer Review", url: "/armor-ar350-concrete-sealer-review/" },
+    { title: "Best Brick Sealer", url: "/best-brick-sealer-reviews/" },
+    { title: "Best Paver Sealers for a Wet Look", url: "/best-paver-sealers-for-a-wet-look/" },
+];
 const dates = pageDates(Astro.url.pathname, { published: "2026-03-15", modified: "2026-03-15" });
 const title = "7 Best Water-Based Paver Sealers in 2026: Tested & Ranked";
 const description =
@@ -314,10 +321,11 @@ const schema = {
         availability: "https://schema.org/InStock",
         url: product.amazonUrl,
       },
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: product.rating,
-        reviewCount: product.reviewCount,
+      review: {
+        "@type": "Review",
+        reviewBody: product.bottomLine,
+        author: authorSchema(),
+        publisher: { "@type": "Organization", name: "The Honest Reviewers" },
       },
     })),
   ],
@@ -607,7 +615,7 @@ const schema = {
                       ))}
                     </div>
                     <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
-                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings on Amazon)</span>
                   </div>
 
                   <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
@@ -802,6 +810,8 @@ const schema = {
             See Our #1 Pick Again
           </a>
         </div>
+
+        <MoreInCategory category="Paver & Masonry Sealers" links={moreInCategory} />
 
         <AuthorBio />
       </div>

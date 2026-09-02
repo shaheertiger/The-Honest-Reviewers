@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
 import { authorSchema } from "../data/authors";
 import AuthorAvatar from "../components/AuthorAvatar.astro";
 import AuthorBio from "../components/AuthorBio.astro";
@@ -10,6 +11,12 @@ import productImages from "../data/product-images.json";
 import { pageDates } from "../data/dates";
 
 
+
+const moreInCategory = [
+    { title: "Best Polyurethane for Stairs", url: "/best-polyurethane-for-stairs/" },
+    { title: "Best Pressure Washers", url: "/best-pressure-washer/" },
+    { title: "Best Router Tables", url: "/best-router-table/" },
+];
 const dates = pageDates(Astro.url.pathname, { published: "2026-08-06", modified: "2026-08-06" });
 const title = "7 Best Gas Lawn Mowers in 2026";
 const description =
@@ -293,10 +300,11 @@ const schema = {
         "@type": "Brand",
         name: product.name.split(" ")[0],
       },
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: product.rating,
-        reviewCount: product.reviewCount,
+      review: {
+        "@type": "Review",
+        reviewBody: product.bottomLine,
+        author: authorSchema(),
+        publisher: { "@type": "Organization", name: "The Honest Reviewers" },
       },
     })),
   ],
@@ -571,7 +579,7 @@ const selfPropelledMowers = PRODUCTS.filter((p) => !p.category.includes("Push"))
                       ))}
                     </div>
                     <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
-                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings on Amazon)</span>
                   </div>
 
                   <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
@@ -672,7 +680,7 @@ const selfPropelledMowers = PRODUCTS.filter((p) => !p.category.includes("Push"))
                       ))}
                     </div>
                     <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
-                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings on Amazon)</span>
                   </div>
 
                   <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
@@ -916,6 +924,8 @@ const selfPropelledMowers = PRODUCTS.filter((p) => !p.category.includes("Push"))
           </p>
         </div>
 
+
+        <MoreInCategory category="Tools & Equipment" links={moreInCategory} />
 
         <AuthorBio />
       </div>

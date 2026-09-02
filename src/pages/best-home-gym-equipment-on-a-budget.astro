@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
 import { authorSchema } from "../data/authors";
 import AuthorAvatar from "../components/AuthorAvatar.astro";
 import QuickPicks from "../components/QuickPicks.astro";
@@ -11,6 +12,12 @@ import productImages from "../data/product-images.json";
 import { pageDates } from "../data/dates";
 
 
+
+const moreInCategory = [
+    { title: "Best Zipline Harnesses", url: "/best-harness-for-zipline-riding/" },
+    { title: "Best Canoes for River Paddling", url: "/best-canoes-for-river-paddling/" },
+    { title: "Best Crash Pads for Outdoor Bouldering", url: "/best-crash-pad-for-bouldering-outdoors/" },
+];
 const dates = pageDates(Astro.url.pathname, { published: "2026-08-28", modified: "2026-08-28" });
 const title = "9 Best Home Gym Equipment Picks on a Budget (2026)";
 const description =
@@ -350,10 +357,11 @@ const schema = {
         "@type": "Brand",
         name: product.name.split(" ")[0],
       },
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: product.rating,
-        reviewCount: product.reviewCount,
+      review: {
+        "@type": "Review",
+        reviewBody: product.bottomLine,
+        author: authorSchema(),
+        publisher: { "@type": "Organization", name: "The Honest Reviewers" },
       },
     })),
   ],
@@ -609,7 +617,7 @@ const schema = {
                       ))}
                     </div>
                     <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
-                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings on Amazon)</span>
                   </div>
 
                   <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
@@ -935,6 +943,8 @@ const schema = {
           </p>
         </div>
 
+
+        <MoreInCategory category="Fitness & Outdoor Gear" links={moreInCategory} />
 
         <AuthorBio />
       </div>
