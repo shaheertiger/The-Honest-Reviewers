@@ -1,11 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import AuthorBio from "../components/AuthorBio.astro";
 import { authorSchema } from "../data/authors";
 import AuthorAvatar from "../components/AuthorAvatar.astro";
 import SocialProof from "../components/SocialProof.astro";
 import TrustBadge from "../components/TrustBadge.astro";
+import { pageDates } from "../data/dates";
 
-const title = "Tekton Tools Review 2026: Are They Actually Good? Honest Assessment";
+
+const dates = pageDates(Astro.url.pathname, { published: "2026-03-15", modified: "2026-03-15" });
+const title = "Tekton Tools Review 2026: Are They Any Good?";
 const description =
   "We put Tekton hand tools through months of real shop use \u2014 wrenches, sockets, ratchets, pliers \u2014 and here is our brutally honest assessment.";
 
@@ -92,8 +96,8 @@ const schema = {
       "@type": "Article",
       headline: title,
       author: authorSchema(),
-      datePublished: "2026-03-15",
-      dateModified: "2026-03-15",
+      datePublished: dates.published,
+      dateModified: dates.modified,
       publisher: { "@type": "Organization", name: "The Honest Reviewers" },
     },
     {
@@ -104,7 +108,7 @@ const schema = {
         "@type": "Person",
         name: "Alex Rivers",
       },
-      datePublished: "2026-03-15",
+      datePublished: dates.published,
       publisher: {
         "@type": "Organization",
         name: "The Honest Reviewers",
@@ -119,8 +123,8 @@ const schema = {
   description={description}
   ogType="article"
   article={{
-    publishedTime: "2026-03-15",
-    modifiedTime: "2026-03-15",
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
     author: "Alex Rivers",
     section: "Tools",
     tags: [
@@ -186,7 +190,7 @@ const schema = {
         <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
         <div class="hidden sm:block">
           <p class="text-sm font-bold text-gray-900">Last Updated</p>
-          <p class="text-xs text-gray-500">March 15, 2026</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
         </div>
         <div class="hidden sm:block ml-auto">
           <SocialProof users="16.0k" />
@@ -538,6 +542,8 @@ const schema = {
             Re-Read Our Verdict
           </a>
         </div>
+
+        <AuthorBio />
       </div>
     </div>
   </article>

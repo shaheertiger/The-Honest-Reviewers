@@ -1,11 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import AuthorBio from "../components/AuthorBio.astro";
 import { authorSchema } from "../data/authors";
 import AuthorAvatar from "../components/AuthorAvatar.astro";
 import TrustBadge from "../components/TrustBadge.astro";
 import SocialProof from "../components/SocialProof.astro";
 import GeneratorWattageCalculator from "../components/GeneratorWattageCalculator";
+import { pageDates } from "../data/dates";
 
+
+const dates = pageDates(Astro.url.pathname, { published: "2026-08-25", modified: "2026-08-25" });
 const title = "What Size Generator Do I Need for My House? Sizing Guide";
 const description =
   "Add up starting and running watts, size for a well pump and AC, and pick between a 7,500W portable and a 22kW standby unit.";
@@ -91,8 +95,8 @@ const schema = {
       "@type": "Article",
       headline: title,
       author: authorSchema(),
-      datePublished: "2026-08-25",
-      dateModified: "2026-08-25",
+      datePublished: dates.published,
+      dateModified: dates.modified,
       publisher: { "@type": "Organization", name: "The Honest Reviewers" },
     },
   ],
@@ -104,8 +108,8 @@ const schema = {
   description={description}
   ogType="article"
   article={{
-    publishedTime: "2026-08-25",
-    modifiedTime: "2026-08-25",
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
     author: "Alex Rivers",
     section: "Generators & Backup Power",
     tags: [
@@ -161,7 +165,7 @@ const schema = {
         <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
         <div class="hidden sm:block">
           <p class="text-sm font-bold text-gray-900">Last Updated</p>
-          <p class="text-xs text-gray-500">August 25, 2026</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
         </div>
         <div class="hidden sm:block ml-auto">
           <SocialProof users="27.6k" />
@@ -198,7 +202,7 @@ const schema = {
         <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
         <div class="hidden sm:block">
           <p class="text-sm font-bold text-gray-900">Last Updated</p>
-          <p class="text-xs text-gray-500">August 25, 2026</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
         </div>
         <div class="hidden sm:block ml-auto">
           <SocialProof users="13.9k" />
@@ -653,6 +657,8 @@ const schema = {
             Before jumping a size class to chase an air conditioner or a well pump, price a <strong class="text-white">soft start kit</strong>. Cutting inrush by two thirds is usually cheaper than the next generator up, and it makes the machine you already own do more.
           </p>
         </div>
+
+        <AuthorBio />
       </div>
     </div>
   </article>

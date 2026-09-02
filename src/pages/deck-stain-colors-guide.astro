@@ -1,10 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import AuthorBio from "../components/AuthorBio.astro";
 import { authorSchema } from "../data/authors";
 import AuthorAvatar from "../components/AuthorAvatar.astro";
 import TrustBadge from "../components/TrustBadge.astro";
 import SocialProof from "../components/SocialProof.astro";
+import { pageDates } from "../data/dates";
 
+
+const dates = pageDates(Astro.url.pathname, { published: "2026-06-16", modified: "2026-06-16" });
 const title = "Deck Stain Colors: How to Choose the Right One";
 const description =
   "A complete guide to deck stain colors: the popular shades, how opacity changes the look, and which colors hide wear and stay cool underfoot.";
@@ -80,8 +84,8 @@ const schema = {
       "@type": "Article",
       headline: title,
       author: authorSchema(),
-      datePublished: "2026-06-16",
-      dateModified: "2026-06-16",
+      datePublished: dates.published,
+      dateModified: dates.modified,
       publisher: { "@type": "Organization", name: "The Honest Reviewers" },
     },
   ],
@@ -94,8 +98,8 @@ const schema = {
   ogImage="https://placehold.co/1200x630/374151/white?text=Deck+Stain+Colors+Guide"
   ogType="article"
   article={{
-    publishedTime: "2026-06-16",
-    modifiedTime: "2026-06-16",
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
     author: "Alex Rivers",
     section: "Home Improvement",
     tags: ["deck stain colors", "deck stain color", "solid deck stain colors", "wood deck stain colors", "deck staining", "cedar deck stain", "gray deck stain"],
@@ -128,7 +132,7 @@ const schema = {
           <div><p class="text-sm font-bold text-gray-900">Alex Rivers</p><p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p></div>
         </div>
         <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
-        <div class="hidden sm:block"><p class="text-sm font-bold text-gray-900">Last Updated</p><p class="text-xs text-gray-500">June 16, 2026</p></div>
+        <div class="hidden sm:block"><p class="text-sm font-bold text-gray-900">Last Updated</p><p class="text-xs text-gray-500">{dates.display}</p></div>
         <div class="hidden sm:block ml-auto"><SocialProof users="6.7k" /></div>
       </div>
     </div>
@@ -159,7 +163,7 @@ const schema = {
         <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
         <div class="hidden sm:block">
           <p class="text-sm font-bold text-gray-900">Last Updated</p>
-          <p class="text-xs text-gray-500">June 16, 2026</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
         </div>
         <div class="hidden sm:block ml-auto">
           <SocialProof users="8.9k" />
@@ -374,6 +378,8 @@ const schema = {
             Pick <strong class="text-white">opacity for your wood's condition</strong>, then a color that <strong class="text-white">coordinates with your home</strong> and suits your sun exposure. Cedar and medium browns are the safe, flattering defaults; gray and driftwood are the modern move. Whatever you choose, test it on the actual deck first — it's the cheapest insurance against a color you'll stare at for the next five years.
           </p>
         </div>
+
+        <AuthorBio />
       </div>
     </div>
   </article>

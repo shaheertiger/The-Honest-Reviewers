@@ -1,10 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import AuthorBio from "../components/AuthorBio.astro";
 import { authorSchema } from "../data/authors";
 import AuthorAvatar from "../components/AuthorAvatar.astro";
 import TrustBadge from "../components/TrustBadge.astro";
 import SocialProof from "../components/SocialProof.astro";
+import { pageDates } from "../data/dates";
 
+
+const dates = pageDates(Astro.url.pathname, { published: "2026-07-09", modified: "2026-07-09" });
 const title = "Driveway Resealing: How to Redo a Sealed Drive";
 const description =
   "Resealing isn't the same job as sealing new. How to tell when your driveway needs it, how to prep over old sealer, and how to avoid buildup.";
@@ -106,8 +110,8 @@ const schema = {
       "@type": "Article",
       headline: title,
       author: authorSchema(),
-      datePublished: "2026-07-09",
-      dateModified: "2026-07-09",
+      datePublished: dates.published,
+      dateModified: dates.modified,
       publisher: { "@type": "Organization", name: "The Honest Reviewers" },
     },
   ],
@@ -119,8 +123,8 @@ const schema = {
   description={description}
   ogType="article"
   article={{
-    publishedTime: "2026-07-09",
-    modifiedTime: "2026-07-09",
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
     author: "Alex Rivers",
     section: "Home Improvement",
     tags: ["driveway resealing", "driveway sealer", "asphalt sealcoating", "driveway maintenance"],
@@ -155,7 +159,7 @@ const schema = {
           <div><p class="text-sm font-bold text-gray-900">Alex Rivers</p><p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p></div>
         </div>
         <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
-        <div class="hidden sm:block"><p class="text-sm font-bold text-gray-900">Last Updated</p><p class="text-xs text-gray-500">July 9, 2026</p></div>
+        <div class="hidden sm:block"><p class="text-sm font-bold text-gray-900">Last Updated</p><p class="text-xs text-gray-500">{dates.display}</p></div>
         <div class="hidden sm:block ml-auto"><SocialProof users="5.1k" /></div>
       </div>
     </div>
@@ -189,7 +193,7 @@ const schema = {
         <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
         <div class="hidden sm:block">
           <p class="text-sm font-bold text-gray-900">Last Updated</p>
-          <p class="text-xs text-gray-500">July 9, 2026</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
         </div>
         <div class="hidden sm:block ml-auto">
           <SocialProof users="7.4k" />
@@ -422,6 +426,8 @@ const schema = {
             Keep a simple record of when you last sealed and what the surface looked like at the time — a phone photo and a note in your calendar app is enough. That small habit turns every future resealing decision from a guess into a quick, confident check, and it's the single easiest way to make sure your driveway gets exactly the maintenance it needs and nothing more.
           </p>
         </div>
+
+        <AuthorBio />
       </div>
     </div>
   </article>

@@ -9,6 +9,7 @@ import SocialProof from "../components/SocialProof.astro";
 import ScarcityBadge from "../components/ScarcityBadge.astro";
 import UrgencyTimer from "../components/UrgencyTimer";
 import ProductGallery from "../components/ProductGallery";
+import { pageDates } from "../data/dates";
 
 function formatMarkdown(text: string): string {
   return text
@@ -16,6 +17,8 @@ function formatMarkdown(text: string): string {
     .replace(/\*(.+?)\*/g, '<em>$1</em>');
 }
 
+
+const dates = pageDates(Astro.url.pathname, { published: "2026-01-15", modified: "2026-02-18" });
 const PRODUCTS = [
   {
     id: "mangroomer-platinum",
@@ -427,8 +430,8 @@ const schema = {
       headline:
         "8 Best Men's Back Shavers in 2026: Tested & Ranked (Fresh Reddit Insights)",
       author: authorSchema(),
-      datePublished: "2026-01-15",
-      dateModified: "2026-02-18",
+      datePublished: dates.published,
+      dateModified: dates.modified,
       publisher: { "@type": "Organization", name: "The Honest Reviewers" },
     },
     ...PRODUCTS.map((product) => ({
@@ -463,8 +466,8 @@ const schema = {
   ogImage="https://placehold.co/1200x630/1E90FF/white?text=Best+Back+Shavers+2026"
   ogType="article"
   article={{
-    publishedTime: "2026-01-15",
-    modifiedTime: "2026-02-18",
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
     author: "Alex Rivers",
     section: "Grooming",
     tags: [
@@ -568,7 +571,7 @@ const schema = {
       <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
       <div class="hidden sm:block">
         <p class="text-sm font-bold text-gray-900">Last Updated</p>
-        <p class="text-xs text-gray-500">February 18, 2026</p>
+        <p class="text-xs text-gray-500">{dates.display}</p>
       </div>
       <div class="hidden sm:block ml-auto">
         <SocialProof users="14.2k" />

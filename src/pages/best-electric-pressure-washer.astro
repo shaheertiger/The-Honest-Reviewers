@@ -1,12 +1,16 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import AuthorBio from "../components/AuthorBio.astro";
 import { authorSchema } from "../data/authors";
 import AuthorAvatar from "../components/AuthorAvatar.astro";
 import { amazonLink } from "../data/affiliate";
 import TrustBadge from "../components/TrustBadge.astro";
 import SocialProof from "../components/SocialProof.astro";
 import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
 
+
+const dates = pageDates(Astro.url.pathname, { published: "2026-08-23", modified: "2026-08-23" });
 const title = "7 Best Electric Pressure Washers in 2026: Tested";
 const description =
   "We ran 11 electric pressure washers on siding, decks, cars, and concrete. Induction versus universal motors, and which ones actually last.";
@@ -358,8 +362,8 @@ const schema = {
       "@type": "Article",
       headline: title,
       author: authorSchema(),
-      datePublished: "2026-08-23",
-      dateModified: "2026-08-23",
+      datePublished: dates.published,
+      dateModified: dates.modified,
       publisher: { "@type": "Organization", name: "The Honest Reviewers" },
     },
     {
@@ -395,8 +399,8 @@ const schema = {
   description={description}
   ogType="article"
   article={{
-    publishedTime: "2026-08-23",
-    modifiedTime: "2026-08-23",
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
     author: "Alex Rivers",
     section: "Home Improvement",
     tags: [
@@ -465,7 +469,7 @@ const schema = {
         <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
         <div class="hidden sm:block">
           <p class="text-sm font-bold text-gray-900">Last Updated</p>
-          <p class="text-xs text-gray-500">August 23, 2026</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
         </div>
         <div class="hidden sm:block ml-auto">
           <SocialProof users="8.6k" />
@@ -1371,6 +1375,8 @@ const schema = {
           </p>
         </div>
 
+
+        <AuthorBio />
       </div>
     </div>
   </article>

@@ -1,10 +1,14 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import AuthorBio from "../components/AuthorBio.astro";
 import { authorSchema } from "../data/authors";
 import AuthorAvatar from "../components/AuthorAvatar.astro";
 import TrustBadge from '../components/TrustBadge.astro';
 import SocialProof from '../components/SocialProof.astro';
+import { pageDates } from "../data/dates";
 
+
+const dates = pageDates(Astro.url.pathname, { published: "2026-02-19", modified: "2026-02-19" });
 const COMPARISON_DATA = {
   series7: {
     name: 'Braun Series 7',
@@ -119,8 +123,8 @@ const schema = {
       description:
         "An in-depth comparison between the Braun MGK5 Multi-Grooming Kit (Type 5544) and the Series 7 electric shaver, covering specifications, Reddit sentiment, and real-world performance.",
       author: authorSchema(),
-      datePublished: "2026-02-19",
-      dateModified: "2026-02-19",
+      datePublished: dates.published,
+      dateModified: dates.modified,
       publisher: { "@type": "Organization", name: "The Honest Reviewers" },
     },
   ],
@@ -133,8 +137,8 @@ const schema = {
   ogImage="https://placehold.co/1200x630/1E90FF/white?text=Braun+5544+vs+Series+7"
   ogType="article"
   article={{
-    publishedTime: "2026-02-19",
-    modifiedTime: "2026-02-19",
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
     author: "Alex Rivers",
     section: "Grooming",
     tags: [
@@ -199,7 +203,7 @@ const schema = {
         <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
         <div class="hidden sm:block">
           <p class="text-sm font-bold text-gray-900">Last Updated</p>
-          <p class="text-xs text-gray-500">February 19, 2026</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
         </div>
         <div class="hidden sm:block ml-auto">
           <SocialProof users="9.4k" />
@@ -788,6 +792,8 @@ const schema = {
           </p>
         </section>
 
+
+        <AuthorBio />
       </div>
     </div>
   </article>

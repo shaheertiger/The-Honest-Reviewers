@@ -1,10 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import AuthorBio from "../components/AuthorBio.astro";
 import { authorSchema } from "../data/authors";
 import AuthorAvatar from "../components/AuthorAvatar.astro";
 import TrustBadge from "../components/TrustBadge.astro";
 import SocialProof from "../components/SocialProof.astro";
+import { pageDates } from "../data/dates";
 
+
+const dates = pageDates(Astro.url.pathname, { published: "2026-08-25", modified: "2026-08-25" });
 const title = "Water Coming Through Basement Floor: Causes and Fixes";
 const description =
   "Water seeping up through a concrete basement floor — hydrostatic pressure, cove joint leaks, cracks, and what each fix costs.";
@@ -90,8 +94,8 @@ const schema = {
       "@type": "Article",
       headline: title,
       author: authorSchema(),
-      datePublished: "2026-08-25",
-      dateModified: "2026-08-25",
+      datePublished: dates.published,
+      dateModified: dates.modified,
       publisher: { "@type": "Organization", name: "The Honest Reviewers" },
     },
   ],
@@ -103,8 +107,8 @@ const schema = {
   description={description}
   ogType="article"
   article={{
-    publishedTime: "2026-08-25",
-    modifiedTime: "2026-08-25",
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
     author: "Alex Rivers",
     section: "Basement Waterproofing",
     tags: [
@@ -160,7 +164,7 @@ const schema = {
         <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
         <div class="hidden sm:block">
           <p class="text-sm font-bold text-gray-900">Last Updated</p>
-          <p class="text-xs text-gray-500">August 25, 2026</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
         </div>
         <div class="hidden sm:block ml-auto">
           <SocialProof users="24.8k" />
@@ -197,7 +201,7 @@ const schema = {
         <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
         <div class="hidden sm:block">
           <p class="text-sm font-bold text-gray-900">Last Updated</p>
-          <p class="text-xs text-gray-500">August 25, 2026</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
         </div>
         <div class="hidden sm:block ml-auto">
           <SocialProof users="10.6k" />
@@ -571,6 +575,8 @@ const schema = {
             Before spending five figures, spend a weekend and a few hundred dollars on <strong class="text-white">downspout extensions, clean gutters and positive grade</strong>. Roof water is the single largest contributor to saturated soil beside a foundation, and removing it either solves the problem outright or cuts the load on whatever system you install next.
           </p>
         </div>
+
+        <AuthorBio />
       </div>
     </div>
   </article>

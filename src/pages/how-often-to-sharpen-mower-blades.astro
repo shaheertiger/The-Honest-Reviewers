@@ -1,10 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import AuthorBio from "../components/AuthorBio.astro";
 import { authorSchema } from "../data/authors";
 import AuthorAvatar from "../components/AuthorAvatar.astro";
 import TrustBadge from "../components/TrustBadge.astro";
 import SocialProof from "../components/SocialProof.astro";
+import { pageDates } from "../data/dates";
 
+
+const dates = pageDates(Astro.url.pathname, { published: "2026-08-25", modified: "2026-08-25" });
 const title = "How Often to Sharpen Mower Blades (and How to Tell)";
 const description =
   "Sharpening intervals by hours and lawn conditions, the signs of a dull blade, balancing, and when to replace instead.";
@@ -90,8 +94,8 @@ const schema = {
       "@type": "Article",
       headline: title,
       author: authorSchema(),
-      datePublished: "2026-08-25",
-      dateModified: "2026-08-25",
+      datePublished: dates.published,
+      dateModified: dates.modified,
       publisher: { "@type": "Organization", name: "The Honest Reviewers" },
     },
   ],
@@ -103,8 +107,8 @@ const schema = {
   description={description}
   ogType="article"
   article={{
-    publishedTime: "2026-08-25",
-    modifiedTime: "2026-08-25",
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
     author: "Alex Rivers",
     section: "Lawn & Yard Care",
     tags: [
@@ -160,7 +164,7 @@ const schema = {
         <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
         <div class="hidden sm:block">
           <p class="text-sm font-bold text-gray-900">Last Updated</p>
-          <p class="text-xs text-gray-500">August 25, 2026</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
         </div>
         <div class="hidden sm:block ml-auto">
           <SocialProof users="15.8k" />
@@ -197,7 +201,7 @@ const schema = {
         <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
         <div class="hidden sm:block">
           <p class="text-sm font-bold text-gray-900">Last Updated</p>
-          <p class="text-xs text-gray-500">August 25, 2026</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
         </div>
         <div class="hidden sm:block ml-auto">
           <SocialProof users="16.2k" />
@@ -547,6 +551,8 @@ const schema = {
             Sharpen to butter-knife, not razor. <strong class="text-white">Always balance afterward</strong>, keep the steel cool, and buy a second blade so a sharp one is always ready. It is the cheapest thing you can do that visibly improves how a lawn looks.
           </p>
         </div>
+
+        <AuthorBio />
       </div>
     </div>
   </article>

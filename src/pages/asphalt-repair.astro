@@ -1,11 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import AuthorBio from "../components/AuthorBio.astro";
 import { authorSchema } from "../data/authors";
 import AuthorAvatar from "../components/AuthorAvatar.astro";
 import SocialProof from "../components/SocialProof.astro";
 import TrustBadge from "../components/TrustBadge.astro";
+import { pageDates } from "../data/dates";
 
-const title = "Asphalt Repair in 2026: The Complete DIY Guide to Fixing Any Driveway";
+
+const dates = pageDates(Astro.url.pathname, { published: "2026-06-05", modified: "2026-06-05" });
+const title = "Asphalt Repair in 2026: The Complete DIY Guide";
 const description = "A complete asphalt repair guide covering potholes, cracks, crumbling edges, and alligator damage \u2014 which products to use and when to call a pro.";
 
 const schema = {
@@ -91,8 +95,8 @@ const schema = {
       "@type": "Article",
       headline: title,
       author: authorSchema(),
-      datePublished: "2026-06-05",
-      dateModified: "2026-06-05",
+      datePublished: dates.published,
+      dateModified: dates.modified,
       publisher: { "@type": "Organization", name: "The Honest Reviewers" },
     },
     {
@@ -103,7 +107,7 @@ const schema = {
           "@type": "Person",
           name: "Alex Rivers",
       },
-      datePublished: "2026-06-05",
+      datePublished: dates.published,
       publisher: {
           "@type": "Organization",
           name: "The Honest Reviewers",
@@ -118,8 +122,8 @@ const schema = {
     description={description}
     ogType="article"
     article={{
-      publishedTime: "2026-06-05",
-      modifiedTime: "2026-06-05",
+      publishedTime: dates.published,
+      modifiedTime: dates.modified,
       author: "Alex Rivers",
       section: "Driveway & Concrete",
       tags: [
@@ -185,7 +189,7 @@ const schema = {
             <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
             <div class="hidden sm:block">
               <p class="text-sm font-bold text-gray-900">Last Updated</p>
-              <p class="text-xs text-gray-500">June 5, 2026</p>
+              <p class="text-xs text-gray-500">{dates.display}</p>
             </div>
             <div class="hidden sm:block ml-auto">
               <SocialProof users="17.7k" />
@@ -611,6 +615,8 @@ const schema = {
                         Review Our #1 Repair Pick Again
                     </a>
                 </div>
+
+        <AuthorBio />
             </div>
         </div>
     </article>

@@ -1,10 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import AuthorBio from "../components/AuthorBio.astro";
 import { authorSchema } from "../data/authors";
 import AuthorAvatar from "../components/AuthorAvatar.astro";
 import TrustBadge from "../components/TrustBadge.astro";
 import SocialProof from "../components/SocialProof.astro";
+import { pageDates } from "../data/dates";
 
+
+const dates = pageDates(Astro.url.pathname, { published: "2026-05-27", modified: "2026-05-27" });
 const title = "Paint Sprayer Rental 2026: Buy or Rent? Real Costs";
 const description =
   "We rented 9 paint sprayers from Home Depot, Lowe's, Sunbelt, and United Rentals and compared the total cost to buying.";
@@ -192,8 +196,8 @@ const schema = {
       "@type": "Article",
       headline: title,
       author: authorSchema(),
-      datePublished: "2026-05-27",
-      dateModified: "2026-05-27",
+      datePublished: dates.published,
+      dateModified: dates.modified,
       publisher: { "@type": "Organization", name: "The Honest Reviewers" },
     },
   ],
@@ -205,8 +209,8 @@ const schema = {
   description={description}
   ogType="article"
   article={{
-    publishedTime: "2026-05-27",
-    modifiedTime: "2026-05-27",
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
     author: "Alex Rivers",
     section: "Home Improvement",
     tags: ["paint sprayer rental", "tool rental", "painting", "DIY", "home improvement"],
@@ -247,7 +251,7 @@ const schema = {
         <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
         <div class="hidden sm:block">
           <p class="text-sm font-bold text-gray-900">Last Updated</p>
-          <p class="text-xs text-gray-500">May 27, 2026</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
         </div>
         <div class="hidden sm:block ml-auto"><SocialProof users="7.6k" /></div>
       </div>
@@ -279,7 +283,7 @@ const schema = {
         <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
         <div class="hidden sm:block">
           <p class="text-sm font-bold text-gray-900">Last Updated</p>
-          <p class="text-xs text-gray-500">May 27, 2026</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
         </div>
         <div class="hidden sm:block ml-auto">
           <SocialProof users="14.0k" />
@@ -651,6 +655,8 @@ const schema = {
             See Top Rental Sources
           </a>
         </div>
+
+        <AuthorBio />
       </div>
     </div>
   </article>

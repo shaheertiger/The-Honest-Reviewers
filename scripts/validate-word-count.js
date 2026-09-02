@@ -3,7 +3,18 @@ import { join } from 'path';
 
 const PAGES_DIR = join(import.meta.dirname, '..', 'src', 'pages');
 const MIN_WORD_COUNT = 2500;
-const EXCLUDED_PAGES = ['index.astro', 'best-of.astro'];
+// Utility, legal and author pages are not articles — the minimum applies to
+// buyer's guides and how-tos, where thin content is the real risk.
+const EXCLUDED_PAGES = [
+  'index.astro',
+  'best-of.astro',
+  '404.astro',
+  'about.astro',
+  'contact.astro',
+  'how-we-test.astro',
+  'privacy-policy.astro',
+  'terms.astro',
+];
 
 function countWords(filePath) {
   const content = readFileSync(filePath, 'utf-8');

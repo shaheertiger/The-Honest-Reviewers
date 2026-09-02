@@ -1,11 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import AuthorBio from "../components/AuthorBio.astro";
 import { authorSchema } from "../data/authors";
 import AuthorAvatar from "../components/AuthorAvatar.astro";
 import TrustBadge from "../components/TrustBadge.astro";
 import SocialProof from "../components/SocialProof.astro";
 import DrivewaySealerCalculator from "../components/DrivewaySealerCalculator";
+import { pageDates } from "../data/dates";
 
+
+const dates = pageDates(Astro.url.pathname, { published: "2026-08-31", modified: "2026-08-31" });
 const title = "Driveway Sealer Calculator: How Much Sealer Do I Need?";
 const description =
   "Work out gallons, pails and cost for your driveway. Sealer covers roughly 80-100 sq ft per gallon per coat — surface porosity moves that number more than anything else.";
@@ -118,8 +122,8 @@ const schema = {
       headline: title,
       description: description,
       author: authorSchema(),
-      datePublished: "2026-08-31",
-      dateModified: "2026-08-31",
+      datePublished: dates.published,
+      dateModified: dates.modified,
       publisher: { "@type": "Organization", name: "The Honest Reviewers" },
     },
   ],
@@ -131,8 +135,8 @@ const schema = {
   description={description}
   ogType="article"
   article={{
-    publishedTime: "2026-08-31",
-    modifiedTime: "2026-08-31",
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
     author: "Alex Rivers",
     section: "Driveway & Concrete",
     tags: [
@@ -199,7 +203,7 @@ const schema = {
         <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
         <div class="hidden sm:block">
           <p class="text-sm font-bold text-gray-900">Last Updated</p>
-          <p class="text-xs text-gray-500">August 31, 2026</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
         </div>
         <div class="hidden sm:block ml-auto">
           <SocialProof users="14.2k" />
@@ -688,6 +692,8 @@ const schema = {
           </p>
         </div>
 
+
+        <AuthorBio />
       </div>
     </div>
   </article>

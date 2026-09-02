@@ -1,10 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import AuthorBio from "../components/AuthorBio.astro";
 import { authorSchema } from "../data/authors";
 import AuthorAvatar from "../components/AuthorAvatar.astro";
 import SocialProof from "../components/SocialProof.astro";
 import TrustBadge from "../components/TrustBadge.astro";
+import { pageDates } from "../data/dates";
 
+
+const dates = pageDates(Astro.url.pathname, { published: "2026-04-22", modified: "2026-04-22" });
 const title = "When to Seal a New Asphalt Driveway";
 const description = "Most contractors push early sealing \u2014 but sealing a new asphalt driveway too soon can actually damage it.";
 
@@ -84,8 +88,8 @@ const schema = {
       headline: title,
       description: description,
       author: authorSchema(),
-      datePublished: "2026-04-22",
-      dateModified: "2026-04-22",
+      datePublished: dates.published,
+      dateModified: dates.modified,
       publisher: { "@type": "Organization", name: "The Honest Reviewers" }
     },
   ],
@@ -97,8 +101,8 @@ const schema = {
   description={description}
   ogType="article"
   article={{
-    publishedTime: "2026-04-22",
-    modifiedTime: "2026-04-22",
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
     author: "Alex Rivers",
     section: "Home Improvement",
     tags: ["new asphalt driveway", "driveway sealing", "asphalt maintenance"],
@@ -164,7 +168,7 @@ const schema = {
         <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
         <div class="hidden sm:block">
           <p class="text-sm font-bold text-gray-900">Last Updated</p>
-          <p class="text-xs text-gray-500">April 22, 2026</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
         </div>
         <div class="hidden sm:block ml-auto">
           <SocialProof users="15.5k" />
@@ -715,6 +719,8 @@ const schema = {
           </div>
         </div>
 
+
+        <AuthorBio />
       </div>
     </div>
   </article>

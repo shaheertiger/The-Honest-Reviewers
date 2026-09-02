@@ -1,10 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import AuthorBio from "../components/AuthorBio.astro";
 import { authorSchema } from "../data/authors";
 import AuthorAvatar from "../components/AuthorAvatar.astro";
 import TrustBadge from "../components/TrustBadge.astro";
 import SocialProof from "../components/SocialProof.astro";
+import { pageDates } from "../data/dates";
 
+
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-01", modified: "2026-09-01" });
 const title = "What Size Generator Runs a Sump Pump?";
 const description =
   "A 1/2 HP sump pump surges to 2,000-2,600 watts. A 3,500W generator runs it alone; 5,000-7,500W covers it alongside the rest of the house.";
@@ -109,8 +113,8 @@ const schema = {
       headline: title,
       description: description,
       author: authorSchema(),
-      datePublished: "2026-09-01",
-      dateModified: "2026-09-01",
+      datePublished: dates.published,
+      dateModified: dates.modified,
       publisher: { "@type": "Organization", name: "The Honest Reviewers" },
     },
   ],
@@ -122,8 +126,8 @@ const schema = {
   description={description}
   ogType="article"
   article={{
-    publishedTime: "2026-09-01",
-    modifiedTime: "2026-09-01",
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
     author: "Alex Rivers",
     section: "Generators & Backup Power",
     tags: [
@@ -190,7 +194,7 @@ const schema = {
         <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
         <div class="hidden sm:block">
           <p class="text-sm font-bold text-gray-900">Last Updated</p>
-          <p class="text-xs text-gray-500">September 1, 2026</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
         </div>
         <div class="hidden sm:block ml-auto">
           <SocialProof users="11.1k" />
@@ -778,6 +782,8 @@ const schema = {
           </p>
         </div>
 
+
+        <AuthorBio />
       </div>
     </div>
   </article>

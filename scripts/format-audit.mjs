@@ -8,14 +8,24 @@ import { join } from 'node:path';
 
 const PAGES_DIR = join(import.meta.dirname, '..', 'src', 'pages');
 // Pages that are not articles and deliberately use a different layout.
-const NON_ARTICLE = new Set(['index', 'best-of', 'sand-calculator', '404']);
+const NON_ARTICLE = new Set([
+  'index',
+  'best-of',
+  'sand-calculator',
+  '404',
+  'about',
+  'contact',
+  'how-we-test',
+  'privacy-policy',
+  'terms',
+]);
 
 const CHECKS = [
   // A full-width dark hero band. Most pages use bg-gray-900; a couple reach the
   // same look with a gradient or a slate hex.
   ['hero', (s) => /bg-gray-900[^"]*\bpy-16\b|from-gray-900|bg-\[#0F172A\]/.test(s)],
   ['trustBadge', (s) => /TrustBadge/.test(s)],
-  ['authorBox', (s) => /Author & Meta/.test(s) && /pravatar/.test(s)],
+  ['authorBox', (s) => /Author & Meta/.test(s) && /AuthorAvatar/.test(s)],
   ['socialProof', (s) => /SocialProof/.test(s)],
   ['toc', (s) => /In This Guide/.test(s)],
   ['breadcrumbSchema', (s) => /BreadcrumbList/.test(s)],
@@ -26,6 +36,7 @@ const CHECKS = [
   ['commonMistakes', (s) => /Common Mistakes/i.test(s)],
   ['relatedGuides', (s) => /Related [\w &]*Guides/i.test(s)],
   ['closing', (s) => /The Bottom Line/i.test(s)],
+  ['authorBio', (s) => /AuthorBio/.test(s)],
 ];
 
 const slugs = readdirSync(PAGES_DIR)

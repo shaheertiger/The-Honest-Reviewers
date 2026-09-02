@@ -1,10 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import AuthorBio from "../components/AuthorBio.astro";
 import { authorSchema } from "../data/authors";
 import AuthorAvatar from "../components/AuthorAvatar.astro";
 import SocialProof from "../components/SocialProof.astro";
 import TrustBadge from "../components/TrustBadge.astro";
+import { pageDates } from "../data/dates";
 
+
+const dates = pageDates(Astro.url.pathname, { published: "2026-04-08", modified: "2026-04-08" });
 const title = "How to Seal a Driveway: The Complete DIY Guide (2026)";
 const description = "How to seal a driveway yourself, whether concrete, asphalt, or pavers. Step-by-step application, prep tips, tools needed, and timing.";
 
@@ -75,8 +79,8 @@ const schema = {
       "@type": "Article",
       headline: title,
       author: authorSchema(),
-      datePublished: "2026-04-08",
-      dateModified: "2026-04-08",
+      datePublished: dates.published,
+      dateModified: dates.modified,
       publisher: { "@type": "Organization", name: "The Honest Reviewers" },
     },
     {
@@ -87,7 +91,7 @@ const schema = {
           "@type": "Person",
           name: "Alex Rivers",
       },
-      datePublished: "2026-04-08",
+      datePublished: dates.published,
       publisher: {
           "@type": "Organization",
           name: "The Honest Reviewers",
@@ -109,8 +113,8 @@ const schema = {
     description={description}
     ogType="article"
     article={{
-      publishedTime: "2026-04-08",
-      modifiedTime: "2026-04-08",
+      publishedTime: dates.published,
+      modifiedTime: dates.modified,
       author: "Alex Rivers",
       section: "Driveway & Concrete",
       tags: [
@@ -172,7 +176,7 @@ const schema = {
             <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
             <div class="hidden sm:block">
               <p class="text-sm font-bold text-gray-900">Last Updated</p>
-              <p class="text-xs text-gray-500">April 8, 2026</p>
+              <p class="text-xs text-gray-500">{dates.display}</p>
             </div>
             <div class="hidden sm:block ml-auto">
               <SocialProof users="12.4k" />
@@ -707,6 +711,8 @@ const schema = {
                         Find the Right Sealer for Your Driveway
                     </a>
                 </div>
+
+        <AuthorBio />
             </div>
         </div>
     </article>
