@@ -19,10 +19,13 @@ const api = new TypedDefaultApi(client);
 
 const PRODUCTS_PATH = join(import.meta.dirname, "all-products.json");
 const OUTPUT_PATH = join(import.meta.dirname, "..", "src", "data", "product-images.json");
+const ASIN_PATH = join(import.meta.dirname, "..", "src", "data", "product-asins.json");
 const REPORT_PATH = join(import.meta.dirname, "all-products-match-report.json");
 
 const products = JSON.parse(readFileSync(PRODUCTS_PATH, "utf-8"));
 const existingImages = existsSync(OUTPUT_PATH) ? JSON.parse(readFileSync(OUTPUT_PATH, "utf-8")) : {};
+// ASINs are what turn a tagged search link into a direct /dp/ product link.
+const asins = existsSync(ASIN_PATH) ? JSON.parse(readFileSync(ASIN_PATH, "utf-8")) : {};
 
 const STOPWORDS = new Set(["the", "best", "premium", "pro", "advanced", "original", "for", "and", "with", "in", "of", "a"]);
 
@@ -71,6 +74,7 @@ for (let i = 0; i < products.length; i++) {
 
     if (match) {
       images[id] = match.images.primary.medium.url;
+      if (match.asin) asins[id] = match.asin;
       report.push({ id, name, file, status: "accepted", matchedTitle: match.itemInfo.title.displayValue, asin: match.asin });
     } else {
       report.push({ id, name, file, status: "rejected", topResultTitle: items[0]?.itemInfo?.title?.displayValue || null });
@@ -84,9 +88,10 @@ for (let i = 0; i < products.length; i++) {
 }
 
 writeFileSync(OUTPUT_PATH, JSON.stringify(images, null, 2) + "\n");
+writeFileSync(ASIN_PATH, JSON.stringify(asins, null, 2) + "\n");
 writeFileSync(REPORT_PATH, JSON.stringify(report, null, 2));
 
 const accepted = report.filter((r) => r.status === "accepted").length;
 const rejected = report.filter((r) => r.status === "rejected").length;
 const errors = report.filter((r) => r.status === "error").length;
-console.log(`Done. accepted=${accepted} rejected=${rejected} errors=${errors} total_images=${Object.keys(images).length}`);
+console.log(`Done. accepted=${accepted} rejected=${rejected} errors=${errors} total_images=${Object.keys(images).length} total_asins=${Object.keys(asins).length}`);
