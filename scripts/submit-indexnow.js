@@ -13,7 +13,9 @@ const DIST = join(process.cwd(), 'dist');
 // Set by the `postbuild` hook so this runs unattended after every `npm run build`.
 // In that mode we only submit on real Vercel production deploys (never local/CI builds
 // or preview deploys), and we never fail the build.
-const AUTO = process.env.INDEXNOW_AUTO === '1';
+// The flag is how postbuild passes this, because `VAR=1 node ...` is not valid on
+// Windows shells; the env var is still honoured for anything already using it.
+const AUTO = process.argv.includes('--auto') || process.env.INDEXNOW_AUTO === '1';
 const IS_VERCEL_PRODUCTION = process.env.VERCEL === '1' && process.env.VERCEL_ENV === 'production';
 
 // `npm run indexnow -- --live` reads the sitemap already published on
