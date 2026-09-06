@@ -109,6 +109,11 @@ const priorityGuides = new Set([
   'how-to-use-detergent-in-a-pressure-washer',
   'how-to-winterize-a-pressure-washer',
   'pressure-washer-not-building-pressure',
+
+  // September 2026: garage floor and epoxy gaps from keyword data.
+  'epoxy-flooring',
+  'garage-flooring-options',
+  'garage-floor-coating-contractors',
 ]);
 
 export default defineConfig({
