@@ -92,6 +92,23 @@ const priorityGuides = new Set([
   'best-canoes-for-river-paddling',
   'best-harness-for-zipline-riding',
   'best-ski-gloves',
+
+  // September 2026: the electric pressure washer supporting cluster.
+  'electric-vs-gas-pressure-washer',
+  'what-psi-pressure-washer-do-i-need',
+  'pressure-washer-psi-vs-gpm',
+  'induction-vs-universal-motor-pressure-washer',
+  'cordless-vs-corded-pressure-washer',
+  'pressure-washer-extension-cord-size',
+  'pressure-washer-water-supply-requirements',
+  'how-to-pressure-wash-a-car',
+  'how-to-pressure-wash-vinyl-siding',
+  'can-an-electric-pressure-washer-clean-concrete',
+  'pressure-washer-nozzle-colors-explained',
+  'what-not-to-pressure-wash',
+  'how-to-use-detergent-in-a-pressure-washer',
+  'how-to-winterize-a-pressure-washer',
+  'pressure-washer-not-building-pressure',
 ]);
 
 export default defineConfig({
