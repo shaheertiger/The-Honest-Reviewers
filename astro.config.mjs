@@ -114,6 +114,12 @@ const priorityGuides = new Set([
   'epoxy-flooring',
   'garage-flooring-options',
   'garage-floor-coating-contractors',
+
+  // September 2026: driveway sealing troubleshooting and application gaps.
+  'fill-driveway-cracks-before-sealing',
+  'driveway-sealer-peeling',
+  'driveway-sealer-still-sticky',
+  'brush-vs-roller-vs-squeegee-driveway-sealer',
 ]);
 
 export default defineConfig({
