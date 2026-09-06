@@ -120,6 +120,20 @@ const priorityGuides = new Set([
   'driveway-sealer-peeling',
   'driveway-sealer-still-sticky',
   'brush-vs-roller-vs-squeegee-driveway-sealer',
+
+  // September 2026: the deck and exterior wood finishing cluster.
+  'deck-stain-vs-sealer',
+  'how-to-stain-a-deck',
+  'how-to-prep-a-deck-for-staining',
+  'how-to-strip-deck-stain',
+  'how-many-coats-of-deck-stain',
+  'how-often-to-stain-a-deck',
+  'best-time-of-year-to-stain-a-deck',
+  'oil-based-vs-water-based-deck-stain',
+  'solid-vs-semi-transparent-deck-stain',
+  'deck-paint-vs-deck-stain',
+  'brush-vs-roller-vs-sprayer-deck-stain',
+  'can-you-stain-over-old-deck-stain',
 ]);
 
 export default defineConfig({
