@@ -1,0 +1,684 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+    { title: "Best Polyurethane for Stairs", url: "/best-polyurethane-for-stairs/" },
+    { title: "Best Brush for Water-Based Polyurethane", url: "/best-brush-for-water-based-polyurethane/" },
+    { title: "Best Palm Sanders", url: "/best-palm-sander/" },
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-08", modified: "2026-09-08" });
+const title = "Best Water-Based Polyurethane for Floors in 2026";
+const description =
+  "The best water-based polyurethane for hardwood floors and furniture — durability, dry times, applicators and why it will not amber the way oil-based does.";
+
+const PRODUCTS = [
+  {
+    id: "bona-traffic-hd",
+    name: "Bona Traffic HD",
+    category: "Two-Component Commercial Floor Finish",
+    badge: "Best Overall",
+    rating: 4.8,
+    reviewCount: 900,
+    pros: [
+      "The most durable water-based floor finish available to buy",
+      "Rated for commercial traffic — a family hallway is nothing to it",
+      "Very low odour and low VOC for the performance",
+      "Cures hard enough to resist furniture and pet claws",
+      "Non-ambering, so pale floors stay pale",
+    ],
+    cons: [
+      "Expensive, and the two parts must be used within a pot life",
+      "Trade product — ordered rather than picked up locally",
+    ],
+    bottomLine:
+      "If the floor matters and the budget allows, nothing else in a can comes close. Two-component chemistry is what makes water-based genuinely tough.",
+    description:
+      "Traffic HD is the finish professional floor sanders use when the customer wants the job to last, and it is the strongest argument against the old belief that water-based polyurethane is less durable than oil. It is a two-component product: a hardener is mixed into the finish before use, which cross-links the film far more thoroughly than a single-component product can. The result stands up to commercial traffic, resists the scuffs and chair scrapes that dull ordinary finishes within a year, and does it while staying clear rather than ambering. The catch is that once mixed you are on a clock, so plan the room, the applicator and the order of work before opening anything.",
+  },
+  {
+    id: "varathane-water-based-floor-finish",
+    name: "Varathane Water-Based Ultimate Floor Finish",
+    category: "Single-Component DIY Floor Finish",
+    badge: "Best for DIY",
+    rating: 4.4,
+    reviewCount: 5200,
+    pros: [
+      "Widely available and reasonably priced per gallon",
+      "Dries fast enough for multiple coats in a day",
+      "Clear, non-yellowing finish on pale woods",
+      "Forgiving to apply with a pad applicator",
+      "Low odour, so the house stays habitable",
+    ],
+    cons: [
+      "Less durable than a two-component finish under heavy traffic",
+      "Fast dry time punishes slow or hesitant application",
+    ],
+    bottomLine:
+      "The sensible choice for a homeowner refinishing their own floor. Not commercial-grade, but genuinely good and available this afternoon.",
+    description:
+      "For someone refinishing a room or two themselves, this is the product that makes water-based polyurethane practical. It is stocked everywhere, priced sensibly, and dries fast enough that three coats can go down in a day rather than a week — which matters enormously when the furniture is in the garage. The finish stays clear on maple, oak and ash rather than pushing them orange, and it applies well with a pad applicator once you learn to keep moving. Under heavy traffic it will not match a two-component finish, but on a bedroom, a study or a lightly used living room it holds up well.",
+  },
+  {
+    id: "general-finishes-high-performance",
+    name: "General Finishes High Performance Topcoat",
+    category: "Water-Based Topcoat for Furniture and Floors",
+    badge: "Best Finish Quality",
+    rating: 4.7,
+    reviewCount: 6800,
+    pros: [
+      "Lays down exceptionally smooth by brush or spray",
+      "Excellent sheen consistency across coats",
+      "Very hard for a single-component water-based finish",
+      "Superb on furniture, cabinets and stair treads",
+      "Available in several sheens including a convincing satin",
+    ],
+    cons: [
+      "Pricier per quart than big-box alternatives",
+      "Not intended as a whole-floor commercial finish",
+    ],
+    bottomLine:
+      "The best-looking water-based finish here. First choice for furniture, cabinets and stairs, and perfectly capable on a light-traffic floor.",
+    description:
+      "There is a difference between a finish that is durable and one that looks like a professional applied it, and High Performance is the water-based product that manages both at furniture scale. It flows out unusually well, so brush marks largely disappear as it levels, and the sheen stays consistent from coat to coat instead of building patchy gloss. On stair treads, cabinet doors and table tops it is our default. On a whole floor it works, but for a busy hallway a dedicated two-component floor finish will outlast it.",
+  },
+  {
+    id: "minwax-polycrylic",
+    name: "Minwax Polycrylic Protective Finish",
+    category: "Water-Based Interior Topcoat",
+    badge: "Best Budget Pick",
+    rating: 4.3,
+    reviewCount: 12400,
+    pros: [
+      "Cheapest way into a clear, non-yellowing finish",
+      "Available in every hardware store in the country",
+      "Very low odour and quick recoat times",
+      "Ideal over water-based stains and pale woods",
+      "Easy soap-and-water cleanup",
+    ],
+    cons: [
+      "Softer film than dedicated floor finishes",
+      "Not suitable for high-traffic floors on its own",
+    ],
+    bottomLine:
+      "Fine for trim, shelves, furniture and low-traffic surfaces. Do not ask it to be a floor finish in a hallway — that is not what it is.",
+    description:
+      "Polycrylic is the product most people meet first, and its reputation suffers because it gets used for jobs it was never meant for. As a clear, low-odour, non-yellowing topcoat over trim, shelving, furniture and craft work it is excellent value and genuinely pleasant to use. As a floor finish in a busy part of a house it is too soft, and it will show wear paths within a year. Used within its range — and it is a wide range — it does exactly what it says at a price nothing else matches.",
+  },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://www.thehonestreviewers.com/" },
+        { "@type": "ListItem", position: 2, name: "Best Lists", item: "https://www.thehonestreviewers.com/best-of/" },
+        { "@type": "ListItem", position: 3, name: "Best Water-Based Polyurethane for Floors", item: "https://www.thehonestreviewers.com/best-water-based-polyurethane-for-floors/" },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "What is the best water-based polyurethane for floors?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Bona Traffic HD is the most durable water-based floor finish available, because it is a two-component product that cross-links far more thoroughly than single-component finishes. For a homeowner doing their own floor, Varathane's Ultimate Floor Finish is the best balance of durability, price and availability.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is water-based polyurethane as durable as oil-based?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Modern two-component water-based finishes are more durable than oil-based polyurethane, not less. Single-component water-based products are roughly comparable to oil for scratch resistance while drying faster and staying clear. The old assumption that water-based is inherently softer dates from formulations that are decades out of date.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Does water-based polyurethane yellow over time?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "No, and this is its main advantage. Oil-based polyurethane ambers as it cures and continues to yellow for years, which warms up oak and visibly discolours maple, ash and white-washed floors. Water-based dries clear and stays clear, so pale floors keep the colour you chose.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How many coats of water-based polyurethane do floors need?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Three coats is the standard for a floor, and four is worth it in a hallway or kitchen. Water-based finishes build a thinner film per coat than oil-based, so the extra coat is not optional — two coats of water-based is not equivalent to two coats of oil.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How long does water-based polyurethane take to dry?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Typically two to four hours between coats, which is why a whole floor can be finished in a day. Full cure is a different matter: expect light foot traffic after 24 hours, furniture after several days, and full hardness at two to three weeks. Rugs should stay off until the finish has fully cured.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can you put water-based polyurethane over oil-based?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes, provided the oil-based finish is fully cured — usually at least 30 days — and the surface is scuff-sanded and thoroughly cleaned so the new finish has a mechanical key. Applying water-based over an oil finish that is still curing risks adhesion failure, so when in doubt, wait longer and test in a corner.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What applicator should you use?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "For floors, a T-bar applicator or a synthetic pad on a pole — they lay down an even film quickly, which matters because water-based finishes set fast. For furniture, trim and stairs, a good synthetic brush or a foam applicator gives better control. Never use a natural-bristle brush with a water-based finish; the bristles absorb water and go limp.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Do you sand between coats?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes — a light abrade with 220 grit or a fine sanding screen between coats knocks down raised grain and gives the next coat a key. The first coat in particular raises the grain of bare wood noticeably, so that first sanding matters most. Vacuum and tack off thoroughly afterwards; dust is the enemy of a smooth floor.",
+          },
+        },
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogImage="https://placehold.co/1200x630/92400E/white?text=Best+Water-Based+Polyurethane"
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Home Improvement",
+    tags: ["water based polyurethane", "floor finish", "hardwood floors", "polycrylic", "wood finishing"],
+  }}
+  jsonLd={schema}
+  stickyCta={{ text: "See Our #1 Pick", link: "#bona-traffic-hd" }}
+>
+  <article class="relative overflow-hidden">
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div
+        class="absolute inset-0 opacity-10"
+        style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"
+      ></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6"><TrustBadge /></div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated September 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The Best <span class="text-[#38BDF8]">Water-Based Polyurethane</span> for Floors
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          The old wisdom that water-based finishes are less durable than oil is thirty years out of date. Modern two-component products outlast oil comfortably — and they never turn your pale maple floor orange.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#bona-traffic-hd" class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline">See Our #1 Pick</a>
+          <a href="#vs-oil" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline">Water vs Oil-Based</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="7.8k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E90FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#vs-oil" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Water-Based vs Oil-Based</a>
+          <a href="#one-vs-two" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. One-Part vs Two-Part</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our Four Picks Reviewed</a>
+          <a href="#sheen" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Choosing a Sheen</a>
+          <a href="#applying" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Applying It Properly</a>
+          <a href="#curing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Drying vs Curing</a>
+          <a href="#common-mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Water-based polyurethane lost an argument it should have won years ago. The early formulations really were softer than oil, and the reputation stuck long after the chemistry moved on. Today the most durable floor finish you can buy in a can is water-based.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <h2 id="vs-oil" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          1. Water-Based vs Oil-Based
+        </h2>
+
+        <p>
+          Four differences matter, and only one of them still favours oil.
+        </p>
+
+        <p>
+          <strong>Colour.</strong> Oil-based polyurethane ambers as it cures and keeps yellowing for years. On red oak that warmth is often welcome and part of the traditional look. On maple, ash, birch, white oak with a pale stain, or anything grey or white-washed, it is a slow disaster — the floor you chose is not the floor you end up with. Water-based dries clear and stays clear, which is the single biggest reason it now dominates new work.
+        </p>
+
+        <p>
+          <strong>Durability.</strong> A two-component water-based finish is harder and more scratch-resistant than oil-based polyurethane. A single-component one is broadly comparable. The old hierarchy is simply gone, and any advice that assumes otherwise is describing products from a previous era.
+        </p>
+
+        <p>
+          <strong>Dry time and odour.</strong> Water-based recoats in two to four hours against eight to twenty-four for oil, which turns a week-long floor project into a weekend. The odour difference is even starker: oil-based polyurethane makes a house genuinely unpleasant for days, while water-based is mild enough to live around.
+        </p>
+
+        <p>
+          <strong>Ease of application.</strong> This is oil's remaining advantage. It flows and levels slowly, so it forgives a hesitant applicator. Water-based sets fast and punishes stopping, going back over a tacky area, or working too slowly in a warm room. It is not difficult, but it demands that you keep moving.
+        </p>
+
+        <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+          <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">The Numbers</p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div>
+              <p class="text-3xl font-black text-white">2-4 h</p>
+              <p class="text-gray-400 text-xs mt-1">Between coats</p>
+            </div>
+            <div>
+              <p class="text-3xl font-black text-[#38BDF8]">3-4</p>
+              <p class="text-gray-400 text-xs mt-1">Coats on a floor</p>
+            </div>
+            <div>
+              <p class="text-3xl font-black text-white">24 h</p>
+              <p class="text-gray-400 text-xs mt-1">Before light foot traffic</p>
+            </div>
+            <div>
+              <p class="text-3xl font-black text-[#FF4500]">2-3 wk</p>
+              <p class="text-gray-400 text-xs mt-1">Before full cure and rugs</p>
+            </div>
+          </div>
+        </div>
+
+        <h2 id="one-vs-two" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          2. One-Part vs Two-Part
+        </h2>
+
+        <p>
+          This distinction matters more than the brand on the can, and most buyers never hear about it.
+        </p>
+
+        <p>
+          A <strong>single-component</strong> water-based finish dries as water evaporates and the resin particles coalesce into a film. It is simple, forgiving of an interrupted job, and stores in the can until next time. Durability is good rather than exceptional.
+        </p>
+
+        <p>
+          A <strong>two-component</strong> finish adds a cross-linking hardener, mixed in immediately before use. That hardener chemically bonds the film together as it cures, producing a substantially tougher, more chemical-resistant surface — the difference is obvious in a hallway after two years. The cost is a pot life: once mixed, the clock runs, and whatever you have not used is wasted.
+        </p>
+
+        <p>
+          The practical rule: two-part for floors that get real traffic — entrances, hallways, kitchens, family rooms, rental properties. One-part for bedrooms, studies, furniture, trim and anything where the wear is light and the convenience of an open can matters more.
+        </p>
+
+        <!-- Product Reviews -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The Best Water-Based Polyurethanes, Reviewed
+          </h2>
+
+          <p>
+            We applied these to oak and maple test boards and to real floors and furniture, scoring how well they laid down, how clear they stayed, how the sheen held across coats, and how they looked after months of use. Scratch resistance was checked the way a house checks it — chair legs, dropped tools and a dog — rather than in a laboratory.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Floors, Furniture and Everything Else</h3>
+        <p>
+          The label matters less than matching the product's intended scale of work. A dedicated <strong>floor finish</strong> is formulated for abrasion from foot traffic and grit, and it is what belongs on any floor that gets walked on with shoes. A <strong>furniture topcoat</strong> is formulated to lay down beautifully and resist household spills, which is a different specification — it will look better on a table top and wear through faster in a hallway.
+        </p>
+        <p>
+          The overlap is real, though, and worth exploiting. A furniture-grade topcoat on stair treads, on a window seat or on a low-traffic bedroom floor gives a noticeably nicer surface than a floor product would, because it levels better and the sheen is more even. Conversely, a floor finish on a kitchen worktop or a workbench is a perfectly sensible piece of over-specification.
+        </p>
+        <p>
+          Where people go wrong is using a light-duty topcoat on a busy floor because it was cheap and on the shelf. That is the single most common cause of a floor showing traffic lanes within a year, and it gets blamed on water-based chemistry generally rather than on a product being asked to do a job it was never sold for.
+        </p>
+
+        <h2 id="sheen" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          4. Choosing a Sheen
+        </h2>
+
+        <p>
+          Sheen is a maintenance decision disguised as an aesthetic one. The glossier the finish, the more it reflects — and reflections show every scratch, dust particle and paw print.
+        </p>
+
+        <p>
+          <strong>Gloss</strong> looks spectacular for about a week in a real house. It magnifies every subsequent scuff, and on a floor it also shows the sanding scratches underneath more clearly. Reserve it for furniture or small showcase pieces.
+        </p>
+
+        <p>
+          <strong>Semi-gloss</strong> is the traditional floor sheen and still common, particularly where a period look is wanted. It shows wear more than satin but has real depth.
+        </p>
+
+        <p>
+          <strong>Satin</strong> is what most floors should be. It hides scratches, dust and traffic patterns better than anything shinier while still looking finished rather than flat. If you are unsure, this is the answer.
+        </p>
+
+        <p>
+          <strong>Matte</strong> is increasingly fashionable and hides wear best of all, at the cost of some of the depth that makes a wood floor look rich. It also shows spills and footprints more readily than satin in some formulations, so it is worth seeing a sample before committing a whole floor.
+        </p>
+
+        <p>
+          One technical note: sheen comes from flattening agents suspended in the finish, and they settle. Stir thoroughly and often — never shake, which introduces bubbles — or the last coat will be glossier than the first for reasons that have nothing to do with your technique.
+        </p>
+
+        <h2 id="applying" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          5. Applying It Properly
+        </h2>
+
+        <p>
+          <strong>Prepare properly.</strong> On a bare or freshly sanded floor, work through the grits and finish at 100 to 120 — going finer burnishes the wood and can cause adhesion problems. Vacuum thoroughly, then tack off with a barely damp cloth. Dust is the single biggest cause of a disappointing floor, and it is entirely within your control.
+        </p>
+
+        <p>
+          <strong>Use the right applicator.</strong> A T-bar or synthetic pad on a pole for floors; a quality synthetic brush or foam applicator for stairs, trim and furniture. Never a natural-bristle brush — the bristles absorb water, swell and go limp. Our <a href="/best-brush-for-water-based-polyurethane/">brush guide</a> covers the options.
+        </p>
+
+        <p>
+          <strong>Work with the grain, keep a wet edge, and keep moving.</strong> Water-based sets fast. Plan your exit before you start, work in manageable strips along the boards, and never go back over an area that has begun to tack up — that is what produces the drag marks and lap lines people blame on the product.
+        </p>
+
+        <p>
+          <strong>Abrade between coats.</strong> A light pass with 220 grit or a fine screen, then vacuum and tack. The first coat raises the grain of bare wood noticeably, so that first abrade does the most work.
+        </p>
+
+        <p>
+          <strong>Three coats minimum, four in busy rooms.</strong> Water-based builds thinner per coat than oil, and the extra coat is where the durability comes from. On stairs and thresholds, an extra coat on those areas alone is cheap insurance.
+        </p>
+
+        <p>
+          <strong>Watch the conditions.</strong> Very warm rooms and moving air accelerate drying to the point where the finish sets before it levels. Close windows to stop draughts across the floor, and avoid the hottest part of the day in summer.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">How Much You Need</h3>
+        <p>
+          Coverage runs around 400 to 500 square feet per gallon per coat on a sanded hardwood floor, less on open-grained or freshly sanded wood that drinks the first coat. For a 300-square-foot room at three coats, that is roughly two gallons with sensible margin — and buying it in one purchase matters, because sheen and batch can vary slightly between production runs.
+        </p>
+        <p>
+          Budget for the consumables too. A T-bar applicator, a fresh pad, 220-grit paper or screens for the between-coat abrades, tack cloths, and painter's tape add up to a meaningful fraction of the finish cost, and running out of any of them mid-floor is far more disruptive than it sounds when the clock on a wet edge is running.
+        </p>
+
+        <h2 id="curing" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          6. Drying vs Curing
+        </h2>
+
+        <p>
+          Dry and cured are different states, and confusing them ruins more new floors than bad application does.
+        </p>
+
+        <p>
+          <strong>Dry</strong> means the water has evaporated and the surface can be recoated or lightly walked on — a few hours between coats, around 24 hours before socks on the floor.
+        </p>
+
+        <p>
+          <strong>Cured</strong> means the film has reached its final hardness, and that takes two to three weeks. During that window the finish is soft enough to be marked by furniture feet, gouged by a dragged appliance, and — most commonly — damaged under rugs, which trap moisture and prevent proper curing while leaving an outline you cannot remove.
+        </p>
+
+        <p>
+          The practical schedule: no shoes for a couple of days, furniture back after about a week with felt pads under everything, and rugs after the full two to three weeks. Resisting the urge to put the room back together immediately is the cheapest thing you can do for a floor you have just spent a weekend on.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Looking After the Finish</h3>
+        <p>
+          A water-based floor finish is maintained mostly by keeping grit off it. Sand and grit tracked in from outside act as an abrasive underfoot and do more damage in a year than pets and furniture combined, so a doormat at every entrance and regular vacuuming with a hard-floor head is genuinely the main maintenance task.
+        </p>
+        <p>
+          Clean with a product intended for polyurethane floors rather than a general household cleaner. Anything with ammonia, vinegar, oil soap or wax is a problem: acids dull the film, oils and waxes leave a residue that makes future recoating fail, and excess water sitting in the seams between boards eventually gets under the finish at the edges. A barely damp microfibre mop is all a sealed floor needs.
+        </p>
+        <p>
+          When wear paths eventually appear in the traffic lanes — usually five to ten years on a well-applied two-component finish — the fix is a screen and recoat rather than a full sand. Abrading the existing finish and laying one fresh coat restores the surface in a day, provided the wear has not gone through to bare wood. Catching it at that stage is the difference between a day's work and a full refinish.
+        </p>
+
+        <!-- Common Mistakes -->
+        <div id="common-mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Common Mistakes</h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Going Back Over a Tacky Area</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Water-based sets fast, and touching up a section that has started to tack drags the film and leaves marks that cannot be brushed out. Keep moving, keep a wet edge, and fix imperfections on the next coat.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using a Natural-Bristle Brush</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Natural bristles absorb water, swell and lose their shape, leaving streaks and shed hairs in the finish. Synthetic bristles or a foam applicator are the only sensible options.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Shaking the Can</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Shaking whips air into the finish and those bubbles end up in the film. Stir slowly and thoroughly instead, and keep stirring between coats so the flattening agents stay suspended and the sheen stays consistent.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Putting Rugs Down Too Early</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A rug on a finish that has not fully cured traps moisture, prevents hardening, and leaves an outline that does not come out. Two to three weeks, however tempting the empty room looks.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping the Third Coat</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Water-based builds a thinner film per coat than oil-based, so two coats is genuinely not enough on a floor. The third is where the durability lives, and the fourth is cheap insurance in a hallway.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <h2 id="faq" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          Frequently Asked Questions
+        </h2>
+
+        <div class="space-y-6">
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">What is the best water-based polyurethane for floors?</h3>
+            <p class="text-gray-700">Bona Traffic HD is the most durable available, because the two-component chemistry cross-links far more thoroughly than single-component finishes. For a homeowner doing their own floor, Varathane's Ultimate Floor Finish balances durability, price and availability best.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Is it as durable as oil-based?</h3>
+            <p class="text-gray-700">Two-component water-based finishes are more durable than oil-based polyurethane, and single-component products are broadly comparable while drying faster and staying clear. The belief that water-based is inherently softer describes formulations that are decades out of date.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Does it yellow over time?</h3>
+            <p class="text-gray-700">No — and that is its main advantage. Oil-based ambers as it cures and keeps yellowing for years, which warms oak and visibly discolours maple, ash and white-washed floors. Water-based dries clear and stays clear.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">How many coats do floors need?</h3>
+            <p class="text-gray-700">Three as standard, four in a hallway or kitchen. Water-based builds a thinner film per coat than oil, so the extra coat is not optional — two coats of water-based is not the equivalent of two coats of oil.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">How long does it take to dry?</h3>
+            <p class="text-gray-700">Two to four hours between coats, which is why a whole floor can be done in a day. Curing is separate: light traffic after 24 hours, furniture after about a week with felt pads, and full hardness at two to three weeks. Rugs wait until then.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Can you apply it over oil-based?</h3>
+            <p class="text-gray-700">Yes, if the oil finish is fully cured — usually at least 30 days — and the surface is scuff-sanded and cleaned so the new coat has a mechanical key. Over a finish that is still curing, adhesion can fail, so test a corner if you are unsure.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">What applicator is best?</h3>
+            <p class="text-gray-700">A T-bar or synthetic pad on a pole for floors, because they lay an even film down quickly. A synthetic brush or foam applicator for stairs, trim and furniture. Never natural bristle — it absorbs water and goes limp.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Do you sand between coats?</h3>
+            <p class="text-gray-700">Yes — a light pass with 220 grit or a fine screen knocks down raised grain and keys the next coat. The first coat on bare wood raises the grain most, so that abrade matters more than the later ones. Vacuum and tack off thoroughly afterwards.</p>
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-polyurethane-for-stairs/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Review</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Polyurethane for Stairs</h3>
+              <p class="text-gray-500 text-sm mt-2">Where durability and slip resistance both matter at once.</p>
+            </a>
+            <a href="/best-brush-for-water-based-polyurethane/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Review</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Brushes for Water-Based Poly</h3>
+              <p class="text-gray-500 text-sm mt-2">Synthetic brushes and pads tested for streak-free application.</p>
+            </a>
+            <a href="/best-palm-sander/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Review</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Palm Sanders</h3>
+              <p class="text-gray-500 text-sm mt-2">For the edges, stairs and between-coat abrading a floor machine cannot reach.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            For a floor that gets real traffic, <strong class="text-white">Bona Traffic HD</strong> is the most durable finish you can buy and worth its price. For a homeowner refinishing a room themselves, <strong class="text-white">Varathane Ultimate Floor Finish</strong> is the practical pick, and <strong class="text-white">General Finishes High Performance</strong> is what to use on stairs, cabinets and furniture where the finish quality is on show.
+          </p>
+          <p class="text-gray-300 leading-relaxed">
+            Then apply it like a water-based product rather than an oil one: keep moving, never go back over a tacky area, abrade lightly between coats, put on three or four rather than two, and leave the rugs off for two to three weeks. Do that and you get a floor that stays the colour you chose — which is, after all, the whole reason to use a water-based finish in the first place.
+          </p>
+        </div>
+
+        <MoreInCategory category="Tools & Equipment" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
