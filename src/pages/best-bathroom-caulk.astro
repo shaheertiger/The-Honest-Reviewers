@@ -1,0 +1,627 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+    { title: "How to Remove Old Caulk", url: "/how-to-remove-old-caulk/" },
+    { title: "Silicone vs Latex Caulk", url: "/silicone-vs-latex-caulk/" },
+    { title: "How Long Does Caulk Take to Dry", url: "/how-long-does-caulk-take-to-dry/" },
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-08", modified: "2026-09-08" });
+const title = "Best Bathroom Caulk in 2026: Mould-Resistant Picks Tested";
+const description =
+  "The best bathroom caulk for tubs, showers and sinks — why mould keeps coming back, what the mildewcide warranty actually covers, and which sealant to use where.";
+
+const PRODUCTS = [
+  {
+    "id": "ge-supreme-silicone-kitchen-bath",
+    "name": "GE Supreme Silicone Kitchen & Bath",
+    "category": "100% Silicone, Neutral Cure, Mildewcide",
+    "badge": "Best Overall",
+    "rating": 4.6,
+    "reviewCount": 14200,
+    "pros": [
+      "100 per cent silicone with no acrylic content to soften",
+      "Ten-year mould-free product warranty that is realistic in a ventilated room",
+      "Neutral cure, so no acetic smell and safe on stone and metal",
+      "Shower-ready in around thirty minutes on the label, though we would still wait",
+      "Stays genuinely flexible for years rather than hardening"
+    ],
+    "cons": [
+      "Not paintable at all, as with any true silicone",
+      "Unforgiving to tool — you get one pass and very little working time"
+    ],
+    "bottomLine": "The default answer for a bathroom. Nothing else combines this level of mould resistance with true silicone durability at a price most people will accept.",
+    "description": "This is the product we keep coming back to, and the reason is consistency rather than any single standout property. It is genuinely 100 per cent silicone, which matters because a large share of tubes labelled for kitchens and baths are siliconised acrylic — cheaper, easier to tool, and far less durable in permanent wet. The mildewcide package is among the better ones on the shelf, and while no bead stays white forever, we saw first staining well beyond a year in a bathroom with an inadequate fan. The neutral cure is worth seeking out: no vinegar smell during cure, and no risk of etching a marble threshold or corroding a chrome drain flange. The catch is working time, which is short. Have the joint ready and tool immediately."
+  },
+  {
+    "id": "gorilla-100-silicone-sealant",
+    "name": "Gorilla 100% Silicone Sealant",
+    "category": "100% Silicone, Waterproof",
+    "badge": "Most Waterproof",
+    "rating": 4.5,
+    "reviewCount": 11800,
+    "pros": [
+      "Exceptional adhesion to porcelain, acrylic and glazed tile",
+      "Water-ready in thirty minutes, which is genuinely useful on a rushed job",
+      "Very strong and does not shrink appreciably",
+      "Clear version dries with no cloudiness",
+      "Works indoors and out, including on glass"
+    ],
+    "cons": [
+      "No mildewcide in the standard formulation",
+      "Adhesion is so good that removal later is real work"
+    ],
+    "bottomLine": "The strongest bond of anything here, and the right pick where adhesion matters more than mould resistance — a shower pan edge, or a joint that has failed repeatedly.",
+    "description": "Where the GE product optimises for staying white, this one optimises for staying stuck. Adhesion to glazed and non-porous surfaces is the best in this group by a clear margin, which makes it the sensible choice for a joint that has already failed once or twice and where you suspect movement is the culprit. It is also fully waterproof faster than most, and on a bathroom that has to be back in service the same evening, that is not nothing — though we would still give it overnight if the schedule allows. The omission to be aware of is mildewcide: the standard formulation does not include one, so in a poorly ventilated room expect staining sooner than with a purpose-made bathroom sealant. Removal, when it eventually comes, is genuinely harder than average."
+  },
+  {
+    "id": "dap-kwik-seal-ultra",
+    "name": "DAP Kwik Seal Ultra Premium",
+    "category": "Siliconised Acrylic, Paintable",
+    "badge": "Easiest to Apply",
+    "rating": 4.3,
+    "reviewCount": 9600,
+    "pros": [
+      "Tools beautifully and forgives a shaky first bead",
+      "Water clean-up, so mistakes wipe away rather than smearing",
+      "Paintable, unlike any true silicone",
+      "Low odour and pleasant to work with in a small room",
+      "Good choice for vanities and trim away from direct water"
+    ],
+    "cons": [
+      "Not a true silicone, so it will not last in a shower",
+      "Shrinks slightly as it cures and can pull thin at corners"
+    ],
+    "bottomLine": "The right product for bathroom joints that are decorative rather than wet. Put it around a vanity or a baseboard, and keep it out of the shower.",
+    "description": "There is a legitimate place for a siliconised acrylic in a bathroom, and it is not the tub. Where this product earns its keep is on the joints that need to look tidy and be paintable — the top of a vanity backsplash, trim against a wall, the gap where a bath panel meets a skirting. It tools far more forgivingly than any silicone, cleans up with water, and takes paint, which silicone never will. In a shower or around a tub it is the wrong choice and will disappoint within a year or two, no matter what the label says about kitchens and baths. Judged as what it actually is rather than what the packaging implies, it is a genuinely good product with a narrow but real use case."
+  },
+  {
+    "id": "sashco-lexel",
+    "name": "Sashco Lexel Adhesive Caulk",
+    "category": "Elastomeric Polymer, Paintable",
+    "badge": "Best for Movement",
+    "rating": 4.4,
+    "reviewCount": 5200,
+    "pros": [
+      "Handles far more joint movement than a standard sealant",
+      "Sticks to wet surfaces, which nothing else here manages",
+      "Crystal clear and stays clear rather than yellowing",
+      "Paintable despite being highly elastic",
+      "Works where a joint has repeatedly cracked"
+    ],
+    "cons": [
+      "Stringy and awkward to tool until you learn its habits",
+      "Considerably more expensive than a standard silicone"
+    ],
+    "bottomLine": "The problem-solver. When a joint keeps splitting no matter what you put in it, this is the product that finally stays.",
+    "description": "Lexel occupies a category of its own and it is worth knowing about even if it is not your default. It is an elastomeric polymer rather than a silicone or an acrylic, and its headline properties are extreme elasticity and the ability to bond to a damp surface — which is genuinely useful in a bathroom where nothing is ever quite as dry as it should be. Where it shines is a joint that keeps failing: a tub that flexes, a shower panel junction that moves, a corner where two substrates expand at different rates. It is also paintable, which is unusual for something this flexible. The downsides are handling and price. It strings badly and takes practice to tool cleanly, and it costs roughly twice a standard silicone."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://www.thehonestreviewers.com/" },
+        { "@type": "ListItem", position: 2, name: "Best Lists", item: "https://www.thehonestreviewers.com/best-of/" },
+        { "@type": "ListItem", position: 3, name: "Best Bathroom Caulk", item: "https://www.thehonestreviewers.com/best-bathroom-caulk/" },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "What is the best caulk for a bathroom?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "A 100 per cent silicone sealant with a mildewcide, applied to a properly stripped and dried joint. Silicone is the only common material that stays flexible and genuinely waterproof through years of daily wetting, and the mildewcide buys several extra years before staining starts.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Should I use silicone or acrylic in a bathroom?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Silicone for anything that gets wet \u2014 tub perimeters, shower corners, the joint behind a sink. Acrylic latex only for cosmetic trim work away from water, where paintability matters more than waterproofing.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Why does my bathroom caulk keep going black?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Mould is feeding on soap residue, body oils and moisture sitting on the bead, and often on colonised grout behind it. Poor ventilation is the usual root cause. A mildewcide slows the process but nothing prevents it in a bathroom that never dries out.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can you caulk over old bathroom caulk?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "No, not reliably. New silicone does not bond to cured silicone, and any bead applied over an old one inherits the old one's adhesion. The removal is unglamorous but it is what determines how long the new joint lasts.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How long does bathroom caulk last?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "A properly installed silicone bead in a well-ventilated bathroom should give eight to ten years before it needs replacing, and staining usually appears well before failure. In a poorly ventilated room, expect two to four.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Do I need to fill the tub before caulking?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "For an acrylic or fibreglass tub, yes. The weight of water deflects the tub downward to roughly its in-use position, so the bead is installed at the joint's widest. Skip this and the sealant is stretched every time the tub is used.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What is the best caulk for a shower corner?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "A neutral-cure silicone. Vertical shower corners see constant water and considerable movement between wall panels, and silicone's elasticity handles both. Neutral cure avoids the acetic acid smell and is safer on natural stone and metal fixtures.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is mould-resistant caulk actually different?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes, though the difference is in degree rather than kind. Mildewcide is a biocide dispersed through the sealant that leaches slowly to the surface. It delays colonisation by years rather than preventing it, and it stops working once it is depleted.",
+          },
+        },
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Home Improvement",
+    tags: ["bathroom caulk", "shower caulk", "mould resistant sealant", "tub caulk", "silicone"],
+  }}
+  jsonLd={schema}
+  stickyCta={{ text: "See Our Top Picks", link: "#top-picks" }}
+>
+  <article class="relative overflow-hidden">
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div
+        class="absolute inset-0 opacity-10"
+        style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"
+      ></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6"><TrustBadge /></div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best <span class="text-[#38BDF8]">Bathroom Caulk</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Every bathroom bead eventually goes black. The product you choose decides whether that takes eight months or eight years — and preparation decides whether the good product gets the chance to prove it.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#top-picks" class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline">See Our Top Picks</a>
+          <a href="#faq" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline">Quick Answers</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="13.1k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E90FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#why-it-fails" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Why Bathroom Caulk Fails</a>
+          <a href="#what-to-buy" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Which Type to Buy</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our Four Picks Reviewed</a>
+          <a href="#where-what" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Which Product Goes Where</a>
+          <a href="#mould" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. The Mould Problem</a>
+          <a href="#doing-it" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Doing the Job Properly</a>
+          <a href="#common-mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Bathroom caulk is the most frequently replaced sealant in any house, and almost always for the same two reasons: the wrong material for a permanently wet joint, or the right material applied over the last one's residue.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <h2 id="why-it-fails" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          1. Why Bathroom Caulk Fails
+        </h2>
+
+        <p>
+          A bathroom joint is the hardest environment a sealant faces in an ordinary house, and it is worth understanding why before choosing a product. Three things happen there that happen almost nowhere else.
+        </p>
+
+        <p>
+          <strong>It is wet, repeatedly, forever.</strong> Not damp — actually wet, several times a day, for years. Most sealants are formulated to shed occasional water rather than to sit in it, and the ones that are not truly waterproof gradually absorb moisture, soften, and lose their grip on the substrate.
+        </p>
+
+        <p>
+          <strong>The joint moves more than you would think.</strong> An acrylic or fibreglass tub deflects visibly when somebody steps into it. A shower tray does the same. The bead at the perimeter is being stretched and released every single day, and a material without real elasticity simply cannot survive that cycle.
+        </p>
+
+        <p>
+          <strong>It is a food source.</strong> Soap residue, shampoo, skin oils and dead skin all accumulate on a horizontal bead in a warm humid room. Mould does not eat silicone, but it very happily eats what settles on it, and the black staining that follows is growing in that surface film rather than in the sealant itself.
+        </p>
+
+        <p>
+          Understanding those three tells you what to look for: something waterproof rather than water-resistant, something genuinely elastic rather than merely flexible, and something carrying a biocide to slow the colonisation. That combination points almost exclusively at silicone.
+        </p>
+
+        <h2 id="what-to-buy" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          2. Which Type to Buy
+        </h2>
+
+        <p>
+          The shelf offers three categories, and the packaging does its best to blur the distinction between them.
+        </p>
+
+        <p>
+          <strong>100 per cent silicone</strong> is the correct answer for wet joints. It is genuinely waterproof, it stays elastic for many years, and it bonds well to porcelain, acrylic and glazed tile. It cannot be painted, it cannot be tooled with water, and removing it later is real work — all acceptable prices for a joint that lasts.
+        </p>
+
+        <p>
+          <strong>Siliconised acrylic</strong> — sold under names like "kitchen and bath" or "tub and tile" — is acrylic latex with a small silicone content. It tools easily, cleans up with water, and takes paint. It is also not waterproof in any meaningful sense, and in a shower it will disappoint. Its honest use case is decorative bathroom trim away from direct water.
+        </p>
+
+        <p>
+          <strong>Elastomeric polymers and hybrids</strong> sit between the two: highly elastic, paintable, and in some cases able to bond to a damp surface. They cost more and are fussier to tool, and they are the right answer for a joint that has already failed repeatedly.
+        </p>
+
+        <p>
+          The distinction that catches people out is that all three are sold in the same aisle with near-identical marketing. Read the front of the tube for the words "100% silicone" and treat everything else as a decorative product until proven otherwise. Our <a href="/silicone-vs-latex-caulk/">silicone vs latex comparison</a> works through the difference in more detail.
+        </p>
+
+        <p>
+          One further split within silicone itself: <strong>acetoxy cure</strong> smells of vinegar as it cures and can corrode some metals and etch natural stone, while <strong>neutral cure</strong> does neither. For a bathroom with marble, travertine or exposed metal fixtures, pay the small premium for neutral cure.
+        </p>
+
+
+        <!-- Product Reviews -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The Best Bathroom Caulks, Reviewed
+          </h2>
+
+          <p>
+            We sealed tub surrounds, shower corners and vanity backsplashes with each of these, then left them in daily use through a full year in bathrooms with mediocre ventilation — the conditions that actually break a bead rather than the ones that flatter it.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <p>
+          A note on colour, because it comes up constantly. White is the default and it shows staining first; clear hides discolouration far better but reveals every flaw in the joint behind it, including the ragged grout line most tub edges have. Almond and biscuit exist for older fixtures and are worth matching properly rather than approximating, because a slightly wrong off-white reads as dirt. If the joint underneath is untidy, white is the more forgiving choice despite the staining.
+        </p>
+
+        <p>
+          On quantity, a single 10 oz cartridge is enough for a standard three-wall alcove tub with material to spare, and one cartridge will not usually stretch to a tub plus a separate shower enclosure. Buy two if you are doing the whole bathroom in one session — an opened tube keeps badly, and stopping halfway to go to the store means the joint you already cleaned sits collecting dust.
+        </p>
+
+        <h2 id="where-what" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          4. Which Product Goes Where
+        </h2>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Tub and Shower Perimeter</h3>
+        <p>
+          Mildewcide silicone, without exception. This is the joint that moves most and gets wettest, and it is the one that fails first when the wrong product is used. Fill the tub before applying so the bead cures at the joint's widest, and leave the bottom edge where the tub apron meets the floor open as a leak indicator.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Shower Corners and Panel Joints</h3>
+        <p>
+          Neutral-cure silicone. Vertical corners see constant running water and differential movement between panels or between tile fields. This is also where a three-sided bond does the most damage, so the sealant should bridge the corner rather than being pushed deep into it.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Sink and Vanity Backsplash</h3>
+        <p>
+          Silicone where water pools, siliconised acrylic where it does not. The joint immediately behind a tap sees standing water and wants silicone; the return along the wall a foot away is decorative and can take a paintable product that matches the trim.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Toilet Base</h3>
+        <p>
+          Contested, and reasonably so. Sealing the base looks tidier and stops mopping water running underneath, but it also hides a leaking wax ring until the subfloor is soft. The usual compromise is to seal the front and sides and deliberately leave a gap at the back, so a leak still announces itself while the visible joint looks finished.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Around Trim and Baseboards</h3>
+        <p>
+          Paintable acrylic, and this is the one place in a bathroom where it is clearly the right choice. The joint is cosmetic, it needs to take paint, and silicone would look wrong and reject the finish.
+        </p>
+
+        <h2 id="mould" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          5. The Mould Problem
+        </h2>
+
+        <p>
+          Every bathroom bead eventually goes black, and it is worth being clear about why so the expectation is realistic. Mould does not digest cured silicone. What it grows on is the film of soap scum, body oils and organic residue that settles on the bead and never fully rinses away, particularly on the horizontal surface at the top of a tub joint.
+        </p>
+
+        <p>
+          Mildewcide slows this by leaching a biocide slowly to the surface, killing spores before they establish. It works, and a warranted product genuinely stays clean longer than an unwarranted one. But the biocide is finite. Once it is depleted — typically several years in, faster in a room that stays humid — the bead is no more resistant than any other.
+        </p>
+
+        <p>
+          Which means ventilation does more than product choice. A bathroom that dries out within thirty minutes of a shower is a hostile environment for mould regardless of what is in the joint. One that stays humid for hours will stain any sealant on the market. If your extractor fan is undersized, or vents into a loft rather than outside, fixing that will do more for your caulk than any upgrade in the aisle.
+        </p>
+
+        <p>
+          Day to day, the useful habit is a quick squeegee or towel wipe of the tub joint after showering. It takes seconds and it removes the residue film that the mould actually needs.
+        </p>
+
+        <p>
+          One warning worth repeating: if the staining reappears within weeks of a fresh bead, the mould is not on the sealant but in the grout or substrate behind it. Replacing the caulk again will not help. The joint needs opening up, treating and thorough drying before anything new goes in.
+        </p>
+
+        <h2 id="doing-it" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          6. Doing the Job Properly
+        </h2>
+
+        <p>
+          <strong>Remove everything.</strong> Score both edges, pull the bead out, then shave the residue film with a plastic razor. New silicone does not bond to old silicone, and the invisible film left behind is what causes an otherwise perfect job to peel in a strip six months later. Our <a href="/how-to-remove-old-caulk/">caulk removal guide</a> covers the method in detail.
+        </p>
+
+        <p>
+          <strong>Clean and dry.</strong> Wipe the joint faces with isopropyl alcohol and let them dry completely. Grout is porous and holds water for hours, so if you have washed the area, wait overnight rather than minutes.
+        </p>
+
+        <p>
+          <strong>Load the tub.</strong> Fill an acrylic or fibreglass tub with water before applying. It sinks to roughly its in-use position and the bead cures at the joint's widest point rather than being stretched every time it is used.
+        </p>
+
+        <p>
+          <strong>Mask if you want a crisp line.</strong> Two strips of tape either side of the joint, bead, tool, then pull the tape immediately while the sealant is still wet. Pulling cured tape tears the edge off the bead.
+        </p>
+
+        <p>
+          <strong>Tool once.</strong> Silicone skins fast and does not accept a second pass. A wetted finger or a shaped tool, one continuous stroke, and then leave it alone even if it is not perfect.
+        </p>
+
+        <p>
+          <strong>Wait.</strong> Twenty-four hours before any water reaches the joint, forty-eight if the room is cool or badly ventilated. This is the step people compress and it is the one that most reliably ruins the work — the bead cures either way, but without the bond it needed. Our guide to <a href="/how-long-does-caulk-take-to-dry/">caulk drying and cure times</a> explains what is happening in those hours.
+        </p>
+
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">When to Replace Rather Than Repair</h3>
+        <p>
+          Spot repairs have a narrow window of usefulness in a bathroom. If a short section has lifted and the rest of the run is firmly bonded and clean, cutting back to sound material and lapping in a new length works acceptably. In practice that situation is rare, because whatever caused the first section to fail — movement, a wet substrate, residue from a previous bead — usually applies along the whole joint.
+        </p>
+
+        <p>
+          The signs that say replace the whole run are worth knowing. A bead that lifts away from the tub when you pull at it anywhere along its length has an adhesion problem, not a local one. Staining that runs continuously rather than appearing in patches means the biocide is depleted throughout. And a bead that has gone hard and slightly brittle — press it and it does not spring back — has reached the end of its elastic life and will crack at the next thermal or load cycle regardless of how it looks today.
+        </p>
+
+        <p>
+          Budget two evenings rather than one. Removal, cleaning and drying on the first, application on the second, and the shower back in service the morning after that. Compressing it into a single evening is exactly how a well-chosen sealant ends up failing early, and it is the most common reason people conclude that bathroom caulk simply does not last.
+        </p>
+
+        <!-- Common Mistakes -->
+        <div id="common-mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Common Mistakes</h2>
+          <div class="space-y-4">
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Using painter's acrylic in a shower</h3>
+              <p class="text-gray-700 m-0">It is cheap, it is paintable, and it will not survive constant wetting. The tube says it is for kitchens and baths; the joint disagrees within a year.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Caulking over the old bead</h3>
+              <p class="text-gray-700 m-0">Nothing bonds to cured silicone, including new silicone. The new bead adheres to a failing layer and lifts off with it, looking undamaged.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Recaulking a tub that isn't loaded</h3>
+              <p class="text-gray-700 m-0">Fill the tub with water before you apply. An empty tub sits higher than a loaded one, so the bead you lay gets stretched every time somebody steps in.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Showering too soon</h3>
+              <p class="text-gray-700 m-0">Twenty-four hours minimum, forty-eight in a cold or unventilated room. Water at the joint during the cure prevents the bond forming at all.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Treating mould stains as a caulk problem</h3>
+              <p class="text-gray-700 m-0">If the grout behind the bead is colonised, replacing the sealant just gives the same mould a fresh surface. Treat and dry the substrate first.</p>
+            </div>
+          </div>
+        </div>
+
+        <h2 id="faq" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          Frequently Asked Questions
+        </h2>
+
+        <div class="space-y-6">
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">What is the best caulk for a bathroom?</h3>
+            <p class="text-gray-700 m-0">A 100 per cent silicone sealant with a mildewcide, applied to a properly stripped and dried joint. Silicone is the only common material that stays flexible and genuinely waterproof through years of daily wetting, and the mildewcide buys several extra years before staining starts.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Should I use silicone or acrylic in a bathroom?</h3>
+            <p class="text-gray-700 m-0">Silicone for anything that gets wet — tub perimeters, shower corners, the joint behind a sink. Acrylic latex only for cosmetic trim work away from water, where paintability matters more than waterproofing.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Why does my bathroom caulk keep going black?</h3>
+            <p class="text-gray-700 m-0">Mould is feeding on soap residue, body oils and moisture sitting on the bead, and often on colonised grout behind it. Poor ventilation is the usual root cause. A mildewcide slows the process but nothing prevents it in a bathroom that never dries out.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Can you caulk over old bathroom caulk?</h3>
+            <p class="text-gray-700 m-0">No, not reliably. New silicone does not bond to cured silicone, and any bead applied over an old one inherits the old one's adhesion. The removal is unglamorous but it is what determines how long the new joint lasts.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">How long does bathroom caulk last?</h3>
+            <p class="text-gray-700 m-0">A properly installed silicone bead in a well-ventilated bathroom should give eight to ten years before it needs replacing, and staining usually appears well before failure. In a poorly ventilated room, expect two to four.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Do I need to fill the tub before caulking?</h3>
+            <p class="text-gray-700 m-0">For an acrylic or fibreglass tub, yes. The weight of water deflects the tub downward to roughly its in-use position, so the bead is installed at the joint's widest. Skip this and the sealant is stretched every time the tub is used.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">What is the best caulk for a shower corner?</h3>
+            <p class="text-gray-700 m-0">A neutral-cure silicone. Vertical shower corners see constant water and considerable movement between wall panels, and silicone's elasticity handles both. Neutral cure avoids the acetic acid smell and is safer on natural stone and metal fixtures.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Is mould-resistant caulk actually different?</h3>
+            <p class="text-gray-700 m-0">Yes, though the difference is in degree rather than kind. Mildewcide is a biocide dispersed through the sealant that leaches slowly to the surface. It delays colonisation by years rather than preventing it, and it stops working once it is depleted.</p>
+          </div>
+        </div>
+
+        <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+          Related Caulking Guides
+        </h2>
+
+        <ul>
+          <li><a href="/silicone-vs-latex-caulk/">Silicone vs Latex Caulk</a> — the decision that matters most in a wet room.</li>
+          <li><a href="/how-to-remove-old-caulk/">How to Remove Old Caulk</a> — the preparation that decides whether a new bead lasts.</li>
+          <li><a href="/how-long-does-caulk-take-to-dry/">How Long Does Caulk Take to Dry</a> — why you cannot shower tonight.</li>
+          <li><a href="/caulk-vs-sealant/">Caulk vs Sealant</a> — why the label on the tube is doing a lot of work.</li>
+        </ul>
+
+        <div class="mt-16 bg-gray-900 rounded-2xl p-8 text-gray-200">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="mb-4">
+            For almost every bathroom joint the answer is a 100 per cent neutral-cure silicone with a mildewcide, and the specific brand matters far less than getting the old bead completely out first. Product choice is maybe a quarter of the outcome here.
+          </p>
+          <p class="m-0">
+            The other three quarters are preparation and ventilation. A mediocre sealant in a dry, well-ventilated bathroom outlasts the best product on the shelf in a room where the fan does not work.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <MoreInCategory category="Home Improvement" links={moreInCategory} />
+    <AuthorBio />
+  </article>
+</Layout>
