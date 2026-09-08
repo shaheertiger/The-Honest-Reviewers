@@ -6,6 +6,18 @@ import sitemap from '@astrojs/sitemap';
 // Buyer's guides that target high-volume search terms. They get a higher
 // sitemap priority than the 0.5 default so crawlers reach them sooner.
 const priorityGuides = new Set([
+  'best-bathroom-caulk',
+  'best-caulk-gun',
+  'best-cordless-tool-brand',
+  'dewalt-vs-makita',
+  'milwaukee-vs-ryobi',
+  'how-to-caulk-exterior-windows',
+  'how-to-remove-old-caulk',
+  'how-long-does-caulk-take-to-dry',
+  'where-not-to-caulk',
+  'silicone-vs-latex-caulk',
+  'caulk-vs-sealant',
+  'polyurethane-vs-silicone-caulk',
   'best-weed-killer',
   'best-pressure-washer',
   'best-electric-pressure-washer',
