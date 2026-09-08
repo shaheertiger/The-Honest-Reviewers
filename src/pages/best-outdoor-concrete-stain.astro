@@ -1,0 +1,675 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+    { title: "Stain Concrete to Look Like Stone", url: "/how-to-stain-concrete-patio-to-look-like-stone/" },
+    { title: "Sealing Old Concrete", url: "/sealing-old-concrete/" },
+    { title: "Best Concrete Sealer", url: "/best-concrete-sealer/" },
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-08", modified: "2026-09-08" });
+const title = "Best Outdoor Concrete Stain in 2026: Colors That Last";
+const description =
+  "The best outdoor concrete stains for patios and driveways — acid, water-based and solid colour compared, with the prep and sealing that decides how long they last.";
+
+const PRODUCTS = [
+  {
+    id: "behr-semi-transparent-concrete-stain",
+    name: "Behr Premium Semi-Transparent Concrete Stain",
+    category: "Water-Based Semi-Transparent",
+    badge: "Best Overall",
+    rating: 4.3,
+    reviewCount: 6200,
+    pros: [
+      "Wide colour range, tinted in store to a sample",
+      "Predictable colour — what you choose is close to what you get",
+      "Low odour and water cleanup",
+      "Works on newer concrete that acid stains struggle with",
+      "Good value per gallon for patio-sized areas",
+    ],
+    cons: [
+      "Less depth and variation than a true acid stain",
+      "Needs a sealer over it to survive traffic and UV",
+    ],
+    bottomLine:
+      "The sensible default for most patios: predictable colour, easy application and available with the sealer on the same shelf.",
+    description:
+      "For most outdoor slabs, a water-based semi-transparent stain is the right category and this is the easiest one to buy. Colour is chosen from a chart and tinted in store, which removes the single most stressful thing about acid staining — not knowing what colour you will actually get until the reaction finishes. It penetrates and colours without forming a heavy film, so the concrete still reads as concrete rather than as painted, and it copes with newer slabs where an acid stain would have little free lime to react with. Expect to seal over it: the stain provides colour, not protection.",
+  },
+  {
+    id: "kemiko-stone-tone-acid-stain",
+    name: "Kemiko Stone Tone Acid Stain",
+    category: "Reactive Acid Stain",
+    badge: "Best Mottled Look",
+    rating: 4.5,
+    reviewCount: 2400,
+    pros: [
+      "Genuine variegated, stone-like depth no film can imitate",
+      "Colour is chemically bonded — it cannot peel or flake",
+      "Extremely long lasting once sealed",
+      "A little goes a long way; small bottles cover large areas",
+      "Ages gracefully rather than wearing through in patches",
+    ],
+    cons: [
+      "Result depends on the slab's chemistry — always test first",
+      "Acid handling demands gloves, eye protection and ventilation",
+    ],
+    bottomLine:
+      "The choice when you want the mottled, natural-stone look. Unpredictable by nature, permanent by chemistry, and worth the test patch.",
+    description:
+      "Acid stain does not sit on concrete, it reacts with it: metallic salts in an acidic solution combine with free lime in the slab to produce colour that is part of the concrete itself. That is why the result cannot peel, and why no two slabs come out identical. The variegation is the point — it is what makes a plain patio read like natural stone rather than coloured concrete. It is also why a test patch is mandatory rather than advisable: an older, weathered slab with little free lime left may take colour weakly or unevenly, and you want to discover that on a square foot rather than a patio.",
+  },
+  {
+    id: "direct-colors-acid-stain",
+    name: "Direct Colors Concrete Acid Stain",
+    category: "Reactive Acid Stain",
+    badge: "Best Colour Range",
+    rating: 4.4,
+    reviewCount: 1900,
+    pros: [
+      "Broader palette than most acid stain lines",
+      "Sample kits let you test before committing",
+      "Detailed application guidance from the manufacturer",
+      "Concentrates dilute to control intensity",
+      "Reliable colour development on suitable slabs",
+    ],
+    cons: [
+      "Online purchase — not a same-day project",
+      "Same slab-dependency as any reactive stain",
+    ],
+    bottomLine:
+      "Acid staining with more colour choice and a sample kit to de-risk it. The sensible way in if you have never used a reactive stain.",
+    description:
+      "The main practical objection to acid staining is that you cannot see the result before you commit, and Direct Colors addresses it better than most: the palette is broader than the traditional handful of earth tones, and sample kits let you test two or three colours on your actual slab before ordering the full quantity. The concentrates also dilute, which gives real control over intensity — the same bottle can produce a subtle tint or a deep saturated tone depending on how it is mixed. Everything else about reactive staining still applies, including the need for neutralisation and thorough rinsing before sealing.",
+  },
+  {
+    id: "surecrete-ecostain",
+    name: "SureCrete EcoStain",
+    category: "Water-Based Penetrating Stain",
+    badge: "Best UV Stability",
+    rating: 4.4,
+    reviewCount: 800,
+    pros: [
+      "Formulated for exterior use and UV exposure",
+      "No acid handling, no neutralisation step",
+      "Colours can be layered and blended for depth",
+      "Works on slabs too new or too old for acid stain",
+      "Low VOC and low odour throughout application",
+    ],
+    cons: [
+      "Trade product — usually ordered rather than stocked locally",
+      "Layering technique takes practice to look natural",
+    ],
+    bottomLine:
+      "The professional's water-based option: acid-stain depth without the acid, and the best colour retention here under direct sun.",
+    description:
+      "EcoStain is what a lot of decorative concrete contractors reach for when a customer wants variegated colour without the unpredictability and hazards of acid. It penetrates rather than coating, holds its colour well under direct sun, and — the part that matters for appearance — can be layered and blended, so you can build the depth and variation that makes a slab look like stone rather than a flat wash. There is no neutralising step and no acid to handle. The trade-off is availability and skill: it is usually an online order, and getting a natural-looking blend takes a little practice, so budget for a test area.",
+  },
+  {
+    id: "hc-solid-color-concrete-stain",
+    name: "H&C Solid Color Concrete Stain",
+    category: "Solid Colour Acrylic Stain",
+    badge: "Best for Tired Concrete",
+    rating: 4.2,
+    reviewCount: 3400,
+    pros: [
+      "Hides discolouration, patches and repairs completely",
+      "Uniform colour across mismatched or stained slabs",
+      "Tough acrylic formulation built for driveways",
+      "Wide colour selection including greys and tans",
+      "Straightforward roller application",
+    ],
+    cons: [
+      "Opaque — the concrete no longer looks like concrete",
+      "It is a film, so it can wear in traffic paths and needs recoating",
+    ],
+    bottomLine:
+      "The rescue option. When a slab is too blotchy or patched for a transparent stain, solid colour is the only thing that will look deliberate.",
+    description:
+      "Some slabs are past the point where a transparent stain helps. Old repairs, oil ghosting, mismatched pours and years of weathering all show straight through anything semi-transparent, and no amount of careful application hides them. A solid colour acrylic stain covers completely, giving a uniform finish across a surface that would otherwise look patchy. The honest cost is that it is effectively paint: the concrete reads as coloured rather than as concrete, and because it is a film on the surface it wears in traffic paths and will need recoating on a cycle rather than lasting indefinitely.",
+  },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://www.thehonestreviewers.com/" },
+        { "@type": "ListItem", position: 2, name: "Best Lists", item: "https://www.thehonestreviewers.com/best-of/" },
+        { "@type": "ListItem", position: 3, name: "Best Outdoor Concrete Stain", item: "https://www.thehonestreviewers.com/best-outdoor-concrete-stain/" },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "What is the best outdoor concrete stain?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "For most patios, a water-based semi-transparent stain such as Behr's is the best balance of predictable colour and easy application. For the mottled natural-stone look, a reactive acid stain like Kemiko Stone Tone produces depth no water-based product matches. For a slab that is blotchy, patched or oil-stained, a solid colour acrylic is the only thing that will look uniform.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Will concrete stain work on old concrete?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Usually yes, provided the slab is clean, unsealed and structurally sound. Old concrete often takes water-based stains particularly well because the surface is open. Acid stains are less predictable on very old slabs, where much of the free lime the reaction depends on has already carbonated away — which is why a test patch matters.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Do you have to seal concrete after staining?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes. Stain provides colour, not protection. Without a sealer the colour weathers, dirt embeds in the open surface, and acid-stained slabs in particular can look dusty within a season. Two thin coats of a suitable exterior sealer after the stain has fully dried is the standard finish.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Acid stain or water-based stain?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Acid stain reacts with the concrete, producing permanent, variegated, stone-like colour that cannot peel — but the result depends on the slab and cannot be predicted precisely. Water-based stain gives the colour you chose from a chart, works on slabs acid stain struggles with, and is far easier to handle. Choose acid for character, water-based for certainty.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How long does outdoor concrete stain last?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "The colour from an acid stain is permanent because it is chemically part of the slab; what wears is the sealer over it, typically every two to four years. Water-based stains hold colour well under a maintained sealer. Solid colour acrylics are films and wear in traffic paths, usually needing a recoat every three to five years.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can you stain concrete that has been sealed?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Not until the sealer is removed. Stains have to reach the concrete, and any existing sealer blocks them completely. Test with water: if it beads rather than soaking in within thirty seconds, a sealer is present and must be stripped or ground off before staining.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Does concrete stain hide cracks and stains?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Transparent and semi-transparent stains hide almost nothing — they colour the surface while every existing mark, patch and repair shows through, and on a variegated finish that can even look intentional. Solid colour stains cover completely. Neither fills or repairs a crack, which has to be dealt with before staining.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is stained concrete slippery when wet?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "The stain itself does not change traction, but the sealer over it can. A glossy film-forming sealer on a smooth slab is genuinely slippery when wet, which matters around pools and on steps. Use a matte or penetrating sealer, or have a slip-resistant additive mixed into the sealer before application.",
+          },
+        },
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogImage="https://placehold.co/1200x630/78716C/white?text=Best+Outdoor+Concrete+Stains"
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Home Improvement",
+    tags: ["outdoor concrete stain", "concrete stain", "acid stain", "patio", "concrete colour"],
+  }}
+  jsonLd={schema}
+  stickyCta={{ text: "See Our #1 Pick", link: "#behr-semi-transparent-concrete-stain" }}
+>
+  <article class="relative overflow-hidden">
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div
+        class="absolute inset-0 opacity-10"
+        style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"
+      ></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6"><TrustBadge /></div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated September 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The Best <span class="text-[#38BDF8]">Outdoor Concrete Stains</span> in 2026
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Staining a patio is one of the highest-impact things you can do to a back garden for a couple of hundred dollars — and one of the easiest to get wrong, because the product is only half the job and the slab gets a vote.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#behr-semi-transparent-concrete-stain" class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline">See Our #1 Pick</a>
+          <a href="#will-it-work" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline">Will It Work on My Slab?</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="9.1k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E90FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#three-types" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. The Three Types of Stain</a>
+          <a href="#will-it-work" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Will It Work on Your Slab?</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our Five Picks Reviewed</a>
+          <a href="#prep" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Preparation Decides the Result</a>
+          <a href="#applying" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Applying and Sealing</a>
+          <a href="#colour" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Choosing a Colour</a>
+          <a href="#common-mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Concrete stain colours the slab you already have rather than covering it, which is why a stained patio looks like stone and a painted one looks like paint. The catch is that the slab is a participant: its age, its finish and whatever is already on it decide how much colour you get.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <h2 id="three-types" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          1. The Three Types of Concrete Stain
+        </h2>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Reactive Acid Stains</h3>
+        <p>
+          Metallic salts in a mild acid solution that react chemically with free lime in the concrete. The colour becomes part of the slab, so it cannot peel, flake or wear off — it can only be ground away. The look is variegated and translucent, with the mottling that makes stained concrete resemble natural stone, and no two slabs come out the same. The palette is limited to earth tones: browns, tans, rusts, and blue-greens.
+        </p>
+        <p>
+          The trade-off is predictability. The reaction depends on the concrete's chemistry, so an old slab with little free lime left, or one with a hard troweled surface, may take colour weakly or unevenly. Acid handling also demands gloves, eye protection and care, and the surface has to be neutralised and rinsed thoroughly before anything else goes on it.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Water-Based Penetrating Stains</h3>
+        <p>
+          Fine pigments in a water carrier that soak into the pore structure and deposit colour without a chemical reaction. The colour you pick is close to the colour you get, the range extends far beyond earth tones, and they work on slabs where acid staining would struggle — including newer concrete and previously ground surfaces.
+        </p>
+        <p>
+          They produce less depth than a reactive stain unless deliberately layered, which is why the better exterior products are designed to be blended. There is no acid to handle, no neutralising step, and cleanup is water.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Solid Colour Stains</h3>
+        <p>
+          Effectively a thin, tough paint: opaque acrylic that covers the concrete completely and delivers a uniform colour. The reason to choose one is a slab that no transparent product can rescue — patched, oil-ghosted, or made of two pours that never matched.
+        </p>
+        <p>
+          Because it is a film on the surface, it wears in traffic paths and eventually needs recoating, and the concrete no longer looks like concrete. That is a fair trade on a tired driveway and the wrong choice on a slab with any character worth keeping. Our <a href="/best-driveway-paint-reviews/">driveway paint guide</a> covers this end of the category in more depth.
+        </p>
+
+        <h2 id="will-it-work" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          2. Will It Work on Your Slab?
+        </h2>
+
+        <p>
+          Four checks, in the order that matters. Any one of them can rule out staining entirely, and all four take an afternoon.
+        </p>
+
+        <p>
+          <strong>Is it sealed?</strong> Drop water on several areas. If it beads or sits rather than soaking in within about thirty seconds, there is a sealer present and no stain will penetrate. It has to be stripped or ground off first, which is a real job — our guide to <a href="/sealing-old-concrete/">sealing old concrete</a> covers identifying and removing what is already there.
+        </p>
+
+        <p>
+          <strong>How old is it?</strong> New concrete needs a full cure, typically at least 28 days, before staining. Very old concrete usually takes water-based stain well but may respond weakly to acid stain, because the free lime the reaction needs has largely carbonated over the decades.
+        </p>
+
+        <p>
+          <strong>How was it finished?</strong> A hard power-troweled surface is dense and closed, and stains struggle to penetrate it. A broom finish or a light float finish is open and takes colour readily. If water sits on an unsealed slab, the surface may simply be too tight, and a light grind or an etch is needed to open it.
+        </p>
+
+        <p>
+          <strong>What is on it?</strong> Oil, grease, efflorescence, paint spots, adhesive residue and even leaf tannin will all resist the stain and show up as pale patches. Every one of them has to come off first — and oil in particular goes deeper than it looks, as our guide to <a href="/how-to-get-oil-out-of-concrete/">getting oil out of concrete</a> explains.
+        </p>
+
+        <!-- Product Reviews -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The Best Outdoor Concrete Stains, Reviewed
+          </h2>
+
+          <p>
+            We applied these across test areas on a weathered patio slab and a newer garage apron, scoring colour development, evenness on an imperfect surface, how much the appearance changed after sealing, and how the finish looked after a season of sun and rain.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <p>
+          One more consideration before you commit: what happens if you dislike the result. A water-based or solid colour stain can be gone over with a darker colour, or covered entirely with a solid, so a disappointing outcome is recoverable. An acid stain is not — the colour is inside the concrete, and the only routes out are covering it with an opaque product or grinding the surface away. That asymmetry is the strongest practical argument for testing thoroughly before acid staining a large area, and for choosing a water-based product if you are at all unsure.
+        </p>
+
+        <h2 id="prep" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          4. Preparation Decides the Result
+        </h2>
+
+        <p>
+          More than with almost any other coating, what you do before the stain comes out determines what you end up looking at for the next decade. Stain is transparent; the slab underneath is the picture.
+        </p>
+
+        <p>
+          <strong>Strip any sealer.</strong> Chemically or mechanically, completely and evenly. Patchy sealer removal produces patchy colour, and the patches follow the shape of wherever the stripper worked best.
+        </p>
+
+        <p>
+          <strong>Degrease individually, then clean the whole slab.</strong> Treat oil spots one at a time with a degreaser or poultice before washing the whole surface, or you simply spread thin oil across a wider area.
+        </p>
+
+        <p>
+          <strong>Pressure wash with a fan tip, not a turbo nozzle.</strong> A rotating nozzle held close cuts into the surface paste and leaves wand marks that the stain will highlight rather than hide. Keep the tip moving and stand back.
+        </p>
+
+        <p>
+          <strong>Repair cracks before, not after.</strong> Patches will not take stain the same way the slab does, so plan for them to show. On a variegated acid-stained finish that can read as character; on a uniform water-based colour it reads as a repair. Either way, repair first and let the material cure fully.
+        </p>
+
+        <p>
+          <strong>Let it dry completely.</strong> At least 24 hours after washing, longer in cool or humid weather. Damp concrete dilutes the stain and produces weak, uneven colour.
+        </p>
+
+        <h2 id="applying" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          5. Applying and Sealing
+        </h2>
+
+        <p>
+          <strong>Test first, always.</strong> A square yard in a corner, taken all the way through to the sealer, tells you what the whole patio will look like. Stain colour changes dramatically once sealed — usually deepening substantially — so a test that stops before sealing tells you very little.
+        </p>
+
+        <p>
+          <strong>Apply with a sprayer, work with a brush.</strong> Most stains go on best with a plastic pump sprayer, worked in with a broom or brush where coverage needs evening out. Avoid metal sprayers with acid stains, for obvious reasons.
+        </p>
+
+        <p>
+          <strong>Keep edges wet and work in irregular sections.</strong> Straight stop lines show. Working to a natural break — a control joint, an edge — or feathering into an irregular boundary keeps the finish continuous.
+        </p>
+
+        <p>
+          <strong>Neutralise acid stains.</strong> A baking soda or ammonia solution, then a thorough rinse until the water runs clear, and a full dry. Residual acid under a sealer will cause it to fail.
+        </p>
+
+        <p>
+          <strong>Seal with two thin coats.</strong> Sealer is what protects the colour from UV, traffic and dirt, and it is also what determines the final appearance — matte, satin or wet look. On anything walked on when wet, choose matte or add a slip-resistant additive, because a glossy sealed slab is genuinely slippery. Our <a href="/best-concrete-sealer/">concrete sealer guide</a> covers the options.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">How Much Product and How Long It Takes</h3>
+        <p>
+          Coverage varies with porosity more than with the label. As a working figure, a gallon of water-based stain covers roughly 200 to 400 square feet on a typical patio slab, and acid stain concentrates go considerably further once diluted. Sealer is the bigger consumable: two coats over a 400-square-foot patio takes two to three gallons of most exterior sealers, and it is worth buying it all in one batch.
+        </p>
+        <p>
+          On time, a realistic weekend looks like this. Saturday morning: strip, degrease and pressure wash. Saturday afternoon: repairs, and let everything dry. Sunday morning: stain, and for acid stain, neutralise and rinse. Sunday afternoon and into Monday: dry thoroughly, then two coats of sealer with the recoat window between them. Anyone compressing that into a single day is skipping a drying step, and drying steps are the ones that show up later as blotches.
+        </p>
+
+        <h2 id="colour" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          6. Choosing a Colour
+        </h2>
+
+        <p>
+          Two rules save most of the regret. First, the colour on the chart is the colour in a lab; the colour on your slab is that filtered through whatever grey the concrete already is, plus the darkening that arrives with the sealer. Pale, warm tones shift the least; blues and greens shift the most.
+        </p>
+
+        <p>
+          Second, look at the fixed things around the slab rather than at the chart. The house's brick or render, the fence, the roof and any adjacent paving are all staying put. Earth tones — tan, mid brown, weathered grey — sit comfortably against almost all of them and are the reason those colours dominate the category.
+        </p>
+
+        <p>
+          If the goal is to imitate flagstone or slate rather than simply to add colour, the technique matters as much as the product: multiple tones, applied unevenly, with cut joint lines. Our walkthrough on <a href="/how-to-stain-concrete-patio-to-look-like-stone/">staining concrete to look like stone</a> covers that process end to end.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Keeping It Looking Good</h3>
+        <p>
+          A stained slab is maintained through its sealer rather than through the stain. Sweep grit off regularly — it is abrasive and wears the sealer in traffic paths faster than weather does — and rinse the surface a few times a season, particularly under trees where leaf tannins stain and algae takes hold.
+        </p>
+        <p>
+          Watch the water test on the sealer the same way you would on any sealed concrete: when water stops beading and starts darkening the surface, the sealer has worn thin and a fresh coat is due. Catching that early means a clean recoat over a sound surface; leaving it means dirt embeds in the exposed stain and the recoat locks it in. In cold climates, keep de-icing salt off a stained patio entirely — it attacks the sealer first and the surface paste after that, and the damage shows as pale, dusty patches exactly where the colour was strongest.
+        </p>
+
+        <!-- Common Mistakes -->
+        <div id="common-mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Common Mistakes</h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Not Testing Through to the Sealer</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Sealer changes stained concrete dramatically, usually deepening it by a shade or more. A test patch that stops at the stain tells you almost nothing about the finished appearance.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Staining Over a Sealed Slab</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Stain must reach the concrete. Over an existing sealer it sits on top, dries unevenly and wipes off in places. Thirty seconds with a cup of water settles the question before you buy anything.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Expecting a Transparent Stain to Hide Damage</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Patches, oil ghosts and mismatched pours show straight through. If the slab is too marked for that, the honest choice is a solid colour rather than hoping the stain will disguise it.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping Neutralisation After Acid Staining</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Residual acid left under a sealer causes it to fail, sometimes months later. Neutralise, rinse until the runoff is clear, and let the slab dry completely before sealing.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using a Glossy Sealer Where People Walk</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Wet-look sealers make colour sing and make a wet patio slippery. Around pools, on steps, or anywhere with older visitors, use a matte finish or have a slip-resistant additive mixed in.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <h2 id="faq" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          Frequently Asked Questions
+        </h2>
+
+        <div class="space-y-6">
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">What is the best outdoor concrete stain?</h3>
+            <p class="text-gray-700">For most patios, a water-based semi-transparent like Behr's balances predictable colour with easy application. For mottled, natural-stone depth, a reactive acid stain such as Kemiko Stone Tone is unmatched. For a blotchy, patched or oil-marked slab, only a solid colour acrylic will look uniform.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Will stain work on old concrete?</h3>
+            <p class="text-gray-700">Usually, if the slab is clean, unsealed and sound. Old concrete often takes water-based stain very well because the surface is open. Acid stain is less predictable on very old slabs, where much of the free lime it reacts with has carbonated away — hence the test patch.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Do you have to seal afterwards?</h3>
+            <p class="text-gray-700">Yes — stain gives colour, not protection. Unsealed, the colour weathers and dirt embeds in the open surface, and acid-stained slabs can look dusty within a season. Two thin coats of a suitable exterior sealer once the stain is fully dry is the standard finish.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Acid or water-based?</h3>
+            <p class="text-gray-700">Acid reacts with the slab, giving permanent variegated colour that cannot peel but cannot be predicted precisely. Water-based gives the colour you chose, works where acid struggles, and is far easier to handle. Acid for character, water-based for certainty.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">How long does it last?</h3>
+            <p class="text-gray-700">Acid stain colour is permanent because it is part of the slab; what wears is the sealer, typically every two to four years. Water-based stains hold well under a maintained sealer. Solid colour films wear in traffic paths and usually want recoating every three to five years.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Can you stain sealed concrete?</h3>
+            <p class="text-gray-700">Not until the sealer comes off — stain has to reach the concrete and any sealer blocks it completely. Test with water: beading rather than absorbing within thirty seconds means a sealer is present and needs stripping or grinding first.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Does stain hide cracks and marks?</h3>
+            <p class="text-gray-700">Transparent and semi-transparent stains hide almost nothing; every patch and mark shows through, though on a variegated finish that can look intentional. Solid colour covers completely. Neither repairs a crack — that has to be dealt with before staining.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Is stained concrete slippery?</h3>
+            <p class="text-gray-700">The stain does not change traction; the sealer over it can. A glossy film on a smooth slab is genuinely slippery when wet, which matters on steps and around pools. Choose a matte or penetrating sealer, or have a slip-resistant additive mixed in.</p>
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/how-to-stain-concrete-patio-to-look-like-stone/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">How-To</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Stain Concrete to Look Like Stone</h3>
+              <p class="text-gray-500 text-sm mt-2">The multi-tone technique, cut joints and all, step by step.</p>
+            </a>
+            <a href="/best-concrete-sealer/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Review</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Concrete Sealers</h3>
+              <p class="text-gray-500 text-sm mt-2">What goes over the stain, and how the finish changes the colour.</p>
+            </a>
+            <a href="/sealing-old-concrete/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">How-To</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Sealing Old Concrete</h3>
+              <p class="text-gray-500 text-sm mt-2">Testing for an existing sealer and getting a weathered slab ready.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            For most outdoor slabs, a <strong class="text-white">water-based semi-transparent stain</strong> is the right call — predictable, easy and available with the sealer alongside it. Choose a <strong class="text-white">reactive acid stain</strong> when you want variegated, permanent, stone-like colour and are prepared for the slab to have opinions. Choose a <strong class="text-white">solid colour</strong> only when the concrete is too marked for anything transparent to save.
+          </p>
+          <p class="text-gray-300 leading-relaxed">
+            Then put the effort where it decides the outcome: strip any sealer, degrease properly, test a square yard all the way through to the sealer, and finish with two thin coats. Stain is transparent, so the slab underneath is the picture — and the preparation is what you are actually painting with.
+          </p>
+        </div>
+
+        <MoreInCategory category="Driveway & Concrete Sealers" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

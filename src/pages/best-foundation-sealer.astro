@@ -1,0 +1,720 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+    { title: "Waterproofing Basement Walls From Outside", url: "/waterproofing-basement-walls-from-outside/" },
+    { title: "Best Basement Waterproofing Paint", url: "/best-basement-waterproofing-paint/" },
+    { title: "Interior vs Exterior Basement Waterproofing", url: "/interior-vs-exterior-basement-waterproofing/" },
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-08", modified: "2026-09-08" });
+const title = "Best Foundation Sealer in 2026: Inside and Outside";
+const description =
+  "The best foundation sealers for exterior below-grade walls and interior masonry — membranes, cementitious coatings and penetrating sealers, and which side to treat.";
+
+const PRODUCTS = [
+  {
+    id: "liquid-rubber-foundation-sealant",
+    name: "Liquid Rubber Foundation & Basement Sealant",
+    category: "Exterior Elastomeric Membrane",
+    badge: "Best Exterior Sealer",
+    rating: 4.3,
+    reviewCount: 3100,
+    pros: [
+      "Applied to the side water actually arrives from",
+      "Cures seamlessly — no laps for water to track behind",
+      "Stays flexible through freeze-thaw movement",
+      "Water-based and low odour for a rubber membrane",
+      "Bonds to concrete, block and most existing coatings",
+    ],
+    cons: [
+      "Only realistic if you are already excavating",
+      "Needs a settled dry window to cure properly",
+    ],
+    bottomLine:
+      "The right product on the right side of the wall. If the excavator is booked, this is what goes on before the soil goes back.",
+    description:
+      "This is the textbook answer to a wet foundation and the one most people cannot use, because applying it means digging out around the house. Where an excavation is happening anyway — for drainage work, a repair, or new construction — a water-based elastomeric membrane on the exterior face is the correct engineering: it works with the water pressure rather than against it, cures seamlessly with no laps, and stays flexible through the freeze-thaw movement that cracks rigid coatings. Combined with a drainage board and a functioning footing drain, it is as close to a permanent solution as residential waterproofing gets.",
+  },
+  {
+    id: "drylok-extreme-foundation",
+    name: "DRYLOK Extreme Masonry Waterproofer",
+    category: "Interior Cementitious Coating",
+    badge: "Best Interior Coating",
+    rating: 4.5,
+    reviewCount: 6800,
+    pros: [
+      "Rated to 15 psi of hydrostatic pressure",
+      "15-year warranty on properly prepped masonry",
+      "Bonds chemically with the wall rather than sitting on it",
+      "Tintable, so a finished basement need not be white",
+      "Available everywhere at a sensible price",
+    ],
+    cons: [
+      "Requires bare, stripped, dry masonry — no exceptions",
+      "Two full coats are mandatory for the rating",
+    ],
+    bottomLine:
+      "The best interior option for a damp foundation wall, provided you do the stripping and brushing the product actually requires.",
+    description:
+      "When digging is not an option, the interior face is what you have, and DRYLOK Extreme is the strongest coating available for it. The cementitious latex reacts with the masonry and becomes part of the wall rather than a film on top, which is what allows its 15 psi rating and 15-year warranty. It demands bare, clean, dry masonry and two full coats, the first brushed in hard rather than rolled. Applied that way it holds for years; applied over paint or a damp wall it lifts within a season, which accounts for most of the negative reviews it attracts.",
+  },
+  {
+    id: "ames-blue-max-foundation",
+    name: "Ames Blue Max Liquid Rubber",
+    category: "Elastomeric, Interior or Exterior",
+    badge: "Best for Cracking Walls",
+    rating: 4.4,
+    reviewCount: 2600,
+    pros: [
+      "Genuinely elastic — bridges hairline cracks",
+      "Tolerates application to slightly damp masonry",
+      "Works on both faces of a foundation wall",
+      "High build per coat with a heavy-nap roller",
+      "Stays sound through seasonal movement",
+    ],
+    cons: [
+      "Rubbery finish will not accept ordinary wall paint",
+      "Costs considerably more per square foot than DRYLOK",
+    ],
+    bottomLine:
+      "The answer for a foundation wall that keeps cracking, and the only one here that tolerates masonry which never fully dries.",
+    description:
+      "Rigid coatings fail at cracks, and plenty of foundation walls open hairline cracks seasonally. Blue Max is a high-solids elastomeric that cures to a genuinely elastic membrane, so it stretches across those cracks rather than splitting along them. It also tolerates a slightly damp substrate — a real advantage in a basement that never fully dries — and can be used on either face of the wall. The costs are money and finish: it is meaningfully more expensive per square foot, and the cured rubber surface needs framing and board over it rather than paint.",
+  },
+  {
+    id: "radonseal-foundation",
+    name: "RadonSeal Deep Penetrating Sealer",
+    category: "Reactive Penetrating Sealer",
+    badge: "Best for Poured Concrete",
+    rating: 4.3,
+    reviewCount: 1900,
+    pros: [
+      "Seals from within — nothing on the surface to peel",
+      "Effectively permanent once cured",
+      "Leaves the wall paintable afterwards",
+      "Also reduces radon and vapour transmission",
+      "No maintenance or recoating cycle at all",
+    ],
+    cons: [
+      "Only works on dense poured concrete, not porous block",
+      "Invisible when applied, so coverage must be measured",
+    ],
+    bottomLine:
+      "On a poured concrete foundation, sealing the capillaries from the inside beats coating the surface — and it never needs doing again.",
+    description:
+      "RadonSeal is not a coating at all: it is a reactive sodium silicate that soaks into cured concrete and crystallises inside the capillary structure, blocking moisture movement from within. Nothing remains on the surface, so there is nothing to peel and no recoating cycle, and the wall stays paintable afterwards. The constraint is the substrate — it needs dense poured concrete or tight block to react with, and does very little on coarse, porous CMU. On a poured foundation wall it is an excellent, genuinely permanent option, with the useful side benefit of reducing radon entry.",
+  },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://www.thehonestreviewers.com/" },
+        { "@type": "ListItem", position: 2, name: "Best Lists", item: "https://www.thehonestreviewers.com/best-of/" },
+        { "@type": "ListItem", position: 3, name: "Best Foundation Sealer", item: "https://www.thehonestreviewers.com/best-foundation-sealer/" },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "What is the best foundation sealer?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "It depends which side of the wall you can reach. On the exterior during an excavation, a water-based elastomeric membrane such as Liquid Rubber's foundation sealant is the correct product. Working from inside, DRYLOK Extreme is the strongest coating for damp block or poured walls, with Ames Blue Max the better choice where the wall cracks and RadonSeal where it is dense poured concrete.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Should a foundation be sealed from the inside or outside?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Outside is better engineering, because it stops water before it enters the wall and works with the pressure rather than against it. Inside is what most homeowners can actually do without excavating. Interior coatings genuinely work against seepage and damp; they cannot resist water arriving in volume, which is a drainage problem regardless of which side you coat.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How much does foundation sealing cost?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Doing it yourself from the inside is largely material cost — typically several hundred dollars for a basement perimeter in cementitious coating, plus preparation tools. Exterior sealing means excavation, and that pushes a professional job into the thousands, with the coating itself a small fraction of the total.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can you seal a foundation from the inside and have it work?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes, for the right problem. A cementitious waterproofer applied in two coats to bare, prepared masonry reliably stops moisture migrating through porous walls — the damp, musty, efflorescent case. It will not stop water entering through a failed drain, a cracked wall, or a rising water table.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How long does foundation sealer last?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "An exterior membrane buried against a foundation and protected from UV is effectively permanent for the life of the backfill. Interior cementitious coatings commonly last well over a decade, with DRYLOK Extreme warranted for 15 years. Reactive penetrating sealers do not wear at all once cured. All of those figures assume correct preparation.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Do you need to fix cracks before sealing a foundation?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes. Coatings seal pores, not gaps. Fill cracks with hydraulic cement, or inject an actively leaking crack in poured concrete with polyurethane, and let the repair cure before coating. Wide, stepped or moving cracks are a structural matter and should be assessed before anything is applied over them.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What is the difference between damp proofing and waterproofing a foundation?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Damp proofing resists moisture vapour and light seepage; waterproofing is rated to resist liquid water under hydrostatic pressure. The spray-on asphalt coating applied to many new foundations is damp proofing, not waterproofing, which surprises owners who assumed their foundation was already protected.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Will sealing the foundation stop a wet basement?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Only if the water is seeping through the masonry itself. If it arrives after heavy rain, pools on the floor, or appears at the wall-floor joint, the fix is drainage — gutters and grading first, then a perimeter drain and sump if needed. Sealing before those is money spent on a symptom.",
+          },
+        },
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogImage="https://placehold.co/1200x630/1E293B/white?text=Best+Foundation+Sealers"
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Home Improvement",
+    tags: ["foundation sealer", "foundation waterproofing", "basement", "drylok", "liquid rubber"],
+  }}
+  jsonLd={schema}
+  stickyCta={{ text: "See Our Picks", link: "#top-picks" }}
+>
+  <article class="relative overflow-hidden">
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div
+        class="absolute inset-0 opacity-10"
+        style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"
+      ></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6"><TrustBadge /></div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated September 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The Best <span class="text-[#38BDF8]">Foundation Sealers</span> in 2026
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          The right foundation sealer depends less on the brand than on which side of the wall you can reach, what the wall is made of, and whether it moves. Get those three straight and the product almost picks itself.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#top-picks" class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline">See Our Picks</a>
+          <a href="#which-side" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline">Inside or Outside?</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="11.9k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E90FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#damp-vs-waterproof" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Damp Proofing vs Waterproofing</a>
+          <a href="#which-side" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Which Side to Treat</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our Four Picks Reviewed</a>
+          <a href="#by-wall" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Matching Product to Wall</a>
+          <a href="#applying" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Preparation and Application</a>
+          <a href="#drainage-first" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. What to Fix Before Sealing</a>
+          <a href="#common-mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          A foundation sealer is one of the highest-value things you can do to an older house, and one of the easiest to waste money on. The difference between those two outcomes is almost never the product — it is whether the wall was the right candidate, and whether the water was coming through the masonry or around it.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <h2 id="damp-vs-waterproof" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          1. Damp Proofing vs Waterproofing
+        </h2>
+
+        <p>
+          These two terms get used interchangeably in marketing and mean genuinely different things in practice, and the gap between them explains a lot of surprised homeowners.
+        </p>
+
+        <p>
+          <strong>Damp proofing</strong> resists moisture vapour and light seepage. The thin spray-on asphalt coating applied to the outside of many new foundations before backfilling is damp proofing. It is a code minimum in many places, it is not rated for liquid water under pressure, and it degrades over the decades. Plenty of people discover a wet basement and assume the foundation was never treated; usually it was, with a product that was never intended to hold back water.
+        </p>
+
+        <p>
+          <strong>Waterproofing</strong> is rated to resist liquid water under hydrostatic pressure — the force water exerts when saturated soil presses against a wall. Elastomeric membranes and cementitious coatings with published psi ratings sit in this category. The distinction matters when you are reading a product label: "water resistant" and "damp proofing" are not the same claim as a pressure rating.
+        </p>
+
+        <p>
+          A third category, <strong>penetrating sealers</strong>, sidesteps the surface entirely by reacting inside the concrete. They do not carry pressure ratings in the same way, because there is no coating to be pushed off — the capillaries themselves are blocked.
+        </p>
+
+        <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+          <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">The Four Numbers That Decide It</p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div>
+              <p class="text-3xl font-black text-white">15 psi</p>
+              <p class="text-gray-400 text-xs mt-1">Best interior pressure rating</p>
+            </div>
+            <div>
+              <p class="text-3xl font-black text-[#38BDF8]">2</p>
+              <p class="text-gray-400 text-xs mt-1">Coats needed for that rating</p>
+            </div>
+            <div>
+              <p class="text-3xl font-black text-white">6 ft</p>
+              <p class="text-gray-400 text-xs mt-1">Where downspouts should discharge</p>
+            </div>
+            <div>
+              <p class="text-3xl font-black text-[#FF4500]">6"/10 ft</p>
+              <p class="text-gray-400 text-xs mt-1">Minimum grade fall from the wall</p>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Signs Your Foundation Wants Sealing</h3>
+        <p>
+          Five symptoms point at moisture moving through the wall rather than around it, and all five are the case sealing genuinely solves.
+        </p>
+        <p>
+          <strong>A musty smell that never clears.</strong> The most reliable early sign, and the one people stop noticing because it arrives gradually. Moisture evaporating off masonry into a poorly ventilated space feeds the mould and mildew responsible for the odour.
+        </p>
+        <p>
+          <strong>White chalky bloom on the walls.</strong> Efflorescence is mineral salt deposited as water evaporates out of the masonry surface. It is proof that water is travelling through the wall, and it comes back after every wipe-down until the movement is stopped.
+        </p>
+        <p>
+          <strong>Walls that feel cool and slightly damp.</strong> Especially at the base, and especially after a wet spell. Cardboard boxes stored against the wall going soft is the same signal, noticed sooner.
+        </p>
+        <p>
+          <strong>Paint or coatings peeling from the inside face.</strong> Vapour pressure pushing outwards lifts anything applied to the surface, which is why ordinary paint on a below-grade wall rarely survives more than a couple of years.
+        </p>
+        <p>
+          <strong>Rust on anything metal stored against the wall.</strong> Shelf brackets, tool boxes and appliance feet corroding faster than they should is a quiet indicator of persistently high humidity coming off the masonry.
+        </p>
+
+        <h2 id="which-side" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          2. Which Side to Treat
+        </h2>
+
+        <p>
+          Exterior is better engineering and interior is what most people can actually do, and being honest about that trade-off is more useful than pretending otherwise.
+        </p>
+
+        <p>
+          <strong>The case for exterior.</strong> Water is stopped before it enters the wall at all. The membrane is pressed against the foundation by the very soil pressure that would push an interior coating off. The masonry never gets saturated, so freeze-thaw damage inside the wall stops as well. Combined with a drainage board and a working footing drain, this is the genuine, long-term solution, and our <a href="/waterproofing-basement-walls-from-outside/">exterior waterproofing guide</a> walks through the full build-up.
+        </p>
+
+        <p>
+          <strong>The case for interior.</strong> It costs a fraction as much, it can be done over a weekend, and for the most common problem — moisture migrating through porous masonry, showing as damp walls, musty air and efflorescence — it genuinely works. What it cannot do is stop water arriving in volume, because an interior coating is the last thing in the water's path and the least able to resist.
+        </p>
+
+        <p>
+          The practical rule: if an excavator is on site for any reason, seal the outside while the wall is exposed. If not, treat the inside and be realistic that you are managing seepage rather than defeating a drainage failure. Our <a href="/interior-vs-exterior-basement-waterproofing/">interior vs exterior comparison</a> puts costs and disruption side by side.
+        </p>
+
+        <!-- Product Reviews -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The Best Foundation Sealers, Reviewed
+          </h2>
+
+          <p>
+            These four cover the four real situations: an exterior dig, a damp interior wall, a wall that cracks, and dense poured concrete. They are not interchangeable, and the badge on each is a description of the case it suits rather than a ranking.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h2 id="by-wall" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          4. Matching Product to Wall
+        </h2>
+
+        <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+          <table class="w-full text-left">
+            <thead class="bg-gray-50 border-b border-gray-200">
+              <tr>
+                <th class="px-4 py-4 font-bold text-gray-600 text-sm">Your Situation</th>
+                <th class="px-4 py-4 font-bold text-gray-600 text-sm">Product Type</th>
+                <th class="px-4 py-4 font-bold text-gray-600 text-sm">Our Pick</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="bg-white border-b border-gray-100">
+                <td class="px-4 py-4 font-black text-gray-900">Excavating anyway</td>
+                <td class="px-4 py-4 text-gray-700">Exterior elastomeric membrane</td>
+                <td class="px-4 py-4 text-gray-700">Liquid Rubber Foundation Sealant</td>
+              </tr>
+              <tr class="bg-gray-50 border-b border-gray-100">
+                <td class="px-4 py-4 font-black text-gray-900">Damp, musty block wall</td>
+                <td class="px-4 py-4 text-gray-700">Cementitious waterproofer</td>
+                <td class="px-4 py-4 text-gray-700">DRYLOK Extreme</td>
+              </tr>
+              <tr class="bg-white border-b border-gray-100">
+                <td class="px-4 py-4 font-black text-gray-900">Wall cracks seasonally</td>
+                <td class="px-4 py-4 text-gray-700">Elastomeric membrane</td>
+                <td class="px-4 py-4 text-gray-700">Ames Blue Max</td>
+              </tr>
+              <tr class="bg-gray-50 border-b border-gray-100">
+                <td class="px-4 py-4 font-black text-gray-900">Dense poured concrete</td>
+                <td class="px-4 py-4 text-gray-700">Reactive penetrating sealer</td>
+                <td class="px-4 py-4 text-gray-700">RadonSeal</td>
+              </tr>
+              <tr class="bg-white border-b border-gray-100">
+                <td class="px-4 py-4 font-black text-gray-900">Wall never fully dries</td>
+                <td class="px-4 py-4 text-gray-700">Damp-tolerant elastomeric</td>
+                <td class="px-4 py-4 text-gray-700">Ames Blue Max</td>
+              </tr>
+              <tr class="bg-gray-50">
+                <td class="px-4 py-4 font-black text-gray-900">Water after every storm</td>
+                <td class="px-4 py-4 text-gray-700">None — drainage work</td>
+                <td class="px-4 py-4 text-gray-700">Gutters, grading, perimeter drain</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          Coverage is worth checking before you buy as well: cementitious coatings cover far less per gallon on rough block than the tin implies, often 75 to 100 square feet per coat, and both coats are mandatory. Elastomeric membranes go on thicker still and cover less again, which is the main reason they are usually reserved for the walls that genuinely need flexibility.
+        </p>
+
+        <p>
+          The last row is the one worth reading twice. No sealer on this page, at any price, resists water arriving in volume through a failed drainage path. Sealing in that situation moves the problem rather than solving it, and often moves it somewhere less visible.
+        </p>
+
+        <h2 id="applying" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          5. Preparation and Application
+        </h2>
+
+        <p>
+          <strong>Strip the wall.</strong> Interior coatings that bond chemically need bare masonry. Old paint, whitewash or a previous coating all have to come off with a masonry stripper or a grinder with dust extraction, and silica dust demands proper respiratory protection.
+        </p>
+
+        <p>
+          <strong>Brush efflorescence off dry.</strong> Wire brush and vacuum. Washing it dissolves the salts back into the wall, where they recrystallise later and can push a new coating off from behind.
+        </p>
+
+        <p>
+          <strong>Fill every crack first.</strong> Hydraulic cement in a chased-out V-groove for stable cracks; polyurethane injection for an actively leaking crack in poured concrete. Let repairs cure fully. Our <a href="/basement-crack-repair/">crack repair guide</a> covers which is which.
+        </p>
+
+        <p>
+          <strong>Work the first coat in.</strong> With cementitious products the first coat is brushed hard into the pores with a masonry brush — rolling bridges them and leaves pinholes. The second coat, 24 hours later, can be rolled and should cross the first so misses are visible.
+        </p>
+
+        <p>
+          <strong>On the exterior, protect the membrane.</strong> A cured membrane can be damaged by sharp backfill. A drainage board over it does two jobs at once: it shields the coating and gives water a path down to the footing drain instead of pressing against the wall.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Block Walls vs Poured Walls</h3>
+        <p>
+          The two common foundation types behave differently enough that the same product can be right on one and wrong on the other.
+        </p>
+        <p>
+          <strong>Concrete block</strong> is hollow and coarse. Water entering the wall can travel vertically inside the cores, which means moisture that enters high can emerge low, often at the bottom course or the wall-floor joint — and that migration makes a purely surface diagnosis misleading. Block also has mortar joints, which are frequently the weakest path. Cementitious coatings suit block well because they fill the open pore structure; reactive silicates do far less, because coarse block does not give the reaction enough to work with.
+        </p>
+        <p>
+          <strong>Poured concrete</strong> is denser and has no cores, so moisture movement is slower and more uniform, but it cracks in a way block does not — vertical shrinkage cracks from the original cure are extremely common and are the usual leak path. Poured walls are where reactive penetrating sealers perform best, and where polyurethane crack injection is the correct repair rather than a surface patch.
+        </p>
+        <p>
+          <strong>Stone and rubble foundations</strong> in older houses are a third case entirely: irregular, full of mortar joints, and often built without any damp proof course. They rarely take a modern coating well, and the realistic approach is usually managing the moisture — drainage, ventilation and dehumidification — rather than trying to seal the wall as if it were a flat block surface.
+        </p>
+
+        <h2 id="drainage-first" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          6. What to Fix Before You Seal Anything
+        </h2>
+
+        <p>
+          Three cheap jobs solve a surprising share of wet foundations, and all of them belong before a single tin is opened.
+        </p>
+
+        <p>
+          <strong>Gutters.</strong> A blocked gutter delivers the entire roof's runoff straight down the wall. Clearing them costs nothing and changes the volume of water reaching the foundation more than any coating can.
+        </p>
+
+        <p>
+          <strong>Downspouts.</strong> Discharge should be at least six feet from the house, ideally further. A downspout dumping at the foundation is a hose pointed at the wall every time it rains.
+        </p>
+
+        <p>
+          <strong>Grade.</strong> Soil should fall away from the house — a common target is six inches over the first ten feet. Settled beds and patios that slope back towards the wall are among the most frequent causes of a suddenly damp basement in an old house.
+        </p>
+
+        <p>
+          Do those three, watch through one wet season, and then decide what sealing the wall needs. A great many foundations turn out to need much less than the owner feared, and our <a href="/wet-basement-solutions/">wet basement solutions guide</a> orders every remaining option by cost.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">What to Do About a Crawl Space</h3>
+        <p>
+          Crawl spaces get asked about in the same breath as foundations and want a different answer. The walls can be treated with the same interior coatings, but the dominant moisture source in most crawl spaces is not the walls at all — it is the exposed soil floor, which evaporates water into the space continuously.
+        </p>
+        <p>
+          The standard fix there is encapsulation: a heavy polyethylene vapour barrier laid over the ground, lapped and sealed at the seams, run up the walls and fastened, with a dehumidifier to handle what remains. Coating the walls without addressing the floor treats a fraction of the problem and rarely changes the humidity reading enough to notice. If the crawl space smells and the joists above show surface mould, start with the ground cover rather than a tin of sealer.
+        </p>
+
+        <!-- Common Mistakes -->
+        <div id="common-mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Common Mistakes</h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Sealing Before Fixing the Water Source</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Gutters, downspouts and grading come first, always. A coating applied while the roof is still discharging against the wall is treating a symptom at considerable expense.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Assuming the Builder Waterproofed It</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Most new foundations get damp proofing, not waterproofing — a thin asphalt spray rated for vapour rather than pressure, which degrades over decades. Finding damp on a relatively modern house does not mean something failed; it means the original spec was lighter than assumed.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Coating Over Paint or Efflorescence</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Cementitious sealers bond by reacting with bare masonry. Anything in between prevents that, and the coating lifts in sheets within a season. Stripping is the job; painting is the easy part.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Backfilling Straight Onto a Fresh Membrane</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Sharp fill damages an exterior coating as it goes in, and every puncture is a path for water. A drainage board protects the membrane and relieves pressure at the same time — do not skip it to save a few dollars per foot.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring a Structural Crack</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Horizontal cracking, stair-stepping through mortar joints, or a wall that bows is a structural question. Coating over it hides the evidence while the underlying problem continues. Get it assessed before anything covers it.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <h2 id="faq" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          Frequently Asked Questions
+        </h2>
+
+        <div class="space-y-6">
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">What is the best foundation sealer?</h3>
+            <p class="text-gray-700">It depends on the side you can reach. Exterior during an excavation: a water-based elastomeric membrane like Liquid Rubber's foundation sealant. From inside: DRYLOK Extreme for damp block or poured walls, Ames Blue Max where the wall cracks, and RadonSeal on dense poured concrete.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Inside or outside?</h3>
+            <p class="text-gray-700">Outside is better engineering — it stops water before it enters the wall and uses soil pressure to hold the membrane on. Inside is what most owners can do without excavating, and it genuinely works against seepage and damp, just not against water arriving in volume.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">How much does it cost?</h3>
+            <p class="text-gray-700">Interior DIY is mostly materials — typically several hundred dollars of coating for a basement perimeter, plus preparation tools. Exterior means excavation, which puts a professional job into the thousands, with the sealer itself a small fraction of the total.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Does interior sealing actually work?</h3>
+            <p class="text-gray-700">For moisture migrating through porous masonry, yes — two coats of a cementitious waterproofer on bare, prepared walls reliably stops the damp, musty, efflorescent case. It will not stop water entering through a failed drain, a cracked wall or a rising water table.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">How long does it last?</h3>
+            <p class="text-gray-700">An exterior membrane buried and protected from UV is effectively permanent for the life of the backfill. Interior cementitious coatings commonly exceed a decade, with DRYLOK Extreme warranted for 15 years. Reactive penetrating sealers do not wear at all. All of that assumes correct preparation.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Do cracks need fixing first?</h3>
+            <p class="text-gray-700">Yes — coatings seal pores, not gaps. Fill with hydraulic cement, or inject an actively leaking crack in poured concrete with polyurethane, and let the repair cure before coating. Wide, stepped or moving cracks should be assessed structurally first.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Damp proofing or waterproofing — what is the difference?</h3>
+            <p class="text-gray-700">Damp proofing resists vapour and light seepage; waterproofing is rated against liquid water under hydrostatic pressure. The asphalt spray on many new foundations is damp proofing, which is why a relatively modern house can still show damp without anything having failed.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Will sealing stop a wet basement?</h3>
+            <p class="text-gray-700">Only if water is seeping through the masonry itself. If it arrives after heavy rain, pools on the floor, or shows at the wall-floor joint, the answer is drainage — gutters and grading first, then a perimeter drain and sump. Sealing before those is money on a symptom.</p>
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/waterproofing-basement-walls-from-outside/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Waterproofing From Outside</h3>
+              <p class="text-gray-500 text-sm mt-2">Excavation, membranes, drainage board and footing drains, layer by layer.</p>
+            </a>
+            <a href="/best-basement-waterproofing-paint/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Review</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Basement Waterproofing Paint</h3>
+              <p class="text-gray-500 text-sm mt-2">The interior coating field, tested through a full wet season.</p>
+            </a>
+            <a href="/basement-waterproofing-cost/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Cost Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Basement Waterproofing Cost</h3>
+              <p class="text-gray-500 text-sm mt-2">Interior against exterior pricing, and what drives it by thousands.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            If the ground is already open, seal the exterior with a <strong class="text-white">liquid rubber membrane</strong> and protect it with a drainage board — nothing else comes close. Working from inside, <strong class="text-white">DRYLOK Extreme</strong> is the strongest coating for a damp wall, <strong class="text-white">Ames Blue Max</strong> is the one for a wall that cracks or never dries, and <strong class="text-white">RadonSeal</strong> is the permanent answer on dense poured concrete.
+          </p>
+          <p class="text-gray-300 leading-relaxed">
+            Before any of that, spend an afternoon on the gutters, the downspouts and the grade. Those three fix more wet foundations than every product on this page combined, and they cost almost nothing — which makes them the only sensible place to start.
+          </p>
+        </div>
+
+        <MoreInCategory category="Basement Waterproofing" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
