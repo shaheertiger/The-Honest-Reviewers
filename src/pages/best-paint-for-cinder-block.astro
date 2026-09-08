@@ -1,0 +1,623 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+    { title: "Best Cinder Block Sealer", url: "/best-cinder-block-sealer-reviews/" },
+    { title: "Best Basement Wall Sealer", url: "/best-basement-wall-sealer/" },
+    { title: "Best Basement Waterproofing Paint", url: "/best-basement-waterproofing-paint/" },
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-08", modified: "2026-09-08" });
+const title = "Best Paint for Cinder Block Walls in 2026: Tested and Ranked";
+const description =
+  "The best paint for cinder block and concrete block walls — block filler, masonry paint and elastomeric coatings compared, plus why paint fails on damp basement block.";
+
+const PRODUCTS = [
+  {
+    "id": "drylok-extreme-masonry-waterproofer",
+    "name": "DRYLOK Extreme Masonry Waterproofer",
+    "category": "Waterproofing Coating, 15 psi Rated",
+    "badge": "Best for Damp Basements",
+    "rating": 4.4,
+    "reviewCount": 11200,
+    "pros": [
+      "Rated to hold back 15 psi of hydrostatic pressure",
+      "Fills pores and waterproofs in the same product",
+      "Fifteen-year warranty when applied to the specification",
+      "Tintable to a reasonable range of colours",
+      "Genuinely stops the damp smell in a dry-ish basement"
+    ],
+    "cons": [
+      "Thick and hard work to apply — a brush is required for the first coat",
+      "Not a substitute for fixing exterior drainage"
+    ],
+    "bottomLine": "The right product for a basement block wall with occasional dampness. Understand what it can and cannot do: it manages moisture, it does not fix a drainage problem.",
+    "description": "On interior basement block, the paint question and the moisture question are the same question, and this is the product that addresses both. It is a waterproofing coating rather than a paint, thick enough to fill the pores of the block as it goes on, and rated to resist genuine hydrostatic pressure rather than just surface damp. Applied properly — brushed hard into the surface on the first coat, so it is worked into every void rather than laid over them — it reliably stops the musty smell that comes from a wall slowly wicking moisture. The warranty is real but conditional on following the specification exactly, including two coats and the brushed first coat. What it will not do is hold back a wall with a genuine water problem. If water is running in, the fix is outside: gutters, grading and drainage."
+  },
+  {
+    "id": "sherwin-williams-loxon-block-surfacer",
+    "name": "Sherwin-Williams Loxon Block Surfacer",
+    "category": "High-Build Block Filler Primer",
+    "badge": "Best Block Filler",
+    "rating": 4.7,
+    "reviewCount": 3100,
+    "pros": [
+      "Fills the pores of block properly in a single coat",
+      "Extremely high alkali resistance, suitable for newer masonry",
+      "Creates a genuinely smooth substrate for topcoats",
+      "Excellent adhesion that later coats build on",
+      "Works on both interior and exterior block"
+    ],
+    "cons": [
+      "Only a primer — you still need a topcoat over it",
+      "Heavy and hard work to roll; a thick nap is essential"
+    ],
+    "bottomLine": "This is the step people skip and the step that decides the result. Nothing else here matters if the pores are not filled first.",
+    "description": "A block filler is not a primer that happens to be thick. It is a high-solids surfacer whose job is to fill the open voids across a block face and turn a porous, pitted surface into a continuous one. That is why an ordinary primer fails here — it soaks in, seals nothing and leaves the texture exactly as it was, so the topcoat pinholes. This one fills properly in a single coat on standard block, and its alkali resistance is high enough to be used over masonry that is newer than most products tolerate. The difference it makes to the finished wall is not subtle: the same topcoat over filled block looks like a painted wall, and over unfilled block looks like painted rock. Applying it is hard work — it is thick, and it needs a three-quarter inch nap roller and real effort."
+  },
+  {
+    "id": "behr-premium-masonry-stucco-brick",
+    "name": "Behr Premium Masonry, Stucco and Brick Paint",
+    "category": "100% Acrylic Masonry Topcoat",
+    "badge": "Best Topcoat",
+    "rating": 4.4,
+    "reviewCount": 8700,
+    "pros": [
+      "100 per cent acrylic with good flexibility for masonry movement",
+      "Strong alkali resistance",
+      "Wide colour range, unlike most masonry coatings",
+      "Good mildew resistance for basements and shaded exteriors",
+      "Reasonable price and widely stocked"
+    ],
+    "cons": [
+      "Coverage on block is far below the tin's claim",
+      "Needs block filler underneath to look its best"
+    ],
+    "bottomLine": "The topcoat to put over your block filler. Flexible enough for masonry, alkali-resistant enough for cement, and available in colours people actually want.",
+    "description": "Once the pores are filled, what the wall needs from a topcoat is flexibility, alkali resistance and breathability — and a colour you are willing to live with, which masonry coatings do not always offer. This delivers all four. Being 100 per cent acrylic rather than a vinyl blend matters: acrylic stays flexible enough to move with a masonry wall through seasonal expansion, where a stiffer film crazes. Alkali resistance is good enough for block that has cured properly, and mildew resistance is a genuine advantage on a shaded exterior or a basement. The coverage figure on the tin should be ignored entirely on block; the real surface area of a block face is several times its apparent area, so budget roughly double the paint you would for drywall even after filling."
+  },
+  {
+    "id": "kilz-interior-exterior-basement-masonry",
+    "name": "KILZ Interior/Exterior Basement and Masonry Waterproofer",
+    "category": "Waterproofing Paint, Budget",
+    "badge": "Best Value",
+    "rating": 4.2,
+    "reviewCount": 9800,
+    "pros": [
+      "Considerably cheaper than the premium waterproofers",
+      "Fills and coats in one product for light-duty walls",
+      "Low odour and water clean-up",
+      "Adequate for garage and utility walls that stay dry",
+      "Easy to apply compared with the heavy waterproofers"
+    ],
+    "cons": [
+      "Lower pressure rating than the premium options",
+      "Thinner build means more coats on rough block"
+    ],
+    "bottomLine": "Fine for a dry garage or utility wall where you want a clean finish cheaply. For a basement with any real moisture, spend more.",
+    "description": "Not every block wall is a problem wall. A garage, a workshop or a utility room with dry block does not need a 15 psi waterproofer — it needs something that fills the surface reasonably, seals it and looks clean, at a price that makes painting a large area affordable. That is the niche this fills, and within it the product is perfectly good. Application is far less punishing than the heavy waterproofers, clean-up is with water, and the odour is low enough for an enclosed space. The limits show up as soon as moisture is involved: the pressure rating is well below the premium products and the film build is thinner, so on rough or split-face block you will be applying more coats than the label suggests. Judge the wall honestly before choosing on price."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://www.thehonestreviewers.com/" },
+        { "@type": "ListItem", position: 2, name: "Best Lists", item: "https://www.thehonestreviewers.com/best-of/" },
+        { "@type": "ListItem", position: 3, name: "Best Paint for Cinder Block", item: "https://www.thehonestreviewers.com/best-paint-for-cinder-block/" },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "What kind of paint do you use on cinder block?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "A 100 per cent acrylic masonry paint over a masonry block filler primer. The filler bridges the open pores and creates a continuous surface; the acrylic topcoat provides colour, flexibility and alkali resistance. Ordinary interior latex on bare block will pinhole and peel.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Do you need to prime cinder block before painting?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes, and specifically with a block filler rather than a standard primer. Block filler is a high-solids product designed to fill the porous voids in the block face. A thin primer soaks straight in and does nothing to solve the texture.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can you paint cinder block basement walls?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes, provided the wall is dry and any moisture source has been dealt with. Where there is active seepage, a waterproofing coating rated for hydrostatic pressure is the correct product, and even that is a management measure rather than a fix for a drainage problem.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How long should new cinder block cure before painting?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "At least 28 days, and longer in cool or damp conditions. New masonry is highly alkaline and needs time for that alkalinity to drop. Painting early causes alkali burn \u2014 colour change, chalking and adhesion failure that cannot be repaired without stripping.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How many coats of paint on cinder block?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "One coat of block filler and two of topcoat is the standard specification. Heavily textured or split-face block frequently needs two coats of filler. Expect coverage to be roughly half what the paint tin claims, because the surface area is far greater than it looks.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What is elastomeric paint and do I need it?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "It is a thick, highly flexible coating that bridges hairline cracks and moves with the wall. It is genuinely useful on exterior block that cracks seasonally. Indoors it is usually unnecessary, and on a damp wall its low permeability can trap moisture.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can you paint over efflorescence?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "No. Efflorescence is salt deposited by water moving through the block, and paint applied over it has nothing solid to bond to. Remove it with a stiff brush or a masonry cleaner, then establish where the water is coming from \u2014 its presence means the wall is wet.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Should I seal or paint cinder block?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Seal if you want to control moisture and are not concerned with appearance; paint if you want colour and a finished look. On a basement wall many people need both \u2014 a penetrating sealer to manage moisture, then filler and paint for the finish.",
+          },
+        },
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Home Improvement",
+    tags: ["paint for cinder block", "concrete block paint", "block filler", "masonry paint", "basement walls"],
+  }}
+  jsonLd={schema}
+  stickyCta={{ text: "See Our Top Picks", link: "#top-picks" }}
+>
+  <article class="relative overflow-hidden">
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div
+        class="absolute inset-0 opacity-10"
+        style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"
+      ></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6"><TrustBadge /></div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best Paint for <span class="text-[#38BDF8]">Cinder Block</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Cinder block is the most absorbent, most alkaline and most texturally awkward surface most people ever paint. Ordinary wall paint on it disappears into the pores, leaves pinholes everywhere, and peels within two winters.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#top-picks" class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline">See Our Top Picks</a>
+          <a href="#faq" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline">Quick Answers</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="7.9k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E90FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#why-it-fails" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Why Paint Fails on Block</a>
+          <a href="#block-filler" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Block Filler Is Not Optional</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our Four Picks Reviewed</a>
+          <a href="#moisture" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Deal With Moisture First</a>
+          <a href="#prep" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Preparation Step by Step</a>
+          <a href="#applying" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Application and Coverage</a>
+          <a href="#common-mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          The product that matters most on a block wall is not the paint. It is the block filler underneath it — and skipping that step is why so many painted block walls look wrong within a year.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <h2 id="why-it-fails" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          1. Why Paint Fails on Cinder Block
+        </h2>
+
+        <p>
+          Concrete block presents four distinct problems all at once, and ordinary wall paint is designed to handle none of them.
+        </p>
+
+        <p>
+          <strong>It is extremely porous.</strong> The face of a standard block is riddled with open voids — you can see them without magnification. Paint applied directly runs into those voids, so a coat that would cover a hundred and fifty square feet of drywall covers perhaps sixty of block, and still leaves pinholes across the whole surface.
+        </p>
+
+        <p>
+          <strong>It is alkaline.</strong> Portland cement is strongly alkaline, and that alkalinity attacks conventional paint binders in a process called saponification — the binder is chemically broken down, the colour shifts, the film chalks, and adhesion goes. New masonry is worst, but even old block has enough residual alkalinity to matter.
+        </p>
+
+        <p>
+          <strong>It moves.</strong> Masonry walls expand and contract with temperature, and block walls develop hairline cracks along mortar joints as a matter of course. A rigid coating cannot follow that movement and cracks with it.
+        </p>
+
+        <p>
+          <strong>It transmits moisture.</strong> Block behaves as a wick. Water sitting in the ground behind a basement wall, or driving rain landing on an exterior one, travels straight through the block and emerges at the painted face. When it does, it pushes the coating off from behind — which is why blistering paint on masonry is nearly always a moisture problem rather than a paint problem.
+        </p>
+
+        <p>
+          A masonry system solves all four: a filler for the porosity, alkali-resistant chemistry, an acrylic binder for flexibility, and a permeability appropriate to how wet the wall is. Miss any one and the wall fails at that point.
+        </p>
+
+        <h2 id="block-filler" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          2. Block Filler Is Not Optional
+        </h2>
+
+        <p>
+          If you take one thing from this page, take this. The most common reason a painted block wall looks disappointing is that nobody filled it first.
+        </p>
+
+        <p>
+          A block filler — sometimes sold as a block surfacer — is a very high-solids primer whose purpose is to bridge and fill the open pores in the block face rather than merely to seal it. It goes on thick, it is hard work to roll, and it turns a pitted surface into a continuous one.
+        </p>
+
+        <p>
+          A standard primer cannot do this. It is formulated to be thin enough to penetrate and promote adhesion, so on block it soaks into the voids and leaves them exactly as open as they were. The topcoat then has to bridge those voids on its own, which it cannot, and the result is a wall covered in tiny pinholes that collect dirt and look unfinished from any distance.
+        </p>
+
+        <p>
+          The economics also favour filling. Block filler is cheaper per gallon than good topcoat, and it dramatically reduces how much topcoat the wall absorbs. Filling first typically means two coats of finish paint instead of three or four, so the extra step frequently pays for itself outright.
+        </p>
+
+        <p>
+          It is worth noting that block filler can be tinted towards your topcoat colour at most paint counters, which costs nothing and makes the finish coats cover more evenly — particularly when going to a dark colour over grey block, where an untinted white filler will otherwise show through at every high point.
+        </p>
+
+        <p>
+          On standard smooth-face block, one coat of filler is usually enough. On split-face, textured or particularly coarse block, plan for two. Roll it with a three-quarter inch or one-inch nap and work it into the surface rather than laying it on top — back-rolling every section while it is wet is what actually drives it into the voids.
+        </p>
+
+
+        <!-- Product Reviews -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The Best Paints for Cinder Block, Reviewed
+          </h2>
+
+          <p>
+            We coated interior basement block, an exterior garage wall and a section of freestanding retaining wall, watching for pinholing, alkali burn, efflorescence coming through, and how each product handled the hairline cracking that block walls inevitably develop.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h2 id="moisture" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          4. Deal With Moisture First
+        </h2>
+
+        <p>
+          On a basement or below-grade block wall, this section matters more than the paint choice. Coatings applied over an active moisture problem fail, and they fail in ways that make the eventual repair worse.
+        </p>
+
+        <p>
+          Start by identifying whether the wall is genuinely wet or merely condensing. Tape a square of plastic sheet tightly to the block and leave it for two days. Moisture on the underside, against the block, means water is coming through the wall. Moisture on the room side means humid air is condensing on cold masonry — an entirely different problem solved with ventilation and dehumidification rather than with coatings.
+        </p>
+
+        <p>
+          If water is coming through, look outside before reaching for a product. Gutters discharging at the foundation, ground sloping towards the house, and blocked or missing drainage account for the substantial majority of wet basement walls, and all three are cheaper to fix than any coating system. A waterproofing paint applied to a wall with a downspout emptying against it outside is a delaying tactic.
+        </p>
+
+        <p>
+          <strong>Efflorescence — the white chalky bloom — is a diagnostic sign rather than a cosmetic one.</strong> It is mineral salt left behind by water that has travelled through the block and evaporated at the surface. Its presence is proof that water is actively moving through the wall. Brush it off and it will come back until the water stops.
+        </p>
+
+        <p>
+          There is also a real argument against sealing damp block tightly from the inside. Water that cannot evaporate at the interior face stays in the block, and in a cold climate it freezes there. Freeze-thaw cycling spalls the face of the block, and when the coating eventually lets go it brings the surface of the masonry with it. Where a wall is genuinely wet and cannot be fixed from outside, a breathable finish that lets the wall dry inward is often the wiser compromise.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Interior Block vs Exterior Block</h3>
+
+        <p>
+          The two cases pull in opposite directions and it is worth being explicit about which one you are solving. An <strong>exterior</strong> block wall is exposed to driving rain, UV and a full seasonal temperature swing. Flexibility and UV stability matter most, which is why elastomeric coatings earn their place there — they bridge the hairline cracking that any block wall develops along its mortar joints, and they keep bridging it as the wall moves.
+        </p>
+
+        <p>
+          An <strong>interior</strong> below-grade wall faces no UV and very little temperature movement, but it does face moisture arriving from behind under pressure. Here flexibility matters little and permeability matters a great deal. A thick, impermeable elastomeric coating applied to the inside of a damp basement wall is close to the worst option available, because it seals the one face through which the block could otherwise dry.
+        </p>
+
+        <p>
+          A garage or workshop wall above grade sits between the two and is the easiest case of all — no hydrostatic pressure, no UV, and usually dry block. That is where a straightforward filler and acrylic topcoat performs best and costs least.
+        </p>
+
+        <h2 id="prep" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          5. Preparation Step by Step
+        </h2>
+
+        <p>
+          <strong>Let new block cure.</strong> A minimum of 28 days, longer in cool or damp weather. New masonry is at its most alkaline and painting early guarantees alkali burn.
+        </p>
+
+        <p>
+          <strong>Remove everything loose.</strong> Wire brush the whole surface. Old flaking paint, laitance, dust and mortar smears all have to go — the coating can only be as well attached as what it is attached to.
+        </p>
+
+        <p>
+          <strong>Deal with efflorescence properly.</strong> Brush it off dry first, then wash with a masonry cleaner if deposits remain. Do not paint over it, and treat its reappearance as evidence the moisture source is still active.
+        </p>
+
+        <p>
+          <strong>Repair cracks and voids.</strong> Hairline cracks can be bridged by an elastomeric coating; anything wider than about a sixteenth of an inch wants hydraulic cement or a masonry patching compound first. Repoint failed mortar joints before painting rather than after.
+        </p>
+
+        <p>
+          <strong>Wash and rinse.</strong> A pressure washer on a low setting works well outdoors; a stiff brush and detergent indoors. Rinse thoroughly, because detergent residue interferes with adhesion.
+        </p>
+
+        <p>
+          <strong>Let it dry completely.</strong> Block holds water far longer than the surface suggests — allow several days after washing, and longer in humid conditions. This is the step most often rushed.
+        </p>
+
+        <p>
+          <strong>Test the alkalinity if the block is newer than a few months.</strong> Inexpensive pH strips wetted against the surface will tell you. Above roughly pH 10, wait longer or use a coating specifically rated for high-alkalinity masonry.
+        </p>
+
+        <h2 id="applying" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          6. Application and Coverage
+        </h2>
+
+        <p>
+          Budget for far more paint than the tin implies. A block wall's real surface area is several times its measured area once you account for the texture and the open pores, and coverage figures on the label are quoted for smooth substrates. As a working rule, expect a block filler to cover around 75 to 100 square feet per gallon, and a topcoat over filled block to cover perhaps 250 — well below the 400 the tin will claim.
+        </p>
+
+        <p>
+          Use a heavy nap roller — three-quarter inch as a minimum, one inch on rough block — and a brush for mortar joints and corners. The roller carries material into the recesses; the brush is what gets it into the joints, which are the deepest part of the surface and the first place a thin coat shows.
+        </p>
+
+        <p>
+          On the first coat of any filler or waterproofer, work the material into the surface rather than spreading it across. Some manufacturers specify brush application for the first coat for exactly this reason, and where they do, the warranty usually depends on it.
+        </p>
+
+        <p>
+          Respect the recoat intervals. Thick masonry coatings hold solvent and water for longer than their surface suggests, and recoating a filler before it has properly dried traps moisture that will later blister the topcoat. When the label says four hours and the room is cold and damp, give it a day.
+        </p>
+
+        <p>
+          Finally, paint in reasonable conditions. Most masonry coatings want a surface temperature above 50°F and falling humidity, and none of them should be applied to a wall that is about to freeze overnight. On exterior work, follow the shade around the building rather than working in direct sun, which skins the surface before the coating can penetrate.
+        </p>
+
+
+        <!-- Common Mistakes -->
+        <div id="common-mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Common Mistakes</h2>
+          <div class="space-y-4">
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Skipping block filler</h3>
+              <p class="text-gray-700 m-0">Ordinary paint cannot bridge the open pores in a block face. Without filler you get pinholes across the whole wall, you use three times the paint, and the finish still looks rough.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Painting new block too soon</h3>
+              <p class="text-gray-700 m-0">Fresh masonry and mortar are strongly alkaline and stay that way for weeks. Paint applied before the wall has cured gets chemically burned — colour shifts, adhesion fails, and the coating comes off in sheets.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Painting over active moisture</h3>
+              <p class="text-gray-700 m-0">A coating cannot hold back water that is being pushed through the wall. Find the source, fix the drainage, and only then paint — otherwise the film blisters off and takes the effort with it.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Using interior wall paint outdoors</h3>
+              <p class="text-gray-700 m-0">Standard latex has neither the flexibility for masonry movement nor the alkali resistance for cement. On an exterior block wall it will craze and peel within two seasons.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Sealing damp block with a waterproof film on the inside</h3>
+              <p class="text-gray-700 m-0">Trapping moisture inside the block does not stop it — it moves the failure point. The water freezes, spalls the face, and the coating takes the surface of the block with it when it goes.</p>
+            </div>
+          </div>
+        </div>
+
+        <h2 id="faq" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          Frequently Asked Questions
+        </h2>
+
+        <div class="space-y-6">
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">What kind of paint do you use on cinder block?</h3>
+            <p class="text-gray-700 m-0">A 100 per cent acrylic masonry paint over a masonry block filler primer. The filler bridges the open pores and creates a continuous surface; the acrylic topcoat provides colour, flexibility and alkali resistance. Ordinary interior latex on bare block will pinhole and peel.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Do you need to prime cinder block before painting?</h3>
+            <p class="text-gray-700 m-0">Yes, and specifically with a block filler rather than a standard primer. Block filler is a high-solids product designed to fill the porous voids in the block face. A thin primer soaks straight in and does nothing to solve the texture.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Can you paint cinder block basement walls?</h3>
+            <p class="text-gray-700 m-0">Yes, provided the wall is dry and any moisture source has been dealt with. Where there is active seepage, a waterproofing coating rated for hydrostatic pressure is the correct product, and even that is a management measure rather than a fix for a drainage problem.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">How long should new cinder block cure before painting?</h3>
+            <p class="text-gray-700 m-0">At least 28 days, and longer in cool or damp conditions. New masonry is highly alkaline and needs time for that alkalinity to drop. Painting early causes alkali burn — colour change, chalking and adhesion failure that cannot be repaired without stripping.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">How many coats of paint on cinder block?</h3>
+            <p class="text-gray-700 m-0">One coat of block filler and two of topcoat is the standard specification. Heavily textured or split-face block frequently needs two coats of filler. Expect coverage to be roughly half what the paint tin claims, because the surface area is far greater than it looks.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">What is elastomeric paint and do I need it?</h3>
+            <p class="text-gray-700 m-0">It is a thick, highly flexible coating that bridges hairline cracks and moves with the wall. It is genuinely useful on exterior block that cracks seasonally. Indoors it is usually unnecessary, and on a damp wall its low permeability can trap moisture.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Can you paint over efflorescence?</h3>
+            <p class="text-gray-700 m-0">No. Efflorescence is salt deposited by water moving through the block, and paint applied over it has nothing solid to bond to. Remove it with a stiff brush or a masonry cleaner, then establish where the water is coming from — its presence means the wall is wet.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Should I seal or paint cinder block?</h3>
+            <p class="text-gray-700 m-0">Seal if you want to control moisture and are not concerned with appearance; paint if you want colour and a finished look. On a basement wall many people need both — a penetrating sealer to manage moisture, then filler and paint for the finish.</p>
+          </div>
+        </div>
+
+        <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+          Related Masonry Guides
+        </h2>
+
+        <ul>
+          <li><a href="/best-cinder-block-sealer-reviews/">Best Cinder Block Sealer</a> — sealing rather than painting, and when that is the better call.</li>
+          <li><a href="/best-basement-wall-sealer/">Best Basement Wall Sealer</a> — for block walls with active moisture.</li>
+          <li><a href="/best-basement-waterproofing-paint/">Best Basement Waterproofing Paint</a> — waterproof coatings rated for hydrostatic pressure.</li>
+          <li><a href="/best-basement-floor-paint/">Best Basement Floor Paint</a> — finishing the floor once the walls are done.</li>
+        </ul>
+
+        <div class="mt-16 bg-gray-900 rounded-2xl p-8 text-gray-200">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="mb-4">
+            The specification that works on almost any block wall is the same one professionals use: fix the moisture, let the wall cure and dry, apply a proper masonry block filler, then two coats of 100 per cent acrylic masonry paint. Skip any of those and the wall tells on you within two years.
+          </p>
+          <p class="m-0">
+            If the block is damp and you cannot resolve why, stop before you paint. A coating over active moisture does not solve anything — it relocates the failure to somewhere less visible and considerably more expensive.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <MoreInCategory category="Home Improvement" links={moreInCategory} />
+    <AuthorBio />
+  </article>
+</Layout>

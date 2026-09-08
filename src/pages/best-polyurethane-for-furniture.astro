@@ -1,0 +1,651 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+    { title: "Best Water-Based Polyurethane for Floors", url: "/best-water-based-polyurethane-for-floors/" },
+    { title: "Best Polyurethane for Stairs", url: "/best-polyurethane-for-stairs/" },
+    { title: "Best Brush for Water-Based Polyurethane", url: "/best-brush-for-water-based-polyurethane/" },
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-08", modified: "2026-09-08" });
+const title = "Best Polyurethane for Furniture in 2026: Oil vs Water-Based";
+const description =
+  "The best polyurethane for furniture — why table tops and bookshelves want different products, which finishes amber over time, and how to get a glass-smooth surface by brush.";
+
+const PRODUCTS = [
+  {
+    "id": "general-finishes-high-performance",
+    "name": "General Finishes High Performance Topcoat",
+    "category": "Water-Based Polyurethane, Multiple Sheens",
+    "badge": "Best Overall",
+    "rating": 4.7,
+    "reviewCount": 9400,
+    "pros": [
+      "Exceptional clarity that does not yellow over years",
+      "Levels beautifully by brush with almost no marks",
+      "Genuinely tough for a water-based finish",
+      "Low odour, so it can be used indoors comfortably",
+      "Satin sheen looks like wood rather than plastic"
+    ],
+    "cons": [
+      "Costs considerably more than hardware-store polyurethane",
+      "Short open time means you must work briskly on large panels"
+    ],
+    "bottomLine": "The finish we would put on almost any piece of furniture. Nothing else in this group combines clarity, levelling and durability as well.",
+    "description": "This is the product most furniture makers we know reach for, and using it makes the reason obvious within one coat. It flows off the brush and levels almost completely, so the brush marks that plague cheaper water-based finishes simply do not appear. Clarity over white maple and painted work is outstanding — it dries genuinely water-clear and stays that way, where an oil-based finish would have gone visibly warm within a year. Toughness is well beyond what people expect from a water-based product; on our test table top it resisted water rings and mug heat as well as the oil-based finishes did. The two honest drawbacks are price, which is roughly double the hardware-store options, and open time. It starts to set quickly, so on a large surface you need to plan your sequence and keep a wet edge."
+  },
+  {
+    "id": "minwax-wipe-on-poly",
+    "name": "Minwax Wipe-On Poly",
+    "category": "Thinned Oil-Based, Wipe Application",
+    "badge": "Easiest to Use",
+    "rating": 4.5,
+    "reviewCount": 12100,
+    "pros": [
+      "Essentially impossible to get runs, drips or brush marks",
+      "Superb on carved detail, spindles and turned legs",
+      "Builds a hand-rubbed look that feels wonderful",
+      "Warm amber tone that flatters walnut, cherry and oak",
+      "Cheap and available everywhere"
+    ],
+    "cons": [
+      "Very thin, so it needs five or six coats for real protection",
+      "Ambers over time, which is wrong for pale or painted wood"
+    ],
+    "bottomLine": "The finish to recommend to anyone who has been disappointed by brush marks. It trades build speed for a result that is very hard to get wrong.",
+    "description": "Wipe-on poly is simply oil-based polyurethane thinned enough to be applied with a cloth, and that one change removes nearly every way a beginner can ruin a finish. There is no brush to leave marks, the film is too thin to run or sag, and excess is wiped away rather than left to cure as a defect. On anything with shape — turned legs, mouldings, carved detail — it reaches into places a brush would flood. The result after five or six coats is the close, hand-rubbed surface that people associate with good furniture. The trade-offs are time and colour. Each coat deposits very little, so meaningful protection takes far more coats than a brushing finish, and the oil base ambers steadily, which is lovely on walnut and quite wrong on maple or a painted piece."
+  },
+  {
+    "id": "varathane-oil-based-poly",
+    "name": "Varathane Premium Oil-Based Polyurethane",
+    "category": "Oil-Based, Brush Application",
+    "badge": "Toughest Film",
+    "rating": 4.4,
+    "reviewCount": 10600,
+    "pros": [
+      "Very hard, durable film once fully cured",
+      "Rich amber warmth on oak, cherry and walnut",
+      "Builds fast — three coats gives real protection",
+      "Long open time makes brushing forgiving",
+      "Excellent heat and water-ring resistance"
+    ],
+    "cons": [
+      "Strong solvent odour needing serious ventilation",
+      "Ambers immediately and continues to darken for years"
+    ],
+    "bottomLine": "The pick for a hard-working dining table in a warm-toned wood. Nothing water-based quite matches the depth it gives to oak and walnut.",
+    "description": "There is a reason oil-based polyurethane has not disappeared despite everything water-based finishes now do well: on warm-toned hardwoods it looks better. The amber cast it adds to oak, cherry and walnut reads as depth and age rather than as discolouration, and no water-based product replicates it — they can be tinted to imitate it, but the effect is not the same. The film itself is genuinely tough and handles heat and moisture on a dining surface with confidence. Long open time makes it forgiving under a brush, which matters on a large top where a fast-setting finish will fight you. The costs are the smell, which is considerable and lingers for days, and the colour shift, which is permanent and progressive. On white maple, ash or anything painted, this is the wrong product."
+  },
+  {
+    "id": "minwax-polycrylic",
+    "name": "Minwax Polycrylic Protective Finish",
+    "category": "Water-Based Acrylic-Polyurethane Blend",
+    "badge": "Best Value",
+    "rating": 4.3,
+    "reviewCount": 15800,
+    "pros": [
+      "Widely stocked and inexpensive",
+      "Dries fast enough for several coats in a day",
+      "Stays clear over painted and pale wood",
+      "Very low odour, fine for indoor use",
+      "Cleans up with water"
+    ],
+    "cons": [
+      "Shows brush marks more readily than premium water-based finishes",
+      "Softer film than a true polyurethane, so less suited to hard-used surfaces"
+    ],
+    "bottomLine": "The sensible budget choice for bookshelves, cabinets and painted pieces. On a dining table it is outclassed by the products above.",
+    "description": "Polycrylic is what a great many people actually use, and for a large share of furniture projects it is entirely adequate. Over painted work and pale woods it stays reliably clear, it costs a fraction of a premium finish, and fast recoat times mean a bookcase can be finished in an afternoon rather than over three days. It is worth being precise about what it is, though: an acrylic-polyurethane blend rather than a full polyurethane, which makes the cured film softer than the others here. On a shelf, a cabinet door or a painted dresser that distinction never matters. On a dining table that takes hot dishes and wet glasses it does. It also shows brush marks more readily than the premium water-based finishes, so thin coats and a good synthetic brush matter more with this one than with most."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://www.thehonestreviewers.com/" },
+        { "@type": "ListItem", position: 2, name: "Best Lists", item: "https://www.thehonestreviewers.com/best-of/" },
+        { "@type": "ListItem", position: 3, name: "Best Polyurethane for Furniture", item: "https://www.thehonestreviewers.com/best-polyurethane-for-furniture/" },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "What is the best polyurethane for furniture?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "For most furniture, a water-based polyurethane \u2014 it stays clear, does not yellow over time, and has almost no odour. Choose oil-based when you want the warm amber tone it adds to walnut, cherry and oak, or when the piece is a hard-working table top that needs maximum film toughness.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Does water-based polyurethane yellow?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "No, and that is its main advantage. It dries genuinely clear and stays that way for decades. Oil-based polyurethane ambers noticeably within the first year and keeps deepening, which looks wonderful on walnut and quite wrong on white maple or a painted piece.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How many coats of polyurethane on furniture?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Three coats is the sensible default for most pieces. A dining table or anything that will see drinks and heat benefits from four or five. More than that adds thickness without meaningful protection and starts to look like a coating rather than a finish.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Should I use wipe-on or brush-on polyurethane?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Wipe-on for anything with detail, carving or turned legs, and for beginners generally \u2014 it is almost impossible to get runs or brush marks. Brush-on builds much faster, so it is the better choice on large flat surfaces like a table top where you want film thickness.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can you put polyurethane over stain?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes, provided the stain is fully dry \u2014 typically 24 hours for oil-based stain, longer in humid conditions. The one combination to be careful with is water-based poly over oil-based stain, which needs the stain properly cured or the finish can lift.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What sheen is best for furniture?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Satin for most pieces. It looks like wood rather than plastic, and it hides fingerprints, dust and small surface flaws far better than gloss. Use semi-gloss or gloss where you specifically want depth and reflection, and matte on rustic or painted pieces.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How long before furniture can be used?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Light use after 24 to 48 hours, but full cure takes seven to thirty days depending on the product. Until then the film is soft enough to emboss, so avoid placemats, laptops, plant pots and anything left in one place for long.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Do I need to sand between coats?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes, lightly. A quick pass with 320 or 400 grit knocks down dust nibs and raised grain and gives the next coat something to key into. It is not about removing material \u2014 two or three light strokes per area is enough.",
+          },
+        },
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Home Improvement",
+    tags: ["polyurethane for furniture", "oil based polyurethane", "water based polyurethane", "wipe on poly", "wood finishing"],
+  }}
+  jsonLd={schema}
+  stickyCta={{ text: "See Our Top Picks", link: "#top-picks" }}
+>
+  <article class="relative overflow-hidden">
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div
+        class="absolute inset-0 opacity-10"
+        style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"
+      ></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6"><TrustBadge /></div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best <span class="text-[#38BDF8]">Polyurethane</span> for Furniture
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Furniture is not flooring. It is seen from eighteen inches rather than six feet, it rarely takes abrasion, and the finish is judged on clarity and feel rather than on how many years it survives a hallway. That changes the answer completely.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#top-picks" class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline">See Our Top Picks</a>
+          <a href="#faq" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline">Quick Answers</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="8.6k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E90FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#oil-vs-water" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Oil vs Water-Based</a>
+          <a href="#sheen" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Choosing a Sheen</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our Four Picks Reviewed</a>
+          <a href="#by-piece" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Which Finish for Which Piece</a>
+          <a href="#applying" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Getting a Glass-Smooth Finish</a>
+          <a href="#cure" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Cure Time and Real Durability</a>
+          <a href="#common-mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          The single decision that matters is oil-based versus water-based, and it comes down to one honest trade-off: warmth and durability against clarity and non-yellowing. Everything else is technique.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <h2 id="oil-vs-water" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          1. Oil vs Water-Based: The Only Decision That Really Matters
+        </h2>
+
+        <p>
+          Nearly every other choice in furniture finishing is reversible or minor. This one is neither, because it determines the colour of the piece for the rest of its life.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Oil-Based Polyurethane</h3>
+
+        <p>
+          Oil-based poly cures by reacting with oxygen, building a hard, solvent-resistant film. It goes on with a distinct amber cast, and — this is the important part — it keeps ambering. A piece finished in oil-based poly is noticeably warmer after a year and warmer still after five.
+        </p>
+
+        <p>
+          On walnut, cherry, oak and mahogany that progression is not a defect; it is most of the reason people choose it. The finish deepens the figure, warms the tone and makes the wood look older and richer than a clear finish would. On white maple, ash, birch or anything painted, the same behaviour turns a crisp piece yellow and there is no undoing it.
+        </p>
+
+        <p>
+          It also has a long open time, which makes brushing forgiving, and it builds quickly — three coats is genuine protection. Against that: strong solvent odour that lingers for days, longer waits between coats, and cleanup in mineral spirits.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Water-Based Polyurethane</h3>
+
+        <p>
+          Water-based poly carries the resin in water, so it dries clear, stays clear, and smells of very little. Over a painted dresser or a maple table it looks like nothing at all, which is exactly the point — you see the wood or the paint, not the finish.
+        </p>
+
+        <p>
+          The old objection was durability, and on modern formulations that objection is largely obsolete. A good water-based furniture finish resists water rings and heat about as well as an oil-based one. Where it genuinely differs is open time: it sets fast, so on a large surface you have to work briskly and keep a wet edge.
+        </p>
+
+        <p>
+          It also raises the grain on the first coat, because water swells wood fibres. That is easily handled — sand lightly after the first coat and it will not happen again — but it surprises people who have only used oil-based finishes.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">The Practical Rule</h3>
+
+        <p>
+          Choose by the wood and the intent. <strong>Warm-toned hardwood where you want depth and age: oil-based.</strong> <strong>Pale wood, painted work, or anything where the colour must stay exactly as it is now: water-based.</strong> Everything else — smell, cleanup, dry time — follows from that choice rather than driving it.
+        </p>
+
+        <h2 id="sheen" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          2. Choosing a Sheen
+        </h2>
+
+        <p>
+          Sheen is not in any sense a measure of protection. All the sheens within a product line share the same resin and offer the same durability; the difference is a flattening agent that scatters light. Choose it on appearance alone.
+        </p>
+
+        <p>
+          <strong>Gloss</strong> reflects most and gives the greatest sense of depth, which suits formal pieces and dark woods. It also shows every dust nib, every brush mark, every fingerprint and every scratch. It is the least forgiving sheen both to apply and to live with.
+        </p>
+
+        <p>
+          <strong>Semi-gloss</strong> keeps some of that depth while hiding considerably more. A reasonable compromise on a dining table where you want a bit of reflection.
+        </p>
+
+        <p>
+          <strong>Satin</strong> is what most furniture should be finished in, and it is what most commercially made furniture uses. It reads as wood rather than as a coating, and it conceals dust, minor flaws and daily handling marks remarkably well.
+        </p>
+
+        <p>
+          <strong>Matte</strong> reflects almost nothing, which suits rustic pieces and painted work but can look slightly dead on figured hardwood where you wanted the grain to shine.
+        </p>
+
+        <p>
+          One technical note that catches people out: the flattening agent settles. A can of satin that has not been stirred thoroughly will apply as gloss at the start and matte at the end. Stir slowly and completely before use, and stir again partway through a large job — but never shake, because every bubble you whip in ends up in the film.
+        </p>
+
+
+        <!-- Product Reviews -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The Best Polyurethanes for Furniture, Reviewed
+          </h2>
+
+          <p>
+            We finished oak, maple, walnut and pine samples with each of these — brushing, wiping and spraying where appropriate — then assessed clarity over white maple, warmth over walnut, feel under the hand, and resistance to water rings and heat after a full cure.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h2 id="by-piece" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          4. Which Finish for Which Piece
+        </h2>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Dining Tables</h3>
+        <p>
+          The hardest-working furniture surface in the house: hot plates, wet glasses, spills, and constant wiping. Use four to five coats of a tough finish, oil-based if the wood is warm-toned and a premium water-based if it is not. Satin or semi-gloss. This is the one piece where the extra coats are genuinely worth the extra day.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Coffee and Side Tables</h3>
+        <p>
+          Similar exposure to a dining table but less heat. Three to four coats is ample. Watch for plant pots, which are the most common cause of water damage on a coffee table — a saucer and a felt pad prevent a repair.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Bookshelves and Cabinets</h3>
+        <p>
+          Very light duty — these surfaces are barely touched once loaded. Two or three coats of a water-based finish is plenty, and the fast recoat time means the whole job fits in a day. There is no reason to spend on a premium finish here.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Chairs, Stools and Turned Legs</h3>
+        <p>
+          Shape is the problem, not durability. Wipe-on poly is the right answer for anything with spindles, carving or mouldings, because a brush inevitably floods the inside corners and leaves runs that you will only notice once they have cured.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Painted Furniture</h3>
+        <p>
+          Water-based only, without exception. An oil-based topcoat over white or pale paint will turn it cream within a year and yellow within three. This is the single most common finishing regret we hear about, and it is entirely avoidable.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Antiques and Restoration</h3>
+        <p>
+          Think carefully before putting polyurethane on an old piece at all. Poly is difficult to repair locally and difficult to remove, and on a period piece it can reduce value considerably. Shellac and traditional varnishes are repairable in ways polyurethane is not.
+        </p>
+
+        <h2 id="applying" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          5. Getting a Glass-Smooth Finish
+        </h2>
+
+        <p>
+          <strong>Sand properly first, and stop at the right grit.</strong> Work up to 180 or 220 for most furniture. Going finer burnishes the surface and can prevent stain and finish from keying in evenly, which shows up as blotching.
+        </p>
+
+        <p>
+          <strong>Remove every trace of dust.</strong> Vacuum, then wipe with a cloth barely damp with the appropriate solvent — water for water-based finishes, mineral spirits for oil. Dust in the first coat is the defect people notice most.
+        </p>
+
+        <p>
+          <strong>Stir, never shake.</strong> Shaking whips air into the finish and every bubble transfers to the surface. Stir slowly with a flat stick, lifting the settled flattening agent off the bottom.
+        </p>
+
+        <p>
+          <strong>Thin coats, always.</strong> A thick coat sags, traps solvent and cures soft. Three thin coats are stronger, clearer and smoother than two heavy ones, and they dry faster in total.
+        </p>
+
+        <p>
+          <strong>Use the right applicator.</strong> A quality synthetic brush for water-based finishes — natural bristle absorbs water and goes limp. A natural bristle brush or a foam applicator for oil-based. Our guide to <a href="/best-brush-for-water-based-polyurethane/">brushes for water-based polyurethane</a> covers the specifics.
+        </p>
+
+        <p>
+          <strong>Keep a wet edge and do not overwork it.</strong> Lay the finish on, tip it off once in the direction of the grain, and move on. Going back over a surface that has begun to set is what produces drag marks and a rough texture.
+        </p>
+
+        <p>
+          <strong>Sand lightly between coats.</strong> 320 or 400 grit, two or three light passes, just enough to remove nibs and raised grain. Wipe the dust off before recoating.
+        </p>
+
+        <p>
+          <strong>Leave the last coat alone</strong>, unless you intend to rub out the entire surface with fine abrasive and wax — which is how a genuinely glass-smooth top is achieved, and which requires enough film thickness to sand into safely.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Temperature and Humidity</h3>
+
+        <p>
+          Both finishes are fussier about conditions than the tins admit. Below about 60°F an oil-based polyurethane cures slowly and can stay tacky for days; a water-based one may not coalesce properly at all, leaving a film that stays soft and cloudy no matter how long you wait. An unheated garage or a cold basement workshop in autumn is by far the most common place where this goes wrong.
+        </p>
+
+        <p>
+          High humidity slows water-based finishes considerably, since the water has nowhere to go. If the air is damp, extend your recoat intervals rather than trusting the touch test — a surface can feel dry while the film underneath is still full of water, and recoating over that traps it permanently.
+        </p>
+
+        <p>
+          The comfortable working range for both is roughly 65 to 75°F with moderate humidity, which for most people means finishing indoors rather than in a workshop. It is worth moving a piece into the house for finishing and moving it back out afterwards.
+        </p>
+
+        <h2 id="cure" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          6. Cure Time and Real Durability
+        </h2>
+
+        <p>
+          The distinction between dry and cured causes more damage to newly finished furniture than any application error. Dry means the solvent or water has left and the surface is firm. Cured means the film has reached its final hardness, and that takes far longer.
+        </p>
+
+        <p>
+          Water-based polyurethane is typically handleable in a few hours and recoatable in two to three, but full hardness takes one to two weeks. Oil-based is touch-dry in six to eight hours, recoatable overnight, and fully cured in three to four weeks.
+        </p>
+
+        <p>
+          During that window the film is soft enough to take an impression. A lamp base, a laptop, a fruit bowl or a plastic placemat left in one spot will emboss the surface permanently, and a felt pad left on a fresh finish can bond to it. This is why a table that looked perfect on day three has a visible ring by week two.
+        </p>
+
+        <p>
+          Practical guidance: light use after 48 hours, nothing left standing in one place for two weeks, and no placemats or tablecloths for a month. If you must use the piece sooner, put something under objects that lifts them clear and move them daily.
+        </p>
+
+        <p>
+          One last point on longevity. A polyurethane film fails at the edges first — the front lip of a table, the arms of a chair, the leading edge of a shelf — because that is where it gets handled and knocked. Applying an extra coat to those areas specifically costs almost nothing and noticeably extends the life of the finish.
+        </p>
+
+
+        <!-- Common Mistakes -->
+        <div id="common-mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Common Mistakes</h2>
+          <div class="space-y-4">
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Using floor-grade polyurethane on furniture</h3>
+              <p class="text-gray-700 m-0">Floor finishes are formulated for abrasion resistance and build, not for clarity or feel. On a table top they go on thick, look plastic, and are far harder to rub out to a fine surface.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Shaking the can</h3>
+              <p class="text-gray-700 m-0">Every bubble you introduce ends up in the film. Stir slowly with a stick instead, and never shake — this single habit causes more ruined table tops than any product defect.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Recoating before the previous coat has hardened</h3>
+              <p class="text-gray-700 m-0">Touch-dry is not ready. Oil-based poly wants overnight between coats and water-based at least two to three hours. Recoating early traps solvent and leaves a soft finish that never fully hardens.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Sanding the final coat to fix a flaw</h3>
+              <p class="text-gray-700 m-0">Sanding through the last coat means recoating the whole surface, not the spot. Fix defects between coats, and leave the final coat alone unless you are deliberately rubbing out the entire panel.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Putting anything heavy on it at one week</h3>
+              <p class="text-gray-700 m-0">Dry to the touch in hours, fully cured in weeks. A lamp base or a laptop left on a two-week-old table top will emboss the finish permanently.</p>
+            </div>
+          </div>
+        </div>
+
+        <h2 id="faq" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          Frequently Asked Questions
+        </h2>
+
+        <div class="space-y-6">
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">What is the best polyurethane for furniture?</h3>
+            <p class="text-gray-700 m-0">For most furniture, a water-based polyurethane — it stays clear, does not yellow over time, and has almost no odour. Choose oil-based when you want the warm amber tone it adds to walnut, cherry and oak, or when the piece is a hard-working table top that needs maximum film toughness.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Does water-based polyurethane yellow?</h3>
+            <p class="text-gray-700 m-0">No, and that is its main advantage. It dries genuinely clear and stays that way for decades. Oil-based polyurethane ambers noticeably within the first year and keeps deepening, which looks wonderful on walnut and quite wrong on white maple or a painted piece.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">How many coats of polyurethane on furniture?</h3>
+            <p class="text-gray-700 m-0">Three coats is the sensible default for most pieces. A dining table or anything that will see drinks and heat benefits from four or five. More than that adds thickness without meaningful protection and starts to look like a coating rather than a finish.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Should I use wipe-on or brush-on polyurethane?</h3>
+            <p class="text-gray-700 m-0">Wipe-on for anything with detail, carving or turned legs, and for beginners generally — it is almost impossible to get runs or brush marks. Brush-on builds much faster, so it is the better choice on large flat surfaces like a table top where you want film thickness.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Can you put polyurethane over stain?</h3>
+            <p class="text-gray-700 m-0">Yes, provided the stain is fully dry — typically 24 hours for oil-based stain, longer in humid conditions. The one combination to be careful with is water-based poly over oil-based stain, which needs the stain properly cured or the finish can lift.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">What sheen is best for furniture?</h3>
+            <p class="text-gray-700 m-0">Satin for most pieces. It looks like wood rather than plastic, and it hides fingerprints, dust and small surface flaws far better than gloss. Use semi-gloss or gloss where you specifically want depth and reflection, and matte on rustic or painted pieces.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">How long before furniture can be used?</h3>
+            <p class="text-gray-700 m-0">Light use after 24 to 48 hours, but full cure takes seven to thirty days depending on the product. Until then the film is soft enough to emboss, so avoid placemats, laptops, plant pots and anything left in one place for long.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Do I need to sand between coats?</h3>
+            <p class="text-gray-700 m-0">Yes, lightly. A quick pass with 320 or 400 grit knocks down dust nibs and raised grain and gives the next coat something to key into. It is not about removing material — two or three light strokes per area is enough.</p>
+          </div>
+        </div>
+
+        <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+          Related Wood Finishing Guides
+        </h2>
+
+        <ul>
+          <li><a href="/best-water-based-polyurethane-for-floors/">Best Water-Based Polyurethane for Floors</a> — the same chemistry judged on very different criteria.</li>
+          <li><a href="/best-polyurethane-for-stairs/">Best Polyurethane for Stairs</a> — where abrasion and slip resistance dominate.</li>
+          <li><a href="/best-brush-for-water-based-polyurethane/">Best Brush for Water-Based Polyurethane</a> — the synthetic brushes that avoid streaking.</li>
+          <li><a href="/best-teak-oil/">Best Teak Oil</a> — for furniture where a penetrating oil beats a film.</li>
+        </ul>
+
+        <div class="mt-16 bg-gray-900 rounded-2xl p-8 text-gray-200">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="mb-4">
+            For the majority of furniture, a water-based polyurethane in satin is the right answer: it stays clear, it does not yellow, it smells of very little, and three coats gives a finish that looks like wood rather than like a coating.
+          </p>
+          <p class="m-0">
+            Reach for oil-based when the warmth is the point — walnut, cherry, oak — or when the piece is a hard-used table top and you want the toughest film available. And whichever you choose, the technique matters more than the brand: thin coats, no shaking, and real patience between them.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <MoreInCategory category="Home Improvement" links={moreInCategory} />
+    <AuthorBio />
+  </article>
+</Layout>
