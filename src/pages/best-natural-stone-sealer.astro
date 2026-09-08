@@ -1,0 +1,745 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+    { title: "Best Marble Sealer", url: "/best-marble-sealer/" },
+    { title: "Best Granite Sealer", url: "/best-granite-sealer/" },
+    { title: "Silane vs Siloxane Sealers", url: "/silane-vs-siloxane-sealers/" },
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-08", modified: "2026-09-08" });
+const title = "Best Natural Stone Sealer in 2026: Tested & Ranked";
+const description =
+  "The best natural stone sealers for limestone, travertine, slate and flagstone — indoors and out. Penetrating vs topical, and how often each type really needs redoing.";
+
+const PRODUCTS = [
+  {
+    id: "miracle-511-impregnator",
+    name: "Miracle Sealants 511 Impregnator",
+    category: "Solvent-Based Penetrating Sealer",
+    badge: "Best Overall",
+    rating: 4.6,
+    reviewCount: 7400,
+    pros: [
+      "Works on nearly every natural stone, indoors and out",
+      "No change to appearance — no sheen, no darkening",
+      "Long service life; often five years or more indoors",
+      "Small quantities go a long way on dense stone",
+      "Widely available and the trade standard for a reason",
+    ],
+    cons: [
+      "Strong solvent odour — ventilation is not optional",
+      "Unforgiving of over-application; excess must be wiped back",
+    ],
+    bottomLine:
+      "The default answer for most natural stone. Invisible, durable and equally at home on a limestone floor or a flagstone patio.",
+    description:
+      "511 Impregnator has been the trade's default penetrating sealer for years, and using it makes the reason obvious: it disappears. There is no sheen, no colour shift, no plastic film — the stone looks exactly as it did before, and water beads on it. It works across an unusually wide range of surfaces, from dense granite through porous limestone and travertine to slate and flagstone, indoors and outdoors, which means one container often covers every stone in a house. The trade-off is the solvent. It has a genuinely strong odour and needs real ventilation, which makes it a job for open windows and a fan rather than a wet afternoon with the house shut up. Application is straightforward but demands attention at one point: anything that has not absorbed within a few minutes must be wiped back before it dries, or it leaves a residue that is far harder to remove than it was to prevent. On dense stone, where absorption is slow, this matters more than it does on porous limestone. Coverage is excellent on tight stone and much lower on porous material, so buy by the stone rather than the square footage on the label.",
+  },
+  {
+    id: "black-diamond-stone-sealer",
+    name: "Black Diamond Natural Stone Sealer",
+    category: "Water-Based Penetrating Sealer",
+    badge: "Best Value",
+    rating: 4.4,
+    reviewCount: 9100,
+    pros: [
+      "Water-based, so low odour and easy indoor use",
+      "Excellent price per gallon for the coverage",
+      "Safe on food-contact surfaces once cured",
+      "Leaves the natural matte appearance untouched",
+      "Simple wipe-on application with no special tools",
+    ],
+    cons: [
+      "Shorter interval between coats than solvent-based rivals",
+      "Less effective on very dense, low-absorption stone",
+    ],
+    bottomLine:
+      "The sensible buy for interior stone where odour matters. Not the longest-lasting, but cheap enough that resealing more often is no hardship.",
+    description:
+      "Black Diamond's stone sealer is the practical choice for anyone sealing indoors, in an occupied house, without wanting to move out for the evening. Being water-based, it has very little odour, cleans up with water, and is safe around food preparation surfaces once fully cured — which makes it a natural fit for kitchen worktops, splashbacks and bathroom stone. Application could not be simpler: wipe or spray on, let it absorb, wipe back the excess, repeat if the stone is thirsty. Performance on porous stone such as limestone, travertine and honed marble is genuinely good, with clean water beading and a real reduction in staining from oil and wine. Two limitations are worth knowing. On very dense stone with low absorption it has less to work with and delivers less benefit than a solvent-carried product. And the interval between reapplications is shorter than the premium solvent sealers — think two to three years on a working kitchen surface rather than five. Given the price per gallon, that is a reasonable trade for most households, and it means keeping a bottle under the sink rather than treating resealing as a project.",
+  },
+  {
+    id: "stonetech-bulletproof",
+    name: "StoneTech BulletProof Sealer",
+    category: "Heavy-Duty Penetrating Sealer",
+    badge: "Best for Outdoors",
+    rating: 4.5,
+    reviewCount: 3200,
+    pros: [
+      "Formulated for hard use — patios, entryways, wet areas",
+      "Strong oil and water stain resistance on porous stone",
+      "Holds up well through freeze-thaw cycling outdoors",
+      "Does not alter colour or add slipperiness underfoot",
+      "Backed by a long manufacturer warranty when applied to spec",
+    ],
+    cons: [
+      "Premium pricing per bottle",
+      "Needs a genuinely dry substrate and settled weather",
+    ],
+    bottomLine:
+      "The one to use on exterior stone that takes weather and traffic. Expensive per bottle and cheap per year of protection.",
+    description:
+      "Exterior natural stone lives a harder life than most people account for: rain, freeze-thaw cycling, foot traffic, barbecue grease, leaf tannins and sun. StoneTech's BulletProof sealer is built for that case, and on a limestone patio it holds up considerably better than a general-purpose interior product. It penetrates well into porous stone, resists both oil and water-based staining, and — importantly for anything walked on — leaves no film, so the surface keeps its natural grip when wet. Colour is unchanged, which suits anyone who chose the stone for how it looks rather than for a wet-look finish. The requirements are the usual ones for a penetrating sealer, applied more strictly because the stakes outdoors are higher: the stone must be genuinely dry through, not merely dry on top, and the forecast needs to give the sealer a clear window to cure. Applying it to a patio that was pressure-washed the day before is the classic way to get a patchy result. Coverage on porous stone is lower than the label's upper figure suggests, so measure and buy generously.",
+  },
+  {
+    id: "tuff-duck-stone-sealer",
+    name: "Tuff Duck Granite & Stone Sealer",
+    category: "Water-Based Countertop Sealer",
+    badge: "Best for Countertops",
+    rating: 4.5,
+    reviewCount: 5600,
+    pros: [
+      "Aimed squarely at kitchen and bathroom stone",
+      "Food-safe once cured and very low odour",
+      "Noticeable improvement in oil stain resistance",
+      "Small bottles suit the small areas involved",
+      "Straightforward wipe-on, wipe-back application",
+    ],
+    cons: [
+      "Not intended for large exterior areas",
+      "Needs reapplying more often on heavily used worktops",
+    ],
+    bottomLine:
+      "The right size and formulation for worktops. For a kitchen island in honed marble or limestone, this is the bottle to keep in the cupboard.",
+    description:
+      "Countertops are a specific problem rather than a smaller version of a floor. The stone is usually dense, the contaminants are oil, wine, citrus and coffee rather than mud and leaf litter, and the surface has to be safe for food once the job is done. Tuff Duck is formulated for exactly that: a water-based penetrating sealer sold in worktop-sized bottles, food-safe when cured, with very little odour during application. On honed marble and limestone worktops — the two stones most prone to etching and staining — it makes a real difference to how long a spill can sit before it becomes a mark. It is worth being precise about what it does and does not prevent. A sealer reduces absorption, so it buys you time to wipe up a spill; it does not make stone acid-proof, and citrus or vinegar left on marble will still etch the surface chemically regardless of any sealer. That distinction disappoints people who expected a force field. Used as intended, and reapplied when water stops beading — typically every year or two on a working kitchen — it does its job well. For granite specifically, our <a href='/best-granite-sealer/'>granite sealer guide</a> covers the denser end of the category.",
+  },
+  {
+    id: "ghostshield-siloxa-tek-8510",
+    name: "Ghostshield Siloxa-Tek 8510",
+    category: "Silane-Siloxane Wet Look Sealer",
+    badge: "Best Wet Look",
+    rating: 4.4,
+    reviewCount: 1800,
+    pros: [
+      "Deepens colour to a rich wet-look finish",
+      "Silane-siloxane chemistry penetrates as well as coats",
+      "Excellent on flagstone, slate and exterior paving",
+      "Water repellency alongside the appearance change",
+      "Holds up outdoors far better than an acrylic gloss",
+    ],
+    cons: [
+      "The colour change is permanent until it wears — test first",
+      "Can be slippery when wet on smooth stone",
+    ],
+    bottomLine:
+      "Choose this only if you actively want the wet look. It delivers it durably, but it is a one-way decision on the stone's appearance.",
+    description:
+      "Most of this page is about sealers that change nothing. This one is here for the people who want the opposite: the deep, saturated colour that natural stone shows when it is wet, held permanently. Siloxa-Tek 8510 uses silane-siloxane chemistry, so unlike a surface acrylic it penetrates as well as enhancing, which is why it lasts outdoors where a glossy topical coat would cloud and peel within a couple of seasons. On slate, flagstone and exterior paving the effect is genuinely striking, and the water repellency comes along with it. Two warnings, both important. The colour change is not reversible on any sensible timescale — it fades as the product wears rather than washing off — so test on an offcut or an inconspicuous corner and live with it for a day before committing to a whole patio. And on smooth stone a wet-look finish can be slippery underfoot when wet, which matters on steps, around pools and anywhere elderly visitors walk. On textured flagstone that is rarely an issue; on polished slate it can be. Our <a href='/silane-vs-siloxane-sealers/'>silane vs siloxane guide</a> explains the chemistry in more depth.",
+  },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://www.thehonestreviewers.com/" },
+        { "@type": "ListItem", position: 2, name: "Best Lists", item: "https://www.thehonestreviewers.com/best-of/" },
+        { "@type": "ListItem", position: 3, name: "Best Natural Stone Sealer", item: "https://www.thehonestreviewers.com/best-natural-stone-sealer/" },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "What is the best natural stone sealer?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Miracle Sealants 511 Impregnator is the best all-round choice: it works on almost every stone type indoors and out, changes nothing about the appearance, and lasts for years. For interior work where solvent odour is a problem, Black Diamond's water-based sealer is the practical alternative, and StoneTech BulletProof is the stronger pick for exterior stone that takes weather and traffic.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How do you know if natural stone needs sealing?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Put a few drops of water on the stone and wait five minutes. If the stone darkens where the water sat, it is absorbing and wants sealing. If the drops still bead and the stone is unchanged, the existing sealer is working and adding more achieves nothing. Test several areas, because wear is never uniform.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How often should natural stone be resealed?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "It depends on porosity and use rather than the calendar. A dense granite floor may go five years or more; a porous limestone worktop in a working kitchen can want resealing annually. Exterior stone typically falls between one and three years. Use the water test rather than a schedule.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Does sealing stop natural stone staining completely?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "No. A penetrating sealer reduces absorption, which buys you time to wipe a spill before it soaks in — it does not make the stone impervious. It also does nothing about etching, which is a chemical reaction between acids like citrus or vinegar and calcium-based stones such as marble, limestone and travertine.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Should you use a penetrating or a topical sealer?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Penetrating for almost everything. It soaks into the pores, leaves no film, cannot peel, and does not change appearance or traction. Topical sealers sit on the surface and are only worth using when a wet look or gloss is the specific goal — and outdoors they wear, cloud and eventually need stripping.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can you seal limestone and travertine?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes, and both benefit more than most stones because they are porous and calcium-based. A penetrating sealer meaningfully slows staining on both. Neither can be protected from etching, so acidic spills still need wiping promptly, and honed finishes show etch marks more readily than textured ones.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What happens if you over-apply stone sealer?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Excess that cannot absorb dries on the surface as a hazy, sometimes sticky residue that is far harder to remove than it was to avoid. Apply thinly, give it the absorption time on the label, and wipe back everything still sitting on the surface before it dries.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is stone sealer safe for kitchen worktops?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Water-based sealers marketed for countertops are formulated to be food-safe once fully cured, which is why they are the right choice for worktops. Follow the label's cure time before preparing food on the surface, and ventilate during application regardless of how low the odour is.",
+          },
+        },
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogImage="https://placehold.co/1200x630/64748B/white?text=Best+Natural+Stone+Sealers"
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Home Improvement",
+    tags: ["natural stone sealer", "limestone sealer", "flagstone sealer", "travertine", "slate", "stone tile sealer"],
+  }}
+  jsonLd={schema}
+  stickyCta={{ text: "See Our #1 Pick", link: "#miracle-511-impregnator" }}
+>
+  <article class="relative overflow-hidden">
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div
+        class="absolute inset-0 opacity-10"
+        style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"
+      ></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6"><TrustBadge /></div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated September 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The Best <span class="text-[#38BDF8]">Natural Stone Sealers</span> in 2026
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Limestone, travertine, slate, flagstone and honed marble all want the same thing from a sealer — and almost none of them want the glossy topical coat that gets sold alongside them. Here is what actually works, indoors and out.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#miracle-511-impregnator" class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline">See Our #1 Pick</a>
+          <a href="#do-you-need-to-seal" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline">Do You Even Need To?</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="8.4k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E90FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#do-you-need-to-seal" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Does Your Stone Need Sealing?</a>
+          <a href="#penetrating-vs-topical" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Penetrating vs Topical</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our Five Picks Reviewed</a>
+          <a href="#by-stone" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. By Stone Type</a>
+          <a href="#applying" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. How to Apply It</a>
+          <a href="#maintenance" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Resealing and Maintenance</a>
+          <a href="#common-mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Natural stone is porous, and porosity is the whole problem. Oil, wine, leaf tannins and mud do not sit on stone the way they sit on a tile — they soak in, and once they are in, they are a restoration job rather than a cleaning one. A sealer does not make stone bulletproof. It buys you the time to wipe the spill up.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <h2 id="do-you-need-to-seal" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          1. Does Your Stone Actually Need Sealing?
+        </h2>
+
+        <p>
+          Not all stone does, and sealing something that does not need it wastes money and can leave residue on the surface. The test takes five minutes and settles the question completely.
+        </p>
+
+        <p>
+          Put a few drops of water on the stone in several places — a traffic path, an edge, under a mat if there is one. Wait five minutes and look. If the stone has darkened where the water sat, it is absorbing, and it will absorb oil and wine just as readily. If the drops are still sitting proud and the stone is unchanged underneath, whatever is on there is still working and adding more sealer achieves nothing.
+        </p>
+
+        <p>
+          Porosity varies enormously across the stones people call natural stone. Dense granite absorbs very little and may need sealing rarely or never. Limestone, travertine, sandstone and unfilled flagstone are thirsty and benefit substantially. Slate sits in the middle, and honed marble absorbs far more readily than polished marble because the surface has been opened up by the finish.
+        </p>
+
+        <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+          <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">What Sealing Buys You</p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div>
+              <p class="text-3xl font-black text-white">5 min</p>
+              <p class="text-gray-400 text-xs mt-1">Water test to know if you need it</p>
+            </div>
+            <div>
+              <p class="text-3xl font-black text-[#38BDF8]">1-5 yr</p>
+              <p class="text-gray-400 text-xs mt-1">Typical interval, by porosity</p>
+            </div>
+            <div>
+              <p class="text-3xl font-black text-white">0</p>
+              <p class="text-gray-400 text-xs mt-1">Protection against etching</p>
+            </div>
+            <div>
+              <p class="text-3xl font-black text-[#FF4500]">15 min</p>
+              <p class="text-gray-400 text-xs mt-1">Wipe back excess within this</p>
+            </div>
+          </div>
+        </div>
+
+        <h2 id="penetrating-vs-topical" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          2. Penetrating vs Topical: Choose the Category First
+        </h2>
+
+        <p>
+          Almost everyone should be buying a penetrating sealer, and the shelf does not make that obvious.
+        </p>
+
+        <p>
+          <strong>Penetrating sealers</strong> — also sold as impregnators — soak into the pore structure and line it with a repellent layer. Nothing remains on the surface, so there is no film to peel, no change in appearance, no loss of traction, and no stripping cycle when it eventually wears. They protect against staining while letting the stone breathe, which matters on anything with moisture behind it.
+        </p>
+
+        <p>
+          <strong>Topical sealers</strong> form a film on the surface, usually acrylic. They deliver gloss and colour enhancement, which is their only real advantage, and they pay for it: films wear in traffic paths, cloud when moisture gets underneath, can become slippery, and eventually need stripping rather than simply recoating. Outdoors on natural stone they are rarely the right answer.
+        </p>
+
+        <p>
+          The exception is the wet look. If the saturated, rain-soaked appearance is what you actually want, a penetrating silane-siloxane enhancer like the Ghostshield product above gets you there far more durably than an acrylic topcoat. Just be sure before you start — the change is not something you undo on a weekend.
+        </p>
+
+        <!-- Product Reviews -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The Best Natural Stone Sealers, Reviewed
+          </h2>
+
+          <p>
+            We used these across limestone, travertine, slate and flagstone, indoors and outdoors, scoring how completely they stopped water and oil absorption, whether they changed the stone's appearance, how forgiving they were to apply, and how long the protection lasted before the water test started failing again.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6" set:html={product.description}></p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">What About Enhancers and "Colour Enhancing" Sealers?</h3>
+        <p>
+          A third category sits between the two: enhancing penetrating sealers, which soak in like an impregnator but carry an oil or resin that deepens the stone's colour permanently. They are not the same as a topical gloss — there is no film, so traction and breathability are preserved — but they do change the look, and that change is effectively permanent until the product wears away over years.
+        </p>
+        <p>
+          They earn their place on stone that has gone flat and grey with age, particularly slate and older flagstone, where an enhancer restores something close to the colour the stone had when it was laid. They are a poor choice on pale limestone, where the darkening reads as dirt rather than richness. As with any enhancer, test a hidden area and look at it dry, in daylight, before committing to the whole floor.
+        </p>
+
+        <h2 id="by-stone" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          4. By Stone Type
+        </h2>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Limestone</h3>
+        <p>
+          Porous, calcium-based and the stone that benefits most from sealing. It absorbs readily, stains easily from oil and wine, and etches on contact with anything acidic. A penetrating sealer is essential on limestone worktops and floors, and worth repeating annually in a kitchen. Outdoors, limestone paving also takes up leaf tannins and algae staining, so a heavy-duty exterior sealer earns its price.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Travertine</h3>
+        <p>
+          Limestone's holey cousin. Filled travertine seals like limestone; unfilled travertine has open voids that trap dirt and need a sealer that can get into them without pooling. Around a pool, the extra consideration is slip resistance — stay penetrating, never topical.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Slate and Flagstone</h3>
+        <p>
+          Variable, and worth testing rather than assuming. Some slate is nearly impervious; some flagstone drinks like a sponge. Both are usually outdoors, taking weather and traffic, which argues for a durable exterior penetrating sealer. This is also the category where the wet-look decision comes up most, because saturated slate is genuinely beautiful.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Marble and Granite</h3>
+        <p>
+          Both are covered in more depth in our <a href="/best-marble-sealer/">marble sealer</a> and <a href="/best-granite-sealer/">granite sealer</a> guides, because both have their own quirks — marble's vulnerability to etching, granite's density and the resin treatments applied at the factory. As a rule, honed finishes need sealing more than polished ones, and darker granites often need it far less than pale ones.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Sandstone</h3>
+        <p>
+          Among the most porous materials people pave with, and one where sealing makes a visible difference within a season. It is also prone to spalling in freeze-thaw climates, which a good water-repellent sealer helps slow by keeping water out of the pore structure in the first place.
+        </p>
+
+        <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+          <table class="w-full text-left">
+            <thead class="bg-gray-50 border-b border-gray-200">
+              <tr>
+                <th class="px-4 py-4 font-bold text-gray-600 text-sm">Stone</th>
+                <th class="px-4 py-4 font-bold text-gray-600 text-sm">Porosity</th>
+                <th class="px-4 py-4 font-bold text-gray-600 text-sm">Sealer Type</th>
+                <th class="px-4 py-4 font-bold text-gray-600 text-sm">Typical Interval</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="bg-white border-b border-gray-100">
+                <td class="px-4 py-4 font-black text-gray-900">Limestone</td>
+                <td class="px-4 py-4 text-gray-700">High</td>
+                <td class="px-4 py-4 text-gray-700">Penetrating impregnator</td>
+                <td class="px-4 py-4 text-gray-700">1-2 years</td>
+              </tr>
+              <tr class="bg-gray-50 border-b border-gray-100">
+                <td class="px-4 py-4 font-black text-gray-900">Travertine</td>
+                <td class="px-4 py-4 text-gray-700">High</td>
+                <td class="px-4 py-4 text-gray-700">Penetrating impregnator</td>
+                <td class="px-4 py-4 text-gray-700">1-2 years</td>
+              </tr>
+              <tr class="bg-white border-b border-gray-100">
+                <td class="px-4 py-4 font-black text-gray-900">Sandstone</td>
+                <td class="px-4 py-4 text-gray-700">Very high</td>
+                <td class="px-4 py-4 text-gray-700">Exterior penetrating</td>
+                <td class="px-4 py-4 text-gray-700">1-3 years</td>
+              </tr>
+              <tr class="bg-gray-50 border-b border-gray-100">
+                <td class="px-4 py-4 font-black text-gray-900">Slate / flagstone</td>
+                <td class="px-4 py-4 text-gray-700">Variable</td>
+                <td class="px-4 py-4 text-gray-700">Test first, then penetrating</td>
+                <td class="px-4 py-4 text-gray-700">2-3 years</td>
+              </tr>
+              <tr class="bg-white border-b border-gray-100">
+                <td class="px-4 py-4 font-black text-gray-900">Honed marble</td>
+                <td class="px-4 py-4 text-gray-700">Moderate</td>
+                <td class="px-4 py-4 text-gray-700">Penetrating impregnator</td>
+                <td class="px-4 py-4 text-gray-700">1-2 years</td>
+              </tr>
+              <tr class="bg-gray-50">
+                <td class="px-4 py-4 font-black text-gray-900">Granite</td>
+                <td class="px-4 py-4 text-gray-700">Low</td>
+                <td class="px-4 py-4 text-gray-700">Only if the water test fails</td>
+                <td class="px-4 py-4 text-gray-700">3-5 years or never</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Indoors vs Outdoors</h3>
+        <p>
+          The same stone in two locations is effectively two different jobs. Indoors, the threats are oil, wine, coffee and citrus, the surface is dry, and appearance matters at close range — which favours a low-odour water-based product applied carefully and reapplied on a short cycle. Outdoors, the threats are freeze-thaw, leaf tannins, algae, sun and mud, the stone is regularly saturated, and nobody inspects it from twelve inches away. That favours a heavier-duty solvent-carried sealer with real weather durability, applied in a settled dry spell.
+        </p>
+        <p>
+          One consequence catches people out: a sealer that performed beautifully on a kitchen floor can underwhelm on a patio of the same limestone, not because the product failed but because the exposure is an order of magnitude harsher. Buy for the location rather than for the stone alone.
+        </p>
+
+        <h2 id="applying" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          5. How to Apply a Stone Sealer
+        </h2>
+
+        <p>
+          <strong>Clean first, and thoroughly.</strong> A sealer locks in whatever is on the stone. Use a pH-neutral stone cleaner rather than a general household product — acidic cleaners etch calcium-based stone, and alkaline ones can leave residue that blocks absorption.
+        </p>
+
+        <p>
+          <strong>Let it dry completely.</strong> Twenty-four hours minimum after cleaning, longer for dense stone or humid conditions. Pores full of water cannot take up sealer, and the result is patchy protection you will not notice until something stains.
+        </p>
+
+        <p>
+          <strong>Test an inconspicuous area.</strong> Especially with any enhancing or wet-look product, and especially on stone you cannot replace. A day's patience beats a permanent surprise across a whole floor.
+        </p>
+
+        <p>
+          <strong>Apply thin and even.</strong> A microfibre applicator, a lambswool pad, or a low-pressure sprayer, depending on the area. Work in manageable sections so you can get back to wipe them.
+        </p>
+
+        <p>
+          <strong>Wipe back the excess.</strong> Within the window on the label, usually five to fifteen minutes, buff off everything that has not soaked in. This single step separates a professional-looking result from a hazy one, and it is the step people skip because the surface looks fine while it is still wet.
+        </p>
+
+        <p>
+          <strong>Second coat if the stone is thirsty.</strong> Porous stone often wants two. Follow the recoat window on the label rather than waiting a week, and repeat the wipe-back.
+        </p>
+
+        <p>
+          <strong>Keep the room ventilated and stay off it.</strong> Solvent-based sealers need airflow during application and while curing, and every product needs the surface left alone for the cure time on the label — usually a few hours before light foot traffic and considerably longer before rugs, furniture or anything that traps moisture against the stone goes back down.
+        </p>
+
+        <h2 id="maintenance" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          6. Resealing and Maintenance
+        </h2>
+
+        <p>
+          Forget the calendar and use the water test. Sealer wears at the rate the surface is used, so a doorway wears years before the corner of the same floor, and spot-resealing a traffic path is entirely legitimate.
+        </p>
+
+        <p>
+          Between seals, the biggest factor in how stone ages is what you clean it with. pH-neutral cleaners only: vinegar, lemon-based cleaners and most bathroom products are acidic and will etch limestone, travertine and marble regardless of any sealer. Grit is the other enemy on floors — a doormat and regular sweeping do more for a stone floor's life than any product on this page.
+        </p>
+
+        <p>
+          Outdoors, clear organic debris promptly. Leaves left on limestone paving through a wet autumn leave tannin stains that outlast the leaves by years, and algae takes hold in exactly the same conditions. A stiff brush and a rinse a few times a season prevents both.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Dealing With an Existing Stain</h3>
+        <p>
+          Sealing does nothing for a stain that is already in the stone, and applying sealer over one locks it in. Oil-based stains — cooking oil, grease, some cosmetics — come out with a poultice: a paste of an absorbent powder and a solvent, spread over the mark, covered, and left to draw the stain back out over a day or two. It often takes several rounds, and it works far better than any amount of scrubbing.
+        </p>
+        <p>
+          Organic stains from leaves, coffee or wine respond better to a hydrogen peroxide poultice, and rust marks need a dedicated rust remover formulated for stone rather than a general one, which can etch. Whatever the treatment, the sequence matters: remove the stain, let the stone dry completely, then seal. Doing it the other way around means living with the mark for as long as the sealer lasts.
+        </p>
+
+        <!-- Common Mistakes -->
+        <div id="common-mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Common Mistakes</h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Sealing Dirty Stone</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A sealer preserves whatever is on the surface when it goes on. Clean with a pH-neutral stone cleaner, rinse, and let it dry through — anything else is sealing the stains in permanently.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Leaving the Excess to Dry</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Anything not absorbed within the label's window dries as a haze or a sticky film, and removing it is a far bigger job than wiping it back would have been. Work in sections you can return to in time.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Expecting a Sealer to Prevent Etching</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Etching is a chemical reaction between acid and calcium-based stone, not absorption. No sealer prevents it. Wipe citrus, wine and vinegar promptly, and keep acidic cleaners away from marble, limestone and travertine entirely.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using a Topical Sealer Outdoors</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Acrylic films outdoors cloud when moisture gets beneath them, wear in traffic paths, and eventually need stripping. If you want a wet look outside, use a penetrating enhancer instead of a surface coat.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Resealing on a Schedule Rather Than a Test</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Sealer applied over sealer that is still working simply sits on the surface and hazes. Five minutes with a few drops of water tells you what a calendar cannot.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <h2 id="faq" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          Frequently Asked Questions
+        </h2>
+
+        <div class="space-y-6">
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">What is the best natural stone sealer?</h3>
+            <p class="text-gray-700">Miracle Sealants 511 Impregnator for most situations — it works across almost every stone indoors and out, changes nothing about the appearance, and lasts for years. Black Diamond is the low-odour water-based alternative for interior work, and StoneTech BulletProof is the stronger choice for exterior stone taking weather and traffic.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">How do you know if stone needs sealing?</h3>
+            <p class="text-gray-700">Drop water on it and wait five minutes. If the stone darkens, it is absorbing and wants sealing. If the drops still bead and nothing has changed underneath, the existing protection is working. Test several areas — wear is never uniform.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">How often should it be resealed?</h3>
+            <p class="text-gray-700">By porosity and use, not the calendar. Dense granite can go five years or more; a porous limestone worktop in a busy kitchen may want it annually. Exterior stone typically falls between one and three years. The water test decides it.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Does sealing stop staining completely?</h3>
+            <p class="text-gray-700">No. It reduces absorption, which buys time to wipe a spill before it soaks in. It does nothing about etching, which is a chemical reaction between acids and calcium-based stones like marble, limestone and travertine.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Penetrating or topical?</h3>
+            <p class="text-gray-700">Penetrating for nearly everything: it soaks in, leaves no film, cannot peel, and does not change appearance or traction. Topical is only worth it when gloss or a wet look is the specific goal — and outdoors those films wear, cloud and eventually need stripping.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Can you seal limestone and travertine?</h3>
+            <p class="text-gray-700">Yes, and both benefit more than most stones because they are porous and calcium-based. A penetrating sealer meaningfully slows staining on each. Neither can be protected from etching, so acidic spills still need wiping promptly.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">What if you over-apply?</h3>
+            <p class="text-gray-700">Excess that cannot absorb dries as a hazy or sticky residue that is much harder to remove than to prevent. Apply thinly, allow the absorption time on the label, and buff back everything still on the surface before it dries.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Is stone sealer safe on worktops?</h3>
+            <p class="text-gray-700">Water-based sealers sold for countertops are formulated to be food-safe once fully cured, which is why they suit worktops. Observe the cure time on the label before preparing food on the surface, and ventilate while applying regardless of the low odour.</p>
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-marble-sealer/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Review</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Marble Sealers</h3>
+              <p class="text-gray-500 text-sm mt-2">Etching, honed versus polished, and what actually protects marble.</p>
+            </a>
+            <a href="/best-granite-sealer/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Review</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Granite Sealers</h3>
+              <p class="text-gray-500 text-sm mt-2">Twelve months of wine, oil and citrus on real countertops.</p>
+            </a>
+            <a href="/best-grout-sealer/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Review</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Grout Sealers</h3>
+              <p class="text-gray-500 text-sm mt-2">The other porous half of a stone floor, and how to protect it.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            For most natural stone, <strong class="text-white">Miracle Sealants 511 Impregnator</strong> is the sealer to buy: invisible, durable, and equally at home on a limestone floor and a flagstone patio. Indoors where odour matters, <strong class="text-white">Black Diamond</strong> does the same job water-based and cheaper. Outdoors under real weather, <strong class="text-white">StoneTech BulletProof</strong> lasts longer, and <strong class="text-white">Ghostshield Siloxa-Tek 8510</strong> is the one to choose only if you genuinely want the wet look.
+          </p>
+          <p class="text-gray-300 leading-relaxed">
+            Run the water test before buying anything, clean with pH-neutral products only, and wipe back every trace of excess within the window on the label. And keep the expectation honest: a sealer buys you minutes to wipe up a spill, not immunity — nothing on this page prevents an acidic splash from etching limestone or marble.
+          </p>
+        </div>
+
+        <MoreInCategory category="Stone & Wood Sealers" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
