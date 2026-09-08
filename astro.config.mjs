@@ -167,6 +167,27 @@ const priorityGuides = new Set([
   'tekton-vs-snap-on',
   'lastiseal-reviews',
   'liquid-rubber-vs-drylok',
+
+  // September 2026: second pass over the organic positions export —
+  // driveway cost terms, drywall filler, and the sealer sub-categories
+  // that were ranking on neighbouring pages.
+  'concrete-driveway-cost',
+  'asphalt-driveway-cost',
+  'joint-compound-vs-spackle',
+  'how-long-does-spackle-take-to-dry',
+  'polymeric-sand-home-depot',
+  'polymeric-sand-colors',
+  'dominator-polymeric-sand-review',
+  'drylok-review',
+  'best-foundation-sealer',
+  'best-natural-stone-sealer',
+  'best-outdoor-concrete-stain',
+  'best-chimney-sealer',
+  'best-pool-deck-sealer',
+  'best-natural-look-paver-sealer',
+  'best-water-based-polyurethane-for-floors',
+  'best-teak-oil',
+  'does-flex-seal-work-on-concrete',
 ]);
 
 export default defineConfig({
