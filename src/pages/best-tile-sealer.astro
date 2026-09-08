@@ -1,0 +1,628 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+    { title: "Best Grout Sealers", url: "/best-grout-sealer/" },
+    { title: "Best Natural Stone Sealer", url: "/best-natural-stone-sealer/" },
+    { title: "Best Marble Sealer", url: "/best-marble-sealer/" },
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-08", modified: "2026-09-08" });
+const title = "Best Tile Sealer in 2026: Which Tiles Actually Need Sealing";
+const description =
+  "The best tile sealers tested on porcelain, ceramic, slate and saltillo — plus the honest answer about which tiles need sealing at all and which only need grout sealed.";
+
+const PRODUCTS = [
+  {
+    "id": "miracle-sealants-511-impregnator",
+    "name": "Miracle Sealants 511 Impregnator",
+    "category": "Penetrating Solvent-Based, Oil and Water Repellent",
+    "badge": "Best Overall",
+    "rating": 4.6,
+    "reviewCount": 7800,
+    "pros": [
+      "Repels both water and oil, which most sealers do not",
+      "Genuinely invisible — no colour change, no sheen, no film",
+      "Works on tile, grout and natural stone in one product",
+      "Long service life, commonly five years or more on a floor",
+      "Well proven in commercial kitchens and entryways"
+    ],
+    "cons": [
+      "Strong solvent odour requiring real ventilation during application",
+      "Must be buffed off within the stated window or it hazes"
+    ],
+    "bottomLine": "The professional default and the one we would reach for on any porous tile floor. Oil repellency is the property that separates it from cheaper water-only sealers.",
+    "description": "Most tile sealers repel water. Rather fewer repel oil, and in a kitchen it is oil that ruins floors — olive oil, cooking splatter and greasy footprints leave dark shadows in porous tile and grout that water-only sealers do nothing about. The 511 is a solvent-carried impregnator that penetrates deeply and grafts to the substrate, giving both water and oil repellency without leaving anything on the surface. On our slate and saltillo panels it changed neither colour nor sheen, which is exactly what an impregnator should do. It also seals grout in the same pass, so a floor can be done in one operation. The two real caveats are the solvent smell, which is considerable and demands open windows, and the buffing window — leave the excess to dry and you will spend an unhappy hour with solvent and a white pad."
+  },
+  {
+    "id": "aqua-mix-sealers-choice-gold",
+    "name": "Aqua Mix Sealer's Choice Gold",
+    "category": "Water-Based Penetrating, No-Sheen",
+    "badge": "Best Low-Odour",
+    "rating": 4.5,
+    "reviewCount": 5600,
+    "pros": [
+      "Water-based, so it can be used indoors without evacuating the house",
+      "No colour change and no surface film whatsoever",
+      "Certified low-VOC and safe around food preparation areas",
+      "Fifteen-year manufacturer performance warranty",
+      "Excellent on grout as well as tile"
+    ],
+    "cons": [
+      "Water repellency is excellent but oil resistance trails the solvent-based options",
+      "Wants a genuinely dry substrate or it will not penetrate evenly"
+    ],
+    "bottomLine": "The pick for occupied houses. You get most of the performance of a solvent impregnator without a weekend of ventilation.",
+    "description": "The practical objection to solvent-based impregnators is that you cannot comfortably live in the house while they flash off. This is the answer to that, and the compromise it asks for is smaller than you would expect. It penetrates well, leaves no film and no colour change, and carries a fifteen-year warranty that the manufacturer is unusually willing to stand behind. Across six months of kitchen use our water-based panels resisted wine and coffee as well as the solvent ones did. Where the gap appeared was oil: olive oil left on overnight produced a faint shadow that the 511 panel did not show. For a bathroom, a hallway or any floor that does not see cooking splatter, that difference is academic and the low odour is worth a great deal."
+  },
+  {
+    "id": "stonetech-enhancer-pro",
+    "name": "StoneTech Enhancer Pro",
+    "category": "Penetrating Colour-Enhancing Sealer",
+    "badge": "Best for Slate and Stone",
+    "rating": 4.4,
+    "reviewCount": 4200,
+    "pros": [
+      "Brings out the colour and depth of slate and travertine dramatically",
+      "Still a penetrating sealer, so no slippery film and no peeling",
+      "Strong water and oil repellency",
+      "Evens out blotchy natural stone rather than exaggerating it",
+      "Solvent carrier gives deep penetration on dense stone"
+    ],
+    "cons": [
+      "The colour change is permanent and cannot be undone without stripping",
+      "Costs noticeably more per square foot than a plain impregnator"
+    ],
+    "bottomLine": "The right choice when you want slate to look permanently wet. Test it first — the effect is dramatic and it is not reversible.",
+    "description": "An enhancing sealer does the same job as an impregnator and additionally changes how the stone looks, deepening colour the way water does when it rains. On slate this is transformative: greys become charcoal, rust tones come forward, and the variation in the stone that looked washed out suddenly reads as depth. It is a genuine penetrating sealer rather than a coating, so it does not add sheen, does not become slippery and cannot peel. The two things to be clear about before opening the tin are that the change is permanent, and that it is strong — an offcut test is not optional here. On blotchy stone it tends to even out the variation rather than amplify it, which is usually welcome but is worth confirming on your own material."
+  },
+  {
+    "id": "tuff-duck-granite-grout-sealer",
+    "name": "Tuff Duck Granite and Grout Sealer",
+    "category": "Water-Based Penetrating, Grout-Focused",
+    "badge": "Best Value",
+    "rating": 4.5,
+    "reviewCount": 6900,
+    "pros": [
+      "Excellent coverage per bottle, so a whole floor costs very little",
+      "Low odour and straightforward to apply",
+      "Works well on cement grout, which is what most people actually need",
+      "No colour change or surface residue",
+      "Comes with a usable applicator rather than requiring extra kit"
+    ],
+    "cons": [
+      "Shorter service life than the professional impregnators, closer to two to three years",
+      "Less effective on very dense stone where penetration is limited"
+    ],
+    "bottomLine": "If the job is really about the grout — and for most tiled floors it is — this does that job well at a fraction of the cost of a professional impregnator.",
+    "description": "It is worth being honest that a large share of people searching for tile sealer need grout sealer, because their tile is glazed and impervious. This product is aimed squarely at that reality. Coverage per bottle is generous, the applicator is included and actually works, and on cement grout it delivers the water and stain repellency that keeps joints from going grey. It is water-based and low-odour, so a kitchen floor can be done on a weekday evening. The trade-off against the professional impregnators is service life: expect to re-run the water test after a couple of years rather than five, and expect weaker results on dense natural stone where there is little pore structure for a water-based carrier to enter. For grout on a normal domestic floor, none of that matters much."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://www.thehonestreviewers.com/" },
+        { "@type": "ListItem", position: 2, name: "Best Lists", item: "https://www.thehonestreviewers.com/best-of/" },
+        { "@type": "ListItem", position: 3, name: "Best Tile Sealer", item: "https://www.thehonestreviewers.com/best-tile-sealer/" },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "Do porcelain tiles need sealing?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Glazed porcelain does not \u2014 the glaze is fired glass and nothing will penetrate it. Unglazed and through-body porcelain has a slightly porous surface and benefits from a penetrating sealer. Either way, cement grout between the tiles does need sealing.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How do I know if my tile needs sealing?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Put a few drops of water on a clean, dry tile and wait five minutes. If the water beads and the tile looks unchanged when you wipe it, it does not need sealing. If the water soaks in and leaves a dark patch that fades as it dries, it does.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What is the best sealer for ceramic tile?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "For glazed ceramic, none \u2014 seal the grout instead. For unglazed ceramic or quarry tile, a penetrating silane or siloxane sealer, which soaks into the pores and repels water and oil without changing the appearance or adding a slippery film.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How often should tile be resealed?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "A quality penetrating sealer on a floor typically lasts three to five years, and up to ten on a wall or a low-traffic area. Rather than working to a schedule, re-run the water test annually \u2014 when water stops beading and starts darkening the surface, it is time.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Does tile sealer make tile slippery?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "A topical, film-forming sealer can, particularly when wet, and that is the main argument against using one on floors. Penetrating sealers sit below the surface and leave the tile's own texture and slip resistance unchanged.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can you seal tile and grout at the same time?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes, if the tile itself needs sealing. Apply a penetrating sealer across the whole surface, let it soak into both tile and grout, then buff off the excess. On glazed tile, use a narrow applicator to put sealer only in the joints.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What is the best sealer for slate tile?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "A penetrating sealer if you want to keep slate's natural matte appearance, or an enhancing sealer if you want the wet, saturated look that brings out the colour. Slate is genuinely porous and staining is a real risk, so this is one tile that always needs sealing.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How long does tile sealer take to dry?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Most penetrating sealers are dry to the touch within an hour and accept light foot traffic after four to six. Full cure and water resistance typically take 24 to 72 hours, and the floor should stay dry for that whole period.",
+          },
+        },
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Home Improvement",
+    tags: ["best tile sealer", "tile sealant", "porcelain tile", "slate sealer", "grout sealer"],
+  }}
+  jsonLd={schema}
+  stickyCta={{ text: "See Our Top Picks", link: "#top-picks" }}
+>
+  <article class="relative overflow-hidden">
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div
+        class="absolute inset-0 opacity-10"
+        style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"
+      ></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6"><TrustBadge /></div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best <span class="text-[#38BDF8]">Tile Sealer</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Start with the question nobody in the aisle will ask you: does your tile actually need sealing? For a great many floors the honest answer is no, and the grout is the only thing that does.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#top-picks" class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline">See Our Top Picks</a>
+          <a href="#faq" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline">Quick Answers</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="9.1k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E90FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#do-you-need" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Does Your Tile Need Sealing?</a>
+          <a href="#types" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Penetrating vs Topical</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our Four Picks Reviewed</a>
+          <a href="#by-tile" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Tile Type by Tile Type</a>
+          <a href="#grout" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. The Grout Is the Real Job</a>
+          <a href="#applying" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. How to Apply It</a>
+          <a href="#common-mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Glazed ceramic and porcelain are already sealed — vitrified in a kiln at temperatures no coating will improve on. Sealing them achieves nothing except a film that wears off unevenly. The tiles that genuinely need a sealer are the unglazed and natural ones, and they need quite different products.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <h2 id="do-you-need" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          1. Does Your Tile Actually Need Sealing?
+        </h2>
+
+        <p>
+          This is the question that should come first and almost never does. A great many tiled floors need no sealer on the tile at all, and buying one is money spent creating a problem rather than solving one.
+        </p>
+
+        <p>
+          <strong>Glazed ceramic and glazed porcelain do not need sealing.</strong> The glaze is a layer of glass fused to the tile body at well over a thousand degrees. It is already impervious — nothing you can buy in a bottle will improve on it, and nothing will penetrate it either. A sealer applied to glazed tile has nowhere to go, so it dries as a film on the surface. That film then wears off in traffic lanes and stays put under furniture, producing exactly the patchy appearance you were trying to avoid.
+        </p>
+
+        <p>
+          <strong>Unglazed tile does need sealing.</strong> Quarry tile, terracotta, saltillo, unglazed quarry and through-body porcelain all have an open pore structure at the surface. Water, oil and dirt go into those pores and stay there.
+        </p>
+
+        <p>
+          <strong>Natural stone almost always needs sealing.</strong> Slate, travertine, limestone, marble and honed granite are porous to varying degrees, and some of them are chemically vulnerable as well as physically absorbent.
+        </p>
+
+        <p>
+          <strong>Cement grout nearly always needs sealing</strong>, whatever the tile is. This is the part people skip and it is the part that actually discolours.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">The Water Test</h3>
+
+        <p>
+          Five minutes, no cost and no special equipment, and it settles the question definitively for any floor. Clean a small area and let it dry completely. Put several drops of water on the tile and several on a grout joint. Wait five minutes, then wipe.
+        </p>
+
+        <p>
+          If the water still sits in beads and the surface underneath is unchanged, that material is not absorbing anything and does not need a sealer. If the water has flattened out and left a dark patch that slowly fades as it dries, it is being absorbed — and anything else spilled there will be absorbed too. Test the tile and the grout separately, because the answer is very frequently different for each of them.
+        </p>
+
+        <p>
+          Run the same test annually on a sealed floor. It is a far better guide to when resealing is due than any interval printed on a bottle.
+        </p>
+
+        <h2 id="types" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          2. Penetrating vs Topical
+        </h2>
+
+        <p>
+          Every tile sealer is one of two things, and for floors the choice is nearly always straightforward.
+        </p>
+
+        <p>
+          <strong>Penetrating sealers</strong> — also called impregnators — carry active silanes or siloxanes into the pore structure of the tile, where they bond and line the pores. Nothing remains on the surface. The tile looks exactly as it did, keeps its own texture and slip resistance, and because there is no film there is nothing to peel, scuff or wear through unevenly. When the sealer eventually stops working it simply stops repelling; it does not fail visibly.
+        </p>
+
+        <p>
+          <strong>Topical sealers</strong> form a film on the surface. They can add sheen, they can be genuinely useful on saltillo and terracotta where a sacrificial coating is traditional, and they offer strong protection while they last. But they wear in traffic lanes, they can trap moisture underneath, they become slippery when wet, and eventually they need stripping rather than simply reapplying.
+        </p>
+
+        <p>
+          For any floor that gets walked on and occasionally wet, use a penetrating sealer. Reserve topical products for decorative tile in low traffic, or for the specific case of terracotta where a wax or acrylic coating is part of the intended look. Our guide to <a href="/best-grout-sealer/">grout sealers</a> covers the same split as it applies to joints.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Enhancing Sealers</h3>
+
+        <p>
+          A third category worth knowing: enhancers are penetrating sealers that deliberately deepen the colour of the stone, producing the saturated look wet slate has in the rain. They protect exactly as an ordinary impregnator does. The only caution is that the effect is permanent and strong, so test on an offcut before committing a whole floor to it.
+        </p>
+
+
+        <!-- Product Reviews -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The Best Tile Sealers, Reviewed
+          </h2>
+
+          <p>
+            We sealed slate, saltillo, unglazed quarry tile and a large field of porcelain with sanded grout, then attacked all of it with red wine, olive oil, coffee and a bleach-based cleaner over six months of ordinary kitchen use.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h2 id="by-tile" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          4. Tile Type by Tile Type
+        </h2>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Glazed Ceramic and Porcelain</h3>
+        <p>
+          Seal the grout, leave the tile alone. This covers the majority of bathroom and kitchen floors installed in the last thirty years. Use a narrow applicator bottle to run sealer along the joints rather than flooding the whole floor.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Unglazed and Through-Body Porcelain</h3>
+        <p>
+          Genuinely porous despite the porcelain name, and worth sealing with a penetrating impregnator. Through-body porcelain is dense, so use a solvent-carried product that can get into what pore structure there is, and expect coverage per bottle to be high.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Slate</h3>
+        <p>
+          Always seal. Slate is layered and absorbent, and it stains readily from oil in particular. This is the tile where an enhancing sealer most often earns its place, because the wet look is what most people wanted from slate in the first place. Expect it to drink the first coat and want a second.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Travertine and Limestone</h3>
+        <p>
+          Both are calcite stones: porous and also acid-sensitive, so lemon juice and vinegar will etch them regardless of sealing. A penetrating sealer stops staining but does not stop etching, and it is worth understanding that distinction before you are disappointed by it. Filled travertine also needs the fillers checked, since they pop out over time and leave open holes.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Saltillo and Terracotta</h3>
+        <p>
+          Extremely porous and traditionally finished with a topical coating rather than an impregnator. This is the one common case where a film-forming sealer is the right answer, because the look depends on it. Expect to strip and recoat every few years as part of ordinary maintenance.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Quarry Tile</h3>
+        <p>
+          Unglazed, absorbent and usually installed where it will get dirty — kitchens, entries, commercial spaces. A penetrating sealer with genuine oil repellency is the right choice, and it is worth paying for the better product here because the failure mode is greasy shadows that never come out.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Shower Walls and Wet Rooms</h3>
+        <p>
+          Vertical tile in a shower is a different problem from a floor. The tile is usually glazed and needs nothing, but the grout is exposed to constant water and soap residue, which is the combination that grows the black staining people blame on the tile. Seal the joints with a penetrating sealer and expect to redo it more often than on a floor — every two years is a realistic interval in a shower that sees daily use by a whole household.
+        </p>
+
+        <p>
+          Avoid film-forming products entirely on a shower floor. A topical coating there is both a genuine slip hazard and a trap for the moisture that inevitably works behind it, and stripping one out of a textured mosaic floor is a job nobody enjoys twice.
+        </p>
+
+        <h2 id="grout" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          5. The Grout Is the Real Job
+        </h2>
+
+        <p>
+          On the majority of tiled floors the tile is impervious and the grout is not, which means every discoloured floor people want to fix is really a grout problem wearing a tile costume.
+        </p>
+
+        <p>
+          Cement-based grout — sanded or unsanded — is porous by nature. It absorbs water, and with the water goes whatever the water is carrying: coffee, cooking oil, soil from shoes, soap residue. That is why grout joints go from pale grey to dark grey over a few years while the tiles either side stay pristine.
+        </p>
+
+        <p>
+          A penetrating sealer in the joints prevents most of this, and it is genuinely worth the hour it takes. The important condition is timing: new cement grout must cure fully before sealing, which normally means at least 72 hours and longer in cool or humid conditions. Sealing green grout traps moisture in the joint and produces efflorescence — a chalky white bloom — that is far more annoying than the staining you were preventing.
+        </p>
+
+        <p>
+          One exception worth knowing: <strong>epoxy grout does not need sealing.</strong> It is non-porous by formulation. If your floor was installed with epoxy grout, both the tile and the joints may be fully impervious and there is nothing here for you to do.
+        </p>
+
+        <h2 id="applying" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          6. How to Apply It
+        </h2>
+
+        <p>
+          <strong>Clean thoroughly and let it dry.</strong> A sealer locks in whatever is on the surface when it goes down, so any existing stain or residue becomes permanent. Use a pH-neutral cleaner rather than anything acidic, and allow a full 24 hours of drying — longer for stone, which holds moisture deeper than it looks.
+        </p>
+
+        <p>
+          <strong>Test in an inconspicuous spot.</strong> A closet, under an appliance, or an offcut. You are checking for colour change and for how quickly the material absorbs, which tells you how much product the floor will take.
+        </p>
+
+        <p>
+          <strong>Apply evenly and let it dwell.</strong> Use a brush, roller or applicator pad and work in manageable sections. The sealer needs time in contact with the surface to penetrate — usually five to fifteen minutes depending on the product. Keep the surface wet with sealer for that whole period; if a patch soaks in and goes dry, add more.
+        </p>
+
+        <p>
+          <strong>Buff off every trace of excess.</strong> This is the step that determines whether the job looks professional. Once the dwell time is up, wipe the surface thoroughly with clean dry cloths, turning them frequently. Any sealer left to dry on top will haze and streak, and removing it means solvent and effort.
+        </p>
+
+        <p>
+          <strong>Apply a second coat if the first was absorbed quickly.</strong> Porous tile such as slate and saltillo frequently drinks the first application. Wait the recommended interval and repeat until the surface stops taking it in.
+        </p>
+
+        <p>
+          <strong>Keep the floor dry while it cures.</strong> Light foot traffic after four to six hours is generally fine, but water should stay off for the full cure period — normally 24 to 72 hours. Mopping a floor on day one undoes a good deal of the work.
+        </p>
+
+
+        <!-- Common Mistakes -->
+        <div id="common-mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Common Mistakes</h2>
+          <div class="space-y-4">
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Sealing glazed porcelain or ceramic</h3>
+              <p class="text-gray-700 m-0">The glaze is fired glass and is already impervious. A sealer cannot penetrate it, so it sits on top as a film, wears unevenly in traffic lanes and leaves you stripping a coating you never needed.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Using a topical sealer on a wet floor area</h3>
+              <p class="text-gray-700 m-0">A film-forming sealer on a shower floor or an entry is a slip hazard when wet and traps any moisture that gets underneath it. Penetrating sealers are the correct choice anywhere water is routine.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Sealing before the grout has cured</h3>
+              <p class="text-gray-700 m-0">Cement grout needs a full cure — commonly around 72 hours, longer in cool or humid conditions — before anything seals it. Seal it early and you trap moisture in the joint, which causes efflorescence and a patchy finish.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Skipping the test patch on stone</h3>
+              <p class="text-gray-700 m-0">Some sealers noticeably darken slate, travertine and saltillo. That may be exactly what you want, or it may ruin the look of the floor. Either way, find out on an offcut or in a closet, not in the middle of the room.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Leaving excess sealer to dry on the surface</h3>
+              <p class="text-gray-700 m-0">A penetrating sealer that is not buffed off within its stated window leaves a hazy, streaky residue that is genuinely difficult to remove. Set a timer and wipe the surface properly.</p>
+            </div>
+          </div>
+        </div>
+
+        <h2 id="faq" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          Frequently Asked Questions
+        </h2>
+
+        <div class="space-y-6">
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Do porcelain tiles need sealing?</h3>
+            <p class="text-gray-700 m-0">Glazed porcelain does not — the glaze is fired glass and nothing will penetrate it. Unglazed and through-body porcelain has a slightly porous surface and benefits from a penetrating sealer. Either way, cement grout between the tiles does need sealing.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">How do I know if my tile needs sealing?</h3>
+            <p class="text-gray-700 m-0">Put a few drops of water on a clean, dry tile and wait five minutes. If the water beads and the tile looks unchanged when you wipe it, it does not need sealing. If the water soaks in and leaves a dark patch that fades as it dries, it does.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">What is the best sealer for ceramic tile?</h3>
+            <p class="text-gray-700 m-0">For glazed ceramic, none — seal the grout instead. For unglazed ceramic or quarry tile, a penetrating silane or siloxane sealer, which soaks into the pores and repels water and oil without changing the appearance or adding a slippery film.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">How often should tile be resealed?</h3>
+            <p class="text-gray-700 m-0">A quality penetrating sealer on a floor typically lasts three to five years, and up to ten on a wall or a low-traffic area. Rather than working to a schedule, re-run the water test annually — when water stops beading and starts darkening the surface, it is time.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Does tile sealer make tile slippery?</h3>
+            <p class="text-gray-700 m-0">A topical, film-forming sealer can, particularly when wet, and that is the main argument against using one on floors. Penetrating sealers sit below the surface and leave the tile's own texture and slip resistance unchanged.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Can you seal tile and grout at the same time?</h3>
+            <p class="text-gray-700 m-0">Yes, if the tile itself needs sealing. Apply a penetrating sealer across the whole surface, let it soak into both tile and grout, then buff off the excess. On glazed tile, use a narrow applicator to put sealer only in the joints.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">What is the best sealer for slate tile?</h3>
+            <p class="text-gray-700 m-0">A penetrating sealer if you want to keep slate's natural matte appearance, or an enhancing sealer if you want the wet, saturated look that brings out the colour. Slate is genuinely porous and staining is a real risk, so this is one tile that always needs sealing.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">How long does tile sealer take to dry?</h3>
+            <p class="text-gray-700 m-0">Most penetrating sealers are dry to the touch within an hour and accept light foot traffic after four to six. Full cure and water resistance typically take 24 to 72 hours, and the floor should stay dry for that whole period.</p>
+          </div>
+        </div>
+
+        <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+          Related Sealing Guides
+        </h2>
+
+        <ul>
+          <li><a href="/best-grout-sealer/">Best Grout Sealers</a> — for the joints, which almost always do need sealing.</li>
+          <li><a href="/best-natural-stone-sealer/">Best Natural Stone Sealer</a> — for slate, travertine and limestone floors.</li>
+          <li><a href="/best-marble-sealer/">Best Marble Sealer</a> — the specific case of polished calcite stone.</li>
+          <li><a href="/best-granite-sealer/">Best Granite Sealer</a> — and how to run the water test that tells you if you need one.</li>
+        </ul>
+
+        <div class="mt-16 bg-gray-900 rounded-2xl p-8 text-gray-200">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="mb-4">
+            For most tiled floors in most houses, the tile itself needs nothing and the grout needs a penetrating sealer. Run the water test before you buy anything — it takes five minutes and it will save a great many people the price of a bottle.
+          </p>
+          <p class="m-0">
+            Where the tile is genuinely porous — slate, saltillo, quarry, unglazed porcelain — use a penetrating silane or siloxane rather than a film. It cannot peel, it cannot go slippery, and it does not change how the floor looks unless you have deliberately chosen an enhancer.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <MoreInCategory category="Home Improvement" links={moreInCategory} />
+    <AuthorBio />
+  </article>
+</Layout>

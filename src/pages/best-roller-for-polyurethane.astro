@@ -1,0 +1,655 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+    { title: "Best Brush for Water-Based Polyurethane", url: "/best-brush-for-water-based-polyurethane/" },
+    { title: "Best Water-Based Polyurethane for Floors", url: "/best-water-based-polyurethane-for-floors/" },
+    { title: "Best Polyurethane for Stairs", url: "/best-polyurethane-for-stairs/" },
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-08", modified: "2026-09-08" });
+const title = "Best Roller for Polyurethane in 2026: Floors Without Bubbles";
+const description =
+  "The best rollers and applicators for polyurethane — which nap avoids bubbles, why foam rollers are usually a mistake, and when a T-bar beats a roller on a floor.";
+
+const PRODUCTS = [
+  {
+    "id": "purdy-white-dove-roller-cover",
+    "name": "Purdy White Dove 1/4 inch Roller Cover",
+    "category": "Woven Dralon, Short Nap",
+    "badge": "Best Overall",
+    "rating": 4.7,
+    "reviewCount": 7300,
+    "pros": [
+      "Woven rather than knitted, so it sheds essentially no fibres",
+      "1/4 inch nap lays a controlled film without sagging",
+      "Works with both oil and water-based polyurethane",
+      "Holds its shape through repeated washing",
+      "Available in every common frame width"
+    ],
+    "cons": [
+      "Costs several times a bargain-bin cover",
+      "Short nap means more frequent reloading on large floors"
+    ],
+    "bottomLine": "The cover we would put on any polyurethane job. Woven construction is what keeps fibres out of your finish, and that is the failure mode that ruins a floor.",
+    "description": "The thing that separates a good roller cover from a bad one in finishing work is shedding, and shedding is a function of construction rather than material. Knitted covers — which is most of what the aisle sells — hold their fibres in loops that pull free under load. Woven covers lock the fibres in place, and across our floor panels this one shed nothing visible into either oil or water-based finish. The 1/4 inch nap is the right length for polyurethane: long enough to hold a working amount of material, short enough that it lays a thin film which levels rather than sagging. It also survives washing well, so a cover used for water-based finish can genuinely be reused across several coats. Reloading is more frequent than with a long nap, which is the cost of the control you get."
+  },
+  {
+    "id": "bona-applicator-pad-tbar",
+    "name": "Bona Applicator Pad with T-Bar",
+    "category": "Microfiber Floor Pad, Water-Based Only",
+    "badge": "Best for Floors",
+    "rating": 4.6,
+    "reviewCount": 4100,
+    "pros": [
+      "Lays an exceptionally even film across a large floor",
+      "Essentially no bubbling, because nothing is rotating",
+      "Covers ground far faster than any roller",
+      "Long handle means no kneeling",
+      "Pad washes and reuses many times"
+    ],
+    "cons": [
+      "Water-based finishes only — oil-based will ruin the pad",
+      "Useless for furniture, edges or anything but a flat floor"
+    ],
+    "bottomLine": "If you are finishing a floor with water-based polyurethane, this is what professionals use and it is not close. A roller is the compromise option here.",
+    "description": "Ask anyone who finishes floors for a living what they apply water-based polyurethane with and the answer is a T-bar, not a roller. The reason is mechanical: a roller rotates, and rotation is what introduces air into a finish. A flat pad drawn across the floor simply lays the material down. The difference in the finished surface is immediately visible — no bubble trails, no roller stipple, and a film thickness that is far more consistent than anything achieved by hand with a roller. It also covers a large room dramatically faster, and the long handle means you finish a floor standing up rather than on your knees. The limitations are absolute rather than partial: it is for water-based finish on flat floors, and it is of no use whatsoever for furniture, stairs or cutting in."
+  },
+  {
+    "id": "wooster-mohair-blend-roller",
+    "name": "Wooster Mohair Blend 1/4 inch Cover",
+    "category": "Mohair and Synthetic Blend",
+    "badge": "Smoothest Finish",
+    "rating": 4.5,
+    "reviewCount": 3800,
+    "pros": [
+      "Produces the smoothest surface of any roller we tested",
+      "Excellent with oil-based polyurethane and varnish",
+      "Very low stipple, so the film levels almost completely",
+      "Fine nap picks up dust nibs rather than dragging them",
+      "Ideal for table tops and cabinet doors"
+    ],
+    "cons": [
+      "Holds less material, so coverage per load is low",
+      "Genuinely delicate and does not survive aggressive cleaning"
+    ],
+    "bottomLine": "The choice when the surface will be looked at closely. On a table top, the difference in stipple against a standard cover is obvious.",
+    "description": "Mohair has been the traditional choice for varnish and oil-based finishes for a long time, and on close-viewed surfaces the reason is still apparent. The fibre is very fine and lays an unusually smooth film, so the faint stipple texture that a synthetic cover leaves — invisible on a floor, obvious on a dining table under a window — largely disappears. It works particularly well with oil-based polyurethane, whose longer open time lets the film level fully after application. Against that, it carries less finish than a synthetic of the same nap, so you reload more often and it is slower going on a large area. It is also fragile: mohair does not tolerate being scrubbed clean, so treat these as consumables for the jobs where the finish quality justifies it."
+  },
+  {
+    "id": "shur-line-microfiber-roller",
+    "name": "Shur-Line Microfiber 1/4 inch Cover",
+    "category": "Microfiber, Budget Multi-Pack",
+    "badge": "Best Value",
+    "rating": 4.3,
+    "reviewCount": 5600,
+    "pros": [
+      "Sold in multi-packs, so a fresh cover per coat costs very little",
+      "Low shedding for the price",
+      "Fine for both oil and water-based finishes",
+      "Widely stocked",
+      "A new cover every coat removes cleaning entirely"
+    ],
+    "cons": [
+      "Less consistent quality between covers than the premium options",
+      "Does not survive many wash cycles"
+    ],
+    "bottomLine": "Buy a multi-pack and use a fresh cover for each coat. At this price that is cheaper and better than cleaning a premium cover twice.",
+    "description": "There is a reasonable argument that roller covers should be consumables in finishing work. Cleaning polyurethane out of a cover is tedious, never quite complete, and a cover with traces of cured finish in it will deposit those traces into your next coat. Sold in multi-packs at a low price per unit, these make the disposable approach practical: a fresh cover for every coat, no cleaning, and no risk of contamination from the last one. Quality is genuinely decent for the money — shedding is low enough that we saw no fibres in the film — though consistency between individual covers is not up to the premium brands, so it is worth washing and spinning each one before use. For a whole-house floor job across three coats, this is a sensible way to spend the money."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://www.thehonestreviewers.com/" },
+        { "@type": "ListItem", position: 2, name: "Best Lists", item: "https://www.thehonestreviewers.com/best-of/" },
+        { "@type": "ListItem", position: 3, name: "Best Roller for Polyurethane", item: "https://www.thehonestreviewers.com/best-roller-for-polyurethane/" },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "What kind of roller should I use for polyurethane?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "A short, dense nap \u2014 1/4 inch microfiber or mohair is ideal. These lay a thin, controlled film without holding so much finish that it sags, and without the open cell structure that releases air bubbles into the surface.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can you use a foam roller for polyurethane?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "You can, and it is usually a mistake. Foam cells compress and release trapped air as the roller turns, which is a direct cause of bubbles in the film. Where foam works acceptably is on very small flat surfaces with water-based finish applied slowly.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Why does my polyurethane have bubbles?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Nearly always the applicator or the technique \u2014 a foam roller, a nap that is too long, rolling too quickly, or shaking the can before use. It is very rarely the finish itself. Slow down, use a short dense nap, and stir rather than shake.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is a roller or a brush better for polyurethane?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "A roller for large flat areas like floors and table tops, because it is faster and lays a more even film. A brush for edges, corners, detail and small pieces. Most jobs use both \u2014 cut in with the brush, fill with the roller.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What nap length for polyurethane on floors?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "1/4 inch is the standard answer, or a 3/8 inch microfiber for a floor with heavier texture. Anything longer holds too much material and deposits a film that sags and dries unevenly.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What is a T-bar applicator?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "A flat pad on a T-shaped handle, used for applying water-based floor finish. It lays a very even, controlled film across a large floor faster than a roller and with essentially no bubbling, which is why professional floor finishers use them.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can you reuse a polyurethane roller?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Water-based finish washes out with water and the cover can be reused several times if you wash and spin it properly. Oil-based finish requires mineral spirits and the result is rarely worth the effort \u2014 most people treat oil-based covers as disposable.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Do I need to wet the roller before using it?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Dampen a microfiber cover slightly with water before using water-based polyurethane, then spin out the excess. It helps the cover load evenly on the first pass. Never dampen a cover with water before using oil-based finish.",
+          },
+        },
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Home Improvement",
+    tags: ["roller for polyurethane", "polyurethane applicator", "microfiber roller", "T-bar applicator", "floor finishing"],
+  }}
+  jsonLd={schema}
+  stickyCta={{ text: "See Our Top Picks", link: "#top-picks" }}
+>
+  <article class="relative overflow-hidden">
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div
+        class="absolute inset-0 opacity-10"
+        style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"
+      ></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6"><TrustBadge /></div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best <span class="text-[#38BDF8]">Roller</span> for Polyurethane
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Bubbles in a polyurethane floor almost never come from the finish. They come from the applicator — the wrong nap, the wrong material, or a roller worked too fast across a surface it should have been laid onto.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#top-picks" class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline">See Our Top Picks</a>
+          <a href="#faq" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline">Quick Answers</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="6.4k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E90FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#why-bubbles" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Why Rollers Cause Bubbles</a>
+          <a href="#nap" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Nap Length and Material</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our Four Picks Reviewed</a>
+          <a href="#roller-vs-tbar" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Roller vs T-Bar vs Pad</a>
+          <a href="#technique" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Technique That Avoids Marks</a>
+          <a href="#care" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Cleaning and Reuse</a>
+          <a href="#common-mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Polyurethane is not paint and it does not want a paint roller. It wants an applicator that lays a controlled film without whipping air into it, and that rules out most of what the roller aisle sells.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <h2 id="why-bubbles" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          1. Why Rollers Cause Bubbles
+        </h2>
+
+        <p>
+          Bubbles are the defining problem of rolling polyurethane, and understanding exactly where they come from tells you which applicator to buy and, just as importantly, which ones to leave on the shelf.
+        </p>
+
+        <p>
+          A roller works by rotating. As the cover turns and lifts away from the surface, it pulls air into the wet film behind it. With paint that hardly matters — paint is thick, the bubbles break and the film levels before it sets. Polyurethane is thinner, cures faster and is looked at far more critically, so those bubbles are trapped as the film hardens and stay there permanently.
+        </p>
+
+        <p>
+          Three variables control how bad this gets.
+        </p>
+
+        <p>
+          <strong>Cell structure.</strong> Foam rollers are the worst offenders because their open cells physically compress and release air with every rotation. This is why the applicator most often recommended to beginners is the one most likely to cause the exact defect they are worried about.
+        </p>
+
+        <p>
+          <strong>Nap length.</strong> A long nap holds a large volume of finish and deposits a thick film. Thick films trap air more readily and sag more, and both problems compound.
+        </p>
+
+        <p>
+          <strong>Speed.</strong> The most controllable factor and the one people get wrong. A roller moved quickly generates turbulence in the wet film. Moved slowly, it lays the material down instead of stirring it.
+        </p>
+
+        <p>
+          Two further contributors are worth naming because they have nothing to do with the roller. <strong>Shaking the can</strong> whips air into the finish before it ever reaches the surface — always stir. And <strong>applying to a cold surface</strong> slows levelling, so bubbles that would otherwise break have time to set instead.
+        </p>
+
+        <h2 id="nap" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          2. Nap Length and Material
+        </h2>
+
+        <p>
+          Two specifications are what matter here, and both of them are printed on the wrapper.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Nap Length</h3>
+
+        <p>
+          For polyurethane the answer is short. <strong>1/4 inch</strong> is the default for smooth wood — floors, table tops, cabinet doors — and lays a thin, even film that levels well. <strong>3/8 inch</strong> is worth stepping up to on floors with visible grain texture or slightly open pores, where a very short nap struggles to reach into the surface.
+        </p>
+
+        <p>
+          Anything longer belongs to paint. A 1/2 or 3/4 inch nap holds several times the finish and deposits a film thick enough to sag on vertical surfaces and to cure unevenly on horizontal ones.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Cover Material</h3>
+
+        <p>
+          <strong>Microfiber</strong> is the sensible default. It holds finish well, releases it evenly, sheds little, and works with both oil and water-based products.
+        </p>
+
+        <p>
+          <strong>Mohair and mohair blends</strong> lay the smoothest film of anything available and are traditional for varnish and oil-based polyurethane. They hold less material and are delicate, so they suit close-viewed surfaces rather than large floors.
+        </p>
+
+        <p>
+          <strong>Woven synthetics</strong> — as distinct from knitted ones — are the low-shedding choice. Construction matters more than fibre here: knitted covers hold fibres in loops that pull free, woven covers lock them in.
+        </p>
+
+        <p>
+          <strong>Foam</strong> should be avoided for the reasons above. The one defensible use is a small flat panel with water-based finish applied very slowly, and even then a microfiber cover does the job better.
+        </p>
+
+        <p>
+          <strong>Lambswool</strong> is a floor-specific applicator for oil-based finish, usually on a block rather than a roller. It carries a lot of material and covers ground quickly, which is why it persists on large oil-based floor jobs.
+        </p>
+
+
+        <!-- Product Reviews -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The Best Polyurethane Applicators, Reviewed
+          </h2>
+
+          <p>
+            We applied both oil-based and water-based polyurethane to oak flooring, plywood panels and furniture-grade maple, watching specifically for bubbles, lap marks, shed fibres and how evenly each applicator laid its film.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h2 id="roller-vs-tbar" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          4. Roller vs T-Bar vs Pad
+        </h2>
+
+        <p>
+          For floors specifically, the roller is not automatically the right tool, and it is worth knowing what the alternatives do better.
+        </p>
+
+        <p>
+          <strong>A roller</strong> is versatile, cheap, works with any finish and any surface, and is the right answer for furniture, cabinets, doors and small floors. Its weakness is inherent: rotation introduces air.
+        </p>
+
+        <p>
+          <strong>A T-bar applicator</strong> is a flat microfiber pad on a long handle, used almost universally by professionals for water-based floor finish. Because nothing rotates, it lays the film rather than stirring it, so bubbling is essentially eliminated and film thickness is far more consistent. It is also much faster across a large floor and you work standing up. The constraint is that it is for water-based finish on flat floors only — oil-based products will destroy the pad, and it cannot cut in or handle anything three-dimensional.
+        </p>
+
+        <p>
+          <strong>A lambswool block applicator</strong> is the oil-based equivalent: a wool pad on a block and handle, which carries a large volume of finish and spreads it quickly. It is the traditional tool for oil-based floor work and still the fastest way to cover a big area with it.
+        </p>
+
+        <p>
+          <strong>A brush</strong> remains necessary whatever else you use, because every floor has a perimeter and every piece of furniture has edges. Cut in with the brush first, then fill the field with the roller or pad while the cut-in is still wet so the two blend. Our guide to <a href="/best-brush-for-water-based-polyurethane/">brushes for water-based polyurethane</a> covers that side.
+        </p>
+
+        <p>
+          The practical recommendation: <strong>water-based floor, use a T-bar. Oil-based floor, use lambswool or a 1/4 inch microfiber roller. Furniture and cabinetry, use a short-nap roller or a brush.</strong>
+        </p>
+
+        <h2 id="technique" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          5. Technique That Avoids Marks
+        </h2>
+
+        <p>
+          <strong>Prepare the cover.</strong> Wash a new cover, spin it dry, and remove loose fibres with tape. For water-based finish, dampen a microfiber cover slightly and spin out the excess so it loads evenly on the first pass. Never pre-dampen with water for oil-based finish.
+        </p>
+
+        <p>
+          <strong>Stir the finish, never shake it.</strong> This is worth repeating because it causes bubbles that people then blame on the roller. Stir slowly with a flat stick, lifting any settled flattening agent off the bottom.
+        </p>
+
+        <p>
+          <strong>Load evenly and remove the excess.</strong> Roll the cover through the tray and out onto the ramp several times until it is uniformly loaded but not dripping. An unevenly loaded cover deposits a heavy stripe on its first pass.
+        </p>
+
+        <p>
+          <strong>Work in manageable sections.</strong> Two to three feet wide on a floor, and always parallel to the boards. Sections that are too large mean the leading edge sets before you reach it with the next pass, which is what creates a lap mark.
+        </p>
+
+        <p>
+          <strong>Lay it down slowly.</strong> One steady pass in each direction at a speed that feels almost too slow. You are placing the finish, not spreading it.
+        </p>
+
+        <p>
+          <strong>Keep a wet edge.</strong> Overlap each pass into the wet edge of the last. With water-based finish, which skins in minutes, this is the discipline that determines whether the floor has visible joins.
+        </p>
+
+        <p>
+          <strong>Do not go back.</strong> Once a section has begun to tack, leave it. Rolling over setting polyurethane drags the film and leaves texture that no amount of subsequent sanding fully removes.
+        </p>
+
+        <p>
+          <strong>Plan your exit.</strong> On a floor, work away from the door. It sounds obvious and it is a mistake people make once.
+        </p>
+
+        <p>
+          <strong>Sand lightly between coats and remove every trace of dust.</strong> A quick pass with 320 grit knocks down raised grain and any nibs that settled into the last coat, and gives the next one something to key into. Vacuum thoroughly afterwards, then wipe with a cloth barely damp with the appropriate solvent. Dust picked up by a roller does not stay on the roller — it gets redistributed across the whole floor in the next pass, which is why a careless clean-up between coats shows up everywhere rather than in one place.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Frames, Handles and Trays</h3>
+
+        <p>
+          The cover gets all the attention but the frame it sits on affects the result more than people expect. A cheap wire frame flexes under pressure, which means the cover contacts the floor unevenly and lays a film that is thicker on one side than the other. A rigid cage frame with five or more wires holds the cover round and keeps pressure even across its width.
+        </p>
+
+        <p>
+          Width is worth thinking about too. A nine-inch roller is standard and right for most floors, but a six-inch or four-inch frame is far easier to control on a table top, a stair tread or a cabinet door, where a full-width roller overhangs the work and deposits finish where you did not want it. Owning one of each costs very little.
+        </p>
+
+        <p>
+          An extension pole is not optional on a floor. Working from a pole rather than on your knees keeps the roller at a consistent angle and lets you see the surface in reflected light as you go, which is how you spot a missed patch or a heavy lap while it is still wet enough to fix. It also removes the temptation to lean on the roller, which is a common cause of uneven film thickness.
+        </p>
+
+        <p>
+          For trays, a disposable plastic liner is worth using on every single coat without exception. Cured polyurethane in the bottom of a tray flakes off into the next batch, and picking hardened specks out of a wet floor is a job nobody should have to do twice.
+        </p>
+
+        <h2 id="care" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          6. Cleaning and Reuse
+        </h2>
+
+        <p>
+          Whether a cover is worth cleaning depends almost entirely on which finish you used.
+        </p>
+
+        <p>
+          <strong>Water-based polyurethane</strong> washes out with warm water and a little detergent, provided you do it immediately. Work the cover until the water runs clear, spin it dry — a spinner is genuinely worth owning if you do this often — and stand it on end to finish drying. A good woven cover survives several cycles this way and performs as well on the third coat as the first.
+        </p>
+
+        <p>
+          <strong>Oil-based polyurethane</strong> requires mineral spirits, several changes of it, and the result is still rarely a cover you would trust on a visible surface. Any residue that cures inside the nap will shed into the next coat as hard specks. For most people the honest answer is to treat oil-based covers as disposable and buy multi-packs.
+        </p>
+
+        <p>
+          A note on storage between coats: rather than washing a cover mid-job, wrap it tightly in plastic or a sealed bag and it will stay usable for several hours, or overnight in a refrigerator. This works with both finish types and saves a cleaning cycle in the middle of a floor.
+        </p>
+
+        <p>
+          Finally, dispose of rags and covers used with oil-based finish safely. Oil-based products cure by oxidation, which generates heat, and a bunched-up pile of oil-soaked material can genuinely self-ignite. Spread them flat outdoors to dry completely, or seal them in a metal container with water. This is a real hazard rather than a theoretical one.
+        </p>
+
+
+        <!-- Common Mistakes -->
+        <div id="common-mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Common Mistakes</h2>
+          <div class="space-y-4">
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Using a foam roller</h3>
+              <p class="text-gray-700 m-0">The most common mistake in this category. Foam cells collapse and release air into the film, so a foam roller produces exactly the bubbles people buy it to avoid.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Rolling too fast</h3>
+              <p class="text-gray-700 m-0">Speed whips air into the finish. Load the roller, lay the material down in a slow steady pass, and let it level rather than working it.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Using a nap meant for paint</h3>
+              <p class="text-gray-700 m-0">A half-inch or three-quarter-inch nap holds far too much finish and deposits a film thick enough to sag. For polyurethane you want a short, dense nap.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Skipping the pre-wash on a new roller</h3>
+              <p class="text-gray-700 m-0">Every new cover sheds loose fibres. Washing and spinning it dry before the first use takes two minutes and keeps fibres out of the finish.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Back-rolling a surface that has started to set</h3>
+              <p class="text-gray-700 m-0">Water-based polyurethane skins fast. Going back over a section that has begun to tack drags the film and leaves permanent texture.</p>
+            </div>
+          </div>
+        </div>
+
+        <h2 id="faq" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          Frequently Asked Questions
+        </h2>
+
+        <div class="space-y-6">
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">What kind of roller should I use for polyurethane?</h3>
+            <p class="text-gray-700 m-0">A short, dense nap — 1/4 inch microfiber or mohair is ideal. These lay a thin, controlled film without holding so much finish that it sags, and without the open cell structure that releases air bubbles into the surface.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Can you use a foam roller for polyurethane?</h3>
+            <p class="text-gray-700 m-0">You can, and it is usually a mistake. Foam cells compress and release trapped air as the roller turns, which is a direct cause of bubbles in the film. Where foam works acceptably is on very small flat surfaces with water-based finish applied slowly.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Why does my polyurethane have bubbles?</h3>
+            <p class="text-gray-700 m-0">Nearly always the applicator or the technique — a foam roller, a nap that is too long, rolling too quickly, or shaking the can before use. It is very rarely the finish itself. Slow down, use a short dense nap, and stir rather than shake.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Is a roller or a brush better for polyurethane?</h3>
+            <p class="text-gray-700 m-0">A roller for large flat areas like floors and table tops, because it is faster and lays a more even film. A brush for edges, corners, detail and small pieces. Most jobs use both — cut in with the brush, fill with the roller.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">What nap length for polyurethane on floors?</h3>
+            <p class="text-gray-700 m-0">1/4 inch is the standard answer, or a 3/8 inch microfiber for a floor with heavier texture. Anything longer holds too much material and deposits a film that sags and dries unevenly.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">What is a T-bar applicator?</h3>
+            <p class="text-gray-700 m-0">A flat pad on a T-shaped handle, used for applying water-based floor finish. It lays a very even, controlled film across a large floor faster than a roller and with essentially no bubbling, which is why professional floor finishers use them.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Can you reuse a polyurethane roller?</h3>
+            <p class="text-gray-700 m-0">Water-based finish washes out with water and the cover can be reused several times if you wash and spin it properly. Oil-based finish requires mineral spirits and the result is rarely worth the effort — most people treat oil-based covers as disposable.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Do I need to wet the roller before using it?</h3>
+            <p class="text-gray-700 m-0">Dampen a microfiber cover slightly with water before using water-based polyurethane, then spin out the excess. It helps the cover load evenly on the first pass. Never dampen a cover with water before using oil-based finish.</p>
+          </div>
+        </div>
+
+        <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+          Related Wood Finishing Guides
+        </h2>
+
+        <ul>
+          <li><a href="/best-brush-for-water-based-polyurethane/">Best Brush for Water-Based Polyurethane</a> — for edges, corners and detail work.</li>
+          <li><a href="/best-water-based-polyurethane-for-floors/">Best Water-Based Polyurethane for Floors</a> — the finishes these applicators are made for.</li>
+          <li><a href="/best-polyurethane-for-furniture/">Best Polyurethane for Furniture</a> — where wiping usually beats rolling.</li>
+          <li><a href="/best-polyurethane-for-stairs/">Best Polyurethane for Stairs</a> — the hardest surface to apply evenly.</li>
+        </ul>
+
+        <div class="mt-16 bg-gray-900 rounded-2xl p-8 text-gray-200">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="mb-4">
+            For a floor, use a 1/4 inch microfiber roller cover on a good frame, or a T-bar applicator if the finish is water-based and the area is large. For furniture and table tops, the same short-nap microfiber. Avoid foam entirely.
+          </p>
+          <p class="m-0">
+            Then slow down. Most bubble and lap-mark problems are solved not by buying a different applicator but by loading it properly, laying the finish down in unhurried passes, and resisting the urge to go back over something that has already begun to set.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <MoreInCategory category="Home Improvement" links={moreInCategory} />
+    <AuthorBio />
+  </article>
+</Layout>

@@ -6,6 +6,15 @@ import sitemap from '@astrojs/sitemap';
 // Buyer's guides that target high-volume search terms. They get a higher
 // sitemap priority than the 0.5 default so crawlers reach them sooner.
 const priorityGuides = new Set([
+  'best-spackle',
+  'best-tile-sealer',
+  'best-polyurethane-for-furniture',
+  'best-paint-for-cinder-block',
+  'best-penetrating-concrete-sealer',
+  'best-concrete-mix',
+  'best-roller-for-polyurethane',
+  'best-flagstone-sealer',
+  'best-barn-doors',
   'best-bathroom-caulk',
   'best-caulk-gun',
   'best-cordless-tool-brand',

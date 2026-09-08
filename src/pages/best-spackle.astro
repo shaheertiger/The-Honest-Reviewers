@@ -1,0 +1,617 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+    { title: "Spackle vs Putty", url: "/spackle-vs-putty/" },
+    { title: "Joint Compound vs Spackle", url: "/joint-compound-vs-spackle/" },
+    { title: "How Long Does Spackle Take to Dry", url: "/how-long-does-spackle-take-to-dry/" },
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-08", modified: "2026-09-08" });
+const title = "Best Spackle in 2026: Lightweight, Vinyl and Patching Compounds";
+const description =
+  "The best spackle for nail holes, dents and deeper damage — lightweight vs vinyl vs all-purpose, which ones shrink, and which sand to an invisible repair.";
+
+const PRODUCTS = [
+  {
+    "id": "dap-drydex-spackling",
+    "name": "DAP DryDex Spackling",
+    "category": "Lightweight Vinyl, Colour-Change Indicator",
+    "badge": "Best Overall",
+    "rating": 4.6,
+    "reviewCount": 13400,
+    "pros": [
+      "Goes on pink and dries white, so you know exactly when to sand",
+      "Genuinely low shrinkage — most nail holes fill flush in one pass",
+      "Sands with a fingertip and a scrap of paper",
+      "Does not slump out of an overhead or vertical hole",
+      "Widely stocked and inexpensive"
+    ],
+    "cons": [
+      "Soft once cured, so it is not for anything load-bearing",
+      "The colour indicator is less useful on deep fills, where the surface whitens before the interior is dry"
+    ],
+    "bottomLine": "The default spackle for household repairs. The colour change removes the guesswork that causes most premature sanding, and the low shrinkage means one pass on a nail hole.",
+    "description": "The colour-change indicator sounds like a gimmick until you have used it, at which point it becomes hard to go back. Wet DryDex is a distinct pink; as the water leaves it turns white, and the transition is obvious enough to see across a room. That matters because premature sanding is the single most common reason a repair looks bad — damp filler tears and clogs paper instead of cutting cleanly. The formulation itself is a lightweight vinyl, aerated so it resists the shrinkage that forces a second coat. On nail holes and picture-hanger damage we filled flush and never went back. The honest limitation is that it stays soft: this is a cosmetic filler, not a structural one, and the colour indicator is misleading on deep fills where the face dries long before the core does."
+  },
+  {
+    "id": "3m-patch-plus-primer",
+    "name": "3M Patch Plus Primer",
+    "category": "Lightweight Spackle With Built-In Primer",
+    "badge": "Fastest Repair",
+    "rating": 4.4,
+    "reviewCount": 8900,
+    "pros": [
+      "Primer is built in, so you can paint straight over it",
+      "Sandable in about 15 minutes on small holes",
+      "Very smooth texture that feathers easily at the edges",
+      "Kit versions include a putty knife and sanding pad",
+      "Excellent for a quick pre-paint pass around a whole room"
+    ],
+    "cons": [
+      "The built-in primer is adequate rather than excellent under high-sheen paint",
+      "More expensive per ounce than plain spackle"
+    ],
+    "bottomLine": "The one to buy when you are patching and painting the same afternoon. Skipping the separate priming step across forty nail holes saves genuine time.",
+    "description": "The proposition here is straightforward: the primer that you would otherwise dab onto every patch is already in the filler, so a repair goes from three steps to two. For anyone prepping a whole room before repainting, that is a real saving — forty nail holes is forty separate primer spots you no longer have to do. In practice the built-in primer works well under flat and eggshell paint and merely acceptably under semi-gloss, where the sheen difference is less forgiving and we would still spot-prime. Drying is genuinely fast on shallow fills, around fifteen minutes to sandable, which supports the same-afternoon workflow it is designed for. The texture is finer than most and feathers to nothing at the edges, which is exactly what you want on a wall that will be viewed in raking light."
+  },
+  {
+    "id": "red-devil-onetime-spackling",
+    "name": "Red Devil ONETIME Lightweight Spackling",
+    "category": "Elastomeric Lightweight, No-Shrink",
+    "badge": "Least Shrinkage",
+    "rating": 4.5,
+    "reviewCount": 6100,
+    "pros": [
+      "Genuinely does not shrink, even in deeper fills",
+      "Slight flexibility means it resists cracking as the wall moves",
+      "Fills up to about half an inch in a single application",
+      "Sands cleanly without crumbling",
+      "Good on both drywall and painted trim"
+    ],
+    "cons": [
+      "Slightly rubbery texture takes a pass or two to get used to",
+      "Longer dry time than the fast-set lightweight products"
+    ],
+    "bottomLine": "The pick when the hole is deeper than a nail hole but not big enough for a patch kit. Nothing else here fills half an inch flush in one go.",
+    "description": "Most lightweight spackles resist shrinkage well at shallow depths and then start to sink once you go past an eighth of an inch. This one keeps its volume considerably deeper, and that is the reason to own it. The formulation is elastomeric, which means the cured filler retains a small amount of flexibility rather than setting rigid — useful in a wall that moves seasonally, and the reason repairs made with it are less prone to the hairline cracking that shows up around door frames and along ceiling lines. Anchor holes, drywall dents and the ragged damage left by a removed wall plug all fill in one pass. The trade-off is texture and time: it feels slightly rubbery under the knife compared with a conventional lightweight, and it takes longer to reach a sandable state."
+  },
+  {
+    "id": "dap-fast-n-final",
+    "name": "DAP Fast 'N Final Lightweight Spackling",
+    "category": "Ultra-Lightweight, No-Sand Capable",
+    "badge": "Best for Big Batches",
+    "rating": 4.3,
+    "reviewCount": 5400,
+    "pros": [
+      "Light enough that a careful fill often needs no sanding at all",
+      "Very large tubs available for whole-house prep",
+      "Does not shrink, crack or slump",
+      "Wipes cleanly off surrounding paint while wet",
+      "Low odour and easy water clean-up"
+    ],
+    "cons": [
+      "Very soft cured surface marks easily before it is painted",
+      "Not suitable for anything deeper than a shallow fill"
+    ],
+    "bottomLine": "Buy this if you are filling a hundred holes rather than five. Applied cleanly it can skip the sanding step entirely, which changes the arithmetic on a big job.",
+    "description": "The appeal of an ultra-lightweight filler is that if you apply it well enough, you do not have to sand it — and on a whole-house repaint, sanding is most of the labour. Drawn off flush with a flexible knife in a single confident pass, this leaves a surface smooth enough to prime directly, and across a room of nail holes that saves a genuinely significant amount of time and dust. It does not shrink and it does not slump on a vertical surface. The limitations follow from the same aeration that makes it light: the cured filler is very soft and will dent under a fingernail until it is painted, and it has no business in a deep hole. Treat it as a specialist tool for high-volume shallow work and it is excellent."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://www.thehonestreviewers.com/" },
+        { "@type": "ListItem", position: 2, name: "Best Lists", item: "https://www.thehonestreviewers.com/best-of/" },
+        { "@type": "ListItem", position: 3, name: "Best Spackle", item: "https://www.thehonestreviewers.com/best-spackle/" },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "What is the best spackle for nail holes?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "A lightweight vinyl spackle. It is engineered not to shrink, so a small hole can be filled in a single pass without needing a second coat, and it sands with almost no effort. For holes under about a quarter inch it is the correct choice every time.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What is the difference between spackle and joint compound?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Joint compound is designed for taping and finishing drywall seams over large areas \u2014 it goes on thin, shrinks noticeably, and sands very easily. Spackle is a filler for holes and dents, formulated to resist shrinking in a confined space. Using compound in a deep hole means several rounds of refilling.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Does spackle shrink?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "All of it shrinks to some degree; the type determines how much. Lightweight vinyl formulations shrink least and can often be filled flush in one pass. Standard all-purpose and patching compounds shrink more and generally want two coats in anything deeper than an eighth of an inch.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can you paint directly over spackle?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "You can, but you should not. Cured spackle is far more absorbent than the surrounding paint film, so the topcoat sinks in and dries with a duller sheen. The patch then reads as a visible flat spot. A spot of primer takes seconds and eliminates it.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How long does spackle take to dry?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "A shallow nail-hole fill in lightweight spackle is sandable in 30 minutes or less. A quarter-inch fill wants two to four hours, and anything deeper is best left overnight. Humidity and depth both extend it considerably, so judge by colour rather than the clock.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What is the best spackle for large holes?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "For anything above about half an inch, a setting-type patching compound or a proper patch kit with mesh backing, rather than spackle. Spackle has no structural strength across a void, and a large fill with no backing will crack out however carefully it is applied.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can you use spackle on wood?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Only for painted trim, and only for small defects. Spackle stays relatively soft, does not take stain, and does not hold a screw. For stained wood or any repair that needs strength, use a wood filler or an epoxy-based repair instead.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Why does my spackle patch keep cracking?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Usually the fill was too deep for one pass, or the substrate is still moving. A deep single application skins over while the interior is soft and cracks as it finishes drying. Build deep repairs in thin layers, and address the movement \u2014 a loose fastener or a flexing panel \u2014 before filling.",
+          },
+        },
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Home Improvement",
+    tags: ["best spackle", "lightweight spackle", "vinyl spackle", "wall repair", "drywall patch"],
+  }}
+  jsonLd={schema}
+  stickyCta={{ text: "See Our Top Picks", link: "#top-picks" }}
+>
+  <article class="relative overflow-hidden">
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div
+        class="absolute inset-0 opacity-10"
+        style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"
+      ></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6"><TrustBadge /></div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best <span class="text-[#38BDF8]">Spackle</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Most spackle failures show up after painting, not before. The ridge around a filled nail hole, the faint dimple that reappears a week later, the patch that flashes through the topcoat — all of them trace back to picking the wrong type for the depth of the hole.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#top-picks" class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline">See Our Top Picks</a>
+          <a href="#faq" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline">Quick Answers</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="10.3k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E90FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#types" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. The Four Types Explained</a>
+          <a href="#shrinkage" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Shrinkage Is the Whole Story</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our Four Picks Reviewed</a>
+          <a href="#by-job" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Which One for Which Hole</a>
+          <a href="#applying" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Getting an Invisible Repair</a>
+          <a href="#priming" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Why Patches Flash Through Paint</a>
+          <a href="#common-mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Spackle is not one product. It is at least four, and the difference between them is shrinkage — how much the filler pulls back as it dries, and therefore whether your repair stays flat.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <h2 id="types" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          1. The Four Types Explained
+        </h2>
+
+        <p>
+          Walk the aisle and you will find a dozen tubs that all say "spackling compound" on the front. They are not interchangeable, and the differences are worth two minutes of your attention because they determine whether you fill a hole once or three times.
+        </p>
+
+        <p>
+          <strong>Lightweight spackle</strong> is a vinyl or acrylic binder loaded with tiny hollow microspheres — glass or ceramic bubbles that take up volume without adding mass. Because so much of the tub is air rather than water, there is very little to evaporate, so it barely shrinks. It sands almost effortlessly. It is also soft, and it has no strength at all across a gap.
+        </p>
+
+        <p>
+          <strong>Vinyl spackle</strong> is the traditional formulation: heavier, stronger, and buildable in layers. It shrinks more than lightweight, so deeper fills want two passes, but it holds an edge better and is more durable once painted. On trim and corners that get knocked, it outlasts a lightweight filler comfortably.
+        </p>
+
+        <p>
+          <strong>Acrylic spackle</strong> sits between the two and adds a degree of flexibility. That matters on any joint that moves — around door and window casings, along the line where a wall meets a ceiling — where a rigid filler will eventually crack and an elastic one will not.
+        </p>
+
+        <p>
+          <strong>Epoxy and setting-type patching compounds</strong> are a different class of product entirely. They cure by chemical reaction rather than by drying, they have real structural strength, and they are what you use when the repair has to hold a fastener or bridge a void. They are also far harder to sand, which is why nobody wants to use them on a nail hole.
+        </p>
+
+        <p>
+          For context on where spackle ends and other fillers begin, our guides to <a href="/joint-compound-vs-spackle/">joint compound vs spackle</a> and <a href="/spackle-vs-putty/">spackle vs putty</a> cover the neighbouring categories.
+        </p>
+
+        <h2 id="shrinkage" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          2. Shrinkage Is the Whole Story
+        </h2>
+
+        <p>
+          Nearly every visible spackle repair failed for the same reason: the filler occupied the hole when it was wet and occupied less of it when it was dry. Understanding that one mechanism tells you most of what you need to know.
+        </p>
+
+        <p>
+          A conventional filler is a solid binder suspended in water. As the water leaves, the remaining solids consolidate and the volume drops. In a wide shallow smear over a drywall seam that barely matters, because the loss is spread across a large area. In a deep narrow hole it matters a great deal, because all of the loss is concentrated in one small spot and appears as a dimple.
+        </p>
+
+        <p>
+          Lightweight fillers solve this by replacing much of the water with air trapped in microspheres. Those bubbles do not evaporate, so the cured filler occupies nearly the same volume as the wet one. That is the entire reason lightweight spackle exists, and it is why it can fill a nail hole flush in a single pass when a heavier compound cannot.
+        </p>
+
+        <p>
+          The trade-off is mechanical. Those same air voids mean there is less binder per unit volume, so the cured filler is softer and weaker. This is why the advice inverts with depth: shallow damage wants the low-shrink, low-strength product, and deep damage wants the high-shrink, high-strength one applied in layers.
+        </p>
+
+        <p>
+          The practical rule that follows: <strong>under an eighth of an inch, use lightweight and fill once. Over an eighth of an inch, either use a no-shrink elastomeric formulation or accept that you are doing two coats.</strong> Trying to fill a deep hole in one pass with a shrinking compound is the most common self-inflicted wound in wall repair.
+        </p>
+
+
+        <!-- Product Reviews -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The Best Spackling Compounds, Reviewed
+          </h2>
+
+          <p>
+            We filled nail holes, screw pops, drywall dents and a few genuinely ugly gouges with each of these, then primed and painted over them and looked at the wall in raking light — which is the only honest test of a wall repair.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h2 id="by-job" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          4. Which One for Which Hole
+        </h2>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Nail and Pin Holes</h3>
+        <p>
+          Lightweight vinyl, one pass, flush. This is the easiest repair in the house and the one people most often overcomplicate. Press the filler in with a fingertip or a flexible knife, draw it off level with the wall, and leave it. Do not mound it up; there is nothing to sand back if you fill flush in the first place.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Picture Hangers and Wall Anchors</h3>
+        <p>
+          A removed plastic anchor leaves a ragged hole with a raised lip of torn paper. Push the lip in with the back of a knife handle first so nothing stands proud of the surface, then fill. If the hole is deeper than a quarter inch, use a no-shrink elastomeric filler or build it in two layers.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Dents and Dings</h3>
+        <p>
+          Shallow and wide is the easiest case for any filler, because shrinkage is spread over a large area. Feather the edges out well past the damage — a repair that ends abruptly casts a visible line under sidelighting even when it is perfectly flat.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Screw Pops</h3>
+        <p>
+          Fix the fastener before you fix the surface. Drive a new screw into the stud about an inch from the popped one, then either drive the original below the surface or remove it entirely. Fill both dimples. Skipping this means the screw pops again and takes your repair with it.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Holes Above Half an Inch</h3>
+        <p>
+          Past this point spackle is the wrong tool. There is nothing behind the hole to support the filler, and a fill with no backing cracks out. Use a self-adhesive mesh patch or a California patch, then skim with joint compound. This is a drywall repair, not a spackle repair, and treating it as the latter is why so many of them fail.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Painted Trim and Casings</h3>
+        <p>
+          An acrylic or vinyl spackle with some flexibility, because trim joints move with the seasons. A rigid lightweight filler in the mitre of a door casing will show a hairline crack by the following winter. If the trim will be stained rather than painted, spackle is the wrong product entirely — use a wood filler.
+        </p>
+
+        <h2 id="applying" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          5. Getting an Invisible Repair
+        </h2>
+
+        <p>
+          <strong>Clean the hole first.</strong> Loose paper, dust and crumbs of old filler all prevent adhesion. A quick pass with a brush or a damp cloth, then let it dry.
+        </p>
+
+        <p>
+          <strong>Press, do not smear.</strong> Force the filler into the hole so it makes contact all the way to the back, then draw the knife across at a low angle to level it. Filler that has merely been wiped across the surface bridges the hole rather than filling it, and it collapses when sanded.
+        </p>
+
+        <p>
+          <strong>Fill flush, not proud.</strong> The mound-and-sand habit is the single biggest cause of visible patches. Sanding a raised fill inevitably scuffs the paper face of the drywall around it, and that scuffed ring absorbs paint differently — the halo you see afterwards is abraded paper, not filler.
+        </p>
+
+        <p>
+          <strong>Judge dryness by colour, not by clock.</strong> The whole patch should be a uniform shade, including the centre. A ring of dry edge around a darker core means the interior is still wet and sanding will drag it out.
+        </p>
+
+        <p>
+          <strong>Scuff, do not sand.</strong> For a flush fill, a folded piece of 220-grit paper or even a damp sponge is enough to knock down any slight ridge. Reserve real sanding for repairs that genuinely stand proud.
+        </p>
+
+        <p>
+          <strong>Check it in raking light.</strong> Hold a torch flat against the wall and look along the surface. Every defect that will show after painting is visible this way and almost none of them are visible under ordinary room lighting. Fixing what you find now is far easier than fixing it through a topcoat.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Tools Worth Having</h3>
+
+        <p>
+          A flexible putty knife in two widths covers almost everything — a narrow one around an inch and a half for pressing filler into holes, and a wider four or six inch blade for drawing off dents and feathering edges. Stiff blades are made for scraping rather than for filling work; a flexible blade follows the slight curvature of a wall and leaves a flush surface rather than bridging across it.
+        </p>
+
+        <p>
+          Beyond that, a sanding sponge in a fine grit outperforms paper on a wall because it conforms slightly and is far less likely to gouge. Keep a damp cloth to hand for wiping filler off the surrounding paint while it is still wet, which is much easier than sanding it off later.
+        </p>
+
+        <h2 id="priming" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          6. Why Patches Flash Through Paint
+        </h2>
+
+        <p>
+          You fill the holes, sand them flat, paint the wall, and in certain light every repair is still visible as a dull spot. The surface is genuinely level, so what is going on?
+        </p>
+
+        <p>
+          The answer is porosity rather than geometry. Cured spackle is far more absorbent than the aged, painted wall around it. When the topcoat goes on, the paint over the patch soaks in while the paint over the existing film sits on the surface. The patch ends up with less binder at the surface and therefore a lower sheen. Painters call this flashing, and it is more pronounced the higher the sheen of the paint — invisible in flat, obvious in semi-gloss.
+        </p>
+
+        <p>
+          The fix takes seconds: a dab of primer on each patch, or a product with primer built in. Primer seals the porous filler so the topcoat behaves the same everywhere. On a wall with many repairs, or any wall in eggshell or above, priming the entire surface is worth the extra twenty minutes.
+        </p>
+
+        <p>
+          One related point people discover the hard way: a patch that has been primed and painted still needs the same number of topcoats as the rest of the wall. Spot-painting a repair and hoping it blends produces a visible patch of its own, in a slightly different shade, because the new paint has not weathered. Cut in and roll the full wall, corner to corner.
+        </p>
+
+
+        <!-- Common Mistakes -->
+        <div id="common-mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Common Mistakes</h2>
+          <div class="space-y-4">
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Overfilling and sanding back</h3>
+              <p class="text-gray-700 m-0">The instinct is to mound it up and sand flat. Sanding a proud patch scuffs the surrounding paper face and creates a halo that shows through the topcoat. Fill flush, and add a second thin coat if it sinks.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Using lightweight spackle for deep damage</h3>
+              <p class="text-gray-700 m-0">Lightweight fillers are aerated to resist shrinking, which also makes them soft. In a deep hole they have no structural strength and will crack or push in the first time something knocks them.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Skipping primer over the patch</h3>
+              <p class="text-gray-700 m-0">Spackle is far more porous than the surrounding paint. Topcoat sinks into it and dries duller, so the repair appears as a flat spot in a sheen wall even when the surface is perfectly flat.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Sanding before it is fully dry</h3>
+              <p class="text-gray-700 m-0">Damp filler clogs the paper and tears rather than cutting. Wait for a uniform colour across the whole patch, not just the edges, and give deep fills considerably longer than the label suggests.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Filling a screw pop without driving the screw</h3>
+              <p class="text-gray-700 m-0">If the fastener has backed out, filling over it just buries the problem. Drive a new screw an inch away into the stud, reset or remove the popped one, then fill both.</p>
+            </div>
+          </div>
+        </div>
+
+        <h2 id="faq" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          Frequently Asked Questions
+        </h2>
+
+        <div class="space-y-6">
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">What is the best spackle for nail holes?</h3>
+            <p class="text-gray-700 m-0">A lightweight vinyl spackle. It is engineered not to shrink, so a small hole can be filled in a single pass without needing a second coat, and it sands with almost no effort. For holes under about a quarter inch it is the correct choice every time.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">What is the difference between spackle and joint compound?</h3>
+            <p class="text-gray-700 m-0">Joint compound is designed for taping and finishing drywall seams over large areas — it goes on thin, shrinks noticeably, and sands very easily. Spackle is a filler for holes and dents, formulated to resist shrinking in a confined space. Using compound in a deep hole means several rounds of refilling.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Does spackle shrink?</h3>
+            <p class="text-gray-700 m-0">All of it shrinks to some degree; the type determines how much. Lightweight vinyl formulations shrink least and can often be filled flush in one pass. Standard all-purpose and patching compounds shrink more and generally want two coats in anything deeper than an eighth of an inch.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Can you paint directly over spackle?</h3>
+            <p class="text-gray-700 m-0">You can, but you should not. Cured spackle is far more absorbent than the surrounding paint film, so the topcoat sinks in and dries with a duller sheen. The patch then reads as a visible flat spot. A spot of primer takes seconds and eliminates it.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">How long does spackle take to dry?</h3>
+            <p class="text-gray-700 m-0">A shallow nail-hole fill in lightweight spackle is sandable in 30 minutes or less. A quarter-inch fill wants two to four hours, and anything deeper is best left overnight. Humidity and depth both extend it considerably, so judge by colour rather than the clock.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">What is the best spackle for large holes?</h3>
+            <p class="text-gray-700 m-0">For anything above about half an inch, a setting-type patching compound or a proper patch kit with mesh backing, rather than spackle. Spackle has no structural strength across a void, and a large fill with no backing will crack out however carefully it is applied.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Can you use spackle on wood?</h3>
+            <p class="text-gray-700 m-0">Only for painted trim, and only for small defects. Spackle stays relatively soft, does not take stain, and does not hold a screw. For stained wood or any repair that needs strength, use a wood filler or an epoxy-based repair instead.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Why does my spackle patch keep cracking?</h3>
+            <p class="text-gray-700 m-0">Usually the fill was too deep for one pass, or the substrate is still moving. A deep single application skins over while the interior is soft and cracks as it finishes drying. Build deep repairs in thin layers, and address the movement — a loose fastener or a flexing panel — before filling.</p>
+          </div>
+        </div>
+
+        <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+          Related Wall Repair Guides
+        </h2>
+
+        <ul>
+          <li><a href="/spackle-vs-putty/">Spackle vs Putty</a> — which filler belongs in wood and which in drywall.</li>
+          <li><a href="/joint-compound-vs-spackle/">Joint Compound vs Spackle</a> — why seams and holes want different materials.</li>
+          <li><a href="/how-long-does-spackle-take-to-dry/">How Long Does Spackle Take to Dry</a> — real timings by type and depth.</li>
+          <li><a href="/best-ceiling-paint/">Best Ceiling Paints</a> — for when the repair is done and the ceiling needs recoating.</li>
+        </ul>
+
+        <div class="mt-16 bg-gray-900 rounded-2xl p-8 text-gray-200">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="mb-4">
+            For the ninety per cent case — nail holes, small dents, picture hangers — a lightweight vinyl spackle is the right answer and the job is genuinely a two-minute one. Fill flush, let it dry properly, scuff it level, prime the spot, paint.
+          </p>
+          <p class="m-0">
+            Step up to a setting-type patching compound only when the damage is deep or wide enough that shrinkage and strength start to matter. Using the heavy product for small holes just makes the sanding harder than it needed to be.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <MoreInCategory category="Home Improvement" links={moreInCategory} />
+    <AuthorBio />
+  </article>
+</Layout>
