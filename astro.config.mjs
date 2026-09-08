@@ -134,6 +134,27 @@ const priorityGuides = new Set([
   'deck-paint-vs-deck-stain',
   'brush-vs-roller-vs-sprayer-deck-stain',
   'can-you-stain-over-old-deck-stain',
+
+  // September 2026: the portable power station cluster. "best portable power
+  // stations" is the site's largest keyword by impressions and the money page
+  // had no supporting content at all.
+  'portable-power-station-vs-generator',
+  'what-size-portable-power-station-do-i-need',
+  'can-a-portable-power-station-run-a-refrigerator',
+  'lifepo4-vs-lithium-ion-power-stations',
+  'how-to-charge-a-portable-power-station-with-solar',
+  'pure-sine-wave-vs-modified-sine-wave',
+  'how-long-do-portable-power-stations-last',
+  'can-a-portable-power-station-run-a-cpap',
+  'are-portable-power-stations-safe-indoors',
+
+  // September 2026: cordless tool fundamentals. Nine drill and brand money
+  // pages had no informational support, which shows in an average position
+  // near 8 for "best cordless drills".
+  'brushless-vs-brushed-drill',
+  'drill-vs-impact-driver',
+  'hammer-drill-vs-drill-driver',
+  'cordless-tool-batteries-explained',
 ]);
 
 export default defineConfig({
