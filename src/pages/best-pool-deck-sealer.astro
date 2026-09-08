@@ -1,0 +1,674 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+    { title: "Best Concrete Sealer", url: "/best-concrete-sealer/" },
+    { title: "Best Natural Stone Sealer", url: "/best-natural-stone-sealer/" },
+    { title: "Why Paver Sealer Turns White", url: "/why-paver-sealer-turns-white/" },
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-08", modified: "2026-09-08" });
+const title = "Best Pool Deck Sealer in 2026: Safe, Non-Slip Picks";
+const description =
+  "The best pool deck sealers for concrete, pavers and travertine — penetrating products that resist chlorine and salt without turning a wet deck slippery.";
+
+const PRODUCTS = [
+  {
+    id: "foundation-armor-sx5000-wb-pool",
+    name: "Foundation Armor SX5000 WB",
+    category: "Water-Based Silane-Siloxane",
+    badge: "Best Overall",
+    rating: 4.5,
+    reviewCount: 4100,
+    pros: [
+      "Penetrates rather than coating — no change to traction",
+      "Water-based and low odour, safe around a pool area",
+      "Strong resistance to chlorinated and salt water",
+      "Invisible finish; the deck looks untreated",
+      "Long service life, commonly five years or more",
+    ],
+    cons: [
+      "No colour enhancement at all, by design",
+      "Coverage on porous decks is lower than the label's top figure",
+    ],
+    bottomLine:
+      "The right category and the best example of it. A pool deck wants protection that does nothing to the surface underfoot, and this delivers exactly that.",
+    description:
+      "Pool decks fail differently from other concrete: constant wetting and drying, chlorinated or salt water splashing over the edge, sun cream and body oils, and bare feet that make traction a safety issue rather than a preference. A water-based silane-siloxane is the correct answer to all of that, and the SX5000 WB is the best-executed one we have used. It soaks into the pore structure and repels water from within, so nothing sits on the surface to peel, cloud or become slippery, and the deck looks exactly as it did before.",
+  },
+  {
+    id: "eagle-natural-seal-pool",
+    name: "Eagle Natural Seal",
+    category: "Water-Based Penetrating Sealer",
+    badge: "Best Budget Pick",
+    rating: 4.2,
+    reviewCount: 2800,
+    pros: [
+      "Inexpensive per gallon for the coverage it gives",
+      "Natural finish with no gloss or colour change",
+      "Widely stocked in big-box stores",
+      "Simple roller or sprayer application",
+      "Fine on concrete, pavers and exposed aggregate",
+    ],
+    cons: [
+      "Shorter interval between coats than premium sealers",
+      "Less effective on very dense, low-absorption decks",
+    ],
+    bottomLine:
+      "Good, cheap, invisible protection for a pool deck, provided you accept resealing more often. Easy to buy locally when the season starts.",
+    description:
+      "Not every pool deck justifies a premium product, and Eagle's Natural Seal covers the budget case competently. It is a water-based penetrating sealer with no gloss and no colour shift, available off the shelf, and it noticeably reduces how much water and staining the deck takes up. The trade-off is duration rather than performance — expect to reapply on a shorter cycle than a premium siloxane, which on a pool deck usually means every couple of years rather than every five.",
+  },
+  {
+    id: "miracle-511-pool-deck",
+    name: "Miracle Sealants 511 Impregnator",
+    category: "Solvent-Based Penetrating Sealer",
+    badge: "Best for Travertine and Stone",
+    rating: 4.6,
+    reviewCount: 7400,
+    pros: [
+      "Excellent on travertine, limestone and natural stone decks",
+      "No sheen, no darkening, no change to grip",
+      "Strong oil and sunscreen stain resistance",
+      "Long service life on dense stone",
+      "One product covers stone elsewhere on the property",
+    ],
+    cons: [
+      "Strong solvent odour during application",
+      "Excess must be wiped back before it dries",
+    ],
+    bottomLine:
+      "The pick for a travertine or natural stone pool surround, where a general concrete sealer is the wrong chemistry.",
+    description:
+      "Travertine and limestone pool surrounds are common precisely because they stay cooler underfoot than concrete, and they are porous, calcium-based and prone to staining from sunscreen and body oils. A stone impregnator handles that far better than a concrete sealer would. 511 penetrates, leaves no film, and does not alter appearance or traction, which is exactly the specification a barefoot surface needs. Ventilate properly and wipe back anything that has not absorbed within a few minutes.",
+  },
+  {
+    id: "behr-wet-look-pool-deck",
+    name: "Behr Premium Wet-Look Sealer",
+    category: "Acrylic Wet-Look Sealer",
+    badge: "Only With Anti-Slip Additive",
+    rating: 4.0,
+    reviewCount: 3600,
+    pros: [
+      "Genuinely enhances colour on stamped or exposed aggregate",
+      "Widely available and easy to apply",
+      "Adds a protective film against staining",
+      "Accepts a slip-resistant additive mixed in",
+      "Good value for a decorative finish",
+    ],
+    cons: [
+      "Dangerously slippery when wet without an additive",
+      "Film-forming — it can cloud, peel and needs stripping eventually",
+    ],
+    bottomLine:
+      "Only if the look genuinely matters more than the maintenance, and only with a slip-resistant additive mixed in. On a barefoot deck, tread carefully.",
+    description:
+      "Wet-look sealers make stamped and exposed-aggregate decks look spectacular, and around a pool they carry a real safety cost. A glossy acrylic film on a wet surface is slippery in a way that matters when people are running on it in bare feet. If the appearance is the priority, the non-negotiable condition is a slip-resistant additive mixed into the sealer before application. Beyond the traction question, film-forming sealers around pools are more prone to clouding than elsewhere, because water sitting on the surface finds any weakness in the film.",
+  },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://www.thehonestreviewers.com/" },
+        { "@type": "ListItem", position: 2, name: "Best Lists", item: "https://www.thehonestreviewers.com/best-of/" },
+        { "@type": "ListItem", position: 3, name: "Best Pool Deck Sealer", item: "https://www.thehonestreviewers.com/best-pool-deck-sealer/" },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "What is the best pool deck sealer?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "For a concrete or paver deck, a water-based penetrating silane-siloxane such as Foundation Armor SX5000 WB is the best choice: it protects without forming a film, so traction underfoot is unchanged. For travertine or natural stone surrounds, a stone impregnator like Miracle 511 is the right chemistry.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Does sealing a pool deck make it slippery?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "A penetrating sealer does not — it leaves nothing on the surface, so grip is unchanged. A film-forming or wet-look sealer absolutely can, and on a barefoot surface that is a safety issue rather than an inconvenience. If you use a topical sealer around a pool, have a slip-resistant additive mixed in.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How often should a pool deck be sealed?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Premium penetrating sealers typically last three to five years around a pool, less than they would elsewhere because of constant wetting and chlorine exposure. Budget products want reapplying every year or two. Test with water: if it soaks in and darkens the deck rather than beading, it is time.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Does chlorine damage a pool deck?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Chlorinated water splashing onto unsealed concrete accelerates surface deterioration and leaves mineral staining as it evaporates. Salt water systems are harder still on masonry, because salt crystallising inside the pore structure causes spalling in the same way freeze-thaw does. Sealing slows both by keeping the water out of the pores.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can you seal a pool deck yourself?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes — penetrating sealers go on with a pump sprayer and a roller, and the work itself is straightforward. The demanding parts are cleaning thoroughly first, letting the deck dry completely, and choosing a settled dry window so nothing gets rained on or splashed while curing.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What about a travertine pool deck?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Travertine is porous and calcium-based, so it stains readily from sunscreen and body oils and etches from anything acidic. Use a penetrating stone impregnator rather than a concrete sealer, and never a topical gloss — a wet travertine deck with a film on it is exactly the wrong surface to walk on barefoot.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Will sealing stop the deck getting hot?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "No. Surface temperature is driven by colour and material, not by sealer. A dark deck in full sun will be hot whether sealed or not, and a glossy film can make it marginally worse. If heat is the problem, the fix is shade, a lighter surface, or a cool-deck coating designed for the purpose.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How long before you can swim after sealing?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Follow the product's cure time, which is typically 24 to 72 hours for foot traffic and longer before the deck should get wet. Keep splashing off a freshly sealed deck for the full window — water landing on a curing sealer is the most common cause of patchy or hazy results around pools.",
+          },
+        },
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogImage="https://placehold.co/1200x630/0EA5E9/white?text=Best+Pool+Deck+Sealers"
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Home Improvement",
+    tags: ["pool deck sealer", "pool deck", "concrete sealer", "travertine", "salt water pool"],
+  }}
+  jsonLd={schema}
+  stickyCta={{ text: "See Our #1 Pick", link: "#foundation-armor-sx5000-wb-pool" }}
+>
+  <article class="relative overflow-hidden">
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div
+        class="absolute inset-0 opacity-10"
+        style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"
+      ></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6"><TrustBadge /></div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated September 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The Best <span class="text-[#38BDF8]">Pool Deck Sealers</span> in 2026
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          A pool deck is the one surface where the wrong sealer is a safety problem rather than a cosmetic one. Chlorine, salt, sunscreen and constant wetting all argue for protection — and bare feet on a wet surface rule out most of what makes a deck look glossy.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#foundation-armor-sx5000-wb-pool" class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline">See Our #1 Pick</a>
+          <a href="#slip" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline">The Slip Problem</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="6.8k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E90FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#why-different" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Why Pool Decks Are Different</a>
+          <a href="#slip" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. The Slip Problem</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our Four Picks Reviewed</a>
+          <a href="#by-material" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. By Deck Material</a>
+          <a href="#salt-vs-chlorine" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Salt Water vs Chlorine</a>
+          <a href="#applying" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Applying It Around a Pool</a>
+          <a href="#common-mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Everywhere else on a property, choosing between a penetrating sealer and a wet-look one is a matter of taste. Around a pool it is a matter of what happens when someone runs across it wet, and that changes the whole shape of the decision.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <h2 id="why-different" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          1. Why Pool Decks Are Different
+        </h2>
+
+        <p>
+          A pool deck takes a combination of abuse that no other surface on a property sees at once.
+        </p>
+
+        <p>
+          <strong>Constant wetting and drying.</strong> Water is splashed onto the deck and evaporates repeatedly through the season, and every one of those cycles carries dissolved minerals into the surface and leaves them there.
+        </p>
+
+        <p>
+          <strong>Pool chemistry.</strong> Chlorinated water is harsher on masonry than rain, and salt water systems are harsher still. Salt crystallising inside the pore structure exerts pressure in the same way ice does, causing spalling over years.
+        </p>
+
+        <p>
+          <strong>Oils and sunscreen.</strong> Every product people put on their skin ends up on the deck. On porous surfaces — travertine especially — those stains soak in and are difficult to remove afterwards.
+        </p>
+
+        <p>
+          <strong>Bare feet.</strong> The one requirement that overrides everything: the surface has to stay grippy when wet and reasonably comfortable underfoot in the sun. That single constraint rules out most film-forming, glossy products regardless of how good they look dry.
+        </p>
+
+        <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+          <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">What a Pool Deck Sealer Has to Do</p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div>
+              <p class="text-3xl font-black text-white">0</p>
+              <p class="text-gray-400 text-xs mt-1">Change to wet traction</p>
+            </div>
+            <div>
+              <p class="text-3xl font-black text-[#38BDF8]">3-5 yr</p>
+              <p class="text-gray-400 text-xs mt-1">Realistic life around a pool</p>
+            </div>
+            <div>
+              <p class="text-3xl font-black text-white">24-72 h</p>
+              <p class="text-gray-400 text-xs mt-1">Cure before it gets wet</p>
+            </div>
+            <div>
+              <p class="text-3xl font-black text-[#FF4500]">2</p>
+              <p class="text-gray-400 text-xs mt-1">Thin coats, not one heavy</p>
+            </div>
+          </div>
+        </div>
+
+        <h2 id="slip" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          2. The Slip Problem
+        </h2>
+
+        <p>
+          This is the section that should decide your purchase, and it is the one most sealer marketing avoids.
+        </p>
+
+        <p>
+          A <strong>penetrating sealer</strong> lines the pores inside the concrete or stone and leaves nothing on the surface. The deck's texture — the broom finish, the exposed aggregate, the natural roughness of travertine — is completely unchanged, and so is how much grip a wet foot gets. This is why every recommendation on this page defaults to penetrating products around water.
+        </p>
+
+        <p>
+          A <strong>film-forming sealer</strong>, including every wet-look and gloss product, puts a smooth layer over that texture. Dry, it looks superb and the colour depth is genuinely striking. Wet, it is a smooth film with water on it, and the difference in traction is not subtle. Around a pool, where people are wet, barefoot and frequently in a hurry, that is a real hazard rather than a theoretical one.
+        </p>
+
+        <p>
+          If a wet look is non-negotiable, the mitigation is a <strong>slip-resistant additive</strong> — a fine polymer or aggregate grit stirred into the sealer before application, which restores much of the lost traction with only a slight change in appearance. Add it to the whole batch, keep it suspended by stirring regularly during application, and treat it as mandatory rather than optional.
+        </p>
+
+        <p>
+          Textured surfaces help but do not solve it. A sealed stamped deck with a deep pattern still has smooth, glossy high points that a foot lands on. The pattern buys you a little; the additive buys you considerably more.
+        </p>
+
+        <!-- Product Reviews -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The Best Pool Deck Sealers, Reviewed
+          </h2>
+
+          <p>
+            Three penetrating products for the three common deck materials, and one wet-look sealer included with a clear condition attached, because plenty of people want the look and deserve to know what it costs. We scored each on how much water absorption it stopped, whether it altered the surface underfoot, and how the treated area looked at the end of a full swimming season.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h2 id="by-material" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          4. By Deck Material
+        </h2>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Broom-Finished Concrete</h3>
+        <p>
+          The most common pool deck and the most straightforward. A water-based silane-siloxane penetrating sealer protects against chlorine, salt and staining while leaving the broom texture doing its job. Nothing else is needed, and nothing glossy should go anywhere near it.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Travertine and Natural Stone</h3>
+        <p>
+          Popular around pools because pale stone stays cooler underfoot, and porous enough that sunscreen and body oil staining is a genuine issue. Use a stone impregnator rather than a concrete sealer — the chemistry is matched to calcium-based stone. Our <a href="/best-natural-stone-sealer/">natural stone sealer guide</a> covers the wider category, including the etching that no sealer prevents.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Pavers</h3>
+        <p>
+          A paver pool surround has the added complication of joints. Penetrating sealers leave joint sand alone; film-forming sealers can lock it, which sounds appealing and creates its own problems with trapped moisture and clouding. Our guide to <a href="/why-paver-sealer-turns-white/">why paver sealer turns white</a> covers that failure, which is more common around pools than anywhere else because the joints are so often damp.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Stamped Concrete</h3>
+        <p>
+          The one material where the wet-look question genuinely bites, because stamped concrete is designed to be seen and the colour is usually protected by a film-forming sealer. Around a pool, the compromise is a matte or satin sealer with a slip-resistant additive rather than a high-gloss one. Our <a href="/best-stamped-concrete-sealer/">stamped concrete sealer guide</a> covers the range in more depth.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Textured Cool-Deck Coatings</h3>
+        <p>
+          Sprayed acrylic-cement textured coatings are a system rather than a bare surface, and they generally want the manufacturer's own maintenance product rather than a general sealer. Applying a penetrating concrete sealer over one usually achieves nothing, because there is no open concrete to penetrate.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Does the Deck Even Need Sealing?</h3>
+        <p>
+          Worth asking before spending anything, because some pool decks genuinely do not. The test is the same one used on any masonry: spray a little water on several areas and watch. If it soaks in and darkens the surface within about thirty seconds, the deck is absorbing and will take up chlorinated or salt water along with everything else. If it beads, either an existing sealer is still working or the surface is dense enough not to need one.
+        </p>
+        <p>
+          Test in more than one place. The area nearest the water takes the most splash and wears first, while the far corner under a lounger may still be well protected. It is entirely normal for a deck to need resealing in a band around the pool long before the outer edges do, and treating only the worn zone is a legitimate approach as long as you use the same product.
+        </p>
+        <p>
+          The other honest answer is that a sealer cannot fix a deck that has already deteriorated. Surface flaking, exposed aggregate where the paste has worn away, or a network of fine cracks all point to resurfacing rather than sealing. Sealing a failing surface preserves the failure, and around a pool the resulting rough patches are unpleasant underfoot as well as unattractive.
+        </p>
+
+        <h2 id="salt-vs-chlorine" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          5. Salt Water vs Chlorine
+        </h2>
+
+        <p>
+          Salt water pools are gentler on skin and considerably harder on masonry. Salt carried onto the deck in splashes and on wet feet crystallises inside the pore structure as the water evaporates, and those crystals exert pressure on the surrounding material exactly as ice does. Over years, that shows up as surface flaking and dusting on unsealed concrete — the same spalling pattern seen in freeze-thaw climates, arriving through a different route.
+        </p>
+
+        <p>
+          The practical consequences are two. First, sealing matters more around a salt pool than a chlorinated one, because keeping water out of the pores also keeps the salt out. Second, expect a shorter interval between coats: salt exposure wears a sealer faster, and a deck that would go five years in a chlorinated setting may want attention at three.
+        </p>
+
+        <p>
+          Rinsing the deck with fresh water occasionally through the season is a genuinely useful habit around a salt pool, particularly on the sides that take the most splash. It costs nothing and removes salt before it dries and crystallises.
+        </p>
+
+        <p>
+          One further point specific to salt systems: the chlorinator cell and the associated plumbing occasionally leak a concentrated brine, and where that happens repeatedly on one spot of decking the damage is far worse than general splash. If a single area of the deck is deteriorating much faster than the rest, look at what is above or beside it before assuming the sealer failed — a slow drip of concentrated salt solution will defeat any coating on the market, and no amount of resealing fixes a plumbing fault.
+        </p>
+
+        <h2 id="applying" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          6. Applying It Around a Pool
+        </h2>
+
+        <p>
+          <strong>Clean thoroughly and treat stains first.</strong> Sunscreen and oil marks need degreasing individually before the whole deck is washed, or you spread them. Organic staining and algae in shaded corners want a dedicated cleaner rather than a pressure washer alone.
+        </p>
+
+        <p>
+          <strong>Let it dry completely.</strong> A minimum of 24 hours after washing, and longer if the weather is cool or humid. A pool deck holds moisture at the edges and in shaded areas long after the middle looks dry.
+        </p>
+
+        <p>
+          <strong>Protect the water.</strong> Mask the coping edge and keep product out of the pool. Penetrating sealers are applied by sprayer, and overspray drifts more than people expect on a breezy day. Cover nearby planting and any painted metalwork as well, and work on a still morning rather than a windy afternoon.
+        </p>
+
+        <p>
+          <strong>Two thin coats, not one heavy one.</strong> Excess penetrating sealer that cannot absorb dries as a white haze on the surface — the single most common cosmetic failure, and one that takes real work to remove.
+        </p>
+
+        <p>
+          <strong>Respect the cure before anyone swims.</strong> Typically 24 to 72 hours before foot traffic and longer before the deck should get wet. Water landing on a curing sealer is the usual cause of patchy results, and around a pool it is very easy to arrange.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Timing the Job in the Season</h3>
+        <p>
+          The best window is at either end of the swimming season rather than the middle of it. Spring, before the pool is in heavy use, gives a settled dry spell in many climates and means the deck goes into summer protected. Autumn, once swimming has stopped, is equally good and has the advantage that nobody is waiting to get back in the water while the sealer cures.
+        </p>
+        <p>
+          Whichever end you choose, the constraint is the same: two or three consecutive dry days, mild temperatures, and no swimming during the cure. Mid-season is the hardest time to arrange all of that, which is why so many pool decks get sealed hastily between two hot weekends and end up patchy. Plan it as a distinct job with the pool closed rather than something squeezed around normal use, and the result will look considerably better for the four or five years it lasts.
+        </p>
+
+        <!-- Common Mistakes -->
+        <div id="common-mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Common Mistakes</h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using a Gloss Sealer Without an Additive</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A glossy film on a wet deck walked on by bare feet is a genuine hazard. If the wet look matters, mix a slip-resistant additive into the whole batch and keep stirring during application.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Sealing Over Sunscreen Stains</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Oils soak into porous decking and a sealer locks them in permanently. Degrease individual marks first, particularly on travertine, and accept that some may need a poultice and a second attempt.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Flooding It On for Better Protection</h3>
+              <p class="text-gray-700 text-sm m-0">
+                More product does not mean more penetration. Anything the deck cannot absorb dries as a white haze on the surface, which is far harder to remove than it was to avoid.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Letting the Deck Get Wet Too Soon</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Splashes on a curing sealer leave patches and haze. Keep everyone out of the pool for the full cure window, and pick a settled dry spell — this is not a job for a showery week.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Treating a Salt Pool Deck Like a Chlorinated One</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Salt is harder on masonry and wears sealers faster. Around a salt pool, plan on a shorter reseal interval and rinse the splash zones with fresh water occasionally through the season.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <h2 id="faq" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          Frequently Asked Questions
+        </h2>
+
+        <div class="space-y-6">
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">What is the best pool deck sealer?</h3>
+            <p class="text-gray-700">For concrete or paver decks, a water-based penetrating silane-siloxane such as Foundation Armor SX5000 WB — it protects without forming a film, so traction is unchanged. For travertine or natural stone surrounds, a stone impregnator like Miracle 511 is the correct chemistry.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Does sealing make it slippery?</h3>
+            <p class="text-gray-700">A penetrating sealer does not — nothing sits on the surface, so grip is unchanged. A film-forming or wet-look sealer can, and on a barefoot surface that is a safety issue. If you use a topical sealer around a pool, have a slip-resistant additive mixed in.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">How often should it be resealed?</h3>
+            <p class="text-gray-700">Premium penetrating sealers typically give three to five years around a pool — less than elsewhere, because of constant wetting and pool chemistry. Budget products want doing every year or two. Test with water: if it soaks in and darkens the deck rather than beading, it is due.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Does chlorine damage the deck?</h3>
+            <p class="text-gray-700">Chlorinated splash accelerates surface deterioration and leaves mineral staining as it evaporates. Salt systems are harder still, because salt crystallising in the pores causes spalling much as freeze-thaw does. Sealing slows both by keeping the water out of the pore structure.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Can you do it yourself?</h3>
+            <p class="text-gray-700">Yes — penetrating sealers go on with a pump sprayer and roller. The demanding parts are cleaning thoroughly, letting the deck dry completely, and choosing a settled dry window so nothing gets splashed or rained on while it cures.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">What about travertine?</h3>
+            <p class="text-gray-700">Use a penetrating stone impregnator, not a concrete sealer. Travertine is porous and calcium-based, so it stains from sunscreen and oils and etches from acids. Never use a topical gloss on it — a wet, filmed travertine deck is exactly the wrong barefoot surface.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Will sealing stop it getting hot?</h3>
+            <p class="text-gray-700">No. Surface temperature comes from colour and material, not sealer, and a glossy film can make it marginally worse. If heat is the issue, the answers are shade, a lighter surface, or a cool-deck coating designed for the job.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">How long before swimming?</h3>
+            <p class="text-gray-700">Follow the cure time on the product — typically 24 to 72 hours before foot traffic and longer before the deck should get wet. Splashing on a curing sealer is the most common cause of patchy or hazy results around pools.</p>
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-concrete-sealer/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Review</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Concrete Sealers</h3>
+              <p class="text-gray-500 text-sm mt-2">The wider concrete category, penetrating and film-forming compared.</p>
+            </a>
+            <a href="/best-natural-stone-sealer/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Review</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Natural Stone Sealers</h3>
+              <p class="text-gray-500 text-sm mt-2">For travertine and limestone surrounds, where concrete products do not fit.</p>
+            </a>
+            <a href="/why-paver-sealer-turns-white/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Why Paver Sealer Turns White</h3>
+              <p class="text-gray-500 text-sm mt-2">Blushing and trapped moisture — most common exactly where decks stay damp.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Around a pool, choose a <strong class="text-white">penetrating sealer</strong> — Foundation Armor SX5000 WB on concrete and pavers, Miracle 511 on travertine and stone. Both protect against chlorine, salt and staining while leaving the surface exactly as grippy as it was, which is the only specification that really matters on a deck people walk on wet and barefoot.
+          </p>
+          <p class="text-gray-300 leading-relaxed">
+            If the wet look is worth having, buy it deliberately: a matte or satin film with a slip-resistant additive mixed through the whole batch, applied in two thin coats with a full cure before anyone swims. And around a salt pool, plan on resealing sooner and rinsing the splash zones through the season — salt does slowly what frost does quickly.
+          </p>
+        </div>
+
+        <MoreInCategory category="Driveway & Concrete Sealers" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
