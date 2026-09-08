@@ -155,6 +155,18 @@ const priorityGuides = new Set([
   'drill-vs-impact-driver',
   'hammer-drill-vs-drill-driver',
   'cordless-tool-batteries-explained',
+
+  // September 2026: topics from the organic positions export that were
+  // ranking on a neighbouring page because they had none of their own.
+  'best-teak-sealer',
+  'best-basement-waterproofing-paint',
+  'flex-seal-for-basement-walls',
+  'what-is-paver-sand',
+  'sealing-old-concrete',
+  'tekton-vs-gearwrench',
+  'tekton-vs-snap-on',
+  'lastiseal-reviews',
+  'liquid-rubber-vs-drylok',
 ]);
 
 export default defineConfig({
