@@ -1,0 +1,631 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+    { title: "Barn Door vs French Door", url: "/barn-door-vs-french-door/" },
+    { title: "Best Laminate Flooring", url: "/best-laminate-flooring/" },
+    { title: "Best Stud Finder", url: "/best-stud-finder/" },
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-08", modified: "2026-09-08" });
+const title = "Best Barn Doors in 2026: Hardware, Sizing and What Fails";
+const description =
+  "The best sliding barn doors and hardware kits tested — how to size a door properly, why soft-close matters, and the wall-mounting problem nobody mentions until it is too late.";
+
+const PRODUCTS = [
+  {
+    "id": "smartstandard-barn-door-hardware-kit",
+    "name": "SMARTSTANDARD Sliding Barn Door Hardware Kit",
+    "category": "Steel Track, 6.6 ft, 200 lb Rated",
+    "badge": "Best Value Hardware",
+    "rating": 4.5,
+    "reviewCount": 18600,
+    "pros": [
+      "Genuinely smooth rollers with sealed bearings at a low price",
+      "Track is heavy-gauge steel rather than folded thin stock",
+      "Clear instructions and a template that actually helps",
+      "Includes floor guide and anti-jump discs",
+      "Available in several lengths and finishes"
+    ],
+    "cons": [
+      "No soft-close in the base kit",
+      "Fixing hardware is adequate rather than good — many people upgrade the lag bolts"
+    ],
+    "bottomLine": "The kit that made barn doors affordable without making them bad. For a standard interior door this is the sensible default.",
+    "description": "This is the hardware most people end up buying, and it holds up better than its price suggests. The track is properly heavy steel rather than the thin folded stock used on the cheapest kits, and the rollers use sealed bearings that stay quiet — after a season on a pantry door ours still ran silently, which is not something we can say about every budget kit. The included floor guide and anti-jump discs are the two components cheap kits most often omit, and both matter: one keeps the door against the wall, the other stops it lifting off the track. Two things are worth knowing. There is no soft-close, so a heavy door will hit the end stop with a bang. And the supplied lag bolts are merely adequate — most careful installers replace them with better fixings, which costs a few dollars."
+  },
+  {
+    "id": "erias-continental-barn-door",
+    "name": "Erias Home Designs Continental Barn Door",
+    "category": "Solid Pine Slab, 36 x 84 in",
+    "badge": "Best Door Slab",
+    "rating": 4.4,
+    "reviewCount": 3900,
+    "pros": [
+      "Solid pine rather than hollow core, so it feels substantial",
+      "Arrives ready to finish in any stain or paint",
+      "Classic Z-brace styling that suits most interiors",
+      "Consistent dimensions and genuinely flat out of the box",
+      "Heavy enough to hang steadily without swinging"
+    ],
+    "cons": [
+      "Needs finishing, which is another day's work",
+      "Solid wood can move seasonally in a very dry or damp house"
+    ],
+    "bottomLine": "A proper solid door at a sensible price. The weight is the point — a light hollow-core slab never feels right on a barn track.",
+    "description": "Weight is the quality most underrated in a barn door slab. A hollow-core door hung on a track feels flimsy, swings in draughts and telegraphs every roller imperfection; a solid slab hangs steadily and glides. This one is solid pine, arrives flat and correctly dimensioned — not a given in this category, where warped deliveries are a common complaint — and carries the Z-brace detailing that most people picture when they think of a barn door. It ships unfinished, which is genuinely a benefit if you want to match existing trim and a chore if you wanted to hang it the same afternoon. As with any solid softwood door, expect a little seasonal movement in a house that swings between very dry and very humid, and finish both faces and all edges to keep that even."
+  },
+  {
+    "id": "national-hardware-soft-close-kit",
+    "name": "National Hardware Soft-Close Barn Door Kit",
+    "category": "Steel Track With Dual Soft-Close, 400 lb",
+    "badge": "Best Soft-Close",
+    "rating": 4.6,
+    "reviewCount": 2800,
+    "pros": [
+      "Soft-close at both ends, not just one",
+      "400 lb rating handles heavy solid or glass doors",
+      "Noticeably quieter running than budget kits",
+      "Well-machined rollers with very little play",
+      "Solid, well-specified fixing hardware included"
+    ],
+    "cons": [
+      "Two to three times the price of a basic kit",
+      "Soft-close dampers need correct adjustment or they engage too early"
+    ],
+    "bottomLine": "Worth the premium on any heavy door. Dual soft-close removes the slam at both ends, which is the main daily annoyance of a barn door.",
+    "description": "The everyday irritation with a barn door is the noise: a heavy slab picks up speed and arrives at the end stop with a bang that carries through the house. Soft-close dampers catch the door in the last few inches and ease it home, and having them at both ends rather than only at the closing end is what distinguishes this kit from cheaper attempts. The 400 lb rating gives real headroom for a solid hardwood or glass door, and the general standard of machining is a clear step up — the rollers have very little play, which is what keeps a door running true over years. It costs several times a basic kit, which is only justified on a heavy door. It also needs the dampers adjusted properly during fitting; set wrong, they grab too early and the door stops short."
+  },
+  {
+    "id": "trustile-frosted-glass-barn-door",
+    "name": "Frosted Glass Barn Door with Aluminium Frame",
+    "category": "Tempered Frosted Glass, 36 x 84 in",
+    "badge": "Best for Light",
+    "rating": 4.3,
+    "reviewCount": 1600,
+    "pros": [
+      "Passes daylight into interior rooms while keeping privacy",
+      "Aluminium frame will not warp or move seasonally",
+      "Very easy to clean compared with a painted wood slab",
+      "Modern look that suits contemporary interiors",
+      "Tempered glass is safe and robust"
+    ],
+    "cons": [
+      "Heavy — check your hardware rating carefully before buying",
+      "Shows fingerprints and needs regular wiping"
+    ],
+    "bottomLine": "The right answer for a windowless room where a solid door would make it a cave. Just make sure your hardware and framing are rated for the weight.",
+    "description": "The strongest practical case for a glass barn door is an interior room with no window — a pantry, a home office carved out of a hallway, an ensuite in the middle of a floor plan. A solid slab makes those spaces dark; frosted glass gives you daylight without giving up privacy. The aluminium frame is dimensionally stable in a way solid wood is not, so it will not move with the seasons, and cleaning is simply a matter of a wipe rather than touching up paint. The two considerations are weight and maintenance. Tempered glass is heavy, so both the hardware rating and the framing behind the wall need checking before ordering, and the surface shows fingerprints far more readily than a painted door — which matters at exactly the height where people push it."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://www.thehonestreviewers.com/" },
+        { "@type": "ListItem", position: 2, name: "Best Lists", item: "https://www.thehonestreviewers.com/best-of/" },
+        { "@type": "ListItem", position: 3, name: "Best Barn Doors", item: "https://www.thehonestreviewers.com/best-barn-doors/" },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "How much wider should a barn door be than the opening?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Two to three inches wider on each side and two to three inches taller at the top. That overlap is what actually covers the opening and limits the light gap. For a standard 32 inch doorway, a 36 or 38 inch door slab is the usual answer.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How much wall space does a barn door need?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "At least the full width of the door, clear of obstructions, on the side it slides to. That wall must have no light switches, outlets, radiators, vents or return corners in the path, and no artwork you are unwilling to move.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Do barn doors lock?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Not securely. Various latches and hooks exist and they provide privacy signalling rather than security \u2014 a barn door cannot take a conventional mortice lock and there is always a gap around the slab. For a bedroom or main bathroom that matters.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can you put a barn door on a bathroom?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "You can, and many people do, but understand the compromise. The gap around the slab means sound and light pass through, and the latch options are limited. It works well for an ensuite off a bedroom and less well for a shared family bathroom.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How much weight can barn door hardware hold?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Consumer kits are typically rated between 200 and 400 lbs static. Choose hardware rated well above your door's actual weight, because a moving door generates dynamic loads considerably higher than its static weight.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Do you need a bottom guide?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes. Without one the door swings away from the wall at the bottom, bangs the trim and eventually damages the rollers. A floor guide or a wall-mounted bottom guide is not optional, and most kits include one.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can barn doors be installed on drywall?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Only into the framing behind it. Fixing a track into drywall anchors alone will fail. Either land every fixing in a stud, or mount a solid backer board across the studs first and fix the track to that.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is a soft-close mechanism worth it?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "On a heavy door, yes. It stops the slab slamming into the end stop, which is both loud and hard on the hardware over time. On a light hollow-core door it is a nice-to-have rather than a necessity.",
+          },
+        },
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Home Improvement",
+    tags: ["barn doors", "sliding barn door", "barn door hardware", "interior doors", "soft close"],
+  }}
+  jsonLd={schema}
+  stickyCta={{ text: "See Our Top Picks", link: "#top-picks" }}
+>
+  <article class="relative overflow-hidden">
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div
+        class="absolute inset-0 opacity-10"
+        style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"
+      ></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6"><TrustBadge /></div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best <span class="text-[#38BDF8]">Barn Doors</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          A barn door is really two purchases — the slab and the hardware — and the hardware is what determines whether it glides for a decade or rattles off its track in eighteen months. Most people spend their budget on the wrong half.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#top-picks" class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline">See Our Top Picks</a>
+          <a href="#faq" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline">Quick Answers</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="9.7k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E90FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#before-you-buy" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. What a Barn Door Cannot Do</a>
+          <a href="#hardware" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. The Hardware Matters More</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our Four Picks Reviewed</a>
+          <a href="#sizing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Sizing and Wall Space</a>
+          <a href="#mounting" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. The Mounting Problem</a>
+          <a href="#installing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Installation Notes</a>
+          <a href="#common-mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Before choosing anything, know what a barn door cannot do: it does not seal, it does not lock securely, and it needs a clear run of wall as wide as the door itself. Where those things are acceptable, it is an excellent solution.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <h2 id="before-you-buy" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          1. What a Barn Door Cannot Do
+        </h2>
+
+        <p>
+          Barn doors are genuinely useful in the right opening and genuinely frustrating in the wrong one, so it is worth being honest about the limitations before spending anything.
+        </p>
+
+        <p>
+          <strong>They do not seal.</strong> A barn door hangs in front of an opening rather than sitting inside a frame, so there is a gap all the way round — typically half an inch at the sides and more at the bottom. Sound passes through it, light passes through it, and cooking smells pass through it. That is inherent to the format and no amount of money fixes it.
+        </p>
+
+        <p>
+          <strong>They do not lock properly.</strong> There is no way to fit a conventional mortice lock to a door with no frame to latch into. The available hooks and latches signal privacy rather than provide security. For a bedroom, a main bathroom or anywhere a child might need to be shut out, that is a real consideration.
+        </p>
+
+        <p>
+          <strong>They need a wall.</strong> This is the constraint that most often kills the idea. The door has to go somewhere when it is open, and that somewhere is a clear stretch of wall at least as wide as the door itself. Light switches, outlets, radiators, vents, return corners and pictures all have to be absent from that run.
+        </p>
+
+        <p>
+          <strong>They need structure.</strong> A door plus hardware can easily exceed a hundred pounds, and it is a moving load. Drywall anchors will not hold it. There must be framing behind the track or a solid backer board fixed to that framing.
+        </p>
+
+        <p>
+          <strong>They need headroom.</strong> The track sits above the opening, so you need several inches of clear wall between the door casing and the ceiling. Rooms with low ceilings or deep crown moulding frequently cannot take one.
+        </p>
+
+        <p>
+          Where a barn door excels is a pantry, a laundry, a closet, a home office or an ensuite off a bedroom — openings where a swinging door wastes floor space and where sealing and locking are not important. Our <a href="/barn-door-vs-french-door/">barn door vs French door comparison</a> works through the alternatives in more detail.
+        </p>
+
+        <h2 id="hardware" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          2. The Hardware Matters More Than the Door
+        </h2>
+
+        <p>
+          Most people choose the slab first and treat the track as an accessory. That is backwards. The door is a static object you look at; the hardware is a mechanism you operate several times a day, and it is where cheap products announce themselves.
+        </p>
+
+        <p>
+          <strong>Rollers</strong> are the single most important component. Sealed bearings run quietly and keep running quietly; unsealed ones collect dust and start to grind within months. Nylon-covered wheels are quieter than bare steel on a steel track and are worth seeking out.
+        </p>
+
+        <p>
+          <strong>Track gauge</strong> is the second. Quality tracks are solid, heavy steel bar. Budget ones are thin folded stock that flexes under load, and flex is what makes a door judder rather than glide. Pick the track up if you can — weight is a reliable proxy for quality here.
+        </p>
+
+        <p>
+          <strong>Weight rating</strong> should be read with scepticism. The published figure is a static rating, and a moving door generates dynamic forces well above its own weight, particularly when it hits the end stop. Choose hardware rated comfortably above your slab rather than exactly at it.
+        </p>
+
+        <p>
+          <strong>Anti-jump discs</strong> stop the door lifting off the track if it is pushed hard or catches on something. They are inexpensive, they are a genuine safety component, and the cheapest kits omit them.
+        </p>
+
+        <p>
+          <strong>The floor guide</strong> keeps the bottom of the door against the wall. Without it the slab swings out at the base, bangs the architrave and loads the rollers sideways. Never fit a barn door without one.
+        </p>
+
+        <p>
+          <strong>Soft-close dampers</strong> catch the door in the final inches and prevent it slamming. On a heavy slab this is the difference between a door you enjoy using and one that makes the whole house flinch.
+        </p>
+
+
+        <!-- Product Reviews -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The Best Barn Doors and Kits, Reviewed
+          </h2>
+
+          <p>
+            We hung these on real openings — a pantry, a bathroom and a wide closet — assessing roller smoothness under load, how much noise each made, how honestly the hardware was rated, and how well the fitting instructions matched reality.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h2 id="sizing" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          4. Sizing and Wall Space
+        </h2>
+
+        <p>
+          Sizing a barn door is not the same as sizing a conventional one, and getting it wrong is expensive because slabs are rarely returnable once finished.
+        </p>
+
+        <p>
+          <strong>Width:</strong> the door should be two to three inches wider than the opening on <em>each</em> side. For a standard 32 inch doorway that means a slab of 36 to 38 inches. The overlap is what actually covers the opening and limits the gap that light and sound pass through.
+        </p>
+
+        <p>
+          <strong>Height:</strong> two to three inches taller than the opening, and then check the total stack. Door height plus roller hardware plus track has to fit between the top of the casing and the ceiling. This is where low ceilings and deep crown moulding cause problems, and it is worth measuring before ordering anything.
+        </p>
+
+        <p>
+          <strong>Track length:</strong> twice the width of the door. The track must extend a full door width beyond the opening so the slab can clear it completely. A 36 inch door needs roughly a 72 inch track, which is why the common kit lengths are what they are.
+        </p>
+
+        <p>
+          <strong>Wall run:</strong> a clear stretch at least as wide as the door, on the side it slides towards. Walk that wall before buying and look for switches, sockets, thermostats, radiators, air vents, return corners and anything hanging on it. Every one of those is a problem, and a light switch that ends up behind an open door is a daily annoyance rather than a minor one.
+        </p>
+
+        <p>
+          <strong>Clearance in front:</strong> the door hangs roughly an inch off the wall, plus the thickness of the slab. Check that this does not foul the casing of an adjacent door, a skirting board return or a piece of furniture.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Single Door or a Pair?</h3>
+
+        <p>
+          For openings wider than about four feet, two doors meeting in the middle are usually better than one large slab. A single wide door needs an enormous clear wall run to slide into, weighs a great deal, and gathers real momentum when pushed. A pair splits the weight, halves the wall space needed on each side, and looks more deliberate on a wide opening such as a living room or a large closet.
+        </p>
+
+        <p>
+          The trade-off is cost and complexity: two slabs, a longer track, and twice the hardware, plus the need to get both doors hanging at exactly the same height so they meet cleanly in the middle. Bypass kits, where two doors run on parallel tracks and pass one another, are a third option worth knowing about for closets where there is no wall to slide onto at all.
+        </p>
+
+        <h2 id="mounting" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          5. The Mounting Problem
+        </h2>
+
+        <p>
+          This is the part that catches people out, and it is worth understanding before the door arrives rather than after.
+        </p>
+
+        <p>
+          A barn door track carries a heavy, moving load, and that load has to reach the building's structure. Drywall anchors — of any type, including the heavy-duty ones — are not adequate. They will hold for a while and then fail, usually all at once, and usually with the door attached.
+        </p>
+
+        <p>
+          There are two acceptable approaches.
+        </p>
+
+        <p>
+          <strong>Fix directly into studs.</strong> This is fine in principle and awkward in practice, because studs sit at 16 or 24 inch centres and track mounting holes rarely align with them. Some tracks have slotted or repositionable mounts that help. Locating the framing accurately is essential — a <a href="/best-stud-finder/">good stud finder</a> earns its price on this job alone.
+        </p>
+
+        <p>
+          <strong>Fit a backer board.</strong> The more reliable method and the one most installers use. A length of 1x6 or similar is fixed across several studs above the opening, and the track is mounted to that. It spreads the load properly, gives you complete freedom on fixing positions, and can be finished to look like an intentional architectural detail. It also raises the track off the wall by its thickness, which needs allowing for in the height calculation.
+        </p>
+
+        <p>
+          One further note: the header above a door opening is usually solid framing, but the wall either side of it may not be, and the track extends well past the opening. Do not assume that because you found timber above the door you will find it along the whole track run.
+        </p>
+
+        <h2 id="installing" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          6. Installation Notes
+        </h2>
+
+        <p>
+          <strong>Finish the door before hanging it.</strong> Stain or paint all faces and every edge, including the top and bottom, before it goes up. Sealing all sides evenly is what keeps a solid wood slab from cupping as humidity changes, and doing it on trestles is far easier than doing it on a hanging door.
+        </p>
+
+        <p>
+          <strong>Get the track dead level.</strong> A barn door will roll towards the low end of a track that is even slightly out, which means it drifts open on its own. Use a long spirit level or a laser rather than a short torpedo level, and check it again after fixing.
+        </p>
+
+        <p>
+          <strong>Work out your height carefully.</strong> Track height is set by the door height plus the hardware, and the finished slab should clear the floor by about half an inch — enough for carpet or a rug, not so much that the gap is obvious. Dry-fit and measure before drilling.
+        </p>
+
+        <p>
+          <strong>Fit the anti-jump discs and the floor guide.</strong> Neither is optional. The discs prevent the door lifting off the track, and the guide keeps the base against the wall. Skipping them is how a door ends up damaging its own trim.
+        </p>
+
+        <p>
+          <strong>Get help with the lift.</strong> A solid or glass slab is heavy and awkward, and it has to be lifted above head height and located onto rollers. This is genuinely a two-person job, and attempting it alone risks both the door and the installer.
+        </p>
+
+        <p>
+          <strong>Adjust and then check again in a month.</strong> Most kits allow roller height adjustment; use it to fine-tune the gap along the bottom. Then recheck the fixings after a few weeks of use, because the settling-in period is when an underspecified fixing will start to loosen — far better to find that with a spanner than the hard way.
+        </p>
+
+
+        <!-- Common Mistakes -->
+        <div id="common-mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Common Mistakes</h2>
+          <div class="space-y-4">
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Ordering a door the same size as the opening</h3>
+              <p class="text-gray-700 m-0">A barn door must overlap the opening by two to three inches on each side and above, or it will not cover it. Ordering to the opening dimension is the most common and most expensive sizing error.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Forgetting the wall space beside the opening</h3>
+              <p class="text-gray-700 m-0">The door has to go somewhere when open. You need clear wall at least as wide as the door — no switches, outlets, radiators, artwork or return walls in that run.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Mounting the track into drywall alone</h3>
+              <p class="text-gray-700 m-0">A door and hardware can weigh well over a hundred pounds and it moves. Anchors in drywall will fail, usually suddenly. The track needs studs or a properly fixed backer board.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Using a barn door on a bathroom without thinking it through</h3>
+              <p class="text-gray-700 m-0">There is a visible gap all round, so it does not block sound or light and it does not lock like a proper door. Fine for an ensuite, questionable for a main bathroom in a shared house.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Buying a kit rated at exactly the door's weight</h3>
+              <p class="text-gray-700 m-0">Ratings are for static load. A moving door generates dynamic forces well above its weight. Choose hardware rated comfortably above your slab, not exactly at it.</p>
+            </div>
+          </div>
+        </div>
+
+        <h2 id="faq" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          Frequently Asked Questions
+        </h2>
+
+        <div class="space-y-6">
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">How much wider should a barn door be than the opening?</h3>
+            <p class="text-gray-700 m-0">Two to three inches wider on each side and two to three inches taller at the top. That overlap is what actually covers the opening and limits the light gap. For a standard 32 inch doorway, a 36 or 38 inch door slab is the usual answer.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">How much wall space does a barn door need?</h3>
+            <p class="text-gray-700 m-0">At least the full width of the door, clear of obstructions, on the side it slides to. That wall must have no light switches, outlets, radiators, vents or return corners in the path, and no artwork you are unwilling to move.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Do barn doors lock?</h3>
+            <p class="text-gray-700 m-0">Not securely. Various latches and hooks exist and they provide privacy signalling rather than security — a barn door cannot take a conventional mortice lock and there is always a gap around the slab. For a bedroom or main bathroom that matters.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Can you put a barn door on a bathroom?</h3>
+            <p class="text-gray-700 m-0">You can, and many people do, but understand the compromise. The gap around the slab means sound and light pass through, and the latch options are limited. It works well for an ensuite off a bedroom and less well for a shared family bathroom.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">How much weight can barn door hardware hold?</h3>
+            <p class="text-gray-700 m-0">Consumer kits are typically rated between 200 and 400 lbs static. Choose hardware rated well above your door's actual weight, because a moving door generates dynamic loads considerably higher than its static weight.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Do you need a bottom guide?</h3>
+            <p class="text-gray-700 m-0">Yes. Without one the door swings away from the wall at the bottom, bangs the trim and eventually damages the rollers. A floor guide or a wall-mounted bottom guide is not optional, and most kits include one.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Can barn doors be installed on drywall?</h3>
+            <p class="text-gray-700 m-0">Only into the framing behind it. Fixing a track into drywall anchors alone will fail. Either land every fixing in a stud, or mount a solid backer board across the studs first and fix the track to that.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Is a soft-close mechanism worth it?</h3>
+            <p class="text-gray-700 m-0">On a heavy door, yes. It stops the slab slamming into the end stop, which is both loud and hard on the hardware over time. On a light hollow-core door it is a nice-to-have rather than a necessity.</p>
+          </div>
+        </div>
+
+        <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+          Related Interior Door Guides
+        </h2>
+
+        <ul>
+          <li><a href="/barn-door-vs-french-door/">Barn Door vs French Door</a> — space, sound and cost compared for an interior opening.</li>
+          <li><a href="/best-stud-finder/">Best Stud Finder</a> — essential kit for locating the framing a barn door needs.</li>
+          <li><a href="/best-laminate-flooring/">Best Laminate Flooring</a> — for the floor clearance a bottom guide needs.</li>
+          <li><a href="/best-attic-ladder/">Best Attic Ladders</a> — another space-saving access solution.</li>
+        </ul>
+
+        <div class="mt-16 bg-gray-900 rounded-2xl p-8 text-gray-200">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="mb-4">
+            Spend on the hardware and buy the slab to suit your budget. A quality track and roller set will make a modest door feel expensive, while cheap hardware will make a beautiful door feel like a mistake every single time you open it.
+          </p>
+          <p class="m-0">
+            And measure before you fall in love with a door. The wall space beside the opening, the header above it, and the framing behind the drywall decide whether this project is straightforward or whether it involves opening up a wall — and it is much better to know that first.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <MoreInCategory category="Home Improvement" links={moreInCategory} />
+    <AuthorBio />
+  </article>
+</Layout>
