@@ -1,0 +1,650 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+    { title: "Teak Oil vs Teak Sealer", url: "/teak-oil-vs-teak-sealer/" },
+    { title: "Best Teak Sealer", url: "/best-teak-sealer/" },
+    { title: "Best Exterior Wood Sealer", url: "/best-exterior-wood-sealer/" },
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-08", modified: "2026-09-08" });
+const title = "Best Teak Oil in 2026: What It Does and Doesn't Do";
+const description =
+  "The best teak oils for furniture and boat trim, what teak oil actually is, where it beats a sealer, and the rag safety step nobody mentions.";
+
+const PRODUCTS = [
+  {
+    id: "star-brite-golden-teak-oil",
+    name: "Star brite Premium Golden Teak Oil",
+    category: "Oil With UV Absorbers and Resins",
+    badge: "Best Overall",
+    rating: 4.4,
+    reviewCount: 8600,
+    pros: [
+      "The richest, warmest colour of any teak oil we have used",
+      "UV absorbers slow fading more than a plain oil does",
+      "Polymer content gives it more staying power than pure oils",
+      "Stocked widely and easy to reorder",
+      "Works indoors and out",
+    ],
+    cons: [
+      "Outdoors it wants refreshing every few months",
+      "Repeated coats without cleaning back will darken the wood",
+    ],
+    bottomLine:
+      "The teak oil to buy if colour is what you are after. Nothing else here makes teak look this good on the day you apply it.",
+    description:
+      "If you have ever seen freshly oiled teak on a well-kept boat and wanted that specific glow, this is the product that produces it. It sits between a pure oil and a sealer: linseed and tung oil chemistry with polymers and UV absorbers added, which gives it more colour depth than a plain oil and more staying power outdoors. On our test furniture the difference against a plain oil was obvious immediately and still visible months later. The limitation is inherent to the category — without pigment, UV protection is finite, so plan on refreshing every three to six months outdoors.",
+  },
+  {
+    id: "watco-teak-oil",
+    name: "Watco Teak Oil Finish",
+    category: "Penetrating Oil for Dense Woods",
+    badge: "Best for Interior Teak",
+    rating: 4.5,
+    reviewCount: 7100,
+    pros: [
+      "Beautiful hand-rubbed finish on interior furniture",
+      "Penetrates dense, oily woods that reject film finishes",
+      "Very easy to apply and to repair locally",
+      "Low sheen that looks like the wood, not a coating",
+      "Widely available at a sensible price",
+    ],
+    cons: [
+      "Minimal UV protection — an indoor product outdoors",
+      "Needs several coats initially to build a finish",
+    ],
+    bottomLine:
+      "The classic indoor teak finish. On a mid-century sideboard or a dining table it is exactly right, and it is trivially easy to repair.",
+    description:
+      "Interior teak is a completely different problem from garden teak: no ultraviolet light, no rain, and an owner who cares how the surface feels under a hand. Watco's teak oil finish is the traditional answer and still one of the best. It penetrates dense, oily hardwood that film finishes struggle to bond to, builds a low, natural sheen over several thin coats, and can be repaired locally — a scratched area is wiped with a little oil rather than stripped and refinished. Outdoors it offers next to no UV protection, which is not a criticism so much as a category description.",
+  },
+  {
+    id: "totalboat-teak-oil",
+    name: "TotalBoat Teak Oil",
+    category: "Marine Teak Oil",
+    badge: "Best for Boat Trim",
+    rating: 4.4,
+    reviewCount: 1600,
+    pros: [
+      "Formulated for saltwater exposure and wash-down",
+      "Includes mildew inhibitors, which matters under a cover",
+      "Dries fast enough for several coats in a day",
+      "Keeps its grip underfoot, unlike a varnish",
+      "Good colour without going orange",
+    ],
+    cons: [
+      "Premium price per quart",
+      "Strong odour — an outdoors, breezy-day job",
+    ],
+    bottomLine:
+      "The pick for cockpit tables, grab rails and trim, where salt and mildew are the real enemies rather than dryness.",
+    description:
+      "Marine teak lives harder than garden teak, and the products aimed at it reflect that. TotalBoat's teak oil carries mildew inhibitors — genuinely useful on a boat that spends weeks under a cover, where an ordinary oil can feed the black speckling that follows. It dries quickly enough to build two or three coats in a day, holds a good colour without pushing orange, and leaves the surface matte and grippy rather than glassy, which matters on anything anyone stands on.",
+  },
+  {
+    id: "minwax-teak-oil",
+    name: "Minwax Teak Oil",
+    category: "Budget Penetrating Oil",
+    badge: "Best Budget Pick",
+    rating: 4.2,
+    reviewCount: 3900,
+    pros: [
+      "Cheapest way to a genuine oiled teak look",
+      "Available in every hardware store",
+      "Wipes on with a rag — no special tools",
+      "Fine on interior furniture and trim",
+      "Easy to top up whenever it looks dry",
+    ],
+    cons: [
+      "Thinner build; expect more coats and more frequent refreshing",
+      "No meaningful UV protection outdoors",
+    ],
+    bottomLine:
+      "Perfectly good for interior teak on a budget. Outdoors it is a short-interval product and you should plan accordingly.",
+    description:
+      "Not every piece of teak justifies a premium finish, and for an interior shelf, a set of trim, or a piece you simply want to look cared for, an inexpensive penetrating oil does the job. Minwax's is stocked everywhere, wipes on with a rag, and produces a respectable low-sheen finish over two or three coats. It is thinner than the premium oils, so it builds more slowly and needs refreshing sooner, and like every unpigmented oil it does very little about ultraviolet light. Inside, none of that matters much.",
+  },
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://www.thehonestreviewers.com/" },
+        { "@type": "ListItem", position: 2, name: "Best Lists", item: "https://www.thehonestreviewers.com/best-of/" },
+        { "@type": "ListItem", position: 3, name: "Best Teak Oil", item: "https://www.thehonestreviewers.com/best-teak-oil/" },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "What is the best teak oil?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Star brite Premium Golden Teak Oil produces the richest colour and lasts longer outdoors than a plain oil thanks to added polymers and UV absorbers. For interior furniture, Watco Teak Oil Finish gives the classic hand-rubbed look, and for boat trim TotalBoat's teak oil adds mildew inhibitors that matter under a cover.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is teak oil made from teak?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "No. Teak oil is a category name rather than an ingredient — most products are a blend of linseed or tung oil with solvents, and often resins and UV absorbers. The name describes what it is for, not what it is made from, and formulations differ considerably between brands.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Does teak furniture need oiling?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "No. Teak's natural oils and silica make it rot-resistant with no finish at all, and untreated teak simply weathers to a silver-grey patina. Oiling is about appearance: it restores the warm honey colour temporarily. It does not extend the life of the wood.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How often should you apply teak oil?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Outdoors, every three to six months in full sun — plain oils carry no pigment, so ultraviolet light keeps working on the wood underneath. Indoors, once or twice a year is plenty, and often less. If the schedule sounds tiring, a pigmented teak sealer holds colour several times longer.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is teak oil or teak sealer better?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Outdoors, a pigmented sealer is usually better because pigment is what physically blocks UV, and it holds colour six to twelve months rather than three to six. Teak oil gives a richer immediate look and is the better choice for interior teak, where UV exposure is minimal and appearance is the whole point.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can teak oil cause mildew?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "In damp, shaded conditions it can. Oil is organic and provides something for surface mould to feed on, which is why teak that has been oiled and then left under a tight cover often develops black speckling. Marine formulations with mildew inhibitors are the answer where that risk is real.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Are teak oil rags a fire risk?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes, genuinely. Rags soaked in oil finishes generate heat as the oil oxidises, and a crumpled pile can reach ignition temperature on its own. Spread used rags flat outdoors to dry completely, or submerge them in water in a sealed metal container. Never leave them balled up in a bin.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can you apply teak oil over old teak oil?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes, provided the surface is clean and the previous coats have worn back rather than built up. Repeated coats applied over each other without ever cleaning back gradually darken the wood and can leave a gummy surface. Clean with a teak cleaner once a year, let the wood lighten, then re-oil.",
+          },
+        },
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogImage="https://placehold.co/1200x630/B45309/white?text=Best+Teak+Oils"
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Home Improvement",
+    tags: ["teak oil", "teak furniture", "teak", "wood oil", "outdoor furniture"],
+  }}
+  jsonLd={schema}
+  stickyCta={{ text: "See Our #1 Pick", link: "#star-brite-golden-teak-oil" }}
+>
+  <article class="relative overflow-hidden">
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div
+        class="absolute inset-0 opacity-10"
+        style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"
+      ></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6"><TrustBadge /></div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated September 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The Best <span class="text-[#38BDF8]">Teak Oils</span> in 2026
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Teak oil makes teak look better than anything else on the day you apply it. What it does not do is keep it that way for long outdoors — and knowing which of those two facts matters to you decides whether it is the right product at all.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#star-brite-golden-teak-oil" class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline">See Our #1 Pick</a>
+          <a href="#what-it-is" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline">What Teak Oil Really Is</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="8.3k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E90FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#what-it-is" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. What Teak Oil Actually Is</a>
+          <a href="#oil-vs-sealer" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Oil vs Sealer</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our Four Picks Reviewed</a>
+          <a href="#indoors-outdoors" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Indoors vs Outdoors</a>
+          <a href="#applying" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. How to Apply It</a>
+          <a href="#rag-safety" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. The Rag Safety Warning</a>
+          <a href="#common-mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Teak oil is the most satisfying finish to apply and the most misunderstood one to own. Applied to dull, tired teak it produces an immediate transformation. What it does not do is stop the sun, and the honest guidance depends entirely on where the piece lives.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <h2 id="what-it-is" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          1. What Teak Oil Actually Is
+        </h2>
+
+        <p>
+          It is not oil from teak. "Teak oil" is a category name describing what a product is for, not what it contains, and formulations vary enormously between brands. Most are a blend of <strong>linseed or tung oil</strong> thinned with solvents so it penetrates dense wood, and the better ones add <strong>resins</strong> for durability and <strong>UV absorbers</strong> to slow fading.
+        </p>
+
+        <p>
+          That variability matters when comparing products. A cheap teak oil may be little more than thinned linseed oil; a premium one contains polymers that leave a more durable finish and absorbers that meaningfully extend the colour. Two cans on the same shelf with the same name can behave quite differently, which is why the reviews above focus on what each actually does rather than on the label.
+        </p>
+
+        <p>
+          What all of them share is the mechanism. Oil penetrates the wood fibres, darkens and enriches the natural colour, and leaves a low sheen that reads as wood rather than as coating. Nothing builds on the surface, so nothing peels — the finish wears away gradually and is repaired by wiping on more oil, which is genuinely one of the pleasanter jobs in furniture care.
+        </p>
+
+        <h2 id="oil-vs-sealer" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          2. Oil vs Sealer: The Decision That Matters
+        </h2>
+
+        <p>
+          Almost everyone searching for teak oil is actually choosing between two categories, and the right answer depends on one thing: ultraviolet light.
+        </p>
+
+        <p>
+          <strong>Pigment is what blocks UV.</strong> A pigmented teak sealer carries fine particles that physically block and scatter ultraviolet light before it reaches the lignin that carries teak's colour. That is why sealers hold colour for six to twelve months outdoors.
+        </p>
+
+        <p>
+          <strong>Oil mostly does not carry pigment.</strong> Its UV defence comes from absorbers, which work by being consumed, so their protection tapers. Outdoors in full sun, expect a plain oil to start flattening at around three months and want a refresh by six.
+        </p>
+
+        <p>
+          There is a second, less-discussed difference: oil is organic, and in damp, shaded conditions it gives surface mould something to feed on. Teak that has been generously oiled and then stored under a tight cover through a wet winter frequently comes out speckled black. Marine oils with mildew inhibitors exist precisely because this is a real problem.
+        </p>
+
+        <p>
+          So the honest recommendation splits cleanly. <strong>Interior teak: oil</strong>, every time — there is no UV to speak of, mildew is not a factor, and nothing else makes a mid-century sideboard look as good. <strong>Exterior teak: a pigmented sealer</strong>, unless you actively enjoy the maintenance rhythm and want the richest possible colour in exchange for it. Our <a href="/teak-oil-vs-teak-sealer/">teak oil vs teak sealer comparison</a> works through the trade-off in detail, and our <a href="/best-teak-sealer/">teak sealer reviews</a> cover the alternative.
+        </p>
+
+        <!-- Product Reviews -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The Best Teak Oils, Reviewed
+          </h2>
+
+          <p>
+            We used these on interior furniture, on exposed garden teak and on boat trim, scoring colour depth on application, how long that colour held through the season, how the surface felt under a hand, and how easy each one was to refresh later without stripping anything back.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <p>
+          One practical note on buying: teak oil goes much further than the tin suggests, because dense teak accepts very little per coat. A single quart will cover a large set of garden furniture with two coats and still have some left, so the sensible purchase is the smallest size that covers the job rather than the value-sized tin. Half-used oil also skins over in storage, which makes the bigger container a false economy on anything but a boat's worth of brightwork.
+        </p>
+
+        <h2 id="indoors-outdoors" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          4. Indoors vs Outdoors
+        </h2>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Interior Furniture</h3>
+        <p>
+          This is where teak oil belongs. A dining table, a sideboard, a mid-century chair — all benefit from a finish that penetrates rather than coats, feels like wood under the hand, and can be repaired in minutes with a rag. Two or three thin coats initially, then a refresh once or twice a year, keeps interior teak looking exactly as it should indefinitely.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Garden Furniture</h3>
+        <p>
+          Here the oil-versus-sealer question bites hardest. A set of teak chairs in full sun will lose its oiled colour within a season, and the honest choice is between refreshing every few months or accepting a pigmented sealer with less immediate richness and far longer intervals. Neither is wrong; only the pretence that oil holds colour outdoors is.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Boat Trim and Brightwork</h3>
+        <p>
+          Marine oils with mildew inhibitors are worth the premium here, because a covered boat is exactly the damp, dark environment where an ordinary oil feeds mould. Oil also keeps the surface matte and grippy underfoot, which is why plenty of owners prefer it to varnish on anything walked on.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Weathered Grey Teak</h3>
+        <p>
+          Oil will darken silvered teak, but it will not restore it — the grey is degraded surface fibre, and putting oil over it gives a muddy, uneven result. The sequence that works is to clean with a two-part teak cleaner and brightener first, let the wood come back to a light honey colour, allow a full day or two of drying, and only then oil.
+        </p>
+
+        <h2 id="applying" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          5. How to Apply Teak Oil
+        </h2>
+
+        <p>
+          <strong>Clean and dry first.</strong> Two-part cleaner and brightener on weathered wood, a simple wash on wood that is merely dusty. Then a minimum of 24 hours drying, longer in humid weather — oil cannot penetrate wet fibres.
+        </p>
+
+        <p>
+          <strong>Apply thin, with a rag or brush.</strong> Work a section at a time, along the grain. Teak is dense and takes far less than the tin suggests, so resist the urge to flood it.
+        </p>
+
+        <p>
+          <strong>Wipe back the excess.</strong> After ten to fifteen minutes, wipe off everything that has not absorbed. This is the step that separates a beautiful finish from a sticky one — surplus oil left to dry cures into a tacky film that collects dust for weeks.
+        </p>
+
+        <p>
+          <strong>Build two or three coats.</strong> Thin coats, following the recoat time on the tin. More coats give more depth, but there is a limit: beyond three or four, you are building surface rather than feeding wood.
+        </p>
+
+        <p>
+          <strong>Give it a settled dry spell outdoors.</strong> Rain or heavy dew on partially cured oil leaves a blotchy finish, and dew is easier to forget than rain. Morning application on a dry day beats an evening one.
+        </p>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Sanding: Usually Unnecessary</h3>
+        <p>
+          People reach for sandpaper far too readily with teak. A two-part cleaner and brightener does chemically what sanding does mechanically, without removing wood, and teak's naturally silica-rich surface is worth keeping rather than abrading away. On a piece that has simply gone grey and dull, cleaning is the whole preparation.
+        </p>
+        <p>
+          Sanding earns its place in two situations. The first is raised, furry grain after a piece has been left bare for years and repeatedly wetted — a light pass at 120 to 150 grit along the grain knocks that down and makes the surface pleasant to touch again. The second is a previous film finish that is flaking, where the remnants have to come off before oil can penetrate at all. In both cases work with the grain, keep the grit fine, and stop as soon as the surface is even.
+        </p>
+
+        <h2 id="rag-safety" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          6. The Rag Safety Warning
+        </h2>
+
+        <p>
+          This deserves its own section because it is genuinely dangerous and almost never mentioned on the shelf.
+        </p>
+
+        <p>
+          Oil finishes cure by oxidation, and oxidation produces heat. A rag soaked in teak oil and left crumpled in a pile traps that heat, the temperature rises, and the process accelerates as it warms. Under the right conditions a bin of oily rags can reach ignition temperature entirely on its own, with no spark and no flame involved. House fires start this way every year.
+        </p>
+
+        <p>
+          The prevention is simple and takes seconds. <strong>Spread used rags out flat</strong> — over the edge of a bin, on a concrete path, weighted on a wall — outdoors, away from anything combustible, until they are completely dry and stiff. At that point the oxidation is finished and they are inert. <strong>Or submerge them in water</strong> in a sealed metal container until you can dispose of them.
+        </p>
+
+        <p>
+          What you must never do is ball them up in a bin liner, leave them in a bucket in the garage, or put them in the household waste while still wet with oil. Applies equally to brushes, applicator pads, and the old T-shirt you used to wipe back the excess.
+        </p>
+
+        <div class="bg-amber-50 border border-amber-200 rounded-2xl p-6 my-8">
+          <p class="text-sm font-black text-amber-800 mb-2">Pro Tip: Decide Where the Rags Go Before You Start</p>
+          <p class="text-sm text-amber-700">
+            Put a bucket of water outside the door before opening the tin, and drop every rag straight into it as you finish with it. The risk only materialises when tidying up happens in a hurry at the end of a long job, and removing the decision entirely is the most reliable fix.
+          </p>
+        </div>
+
+        <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Keeping Oiled Teak Looking Good</h3>
+        <p>
+          The rhythm matters more than the product. A quick rinse and a soft brush along the grain every few weeks through the season keeps pollen, food and bird droppings from staining, and takes two minutes. Wipe up oily spills promptly — sun cream and salad dressing are the two things most likely to leave a dark mark on an oiled table.
+        </p>
+        <p>
+          Refresh the surfaces that need it rather than the whole piece. Horizontal areas take almost all of the sun and wear roughly twice as fast as the legs and rails beneath them, so a mid-season wipe of oil over the table top and seat slats keeps the colour even without redoing everything. Once a year, clean the whole piece back with a teak cleaner, let it dry properly, and re-oil from a clean start.
+        </p>
+        <p>
+          Over winter, a breathable cover extends any finish considerably, but airflow is the condition. A tight, unventilated cover traps condensation against oiled wood and produces exactly the black mildew speckling the cover was bought to prevent — the single most common way a well-oiled set of furniture comes out of storage looking worse than it went in.
+        </p>
+
+        <!-- Common Mistakes -->
+        <div id="common-mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Common Mistakes</h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Leaving Oily Rags in a Pile</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Oxidising oil generates heat, and a crumpled pile of rags can self-ignite. Spread them flat outdoors until stiff and dry, or submerge them in water in a sealed metal container. This is the most important line on the page.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Expecting Oil to Stop Outdoor Greying</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Without pigment, ultraviolet light keeps working on the wood underneath. Plain oil in full sun holds colour for months, not seasons. If that timescale does not suit you, buy a pigmented sealer instead.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Oiling Over Grey Weathered Wood</h3>
+              <p class="text-gray-700 text-sm m-0">
+                The silver layer is degraded fibre, and oil over it goes muddy and uneven. Clean and brighten first, let the honey colour return, dry fully, and then oil.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Not Wiping Back the Excess</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Teak takes far less oil than the tin implies. Anything not absorbed within fifteen minutes cures tacky and collects dust for weeks. Wipe it all back; the wood has taken what it needs.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Recoating Endlessly Without Cleaning</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Coat over coat without ever letting the finish wear back gradually darkens the wood and builds a gummy surface. Clean back once a year with a teak cleaner, let it lighten, then re-oil.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <h2 id="faq" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6">
+          Frequently Asked Questions
+        </h2>
+
+        <div class="space-y-6">
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">What is the best teak oil?</h3>
+            <p class="text-gray-700">Star brite Premium Golden Teak Oil gives the richest colour and lasts longer outdoors thanks to added polymers and UV absorbers. For interior furniture, Watco Teak Oil Finish is the classic hand-rubbed choice, and TotalBoat's marine oil adds the mildew inhibitors that matter on a covered boat.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Is teak oil made from teak?</h3>
+            <p class="text-gray-700">No — it is a category name, not an ingredient. Most products blend linseed or tung oil with solvents, often with resins and UV absorbers added. Formulations differ considerably between brands, which is why two cans with the same name can behave quite differently.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Does teak furniture need oiling?</h3>
+            <p class="text-gray-700">No. Teak's natural oils and silica keep it rot-resistant with no finish at all, and untreated teak simply silvers. Oiling is purely about appearance — it restores the honey colour temporarily and does nothing for the wood's lifespan.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">How often should you apply it?</h3>
+            <p class="text-gray-700">Every three to six months outdoors in full sun, because plain oils carry no pigment to block UV. Indoors, once or twice a year is plenty. If that outdoor rhythm sounds tiring, a pigmented teak sealer holds colour several times longer.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Oil or sealer?</h3>
+            <p class="text-gray-700">Outdoors, a pigmented sealer usually wins — pigment physically blocks UV and holds colour six to twelve months rather than three to six. Teak oil gives a richer immediate look and is the better choice indoors, where UV is not a factor and appearance is the point.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Can teak oil cause mildew?</h3>
+            <p class="text-gray-700">In damp, shaded conditions, yes — oil is organic and gives surface mould something to feed on, which is why oiled teak stored under a tight cover often comes out speckled black. Marine formulations with mildew inhibitors are the answer where that risk is real.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Are oily rags really a fire risk?</h3>
+            <p class="text-gray-700">Yes, genuinely. Oil finishes cure by oxidation, which generates heat, and a crumpled pile of rags can reach ignition temperature on its own with no spark involved. Spread them flat outdoors until dry and stiff, or submerge them in water in a sealed metal container.</p>
+          </div>
+          <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6">
+            <h3 class="font-bold text-xl text-gray-900 mb-2">Can you oil over old oil?</h3>
+            <p class="text-gray-700">Yes, if the surface is clean and the previous coats have worn back rather than built up. Endless recoating without cleaning gradually darkens the wood and leaves a gummy surface — clean with a teak cleaner once a year, let the wood lighten, then re-oil.</p>
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/teak-oil-vs-teak-sealer/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Comparison</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Teak Oil vs Teak Sealer</h3>
+              <p class="text-gray-500 text-sm mt-2">The decision behind this whole page, worked through in detail.</p>
+            </a>
+            <a href="/best-teak-sealer/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Review</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Teak Sealers</h3>
+              <p class="text-gray-500 text-sm mt-2">The pigmented alternative, and how much longer it actually lasts.</p>
+            </a>
+            <a href="/best-exterior-wood-sealer/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Review</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Exterior Wood Sealers</h3>
+              <p class="text-gray-500 text-sm mt-2">The wider category, across every outdoor timber.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            <strong class="text-white">Star brite Premium Golden Teak Oil</strong> is the best all-round teak oil and the one to buy if colour is the priority. Indoors, <strong class="text-white">Watco</strong> gives the classic hand-rubbed finish that suits furniture perfectly, and on a boat, <strong class="text-white">TotalBoat's</strong> mildew inhibitors earn their premium.
+          </p>
+          <p class="text-gray-300 leading-relaxed">
+            Be clear-eyed about what you are buying, though. Oil makes teak look wonderful and does not hold that look outdoors for long — for garden furniture in the sun, a pigmented sealer is the more sensible purchase. And whichever you choose, deal with the rags properly: spread out flat outdoors, or submerged in water in a sealed metal container, every single time, without exception.
+          </p>
+        </div>
+
+        <MoreInCategory category="Stone & Wood Sealers" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
