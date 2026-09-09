@@ -181,6 +181,14 @@ const priorityGuides = new Set([
   'brush-vs-roller-vs-sprayer-deck-stain',
   'can-you-stain-over-old-deck-stain',
 
+  // September 2026: deck staining cluster gaps — cost, cleaning, composite and
+  // the two removal questions the cluster had no page for.
+  'how-much-does-it-cost-to-stain-a-deck',
+  'how-to-clean-a-deck',
+  'can-you-stain-composite-decking',
+  'can-you-paint-over-deck-stain',
+  'how-to-remove-deck-stain-from-vinyl-siding',
+
   // September 2026: the portable power station cluster. "best portable power
   // stations" is the site's largest keyword by impressions and the money page
   // had no supporting content at all.
@@ -192,6 +200,11 @@ const priorityGuides = new Set([
   'pure-sine-wave-vs-modified-sine-wave',
   'how-long-do-portable-power-stations-last',
   'can-a-portable-power-station-run-a-cpap',
+
+  // September 2026: the two missing 'best generator' category pages — the
+  // portable and gasoline head terms had no roundup of their own.
+  'best-portable-generator',
+  'best-gas-generator',
   'are-portable-power-stations-safe-indoors',
 
   // September 2026: cordless tool fundamentals. Nine drill and brand money
