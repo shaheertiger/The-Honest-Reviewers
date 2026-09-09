@@ -1,0 +1,470 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import SocialProof from "../components/SocialProof.astro";
+import TrustBadge from "../components/TrustBadge.astro";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+    { title: "Coal Tar vs Asphalt Emulsion Sealer", url: "/coal-tar-vs-asphalt-emulsion-sealer/" },
+    { title: "Sealing an Asphalt Driveway: Pros and Cons", url: "/sealing-asphalt-driveway-pros-and-cons/" },
+    { title: "Best Asphalt Driveway Sealer Reviews", url: "/best-asphalt-driveway-sealer-reviews/" },
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-09", modified: "2026-09-09" });
+const title = "Is Driveway Sealer Toxic? Coal Tar, PAHs and What Is Actually Safe";
+const description =
+  "Coal tar sealers carry PAH levels roughly a thousand times higher than asphalt-based ones. What the research says, where it is banned, and how to seal safely.";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://www.thehonestreviewers.com/" },
+        { "@type": "ListItem", position: 2, name: "Best Lists", item: "https://www.thehonestreviewers.com/best-of/" },
+        { "@type": "ListItem", position: 3, name: "Is Driveway Sealer Toxic?", item: "https://www.thehonestreviewers.com/is-driveway-sealer-toxic/" },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "Is driveway sealer toxic?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "It depends on the type. Refined coal tar sealers contain very high concentrations of polycyclic aromatic hydrocarbons, several of which are probable human carcinogens, and their dust has been linked to elevated PAH levels in homes and streams. Asphalt emulsion and acrylic sealers contain far lower PAH levels and are considered much lower risk, though wet product should still be kept off skin and out of drains.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How do I know if my driveway sealer contains coal tar?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Check the Safety Data Sheet, which manufacturers must provide. Look for coal tar, coal tar pitch, refined tar, RT-12, or CAS number 65996-93-2 in the ingredients. Products labelled asphalt emulsion, asphalt-based, or acrylic and sold at Home Depot or Lowe's are not coal tar; both chains stopped selling coal tar sealers years ago.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Where is coal tar sealer banned?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Statewide bans exist in Washington State and Minnesota, and Washington DC has banned it. Austin, Texas was the first city to do so in 2006, and a large number of counties and municipalities across Illinois, Wisconsin, Maryland, New York, Texas and elsewhere have followed. Home Depot and Lowe's withdrew coal tar sealers from their shelves nationwide voluntarily.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Are the fumes from driveway sealer dangerous?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Coal tar fumes are the most irritating and contain volatile PAHs; apply upwind, in open air, and take breaks if you feel light-headed or your eyes sting. Asphalt emulsion fumes are milder, a petroleum smell that fades within hours. Neither should be used in an enclosed space such as a garage with the door down.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How long should kids and pets stay off a sealed driveway?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "At least 24 hours in warm dry weather and 48 hours if it is cool, humid or the coat went on thick. Even after it is dry to the touch the coating is still soft, and small feet and paws pick up residue that ends up on carpets and in mouths. Wait until it no longer marks under a firm thumb press.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What do I do with leftover driveway sealer?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Never pour it down a drain, storm sewer or on the ground. Small amounts of asphalt emulsion can be left open to dry solid and then disposed of with household trash in most areas. Coal tar product should go to a household hazardous waste facility. Rinse tools in a bucket and let the rinse water evaporate rather than tipping it out.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is it safe to seal a driveway while pregnant?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "There is no specific study we would point to, but PAH exposure is something most guidance suggests minimising during pregnancy, and there is no reason to accept avoidable exposure for a job someone else can do. As a reasonable precaution, we would suggest a pregnant person leave the application to someone else and stay clear of the fumes.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can driveway sealer contaminate a well or storm drain?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Wet sealer washed off by rain runs straight into storm drains, which discharge untreated to local streams, and coal tar runoff in particular has been measured in stream sediments. Never seal with rain forecast, keep product away from drains and swales, and if you are on a well, keep sealer well clear of the wellhead and any drainage that leads to it.",
+          },
+        },
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Home Improvement",
+    tags: ["driveway sealer toxic", "coal tar sealer", "PAHs", "asphalt emulsion", "driveway sealer safety"],
+  }}
+  jsonLd={schema}
+  stickyCta={{ text: "Safe Application Checklist", link: "#practical-safety" }}
+>
+  <article class="relative overflow-hidden">
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div
+        class="absolute inset-0 opacity-10"
+        style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"
+      ></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6"><TrustBadge /></div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Is Driveway Sealer <span class="text-[#38BDF8]">Toxic</span>? Coal Tar, PAHs and What Is Actually Safe
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          One kind of driveway sealer has been banned by two states, a dozen counties and quietly dropped by every big-box chain. The others are far less of a concern but still not something to handle carelessly. Here is the honest split.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#practical-safety" class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline">Safe Application Checklist</a>
+          <a href="#coal-tar" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline">The Coal Tar Problem</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="8.2k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E90FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#short-answer" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. The Short Answer</a>
+          <a href="#coal-tar" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. The Coal Tar Problem</a>
+          <a href="#bans" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Bans, Withdrawals and Where It Still Sells</a>
+          <a href="#other-sealers" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Asphalt Emulsion, Acrylic and "Eco" Claims</a>
+          <a href="#identify" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. How to Check What You Have</a>
+          <a href="#practical-safety" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Practical Safety During and After</a>
+          <a href="#disposal" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Disposal, Runoff and Wells</a>
+          <a href="#common-mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto px-4 py-16 lg:py-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic border-l-4 border-[#38BDF8] pl-6 bg-gray-50 py-4 rounded-r-xl">
+          "Driveway sealer" covers two chemically unrelated products. One is a refined byproduct of coking coal that regulators have been steadily removing from the market. The other is essentially the same material as the driveway itself. Which one you are holding is the whole question.
+        </p>
+
+        <h2 id="short-answer" class="scroll-mt-24 text-3xl font-black text-gray-900 mb-6 font-sans border-b pb-4">
+          1. The Short Answer
+        </h2>
+
+        <p>
+          Refined coal tar sealer is the one to worry about. It contains polycyclic aromatic hydrocarbons, PAHs, at concentrations that are genuinely high, several of those compounds are classed as probable human carcinogens, and the dust that wears off a coal-tar-sealed surface has been traced into house dust, storm water and stream beds by federal researchers. That is why it has been banned across an expanding list of jurisdictions and why the big-box chains stopped stocking it.
+        </p>
+
+        <p>
+          Asphalt emulsion sealers, which are what you will find on the shelf at Home Depot, Lowe's and Menards under names like Latex-ite, Black Jack, Henry and the store brands, are a different product. They are made from the same petroleum asphalt as the driveway, suspended in water. Their PAH content is a small fraction of coal tar's, the fumes are mild, and once cured they are about as inert as the pavement underneath. They are not something to drink, bathe in or let a toddler crawl through while wet, but used with ordinary care they are not a meaningful health concern.
+        </p>
+
+        <p>
+          Acrylic and polymer-modified sealers are lower still in PAHs and are the usual choice where local rules are strictest. The rest of this article explains the evidence behind that ranking, how to find out which type you have, and the practical precautions that apply to all of them.
+        </p>
+
+        <h2 id="coal-tar" class="scroll-mt-24 text-3xl font-black text-gray-900 mb-6 font-sans border-b pb-4">
+          2. The Coal Tar Problem
+        </h2>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">What It Is</h3>
+        <p>
+          Coal tar is what is left when coal is heated in the absence of air to make coke for steel production. Refined coal tar pitch, the grade used in pavement sealers under specifications such as RT-12, is a dense black material that happens to be exceptionally resistant to petroleum. That is precisely why the industry liked it: gasoline and oil drips that dissolve an asphalt-based coating sit on a coal tar coating and wipe off. For decades it was the professional's default sealer, especially on commercial lots and in the eastern and midwestern United States.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">The PAH Numbers</h3>
+        <p>
+          PAHs are a family of compounds formed whenever organic material burns or is heated without enough oxygen. Coal tar is largely made of them. Refined coal tar sealers typically contain PAHs on the order of 50,000 milligrams per kilogram, which is five per cent of the product by weight. Asphalt emulsion sealers typically contain around 50 milligrams per kilogram. That is the source of the widely quoted figure that coal tar sealers carry roughly a thousand times the PAH content of asphalt-based sealers. Several of the individual PAHs involved, benzo(a)pyrene being the best known, are listed as probable human carcinogens by the US EPA and the International Agency for Research on Cancer, and coal tar pitch itself is classed as a known human carcinogen in the occupational context, where workers have been exposed to it at high levels for years.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">What the USGS Found</h3>
+        <p>
+          The research that shifted the conversation came from the US Geological Survey, beginning with work in Austin, Texas in the early 2000s. City staff had noticed unusually high PAH levels in stream sediment and, on investigation, traced them to parking lot runoff. The USGS then established, across a series of studies, that coal tar sealcoat is the dominant source of PAHs in urban lake and stream sediments in many parts of the country, that a sealed surface sheds a meaningful proportion of its coating as fine dust within the first few years, and that this dust does not stay outside. Their work found PAH concentrations in house dust from apartments adjoining coal-tar-sealed parking lots that were many times higher than in homes next to unsealed or asphalt-sealed lots, and they estimated that for small children, who spend a lot of time on floors and put their hands in their mouths, ingestion of that dust could represent a substantial fraction of their PAH exposure.
+        </p>
+
+        <p>
+          It is worth being precise about what that does and does not say. It is evidence of elevated exposure, and PAHs are compounds that toxicologists have good reason to want people exposed to as little as possible. It is not a body count, and the risk estimates involved carry all the uncertainty that lifetime exposure modelling always does. But it was enough for a number of state and local governments to decide the trade-off was not worth it, and we think they were right. The oil resistance of coal tar is a real advantage, and it is not remotely worth a thousandfold increase in a probable carcinogen tracked across your kitchen floor.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Fumes and Skin</h3>
+        <p>
+          Anyone who has applied coal tar sealer on a hot day will tell you the fumes are unpleasant in a way emulsion is not. The volatile fraction includes naphthalene and other light PAHs, which irritate eyes and airways and give some people headaches. Skin contact with wet coal tar sealer can cause irritation and, more distinctively, photosensitisation, where the exposed skin burns far more easily in sunlight for a day or two afterwards. Contractors who work with it daily know to cover up completely. Homeowners doing it once a year often do not.
+        </p>
+
+        <h2 id="bans" class="scroll-mt-24 text-3xl font-black text-gray-900 mb-6 font-sans border-b pb-4">
+          3. Bans, Withdrawals and Where It Still Sells
+        </h2>
+
+        <p>
+          Austin banned coal tar sealcoat in 2006, the first jurisdiction in the country to do so, following the stream sediment findings. Washington DC followed in 2009. Washington State enacted a statewide ban that took effect in 2012, and Minnesota's statewide ban took effect in 2014. Since then a long and growing list of counties and municipalities have adopted their own, concentrated in Illinois, Wisconsin, Minnesota, Maryland, New York, Texas and the Great Lakes region generally, along with a number of individual cities elsewhere. Several states have considered wider bans without yet passing them, and the position changes often enough that it is worth checking your own county's stormwater or public health pages before assuming either way.
+        </p>
+
+        <p>
+          Retail moved faster than legislation. Home Depot stopped selling coal-tar-based sealers nationwide around 2011, and Lowe's did the same shortly after, replacing them with asphalt emulsion and acrylic lines. Ace Hardware and several regional chains followed. The practical effect is that the pail a homeowner picks up at a big-box store today is almost certainly not coal tar, regardless of where they live. Our <a href="/driveway-sealer-home-depot/">Home Depot driveway sealer</a> guide goes through what is actually on the shelf.
+        </p>
+
+        <p>
+          Where coal tar persists is the contractor supply chain. Sealcoating contractors in states without a ban can still buy it in bulk from regional manufacturers, and some still prefer it for its oil resistance and durability. If you are hiring out the job, this is a question to ask directly, and our guide to the <a href="/diy-vs-professional-driveway-sealing/">DIY versus professional</a> decision covers what else to ask. A contractor who cannot tell you what is in the tank is not one we would use.
+        </p>
+
+        <h2 id="other-sealers" class="scroll-mt-24 text-3xl font-black text-gray-900 mb-6 font-sans border-b pb-4">
+          4. Asphalt Emulsion, Acrylic and "Eco" Claims
+        </h2>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Asphalt Emulsion</h3>
+        <p>
+          Asphalt emulsion sealer is petroleum asphalt, the same binder that holds the driveway together, dispersed in water with emulsifying agents, clay fillers and usually some latex or polymer for flexibility. Its PAH content is low because petroleum asphalt is a fundamentally different material from coal tar, made of much heavier and less aromatic hydrocarbons. When you open the pail it smells like a freshly paved road, the fumes are mild and dissipate within hours, and there is no significant volatile PAH fraction to worry about in normal outdoor use.
+        </p>
+
+        <p>
+          That said, wet emulsion is not harmless. It is alkaline, it will irritate skin with prolonged contact, it is very difficult to remove from skin, clothing and anything porous once it starts to set, and it should not go anywhere near your eyes. The clay and asphalt fines that wear off a cured emulsion surface are not the concern that coal tar dust is, but they still come into the house on shoes and paws, and they still wash into storm drains, which is one reason stormwater agencies would rather nobody sealed at all. On balance, this is the sealer we recommend for most homeowners and the products in our <a href="/best-asphalt-driveway-sealer-reviews/">best asphalt driveway sealer reviews</a> are all in this family or the next one. The full comparison is in <a href="/coal-tar-vs-asphalt-emulsion-sealer/">coal tar vs asphalt emulsion sealer</a>.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Acrylic and Polymer Sealers</h3>
+        <p>
+          Acrylic sealers use synthetic resins rather than asphalt as the binder, sometimes with a small asphalt component for colour. They have the lowest PAH content of the three, cure fastest, and are the product of choice where local rules are tightest or where a coloured finish is wanted. They are also the most expensive and, in our experience, some of them are less forgiving of poor prep. We compare them with emulsion in <a href="/acrylic-vs-asphalt-emulsion-driveway-sealer/">acrylic vs asphalt emulsion driveway sealer</a>. Fume-wise they are similar to exterior latex paint: a mild chemical smell, no PAH volatiles to speak of.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">What "Eco" and "Low VOC" Actually Mean</h3>
+        <p>
+          Be a little sceptical of marketing here. "Coal tar free" is a real and meaningful claim and it is the one that matters. "Low VOC" is also real; most water-based emulsions and acrylics have low volatile organic compound content because the carrier is water, and it is genuinely better for air quality than solvent-based products. "Eco-friendly", "green" and "environmentally safe" are not regulated terms and tell you nothing specific. Every asphalt emulsion sealer is a petroleum product that you are spreading over several hundred square feet of ground that drains to a storm sewer. It is a lower-impact choice than coal tar by a very wide margin. It is not a zero-impact one, and any label implying it is should make you read the Safety Data Sheet more carefully, not less.
+        </p>
+
+        <h2 id="identify" class="scroll-mt-24 text-3xl font-black text-gray-900 mb-6 font-sans border-b pb-4">
+          5. How to Check What You Have
+        </h2>
+
+        <p>
+          If you have a pail in the garage of uncertain origin, or a contractor has quoted you a job, here is how to establish what it is.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Read the Safety Data Sheet</h3>
+        <p>
+          Every sealer sold in the US has a Safety Data Sheet, and manufacturers publish them online; search the exact product name plus SDS. Section 3, composition, lists the hazardous ingredients. Coal tar products will list coal tar, coal tar pitch, refined coal tar, or refined tar, and they will carry the CAS registry number 65996-93-2, which is the identifier for coal tar pitch. Some older data sheets reference the RT-12 specification. If you see any of those, it is coal tar. Asphalt emulsion products will list asphalt or petroleum asphalt, typically with CAS number 8052-42-4, along with water, clay and polymers.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Read the Front of the Pail</h3>
+        <p>
+          Because "coal tar free" has become a selling point, most emulsion and acrylic products now say so prominently. Coal tar products, conversely, often say "refined tar" or "coal tar emulsion" in small print on the back and lean on words like "professional grade" and "gas and oil resistant" on the front. Exceptional oil resistance in a sealer sold at an ordinary price is itself a hint, because it is the one thing coal tar does that emulsion cannot match.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Ask the Contractor</h3>
+        <p>
+          Ask what product they use and ask to see the SDS. A reputable sealcoating outfit will have it in the truck or can email it in minutes. If the answer is vague, or "it's just sealer", either press for the manufacturer and product name or move on. In a jurisdiction with a ban, using coal tar is also illegal, which is a useful additional lever.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">If It Is Already on Your Drive</h3>
+        <p>
+          A coal tar sealed drive is not an emergency, and ripping it up would release far more dust than leaving it. The practical mitigations are to sweep rather than pressure wash so you are not blasting fines into the storm drain, to take shoes off at the door, to keep kids from playing on the surface, and, when it is due to be resealed, to overcoat with an asphalt emulsion or acrylic rather than more coal tar. Overcoating encapsulates the old surface and stops it shedding. Our guide on <a href="/how-to-remove-old-driveway-sealer/">removing old driveway sealer</a> explains why full removal is rarely the right approach.
+        </p>
+
+        <h2 id="practical-safety" class="scroll-mt-24 text-3xl font-black text-gray-900 mb-6 font-sans border-b pb-4">
+          6. Practical Safety During and After
+        </h2>
+
+        <p>
+          These apply to any sealer. Most of them are basic, and most of them are skipped by most homeowners most of the time.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Gloves and Eye Protection</h3>
+        <p>
+          Nitrile gloves, not the cotton work gloves that soak through in five minutes. Wet sealer is alkaline and irritating, it will not come off skin with soap, and you do not want to find out how well it comes out of an eye. Wrap-around safety glasses are worth wearing whenever you are pouring or squeegeeing, because a splash from a dropped pail travels further than you would think. Long sleeves and trousers you do not mind ruining. Old boots you will never wear indoors again.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Fumes and Ventilation</h3>
+        <p>
+          Sealing is an outdoor job and the ventilation problem mostly solves itself, but a few situations catch people out. Do not seal a garage floor or a carport with the door down. Do not stand downwind of a large freshly-coated area on a hot still afternoon for hours at a time. If you are using coal tar, apply with the wind at your back and take a break in fresh air if your eyes sting or you feel light-headed. For emulsion, a headache from the smell is unusual but not unheard of on a very hot day, and it is a signal to step away. A basic respirator with organic vapour cartridges is not necessary for emulsion in the open but is a sensible precaution with coal tar.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Skin Contact and Washing</h3>
+        <p>
+          Wipe wet sealer off skin immediately with a rag and then wash with soap and warm water. If it has started to set, a little mineral oil, baby oil or a citrus-based hand cleaner will lift it; do not reach for gasoline or paint thinner, which is a common and bad idea that replaces one exposure with another. Shower when you finish the job, and wash the clothes separately or bin them.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Kids and Pets</h3>
+        <p>
+          Keep both off the drive for a minimum of 24 hours in warm dry weather and 48 hours if it is cool, humid or shaded, or if the coat went on heavy. "Dry to the touch" is not the standard; the coating is still soft for a day or more after that and small feet pick up residue that goes onto carpets, into beds and into mouths. Dogs in particular walk through it, lick their paws, and then you are on the phone to a vet. Our guide to <a href="/how-long-for-driveway-sealer-to-dry/">how long driveway sealer takes to dry</a> has the full timeline, and the honest rule is to wait until a firm thumb press leaves no mark before anyone small is allowed back on.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Tracking Into the House</h3>
+        <p>
+          For the first week or two after sealing, especially with emulsion, some fines will come off on shoes. Take them off at the door. This matters most in a house with a crawling baby, and it matters far more if the sealer is coal tar, where the dust is the primary exposure route the USGS identified. A doormat and a shoes-off rule for a fortnight cost nothing.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Pregnancy</h3>
+        <p>
+          We are not aware of a study specifically on driveway sealing and pregnancy outcomes, and we are not going to invent one. What we can say is that PAHs are compounds most guidance advises minimising exposure to during pregnancy, and that sealing a driveway is a job that can be done by someone else or postponed. On that basis the reasonable precaution is for a pregnant person to skip the application and stay clear of the fumes, which for emulsion means a few hours and for coal tar means the rest of the day. That is a common-sense position rather than a medical claim.
+        </p>
+
+        <h2 id="disposal" class="scroll-mt-24 text-3xl font-black text-gray-900 mb-6 font-sans border-b pb-4">
+          7. Disposal, Runoff and Wells
+        </h2>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Leftover Product</h3>
+        <p>
+          Never pour sealer down a sink, toilet, storm drain or onto soil. That is the one absolute rule. For a part-used pail of asphalt emulsion, most municipalities are happy for you to leave the lid off somewhere sheltered until the contents dry solid, then put the pail in household waste; the dried material is inert enough for landfill and the pail is no longer a liquid hazard. Adding cat litter or sawdust speeds the drying. For coal tar product, take it to your household hazardous waste facility, and do the same for emulsion if your local authority asks for it; the rules vary by county and a two-minute search of your county's waste pages will tell you. Unopened pails can often be given to a neighbour or a local buy-nothing group, which is better than either option.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Tools and Rinse Water</h3>
+        <p>
+          Rinse squeegees, brushes and rollers in a bucket, not under the hose in the street. Let the bucket sit until the solids settle and the water evaporates, then dispose of the dried residue with the rest. A cheap roller cover is not worth cleaning; let it dry and bin it. Wash-down water from cleaning tools is one of the most common ways sealer ends up in a storm drain, and it is entirely avoidable.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Rain and Runoff</h3>
+        <p>
+          Storm drains in most US neighbourhoods do not go to a treatment plant. They go to the nearest stream. Wet sealer washed off by an unexpected shower goes straight there in a black slick, and this is the acute version of the chronic sediment problem the USGS documented. Do not seal with rain in the forecast for at least 24 hours, and preferably 48, and check the radar again before you open the pail. Our piece on <a href="/rain-after-driveway-sealing/">rain after driveway sealing</a> covers what to do if you get caught. Keep the product itself well back from any drain grate, swale or ditch, and if the drive runs down to the street, stop the coat a foot short of the gutter rather than flooding into it.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Wells and Septic</h3>
+        <p>
+          If you are on a private well, keep sealer, rinse water and runoff well clear of the wellhead and any surface drainage that leads toward it. The risk from a properly applied emulsion sealer is small, but wells have no treatment step, and there is no reason to test it. Do not clean tools anywhere near a septic drain field either; the solids and the alkalinity are both unwelcome there.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Should You Seal at All?</h3>
+        <p>
+          Some stormwater agencies would answer no, and it is a fair question. Sealing an asphalt drive protects the binder from UV and water and extends its life; it also puts a few gallons of petroleum product onto an impervious surface every couple of years. Our view is that it is worth doing with an emulsion or acrylic product, applied thin, in dry weather, with the precautions above, and that the honest trade-offs are laid out in <a href="/sealing-asphalt-driveway-pros-and-cons/">sealing an asphalt driveway: pros and cons</a>. What is not worth doing is coal tar, anywhere, for any driveway.
+        </p>
+
+        <!-- Common Mistakes -->
+        <div id="common-mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Common Mistakes</h2>
+          <div class="space-y-4">
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Assuming all "sealer" is the same stuff</h3>
+              <p class="text-gray-700 m-0">Coal tar and asphalt emulsion differ in PAH content by roughly a thousand times. Check the SDS for CAS 65996-93-2 before you buy, or before a contractor sprays.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Letting kids and dogs back on when it looks dry</h3>
+              <p class="text-gray-700 m-0">Dry to the eye is not cured. Give it 24 to 48 hours and the thumb-press test before small feet and paws carry it into the house.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Hosing tools off in the street</h3>
+              <p class="text-gray-700 m-0">The storm drain goes to a stream, not a treatment plant. Rinse in a bucket and let it dry out.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Cleaning skin with gasoline or thinner</h3>
+              <p class="text-gray-700 m-0">You have swapped an alkaline irritant for a solvent that goes straight through skin. Use mineral oil or a citrus hand cleaner, then soap.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Trusting "eco" on the label</h3>
+              <p class="text-gray-700 m-0">Only "coal tar free" means something specific. Everything else is marketing. Read section 3 of the data sheet.</p>
+            </div>
+          </div>
+        </div>
+
+        <h2 id="faq" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6 font-sans border-b pb-4">
+          Frequently Asked Questions
+        </h2>
+
+        <div class="space-y-6">
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Is driveway sealer toxic?</h3>
+            <p class="text-gray-700 m-0">It depends on the type. Refined coal tar sealers contain very high concentrations of polycyclic aromatic hydrocarbons, several of which are probable human carcinogens, and their dust has been linked to elevated PAH levels in homes and streams. Asphalt emulsion and acrylic sealers contain far lower PAH levels and are considered much lower risk, though wet product should still be kept off skin and out of drains.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">How do I know if my driveway sealer contains coal tar?</h3>
+            <p class="text-gray-700 m-0">Check the Safety Data Sheet, which manufacturers must provide. Look for coal tar, coal tar pitch, refined tar, RT-12, or CAS number 65996-93-2 in the ingredients. Products labelled asphalt emulsion, asphalt-based, or acrylic and sold at Home Depot or Lowe's are not coal tar; both chains stopped selling coal tar sealers years ago.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Where is coal tar sealer banned?</h3>
+            <p class="text-gray-700 m-0">Statewide bans exist in Washington State and Minnesota, and Washington DC has banned it. Austin, Texas was the first city to do so in 2006, and a large number of counties and municipalities across Illinois, Wisconsin, Maryland, New York, Texas and elsewhere have followed. Home Depot and Lowe's withdrew coal tar sealers from their shelves nationwide voluntarily.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Are the fumes from driveway sealer dangerous?</h3>
+            <p class="text-gray-700 m-0">Coal tar fumes are the most irritating and contain volatile PAHs; apply upwind, in open air, and take breaks if you feel light-headed or your eyes sting. Asphalt emulsion fumes are milder, a petroleum smell that fades within hours. Neither should be used in an enclosed space such as a garage with the door down.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">How long should kids and pets stay off a sealed driveway?</h3>
+            <p class="text-gray-700 m-0">At least 24 hours in warm dry weather and 48 hours if it is cool, humid or the coat went on thick. Even after it is dry to the touch the coating is still soft, and small feet and paws pick up residue that ends up on carpets and in mouths. Wait until it no longer marks under a firm thumb press.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">What do I do with leftover driveway sealer?</h3>
+            <p class="text-gray-700 m-0">Never pour it down a drain, storm sewer or on the ground. Small amounts of asphalt emulsion can be left open to dry solid and then disposed of with household trash in most areas. Coal tar product should go to a household hazardous waste facility. Rinse tools in a bucket and let the rinse water evaporate rather than tipping it out.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Is it safe to seal a driveway while pregnant?</h3>
+            <p class="text-gray-700 m-0">There is no specific study we would point to, but PAH exposure is something most guidance suggests minimising during pregnancy, and there is no reason to accept avoidable exposure for a job someone else can do. As a reasonable precaution, we would suggest a pregnant person leave the application to someone else and stay clear of the fumes.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Can driveway sealer contaminate a well or storm drain?</h3>
+            <p class="text-gray-700 m-0">Wet sealer washed off by rain runs straight into storm drains, which discharge untreated to local streams, and coal tar runoff in particular has been measured in stream sediments. Never seal with rain forecast, keep product away from drains and swales, and if you are on a well, keep sealer well clear of the wellhead and any drainage that leads to it.</p>
+          </div>
+        </div>
+
+        <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6 font-sans border-b pb-4">
+          Related Driveway Sealer Guides
+        </h2>
+
+        <ul>
+          <li><a href="/coal-tar-vs-asphalt-emulsion-sealer/">Coal Tar vs Asphalt Emulsion Sealer</a> — the full performance and safety comparison.</li>
+          <li><a href="/acrylic-vs-asphalt-emulsion-driveway-sealer/">Acrylic vs Asphalt Emulsion Driveway Sealer</a> — the two coal-tar-free options side by side.</li>
+          <li><a href="/sealing-asphalt-driveway-pros-and-cons/">Sealing an Asphalt Driveway: Pros and Cons</a> — whether it is worth doing at all.</li>
+          <li><a href="/best-asphalt-driveway-sealer-reviews/">Best Asphalt Driveway Sealer Reviews</a> — the coal-tar-free products we would actually buy.</li>
+          <li><a href="/how-long-for-driveway-sealer-to-dry/">How Long for Driveway Sealer to Dry</a> — when it is genuinely safe to walk, park and let the dog out.</li>
+          <li><a href="/rain-after-driveway-sealing/">Rain After Driveway Sealing</a> — what happens when a shower hits wet sealer, and what to do.</li>
+        </ul>
+
+        <div class="mt-16 bg-gray-900 rounded-2xl p-8 text-gray-200">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="mb-4">
+            Coal tar sealer is the toxic one. Its PAH content is roughly a thousand times that of asphalt-based sealers, federal researchers have traced its dust into homes and streams, and a growing list of states and cities have banned it. Check the data sheet for CAS 65996-93-2 and do not use it, whatever a contractor says about oil resistance.
+          </p>
+          <p class="m-0">
+            Asphalt emulsion and acrylic sealers are a different matter. Treat them like any petroleum coating: gloves, eye protection, open air, kids and pets off for a day or two, nothing down the drain, and no application with rain coming. Do that and sealing a driveway is a low-risk job.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <MoreInCategory category="Driveway Sealers" links={moreInCategory} />
+    <AuthorBio />
+  </article>
+</Layout>

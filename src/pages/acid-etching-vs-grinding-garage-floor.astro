@@ -1,0 +1,534 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import SocialProof from "../components/SocialProof.astro";
+import TrustBadge from "../components/TrustBadge.astro";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+    { title: "How to Prepare Concrete for Epoxy", url: "/how-to-prepare-concrete-for-epoxy/" },
+    { title: "Epoxy Garage Floor Moisture Test", url: "/epoxy-garage-floor-moisture-test/" },
+    { title: "How to Apply Garage Floor Epoxy", url: "/how-to-apply-garage-floor-epoxy/" },
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-09", modified: "2026-09-09" });
+const title = "Acid Etching vs Grinding a Garage Floor: Which Prep Actually Works?";
+const description =
+  "Acid etching vs grinding before epoxy: what each does, the CSP profile coatings need, why etching fails on hard slabs, cost, dust control and which to pick.";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://www.thehonestreviewers.com/" },
+        { "@type": "ListItem", position: 2, name: "Best Lists", item: "https://www.thehonestreviewers.com/best-of/" },
+        { "@type": "ListItem", position: 3, name: "Acid Etching vs Grinding a Garage Floor", item: "https://www.thehonestreviewers.com/acid-etching-vs-grinding-garage-floor/" },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "Is grinding better than acid etching for a garage floor?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes, in almost every case. Grinding removes the weak surface paste mechanically and leaves a consistent profile regardless of how hard, smooth or sealed the concrete is. Etching depends on the acid reacting with the surface, and on a hard-trowelled or sealed slab that reaction barely happens.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What is the CSP scale and what number does epoxy need?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "CSP stands for Concrete Surface Profile, a 1 to 10 scale published by the International Concrete Repair Institute. CSP 1 is smooth, CSP 10 is heavily scarified. Thin-film garage epoxies want CSP 2 to 3, which feels like 100 to 120-grit sandpaper. Thicker 100 per cent solids systems are happier at CSP 3 to 4.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Why did acid etching not work on my garage floor?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Usually because the surface was too dense for the acid to bite, or because a cure-and-seal or densifier was applied when the slab was poured. Acid also does nothing to old paint or coatings, and if the etch was not neutralised and rinsed thoroughly the salts left behind will ruin adhesion on their own.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is muriatic acid dangerous to use in a garage?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "It is genuinely hazardous. The fumes are hydrogen chloride gas, which attacks your lungs, eyes and any steel in the garage. Work with the door fully open, wear a respirator with acid-gas cartridges, goggles and rubber gloves, always add acid to water and never the reverse, and keep baking soda on hand to neutralise spills.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How much does it cost to rent a concrete grinder?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "A walk-behind single-head grinder from Home Depot or Sunbelt typically rents for around 100 to 200 dollars per day, plus a diamond tooling deposit and a HEPA vacuum rental of 50 to 100 dollars. Expect 200 to 400 dollars all in for a weekend. A 7-inch angle grinder with a diamond cup wheel and dust shroud is 60 to 150 dollars to buy outright.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How long does it take to grind a two-car garage floor?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Around three to five hours of grinding for a 400 to 500 square foot floor with a walk-behind machine, plus another hour or two on the edges with a hand grinder. Acid etching takes a similar total time once you include the pre-clean, the etch, the neutralising, the rinsing and the 24 to 48 hours of drying afterwards.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can I acid etch a new concrete garage floor?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Sometimes. A new broom-finished or lightly trowelled slab with no cure-and-seal applied, at least 28 days old, is the one scenario where etching can produce an acceptable profile. Check with the water test first: if water soaks in within a minute or two across the whole floor, etching has a chance. If it beads anywhere, grind.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Do I need to grind if I am using a polyaspartic or polyurea coating?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes, and the manufacturers of those systems are usually stricter about it than epoxy makers. Polyaspartics are thin, fast-curing and unforgiving of a weak bond line. Every professional polyaspartic installer we know grinds, and most will not warranty a floor prepped any other way.",
+          },
+        },
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Home Improvement",
+    tags: ["acid etching", "concrete grinding", "garage floor epoxy", "surface prep", "CSP"],
+  }}
+  jsonLd={schema}
+  stickyCta={{ text: "Which Should I Choose?", link: "#which-to-choose" }}
+>
+  <article class="relative overflow-hidden">
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div
+        class="absolute inset-0 opacity-10"
+        style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"
+      ></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6"><TrustBadge /></div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Acid Etching vs <span class="text-[#38BDF8]">Grinding</span> a Garage Floor
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Nearly every peeled epoxy floor we have been asked to look at was etched, not ground. The kit said etching was enough. The concrete disagreed. Here is what each method actually does to the slab, and how to decide which one your floor needs.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#which-to-choose" class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline">Which Should I Choose?</a>
+          <a href="#what-each-does" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline">How They Work</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="7.4k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E90FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#what-each-does" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. What Each Method Actually Does</a>
+          <a href="#csp-scale" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. The CSP Scale and What Coatings Need</a>
+          <a href="#why-etching-fails" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Why Etching Fails So Often</a>
+          <a href="#acid-safety" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Working Safely With Muriatic Acid</a>
+          <a href="#two-tests" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. The Two Tests That Tell You the Truth</a>
+          <a href="#grinding-in-practice" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Grinding in Practice: Tools, Dust, Cost</a>
+          <a href="#time-and-cost" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Time and Cost for a Two-Car Garage</a>
+          <a href="#which-to-choose" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Which to Choose, and Why Kits Still Say Etch</a>
+          <a href="#common-mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto px-4 py-16 lg:py-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic border-l-4 border-[#38BDF8] pl-6 bg-gray-50 py-4 rounded-r-xl">
+          Epoxy does not fail because the epoxy was bad. It fails because the bond between the coating and the concrete was never really there. Prep is the whole job, and the coating is just the last hour of it.
+        </p>
+
+        <h2 id="what-each-does" class="scroll-mt-24 text-3xl font-black text-gray-900 mb-6 font-sans border-b pb-4">
+          1. What Each Method Actually Does
+        </h2>
+
+        <p>
+          A finished concrete slab has a thin skin on top that is not like the concrete underneath. When the finisher trowels the surface, the fine cement paste and water rise and get worked into a smooth, dense layer a few thousandths of an inch thick. That layer, usually called laitance or surface paste, is weak, tightly closed and often contaminated with whatever has landed on it in the years since. It is also the only part of the slab your coating will ever touch. Both etching and grinding exist to get rid of it and open up the sound concrete below so a coating can key into the pores.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Acid Etching: A Chemical Reaction</h3>
+        <p>
+          Etching relies on an acid reacting with the calcium compounds in the cement paste. Muriatic acid, which is diluted hydrochloric acid sold at hardware stores at around 30 per cent strength, is the traditional choice. Diluted further to roughly one part acid to three or four parts water and spread over a wet floor, it fizzes on contact, dissolving a fraction of the surface paste and leaving behind a lightly roughened, more porous face. The reaction is self-limiting: once the acid has consumed the most reactive material or has been neutralised by the alkaline concrete, it stops.
+        </p>
+        <p>
+          The gentler alternatives now packed into most consumer kits are citric acid or phosphoric acid formulations, usually branded as an "etch and clean" or "concrete etcher" solution. Rust-Oleum's EpoxyShield kit ships with a citric acid based pouch, for instance. These are much safer to handle and they do remove some surface contamination, but their bite on hard concrete is minimal. In our experience a citric etch on a typical hard-trowelled garage slab produces a surface that looks cleaner and feels almost exactly the same as it did before.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Grinding: Mechanical Removal</h3>
+        <p>
+          Grinding does not ask the concrete to react with anything. Diamond segments bonded into a metal matrix spin against the surface and physically abrade the top layer away, paste and all. A single pass with a 30 to 40 grit metal-bond diamond typically removes between a sixty-fourth and a thirty-second of an inch, which is far more than any etch can dissolve. What is left is fresh aggregate and sound cement with a uniform texture, regardless of how the slab was finished, whether a sealer was applied, or how many years of tire rubber have been polished into it.
+        </p>
+        <p>
+          Grinding also does something etching cannot: it removes things that are not concrete. Old paint, a failed thin epoxy, a cure-and-seal compound, drywall mud from the original build, glue from carpet tiles, the shiny burnished patches where tires have parked for a decade. All of that comes off under a grinder and none of it comes off under acid. That single difference decides most garage floors.
+        </p>
+
+        <h2 id="csp-scale" class="scroll-mt-24 text-3xl font-black text-gray-900 mb-6 font-sans border-b pb-4">
+          2. The CSP Scale and What Coatings Need
+        </h2>
+
+        <p>
+          The coatings industry has a standard way to describe how rough a prepared concrete surface is. The International Concrete Repair Institute publishes a set of ten moulded rubber chips called Concrete Surface Profiles, numbered CSP 1 through CSP 10. CSP 1 is essentially the smooth surface left by acid etching a soft slab. CSP 3 is what light grinding produces, and it feels like coarse sandpaper. CSP 5 and above are the heavy textures left by shot blasting and scarifying, used under thick industrial toppings.
+        </p>
+
+        <p>
+          Every serious coating manufacturer specifies the CSP their product needs, and it is worth reading, because this is the number that the kit instructions quietly ignore. Thin-film epoxies in the 4 to 10 mil range, which covers every water-based and most solvent-based garage kits, want CSP 2 to 3. Thicker 100 per cent solids epoxies and the polyaspartic and polyurea systems installers use call for CSP 3 to 4. Self-levelling overlays and heavy-duty mortar systems go higher still. Nobody with a data sheet asks for CSP 1.
+        </p>
+
+        <p>
+          The reason profile matters is surface area and mechanical key. A coating bonds partly by chemical adhesion to the cement and partly by flowing into the microscopic peaks and valleys of the surface and locking in as it cures. A smoother profile gives it less to hold on to, and the bond is then carrying tire loads, thermal cycling and hot-tire pickup with nothing but a thin chemical grip. Move the profile from CSP 1 to CSP 3 and the effective bonding area rises dramatically. That is the difference between a floor that survives a decade and one that lifts under the first set of hot tires in July.
+        </p>
+
+        <p>
+          You do not need the rubber chips to judge this at home. A well-prepped floor for garage epoxy should have a uniform matte, slightly chalky look with no shiny spots, and running your palm over it should feel like 100 to 120-grit sandpaper. If any part of the floor feels like the surface of a smooth countertop, that part is not ready.
+        </p>
+
+        <h2 id="why-etching-fails" class="scroll-mt-24 text-3xl font-black text-gray-900 mb-6 font-sans border-b pb-4">
+          3. Why Etching Fails So Often
+        </h2>
+
+        <p>
+          The uncomfortable truth about acid etching is that it works best on exactly the floors that need it least. A soft, porous, broom-finished slab with a lot of exposed paste will fizz enthusiastically and end up with a decent profile. A hard, dense, steel-trowelled slab, which describes the vast majority of garage floors poured in the last thirty years, barely reacts. The acid sits on the surface, fizzes weakly, and runs off having changed very little.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Hard-Trowelled and Burnished Slabs</h3>
+        <p>
+          Production builders finish garage slabs with power trowels because it is fast and leaves a floor that is easy to sweep. Repeated trowelling densifies the surface paste until it is almost glassy. Acid needs porosity to work, and a burnished surface has almost none. We have seen etched floors of this type where the water-beading test still failed after two full applications of muriatic acid at a strong dilution.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Cure-and-Seal and Densifiers</h3>
+        <p>
+          Many slabs are sprayed with a curing compound or a cure-and-seal within hours of being poured. Those products are acrylic or silicate based and they are designed to sit in or on the surface and stop water moving through it. Acid does not remove acrylic. It also does not remove a lithium or sodium silicate densifier, which chemically hardens the paste and is the enemy of any etch. If the builder used either, and there is no way to tell by looking, etching will leave you with a slab that looks prepped and is not.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Old Paint and Previous Coatings</h3>
+        <p>
+          Acid has no effect at all on a cured paint or epoxy film. It will not soften it, roughen it or improve its adhesion. If your floor has any previous coating, even a thin one that looks mostly gone, the etch is doing nothing to those areas and your new coating is bonding to old paint of unknown quality. When that old layer lets go, and it will, your new floor goes with it. This is covered in detail in our guide to <a href="/can-you-epoxy-over-a-painted-garage-floor/">epoxying over a painted garage floor</a>, and the short version is that the only reliable answer is to grind it off.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Residue and Salts</h3>
+        <p>
+          Even where the etch does work, it leaves behind a problem. The reaction between acid and cement produces calcium chloride and other salts, plus a fine, loose white dust of dissolved paste. If that is not thoroughly neutralised and rinsed, and then rinsed again, it sits between the concrete and the coating as a powdery bond-breaker. Most kit instructions describe one rinse. In our experience it takes three or four with a stiff brush and a wet vac before the rinse water runs clear, and few first-timers go that far.
+        </p>
+
+        <p>
+          Then the slab has to dry. Etching soaks the concrete, and a wet slab under a solvent-free epoxy is a recipe for blisters. Allow at least 24 to 48 hours in warm dry weather, longer in a humid climate or a cool garage, and confirm with a plastic-sheet test. Our <a href="/epoxy-garage-floor-moisture-test/">moisture testing guide</a> walks through it. Grinding introduces no water at all, which is one more reason installers prefer it.
+        </p>
+
+        <h2 id="acid-safety" class="scroll-mt-24 text-3xl font-black text-gray-900 mb-6 font-sans border-b pb-4">
+          4. Working Safely With Muriatic Acid
+        </h2>
+
+        <p>
+          If you do decide to etch with muriatic acid, treat it with the respect it deserves. Hardware-store muriatic acid is roughly 31 per cent hydrochloric acid and it gives off hydrogen chloride vapour that you will smell instantly and feel in your throat within seconds. That vapour is corrosive to lung tissue and eyes, and it will start rusting every exposed steel surface in the garage, from tool chests to the door track to the bicycle chains, within a day or two. Move anything you care about outside.
+        </p>
+
+        <p>
+          Wear splash goggles rather than safety glasses, nitrile or rubber gloves that go up the forearm, rubber boots, and a half-face respirator fitted with acid-gas cartridges. A dust mask does nothing. Keep the garage door fully open and set up a fan to push air out, not in. Never work alone with acid, and keep a hose running nearby.
+        </p>
+
+        <p>
+          Mixing is where the classic mistake happens. Always add acid to water, never water to acid. Pouring water into concentrated acid can cause it to spit and boil. Use a plastic watering can or a plastic pump sprayer with acid-rated seals for application, and wet the floor first so the acid spreads evenly and does not soak into dry pores in a concentrated pool.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Neutralising and Disposal</h3>
+        <p>
+          Once the fizzing subsides, usually after ten to fifteen minutes, the acid must be neutralised before rinsing. A box of baking soda scattered over the floor and scrubbed in with a little water will do it, or a solution of one cup of household ammonia per gallon of water. Some pros use a diluted trisodium phosphate wash. Test the rinse water with a cheap pH strip and keep going until it reads neutral, around 7. Then rinse with clean water and vacuum up, repeating until the slurry is gone and the water runs clear.
+        </p>
+
+        <p>
+          Do not let acid rinse water run into the street drain or onto the lawn. Even neutralised, the volume of dissolved lime and salt is not good for a storm system or your grass. Collect it with a wet vac and let it settle, then dispose of the neutralised liquid down a sanitary drain where local rules allow, or check with your municipal waste service. In some jurisdictions acid etching runoff is regulated as hazardous waste, and that alone has pushed a lot of contractors to stop doing it.
+        </p>
+
+        <h2 id="two-tests" class="scroll-mt-24 text-3xl font-black text-gray-900 mb-6 font-sans border-b pb-4">
+          5. The Two Tests That Tell You the Truth
+        </h2>
+
+        <p>
+          You do not have to guess whether your prep worked. Two simple tests will tell you, and they are the same tests a good installer uses before opening a single can of coating.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">The Water Test</h3>
+        <p>
+          Sprinkle a few tablespoons of clean water on the bare concrete in several places, especially where tires park and near the door. On a properly profiled slab the water darkens the surface and soaks in within a minute or two. If it beads, sits in a shiny puddle or takes five minutes to disappear, the surface is either sealed, densified or too closed to accept a coating. That is a fail, and no amount of etching will fix it. Run this test before you decide on a method and run it again after prep. Water that still beads after an etch is the concrete telling you to rent a grinder.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">The Sandpaper Test</h3>
+        <p>
+          Once the floor is dry, run your bare palm over it in several places. You are looking for the texture of 100 to 120-grit sandpaper, rough enough to feel every grain but not coarse enough to snag skin. A grinder leaves this texture reliably across the whole slab. An etch, if it worked, leaves it in patches, and the smooth areas between those patches are exactly where the coating will lift. If your fingertips slide without resistance anywhere on the floor, that spot is not ready.
+        </p>
+
+        <p>
+          A third check that is worth doing on any slab you suspect was sealed: put a few drops of muriatic acid on a bare spot. Good concrete fizzes immediately. If nothing happens, there is a sealer or densifier on the surface and the etch is not going to work no matter how much you use.
+        </p>
+
+        <h2 id="grinding-in-practice" class="scroll-mt-24 text-3xl font-black text-gray-900 mb-6 font-sans border-b pb-4">
+          6. Grinding in Practice: Tools, Dust, Cost
+        </h2>
+
+        <p>
+          The objection to grinding used to be that it was a professional-only job requiring equipment nobody could rent. That has not been true for years. Every Home Depot tool rental counter and every Sunbelt or United Rentals branch stocks single-head walk-behind concrete grinders, and the diamond tooling to go with them.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Walk-Behind Grinders</h3>
+        <p>
+          A rental walk-behind is typically a 10 to 12 inch single-disc machine running on standard 120-volt power, with a rotating plate that accepts diamond segments or a bolt-on diamond cup wheel. It rents for around 100 to 200 dollars a day depending on the region, and you will pay a deposit or a wear charge on the diamond tooling. Choose a 30 to 40 grit metal-bond segment for bare concrete and a more aggressive 16 to 25 grit if you are removing paint or a previous coating. The machine does the work; you steer it in slow overlapping passes, first one direction and then across at 90 degrees, until the whole floor has the same matte texture.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Angle Grinder and Cup Wheel</h3>
+        <p>
+          For edges, corners and around the door track, a 7-inch or 4.5-inch angle grinder with a diamond cup wheel and a dust shroud is the tool. A shroud with a vacuum port is not optional. Many homeowners with a one-car garage do the entire floor this way, and it is possible but slow and hard on the back. Budget 60 to 150 dollars for a decent cup wheel and shroud if you do not already own a grinder, and expect the cup wheel to be worn out by the end of a full garage.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Dust Control</h3>
+        <p>
+          Concrete dust contains crystalline silica, and breathing it is not a minor thing. OSHA regulates silica exposure for a reason, and the dust from a dry grind is fine enough to hang in the air for hours and drift through every gap into the house. You need a HEPA-rated vacuum with a cyclonic pre-separator connected to the grinder shroud, not a shop vac, and a properly fitted N95 or better on your face. Rental yards will rent the HEPA vac alongside the grinder for another 50 to 100 dollars a day. Seal the door into the house with plastic and tape, and warn the neighbours if their cars are parked nearby.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Edges and Control Joints</h3>
+        <p>
+          The walk-behind will leave a strip of two to four inches along every wall and around every post that it cannot reach. Do those with the hand grinder before you finish, and pay attention to the area just inside the garage door, which is where most floors have the heaviest sealer residue and the most spalling. Control joints and saw cuts need to be vacuumed out and, if you want a monolithic look, filled with a flexible joint sealant or a rigid epoxy filler depending on whether the joint is still moving. Never let a grinder ride across a crack edge at speed; it will chip the arris and leave you with a repair.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">Shot Blasting for Pros</h3>
+        <p>
+          On commercial and larger residential jobs, installers often use a shot blaster instead of a grinder. The machine fires steel shot at the surface and recovers it in a closed loop, leaving a uniform CSP 3 to 5 profile at high speed and with almost no airborne dust. Shot blasting is faster than grinding on a big open floor and produces a superb profile, but the machines are expensive and rarely rented to homeowners, and they struggle with edges just as grinders do. If you are hiring a <a href="/garage-floor-coating-contractors/">garage floor coating contractor</a>, asking whether they grind or shot blast is a fair way to sort the serious ones from those who show up with a bottle of etch.
+        </p>
+
+        <h2 id="time-and-cost" class="scroll-mt-24 text-3xl font-black text-gray-900 mb-6 font-sans border-b pb-4">
+          7. Time and Cost for a Two-Car Garage
+        </h2>
+
+        <p>
+          A typical two-car garage is somewhere between 400 and 550 square feet. Here is how the two methods compare in practice on a floor that size, based on the jobs we have done and watched.
+        </p>
+
+        <div class="overflow-x-auto">
+          <table>
+            <thead>
+              <tr>
+                <th>Factor</th>
+                <th>Acid Etching</th>
+                <th>Grinding</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Materials and rental</td>
+                <td>20 to 60 dollars (acid, baking soda, brushes)</td>
+                <td>200 to 400 dollars (grinder, tooling, HEPA vac)</td>
+              </tr>
+              <tr>
+                <td>Active work time</td>
+                <td>3 to 5 hours including rinsing</td>
+                <td>4 to 7 hours including edges</td>
+              </tr>
+              <tr>
+                <td>Drying wait before coating</td>
+                <td>24 to 72 hours</td>
+                <td>None, sweep and coat</td>
+              </tr>
+              <tr>
+                <td>Resulting profile</td>
+                <td>CSP 1 to 2, inconsistent</td>
+                <td>CSP 2 to 3, uniform</td>
+              </tr>
+              <tr>
+                <td>Removes old paint or sealer</td>
+                <td>No</td>
+                <td>Yes</td>
+              </tr>
+              <tr>
+                <td>Hazards</td>
+                <td>Corrosive fumes, disposal</td>
+                <td>Silica dust, noise</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          The extra cost of grinding is real, and on a coating budget of 300 to 600 dollars for a decent kit it can feel like a lot. Put it against the cost of doing the whole job twice, though. A failed epoxy floor has to be ground off anyway before it can be recoated, so the grinder rental gets paid for either way. You are just choosing whether to pay for it before the coating or after. Our <a href="/epoxy-garage-floor-cost/">garage epoxy cost guide</a> breaks down the full budget.
+        </p>
+
+        <p>
+          Time is closer than most people expect. Etching itself is quick, but the pre-cleaning, degreasing, repeated rinsing and then the one to three days of drying stretch the job across a weekend or longer. Grinding is a solid day of noisy, dusty work, but you can vacuum, tack-wipe and start priming the same afternoon.
+        </p>
+
+        <h2 id="which-to-choose" class="scroll-mt-24 text-3xl font-black text-gray-900 mb-6 font-sans border-b pb-4">
+          8. Which to Choose, and Why Kits Still Say Etch
+        </h2>
+
+        <p>
+          Our honest recommendation, after enough failed floors to be confident about it, is simple. If there is any doubt at all, grind. The only situation in which we would consider etching acceptable is a new, bare, never-sealed slab with a broom or light float finish, at least 28 days old, that passes the water test everywhere before you start. Even then we would use muriatic rather than citric acid, test the profile with the sandpaper check afterwards, and be prepared to grind the areas that did not take.
+        </p>
+
+        <p>
+          Grind if the floor has ever been painted or coated. Grind if water beads anywhere. Grind if the surface is glossy or burnished. Grind if you do not know the slab's history, which is nearly everyone buying an existing house. Grind if you are applying a 100 per cent solids epoxy, a polyaspartic or a polyurea, because those systems are thick and rigid and put more stress on the bond line than a thin water-based coat. And grind if you simply want to do the job once, because the consistent profile it produces is the single biggest factor in whether a garage floor coating lasts. Our guide to <a href="/how-to-prepare-concrete-for-epoxy/">preparing concrete for epoxy</a> covers the full prep sequence from degreasing to final vacuum.
+        </p>
+
+        <h3 class="text-xl font-bold text-gray-900 mt-8 mb-3">So Why Do Big-Box Kits Say Etch?</h3>
+        <p>
+          Because the kit has to be something a homeowner can complete in a weekend with nothing but the box and a bucket. Telling a customer to rent a grinder, a HEPA vacuum and buy a respirator adds several hundred dollars and a serious day of labour to a product that sells on being easy. So the manufacturers include a pouch of citric acid, call it prep, and write the warranty to exclude adhesion failures caused by "improper surface preparation". The floor that fails eighteen months later is then, on paper, your fault.
+        </p>
+
+        <p>
+          That is not a knock on the coatings themselves. Rust-Oleum EpoxyShield and the other <a href="/best-epoxy-garage-floor-kit/">big-box epoxy kits</a> are reasonable products for what they cost, and a thin water-based epoxy over a properly ground floor will outlast the same product over an etched one by years. The problem is entirely in the instructions.
+        </p>
+
+        <p>
+          Professional installers, meanwhile, never etch. Not because they are precious about it but because they warranty their work, and a callback to strip and recoat a peeling floor costs more than the grinder did. Every reputable installer we have spoken to grinds or shot blasts every floor, every time, including brand new slabs. When the people who lose money on failures all do the same thing, that is the answer.
+        </p>
+
+        <!-- Common Mistakes -->
+        <div id="common-mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Common Mistakes</h2>
+          <div class="space-y-4">
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Trusting the kit's citric acid pouch on a hard-trowelled slab</h3>
+              <p class="text-gray-700 m-0">A citric etch on burnished concrete cleans the surface and changes almost nothing else. The floor looks prepped, passes a glance, and fails under the first hot tires.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Skipping the water test before choosing a method</h3>
+              <p class="text-gray-700 m-0">Beading water means a sealer or densifier is present. Etching over it wastes a day and leaves you with a slab that still needs grinding, only now it is wet.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Rinsing once and calling it done</h3>
+              <p class="text-gray-700 m-0">Acid residue and dissolved paste form a fine powder that acts as a bond-breaker. Rinse until the water runs clear and the floor does not chalk on a dark rag, however many passes that takes.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Grinding without a HEPA vacuum</h3>
+              <p class="text-gray-700 m-0">A shop vac filter passes silica dust straight through and fills the garage and the house with it. Rent the proper vacuum and wear a fitted respirator; the dust is a genuine long-term health risk.</p>
+            </div>
+            <div class="bg-red-50 border-l-4 border-red-500 rounded-r-xl p-6">
+              <h3 class="font-black text-gray-900 mb-2">Leaving the edges and the door apron smooth</h3>
+              <p class="text-gray-700 m-0">The walk-behind cannot reach the last few inches, and the apron is where sealer and salt are thickest. Those are the first places a coating peels. Hand-grind them properly.</p>
+            </div>
+          </div>
+        </div>
+
+        <h2 id="faq" class="scroll-mt-24 text-3xl font-black text-gray-900 mt-16 mb-6 font-sans border-b pb-4">
+          Frequently Asked Questions
+        </h2>
+
+        <div class="space-y-6">
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Is grinding better than acid etching for a garage floor?</h3>
+            <p class="text-gray-700 m-0">Yes, in almost every case. Grinding removes the weak surface paste mechanically and leaves a consistent profile regardless of how hard, smooth or sealed the concrete is. Etching depends on the acid reacting with the surface, and on a hard-trowelled or sealed slab that reaction barely happens.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">What is the CSP scale and what number does epoxy need?</h3>
+            <p class="text-gray-700 m-0">CSP stands for Concrete Surface Profile, a 1 to 10 scale published by the International Concrete Repair Institute. CSP 1 is smooth, CSP 10 is heavily scarified. Thin-film garage epoxies want CSP 2 to 3, which feels like 100 to 120-grit sandpaper. Thicker 100 per cent solids systems are happier at CSP 3 to 4.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Why did acid etching not work on my garage floor?</h3>
+            <p class="text-gray-700 m-0">Usually because the surface was too dense for the acid to bite, or because a cure-and-seal or densifier was applied when the slab was poured. Acid also does nothing to old paint or coatings, and if the etch was not neutralised and rinsed thoroughly the salts left behind will ruin adhesion on their own.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Is muriatic acid dangerous to use in a garage?</h3>
+            <p class="text-gray-700 m-0">It is genuinely hazardous. The fumes are hydrogen chloride gas, which attacks your lungs, eyes and any steel in the garage. Work with the door fully open, wear a respirator with acid-gas cartridges, goggles and rubber gloves, always add acid to water and never the reverse, and keep baking soda on hand to neutralise spills.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">How much does it cost to rent a concrete grinder?</h3>
+            <p class="text-gray-700 m-0">A walk-behind single-head grinder from Home Depot or Sunbelt typically rents for around 100 to 200 dollars per day, plus a diamond tooling deposit and a HEPA vacuum rental of 50 to 100 dollars. Expect 200 to 400 dollars all in for a weekend. A 7-inch angle grinder with a diamond cup wheel and dust shroud is 60 to 150 dollars to buy outright.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">How long does it take to grind a two-car garage floor?</h3>
+            <p class="text-gray-700 m-0">Around three to five hours of grinding for a 400 to 500 square foot floor with a walk-behind machine, plus another hour or two on the edges with a hand grinder. Acid etching takes a similar total time once you include the pre-clean, the etch, the neutralising, the rinsing and the 24 to 48 hours of drying afterwards.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Can I acid etch a new concrete garage floor?</h3>
+            <p class="text-gray-700 m-0">Sometimes. A new broom-finished or lightly trowelled slab with no cure-and-seal applied, at least 28 days old, is the one scenario where etching can produce an acceptable profile. Check with the water test first: if water soaks in within a minute or two across the whole floor, etching has a chance. If it beads anywhere, grind.</p>
+          </div>
+          <div class="border border-gray-200 rounded-xl p-6">
+            <h3 class="font-black text-gray-900 mb-2">Do I need to grind if I am using a polyaspartic or polyurea coating?</h3>
+            <p class="text-gray-700 m-0">Yes, and the manufacturers of those systems are usually stricter about it than epoxy makers. Polyaspartics are thin, fast-curing and unforgiving of a weak bond line. Every professional polyaspartic installer we know grinds, and most will not warranty a floor prepped any other way.</p>
+          </div>
+        </div>
+
+        <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6 font-sans border-b pb-4">
+          Related Garage Floor Guides
+        </h2>
+
+        <ul>
+          <li><a href="/how-to-prepare-concrete-for-epoxy/">How to Prepare Concrete for Epoxy</a> — the full prep sequence from degreasing to final vacuum.</li>
+          <li><a href="/epoxy-garage-floor-moisture-test/">Epoxy Garage Floor Moisture Test</a> — how to confirm the slab is dry enough to coat.</li>
+          <li><a href="/how-to-apply-garage-floor-epoxy/">How to Apply Garage Floor Epoxy</a> — what to do once the prep is done.</li>
+          <li><a href="/epoxy-garage-floor-peeling/">Epoxy Garage Floor Peeling</a> — diagnosing a floor that has already let go.</li>
+          <li><a href="/can-you-epoxy-over-a-painted-garage-floor/">Can You Epoxy Over a Painted Garage Floor?</a> — why old paint has to come off first.</li>
+          <li><a href="/epoxy-vs-polyaspartic-garage-floor/">Epoxy vs Polyaspartic Garage Floor</a> — how the coating choice changes the prep requirement.</li>
+        </ul>
+
+        <div class="mt-16 bg-gray-900 rounded-2xl p-8 text-gray-200">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="mb-4">
+            Acid etching is a chemical gamble that pays off only on soft, porous, unsealed concrete, and most garage floors are none of those things. Grinding is a mechanical certainty. It removes the paste, the sealer, the old paint and the tire polish in one pass and leaves the uniform CSP 2 to 3 profile that every coating manufacturer actually asks for.
+          </p>
+          <p class="m-0">
+            The kit says etch because the kit has to be easy to sell. The installer grinds because the installer has to come back if it fails. Rent the grinder, wear the respirator, and do the job once.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <MoreInCategory category="Garage Flooring" links={moreInCategory} />
+    <AuthorBio />
+  </article>
+</Layout>
