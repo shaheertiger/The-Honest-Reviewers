@@ -205,6 +205,7 @@ const priorityGuides = new Set([
   // portable and gasoline head terms had no roundup of their own.
   'best-portable-generator',
   'best-gas-generator',
+  'best-small-generator-for-home',
   'are-portable-power-stations-safe-indoors',
 
   // September 2026: cordless tool fundamentals. Nine drill and brand money
