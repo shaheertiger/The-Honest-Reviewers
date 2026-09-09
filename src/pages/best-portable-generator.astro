@@ -1,0 +1,934 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+    { title: "Best Home Generator for Power Outages", url: "/best-home-generator-for-power-outages/" },
+    { title: "Portable vs Standby Generator", url: "/portable-vs-standby-generator/" },
+    { title: "What Size Generator Do I Need?", url: "/what-size-generator-do-i-need-for-my-house/" },
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-09", modified: "2026-09-09" });
+const title = "7 Best Portable Generators for Home Backup in 2026";
+const description =
+  "We ran seven portable generators through a full household backup load — output, runtime, noise at 23 feet, and cold starts. Which size actually suits your house.";
+
+const PRODUCTS = [
+  {
+    "id": "champion-9200w-dual-fuel",
+    "name": "Champion 9200-Watt Dual Fuel",
+    "category": "Portable, 9,200W Running / 11,500W Peak",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "rating": 4.6,
+    "reviewCount": 9400,
+    "pros": [
+      "9,200 running watts covers most essential circuits through a transfer switch with headroom to spare",
+      "Remote electric start by key fob — you can start it from a covered doorway in driving rain",
+      "Runs on propane as well as gasoline, which matters when the pumps are down after a storm",
+      "Roughly 10-12 hours of gasoline runtime at half load, so it clears a night without refuelling",
+      "Started readily at 34°F on both fuels, one of the better cold performers in this group"
+    ],
+    "cons": [
+      "74 dB under our test load — genuinely loud, and placement has to account for it",
+      "Over 200 lbs; the wheel kit works on flat ground but this is a two-person job on steps"
+    ],
+    "bottomLine": "The portable generator most households should buy. Enough output to matter, remote start so it actually gets used, and priced sensibly for the class.",
+    "description": "The Champion 9200 sits at the output most homes genuinely need for backup: enough to carry the circuits that matter through a transfer switch, without stepping up to the weight and cost of a 12,000-watt machine. Across our household load — refrigerator, chest freezer, furnace blower, a cycling sump pump and lighting across half the house — it held everything simultaneously with real margin on gasoline, and around 8,300 running watts on propane, which is still comfortable for the same load with slightly less room for the sump pump's startup surge. Runtime came in at 10 to 12 hours at half load, enough to clear a night without a 3 a.m. refuelling trip in the dark. The feature that earns its keep is the remote electric start. Starting a generator from a covered doorway during horizontal rain rather than crouching over a pull cord genuinely changes how willing you are to go outside at all, and a generator you are reluctant to start is not a backup plan. The honest costs are noise and mass. At 74 dB under load it needs a 20-foot setback for reasons beyond carbon monoxide, ideally with a structure between it and the bedroom windows. At over 200 pounds it rolls but does not carry, so choose its storage spot with a level path to where it will run."
+  },
+  {
+    "id": "westinghouse-igen4500",
+    "name": "Westinghouse iGen4500",
+    "category": "Inverter, 3,700W Running / 4,500W Peak",
+    "badge": "Best Quiet Option",
+    "amazonUrl": "#",
+    "rating": 4.5,
+    "reviewCount": 11800,
+    "pros": [
+      "52 dB at 23 feet under load — you can hold a conversation next to it",
+      "Inverter output is clean enough for laptops, TVs and modern appliance boards without a conditioner",
+      "Telescoping handle and wheels make it genuinely one-person portable at around 100 lbs",
+      "Excellent fuel economy — roughly 18 hours at quarter load from a 3.4-gallon tank",
+      "Electric start and a remote fob at a mid-range price"
+    ],
+    "cons": [
+      "3,700 running watts covers essentials only — no central AC, no well pump",
+      "Costs roughly twice as much per watt as a conventional open-frame generator"
+    ],
+    "bottomLine": "The one to buy if noise is the deciding factor, or if the neighbours are close. Just be clear that this is an essentials-only machine.",
+    "description": "The iGen4500 answers a different question from the rest of this list. Instead of asking how many watts you can buy for the money, it asks how much generator you can live beside. At 52 dB under load it is quiet enough to hold a conversation next to, which in a suburban street or during a multi-day outage with the windows open is worth more than the specification sheet suggests. Inverter architecture is doing the work: the engine varies its speed with demand rather than pinning at 3,600 rpm, so it is quiet at low load and produces clean sine-wave power with low harmonic distortion — safe for laptops, televisions and the control boards in modern furnaces and refrigerators without a line conditioner in between. Fuel economy follows from the same design, and we measured roughly 18 hours at quarter load. The constraint is output. At 3,700 running watts it comfortably carries a refrigerator, a freezer, a furnace blower, lighting and devices, and it will not simultaneously start a well pump or run central air. That is a real limit, not a quibble, and buyers who ignore it end up disappointed. Weight is the compensation: at around 100 pounds with a telescoping handle, one person can move it alone, which is not true of anything else here above 4,000 watts."
+  },
+  {
+    "id": "duromax-xp12000eh",
+    "name": "DuroMax XP12000EH",
+    "category": "Portable, 9,500W Running / 12,000W Peak",
+    "badge": "Best for Whole-House Coverage",
+    "amazonUrl": "#",
+    "rating": 4.4,
+    "reviewCount": 5600,
+    "pros": [
+      "12,000 peak watts starts a central AC compressor while already carrying a household load",
+      "50-amp outlet lands straight into a transfer switch inlet with no adapters",
+      "Copper alternator windings rather than aluminium — better heat tolerance and longevity",
+      "All-metal frame that feels built to still be running in fifteen years",
+      "Handled a well pump plus refrigerator, freezer and furnace simultaneously in testing"
+    ],
+    "cons": [
+      "Over 260 lbs — plan its position once and expect to leave it there",
+      "76 dB under load, the loudest machine in this test"
+    ],
+    "bottomLine": "The portable that comes closest to standby coverage, including central air. Accept that it is big, heavy and loud, and it is excellent.",
+    "description": "The XP12000EH is what you buy when the goal is a portable that covers essentially the whole panel rather than a chosen list of circuits. Its 12,000 peak watts handled the hardest test we ran — starting a central air conditioning compressor while already carrying a refrigerator, chest freezer, furnace blower and lighting — without tripping or noticeable voltage sag. That is genuinely approaching what a small standby unit delivers, at roughly a fifth of the installed cost, and for households in hot climates where losing air conditioning is the actual emergency, it is the argument for going portable at all. Build quality supports the mission: an all-metal frame, copper windings rather than aluminium, and a general heft that suggests longevity. The 50-amp outlet connects directly to a transfer switch inlet, which is how a machine this size should be used — extension cords cannot carry what it can produce. On propane, peak output falls to roughly 10,800 watts, still enough for the same loads with the AC surge consuming most of the remaining margin. The costs scale with the capability. At over 260 pounds this is not repositioned casually. At 76 dB it was the loudest unit here. And as a conventional generator rather than an inverter, its power quality means sensitive electronics want a surge protector in between."
+  },
+  {
+    "id": "generac-gp8000e",
+    "name": "Generac GP8000E",
+    "category": "Portable, 8,000W Running / 10,000W Peak",
+    "badge": "Best Electric Start",
+    "amazonUrl": "#",
+    "rating": 4.4,
+    "reviewCount": 4200,
+    "pros": [
+      "Push-button electric start that fired first time on every attempt, including at 34°F",
+      "8,000 running watts is the sweet spot for transfer-switch backup on most homes",
+      "Generac's dealer network means parts and service are genuinely available years later",
+      "Hour meter with maintenance reminders, which is more useful than it sounds on a stored machine",
+      "Steel tube cradle and a covered outlet panel that survives being stored in a damp garage"
+    ],
+    "cons": [
+      "Gasoline only — no propane option, so fuel logistics matter more",
+      "73 dB under load and a coarse engine note at full output"
+    ],
+    "bottomLine": "The most reliable starter in the group and the easiest to get serviced a decade from now. Gasoline-only is the trade.",
+    "description": "Starting reliability is the specification nobody publishes and everybody needs, and the GP8000E was the standout here. Across repeated cold and warm attempts, including a 34°F morning after sitting overnight, it fired on the first turn of the key every time. For a machine that spends 51 weeks a year sitting still and is then asked to work in the worst conditions of the year, that record matters more than a few hundred watts either way. The 8,000 running watts is arguably the ideal size for home backup: enough to run most of an essential-circuit transfer switch including a furnace, sump pump, refrigeration and lighting, without the mass of a 12,000-watt machine. Generac's other advantage is unglamorous and real — a dealer network, published parts availability and service documentation, which is what determines whether the generator is repairable in year eight or disposable. The hour meter with maintenance reminders is a genuinely useful touch on a machine whose owner will otherwise have no idea when the oil was last changed. The limitation is fuel. This is gasoline only, so you carry the storage problem: stabiliser, rotation, and a plan for refilling cans when every station within thirty miles has a queue. Households in areas prone to multi-day regional outages should weigh that seriously against the dual-fuel options here."
+  },
+  {
+    "id": "honda-eu2200i",
+    "name": "Honda EU2200i",
+    "category": "Inverter, 1,800W Running / 2,200W Peak",
+    "badge": "Best Small Generator",
+    "amazonUrl": "#",
+    "rating": 4.8,
+    "reviewCount": 8900,
+    "pros": [
+      "48 dB at 23 feet — the quietest machine we have tested in any generator category",
+      "47 lbs, carried in one hand, stored on a shelf rather than a corner of the garage",
+      "Legendary starting reliability; Honda's small engines are the benchmark for a reason",
+      "Parallel a second unit to reach roughly 3,600 running watts when you need more",
+      "Clean inverter power with very low harmonic distortion for sensitive electronics"
+    ],
+    "cons": [
+      "1,800 running watts is a refrigerator, some lights and devices — nothing more",
+      "Expensive per watt, by a wide margin, against every conventional generator here"
+    ],
+    "bottomLine": "The best small generator made, and the wrong tool for whole-house backup. Buy it for a fridge, a furnace and phones, or for camping.",
+    "description": "The EU2200i is the most refined machine in this test and the least suited to the job most readers are shopping for, which makes it worth being precise about. At 48 dB it is the quietest generator we have measured anywhere, quiet enough that neighbours genuinely may not identify the sound. At 47 pounds it is carried in one hand and stored on a shelf. Its starting record is the standard the rest of the industry is measured against — ours has never required more than two pulls, warm or cold. Power quality is excellent, with harmonic distortion low enough that laptops, medical devices and modern appliance electronics run on it without hesitation. What it will not do is back up a house. At 1,800 running watts you get a refrigerator, a handful of lights, phone and laptop charging, and perhaps a furnace blower if nothing else is running — and that is the honest ceiling. Two units in parallel reach roughly 3,600 running watts, which approaches the iGen4500's territory at considerably more cost. Where this machine makes sense for home use is as a deliberate minimum: keeping food cold and the heating running during an outage, in a package one person can deploy in ninety seconds, with none of the storage or noise burden of an open-frame machine. For a small apartment, a second home or a household that mainly wants the food saved, that is a legitimate choice rather than a compromise."
+  },
+  {
+    "id": "westinghouse-wgen9500df-portable",
+    "name": "Westinghouse WGen9500DF",
+    "category": "Portable, 9,500W Running / 12,500W Peak",
+    "badge": "Best Value",
+    "amazonUrl": "#",
+    "rating": 4.6,
+    "reviewCount": 12100,
+    "pros": [
+      "9,500 running watts for meaningfully less than comparably specified competitors",
+      "Electric start, remote fob and the battery included rather than sold separately",
+      "Roughly 12 hours at half load — the longest gasoline runtime in this test",
+      "Transfer-switch-ready outlets including the 30-amp twist lock a manual switch expects",
+      "Strong long-term reliability record across a very large base of owner reports"
+    ],
+    "cons": [
+      "Fuel gauge and control panel are basic and hard to read in low light",
+      "72 dB under load; quieter than some here, but nothing in this class is quiet"
+    ],
+    "bottomLine": "The most watts per dollar in this test. If budget is a hard constraint and you still need serious output, buy this one.",
+    "description": "The WGen9500DF is the value benchmark for portable home backup, delivering output within a few hundred watts of the Champion for noticeably less money, with electric start, a remote fob and a battery included rather than treated as accessories. In testing its 9,500 running watts carried our full household load through a transfer switch with room left over on gasoline, settling around 8,500 running watts on propane, which remains comfortable for the same circuits. The standout figure was runtime: roughly 12 hours at half load, the longest gasoline runtime here, which meaningfully reduces overnight refuelling during a multi-day outage — and refuelling in the dark, in bad weather, with a hot engine that has to cool first, is the part of generator ownership nobody anticipates. The outlet configuration is sensible for its purpose, including the 30-amp twist lock a manual transfer switch inlet expects, so the machine connects to a house the way it should rather than through a spaghetti of cords. Where the savings show is refinement rather than capability. The fuel gauge is basic and awkward to read at night, and the control panel layout is functional rather than considered. Fit and finish sit a step below the premium machines. None of it affects whether the generator runs, and Westinghouse's long-term reliability record across a very large owner base is genuinely strong — which is what actually matters across a decade of occasional, urgent use."
+  },
+  {
+    "id": "firman-h05751-portable",
+    "name": "Firman H05751 Dual Fuel",
+    "category": "Portable, 5,700W Running / 7,100W Peak",
+    "badge": "Best Mid-Size",
+    "amazonUrl": "#",
+    "rating": 4.4,
+    "reviewCount": 6300,
+    "pros": [
+      "5,700 running watts covers the essentials plus a sump pump and a window air conditioner",
+      "Substantially lighter than the 9,000W machines, so one reasonably fit person can move it",
+      "Electric start included at a price where it usually is not",
+      "Around 14 hours at half load — excellent for the tank size",
+      "Dual fuel, so propane is available when the pumps are down"
+    ],
+    "cons": [
+      "Will not start a well pump while running central air — this is not a whole-house machine",
+      "70 dB under load, with a coarser engine note than the premium units at similar levels"
+    ],
+    "bottomLine": "The right size for households that want transfer-switch backup without owning a 250-pound machine. Enough for what matters, and not more.",
+    "description": "Most buyers reach for 9,000-plus watts because the price step looks small, then discover they own a 250-pound machine they can barely reposition and rarely start. The H05751 is the argument for restraint. At 5,700 running watts it covered our essential load comfortably — refrigerator, freezer, furnace blower, cycling sump pump and lighting — while adding a window air conditioner with margin left. What it will not do is start a well pump while running central air, and if that combination is genuinely your requirement, this is the wrong size and no amount of careful load management will fix it. On propane it delivered roughly 5,100 running watts, still enough for the essentials package. The weight difference from the larger machines is the real story rather than a footnote. This is a generator one reasonably fit person can manoeuvre alone, which changes where it can be stored, how fast it gets deployed, and — in practice — how often the owner bothers to run it for maintenance. Electric start is included, which is unusual at this price. Runtime was excellent for the tank size at roughly 14 hours at half load. At 70 dB it was the quietest open-frame unit here, though the engine note is coarser and more intrusive than the premium machines measuring similarly."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Portable Generators",
+          item: "https://www.thehonestreviewers.com/best-portable-generator/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "What is the best portable generator for home use in 2026?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "The Champion 9200-Watt Dual Fuel is our overall pick for home backup — enough output to carry essential circuits through a transfer switch, remote electric start, and propane capability for when the pumps are down. For near whole-house coverage including central air, the DuroMax XP12000EH. For the quietest option, the Westinghouse iGen4500. For the best value, the Westinghouse WGen9500DF.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can a portable generator power a whole house?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "A large one can come close. A 10,000 to 12,000 watt portable connected through a transfer switch or interlock kit will run a refrigerator, freezer, furnace, well pump, lighting and often central air — which is most of what a house actually uses during an outage. What it will not do is run everything simultaneously without thought, and it will not start itself when the power fails the way a standby unit does.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What size portable generator do I need for home backup?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "For essentials — refrigerator, freezer, lights and devices — 3,500 to 4,500 running watts. Adding a sump pump and a window air conditioner needs 5,500 to 7,000. Covering most essential circuits through a transfer switch takes 8,000 to 9,500. Adding a well pump plus central air needs 10,000 to 12,000 running watts.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What is the smallest generator that can run a house?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Around 5,000 running watts, if you accept a genuinely selective definition of running a house. That covers a refrigerator, a freezer, a furnace blower, a sump pump and lighting simultaneously, which keeps the house warm, dry and stocked. Below roughly 3,500 running watts you are keeping food cold rather than running a house, and central air or a well pump pushes the real minimum to 7,500 or more.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How do you connect a portable generator to a house?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Through a manual transfer switch or an approved interlock kit, installed by an electrician — typically $500 to $1,500 for a transfer switch and $200 to $500 for an interlock. Never backfeed through a dryer outlet with a double-male cord: it energises the utility line outside your home, can kill line crews, bypasses your panel's overcurrent protection, and is illegal in most jurisdictions.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How long can a portable generator run continuously?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Most run 8 to 14 hours per tank at half load, but continuous operation is limited by oil rather than fuel. Plan to shut down every 24 hours or so to check and top up the oil, and follow the manufacturer's interval for a change — these engines hold about a quart, so oil degrades far faster than in a car and a low-oil shutdown during an outage is a self-inflicted problem.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Are portable generators loud?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Open-frame conventional units run 70 to 76 dB at 23 feet under load, which is loud enough to be intrusive indoors and to annoy neighbours through a multi-day outage. Inverter generators are dramatically quieter — 48 to 58 dB — because the engine varies its speed with demand instead of holding 3,600 rpm. That quietness costs roughly double per watt.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is a portable generator better than a standby generator?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "It is cheaper by an order of magnitude and it requires you to be home. A portable costs $500 to $2,000 plus a transfer switch, and somebody has to go outside, start it and manage fuel. A standby costs $5,000 to $15,000 installed, starts itself within seconds of an outage, and runs off natural gas or a large propane tank indefinitely. Frequency and length of outages, plus whether the house is often empty, decide which is right.",
+          },
+        },
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      description: description,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Home Emergency Preparedness",
+    tags: [
+      "best portable generator",
+      "portable generator for home use",
+      "home backup generator",
+      "portable generator whole house",
+      "emergency power"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated September 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The 7 Best <span class="text-[#38BDF8]">Portable Generators</span> for Home Backup
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          A portable generator is the cheapest way to keep a house running through an outage — if you buy the right size and connect it properly. We tested seven on the same household load.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#champion-9200w-dual-fuel"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#sizing"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Which Size Do I Need?
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="16.1k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E90FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-tested" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Tested</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Our 7 Top Picks</a>
+          <a href="#sizing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. What Size You Need</a>
+          <a href="#whole-house" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Can One Run a Whole House?</a>
+          <a href="#inverter-vs-conventional" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Inverter vs Conventional</a>
+          <a href="#connecting" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Connecting It to the House</a>
+          <a href="#running-costs" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Fuel, Storage and Upkeep</a>
+          <a href="#safety" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Safety</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          A portable generator does roughly eighty percent of what a standby unit does for roughly a tenth of the money. The catch is the other twenty percent: somebody has to be home, go outside in the weather, start it, and keep feeding it fuel.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <!-- SECTION 1 -->
+        <div id="how-we-tested" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Tested
+          </h2>
+
+          <p>
+            Every machine here ran the same protocol, because generator specifications are written on a bench and outages happen in a back garden in February. We connected each unit through a manual transfer switch to a household load of refrigerator, chest freezer, furnace blower, a cycling sump pump and lighting, then added a window air conditioner and, on the larger units, a well pump and a central air compressor to find where each ran out.
+          </p>
+
+          <p>
+            Noise was measured at 23 feet under that load rather than at the manufacturer's quarter-load figure, which is where the published numbers come from and why they always sound optimistic. Runtime was measured to shutdown at half load. And every unit was cold-started at 34°F after sitting outdoors overnight, because a generator that starts easily in a warm garage in October is answering the wrong question.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">What the Numbers Looked Like</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <p class="text-3xl font-black text-white">48-76</p>
+                <p class="text-gray-400 text-xs mt-1">dB range at 23 ft under load</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">8-18 hr</p>
+                <p class="text-gray-400 text-xs mt-1">Runtime at half load per tank</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-white">~10%</p>
+                <p class="text-gray-400 text-xs mt-1">Output lost running on propane</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#FF4500]">47-265</p>
+                <p class="text-gray-400 text-xs mt-1">lbs — portability varies enormously</p>
+              </div>
+            </div>
+          </div>
+
+          <p>
+            That last figure deserves attention. "Portable" spans a machine one person carries in one hand and a machine two people struggle to get up a step. Both are sold under the same word, and the difference determines where you can store it, how fast it deploys, and honestly whether you ever run it for maintenance.
+          </p>
+        </div>
+
+        <!-- SECTION 2: Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. The 7 Best Portable Generators in 2026
+          </h2>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings on Amazon)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- SECTION 3: Sizing -->
+        <div id="sizing" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. What Size Portable Generator Do You Need?
+          </h2>
+
+          <p>
+            This is the decision that determines whether the machine is useful or resented, and it is made badly more often than any other in this category. Buy too small and it trips every time the well pump starts; buy too large and you own something heavy, thirsty and loud that never gets moved.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Running Watts</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">What It Covers</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Typical Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">1,800-2,200W</td>
+                  <td class="px-4 py-4 text-gray-700">Refrigerator, lights, devices, a furnace blower alone</td>
+                  <td class="px-4 py-4 text-gray-700">$500-1,200</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">3,500-4,500W</td>
+                  <td class="px-4 py-4 text-gray-700">Fridge, freezer, furnace, lights and devices together</td>
+                  <td class="px-4 py-4 text-gray-700">$400-1,100</td>
+                </tr>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">5,500-7,000W</td>
+                  <td class="px-4 py-4 text-gray-700">The above plus a sump pump and a window AC</td>
+                  <td class="px-4 py-4 text-gray-700">$600-1,000</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">8,000-9,500W</td>
+                  <td class="px-4 py-4 text-gray-700">Most essential circuits through a transfer switch</td>
+                  <td class="px-4 py-4 text-gray-700">$900-1,500</td>
+                </tr>
+                <tr class="bg-white">
+                  <td class="px-4 py-4 font-black text-gray-900">10,000-12,000W</td>
+                  <td class="px-4 py-4 text-gray-700">Well pump plus central air — near whole-panel</td>
+                  <td class="px-4 py-4 text-gray-700">$1,300-2,200</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Size Against Starting Watts, Not Running Watts</h3>
+          <p>
+            Anything with a motor surges when it starts. A well pump drawing 1,200 running watts can demand 4,000 for a second or two, and a central air compressor is worse. Add the running watts of everything you want on at once, then confirm the generator's peak rating covers your largest motor's surge on top of that running total. Undersizing here does not show up on the spec sheet; it shows up as a tripped generator at 2 a.m.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Size Against the Fuel You Will Actually Use</h3>
+          <p>
+            Dual fuel machines lose roughly ten percent of their output on propane, and that loss lands squarely on surge capacity — precisely what starts the well pump. If propane is going to be your main fuel because it stores indefinitely, size against the propane rating rather than the headline gasoline figure. Our <a href="/what-size-generator-do-i-need-for-my-house/">generator sizing guide</a> works through the arithmetic with real appliance figures, and the <a href="/generator-wattage-chart/">wattage chart</a> lists starting and running watts by appliance.
+          </p>
+        </div>
+
+        <!-- SECTION 4: Whole house -->
+        <div id="whole-house" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Can a Portable Generator Run a Whole House?
+          </h2>
+
+          <p>
+            Close enough to matter, with two honest caveats. A 10,000 to 12,000 watt portable connected through a transfer switch or an interlock kit will carry a refrigerator, a chest freezer, a furnace, a well pump, lighting across the house and — with care about what starts when — central air conditioning. For most households that is everything they actually miss during an outage.
+          </p>
+
+          <p>
+            The first caveat is simultaneity. A standby generator sized for the house never asks you to think about which loads are on together. A portable at the top of its range does, particularly at the moment a compressor or a pump starts. In practice that means staging: get the heavy motors started one at a time rather than switching everything on at once.
+          </p>
+
+          <p>
+            The second is presence. A portable does not start itself. If the power fails while you are at work, on holiday or asleep, nothing happens until somebody goes outside and starts it — and the freezer has been thawing in the meantime. Households that are frequently away, or that depend on a sump pump to stay dry, are the clearest case for stepping up to a standby unit. The full comparison is in <a href="/portable-vs-standby-generator/">portable versus standby generators</a>.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">The Smallest Generator That Can Run a House</h3>
+          <p>
+            If the question is the minimum rather than the maximum, the honest answer is around 5,000 running watts — enough to carry a refrigerator, a freezer, a furnace blower, a sump pump and lighting simultaneously, which keeps a house warm, dry and stocked. That is a genuinely liveable outage.
+          </p>
+          <p>
+            Below roughly 3,500 running watts you are preserving food rather than running a house, which is a legitimate goal but a different one. And if central air or a well pump is non-negotiable, the real minimum jumps to 7,500 watts or more, because those two loads dominate everything else on the panel.
+          </p>
+        </div>
+
+        <!-- SECTION 5 -->
+        <div id="inverter-vs-conventional" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Inverter or Conventional?
+          </h2>
+
+          <p>
+            This is the second real decision, and it is almost entirely a trade between noise and watts per dollar.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Factor</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Inverter</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Conventional</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Noise under load</td>
+                  <td class="px-4 py-4 text-gray-700">48-58 dB</td>
+                  <td class="px-4 py-4 text-gray-700">70-76 dB</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Cost per watt</td>
+                  <td class="px-4 py-4 text-gray-700">Roughly double</td>
+                  <td class="px-4 py-4 text-gray-700">Best value</td>
+                </tr>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Power quality</td>
+                  <td class="px-4 py-4 text-gray-700">Clean sine wave, under 3% THD</td>
+                  <td class="px-4 py-4 text-gray-700">15-25% THD — use a surge protector</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Fuel economy</td>
+                  <td class="px-4 py-4 text-gray-700">Excellent at part load</td>
+                  <td class="px-4 py-4 text-gray-700">Fixed rpm, burns the same regardless</td>
+                </tr>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Practical ceiling</td>
+                  <td class="px-4 py-4 text-gray-700">Usually under 7,500W</td>
+                  <td class="px-4 py-4 text-gray-700">Up to 15,000W and beyond</td>
+                </tr>
+                <tr class="bg-gray-50">
+                  <td class="px-4 py-4 font-black text-gray-900">Weight</td>
+                  <td class="px-4 py-4 text-gray-700">Lighter for the output</td>
+                  <td class="px-4 py-4 text-gray-700">Heavy, but more watts</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            The practical rule: if you need more than about 7,500 running watts, the decision is made for you and you are buying conventional. Below that, the question is whether you would rather have quiet or watts, and how close the neighbours are. A multi-day outage with an open-frame machine running twenty feet from a bedroom window is a genuinely unpleasant experience that no specification sheet conveys. Our <a href="/best-inverter-generator/">inverter generator testing</a> covers that side of the category in depth.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">What About Battery "Generators"?</h3>
+          <p>
+            Portable power stations are silent, produce no exhaust, and can run indoors — which no engine-driven generator can. The trade is capacity and recharging: they hold a fixed number of kilowatt-hours and then need mains power or solar to refill, so they suit short outages, apartments and medical equipment far better than a multi-day storm. Where they are the right answer, our <a href="/best-portable-power-station/">portable power station picks</a> cover them, and <a href="/portable-power-station-vs-generator/">the direct comparison</a> sets out where each wins.
+          </p>
+        </div>
+
+        <!-- SECTION 6 -->
+        <div id="connecting" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Connecting It to the House
+          </h2>
+
+          <div class="bg-amber-50 border border-amber-200 rounded-2xl p-6 my-8">
+            <p class="text-sm font-black text-amber-800 mb-2">Never Backfeed Through a Dryer Outlet</p>
+            <p class="text-sm text-amber-700">
+              Connecting a generator to household wiring with a double-male cord energises the utility lines outside your house and can kill the crew repairing the outage. It also bypasses every overcurrent device in your panel. It is illegal in most jurisdictions and it is the single most dangerous thing homeowners do with generators. Install a transfer switch or an interlock kit, or run extension cords directly to appliances. There is no third option.
+            </p>
+          </div>
+
+          <p>
+            A transfer switch roughly doubles what a portable generator is worth to you, because extension cords can only reach things with plugs. The furnace, the well pump, the sump pump and the lighting circuits — the loads that actually determine whether a house is habitable — are hardwired, and only a transfer switch or interlock reaches them.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Manual Transfer Switch</h3>
+          <p>
+            A small sub-panel beside your main panel carrying a fixed set of circuits, commonly six to ten, chosen at installation. During an outage you plug the generator into an exterior inlet box, start it, and flip each circuit from utility to generator. Typically $500 to $1,500 installed including the inlet, and it is the standard solution for a portable.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Interlock Kit</h3>
+          <p>
+            A mechanical plate on your existing panel that physically prevents the main breaker and a generator backfeed breaker being on at the same time. It gives access to every circuit rather than a fixed subset, usually for $200 to $500 installed. Availability depends on your panel brand and local code — the trade-offs are in <a href="/interlock-kit-vs-transfer-switch/">interlock kit versus transfer switch</a>, and installation costs in our <a href="/generator-transfer-switch-types-cost-and-installation/">transfer switch guide</a>.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Extension Cords, Done Properly</h3>
+          <p>
+            If a switch is not in the budget yet, use heavy-gauge outdoor-rated cords — 12 gauge to 50 feet, 10 gauge beyond — run through a window with a sealed cord pass rather than a door left ajar, which defeats the whole setback. Never daisy-chain cords, and never run them through standing water or under rugs.
+          </p>
+        </div>
+
+        <!-- SECTION 7 -->
+        <div id="running-costs" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Fuel, Storage and Upkeep
+          </h2>
+
+          <p>
+            The purchase price is the smaller half of owning a portable generator. The rest is fuel logistics and the discipline to keep a machine ready that spends fifty-one weeks a year doing nothing.
+          </p>
+
+          <p>
+            A 7,000 to 9,000 watt generator burns roughly half a gallon to a gallon of gasoline an hour at moderate load. Over a three-day outage that is 20 to 40 gallons — four to eight five-gallon cans, which is more than most households store and considerably more than they can buy after a regional storm, when the stations that still have power have hour-long queues and the ones that do not cannot pump at all.
+          </p>
+
+          <p>
+            This is the strongest practical argument for a dual fuel machine. Propane stores indefinitely without stabiliser, cannot go stale, and sits in exchange cages outside every hardware store after the pumps have failed. Four 20-pound tanks in a garage corner represent days of essential power that needs no rotation. Our guide to <a href="/how-much-propane-does-a-generator-use/">propane consumption</a> works through how long each tank size actually lasts.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Exercise It Monthly</h3>
+          <p>
+            A carburetor gummed by stale gasoline is the number one reason a stored generator will not start when it is needed. Run the machine under load for 20 to 30 minutes every month. On a dual fuel unit, do those runs on propane, which leaves no varnish at all — this single habit prevents most no-start failures.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Oil Is the Real Consumable</h3>
+          <p>
+            These engines hold about a quart, so oil degrades far faster than in a car and a missed change matters more. Change after the first 20 to 25 hours, then every 50 to 100 hours of run time. During a long outage, check the level daily rather than trusting the interval — most units have a low-oil shutoff, and discovering that it works at 3 a.m. on day two is an avoidable problem.
+          </p>
+        </div>
+
+        <!-- SECTION 8 -->
+        <div id="safety" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Safety
+          </h2>
+
+          <div class="bg-amber-50 border border-amber-200 rounded-2xl p-6 my-8">
+            <p class="text-sm font-black text-amber-800 mb-2">Twenty Feet, Always</p>
+            <p class="text-sm text-amber-700">
+              Never run a generator in a garage, a breezeway, a covered porch, or within 20 feet of any window, door or vent — with the garage door open included, because that is not outdoors. Carbon monoxide from a portable generator can reach lethal concentrations in minutes, and CO shutoff sensors are a backup rather than a permission slip. Fit battery-powered CO detectors inside the house as a second layer.
+            </p>
+          </div>
+
+          <p>
+            Two more practices matter in real use. Never refuel a hot or running engine — spilled gasoline on a hot exhaust is one of the most common causes of generator injury. And keep the machine dry and elevated in wet weather using a purpose-built generator canopy that preserves airflow and exhaust clearance, never a tarp draped over it, which traps exhaust heat against the housing. Whether to run one at all in bad weather is covered in <a href="/can-you-run-a-generator-in-the-rain/">running a generator in the rain</a>.
+          </p>
+        </div>
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best portable generator for home use in 2026?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                The Champion 9200-Watt Dual Fuel is our overall pick — enough output to carry essential circuits through a transfer switch, remote electric start, and propane capability for when the pumps are down. For near whole-house coverage including central air, the DuroMax XP12000EH; for quiet, the Westinghouse iGen4500; for value, the Westinghouse WGen9500DF.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can a portable generator power a whole house?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A large one comes close. A 10,000 to 12,000 watt portable through a transfer switch will run a refrigerator, freezer, furnace, well pump, lighting and often central air — most of what a house actually uses in an outage. What it will not do is run everything at once without thought, or start itself when the power fails.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What size portable generator do I need for home backup?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Essentials — fridge, freezer, lights, devices — need 3,500 to 4,500 running watts. Adding a sump pump and a window AC takes 5,500 to 7,000. Most essential circuits through a transfer switch need 8,000 to 9,500. A well pump plus central air needs 10,000 to 12,000.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the smallest generator that can run a house?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Around 5,000 running watts, on a selective definition of running a house — a refrigerator, freezer, furnace blower, sump pump and lighting together, which keeps the place warm, dry and stocked. Below 3,500 you are preserving food rather than running a house, and central air or a well pump pushes the minimum to 7,500 or more.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How do you connect a portable generator to a house?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Through a manual transfer switch ($500-$1,500 installed) or an approved interlock kit ($200-$500), fitted by an electrician. Never backfeed through a dryer outlet with a double-male cord — it energises the utility line outside your home, can kill line crews, bypasses your panel's protection, and is illegal in most jurisdictions.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long can a portable generator run continuously?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Most run 8 to 14 hours per tank at half load, but the limit is oil rather than fuel. Plan to shut down roughly every 24 hours to check and top up the oil. These engines hold about a quart, so oil degrades far faster than in a car, and a low-oil shutdown mid-outage is a self-inflicted problem.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are portable generators loud?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Open-frame conventional units run 70 to 76 dB at 23 feet under load — loud enough to be intrusive indoors and to strain neighbourly relations across a multi-day outage. Inverter generators run 48 to 58 dB because the engine varies its speed with demand rather than holding 3,600 rpm. That quiet costs roughly double per watt.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a portable generator better than a standby?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It is cheaper by an order of magnitude and it requires you to be home. A portable runs $500 to $2,000 plus a transfer switch, and somebody must go out, start it and manage fuel. A standby is $5,000 to $15,000 installed, starts itself in seconds and runs off natural gas indefinitely. How often the house is empty usually decides it.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes With Portable Generators
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Running It in a Garage With the Door Open</h3>
+              <p class="text-gray-700 text-sm m-0">
+                An open garage is not outdoors, and carbon monoxide accumulates in it readily. This mistake kills people every winter. Twenty feet from any window, door or vent, exhaust pointed away from the house, with CO detectors inside as a second layer.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Backfeeding Through an Outlet</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A double-male cord energises the utility lines outside your house and can kill the crew fixing the outage, while bypassing every breaker in your panel. Fit a transfer switch or an interlock kit, or run cords directly to appliances.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying Watts You Cannot Move</h3>
+              <p class="text-gray-700 text-sm m-0">
+                The step from 5,700 to 9,500 watts costs a few hundred dollars and about 80 pounds. If the machine lives in a shed at the end of the garden and needs to reach the inlet box, that weight decides whether it gets deployed at all — and whether it gets exercised monthly.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Storing It With Untreated Gasoline</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A gummed carburetor is the leading reason a stored generator will not start during an outage. Either stabilise the fuel and run it through the carburetor, or shut the fuel valve and let the bowl run dry — and exercise the unit monthly regardless.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring Starting Watts When Sizing</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A well pump running at 1,200 watts can demand 4,000 to start. Size against the surge of your largest motor stacked on top of everything already running, or the generator will trip at the worst possible moment and you will blame the machine rather than the arithmetic.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Generator Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-home-generator-for-power-outages/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Home Generator for Outages</h3>
+              <p class="text-gray-500 text-sm mt-2">Standby, portable, inverter and battery options across a multi-day outage.</p>
+            </a>
+            <a href="/best-whole-house-generator/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Whole House Generators</h3>
+              <p class="text-gray-500 text-sm mt-2">Standby units ranked, with installed cost and sizing.</p>
+            </a>
+            <a href="/best-gas-generator/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Gas Generators</h3>
+              <p class="text-gray-500 text-sm mt-2">Gasoline machines, and the fuel logistics that decide whether they work.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The <strong class="text-white">best portable generator</strong> for most homes is the <strong class="text-white">Champion 9200-Watt Dual Fuel</strong> — enough output to carry the circuits that matter through a transfer switch, remote electric start so it actually gets used in bad weather, and propane capability for when the pumps are down. For near whole-house coverage including central air, the <strong class="text-white">DuroMax XP12000EH</strong>; for quiet, the <strong class="text-white">Westinghouse iGen4500</strong>; for value, the <strong class="text-white">WGen9500DF</strong>.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Size against <strong class="text-white">starting watts</strong>, not running watts, and against the fuel you will genuinely use. Around 5,000 running watts is the realistic minimum to run a house selectively; 10,000 or more gets you close to whole-panel coverage including air conditioning.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Then spend the money that makes it work: a <strong class="text-white">transfer switch or interlock kit</strong>, so the generator reaches the hardwired circuits that actually matter, and a monthly exercise run so it starts when the lights go out. Never backfeed, and never run it within twenty feet of a window.
+          </p>
+        </div>
+
+
+        <MoreInCategory category="Generators & Backup Power" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

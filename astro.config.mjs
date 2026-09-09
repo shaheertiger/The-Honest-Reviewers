@@ -200,6 +200,11 @@ const priorityGuides = new Set([
   'pure-sine-wave-vs-modified-sine-wave',
   'how-long-do-portable-power-stations-last',
   'can-a-portable-power-station-run-a-cpap',
+
+  // September 2026: the two missing 'best generator' category pages — the
+  // portable and gasoline head terms had no roundup of their own.
+  'best-portable-generator',
+  'best-gas-generator',
   'are-portable-power-stations-safe-indoors',
 
   // September 2026: cordless tool fundamentals. Nine drill and brand money
