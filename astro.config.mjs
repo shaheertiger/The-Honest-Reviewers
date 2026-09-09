@@ -206,6 +206,19 @@ const priorityGuides = new Set([
   'best-portable-generator',
   'best-gas-generator',
   'best-small-generator-for-home',
+
+  // September 2026: ten troubleshooting and comparison gaps identified across
+  // the deck, garage floor, paver, driveway, generator, caulk and mower clusters.
+  'deck-brightener-vs-deck-cleaner',
+  'rain-after-staining-a-deck',
+  'can-you-apply-epoxy-over-existing-epoxy',
+  'why-is-my-concrete-sealer-turning-white',
+  'how-to-remove-polymeric-sand-haze-from-pavers',
+  'how-to-fix-puddles-in-an-asphalt-driveway',
+  'how-to-store-a-portable-generator',
+  'generator-runs-but-no-power',
+  'why-does-exterior-caulk-keep-cracking',
+  'front-wheel-vs-rear-wheel-drive-lawn-mower',
   'are-portable-power-stations-safe-indoors',
 
   // September 2026: cordless tool fundamentals. Nine drill and brand money
