@@ -1,0 +1,541 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+    { title: "Best Snow Blowers", url: "/best-snow-blower/" },
+    { title: "Best Electric Snow Blowers", url: "/best-electric-snow-blower/" },
+    { title: "Best Ice Melt for Concrete", url: "/best-ice-melt-for-concrete/" },
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-10", modified: "2026-09-10" });
+const title = "How to Prepare a Snow Blower for Winter";
+const description =
+  "The pre-season service that stops a snow blower failing on the first real storm: fuel, shear pins, belts, skid shoes, auger clearance and a proper test run.";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Home", item: "https://www.thehonestreviewers.com/" },
+        { "@type": "ListItem", position: 2, name: "Guides", item: "https://www.thehonestreviewers.com/best-of/" },
+        { "@type": "ListItem", position: 3, name: "Prepare a Snow Blower for Winter", item: "https://www.thehonestreviewers.com/how-to-prepare-a-snow-blower-for-winter/" },
+      ],
+    },
+    {
+      "@type": "HowTo",
+      name: "How to prepare a snow blower for the season",
+      totalTime: "PT1H30M",
+      step: [
+        { "@type": "HowToStep", name: "Drain last year's fuel", text: "Any fuel left from last winter is stale. Drain it, refill with fresh treated fuel, and run the engine long enough to draw it through the carburettor." },
+        { "@type": "HowToStep", name: "Change the oil", text: "Fresh oil before the season, in a grade rated for the temperatures you actually get. Thick oil in deep cold makes a machine hard to start." },
+        { "@type": "HowToStep", name: "Check shear pins and keep spares", text: "Inspect the shear pins for partial shearing and buy a set of spares now, because they fail mid-storm and no shop is open." },
+        { "@type": "HowToStep", name: "Inspect belts and cables", text: "Look for cracks, glazing and fraying on the auger and drive belts, and check that both control cables engage and release cleanly." },
+        { "@type": "HowToStep", name: "Set the skid shoes", text: "Set skid shoe height for your surface: a small gap on concrete and asphalt, more on gravel so the auger does not fling stones." },
+        { "@type": "HowToStep", name: "Test run it under power", text: "Run the machine, engage the auger and drive, and work the chute through its full travel before you need it in the dark at 6am." },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "When should you service a snow blower?",
+          acceptedAnswer: { "@type": "Answer", text: "Early autumn, six to eight weeks before you expect the first storm. Parts are in stock, shops are not backed up, and you have time to order a belt or a carburettor kit if the test run finds a problem. Servicing it during the first snowfall is how people end up shovelling a driveway they bought a machine to avoid shovelling." },
+        },
+        {
+          "@type": "Question",
+          name: "Can you use last year's gas in a snow blower?",
+          acceptedAnswer: { "@type": "Answer", text: "No. Fuel that has sat since spring has lost its volatile fractions and, if it is an ethanol blend, may have absorbed enough water to separate. Drain it, dispose of it properly, and refill with fresh fuel treated with stabilizer. Stale fuel is the single most common cause of a snow blower that will not start in December." },
+        },
+        {
+          "@type": "Question",
+          name: "What are shear pins and why do they break?",
+          acceptedAnswer: { "@type": "Answer", text: "Shear pins are deliberately weak bolts that connect the auger to its shaft. When the auger hits something solid — a chunk of ice, a newspaper, a frozen branch — the pin shears rather than the gearbox or auger shaft, which are far more expensive. They are meant to break. Keep a set of spares and the right size wrench with the machine." },
+        },
+        {
+          "@type": "Question",
+          name: "How high should snow blower skid shoes be set?",
+          acceptedAnswer: { "@type": "Answer", text: "On smooth concrete or asphalt, set the scraper bar close to the surface, around three millimetres, so the machine cleans down to the pavement. On gravel or a rough surface, raise the shoes to give roughly twelve to twenty-five millimetres of clearance so the auger does not pick up stones and fire them at your windows or your legs." },
+        },
+        {
+          "@type": "Question",
+          name: "Why will my snow blower not start after summer storage?",
+          acceptedAnswer: { "@type": "Answer", text: "Almost always fuel. Stale gasoline leaves varnish that blocks the carburettor's small passages, and ethanol blends can leave water in the bowl. Start with fresh fuel and a new spark plug, and if it still will not run, the carburettor bowl and jet usually need cleaning. Check the fuel shut-off valve is open and the choke is set correctly before assuming the worst." },
+        },
+        {
+          "@type": "Question",
+          name: "Should you change the oil in a snow blower every year?",
+          acceptedAnswer: { "@type": "Answer", text: "Yes, and pay attention to the grade. Many snow blowers specify 5W-30 or a full synthetic for cold-weather use, because straight SAE 30 turns to treacle below freezing and makes the engine very hard to turn over. If your machine has been running summer-weight oil, this is the change that matters most." },
+        },
+        {
+          "@type": "Question",
+          name: "How do you keep snow from sticking inside the chute?",
+          acceptedAnswer: { "@type": "Answer", text: "Coat the inside of the chute and the auger housing with a silicone spray or a dedicated non-stick coating before the season, and reapply a few times through the winter. Wet snow clogs chutes, and a slick surface genuinely reduces it. Always clear a clog with the tool provided and the engine off — never with your hand, even with the engine off, because a loaded auger can spring." },
+        },
+        {
+          "@type": "Question",
+          name: "Do electric and battery snow blowers need pre-season service?",
+          acceptedAnswer: { "@type": "Answer", text: "Less, but not none. Check the auger paddles and scraper bar for wear, since those are consumables on single-stage machines, inspect the cord or battery contacts, and charge the pack to full a day before the first storm. Store lithium packs indoors and let them warm up before charging, as cold charging damages cells." },
+        },
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      description: description,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Snow Removal",
+    tags: ["snow blower maintenance", "pre-season service", "shear pins", "winter prep"],
+  }}
+  jsonLd={schema}
+  stickyCta={{ text: "See Our Tested Snow Blowers", link: "/best-snow-blower/" }}
+>
+  <article class="relative overflow-hidden">
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6"><TrustBadge /></div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">Pre-Season Service</span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">Field Tested</span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">Prepare a Snow Blower <span class="text-[#38BDF8]">Before the First Storm</span></h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          A snow blower is the one machine in the garage that has to work on the exact morning you need it. Ninety minutes in October is what makes that true.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#checklist" class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline">See the Checklist</a>
+          <a href="#faq" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline">Jump to the FAQ</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto"><SocialProof users="6.4k" /></div>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">In This Guide</h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#timing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Do It in October, Not December</a>
+          <a href="#checklist" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. The Pre-Season Checklist</a>
+          <a href="#fuel" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Fuel and Oil</a>
+          <a href="#shear-pins" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Shear Pins and Spares</a>
+          <a href="#belts" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Belts, Cables and Auger</a>
+          <a href="#skid-shoes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Skid Shoes and Scraper Bar</a>
+          <a href="#chute" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Chute, Tyres and Electrics</a>
+          <a href="#test-run" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. The Test Run</a>
+          <a href="#electric" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Electric and Battery Machines</a>
+          <a href="#common-mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes to Avoid</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. Frequently Asked Questions</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Every other machine in the garage can wait a week for a part. A snow blower cannot, because the moment it is needed is the moment nothing is open and the driveway is under thirty centimetres of wet snow.
+        </p>
+
+        <div id="timing" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">1. Do It in October, Not December</h2>
+
+          <p>
+            The argument for an early service is entirely about supply. In October a belt is in stock, a carburettor kit arrives in two days, and the small-engine shop can take the machine on Thursday. After the first storm, all three of those become a three-week wait, and every hardware store within thirty kilometres is out of shear pins.
+          </p>
+
+          <p>
+            The other reason is that the test run tells you something. If you start the machine in October and discover the auger will not engage, that is an inconvenience. Discovering it at six in the morning on a snow day is a different experience entirely.
+          </p>
+        </div>
+
+        <div id="checklist" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">2. The Pre-Season Checklist</h2>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Job</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Time</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Why It Fails Mid-Storm</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Drain stale fuel, refill treated</td>
+                    <td class="px-4 py-4 text-gray-700">20 min</td>
+                    <td class="px-4 py-4 text-gray-700">Varnished jets, no start</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Oil change, cold-rated grade</td>
+                    <td class="px-4 py-4 text-gray-700">15 min</td>
+                    <td class="px-4 py-4 text-gray-700">Will not turn over at −15°C</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Shear pins plus spares</td>
+                    <td class="px-4 py-4 text-gray-700">10 min</td>
+                    <td class="px-4 py-4 text-gray-700">Auger stops, no spares, done</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Belts and control cables</td>
+                    <td class="px-4 py-4 text-gray-700">15 min</td>
+                    <td class="px-4 py-4 text-gray-700">Auger spins slowly or not at all</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Skid shoes and scraper bar</td>
+                    <td class="px-4 py-4 text-gray-700">15 min</td>
+                    <td class="px-4 py-4 text-gray-700">Gouged lawn or flung gravel</td>
+                  </tr>
+                  <tr class="bg-gray-50">
+                    <td class="px-4 py-4 font-black text-gray-900">Test run under load</td>
+                    <td class="px-4 py-4 text-gray-700">15 min</td>
+                    <td class="px-4 py-4 text-gray-700">Finds everything above</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="bg-amber-50 border border-amber-200 rounded-2xl p-6 my-8">
+            <p class="text-sm font-black text-amber-800 mb-2">Safety First</p>
+            <p class="text-sm text-amber-700">
+              Disconnect the spark plug lead before touching the auger, impeller, belts or shear pins. An auger under spring tension can rotate suddenly when a jam releases, and it does not care that the engine is off. Use the clearing tool, never a hand, for chute clogs — at any time, in any condition.
+            </p>
+          </div>
+        </div>
+
+        <div id="fuel" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">3. Fuel and Oil</h2>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Get Last Winter's Fuel Out</h3>
+          <p>
+            Whatever is in the tank has been sitting since March. Gasoline loses its volatile fractions in weeks, and ethanol blends absorb moisture through the tank vent all summer. Siphon the old fuel out, dispose of it at a household hazardous waste site rather than down a drain, and refill with fresh fuel treated with stabilizer.
+          </p>
+          <p>
+            Then run the engine for five minutes so the treated fuel reaches the carburettor. Fresh fuel in the tank and stale, varnishing fuel still sitting in the float bowl is a common half-measure that leaves the machine no better off than before.
+          </p>
+          <p>
+            If you can get ethanol-free fuel, this is the machine to buy it for. A snow blower runs a handful of hours a year and sits for the other eleven months, which is precisely the duty cycle ethanol handles worst.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Oil, and the Grade That Matters</h3>
+          <p>
+            Check the manual for the cold-weather grade. Many snow blowers specify 5W-30 or a synthetic, and the reason becomes obvious the first time you try to pull-start an engine full of straight SAE 30 at −15°C: the oil is thick enough that the recoil starter barely turns the crank.
+          </p>
+          <p>
+            Change it before the season rather than after. Fresh oil in the sump over winter is doing its job, whereas oil left in from last season has been sitting on acidic combustion residue for eight months.
+          </p>
+        </div>
+
+        <div id="shear-pins" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">4. Shear Pins and Spares</h2>
+
+          <p>
+            Shear pins are the most misunderstood part on the machine. They are deliberately weak bolts holding the auger to its shaft, and their entire job is to break when the auger hits something it cannot chew — a lump of ice, a rolled-up newspaper, a frozen branch buried in a drift. The pin dies so the auger gearbox lives.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">The Rule</p>
+            <p class="text-xl font-bold text-white mb-3">Never replace a shear pin with an ordinary hardware-store bolt.</p>
+            <p class="text-gray-300 leading-relaxed m-0">A grade 5 or grade 8 bolt will not shear, so the next impact goes straight into the auger gearbox or bends the auger shaft — a repair that runs into the hundreds. Buy the manufacturer's pins by part number, keep a pack of four in a bag taped inside the housing, and keep the right size wrench with them.</p>
+          </div>
+
+          <p>
+            While you are there, inspect the pins you have. A pin that has taken a hard hit without fully shearing can be partly cracked and will fail on the first serious drift. If a pin looks deformed or the auger has any rotational play against the shaft, replace it now.
+          </p>
+        </div>
+
+        <div id="belts" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">5. Belts, Cables and Auger</h2>
+
+          <p>
+            Most two-stage machines drive the auger and the wheels through separate V-belts, and both are consumables. Remove the belt cover and look for cracking across the ribs, a glazed shiny surface on the sides, fraying at the edges, or missing chunks. A glazed belt slips under load, which shows up as an auger that spins fine in the air and stalls the moment it meets deep snow.
+          </p>
+
+          <p>
+            Work both control levers and watch what the cables do. They should engage crisply and, more importantly, release completely — a stretched cable that leaves the auger creeping when the lever is released is a genuine hazard. Most machines have an adjuster barrel at one end of the cable for exactly this.
+          </p>
+
+          <p>
+            Spin the auger by hand with the plug lead off. It should turn without grinding, and the auger bearings at each end should have no side-to-side play. Check the impeller behind the auger too, and grease the fittings your manual identifies — usually the auger shaft and the axle.
+          </p>
+
+          <p>
+            On a single-stage machine, the rubber auger paddles are the wear item instead. When the paddles no longer touch the ground with the machine on a flat surface, the machine will stop propelling itself forward and throw snow poorly. Paddles and the scraper bar are cheap and are meant to be replaced.
+          </p>
+        </div>
+
+        <div id="skid-shoes" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">6. Skid Shoes and Scraper Bar</h2>
+
+          <p>
+            Skid shoes set how high the housing rides, and getting them wrong is what gouges a lawn or turns a gravel driveway into a shotgun. Set them on a flat surface with the machine level, and adjust both sides equally.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Surface</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Scraper Bar Clearance</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Why</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Smooth concrete or asphalt</td>
+                    <td class="px-4 py-4 text-gray-700">About 3 mm</td>
+                    <td class="px-4 py-4 text-gray-700">Cleans down to the pavement</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Pavers or uneven slab</td>
+                    <td class="px-4 py-4 text-gray-700">6-10 mm</td>
+                    <td class="px-4 py-4 text-gray-700">Clears lips without catching</td>
+                  </tr>
+                  <tr class="bg-white">
+                    <td class="px-4 py-4 font-black text-gray-900">Gravel or dirt</td>
+                    <td class="px-4 py-4 text-gray-700">12-25 mm</td>
+                    <td class="px-4 py-4 text-gray-700">Stops the auger throwing stones</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            Skid shoes are reversible on most machines, so a worn set often has a second life if you flip them before they wear through into the housing. The scraper bar at the bottom rear of the housing is the same idea — a wear part that costs very little and protects something that does not.
+          </p>
+
+          <p>
+            If your driveway is gravel and you find stones going through the machine regardless, that is a strong argument for a two-stage design with more housing clearance. Our <a href="/best-snow-blower/">snow blower testing</a> covers where each type earns its place.
+          </p>
+        </div>
+
+        <div id="chute" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">7. Chute, Tyres and Electrics</h2>
+
+          <p>
+            Work the chute through its full rotation and the deflector through its full travel. Cable-operated chute controls seize with corrosion over summer, and a chute that will only point one way makes clearing a driveway twice the work. A shot of penetrating oil on the rotation gear and pivot points usually frees a stiff one.
+          </p>
+
+          <p>
+            Coat the inside of the chute and the auger housing with silicone spray or a dedicated non-stick coating. Wet snow packs and clogs, and a slick surface measurably reduces it. Reapply a few times through the season.
+          </p>
+
+          <p>
+            Check tyre pressures against the sidewall figure and, critically, check that both sides match. Unequal pressures make the machine pull steadily to one side, which people usually blame on the drive system. Look at the tread too — worn snow blower tyres on a slope are miserable.
+          </p>
+
+          <p>
+            If the machine has an electric start, test it on an outlet now. The starter is a consumable and the cord is a hazard when it is perished. Test the headlight while you are there, since a good proportion of snow clearing happens in the dark at either end of the day.
+          </p>
+        </div>
+
+        <div id="test-run" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">8. The Test Run</h2>
+
+          <p>
+            Take it outside, start it, and let it warm up for a few minutes. Listen for a steady note rather than surging, which points at a partly blocked carburettor jet and is much easier to deal with in October.
+          </p>
+
+          <p>
+            Engage the auger and let it run. Engage the drive and work through every forward and reverse speed. Rotate the chute fully in both directions and move the deflector up and down. Then release both controls and confirm everything actually stops.
+          </p>
+
+          <p>
+            Run it fifteen minutes. Snow blowers that start and run for thirty seconds then die usually have a fuel delivery problem that only shows up once the bowl empties, and fifteen minutes is enough to expose it. Better now than at dawn on a snow day.
+          </p>
+        </div>
+
+        <div id="electric" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">9. Electric and Battery Machines</h2>
+
+          <p>
+            Corded and battery machines skip the fuel and oil work entirely, which is most of their appeal. What they do not skip is the wear inspection: rubber auger paddles and the scraper bar are consumables on single-stage machines, and a set of worn paddles is the usual reason a machine that worked fine last year suddenly throws snow half as far.
+          </p>
+
+          <p>
+            For battery machines, charge every pack to full the day before a forecast storm rather than leaving them on the charger all winter. Store packs indoors, and let a cold pack reach room temperature before charging, because charging lithium cells below freezing is what damages them permanently.
+          </p>
+
+          <p>
+            Expect noticeably reduced runtime in deep cold — a lithium pack in −10°C air delivers meaningfully less than its rated capacity. If your driveway is at the edge of what one pack manages in mild conditions, plan on a second. Our <a href="/best-electric-snow-blower/">electric snow blower testing</a> covers realistic runtimes rather than the box figures.
+          </p>
+
+          <p>
+            For corded machines, inspect the full length of your extension cord for nicks and crushed insulation, and confirm it is rated for outdoor cold-weather use. Ordinary cable stiffens and cracks in the cold.
+          </p>
+        </div>
+
+
+        <div class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">The Spares Kit to Keep With the Machine</h2>
+
+          <p>
+            Everything on this list is cheap, and every item on it is something that fails at the least convenient possible moment, when nothing is open. Put it in a box and keep the box with the machine rather than somewhere sensible you will not remember.
+          </p>
+
+          <p>
+            <strong>Shear pins and their nuts</strong>, four of each, in the manufacturer's part number, with the correct size wrench or socket taped to the bag. <strong>A spare spark plug</strong>, gapped and ready. <strong>A litre of the right oil</strong> and a small funnel. <strong>A spare auger belt and drive belt</strong> for the machine, since a belt is a twenty-minute job with the part in hand and a week-long wait without it.
+          </p>
+
+          <p>
+            Add a can of silicone spray for the chute, a pair of spare skid shoes if yours are close to worn through, and the clearing tool if it has wandered off — a stick of dowel is not the same thing and the tool exists because the alternative maims people.
+          </p>
+
+          <p>
+            Keep about twenty litres of treated fuel on hand as well, stored properly in an approved container away from ignition sources, and rotate it through the machine so it never sits more than a few months. The storm that keeps you home for three days is the storm that closes the fuel station, and a full tank plus a full can is roughly the difference between clearing your driveway twice and clearing it once.
+          </p>
+        </div>
+
+        <div id="common-mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">10. Common Mistakes to Avoid</h2>
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Replacing Shear Pins With Hardware-Store Bolts</h3>
+              <p class="text-gray-700 text-sm m-0">A grade 5 or 8 bolt will not shear, so the next impact destroys the auger gearbox instead. Buy the manufacturer's pins by part number and keep spares taped inside the housing.</p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Running Last Winter's Fuel</h3>
+              <p class="text-gray-700 text-sm m-0">Eight-month-old gasoline is the leading cause of a snow blower that will not start in December. Drain it, refill with treated fresh fuel, and run the engine long enough to reach the carburettor.</p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Clearing a Chute Clog by Hand</h3>
+              <p class="text-gray-700 text-sm m-0">A jammed auger stores energy and can rotate suddenly when the blockage frees, engine off or not. Every year this causes serious hand injuries. Use the clearing tool, always.</p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skid Shoes Set Flat on Gravel</h3>
+              <p class="text-gray-700 text-sm m-0">A two-stage auger picks up stones and throws them at high speed. On gravel, raise the shoes for 12 to 25 mm of clearance and accept leaving a thin layer behind.</p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Summer-Weight Oil in a Winter Machine</h3>
+              <p class="text-gray-700 text-sm m-0">Straight SAE 30 at −15°C is thick enough to defeat a recoil starter. Check the manual and use the cold-weather grade it specifies, usually 5W-30 or a synthetic.</p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Servicing It After the First Snowfall</h3>
+              <p class="text-gray-700 text-sm m-0">Parts sell out and shops back up the moment winter arrives. Every job here is cheap and easy in October and expensive and slow in January.</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">11. Frequently Asked Questions</h2>
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">When should you service a snow blower?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">Early autumn, six to eight weeks before the first storm. Parts are in stock, shops are not backed up, and there is time to order a belt if the test run finds a problem.</p>
+            </div>
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can you use last year's gas?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">No. It has lost its volatile fractions and may have absorbed water if it is an ethanol blend. Drain it, dispose of it properly, refill with fresh treated fuel, and run the engine to get it through the carburettor.</p>
+            </div>
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What are shear pins for?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">They are deliberately weak bolts joining the auger to its shaft. When the auger hits something solid the pin shears instead of the gearbox or shaft breaking. They are meant to fail — keep spares and the right wrench with the machine.</p>
+            </div>
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How high should skid shoes be?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">About 3 mm of scraper clearance on smooth concrete or asphalt, 6 to 10 mm on pavers, and 12 to 25 mm on gravel so the auger does not fling stones. Set both sides equally on a flat surface.</p>
+            </div>
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Why will it not start after summer?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">Almost always stale fuel leaving varnish in the carburettor. Start with fresh fuel and a new plug, check the fuel valve is open and the choke is right, and if it still will not run the bowl and jet need cleaning.</p>
+            </div>
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Change the oil every year?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">Yes, and mind the grade. Many machines specify 5W-30 or a synthetic for cold use, because straight SAE 30 is thick enough below freezing to make an engine very hard to turn over.</p>
+            </div>
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How do you stop the chute clogging?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">Coat the chute and auger housing with silicone spray or a non-stick coating before the season and reapply through winter. Wet snow still clogs — clear it with the tool, never a hand.</p>
+            </div>
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do electric machines need servicing?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">Less, but check auger paddles and the scraper bar for wear, inspect the cord or battery contacts, and charge packs the day before a storm. Store lithium indoors and warm them before charging.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Winter Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-ice-melt-for-concrete/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Winter</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Ice Melt for Concrete</h3>
+              <p class="text-gray-500 text-sm mt-2">What the blower cannot clear, and what will not wreck the slab.</p>
+            </a>
+            <a href="/how-to-winterize-a-pressure-washer/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Seasonal</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Winterizing a Pressure Washer</h3>
+              <p class="text-gray-500 text-sm mt-2">The machine going into storage as the blower comes out.</p>
+            </a>
+            <a href="/best-snow-blower/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#16A34A] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Snow Blowers</h3>
+              <p class="text-gray-500 text-sm mt-2">If the test run says this one has had its last winter.</p>
+            </a>
+          </div>
+        </div>
+
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            <strong class="text-white">Service it in October.</strong> Every job in this guide is cheap and quick before the season and expensive and slow once parts are sold out and the shop is three weeks deep.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Drain last winter's fuel and refill with treated fresh fuel, change the oil for a cold-weather grade, inspect the belts and cables, set the skid shoes for your surface, and buy a pack of the correct shear pins to keep with the machine.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Then run it for fifteen minutes with the auger and drive engaged. That test run is what turns a checklist into confidence, and it is the difference between a machine that works on the morning it matters and a driveway you end up shovelling.
+          </p>
+        </div>
+
+        <MoreInCategory category="Snow Removal & Winter Gear" links={moreInCategory} />
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

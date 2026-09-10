@@ -261,6 +261,23 @@ const priorityGuides = new Set([
   'best-water-based-polyurethane-for-floors',
   'best-teak-oil',
   'does-flex-seal-work-on-concrete',
+
+  // September 2026: seasonal winter-preparation cluster. The search console
+  // export for the quarter to 10 September shows impressions up 86% period on
+  // period while CTR fell from 4.50% to 2.39% — the site is picking up
+  // impressions on autumn and winter maintenance intent it had no dedicated
+  // pages for. These ten fill that gap across the mower, snow, generator,
+  // driveway, concrete, basement and exterior clusters.
+  'how-to-winterize-a-lawn-mower',
+  'how-to-prepare-a-snow-blower-for-winter',
+  'where-to-place-a-generator-outside',
+  'how-often-to-change-generator-oil',
+  'sump-pump-battery-backup-vs-generator',
+  'how-to-winterize-outdoor-faucets',
+  'how-to-prevent-concrete-spalling-in-winter',
+  'how-to-prepare-a-driveway-for-winter',
+  'do-you-need-a-dehumidifier-in-winter',
+  'how-to-clean-gutters-before-winter',
 ]);
 
 export default defineConfig({
