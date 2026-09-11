@@ -59,7 +59,7 @@ function loadExports() {
     .map((f) => ({ f, mtime: statSync(join(DATA_DIR, f)).mtimeMs }))
     .sort((a, b) => b.mtime - a.mtime);
 
-  const queries = [], pages = [], used = [];
+  const queries = [], pages = [], dates = [], used = [];
   for (const { f } of files) {
     const rows = parseCsv(readFileSync(join(DATA_DIR, f), 'utf8').replace(/^﻿/, ''));
     if (!rows.length) continue;
@@ -70,6 +70,18 @@ function loadExports() {
 
     const iQuery = col('quer', 'search term', 'keyword');   // 'Top queries' is plural
     const iPage = col('page', 'url', 'address');
+    const iDate = col('date', 'day');
+
+    if (iDate !== -1 && !dates.length) {
+      used.push(f);
+      for (const r of body) {
+        const day = new Date(r[iDate].split(' ')[0]);
+        if (Number.isNaN(day.getTime())) continue;
+        dates.push({ day, clicks: num(r[iClicks]), impressions: num(r[iImp]) });
+      }
+      dates.sort((a, b) => a.day - b.day);
+      continue;
+    }
 
     if (iQuery !== -1 && !queries.length) {
       used.push(f);
@@ -87,11 +99,11 @@ function loadExports() {
       }
     }
   }
-  return { queries, pages, files: used };
+  return { queries, pages, dates, files: used };
 }
 
-const { queries, pages, files } = loadExports();
-if (!queries.length && !pages.length) {
+const { queries, pages, dates, files } = loadExports();
+if (!queries.length && !pages.length && !dates.length) {
   console.log(`No Search Console exports found in content/search-console/.\n`);
   console.log(`Export from Search Console: Performance > Export > CSV, then unzip and drop`);
   console.log(`Queries.csv and Pages.csv into content/search-console/. See the README there.`);
@@ -181,8 +193,45 @@ const gaps = queries
   .sort((a, b) => b.impressions - a.impressions)
   .slice(0, 25);
 
+// Trend. Clicks are the health metric; CTR on its own is a ratio that a surge of
+// low-intent impressions can halve while the business is growing.
+function trend(days) {
+  if (days.length < 14) return null;
+  const sum = (sel, k) => sel.reduce((n, d) => n + d[k], 0);
+  const half = (n) => days.slice(-n * 2, -n);
+  const recent = (n) => days.slice(-n);
+  const window = days.length >= 60 ? 30 : Math.floor(days.length / 2);
+
+  const prev = half(window), now = recent(window);
+  const pc = sum(prev, 'clicks') / window, nc = sum(now, 'clicks') / window;
+  const pi = sum(prev, 'impressions') / window, ni = sum(now, 'impressions') / window;
+
+  // A step change is what a dilution event looks like: impressions jump, clicks do not.
+  let step = null;
+  for (let i = 7; i < days.length - 3; i++) {
+    const before = days.slice(Math.max(0, i - 7), i);
+    const after = days.slice(i, i + 4);
+    const bi = sum(before, 'impressions') / before.length;
+    const ai = sum(after, 'impressions') / after.length;
+    const bc = sum(before, 'clicks') / before.length;
+    const ac = sum(after, 'clicks') / after.length;
+    if (ai > bi * 1.6 && ac < bc * 1.15 && (!step || ai / bi > step.ratio)) {
+      step = { date: days[i].day.toISOString().slice(0, 10), ratio: ai / bi,
+               impBefore: bi, impAfter: ai, clkBefore: bc, clkAfter: ac };
+    }
+  }
+
+  return { window, days: days.length,
+           from: days[0].day.toISOString().slice(0, 10), to: days[days.length - 1].day.toISOString().slice(0, 10),
+           clicksPerDay: { prev: pc, now: nc, change: nc / pc - 1 },
+           impressionsPerDay: { prev: pi, now: ni, change: ni / pi - 1 },
+           ctr: { prev: pc / pi, now: nc / ni }, step };
+}
+const trendReport = trend(dates);
+
 const report = {
   files,
+  trend: trendReport,
   striking: striking.slice(0, 20),
   lowCtr: lowCtr.slice(0, 15),
   queryStriking: qStriking.slice(0, 20),
@@ -200,7 +249,22 @@ if (process.argv.includes('--save')) {
 if (process.argv.includes('--json')) {
   console.log(JSON.stringify(report, null, 2));
 } else {
-  console.log(`Read: ${files.join(', ')}  (${queries.length} queries, ${pages.length} pages)\n`);
+  console.log(`Read: ${files.join(', ')}  (${queries.length} queries, ${pages.length} pages, ${dates.length} days)\n`);
+
+  if (trendReport) {
+    const t = trendReport;
+    const pctf = (n) => `${n >= 0 ? '+' : ''}${(n * 100).toFixed(0)}%`;
+    console.log(`TREND — ${t.from} to ${t.to}, last ${t.window} days vs the ${t.window} before.\n`);
+    console.log(`  clicks/day       ${t.clicksPerDay.prev.toFixed(0).padStart(6)}  ->  ${t.clicksPerDay.now.toFixed(0).padStart(6)}   ${pctf(t.clicksPerDay.change)}`);
+    console.log(`  impressions/day  ${t.impressionsPerDay.prev.toFixed(0).padStart(6)}  ->  ${t.impressionsPerDay.now.toFixed(0).padStart(6)}   ${pctf(t.impressionsPerDay.change)}`);
+    console.log(`  CTR              ${(t.ctr.prev * 100).toFixed(2).padStart(5)}%  ->  ${(t.ctr.now * 100).toFixed(2).padStart(5)}%`);
+    if (t.step) {
+      console.log(`\n  Impression step change around ${t.step.date}: ${t.step.impBefore.toFixed(0)} -> ${t.step.impAfter.toFixed(0)} impressions/day`);
+      console.log(`  while clicks went ${t.step.clkBefore.toFixed(0)} -> ${t.step.clkAfter.toFixed(0)}. That is dilution, not decline —`);
+      console.log(`  a query started serving volume that does not click. Judge health on clicks, not CTR.`);
+    }
+    console.log('');
+  }
 
   if (report.striking.length) {
     console.log(`IMPROVE FIRST — pages at position ${STRIKING.minPos}-${STRIKING.maxPos} with real impressions.`);
