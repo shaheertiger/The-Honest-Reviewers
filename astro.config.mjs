@@ -132,6 +132,7 @@ const priorityGuides = new Set([
   'self-emptying-robot-vacuum-worth-it',
   'how-long-do-robot-vacuums-last',
   'do-robot-vacuums-work-on-pet-hair',
+  'what-size-air-purifier-do-i-need',
   'best-robotic-lawn-mower',
   'best-inverter-generator',
   'best-dual-fuel-inverter-generator',
