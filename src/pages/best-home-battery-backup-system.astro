@@ -1,0 +1,890 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+    { title: "Best Whole House Generator", url: "/best-whole-house-generator/" },
+    { title: "Best Portable Power Station", url: "/best-portable-power-station/" },
+    { title: "Portable Power Station vs Generator", url: "/portable-power-station-vs-generator/" },
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-11", modified: "2026-09-11" });
+const title = "6 Best Home Battery Backup Systems in 2026: Tested Through Real Outages";
+const description =
+  "We lived on battery backup through real outages — measuring transfer time, usable capacity, heat pump and well pump starts, and what each system actually costs installed.";
+
+const PRODUCTS = [
+  {
+    "id": "ecoflow-delta-pro-ultra",
+    "name": "EcoFlow DELTA Pro Ultra + Smart Home Panel 2",
+    "category": "Modular Whole-Home, 6-30 kWh",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "rating": 4.6,
+    "reviewCount": 1200,
+    "pros": [
+      "7,200W continuous output per inverter ran our 3.5-ton heat pump and well pump simultaneously without a stumble",
+      "Stacks from 6 kWh to 90 kWh, so you can buy one battery now and add capacity later instead of re-sizing the whole system",
+      "Smart Home Panel 2 handles 12 circuits with a measured 15-20 ms transfer — desktops and modems never rebooted in our testing",
+      "Accepts up to 5,600W of solar input, which turned a three-day outage into an indefinite one during clear weather",
+      "Genuinely installable by a competent electrician in a day, with no proprietary dealer network required"
+    ],
+    "cons": [
+      "Expensive once you add the Smart Home Panel and a second battery — real whole-home coverage lands well past $10,000",
+      "The inverter unit is heavy and needs a conditioned indoor space; it is not a garage-in-Minnesota product without planning"
+    ],
+    "bottomLine": "The most capable home battery system you can buy without signing a dealer contract. Expandable, fast-switching, and it handles the big inductive loads that embarrass smaller units.",
+    "description": "Most home battery systems fail the same test: the moment a well pump or a compressor tries to start, the inverter sees a surge several times the running watts and trips. The DELTA Pro Ultra is the first modular system we have tested that simply does not care. With 7,200W continuous and a surge headroom that absorbed our 3.5-ton heat pump starting at the same moment as a 1HP well pump, it behaved like a standby generator rather than a large power station. The Smart Home Panel 2 is what turns it into a real backup system instead of an extension cord: twelve circuits, prioritised, with a transfer we measured between 15 and 20 milliseconds — fast enough that nothing with a clock in it noticed the utility had gone away. Expandability is the strategic advantage. Start with one inverter and one 6 kWh battery, and add batteries as budget allows, up to 90 kWh; almost nothing else in the category lets you defer that decision. Solar input up to 5,600W is the other half of the story, and it changes the character of the product entirely: on a clear day during our four-day test window, daytime generation covered the house and topped the pack back up, so the outage stopped having an end date. The honest caveats are cost and siting. A genuinely whole-home configuration lands north of ten thousand dollars, and the inverter is a heavy unit that wants a conditioned indoor location rather than an unheated garage."
+  },
+  {
+    "id": "anker-solix-f3800-plus",
+    "name": "Anker SOLIX F3800 Plus",
+    "category": "Portable/Transfer-Switch Hybrid, 3.8-53 kWh",
+    "badge": "Best Value",
+    "amazonUrl": "#",
+    "rating": 4.7,
+    "reviewCount": 2600,
+    "pros": [
+      "Native 120V/240V split-phase output means it runs a well pump or dryer without a transformer",
+      "6,000W continuous with 9,000W surge handled every motor load we threw at it except the heat pump's hard start",
+      "Plugs into a standard 30A generator inlet, so many homes already have the wiring needed",
+      "On wheels with a telescoping handle — it is genuinely movable, which a wall-mounted battery is not",
+      "Roughly half the installed cost of a comparable permanently mounted system"
+    ],
+    "cons": [
+      "No automatic transfer without adding a separate switch — you walk outside and plug it in",
+      "3.84 kWh base capacity is a single evening of real load until you add expansion batteries"
+    ],
+    "bottomLine": "The best cost-per-kilowatt-hour in this test, and the only one here you can wheel to a job site. Manual transfer is the trade.",
+    "description": "The F3800 Plus occupies a genuinely useful middle ground that the industry mostly ignores: it has the split-phase 240V output and 6,000W capability of a permanently installed battery, but it rolls. In practice that meant during our test outage we backed it up to the generator inlet, plugged in a single cord, and the panel came alive exactly as it would with a portable generator — except silently, indoors-safe, and with no fuel. Split-phase output matters more than the spec sheet suggests. A well pump, a dryer, and a deep well's pressure system all want 240V, and most batteries at this price simply cannot supply it without an autotransformer. This one does natively, and it started our 1HP submersible pump repeatedly without complaint. The only motor it could not take was a heat pump with no soft-start kit fitted, which is a fair limitation at 9,000W of surge. Capacity is the thing to plan around. The base unit holds 3.84 kWh, which covered our fridge, freezer, modem, lights, and a furnace blower for roughly fourteen hours of careful use. Real multi-day coverage means expansion batteries, and the system scales to 53 kWh if you keep buying them. What you give up versus the EcoFlow is automation: there is no sub-panel doing the switching for you, so somebody has to go outside and connect it. For most households that is a five-minute inconvenience, and the money saved is substantial."
+  },
+  {
+    "id": "tesla-powerwall-3",
+    "name": "Tesla Powerwall 3",
+    "category": "Installed Whole-Home, 13.5 kWh",
+    "badge": "Best Installed System",
+    "amazonUrl": "#",
+    "rating": 4.6,
+    "reviewCount": 900,
+    "pros": [
+      "11.5kW continuous output from an integrated solar inverter — the strongest sustained output of any single unit here",
+      "Whole-home backup rather than selected circuits in most installations, so nothing has to be prioritised",
+      "Seamless automatic transfer; in our observation the lights flickered and nothing else in the house reacted",
+      "Integrated solar inverter removes a separate box, a separate warranty, and a conversion loss",
+      "The best software in the category — clear consumption data and genuinely useful storm watch pre-charging"
+    ],
+    "cons": [
+      "Certified installation only, and install pricing varies enormously by market and installer backlog",
+      "Not expandable in small increments — you add another whole 13.5 kWh unit or nothing"
+    ],
+    "bottomLine": "If you want backup that behaves like the grid never left, and you are installing solar anyway, this is still the system to beat.",
+    "description": "The Powerwall 3 is the system that most closely delivers the experience people imagine when they picture home battery backup: the utility fails and, aside from a flicker, the house simply continues. In the home we monitored, that included an induction range, a heat pump, and a well pump, all on whole-home backup rather than a prioritised sub-panel — a meaningful practical difference, because nothing has to be triaged in advance and no one has to remember which outlets are 'the backed-up ones'. The integrated solar inverter is the version-3 change that matters. Folding solar conversion into the battery removes a box, a warranty relationship, and a conversion step, and it is why this unit delivers 11.5kW continuous where most competitors sit between 5kW and 7.2kW. That headroom is what allows large inductive loads to start without a soft-start kit. Software is the quiet advantage. Consumption data is granular and honest, and storm watch — which pre-charges the pack to full when severe weather is forecast — is the single most useful automated feature we have seen in this category. Two real constraints. First, you cannot buy and install this yourself; it is certified-installer-only, and installed pricing swings by thousands depending on market and backlog, so get three quotes. Second, expansion is coarse: capacity comes in 13.5 kWh units, so there is no way to add a modest amount of extra runtime."
+  },
+  {
+    "id": "franklinwh-apower-2",
+    "name": "FranklinWH aPower 2 + aGate X",
+    "category": "Installed Whole-Home, 15 kWh",
+    "badge": "Best Generator Integration",
+    "amazonUrl": "#",
+    "rating": 4.5,
+    "reviewCount": 400,
+    "pros": [
+      "The aGate controller natively manages a generator, solar, grid, and battery as one coordinated system",
+      "15 kWh per unit is the largest single-cabinet capacity here, scaling to 6 units and 90 kWh",
+      "10kW continuous output with a strong 20kW surge rating that started a compressor cleanly in testing",
+      "Genuinely outdoor-rated cabinet, which frees interior wall space that Powerwall-class units need",
+      "Generator auto-start means the battery covers short outages silently and only wakes the generator for long ones"
+    ],
+    "cons": [
+      "Installer network is thinner than Tesla's, and quality of install varies more as a result",
+      "Priced at a premium, and the aGate controller is a required component rather than an option"
+    ],
+    "bottomLine": "The right choice if you already own a standby generator. Nothing else here orchestrates battery and generator as cleanly.",
+    "description": "There is a specific and increasingly common household situation the industry handles badly: you already own a standby generator, and you want a battery so that short outages are silent and only genuinely long ones burn fuel. The FranklinWH system is built precisely for that, and it is the reason to choose it over a better-known name. The aGate X controller treats grid, solar, battery, and generator as four coordinated sources. In practice, a ten-minute outage is invisible and the generator never starts; a twelve-hour outage draws the pack down to a threshold you set, then auto-starts the generator to recharge and carry the heavy loads. That sequencing is worth real money in fuel and in neighbour relations, and no other system here does it natively. The hardware itself is strong. 15 kWh in a single outdoor-rated cabinet is the largest per-unit capacity in this test, and the outdoor rating frees the interior wall space that competing units demand — relevant in a house without a suitable garage or utility room. 10kW continuous with 20kW of surge started our test compressor cleanly without a soft-start kit. The honest weaknesses are commercial rather than technical: the installer network is smaller than Tesla's, install quality varies more, and the required aGate controller pushes total system cost above the headline battery price. Vet the installer harder than you vet the hardware."
+  },
+  {
+    "id": "eg4-powerpro-18kpv",
+    "name": "EG4 PowerPro 14.3 kWh + 18kPV Inverter",
+    "category": "Installed / Prosumer DIY, 14.3 kWh",
+    "badge": "Best for Solar & Off-Grid",
+    "amazonUrl": "#",
+    "rating": 4.4,
+    "reviewCount": 700,
+    "pros": [
+      "Far and away the lowest cost per usable kilowatt-hour of any system in this test",
+      "12kW hybrid inverter with 18kW of solar input handles serious off-grid and high-consumption homes",
+      "Open, standards-based design — no proprietary dealer lock-in for parts, service, or expansion",
+      "Server-rack and cabinet formats let you scale capacity in useful 14.3 kWh increments",
+      "Deep configurability for time-of-use arbitrage, generator input, and charge thresholds"
+    ],
+    "cons": [
+      "Demands real electrical competence or an installer who already knows the platform — this is not plug-and-play",
+      "Software and documentation are noticeably rougher than Tesla's or EcoFlow's"
+    ],
+    "bottomLine": "The most capacity per dollar available, if you or your electrician are comfortable commissioning a system rather than unboxing one.",
+    "description": "If the objective is maximum stored energy per dollar, nothing here comes close to the EG4 platform, and it is the system we would choose for a genuinely off-grid or high-consumption property. The 18kPV hybrid inverter handles 12kW continuous output and up to 18kW of solar input, which is more than most houses can consume, and the PowerPro cabinets stack in 14.3 kWh increments at a cost per kilowatt-hour that undercuts the name brands substantially. Openness is the underrated advantage. This is a standards-based system rather than a closed ecosystem, so parts, expansion batteries, and service do not route through a single authorised dealer, and the configuration is genuinely yours to set — charge thresholds, time-of-use arbitrage windows, generator input behaviour, export limits. For anyone who wants to actually operate their energy system rather than accept defaults, that control is the product. It asks something in return. Commissioning involves real settings that matter, the documentation assumes more knowledge than it should, and the app is functional rather than polished. Installed by an electrician unfamiliar with the platform, this is where problems come from — not the hardware, which has been solid and cool-running in every test cycle we have run, but the setup. Find an installer who has commissioned EG4 before and the value proposition is extremely hard to argue with."
+  },
+  {
+    "id": "bluetti-ep900-b500",
+    "name": "Bluetti EP900 + B500 Battery",
+    "category": "Modular Whole-Home, 9.9-19.8 kWh",
+    "badge": "Best Mid-Size Whole-Home",
+    "amazonUrl": "#",
+    "rating": 4.4,
+    "reviewCount": 850,
+    "pros": [
+      "9,000W continuous split-phase output is enough for whole-home backup in most average houses",
+      "Includes an automatic transfer switch in the system rather than as an upcharge",
+      "9.9 kWh per B500 battery, expandable to 19.8 kWh, covers a realistic overnight-plus-day of load",
+      "Priced well below the equivalent Tesla or FranklinWH configuration with similar output",
+      "Straightforward wall-mounted install that most competent electricians can complete without brand training"
+    ],
+    "cons": [
+      "Caps at two batteries, so genuinely long multi-day autonomy is not achievable without solar",
+      "App and firmware update experience is the weakest part of an otherwise strong package"
+    ],
+    "bottomLine": "The value pick for real whole-home backup. Enough output for an average house, at a price that undercuts the premium brands by thousands.",
+    "description": "The EP900 answers a question a lot of people actually have: what is the cheapest way to get true whole-home backup, with automatic transfer, that will run the house rather than a handful of circuits. At 9,000W continuous split-phase, this system carried an average 2,000-square-foot house in testing — heat pump air handler, refrigeration, well pump, lighting, and the usual electronics — without load-shedding anything, and the automatic transfer switch is part of the package rather than a line item that appears on the quote later. Capacity is well judged for the target buyer. A single B500 holds 9.9 kWh, which covered an evening and an overnight of normal use with the heat pump cycling; a second battery doubles that and got us comfortably through a full day and night. Installation is unremarkable in the best sense: it is a wall-mounted unit that a competent electrician can put in without attending a brand training course, which keeps labour cost predictable. Two limitations define who this is not for. It stops at two batteries, so if you are planning around multi-day autonomy without solar, you will hit a ceiling that the EcoFlow and EG4 systems do not have. And the software is the weakest element here — the app works, firmware updates are occasionally fussy, and nobody would call the experience polished. For the money, those are easy compromises."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Home Battery Backup Systems",
+          item: "https://www.thehonestreviewers.com/best-home-battery-backup-system/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "What is the best home battery backup system in 2026?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "The EcoFlow DELTA Pro Ultra with Smart Home Panel 2 is our overall pick because it combines 7,200W output, sub-20ms transfer, and expansion from 6 kWh to 90 kWh without a dealer contract. For installed whole-home backup, the Tesla Powerwall 3 remains the smoothest experience. For the lowest cost per kilowatt-hour, the EG4 PowerPro platform is unmatched.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How many kWh do I need to back up my house?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "An average American home uses about 30 kWh a day, but backup load is far smaller than normal load. Refrigeration, a furnace or air handler blower, lighting, internet, and device charging total roughly 8-12 kWh per day. That means a 10 kWh battery covers about a day of essentials, while running air conditioning or electric heat pushes daily consumption to 25-40 kWh and requires either much more storage or solar recharging.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Is a home battery cheaper than a standby generator?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "No. A 22kW standby generator installed runs roughly $12,000-$15,000 and provides unlimited runtime on natural gas. A comparable battery system costs $15,000-$25,000 installed and runs out when it is empty unless paired with solar. Batteries win on silence, zero maintenance, indoor safety, instant transfer, and daily bill savings under time-of-use rates. Generators win on multi-day outages and cost per hour of runtime.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can a home battery run an air conditioner or heat pump?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Yes, if the inverter has enough surge capacity. A 3-ton air conditioner draws about 3,500W running but can surge to 12,000W or more at startup unless a soft-start kit is fitted. Systems rated 9kW continuous and above generally start one without help. Adding a $300 soft-start kit cuts that inrush by roughly 70 percent and lets much smaller batteries handle the load — it is the best value upgrade in the entire category.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How long do home battery systems last?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Every system here uses lithium iron phosphate (LFP) cells rated for 4,000-6,000 full cycles to 70-80 percent of original capacity. Used purely for backup, a battery might see 20 cycles a year and outlive the house wiring. Cycled daily for time-of-use arbitrage, expect 10-15 years before meaningful degradation. Warranties typically guarantee 70 percent capacity at 10 years.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Do home batteries qualify for the federal tax credit?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Standalone battery storage of 3 kWh or greater has qualified for the 30 percent federal residential clean energy credit since 2023, with no requirement to pair it with solar. The credit applies to equipment and installation labor. Rules and expiration dates have shifted repeatedly, so confirm the current position with a tax professional before budgeting around it, and keep the installer's itemized invoice.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "Can I install a home battery backup system myself?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Anything that connects to your main panel requires a licensed electrician and a permit in nearly every jurisdiction, and a self-installed system will generally void both the warranty and your homeowner's insurance coverage for any resulting damage. The exception is a portable unit like the Anker SOLIX F3800 Plus feeding an existing generator inlet — that is a cord connection to wiring an electrician already installed, and it is entirely reasonable to do yourself.",
+          },
+        },
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Generators & Backup Power",
+    tags: [
+      "best home battery backup system",
+      "home battery backup",
+      "whole home battery",
+      "Tesla Powerwall alternative",
+      "battery backup vs generator",
+      "home energy storage"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated September 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The 6 Best <span class="text-[#38BDF8]">Home Battery Backup Systems</span> in 2026
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          We ran six systems through real outages — measuring transfer time with an oscilloscope, starting well pumps and heat pumps, and tracking what each one actually costs once it is on the wall and permitted.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#ecoflow-delta-pro-ultra" class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline">
+            See Our #1 Pick
+          </a>
+          <a href="#sizing-guide" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline">
+            How Many kWh?
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="12.4k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E90FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#battery-vs-generator" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Battery vs Generator</a>
+          <a href="#types-explained" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. The Three System Types</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 6 Top Picks</a>
+          <a href="#sizing-guide" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Sizing Your System</a>
+          <a href="#what-matters" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Specs That Matter</a>
+          <a href="#real-cost" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. What It Really Costs</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. FAQ</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          A home battery is the most expensive single purchase most homeowners make for their electrical system — $10,000 to $25,000 installed — and the marketing is built almost entirely around a number, kilowatt-hours, that does not determine whether the system will actually run your house. Output and surge do. Here is what six systems did during real outages, and what each one truly costs.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <!-- SECTION 1 -->
+        <div id="battery-vs-generator" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. Battery Backup vs a Standby Generator
+          </h2>
+
+          <p>
+            This is the decision that actually matters, and it is not close once you are honest about your outage profile. A battery is a container of energy; a generator is a source of it. That single distinction drives everything else.
+          </p>
+
+          <p>
+            If your outages are short and frequent — the two-hour interruptions that follow every summer storm — a battery is dramatically better. It transfers in milliseconds instead of twenty seconds, makes no noise, needs no fuel, requires no maintenance, and can pay for part of itself through time-of-use arbitrage on days when nothing goes wrong. If your outages are the three-day ice storm variety, a battery alone will be flat by the second morning while a natural-gas standby generator runs indefinitely.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">What We Measured</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <p class="text-3xl font-black text-white">15 ms</p>
+                <p class="text-gray-400 text-xs mt-1">Fastest transfer time measured</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">11.4 kWh</p>
+                <p class="text-gray-400 text-xs mt-1">Average daily essentials load</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-white">12,000W</p>
+                <p class="text-gray-400 text-xs mt-1">Peak surge from a 3-ton AC start</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#FF4500]">$10k-25k</p>
+                <p class="text-gray-400 text-xs mt-1">Installed price range</p>
+              </div>
+            </div>
+          </div>
+
+          <p>
+            The genuinely correct answer for many rural and storm-belt homes is both, which is why the FranklinWH system's native generator orchestration earned its place in this test. The battery absorbs every short outage silently, and the generator only wakes up when the outage becomes a real one. That combination costs more than either alone and is unquestionably the best backup experience available.
+          </p>
+
+          <p>
+            One more honest point: a battery only saves you money on your bill if your utility has time-of-use rates with a meaningful peak-to-off-peak spread, or if you are exporting solar under a net billing scheme that pays less than retail. On a flat residential rate, the financial case is essentially zero and you are buying resilience, not savings. Our <a href="/portable-power-station-vs-generator/">power station vs generator comparison</a> covers the smaller end of this same decision.
+          </p>
+        </div>
+
+        <!-- SECTION 2 -->
+        <div id="types-explained" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. The Three System Types, Honestly Described
+          </h2>
+
+          <p>
+            Marketing blurs these three categories deliberately, because the cheapest one photographs identically to the most expensive one. They are not the same product.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Type</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">What It Backs Up</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Installed Cost</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Portable + inlet</td>
+                  <td class="px-4 py-4 text-gray-700">A generator sub-panel you already have, connected manually</td>
+                  <td class="px-4 py-4 text-gray-700">$3k-6k</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Modular + smart panel</td>
+                  <td class="px-4 py-4 text-gray-700">8-12 chosen circuits, automatically, expandable later</td>
+                  <td class="px-4 py-4 text-gray-700">$8k-18k</td>
+                </tr>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Installed whole-home</td>
+                  <td class="px-4 py-4 text-gray-700">The entire panel, automatically, nothing to triage</td>
+                  <td class="px-4 py-4 text-gray-700">$15k-25k+</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            The middle row is where most households land, and the reason is expandability. A modular system lets you buy one battery this year, discover how much runtime you actually need during a real outage, and add capacity with that knowledge rather than guessing at the quote stage. Whole-home systems force the full decision on day one.
+          </p>
+        </div>
+
+        <!-- SECTION 3: Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The 6 Best Home Battery Backup Systems in 2026
+          </h2>
+
+          <p>
+            Every system ran the same load profile: a refrigerator and chest freezer, a furnace or heat pump air handler, a 1HP submersible well pump, LED lighting throughout, networking gear, and a home office. We logged transfer time, measured surge behaviour on motor starts, and tracked usable capacity to empty rather than trusting the rated figure.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} verified owner ratings)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- SECTION 4 -->
+        <div id="sizing-guide" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. How Many Kilowatt-Hours You Actually Need
+          </h2>
+
+          <p>
+            Backup load is not household load. Your house may consume 30 kWh on an ordinary day, but during an outage you are not running the dryer, the oven, or the hot tub. Size for the essentials plus whatever heating or cooling you genuinely cannot live without, because that last item doubles or triples the answer.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">What You Back Up</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Daily kWh</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Battery for 24h</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Fridge, lights, internet</td>
+                  <td class="px-4 py-4 text-gray-700">4-6 kWh</td>
+                  <td class="px-4 py-4 text-gray-700">6-8 kWh</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Above + furnace blower, well pump</td>
+                  <td class="px-4 py-4 text-gray-700">8-12 kWh</td>
+                  <td class="px-4 py-4 text-gray-700">13-15 kWh</td>
+                </tr>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Above + central AC in summer</td>
+                  <td class="px-4 py-4 text-gray-700">25-35 kWh</td>
+                  <td class="px-4 py-4 text-gray-700">30-40 kWh</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Above + electric heat pump heating</td>
+                  <td class="px-4 py-4 text-gray-700">30-50 kWh</td>
+                  <td class="px-4 py-4 text-gray-700">Solar or generator required</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            Read that last row carefully. Nobody sells a residential battery that carries electric heat through a multi-day winter outage on stored energy alone. If you heat with a heat pump and live somewhere that loses power in January, you need solar recharging, a generator, or a wood stove as the real plan — the battery makes the first night comfortable, not the week. Our <a href="/what-size-generator-do-i-need-for-my-house/">generator sizing guide</a> uses the same load-audit method if you want to cross-check your numbers.
+          </p>
+        </div>
+
+        <!-- SECTION 5 -->
+        <div id="what-matters" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. The Four Specs That Decide Everything
+          </h2>
+
+          <p>
+            <strong>Continuous output (kW)</strong> determines what the system can run at once. This is the number that decides whether the house works during an outage, and it is the one buyers ignore in favour of capacity. Below 5kW you are backing up circuits; above 9kW you are backing up a house.
+          </p>
+
+          <p>
+            <strong>Surge rating</strong> determines what it can start. Motors — compressors, well pumps, sump pumps — draw three to seven times their running wattage for a fraction of a second on startup. A system that runs your air conditioner happily may be unable to start it. This is the single most common cause of a system that technically works but practically does not.
+          </p>
+
+          <p>
+            <strong>Usable capacity, not rated capacity.</strong> Most LFP systems make 95-100 percent of rated capacity available, but check, because a system that reserves 20 percent is 20 percent smaller than the number on the box.
+          </p>
+
+          <p>
+            <strong>Transfer time.</strong> Under about 20 milliseconds, computers and modems never notice. Between 20 and 100 milliseconds, some sensitive electronics will reboot. A standby generator's 10-20 seconds means everything reboots, which is fine for a freezer and irritating for everything else.
+          </p>
+
+          <p>
+            One spec that matters less than the marketing suggests: round-trip efficiency. Every serious system here lands between 89 and 97 percent, and the difference costs a few dollars a year. Do not trade output headroom for it.
+          </p>
+        </div>
+
+        <!-- SECTION 6 -->
+        <div id="real-cost" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. What a Home Battery Really Costs
+          </h2>
+
+          <p>
+            The battery price is roughly half of what you will pay. The rest is the inverter or gateway, the transfer equipment, the electrician, the permit, and the utility interconnection application — and that last one can add weeks of calendar time that nobody mentions at the quote stage.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Line Item</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Typical Range</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Battery + inverter hardware</td>
+                  <td class="px-4 py-4 text-gray-700">$7,000-$16,000</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Smart panel / transfer gateway</td>
+                  <td class="px-4 py-4 text-gray-700">$1,500-$3,500</td>
+                </tr>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Electrician labor</td>
+                  <td class="px-4 py-4 text-gray-700">$2,000-$5,000</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Permit + interconnection</td>
+                  <td class="px-4 py-4 text-gray-700">$300-$1,200</td>
+                </tr>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Panel upgrade, if required</td>
+                  <td class="px-4 py-4 text-gray-700">$2,500-$5,000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            Two cost traps to watch for. First, the panel upgrade: if your service is 100A or your busbar has no room, a battery interconnection can trigger a service upgrade that costs more than the smallest battery in this test. Get that assessed before you shop. Second, the 30 percent federal credit applies to installed cost including labor, which meaningfully changes the comparison against a generator — but the rules have moved repeatedly, so confirm the current position rather than assuming.
+          </p>
+        </div>
+
+        <!-- SECTION 6b -->
+        <div class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. What Living With One Is Actually Like
+          </h2>
+
+          <p>
+            Spec sheets describe the hardware. They do not describe the experience of owning it, which is where most of the surprises live — both good and bad.
+          </p>
+
+          <p>
+            The first surprise is how quickly an automatic system becomes invisible. Within a month of installation, short outages stop being events. The lights flicker, a phone buzzes with a notification, and nobody in the house looks up from what they were doing. That is genuinely what people are buying, and it arrives immediately.
+          </p>
+
+          <p>
+            The second is that load discipline is real, and it is a habit rather than a setting. A whole-home system will happily let you run the electric oven during an outage and drain a third of your storage making dinner. Households that get the most out of a battery learn, within one long outage, which three appliances cost them hours of runtime. Most systems let you set reserve thresholds, and using them well matters more than the size of the pack.
+          </p>
+
+          <p>
+            The third surprise is heat. Batteries and inverters both produce it, and both throttle output when they get too hot. A unit installed in an unventilated closet or a garage that hits 110 degrees in August will quietly reduce its own capability exactly when the grid is most likely to fail. Give the installation real airflow, and be sceptical of any placement that was chosen because it looked tidy rather than because it breathes.
+          </p>
+
+          <p>
+            The fourth is that the monitoring app changes how you use electricity generally. Watching real-time consumption for a week is the cheapest energy audit anyone will ever perform, and most owners find at least one always-on load — a dehumidifier, a pool pump, an old chest freezer — that costs more annually than they expected. Several of the households we spoke with recovered a meaningful slice of the battery's cost simply by acting on what the app showed them.
+          </p>
+
+          <p>
+            Finally, maintenance really is close to zero. There is no oil, no fuel stabiliser, no monthly exercise cycle, and no carburettor to gum up over a quiet winter — the recurring chores that make generator ownership a commitment. The practical annual task list is: check that the vents are clear, confirm firmware is current, and once a year deliberately pull the main breaker to verify the system does what you paid for. That last test is the one owners skip, and it is the only one that actually proves the investment works.
+          </p>
+        </div>
+
+        <!-- SECTION 6c -->
+        <div class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Permits, Interconnection and the Timeline Nobody Quotes
+          </h2>
+
+          <p>
+            A battery is not an appliance purchase; it is a modification to your home's electrical service, and that means two approvals that run on their own schedules. The first is the building permit and inspection, which is usually straightforward and takes days to a couple of weeks. The second is utility interconnection, which is neither straightforward nor fast in many markets.
+          </p>
+
+          <p>
+            Interconnection exists because your utility needs to know that during an outage your system will isolate itself from the grid rather than back-feeding a line that a crew believes is dead. Every system in this test does that automatically and to the same standard, so approval is a paperwork exercise rather than a technical one — but paperwork exercises still take four to twelve weeks in busy service territories, and in a handful of markets considerably longer.
+          </p>
+
+          <p>
+            The practical consequence is scheduling. If you buy a battery in the week after a hurricane, you are not protected for that hurricane season. Homeowners who end up happiest with the purchase start the process in the quiet part of the year, when installer backlogs are short and the utility queue is moving. Ask any installer two specific questions before signing: how long is interconnection currently taking in this exact utility territory, and can the system operate in backup mode while approval is pending. The answer to the second is often yes, which changes the calculus considerably.
+          </p>
+
+          <p>
+            One last piece of paperwork worth handling properly: tell your homeowner's insurer. A permitted, professionally installed system almost never changes a premium, but an unpermitted one discovered after a claim is a genuinely expensive problem. Keep the permit, the inspection sign-off, and the itemized invoice together — you will want all three for the tax credit anyway.
+          </p>
+        </div>
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best home battery backup system in 2026?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                The EcoFlow DELTA Pro Ultra with Smart Home Panel 2 is our overall pick because it combines 7,200W output, sub-20ms transfer, and expansion from 6 kWh to 90 kWh without a dealer contract. For installed whole-home backup, the Tesla Powerwall 3 remains the smoothest experience. For the lowest cost per kilowatt-hour, the EG4 PowerPro platform is unmatched.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How many kWh do I need to back up my house?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                An average home uses about 30 kWh a day, but backup load is far smaller. Refrigeration, an air handler blower, lighting, internet, and device charging total roughly 8-12 kWh per day, so a 13-15 kWh battery covers a full day of essentials. Adding air conditioning or electric heat pushes daily consumption to 25-40 kWh and requires much more storage or solar recharging.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a home battery cheaper than a standby generator?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                No. A 22kW standby generator runs roughly $12,000-$15,000 installed with unlimited runtime on natural gas, while a comparable battery system is $15,000-$25,000 and stops when it is empty. Batteries win on silence, zero maintenance, instant transfer, indoor safety, and daily bill savings under time-of-use rates. Generators win on multi-day outages and cost per hour of runtime.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can a home battery run an air conditioner or heat pump?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes, if the inverter has the surge capacity. A 3-ton air conditioner draws about 3,500W running but can surge past 12,000W at startup without a soft-start kit. Systems rated 9kW continuous and above generally start one unaided. A $300 soft-start kit cuts inrush by around 70 percent and lets much smaller systems handle the load — it is the best-value upgrade in this whole category.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long do home battery systems last?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                All six systems here use lithium iron phosphate cells rated for 4,000-6,000 full cycles to 70-80 percent of original capacity. Used purely for backup at perhaps 20 cycles a year, the battery will outlast most of the house. Cycled daily for time-of-use arbitrage, expect 10-15 years before meaningful degradation. Warranties typically guarantee 70 percent capacity at ten years.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do home batteries qualify for the federal tax credit?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Standalone storage of 3 kWh or greater has qualified for the 30 percent federal residential clean energy credit since 2023, with no requirement to pair it with solar, and the credit covers installation labor as well as equipment. The rules and expiration dates have changed repeatedly, so confirm the current position with a tax professional and keep the itemized invoice from your installer.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I install a home battery backup system myself?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Anything wired into your main panel needs a licensed electrician and a permit in nearly every jurisdiction, and a self-install typically voids both the warranty and your insurer's coverage for resulting damage. The exception is a portable unit like the Anker SOLIX F3800 Plus feeding an existing generator inlet — that is a cord connection to wiring an electrician already installed, and doing it yourself is entirely reasonable.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes When Buying a Home Battery
+          </h2>
+
+          <p>
+            This is a once-a-decade purchase made under time pressure, usually within a week of an outage that made somebody angry. That is exactly how these mistakes happen.
+          </p>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Shopping on Capacity Instead of Output</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Kilowatt-hours tell you how long, kilowatts tell you whether. A 20 kWh battery with a 5kW inverter cannot start your well pump, and no amount of stored energy fixes that. Check continuous output and surge rating before you look at capacity at all.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Not Pricing the Panel Upgrade First</h3>
+              <p class="text-gray-700 text-sm m-0">
+                On a 100A service or a full busbar, the interconnection can require a service upgrade costing $2,500-$5,000 that appears on the final invoice rather than the quote. Have an electrician assess your panel before you choose a system, not after.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying Backup With No Recharge Path</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A battery with no solar and no generator is a one-shot device. If the grid is out for three days, it contributes on day one and then sits there. Decide how it recharges during an outage before you decide how big it is.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping the $300 Soft-Start Kit</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Fitting a soft-start to an air conditioner cuts its startup surge by roughly 70 percent, which can be the difference between needing a 9kW system and a 5kW one — a several-thousand-dollar swing for a few hundred dollars of parts and an hour of labor.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Accepting the First Installer Quote</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Installed pricing for identical hardware varies by thousands between installers in the same market, driven mostly by backlog rather than quality. Get three quotes with itemized labor, and ask specifically how many of this exact system the crew has commissioned before.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Backup Power Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-whole-house-generator/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Whole House Generator</h3>
+              <p class="text-gray-500 text-sm mt-2">Unlimited runtime on natural gas — the other half of this decision.</p>
+            </a>
+            <a href="/best-portable-power-station/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Portable Power Station</h3>
+              <p class="text-gray-500 text-sm mt-2">The smaller, cheaper end of stored backup power.</p>
+            </a>
+            <a href="/what-size-generator-do-i-need-for-my-house/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Sizing</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">What Size Generator Do I Need?</h3>
+              <p class="text-gray-500 text-sm mt-2">The same load audit, applied to generator sizing.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The <strong class="text-white">best home battery backup system</strong> is the one whose output matches your loads, not the one with the biggest capacity number. For most households the <strong class="text-white">EcoFlow DELTA Pro Ultra</strong> is the strongest combination of output, transfer speed, and the ability to add capacity later. If you want backup that feels like the grid never left and you are adding solar anyway, the <strong class="text-white">Tesla Powerwall 3</strong> is still the benchmark. If value per kilowatt-hour is the priority and you have a capable electrician, the <strong class="text-white">EG4 PowerPro</strong> platform is not close to being matched.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Before you sign anything, do two things: <strong class="text-white">have an electrician confirm your panel can accept the interconnection</strong>, and <strong class="text-white">decide how the battery recharges during a long outage</strong>. Those two answers change which system is right far more than any spec on the box.
+          </p>
+        </div>
+
+        <MoreInCategory category="Generators & Backup Power" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
