@@ -22,6 +22,23 @@ If the brief names a pillar that is a genuinely bad fit (a discontinued product,
 topic with no search demand), skip it with `npm run topics -- --json --skip 1` and
 say so in the run report.
 
+### If a Search Console export is present
+
+`content/search-console/` may hold recent exports. When it does, run
+`npm run gsc` before writing and read the report, because it changes what the day
+is worth spending on:
+
+- Anything in **IMPROVE FIRST** (position 5-20, real impressions) beats writing a
+  new article. If today's pillar or one of its spokes appears there, improving that
+  page is the better use of one of the five slots — do it, and say so in the report.
+- **REWRITE TITLE/META** items are five-minute fixes with real upside. Doing one or
+  two alongside the batch is free value.
+- **QUERIES WITH NO PAGE** are candidates for the batch, but verify each against
+  existing slugs first — the matcher is generous and some are already covered.
+
+The topic picker already accounts for demand if `demand.json` exists, so you do not
+need to second-guess which cluster it chose.
+
 ## 2. Turn each intent into a real article
 
 For each of the five intents, decide the actual title, slug and angle. Rules:

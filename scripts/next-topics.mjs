@@ -7,7 +7,7 @@
 //   node scripts/next-topics.mjs --json       # brief for the daily publishing job
 //   node scripts/next-topics.mjs --count 5    # how many articles to plan (default 5)
 //   node scripts/next-topics.mjs --skip 2     # skip the N thinnest (if one is a dead end)
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { buildClusters, loadPages } from './cluster-report.mjs';
 
@@ -51,7 +51,24 @@ const arg = (flag, fallback) => {
 const count = arg('--count', 5);
 const skip = arg('--skip', 0);
 
-const { ranked } = buildClusters();
+// Search Console demand, when a recent export has been processed with
+// `npm run gsc -- --save`. It never changes WHICH clusters are thin — it breaks the
+// tie between equally thin ones, so the job works the gaps people actually search.
+const DEMAND_FILE = join(import.meta.dirname, '..', 'content', 'search-console', 'demand.json');
+let demand = new Map();
+let demandDate = null;
+if (existsSync(DEMAND_FILE)) {
+  const parsed = JSON.parse(readFileSync(DEMAND_FILE, 'utf8'));
+  demandDate = parsed.generatedAt;
+  demand = new Map(parsed.clusterDemand.map((c) => [c.pillar, c.impressions]));
+}
+
+const { ranked: byCoverage } = buildClusters();
+const ranked = [...byCoverage].sort((a, b) =>
+  a.spokeCount - b.spokeCount ||
+  (demand.get(b.pillar) || 0) - (demand.get(a.pillar) || 0) ||
+  a.pillar.localeCompare(b.pillar));
+
 const target = ranked[skip];
 if (!target) {
   console.error('No pillar found to work on.');
@@ -77,6 +94,9 @@ const brief = {
   generatedAt: new Date().toISOString().slice(0, 10),
   pillar: { slug: target.pillar, url: `/${target.pillar}/`, title, section },
   clusterSize: target.spokeCount,
+  searchDemand: demand.size
+    ? { impressions: demand.get(target.pillar) ?? 0, dataFrom: demandDate }
+    : null,
   existingSpokes: spokeSlugs.map((s) => `/${s}/`),
   linkTargets: [`/${target.pillar}/`, ...siblings.map((s) => `/${s}/`)],
   articles: plan.map((intent, i) => ({ n: i + 1, intent: intent.id, brief: intent.brief })),
@@ -86,7 +106,14 @@ if (process.argv.includes('--json')) {
   console.log(JSON.stringify(brief, null, 2));
 } else {
   console.log(`Today's cluster: /${target.pillar}/  (${target.spokeCount} existing spokes, section: ${section})`);
-  console.log(`Pillar title: ${title}\n`);
+  console.log(`Pillar title: ${title}`);
+  if (demand.size) {
+    const imp = demand.get(target.pillar);
+    console.log(imp
+      ? `Search demand: ${imp.toLocaleString()} impressions (Search Console, ${demandDate})`
+      : `Search demand: none recorded in the ${demandDate} export — worth sanity-checking before writing`);
+  }
+  console.log('');
   if (spokeSlugs.length) console.log(`Already covered: ${spokeSlugs.map((s) => '/' + s + '/').join(', ')}\n`);
   console.log(`Write ${count} articles covering these intents:`);
   for (const a of brief.articles) console.log(`  ${a.n}. [${a.intent}] ${a.brief}`);
