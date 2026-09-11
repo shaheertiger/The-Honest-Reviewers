@@ -106,6 +106,12 @@ const priorityGuides = new Set([
 
   // August 2026 batch: generators, mowers, waterproofing and concrete coatings.
   'best-zero-turn-mower',
+  'best-home-battery-backup-system',
+  'best-mini-split-heat-pump',
+  'best-heat-pump-water-heater',
+  'best-compact-tractor',
+  'best-log-splitter',
+  'best-table-saw',
   'best-robotic-lawn-mower',
   'best-inverter-generator',
   'best-dual-fuel-inverter-generator',

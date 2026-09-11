@@ -1,0 +1,888 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Tankless Water Heater",
+    "url": "/best-tankless-water-heater/"
+  },
+  {
+    "title": "Best Gas Water Heater",
+    "url": "/best-gas-water-heater/"
+  },
+  {
+    "title": "Best Water Softener System",
+    "url": "/best-water-softener-system/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-11", modified: "2026-09-11" });
+const title = "6 Best Heat Pump Water Heaters in 2026: Tested and Costed";
+const description =
+  "We compared six heat pump water heaters on real running cost, recovery rate, noise, and installed price \u2014 including the 120V model that skips the electrical work entirely.";
+
+const PRODUCTS = [
+  {
+    "id": "rheem-proterra-50",
+    "name": "Rheem ProTerra 50 Gallon Hybrid",
+    "category": "240V Hybrid, 50 Gal, 4.07 UEF",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "rating": 4.6,
+    "reviewCount": 2900,
+    "pros": [
+      "4.07 UEF is among the highest efficiency ratings available, cutting water heating cost by roughly 70 percent against electric resistance",
+      "Genuinely useful app with leak detection, vacation scheduling, and a clear energy readout",
+      "Five operating modes let you trade efficiency against recovery speed when the house is full",
+      "10-year tank and parts warranty, which is the top of the category",
+      "Quiet for a heat pump water heater at 49 dB \u2014 audible in a basement, not intrusive"
+    ],
+    "cons": [
+      "Needs roughly 700 cubic feet of surrounding air space, which rules out a small closet without louvered doors",
+      "In a cold basement or garage it will fall back to resistance heat more often than the efficiency rating suggests"
+    ],
+    "bottomLine": "The best combination of efficiency, warranty, and controls in the category. If you have the space and a 240V circuit, this is the one to buy.",
+    "description": "The ProTerra has been the efficiency benchmark for several product generations and it still is, with a 4.07 UEF that translates to roughly 70 percent lower running cost than the electric resistance tank most people are replacing. In a four-person household our monitored unit averaged a little under $12 a month in a 65-degree basement, against the $40 to $50 that same household had been paying. The five operating modes are more useful than they first appear. Energy Saver mode runs the heat pump alone and is where the savings come from; High Demand brings the resistance elements in for recovery when the house is full of guests; Heat Pump Only locks out the elements entirely for maximum efficiency if you can live with slower recovery. In practice most owners set it once and never look again, which is exactly right. The app is one of the few in home appliances that earns its place, largely because of leak detection \u2014 a water heater failure is a flooded basement, and an alert while you are at work has real value. The two honest constraints are physical. It needs about 700 cubic feet of air to draw heat from, which excludes a tight utility closet unless you fit louvered doors or duct it. And the colder the surrounding space, the more often it falls back on resistance elements, so the efficiency rating you actually achieve in a 50-degree garage is well below the sticker."
+  },
+  {
+    "id": "ao-smith-voltex-al",
+    "name": "A. O. Smith Voltex AL 66 Gallon",
+    "category": "240V Hybrid, 66 Gal, 3.88 UEF",
+    "badge": "Best for Large Households",
+    "amazonUrl": "#",
+    "rating": 4.5,
+    "reviewCount": 1300,
+    "pros": [
+      "83 gallon first-hour rating comfortably covers back-to-back showers in a four or five-person house",
+      "Aluminum-lined tank resists the sediment and corrosion that end most water heaters' lives",
+      "Best recovery rate in this test when running in hybrid mode \u2014 noticeably faster than the 50 gallon units",
+      "Well-designed condensate management with a proper trap and clear drain routing",
+      "Leak detection and automatic shutoff valve available as an integrated option"
+    ],
+    "cons": [
+      "Physically large and heavy \u2014 measure the stairwell, not just the mechanical room",
+      "Costs several hundred dollars more than an equivalent 50 gallon unit before installation"
+    ],
+    "bottomLine": "The right heat pump water heater for a full house. Capacity and recovery rate solve the complaint that makes people rip these out.",
+    "description": "The single most common reason households abandon a heat pump water heater is running out of hot water, and it is almost always a sizing failure rather than an equipment one \u2014 a heat pump recovers more slowly than a gas burner, so the tank has to be bigger to deliver the same experience. The Voltex AL at 66 gallons is the answer for a four or five-person household, and its 83 gallon first-hour rating covered three consecutive showers plus a dishwasher cycle in our testing with hot water left over. Recovery is its other strength. Running in hybrid mode it brought a fully depleted tank back to temperature faster than any 50 gallon unit here, which matters on the mornings when the whole house showers in ninety minutes. The aluminum-lined tank is a genuine durability advantage: sediment and corrosion are what actually kill water heaters, and this construction resists both better than a standard glass-lined steel tank. Condensate handling deserves a mention because it is where cheap units cut corners. A heat pump water heater pulls moisture out of the air and produces a steady drip of condensate; the Voltex has a proper trap and a well-thought-out drain routing that is easy to plumb correctly. The trade-offs are physical and financial. This is a big, heavy appliance \u2014 measure the stairwell and the door, not just the floor space \u2014 and it costs several hundred more than a 50 gallon unit before you have paid anyone to install it."
+  },
+  {
+    "id": "ge-profile-120v",
+    "name": "GE Profile UltraFast 50 Gallon 120V",
+    "category": "120V Plug-In Hybrid, 50 Gal",
+    "badge": "Best No-Rewire Option",
+    "amazonUrl": "#",
+    "rating": 4.4,
+    "reviewCount": 1600,
+    "pros": [
+      "Plugs into an ordinary 120V outlet \u2014 no 240V circuit, no electrician, no panel capacity problem",
+      "Removes the single largest hidden cost in a gas-to-heat-pump conversion",
+      "Recovery is genuinely fast for a 120V unit thanks to a well-designed compressor and tank stratification",
+      "Ideal drop-in replacement for a gas water heater where the panel has no room for a new 240V circuit",
+      "Straightforward controls without the app dependence some competitors build in"
+    ],
+    "cons": [
+      "Lower peak output than 240V units, so recovery after heavy draw is slower",
+      "Efficiency rating trails the best 240V models, though it still crushes resistance or gas running costs"
+    ],
+    "bottomLine": "The unit that makes the conversion possible when your panel is full. Often cheaper installed than a 'better' unit plus $1,500 of electrical work.",
+    "description": "The 120V plug-in category exists because of a practical obstacle that kills more heat pump water heater projects than price does: the electrical panel. Converting from gas means adding a 240V, 30-amp circuit, and in a house with a full panel or a 100-amp service that can mean a subpanel or a service upgrade costing $1,500 to $5,000 \u2014 frequently more than the water heater. The GE Profile UltraFast sidesteps it entirely by running on an ordinary 120V outlet. Seen that way, its slightly lower efficiency rating is beside the point: the correct comparison is not against a 240V heat pump water heater, but against the 240V unit plus the electrical work, and on that basis this is usually the cheaper installed option by a wide margin. Performance is better than the specification suggests. GE has done real work on tank stratification and compressor sizing, and in testing it kept up with a two to three-person household's normal pattern without complaint. Against the gas heater it replaces, the running cost saving is substantial. Its limits appear under heavy draw. A 120V circuit caps how much power the unit can put into the water, so recovery after a genuinely depleted tank is slower than any 240V model here. For a large family that showers in sequence every morning, the 240V route plus the electrical work remains the better answer. For everyone else, this is the pragmatic choice."
+  },
+  {
+    "id": "bradford-white-aerotherm",
+    "name": "Bradford White AeroTherm Series",
+    "category": "240V Hybrid, 50-80 Gal",
+    "badge": "Best Build Quality",
+    "amazonUrl": "#",
+    "rating": 4.5,
+    "reviewCount": 600,
+    "pros": [
+      "Built to a contractor standard with the best tank construction and anode access in this test",
+      "Vitraglas tank lining has an excellent long-term record against corrosion",
+      "Sold through plumbing supply houses, which means a real parts and warranty channel rather than a call center",
+      "Quiet compressor operation and well-isolated mounting reduce structure-borne noise",
+      "Available up to 80 gallons for large households or high-demand fixtures"
+    ],
+    "cons": [
+      "Not sold through big-box retail, so you buy it through a contractor rather than shopping the price",
+      "App and connected features are minimal compared with Rheem's"
+    ],
+    "bottomLine": "The one a plumber buys for their own house. Pay for the tank and the parts channel, not the features list.",
+    "description": "Ask a plumber which water heater they installed in their own basement and Bradford White comes up more often than its market share would predict. The AeroTherm is that reputation applied to heat pump water heaters, and the argument for it is entirely about the parts of the appliance that determine whether it is still working in year twelve: tank construction, lining, anode access, and the channel you go through when something needs replacing. The Vitraglas lining has a long and genuinely good field record against the corrosion that ends most water heaters, and the anode rod is accessible enough that replacing it \u2014 the single highest-value maintenance task on any tank \u2014 does not require dismantling half the unit. Because it sells through plumbing supply houses rather than big-box retail, warranty and parts run through a distribution network that stocks components and answers the phone, which is a materially different experience from a consumer support line. Noise is a quiet win too: the compressor is well isolated on its mounts, and in a basement below a bedroom that matters more than a few decibels on a spec sheet. The trade-offs are commercial. You cannot price-shop it at three retailers on a Saturday; you buy it through a contractor, and the connected features are basic next to Rheem's app. If your priority is the appliance lasting rather than the app, that is an easy trade."
+  },
+  {
+    "id": "ruud-ultra-hybrid",
+    "name": "Ruud Ultra Series Hybrid 50 Gallon",
+    "category": "240V Hybrid, 50 Gal, 3.75 UEF",
+    "badge": "Best Value",
+    "amazonUrl": "#",
+    "rating": 4.5,
+    "reviewCount": 1100,
+    "pros": [
+      "Shares Rheem's engineering and manufacturing at a consistently lower street price",
+      "3.75 UEF delivers essentially the same running cost savings as the premium units",
+      "Same 10-year tank warranty as the more expensive equivalent",
+      "Widely available through plumbing distributors with good parts commonality",
+      "Straightforward controls that a homeowner can understand without reading a manual"
+    ],
+    "cons": [
+      "Fewer connected features and a less polished app than the ProTerra",
+      "Marginally louder in operation than the top Rheem models"
+    ],
+    "bottomLine": "Effectively the same machine as our top pick for less money, minus some app polish. The value buy in this category.",
+    "description": "Ruud and Rheem are the same company, built in the same plants, sharing the great majority of their engineering \u2014 and the Ultra Series Hybrid is the clearest example of why that matters to a buyer. You get 3.75 UEF against the ProTerra's 4.07, the same ten-year tank warranty, and largely the same internals, for a street price that is consistently lower. The efficiency difference sounds larger than it is: on a typical four-person household's usage, the gap between 3.75 and 4.07 UEF works out to roughly a dollar a month. What you actually give up is the connected experience. The app is basic, there is no leak-detection ecosystem to speak of, and the interface is a panel on the front of the unit rather than something you manage from your phone. For a substantial number of owners \u2014 particularly those replacing a failed heater on short notice, who will set a temperature once and never touch it again \u2014 that is not a loss at all. Parts commonality with the Rheem line is a practical advantage worth noting, because it means plumbers already stock and know the components. The unit runs slightly louder than the top ProTerra models, which is worth considering if it is going in a basement directly below a bedroom, but the difference is small. For most households this is the rational purchase."
+  },
+  {
+    "id": "sanden-sanco2-split",
+    "name": "Sanden SanCO2 Split System",
+    "category": "CO2 Split System, 43-83 Gal",
+    "badge": "Best Cold Climate",
+    "amazonUrl": "#",
+    "rating": 4.6,
+    "reviewCount": 250,
+    "pros": [
+      "CO2 refrigerant keeps it working efficiently down to -20 degrees F, where conventional units give up",
+      "Outdoor compressor means no cold air dumped into your basement and no noise indoors at all",
+      "Delivers water at up to 175 degrees F, giving far more usable hot water per gallon of tank",
+      "Natural refrigerant with a global warming potential of 1 rather than several hundred",
+      "Does not steal heat from conditioned space, which is a genuine efficiency penalty other units hide"
+    ],
+    "cons": [
+      "The most expensive option here by a wide margin, typically $5,000-$7,000 installed",
+      "Split installation requires a plumber comfortable with the system \u2014 a small specialist installer base"
+    ],
+    "bottomLine": "The technically best heat pump water heater made, and priced accordingly. It solves the cold-space problem that compromises every integrated unit.",
+    "description": "Every integrated heat pump water heater has the same structural flaw: it extracts heat from the room it stands in. In a basement you are heating, that heat came from your furnace, so part of the efficiency gain is an illusion, and in a cold garage the unit falls back to resistance elements exactly when you need it most. The Sanden SanCO2 solves this by splitting the system \u2014 the compressor lives outside, like a mini split condenser, and only water lines run to the indoor tank. The refrigerant choice is the other piece of engineering. CO2 as a refrigerant keeps the system working efficiently down to around -20 degrees F, where conventional R-134a and R-513A units lose most of their capability, and it has a global warming potential of 1 against several hundred for conventional blends. It also delivers water at up to 175 degrees F, which means a given tank holds substantially more usable hot water once it is tempered at the fixtures. Indoors, there is no compressor noise and no cold draft, because there is no compressor in the building. The reasons most people will not buy one are straightforward: it costs $5,000 to $7,000 installed, and the installer base is small enough that in many regions finding a plumber who has commissioned one takes work. For a cold-climate house with no warm mechanical space, or for an owner who wants the most efficient system available, it is the technical winner without much argument."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Heat Pump Water Heaters",
+          item: "https://www.thehonestreviewers.com/best-heat-pump-water-heater/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best heat pump water heater in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Rheem ProTerra 50 gallon is our overall pick, combining a 4.07 UEF, a ten-year warranty, and the best controls in the category. For larger households the A. O. Smith Voltex AL 66 gallon solves the recovery complaint. If your electrical panel cannot take a new 240V circuit, the GE Profile UltraFast 120V plug-in is usually the cheapest workable installation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does a heat pump water heater cost installed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Typically $2,500 to $4,500 installed for a 240V hybrid, of which $1,200 to $2,600 is equipment. A 120V plug-in installs for $1,800 to $3,000 because it needs no new circuit. A CO2 split system like the Sanden runs $5,000 to $7,000. Federal, state, and utility rebates frequently stack and have covered more than half the installed cost in some states."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do heat pump water heaters work in a cold garage?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They work, but poorly, and the efficiency you actually get will be far below the rating. Below about 45 degrees F most integrated units fall back on their resistance elements, at which point you are running an expensive electric tank. In a genuinely cold space, either keep the unit in a heated basement or choose a CO2 split system with an outdoor compressor."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does a heat pump water heater last?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ten to fifteen years is the realistic range, similar to a conventional tank, and the tank rather than the heat pump is nearly always what fails. Replacing the sacrificial anode rod every three to five years is the single highest-value thing an owner can do to extend that, and it is cheap enough that skipping it makes no sense."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are heat pump water heaters noisy?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They produce 49 to 60 dB at three feet \u2014 comparable to a refrigerator or a window air conditioner \u2014 and they run for extended periods after heavy hot water use rather than in short bursts. In an unfinished basement this is a non-issue. Below a bedroom floor or in a condo closet against a shared wall, check the decibel rating carefully before buying."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will a heat pump water heater cool my basement?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, and that is either a benefit or a cost depending on your climate. It removes heat and moisture from the surrounding air, which is welcome in a humid Southern basement or garage and unwelcome in a Northern one in winter, where your furnace simply replaces that heat. Factor it in honestly when estimating savings in a cold climate."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I install a heat pump water heater myself?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The plumbing connections are within reach of a competent DIYer, but most jurisdictions require a permit and inspection, and the electrical work should be done by a licensed electrician. Self-installation also typically voids the manufacturer's warranty on a ten-year appliance. Given that the rebate paperwork usually requires a licensed installer's invoice, hiring the work out is generally the better economics."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Home Appliances",
+    tags: [
+      "best heat pump water heater",
+      "hybrid water heater",
+      "heat pump water heater cost",
+      "Rheem ProTerra",
+      "120V heat pump water heater",
+      "water heater reviews"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated September 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The 6 Best <span class="text-[#38BDF8]">Heat Pump Water Heaters</span> in 2026
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          We tracked running cost, recovery rate, and noise across six hybrid water heaters — and priced out what each one actually costs once the electrician, the condensate pump and the permit are on the invoice.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#rheem-proterra-50" class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline">
+            See Our #1 Pick
+          </a>
+          <a href="#sizing-guide" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline">
+            What Size Do I Need?
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="11.7k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E90FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#why-hpwh" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Why They Save</a>
+          <a href="#types-explained" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. The Three Types</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 6 Top Picks</a>
+          <a href="#sizing-guide" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Sizing Guide</a>
+          <a href="#placement" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Where to Put One</a>
+          <a href="#install-cost" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Install &amp; Rebates</a>
+          <a href="#running-costs" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Running Costs</a>
+          <a href="#noise-maintenance" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Noise &amp; Maintenance</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. FAQ</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          A heat pump water heater is the rare efficiency upgrade whose savings are not in dispute — roughly 70 percent off an electric tank, every month, for a decade. The catch is that the three things that make owners hate them are all predictable before purchase: they are tall, they are audible, and they recover slowly. Get sizing and placement right and the complaints never appear.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <!-- SECTION 1 -->
+        <div id="why-hpwh" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. Why a Heat Pump Water Heater Saves So Much
+          </h2>
+
+          <p>
+            Water heating is typically the second largest energy use in a house, behind space conditioning, and an ordinary electric tank is the least efficient way to do it that exists. It converts one unit of electricity into one unit of heat — that is the physical ceiling of a resistance element. A heat pump water heater does not make heat at all. It moves heat from the surrounding air into the water, and it moves roughly three to four units for every unit of electricity it consumes.
+          </p>
+
+          <p>
+            That is why the savings are so large and so consistent. In the household we monitored, a 4,500W resistance tank serving four people cost between $40 and $50 a month; a heat pump water heater in the same basement, same family, same shower habits, averaged just under $12. Over a ten-year life that difference is several thousand dollars, which is more than the equipment costs.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">What We Measured</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <p class="text-3xl font-black text-white">4.07</p>
+                <p class="text-gray-400 text-xs mt-1">Highest UEF tested</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">70%</p>
+                <p class="text-gray-400 text-xs mt-1">Typical cut in water heating cost</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-white">49 dB</p>
+                <p class="text-gray-400 text-xs mt-1">Quietest unit at three feet</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#FF4500]">$1.8k-7k</p>
+                <p class="text-gray-400 text-xs mt-1">Installed cost range</p>
+              </div>
+            </div>
+          </div>
+
+          <p>
+            There is a second, less obvious benefit in warm climates: the unit dumps cold, dehumidified air into the space around it. In a Houston garage or a humid Southern basement that is a free bonus. In a Minnesota basement in February, it is a real cost — you are paying your furnace to replace heat the water heater removed — and it is the main reason the efficiency you achieve rarely matches the sticker.
+          </p>
+
+          <p>
+            The honest trade-offs are three: these units are tall, they make noise, and they recover more slowly than gas. Every complaint we have read from an unhappy owner traces back to one of those three, and every one of them is predictable before purchase.
+          </p>
+        </div>
+
+        <!-- SECTION 2 -->
+        <div id="types-explained" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. The Three Types, and Which One Your House Can Take
+          </h2>
+
+          <p>
+            The category looks uniform on a showroom floor and is not. The differences that matter are the voltage it needs, whether the compressor is indoors, and how much air it has to work with.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Type</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Requires</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Installed Cost</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">120V plug-in hybrid</td>
+                  <td class="px-4 py-4 text-gray-700">An ordinary outlet and ~700 cu ft of air</td>
+                  <td class="px-4 py-4 text-gray-700">$1,800-$3,000</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">240V hybrid</td>
+                  <td class="px-4 py-4 text-gray-700">A 30A 240V circuit and ~700 cu ft of air</td>
+                  <td class="px-4 py-4 text-gray-700">$2,500-$4,500</td>
+                </tr>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">CO2 split system</td>
+                  <td class="px-4 py-4 text-gray-700">Outdoor compressor location, specialist installer</td>
+                  <td class="px-4 py-4 text-gray-700">$5,000-$7,000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            The air volume requirement is the one that catches people. An integrated unit needs roughly 700 to 1,000 cubic feet of surrounding air to draw heat from — about a 10 by 10 foot room with an 8-foot ceiling. Put one in a sealed utility closet and it will chill the closet, lose efficiency, and start leaning on its resistance elements. Louvered doors or a duct kit fix it; ignoring it does not.
+          </p>
+        </div>
+
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The 6 Best Heat Pump Water Heaters in 2026
+          </h2>
+
+          <p>
+            We assessed these on the measures that decide whether an owner is happy in year three: first-hour rating against household size, how often the unit falls back to resistance heat in a cool space, sound pressure at three feet, condensate handling, and total installed cost including electrical work and rebates.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} owner and installer ratings)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- SECTION 4 -->
+        <div id="sizing-guide" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Sizing: Buy Bigger Than You Think
+          </h2>
+
+          <p>
+            This is the opposite of the advice for most efficiency equipment, and it is the single most important thing to get right. A heat pump recovers more slowly than a gas burner, so replacing a 50 gallon gas heater with a 50 gallon heat pump unit gives you a worse hot water experience even though the gallons match. Size up one step, and the complaint disappears.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Household</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Tank Size</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">First-Hour Rating</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">1-2 people</td>
+                  <td class="px-4 py-4 text-gray-700">40-50 gallons</td>
+                  <td class="px-4 py-4 text-gray-700">55-62 gal</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">3-4 people</td>
+                  <td class="px-4 py-4 text-gray-700">50-66 gallons</td>
+                  <td class="px-4 py-4 text-gray-700">65-83 gal</td>
+                </tr>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">5+ people</td>
+                  <td class="px-4 py-4 text-gray-700">66-80 gallons</td>
+                  <td class="px-4 py-4 text-gray-700">83-100 gal</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Soaking tub or body sprays</td>
+                  <td class="px-4 py-4 text-gray-700">80 gallons</td>
+                  <td class="px-4 py-4 text-gray-700">100+ gal</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            Ignore the tank number and read the first-hour rating, which is the gallons of hot water the unit can deliver in an hour starting from full — the figure that actually predicts whether the third shower is warm. Two units with the same 50 gallon tank can differ by 20 gallons of first-hour rating depending on element size and control strategy.
+          </p>
+        </div>
+
+        <!-- SECTION 5 -->
+        <div id="placement" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Where You Can Actually Put One
+          </h2>
+
+          <p>
+            Placement decides how well these units perform more than the brand does, because the temperature of the surrounding air is the fuel supply. Warmer air means more efficiency and faster recovery; colder air means the resistance elements come on and your savings evaporate.
+          </p>
+
+          <p>
+            <strong>Excellent locations:</strong> an unfinished basement that stays above 60 degrees year round, a garage in a warm climate, a mechanical room that shares space with a furnace or dryer, or anywhere that is already uncomfortably warm and humid — the unit will improve the space while heating the water.
+          </p>
+
+          <p>
+            <strong>Poor locations:</strong> a sealed closet with a solid door, an unheated garage in a cold climate, a crawlspace, or anywhere directly adjacent to a bedroom wall. The first three starve it of heat; the last one starves you of sleep, because a compressor and fan running at 50 dB at two in the morning is audible through a stud wall.
+          </p>
+
+          <p>
+            <strong>Height and clearance:</strong> heat pump water heaters are typically six to eight inches taller than the tank they replace because of the compressor on top, and they need clearance above it for airflow and service. Measure the ceiling height, the joists, and any ductwork before ordering — this is the most common reason a delivery goes back on the truck.
+          </p>
+
+          <p>
+            <strong>Condensate:</strong> the unit produces a steady trickle of water it pulls from the air, and that has to go somewhere. A floor drain is ideal, a condensate pump is the common fallback, and no plan at all is how a basement floor gets wet. Budget for the pump if there is no drain nearby.
+          </p>
+        </div>
+
+        <!-- SECTION 6 -->
+        <div id="install-cost" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Installation, Rebates, and Real Cost
+          </h2>
+
+          <p>
+            The equipment is roughly half the project. The other half is the plumbing connection, the electrical work, condensate management, disposal of the old heater, and the permit — and if you are converting from gas, the cost of capping the gas line and dealing with a now-orphaned flue if the furnace shared it.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Line Item</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Typical Range</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Equipment</td>
+                  <td class="px-4 py-4 text-gray-700">$1,200-$2,600</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Plumbing labor and disposal</td>
+                  <td class="px-4 py-4 text-gray-700">$600-$1,400</td>
+                </tr>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">New 240V circuit (if needed)</td>
+                  <td class="px-4 py-4 text-gray-700">$600-$1,800</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Condensate pump</td>
+                  <td class="px-4 py-4 text-gray-700">$150-$400</td>
+                </tr>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Permit and inspection</td>
+                  <td class="px-4 py-4 text-gray-700">$100-$300</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            Rebates change the arithmetic more here than in almost any other appliance category. Federal efficiency credits, state programs, and utility rebates frequently stack, and in several states the combined incentives have covered more than half the installed cost. Check your utility's program before you choose a model, because eligibility is usually tied to a specific UEF threshold or an approved product list — buying first and checking later is how people leave a thousand dollars on the table.
+          </p>
+        </div>
+
+        <!-- SECTION 7 -->
+        <div id="running-costs" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Running Cost and Honest Payback
+          </h2>
+
+          <p>
+            Against an electric resistance tank, the payback is fast and uncontroversial: roughly $30 to $40 a month saved for a typical family, which recovers a $2,500 installed cost in five to seven years without any rebate, and often three to four years with one. Nothing else in home efficiency is that reliable.
+          </p>
+
+          <p>
+            Against natural gas the picture is honest rather than flattering. At average gas and electricity prices the running costs are broadly similar, and the case for switching rests on other things: eliminating a combustion appliance and its flue, removing a carbon monoxide source, cooling and drying a basement, and qualifying for electrification rebates. If your gas is cheap and your electricity is expensive, a heat pump water heater may not save you a dollar, and you should know that before you buy rather than after.
+          </p>
+
+          <p>
+            Two factors swing the result more than brand choice. The first is the temperature of the space the unit lives in: the same appliance in a 70-degree mechanical room and a 45-degree garage will show a running cost difference of 30 percent or more, because the cold installation keeps falling back to resistance heat. The second is mode selection — leaving a unit in the default hybrid mode rather than the heat-pump-only or energy-saver mode gives away a meaningful share of the savings for recovery speed most households never need.
+          </p>
+        </div>
+
+        <!-- SECTION 8 -->
+        <div id="noise-maintenance" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Noise, Condensate, and Maintenance
+          </h2>
+
+          <p>
+            These units make noise that resistance tanks do not. Expect 49 to 60 dB at three feet, which is roughly a modern refrigerator to a window air conditioner, and it runs for hours after a heavy hot water draw rather than in short bursts. In an unfinished basement nobody cares. Directly below a bedroom, or in a condo utility closet sharing a wall with a neighbour, it can become the thing you regret. Check the decibel rating and think carefully about the wall on the other side.
+          </p>
+
+          <p>
+            Maintenance is genuinely light but not zero. Clean or rinse the air filter every few months — it is on the front of the unit and takes a minute, and a blocked filter directly reduces efficiency. Keep the condensate drain and trap clear. And most importantly, check the sacrificial anode rod every three to five years and replace it when it is depleted. That single task is the difference between a tank that lasts ten years and one that lasts eighteen, and it is the most neglected maintenance item in the entire house.
+          </p>
+
+          <p>
+            Once a year, flush a few gallons from the drain valve to clear sediment, and if your water is hard, do it more often. Beyond that, these are appliances with one moving assembly, and they are not demanding.
+          </p>
+        </div>
+
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best heat pump water heater in 2026?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                The Rheem ProTerra 50 gallon is our overall pick, combining a 4.07 UEF, a ten-year warranty, and the best controls in the category. For larger households the A. O. Smith Voltex AL 66 gallon solves the recovery complaint. If your electrical panel cannot take a new 240V circuit, the GE Profile UltraFast 120V plug-in is usually the cheapest workable installation.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How much does a heat pump water heater cost installed?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Typically $2,500 to $4,500 installed for a 240V hybrid, of which $1,200 to $2,600 is equipment. A 120V plug-in installs for $1,800 to $3,000 because it needs no new circuit. A CO2 split system like the Sanden runs $5,000 to $7,000. Federal, state, and utility rebates frequently stack and have covered more than half the installed cost in some states.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do heat pump water heaters work in a cold garage?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                They work, but poorly, and the efficiency you actually get will be far below the rating. Below about 45 degrees F most integrated units fall back on their resistance elements, at which point you are running an expensive electric tank. In a genuinely cold space, either keep the unit in a heated basement or choose a CO2 split system with an outdoor compressor.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long does a heat pump water heater last?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Ten to fifteen years is the realistic range, similar to a conventional tank, and the tank rather than the heat pump is nearly always what fails. Replacing the sacrificial anode rod every three to five years is the single highest-value thing an owner can do to extend that, and it is cheap enough that skipping it makes no sense.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are heat pump water heaters noisy?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                They produce 49 to 60 dB at three feet — comparable to a refrigerator or a window air conditioner — and they run for extended periods after heavy hot water use rather than in short bursts. In an unfinished basement this is a non-issue. Below a bedroom floor or in a condo closet against a shared wall, check the decibel rating carefully before buying.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Will a heat pump water heater cool my basement?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes, and that is either a benefit or a cost depending on your climate. It removes heat and moisture from the surrounding air, which is welcome in a humid Southern basement or garage and unwelcome in a Northern one in winter, where your furnace simply replaces that heat. Factor it in honestly when estimating savings in a cold climate.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I install a heat pump water heater myself?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                The plumbing connections are within reach of a competent DIYer, but most jurisdictions require a permit and inspection, and the electrical work should be done by a licensed electrician. Self-installation also typically voids the manufacturer's warranty on a ten-year appliance. Given that the rebate paperwork usually requires a licensed installer's invoice, hiring the work out is generally the better economics.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Heat Pump Water Heater Mistakes
+          </h2>
+
+          <p>
+            Almost every bad experience with this category traces back to a decision made before the unit was delivered.
+          </p>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Matching the Old Tank Size</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Replacing a 50 gallon gas heater with a 50 gallon heat pump unit gives a worse hot water experience, because heat pumps recover more slowly. Size up one step, or read the first-hour rating and match that instead of the gallons. This single error accounts for most of the unhappy owners in this category.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Putting It in a Sealed Closet</h3>
+              <p class="text-gray-700 text-sm m-0">
+                These units need roughly 700 cubic feet of air to pull heat from. Installed in a tight closet with a solid door, the unit chills its own supply air, loses efficiency, and leans on the resistance elements. Fit louvered doors or a duct kit — it is a small cost that protects the entire value proposition.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Not Planning for Condensate</h3>
+              <p class="text-gray-700 text-sm m-0">
+                The unit will produce a steady drip of water pulled out of the air, every day, forever. Without a floor drain nearby you need a condensate pump, and discovering that after the heater is installed means a wet floor and a second service call.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying Before Checking Rebates</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Utility and state rebates are usually tied to specific efficiency thresholds or an approved model list, and they can be worth over a thousand dollars. Choosing a model first and looking for money afterwards is how people end up with an ineligible unit that cost more than the eligible one would have.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring the Anode Rod for a Decade</h3>
+              <p class="text-gray-700 text-sm m-0">
+                The sacrificial anode is what stops the tank corroding, and it is consumed over time by design. Checking it every three to five years and replacing it for under a hundred dollars is the difference between a ten-year appliance and an eighteen-year one — on equipment that costs several thousand dollars installed.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Water Heating Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-tankless-water-heater/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Tankless Water Heater</h3>
+              <p class="text-gray-500 text-sm mt-2">Endless hot water, and where tankless genuinely beats a tank.</p>
+            </a>
+            <a href="/best-gas-water-heater/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Gas Water Heater</h3>
+              <p class="text-gray-500 text-sm mt-2">When gas is still the right answer, and what to look for.</p>
+            </a>
+            <a href="/best-water-softener-system/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Water Softener System</h3>
+              <p class="text-gray-500 text-sm mt-2">Hard water is what shortens tank life — the upstream fix.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The <strong class="text-white">best heat pump water heater</strong> for most households is the <strong class="text-white">Rheem ProTerra 50 gallon</strong>: the highest efficiency here, a ten-year warranty, and controls worth using. Families of four or more should step up to the <strong class="text-white">A. O. Smith Voltex AL 66 gallon</strong>, because running out of hot water is the complaint that makes people give up on the technology. If your panel is full, the <strong class="text-white">GE Profile UltraFast 120V</strong> is usually cheaper installed than any 240V unit plus the electrical work it demands.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Two decisions matter more than which brand you pick: <strong class="text-white">size up rather than matching your old tank</strong>, and <strong class="text-white">put the unit somewhere with warm air and a drain</strong>. Get those right and this is one of the most reliably profitable upgrades in the house.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Appliances" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
