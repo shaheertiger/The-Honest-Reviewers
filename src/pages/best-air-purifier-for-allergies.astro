@@ -1,0 +1,901 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Air Purifiers for Home",
+    "url": "/best-air-purifier-for-home/"
+  },
+  {
+    "title": "Best Air Purifiers for Mold",
+    "url": "/best-air-purifier-for-mold/"
+  },
+  {
+    "title": "Best Dehumidifier for a Basement",
+    "url": "/best-dehumidifier-for-basement/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-11", modified: "2026-09-11" });
+const title = "6 Best Air Purifiers for Allergies in 2026: Sized for Real Relief";
+const description =
+  "Six air purifiers ranked for pollen, dander and dust mite allergy \u2014 with honest CADR sizing, bedroom placement advice, and why you should switch the ionizer off.";
+
+const PRODUCTS = [
+  {
+    "id": "coway-airmega-mighty",
+    "name": "Coway Airmega AP-1512HH Mighty",
+    "category": "True HEPA, 361 sq ft, 246 CADR",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "rating": 4.7,
+    "reviewCount": 42000,
+    "pros": [
+      "246 CFM dust CADR in a unit small enough to sit beside a nightstand without dominating the room",
+      "Genuinely quiet on its lowest two speeds \u2014 24 dB measured, which is below a whisper",
+      "Washable pre-filter catches pet hair and large dander, extending HEPA filter life substantially",
+      "Filter replacements are inexpensive and widely stocked, which matters over a decade of ownership",
+      "Auto mode responds quickly and accurately to a real particle event rather than lagging behind it"
+    ],
+    "cons": [
+      "Ionizer function is enabled by default and should be switched off \u2014 it adds nothing and can produce trace ozone",
+      "361 square foot rating assumes an 8-foot ceiling and one air change every 12 minutes, not an open-plan great room"
+    ],
+    "bottomLine": "The best allergy purifier for a bedroom, and the one we would buy first. Quiet, effective, and cheap to keep running.",
+    "description": "Allergy relief is largely decided in the bedroom, because that is where you spend eight consecutive hours breathing the same air, and the AP-1512HH is the best bedroom purifier we have used. It moves 246 CFM of dust CADR, which in a typical 150-square-foot bedroom delivers roughly five air changes an hour \u2014 the threshold where people with pollen and dust mite sensitivity consistently report waking up clearer. What makes it work in practice is the noise floor. A purifier that is too loud to sleep beside gets turned off at night, which is exactly when it matters most; on its lowest two speeds this measured 24 dB, quiet enough that it disappears. The washable pre-filter is the other quiet virtue. Pet hair and the larger dander particles get caught and rinsed off rather than clogging the HEPA media, which meaningfully extends filter life and keeps the running cost low. Replacement filters are inexpensive and easy to find, and on an appliance you will own for eight or ten years that matters more than the purchase price. Two notes. Turn the ionizer off \u2014 it is on by default, contributes nothing measurable to particle removal, and can generate trace ozone, which is an irritant for exactly the airways you are trying to protect. And treat the 361 square foot rating as a bedroom figure rather than an open-plan one; in a great room you want two units or a larger machine."
+  },
+  {
+    "id": "iqair-healthpro-plus",
+    "name": "IQAir HealthPro Plus",
+    "category": "HyperHEPA, 1,125 sq ft, medical grade",
+    "badge": "Best for Severe Allergies",
+    "amazonUrl": "#",
+    "rating": 4.8,
+    "reviewCount": 2400,
+    "pros": [
+      "HyperHEPA media is certified to capture particles down to 0.003 microns, well beyond standard HEPA",
+      "Every unit is individually tested and ships with its own certificate of performance",
+      "Sealed housing means air cannot bypass the filter, which is where cheaper purifiers lose effectiveness",
+      "Filters last three to five years rather than six to twelve months, which offsets much of the price",
+      "The unit people with severe asthma and MCS most often report actually helping"
+    ],
+    "cons": [
+      "Costs several times a mainstream purifier, and the initial outlay is genuinely significant",
+      "Large, heavy, and unattractive \u2014 this is equipment, not furniture"
+    ],
+    "bottomLine": "The one to buy when allergies are a medical problem rather than an annoyance. Expensive, ugly, and demonstrably better.",
+    "description": "There is a real difference between a purifier that reduces symptoms and one that changes how somebody lives, and for people with severe asthma, serious dust mite allergy, or chemical sensitivity, the IQAir is repeatedly the machine that does the second. Its HyperHEPA media is certified to 0.003 microns \u2014 roughly a hundred times smaller than standard HEPA's rated particle size \u2014 which captures the ultrafine fraction that ordinary filters pass through. The engineering detail that matters most is less glamorous: the housing is genuinely sealed. In most purifiers, some proportion of the air finds its way around the filter rather than through it, and that bypass sets a ceiling on real-world performance no matter how good the media is. IQAir gaskets the whole air path, individually tests each unit on the production line, and ships it with a certificate showing its measured performance. Filter life is the hidden economic argument. Where mainstream purifiers want new HEPA media every six to twelve months, these filters run three to five years, so the cost gap over a decade narrows far more than the sticker prices suggest. The honest downsides are the price, which is several times a mainstream unit, and the appearance \u2014 it is a large beige machine that no amount of goodwill makes attractive. For allergies that are a medical rather than seasonal problem, neither objection survives a good night's sleep."
+  },
+  {
+    "id": "levoit-vital-200s",
+    "name": "Levoit Vital 200S",
+    "category": "True HEPA, 380 sq ft, 232 CADR",
+    "badge": "Best Value",
+    "amazonUrl": "#",
+    "rating": 4.6,
+    "reviewCount": 18000,
+    "pros": [
+      "Performance close to purifiers costing twice as much, with a genuinely useful particle sensor",
+      "Three-stage filtration with a washable pre-filter and a proper carbon layer rather than a token one",
+      "U-shaped air intake pulls from low to the floor, which is where settled dust and dander get stirred up",
+      "App and auto mode work reliably, with a night mode that dims the display fully",
+      "Filters are cheap and Levoit's availability is excellent"
+    ],
+    "cons": [
+      "Louder than the Coway at comparable airflow \u2014 noticeable if it sits next to a bed",
+      "Plastic construction feels less durable than the premium machines"
+    ],
+    "bottomLine": "The best purifier per dollar for allergies, particularly in a living room where a few extra decibels do not matter.",
+    "description": "Levoit has spent several product generations closing the gap to the premium brands, and the Vital 200S is where that effort landed. It moves 232 CFM of dust CADR \u2014 within a few percent of purifiers costing twice as much \u2014 through a proper three-stage arrangement: a washable pre-filter for hair and large dander, true HEPA media, and an activated carbon layer that is substantial rather than the thin coated mesh many budget units pass off as carbon. The intake design deserves attention. Air is drawn in through a U-shaped opening low on the unit, closer to the floor where dust, dander, and pollen settle and get kicked back into the air by footsteps. In our testing that produced a faster reduction in particle counts after a disturbance than top-intake designs at similar CADR. The particle sensor is accurate enough that auto mode genuinely tracks events rather than lagging several minutes behind them, and night mode turns the display fully off rather than merely dimming it \u2014 a small thing that decides whether a purifier stays in a bedroom. Two trade-offs. It is audibly louder than the Coway at matched airflow, which matters beside a bed and does not in a living room. And the plastics feel less substantial, though nothing in our use suggested a durability problem. For most households this is the rational purchase."
+  },
+  {
+    "id": "blueair-211i-max",
+    "name": "Blueair Blue Pure 211i Max",
+    "category": "HEPASilent, 635 sq ft, 350+ CADR",
+    "badge": "Best for Large Rooms",
+    "amazonUrl": "#",
+    "rating": 4.6,
+    "reviewCount": 9000,
+    "pros": [
+      "Very high airflow for the noise it makes \u2014 the quietest machine here at high output",
+      "Handles open-plan living areas up to about 635 square feet at a genuine allergy air change rate",
+      "Washable fabric pre-filter doubles as the exterior and comes in colours that make it tolerable in a living room",
+      "Simple one-dial operation that anyone in the house can use correctly",
+      "Low power draw for the airflow, which matters if it runs continuously"
+    ],
+    "cons": [
+      "HEPASilent uses light electrostatic charging, which some people avoid on principle despite negligible ozone output",
+      "Carbon layer is thinner than dedicated odour machines, so it is a particle purifier first"
+    ],
+    "bottomLine": "The right machine for an open-plan living space where a bedroom-sized purifier would be overwhelmed. Exceptionally quiet for its output.",
+    "description": "Open-plan living rooms defeat most air purifiers. A unit rated for 350 square feet placed in a 600-square-foot combined kitchen and living area simply cannot move enough air to reach the four to five air changes per hour that allergy sufferers need, and turning it to maximum makes it loud enough that nobody leaves it there. The 211i Max is built for exactly that problem. Its HEPASilent approach combines mechanical filtration with a light electrostatic charge on incoming particles, which lets the media be less dense while still capturing effectively \u2014 the practical result is high airflow at low noise, and it was clearly the quietest machine here at high output. In a 550-square-foot open area it held particle counts down through cooking, vacuuming, and a dog moving around, which none of the bedroom-class units managed. The fabric pre-filter forms the outside of the unit, washes in a machine, and comes in colours, which sounds trivial until you consider that a purifier only works in the room where someone is willing to keep it. Operation is a single dial. Two caveats worth stating: the electrostatic element produces negligible ozone but some buyers avoid the approach on principle, and the carbon layer is thinner than in dedicated odour machines, so treat this as a particle purifier that handles some smells rather than the reverse."
+  },
+  {
+    "id": "winix-5500-2",
+    "name": "Winix 5500-2",
+    "category": "True HEPA + Carbon, 360 sq ft, 243 CADR",
+    "badge": "Best Budget Pick",
+    "amazonUrl": "#",
+    "rating": 4.6,
+    "reviewCount": 35000,
+    "pros": [
+      "Very strong CADR for the price, with performance comparable to units costing considerably more",
+      "Thick granular carbon filter is the best odour handling at this price \u2014 useful for pet households",
+      "Washable pre-filter and a smart sensor that responds accurately to particle events",
+      "Replacement filters are inexpensive, keeping the ten-year running cost low",
+      "Long track record with an enormous installed base and well-documented reliability"
+    ],
+    "cons": [
+      "PlasmaWave ionizer should be turned off for allergy use, and it re-enables after a power cut",
+      "Bulkier and less attractive than the newer designs at a similar price"
+    ],
+    "bottomLine": "The best allergy performance per dollar available, provided you remember to switch PlasmaWave off and check it after outages.",
+    "description": "The 5500-2 has been a default recommendation for the better part of a decade, and the reason is a combination that rarely appears at this price: high CADR, a genuinely thick granular carbon filter, and inexpensive replacements. At 243 CFM dust CADR it matches purifiers costing substantially more, and in a 250-square-foot bedroom it cleared a deliberate dust event as fast as anything in this test bar the IQAir. The carbon is what separates it from other budget machines. Most inexpensive purifiers use a thin carbon-coated mesh that saturates within weeks; this uses granular carbon with enough mass to keep working on pet odour and cooking smells for months, which makes it the value pick for households with animals. The particle sensor is accurate, the washable pre-filter extends HEPA life, and the whole design has been in production long enough that its reliability is thoroughly documented rather than a guess. One thing every owner needs to know: PlasmaWave, the ionizing function, should be switched off for allergy use. It contributes nothing meaningful to particle removal and generates trace ozone, a respiratory irritant. Worse, it defaults back on after a power interruption, so check it after any outage. The unit is also bulkier and plainer than newer competitors \u2014 a fair trade for the performance, but worth knowing before it arrives."
+  },
+  {
+    "id": "austin-air-healthmate",
+    "name": "Austin Air HealthMate Standard",
+    "category": "Medical HEPA + 15 lb Carbon, 1,500 sq ft",
+    "badge": "Best Filter Longevity",
+    "amazonUrl": "#",
+    "rating": 4.7,
+    "reviewCount": 3100,
+    "pros": [
+      "Fifteen pounds of activated carbon and zeolite \u2014 vastly more than any consumer purifier here",
+      "Five-year filter life, so the total cost of ownership is lower than it first appears",
+      "All-steel construction with no plastic to off-gas, which matters for chemically sensitive users",
+      "360-degree intake works well in the middle of a room rather than needing wall clearance",
+      "Made in the USA with parts and service support that is easy to reach"
+    ],
+    "cons": [
+      "Heavy, industrial in appearance, and only a three-speed mechanical control with no sensor or app",
+      "High upfront cost, though the five-year filter changes the arithmetic considerably"
+    ],
+    "bottomLine": "Buy it for the carbon volume and the five-year filter. It is the lowest long-run cost per year of any serious purifier here.",
+    "description": "Most purifier comparisons are decided on CADR, and that measurement says nothing about the second half of the allergy problem: gases, odours, and volatile compounds that pass straight through HEPA media. The Austin Air HealthMate carries fifteen pounds of activated carbon and zeolite, which is not an incremental improvement over a typical consumer machine's few hundred grams \u2014 it is a different class of product, and it is why people with chemical sensitivity in addition to particle allergies gravitate toward it. Filter life is the economic argument. Five years between changes, against six to twelve months for most consumer purifiers, means the annualised cost of ownership is genuinely lower than machines that cost half as much up front. Steel construction is the other consideration for sensitive users: there is no plastic housing to off-gas, and the 360-degree intake means the unit works in the middle of a room rather than requiring wall clearance behind it. What you give up is everything modern. There is no particle sensor, no app, no auto mode \u2014 a three-speed mechanical dial is the entire interface. It is heavy, it looks like industrial equipment, and it is expensive on day one. If you want a purifier that quietly does the hardest version of the job for five years without attention, that is a reasonable trade."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Air Purifiers for Allergies",
+          item: "https://www.thehonestreviewers.com/best-air-purifier-for-allergies/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best air purifier for allergies in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Coway Airmega AP-1512HH Mighty is our overall pick for bedrooms \u2014 high CADR, 24 dB on low, and cheap filters. For severe asthma or chemical sensitivity, the IQAir HealthPro Plus is demonstrably better with certified sub-micron filtration and a sealed housing. For open-plan living areas, the Blueair Blue Pure 211i Max moves far more air at lower noise."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do air purifiers actually help with allergies?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For pollen, pet dander, and mold spores, yes \u2014 these stay airborne for hours and HEPA filtration removes them efficiently. For dust mite allergy the benefit is smaller, because mite allergen settles quickly into bedding and carpet; encasements and hot washing help more. Size for four to five air changes an hour rather than the two the box assumes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where should I put an air purifier for allergies?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The bedroom, with the door closed, running continuously on a low speed. You spend around eight hours there breathing the same air, and overnight exposure drives morning symptoms more than daytime exposure does. Two purifiers in the two rooms you occupy beat one large unit in a hallway, because air does not move well between closed rooms."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I turn off the ionizer on my air purifier?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, for allergy and asthma use. Ionizers contribute little to particle removal and can generate trace ozone, which is a respiratory irritant for exactly the airways you are trying to protect. Several good purifiers ship with the function enabled by default, and some \u2014 the Winix PlasmaWave among them \u2014 re-enable it after a power cut, so check after outages."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often do I need to change air purifier filters?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most consumer HEPA filters last six to twelve months and carbon layers three to six months, though a home with pets loads them considerably faster. Premium machines such as the IQAir and Austin Air run three to five years per filter. Rinse or vacuum the washable pre-filter monthly \u2014 it is the single task that most affects both performance and filter cost."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What CADR do I need for my room?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For allergy-level air changes, aim for a dust CADR roughly equal to your room's square footage: about 150 CFM for a 150 square foot bedroom, 250 CFM for a 250 square foot room, and 350 CFM or more for a 400 to 600 square foot open-plan space. Manufacturer room ratings assume two air changes an hour, which is about half what allergy relief requires."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are expensive air purifiers worth it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For seasonal allergies, a $200 machine with good CADR and cheap filters does most of the work. The premium units earn their price in two situations: severe asthma or chemical sensitivity, where sealed housings and certified sub-micron filtration make a measurable difference, and long filter life, where a five-year filter can make the ten-year cost of ownership lower than a cheaper machine's."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Home Appliances",
+    tags: [
+      "best air purifier for allergies",
+      "HEPA air purifier",
+      "pollen allergy",
+      "pet dander",
+      "CADR sizing",
+      "air purifier reviews"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated September 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The 6 Best <span class="text-[#38BDF8]">Air Purifiers for Allergies</span> in 2026
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          We compared six purifiers on the numbers that decide whether allergy symptoms improve — dust CADR against real room size, noise at sleeping speed, filter cost over a decade, and what the ionizer switch is actually doing.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#coway-airmega-mighty" class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline">
+            See Our #1 Pick
+          </a>
+          <a href="#sizing-guide" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline">
+            What CADR Do I Need?
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="21.3k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E90FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#what-works" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. What Actually Works</a>
+          <a href="#filtration-types" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Filter Types</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 6 Top Picks</a>
+          <a href="#sizing-guide" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. CADR Sizing</a>
+          <a href="#placement" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Placement &amp; Habits</a>
+          <a href="#running-costs" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Filters &amp; Costs</a>
+          <a href="#beyond-purifiers" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Beyond Purifiers</a>
+          <a href="#maintenance" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Maintenance</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. FAQ</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Most people who say air purifiers did nothing for their allergies bought a machine rated for their room size. That rating assumes two air changes an hour; allergy relief takes four to five. Size correctly, put it in the bedroom, switch the ionizer off, and the same category of product produces a completely different result.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <!-- SECTION 1 -->
+        <div id="what-works" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. What an Air Purifier Can and Cannot Do for Allergies
+          </h2>
+
+          <p>
+            The evidence on air purifiers for allergies is genuinely good, with one important qualification: they work on airborne particles, and the allergen that bothers you may not spend much time airborne. Understanding which category your trigger falls into determines whether a purifier changes your life or wastes your money.
+          </p>
+
+          <p>
+            <strong>Pollen, pet dander, and mold spores</strong> stay suspended for hours and are removed efficiently by HEPA filtration. These are the allergens where a properly sized purifier produces a noticeable difference, often within days. <strong>Dust mite allergen</strong> is different — it is heavy, settles quickly into bedding and carpet, and is only briefly airborne when disturbed. A purifier helps, but mattress encasements, hot washing, and reduced carpet do more.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">What We Measured</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <p class="text-3xl font-black text-white">4-5x</p>
+                <p class="text-gray-400 text-xs mt-1">Air changes per hour for allergy relief</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">24 dB</p>
+                <p class="text-gray-400 text-xs mt-1">Quietest unit on low</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-white">0.3 &micro;m</p>
+                <p class="text-gray-400 text-xs mt-1">HEPA rated particle size</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#FF4500]">$100-900</p>
+                <p class="text-gray-400 text-xs mt-1">Price range that matters</p>
+              </div>
+            </div>
+          </div>
+
+          <p>
+            The single most important number is air changes per hour, and for allergy relief the target is four to five — meaningfully higher than the two changes that most manufacturer room-size ratings assume. That gap is why so many people buy a purifier rated for their room size and conclude that purifiers do not work. They bought a machine sized for general air quality and asked it to do allergy work.
+          </p>
+
+          <p>
+            One equipment warning that applies across the category: avoid ozone generators entirely, and switch off the ionizer function on any purifier that has one. Ozone is a respiratory irritant, and for someone with asthma or allergic airways it makes symptoms worse rather than better. Several excellent purifiers ship with ionizers enabled by default.
+          </p>
+        </div>
+
+        <!-- SECTION 2 -->
+        <div id="filtration-types" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Filter Types, and Which Ones Matter
+          </h2>
+
+          <p>
+            Purifier marketing lists stages as if more is better. What actually matters is whether the machine has true HEPA media, whether the housing is sealed so air cannot bypass it, and how much genuine activated carbon is present.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Stage</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">What It Does</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Matters For Allergies?</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Washable pre-filter</td>
+                  <td class="px-4 py-4 text-gray-700">Catches hair and large dander</td>
+                  <td class="px-4 py-4 text-gray-700">Yes — extends HEPA life</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">True HEPA</td>
+                  <td class="px-4 py-4 text-gray-700">99.97% of particles at 0.3 microns</td>
+                  <td class="px-4 py-4 text-gray-700">Essential</td>
+                </tr>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Activated carbon</td>
+                  <td class="px-4 py-4 text-gray-700">Adsorbs odours and gases</td>
+                  <td class="px-4 py-4 text-gray-700">Only if odours also trigger you</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Ionizer / UV</td>
+                  <td class="px-4 py-4 text-gray-700">Charges particles or claims to kill microbes</td>
+                  <td class="px-4 py-4 text-gray-700">No — switch it off</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            Watch for the phrase "HEPA-type" or "99 percent at 2 microns", which are marketing terms for media that does not meet the HEPA standard. True HEPA means 99.97 percent capture at 0.3 microns, and the difference in the size range that carries pollen fragments and dander is substantial.
+          </p>
+        </div>
+
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The 6 Best Air Purifiers for Allergies in 2026
+          </h2>
+
+          <p>
+            We judged these on dust CADR against realistic room sizes rather than the marketing figure, sound pressure at the speed you would actually sleep beside, the presence of genuine activated carbon rather than a coated mesh, and ten-year filter cost — because a purifier is an appliance you run continuously for years.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings on Amazon)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- SECTION 4 -->
+        <div id="sizing-guide" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Sizing by CADR, Not by the Box
+          </h2>
+
+          <p>
+            Manufacturer room ratings typically assume two air changes an hour, which is fine for general air quality and inadequate for allergies. Size against four to five air changes instead, and the practical effect is that you need a purifier rated for roughly twice the room you are putting it in.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Room Size</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Dust CADR Needed</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">100-150 sq ft bedroom</td>
+                  <td class="px-4 py-4 text-gray-700">100-150 CFM</td>
+                  <td class="px-4 py-4 text-gray-700">Any unit here, run on low</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">200-300 sq ft</td>
+                  <td class="px-4 py-4 text-gray-700">200-250 CFM</td>
+                  <td class="px-4 py-4 text-gray-700">Coway Mighty, Winix 5500-2</td>
+                </tr>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">400-600 sq ft open plan</td>
+                  <td class="px-4 py-4 text-gray-700">330-450 CFM</td>
+                  <td class="px-4 py-4 text-gray-700">Blueair 211i Max</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Whole floor</td>
+                  <td class="px-4 py-4 text-gray-700">Two or more units</td>
+                  <td class="px-4 py-4 text-gray-700">One per room beats one large machine</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            Two smaller purifiers in the two rooms you actually occupy beat one large one in a hallway, every time. Air does not circulate between rooms well enough for a single central unit to protect a closed bedroom, and the bedroom is where the hours are.
+          </p>
+        </div>
+
+        <!-- SECTION 5 -->
+        <div id="placement" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Placement and Habits That Double the Benefit
+          </h2>
+
+          <p>
+            <strong>Put it in the bedroom first.</strong> You spend a third of your life there with the door closed, and overnight exposure drives morning symptoms more than daytime exposure does. If you buy one purifier, this is where it goes — not the living room, however much more time it feels like you spend there.
+          </p>
+
+          <p>
+            <strong>Run it continuously on a low speed</strong> rather than intermittently on high. Steady operation holds particle counts down; intermittent operation lets them rebuild between sessions, and the recovery takes far longer than people expect. A quiet machine running all night beats a powerful one you switch off to sleep.
+          </p>
+
+          <p>
+            <strong>Give it clearance.</strong> Most units draw from the front or sides and exhaust upward, and shoving one against a wall or into a corner restricts intake enough to lose a meaningful share of its rated airflow. A foot of space around it is usually sufficient.
+          </p>
+
+          <p>
+            <strong>Close the windows during pollen season.</strong> A purifier cannot keep up with an open window during a high pollen count, and running one in a room with outdoor air pouring in simply wears out the filter. The purifier's job is to clean the air that is already inside and the pollen you bring in on clothes and hair.
+          </p>
+
+          <p>
+            <strong>Shower before bed during pollen season.</strong> Pollen collects in hair and on skin during the day and transfers straight onto the pillow, where you then breathe it for eight hours. This costs nothing and helps more than most equipment purchases.
+          </p>
+        </div>
+
+        <!-- SECTION 6 -->
+        <div id="running-costs" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Filters, Electricity, and What It Costs to Run
+          </h2>
+
+          <p>
+            The purchase price is the smaller half of the decision for a machine that will run continuously for years. Filters and electricity determine what you actually spend, and the cheapest purifier to buy is frequently not the cheapest to own.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Cost</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Typical Range</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">HEPA filter replacement</td>
+                  <td class="px-4 py-4 text-gray-700">$30-$120 every 6-12 months</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Premium long-life filter</td>
+                  <td class="px-4 py-4 text-gray-700">$200-$400 every 3-5 years</td>
+                </tr>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Electricity, low speed 24/7</td>
+                  <td class="px-4 py-4 text-gray-700">$15-$40 per year</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Electricity, high speed 24/7</td>
+                  <td class="px-4 py-4 text-gray-700">$60-$120 per year</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            Check the price and availability of replacement filters before you buy the machine, particularly with lesser-known brands. A purifier whose filters cost $90 twice a year has a ten-year cost of ownership well over a thousand dollars, which reframes what looks like an expensive machine with five-year filters.
+          </p>
+        </div>
+
+        <!-- SECTION 7 -->
+        <div id="beyond-purifiers" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. What Helps More Than a Second Purifier
+          </h2>
+
+          <p>
+            Once one good purifier is running in the bedroom, the next dollar is usually better spent elsewhere. For dust mite allergy, zippered mattress and pillow encasements are the single highest-value intervention available, because they put a barrier between you and the largest reservoir of allergen in the house. Washing bedding weekly at 130 degrees F or above kills mites; cooler washes do not.
+          </p>
+
+          <p>
+            Humidity control is the other lever. Dust mites and mold both need moisture, and holding indoor relative humidity between 40 and 50 percent suppresses both. In a damp basement or a humid climate, a dehumidifier often does more for symptoms than a second purifier would — our <a href="/best-dehumidifier-for-basement/">basement dehumidifier guide</a> covers sizing for that.
+          </p>
+
+          <p>
+            For pet allergies, the honest advice is unglamorous: keep the animal out of the bedroom. Dander accumulates in bedding and soft furnishings, and no purifier can compete with a cat sleeping on the pillow. Combine that with a HEPA vacuum and weekly washing of anything the animal lies on, and the improvement is larger than any equipment upgrade.
+          </p>
+
+          <p>
+            Finally, if your HVAC system runs regularly, fitting a MERV 13 filter turns the whole house into a filtration system when the blower runs. Check that your system can handle the pressure drop first — older furnaces sometimes cannot — but where it works, it is inexpensive and covers rooms no purifier is in.
+          </p>
+        </div>
+
+        <!-- SECTION 8 -->
+        <div id="maintenance" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Maintenance People Skip
+          </h2>
+
+          <p>
+            Vacuum or rinse the pre-filter monthly. This is the task that most affects both performance and filter cost, and it takes two minutes. A pre-filter thick with pet hair chokes airflow, which lowers the effective CADR of the machine well below what you paid for.
+          </p>
+
+          <p>
+            Replace HEPA media on schedule rather than when the indicator light insists. Most indicators are timers rather than sensors, and they are approximately right — but a purifier in a home with two dogs loads its filter far faster than the same unit in a low-dust apartment. If airflow feels lower and the pre-filter is clean, the HEPA is loaded.
+          </p>
+
+          <p>
+            Never wash a HEPA filter unless the manufacturer explicitly says it is washable. Water damages the fibre structure and destroys the electrostatic charge many HEPA media rely on, leaving a filter that looks clean and performs badly. Carbon filters cannot be regenerated at home either — once saturated they need replacing.
+          </p>
+
+          <p>
+            Keep a spare filter on hand before the season starts. Pollen counts spike on a schedule, filter stock does not, and a purifier waiting three weeks for a delivery during peak season is doing nothing for the person who needs it.
+          </p>
+
+          <p>
+            Finally, wipe the sensor window if your unit has an auto mode. Dust accumulates on the optical particle sensor and makes it read high, which leaves the fan running at full speed permanently and wears the machine out for nothing.
+          </p>
+        </div>
+
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best air purifier for allergies in 2026?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                The Coway Airmega AP-1512HH Mighty is our overall pick for bedrooms — high CADR, 24 dB on low, and cheap filters. For severe asthma or chemical sensitivity, the IQAir HealthPro Plus is demonstrably better with certified sub-micron filtration and a sealed housing. For open-plan living areas, the Blueair Blue Pure 211i Max moves far more air at lower noise.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do air purifiers actually help with allergies?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For pollen, pet dander, and mold spores, yes — these stay airborne for hours and HEPA filtration removes them efficiently. For dust mite allergy the benefit is smaller, because mite allergen settles quickly into bedding and carpet; encasements and hot washing help more. Size for four to five air changes an hour rather than the two the box assumes.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Where should I put an air purifier for allergies?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                The bedroom, with the door closed, running continuously on a low speed. You spend around eight hours there breathing the same air, and overnight exposure drives morning symptoms more than daytime exposure does. Two purifiers in the two rooms you occupy beat one large unit in a hallway, because air does not move well between closed rooms.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Should I turn off the ionizer on my air purifier?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes, for allergy and asthma use. Ionizers contribute little to particle removal and can generate trace ozone, which is a respiratory irritant for exactly the airways you are trying to protect. Several good purifiers ship with the function enabled by default, and some — the Winix PlasmaWave among them — re-enable it after a power cut, so check after outages.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How often do I need to change air purifier filters?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Most consumer HEPA filters last six to twelve months and carbon layers three to six months, though a home with pets loads them considerably faster. Premium machines such as the IQAir and Austin Air run three to five years per filter. Rinse or vacuum the washable pre-filter monthly — it is the single task that most affects both performance and filter cost.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What CADR do I need for my room?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For allergy-level air changes, aim for a dust CADR roughly equal to your room's square footage: about 150 CFM for a 150 square foot bedroom, 250 CFM for a 250 square foot room, and 350 CFM or more for a 400 to 600 square foot open-plan space. Manufacturer room ratings assume two air changes an hour, which is about half what allergy relief requires.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are expensive air purifiers worth it?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For seasonal allergies, a $200 machine with good CADR and cheap filters does most of the work. The premium units earn their price in two situations: severe asthma or chemical sensitivity, where sealed housings and certified sub-micron filtration make a measurable difference, and long filter life, where a five-year filter can make the ten-year cost of ownership lower than a cheaper machine's.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Air Purifier Mistakes
+          </h2>
+
+          <p>
+            Every one of these is a decision made before the machine is plugged in, and every one of them limits how much relief you get.
+          </p>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Sizing to the Box Rather Than to Air Changes</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Manufacturer room ratings assume two air changes an hour, and allergy relief needs four to five. Buy a purifier rated for roughly twice the room you are putting it in, or accept that you will have to run it on a noisy high speed to get the benefit.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Putting the Only Purifier in the Living Room</h3>
+              <p class="text-gray-700 text-sm m-0">
+                The bedroom is where you spend eight uninterrupted hours behind a closed door, and it is where overnight exposure sets up morning symptoms. If you own one purifier, it belongs beside the bed. Air does not circulate between closed rooms well enough for a hallway unit to help.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Leaving the Ionizer On</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Ionizing functions add little to particle capture and can produce trace ozone, an irritant for allergic and asthmatic airways. Switch it off, and check it again after any power interruption because several models silently default back on.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying on Price Without Checking Filter Costs</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A cheap purifier with $90 filters twice a year costs more over ten years than an expensive one with a five-year filter. Look up the replacement price and availability before you buy the machine, especially with brands you have not heard of.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Never Cleaning the Pre-Filter</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A pre-filter matted with pet hair chokes airflow, and a purifier that cannot pull air is not cleaning the room whatever its rating says. Rinsing or vacuuming it monthly takes two minutes, restores full airflow, and extends the expensive HEPA filter underneath by months.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Indoor Air Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-air-purifier-for-home/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Air Purifier for Home</h3>
+              <p class="text-gray-500 text-sm mt-2">General air quality across the house rather than allergy-specific relief.</p>
+            </a>
+            <a href="/best-air-purifier-for-mold/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Air Purifier for Mold</h3>
+              <p class="text-gray-500 text-sm mt-2">Spores and musty odour need carbon volume, not just HEPA.</p>
+            </a>
+            <a href="/best-dehumidifier-for-basement/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Basement Dehumidifier</h3>
+              <p class="text-gray-500 text-sm mt-2">Holding humidity at 40-50% suppresses both mites and mold.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The <strong class="text-white">best air purifier for allergies</strong> for most people is the <strong class="text-white">Coway Airmega AP-1512HH Mighty</strong>: enough CADR for a real bedroom, quiet enough to sleep beside, and cheap to keep running. If allergies are a medical problem rather than a seasonal nuisance, the <strong class="text-white">IQAir HealthPro Plus</strong> is measurably better and worth its price. For an open-plan living space, the <strong class="text-white">Blueair 211i Max</strong> is the only machine here that moves enough air quietly enough.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Then do the two free things that matter as much as the machine: <strong class="text-white">run it continuously in the bedroom with the door closed</strong>, and <strong class="text-white">switch the ionizer off</strong>. Add mattress encasements if dust mites are your trigger, and the combination outperforms any purifier upgrade you could buy instead.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Appliances" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

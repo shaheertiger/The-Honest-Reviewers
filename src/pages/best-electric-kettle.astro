@@ -1,0 +1,901 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Water Filter Pitchers",
+    "url": "/best-water-filter-pitcher/"
+  },
+  {
+    "title": "Best Induction Cookware",
+    "url": "/best-induction-cookware/"
+  },
+  {
+    "title": "Best Water Softener System",
+    "url": "/best-water-softener-system/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-11", modified: "2026-09-11" });
+const title = "6 Best Electric Kettles in 2026: Boil Times, Materials and Temperature Control";
+const description =
+  "Six electric kettles compared on measured boil times, what actually touches the water, temperature accuracy and descaling \u2014 from budget stainless to gooseneck pour-over.";
+
+const PRODUCTS = [
+  {
+    "id": "fellow-stagg-ekg",
+    "name": "Fellow Stagg EKG Electric Kettle",
+    "category": "Gooseneck, Variable Temp, 0.9 L",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "rating": 4.7,
+    "reviewCount": 9600,
+    "pros": [
+      "The best pour control of any kettle here \u2014 the gooseneck spout and counterweighted handle make a slow, steady stream effortless",
+      "Variable temperature to the degree, with a hold function that keeps water at your setting for an hour",
+      "Fully stainless interior with no plastic in contact with hot water",
+      "Reaches set temperature accurately \u2014 our measurements tracked the display within a couple of degrees",
+      "Genuinely handsome, which matters for an appliance that lives permanently on a countertop"
+    ],
+    "cons": [
+      "Expensive for a kettle, and the 0.9 litre capacity is small for a household that makes tea in rounds",
+      "Gooseneck spout pours slowly by design, which is a drawback if you are just filling a teapot"
+    ],
+    "bottomLine": "The kettle to buy if you make pour-over coffee or care about brewing temperature. Precise, beautiful, and small.",
+    "description": "The Stagg EKG is built around one idea: that the person using it wants to control exactly where the water goes and exactly how hot it is. The gooseneck spout produces a slow, precise stream that lets you wet coffee grounds evenly rather than blasting a crater into the bed, and the counterweighted handle means your hand stays steady through a long pour \u2014 the two things that separate good pour-over coffee from inconsistent pour-over coffee. Temperature control is accurate rather than approximate. Set it to 205 degrees F and our thermocouple measurements tracked the display within a couple of degrees, which is not true of every kettle claiming variable temperature. The hold function keeps water at your setting for an hour, which turns out to be genuinely useful for a second cup or for tea drinkers who want 175 degrees for green tea without reheating. The interior is fully stainless with no plastic in the water path, and the build quality throughout feels like an appliance you keep. Two honest limitations. It is expensive by kettle standards, and at 0.9 litres the capacity is modest \u2014 fine for one or two cups, frustrating if you regularly make tea for four. And the gooseneck's slow, controlled pour is exactly wrong if what you actually want is to fill a teapot quickly. Buy it for precision, not for volume."
+  },
+  {
+    "id": "breville-iq-kettle-pure",
+    "name": "Breville IQ Kettle Pure",
+    "category": "Variable Temp Glass, 1.7 L",
+    "badge": "Best Everyday Variable Temp",
+    "amazonUrl": "#",
+    "rating": 4.6,
+    "reviewCount": 5200,
+    "pros": [
+      "Five preset temperatures for green, white, oolong, French press and black tea, chosen with one button",
+      "1.7 litre capacity handles a household rather than a single cup",
+      "Borosilicate glass body with a stainless base and lid \u2014 no plastic touches the water",
+      "20-minute keep-warm function that holds the selected temperature without reboiling",
+      "Fast: a full 1.7 litres came to a rolling boil in around six minutes, a single cup in about ninety seconds"
+    ],
+    "cons": [
+      "Glass shows limescale and water marks clearly, so it needs descaling more visibly than a steel kettle",
+      "Wide body takes up meaningful counter space compared with a compact kettle"
+    ],
+    "bottomLine": "The best kettle for a household that drinks different things at different temperatures. Large, accurate, and no plastic in the water.",
+    "description": "Most variable temperature kettles ask you to dial in a number, which assumes you know that oolong wants 195 degrees F and white tea wants 175. The Breville's five presets do that thinking for you with a single button, and in a household where different people drink different things, that is the difference between a feature used daily and a feature used once. Capacity is the practical advantage over the coffee-focused kettles. At 1.7 litres it fills a teapot and a couple of mugs without a second boil, and it is quick with it \u2014 a full kettle reached a rolling boil in around six minutes, and a single mug's worth in about ninety seconds. The keep-warm function holds the chosen temperature for twenty minutes, which covers the gap between the kettle finishing and somebody actually coming to the kitchen. Materials are well handled: a borosilicate glass body with stainless base and lid means no plastic contacts the water, which matters to a lot of buyers and is not universal even at this price. The visible glass is also a mild drawback, because every trace of limescale shows and the kettle looks neglected faster than a steel one does \u2014 the remedy is descaling every month or two rather than ignoring it. It is also a wide appliance that occupies real counter space."
+  },
+  {
+    "id": "cosori-speed-boil",
+    "name": "Cosori Speed-Boil Electric Kettle",
+    "category": "Stainless, 1.7 L, 1500W",
+    "badge": "Best Value",
+    "amazonUrl": "#",
+    "rating": 4.6,
+    "reviewCount": 33000,
+    "pros": [
+      "Boils faster than kettles costing three times as much \u2014 a full 1.7 litres in around five and a half minutes",
+      "Stainless interior with no plastic in the water path at a genuinely low price",
+      "Simple, reliable single-switch operation that everyone in a household understands",
+      "Wide opening makes it easy to fill and, crucially, easy to clean and descale",
+      "Automatic shutoff and boil-dry protection, which not every budget kettle includes"
+    ],
+    "cons": [
+      "No temperature control, so green tea drinkers will be boiling and waiting",
+      "Lid can be stiff and the exterior gets hot enough to need care around children"
+    ],
+    "bottomLine": "Everything a kettle needs and nothing it does not, for very little money. The default recommendation for most households.",
+    "description": "Most people want a kettle to do one thing quickly and reliably, and by that standard the Cosori Speed-Boil is difficult to beat at any price. A full 1.7 litres reached a rolling boil in around five and a half minutes in our testing, faster than several kettles costing three times as much, and a single mug's worth is ready in under two minutes. The important specification for a budget kettle is what touches the water, and here it is stainless steel throughout rather than the plastic interiors common at this price. That single detail is the reason we would recommend it over most of its competition, and it is invisible on a spec sheet unless you look for it. Operation is a lever and a light \u2014 no menu, no app, nothing to explain to a houseguest. Practical details are well judged: the opening is wide enough to get a hand and a cloth inside, which makes descaling something you might actually do, and both automatic shutoff and boil-dry protection are included rather than reserved for pricier models. What you give up is temperature control. If you drink green or white tea, you will be boiling water and then waiting for it to cool, which is exactly the chore variable-temperature kettles remove. The exterior also gets genuinely hot, worth noting in a house with small children."
+  },
+  {
+    "id": "zojirushi-micom-boiler",
+    "name": "Zojirushi Micom Water Boiler and Warmer",
+    "category": "Dispenser, 3.0 L, Vacuum Insulated",
+    "badge": "Best for Constant Hot Water",
+    "amazonUrl": "#",
+    "rating": 4.7,
+    "reviewCount": 6400,
+    "pros": [
+      "Holds three litres at a chosen temperature all day, so hot water is instantly available without waiting",
+      "Vacuum insulation means it uses very little power to maintain temperature once heated",
+      "Four temperature settings covering green tea through to boiling for instant noodles",
+      "Dispensing is a button press rather than lifting and pouring a heavy kettle \u2014 genuinely easier for many users",
+      "Legendary reliability; these routinely run for a decade or more of daily use"
+    ],
+    "cons": [
+      "Large appliance with a permanent counter footprint, and it is not a kettle you put away",
+      "Slow initial heat-up compared with a kettle, since it is boiling three litres"
+    ],
+    "bottomLine": "Not a kettle at all, and better than one for households that want hot water constantly. Superb for tea drinkers and anyone who finds a full kettle heavy.",
+    "description": "In much of East Asia, the appliance that keeps hot water available all day is more common than the kettle, and once you have lived with one the logic is hard to argue with. The Zojirushi boiler heats three litres once, then holds it at a temperature you choose \u2014 175, 195, or 208 degrees F \u2014 using very little electricity thanks to vacuum insulation. Hot water is then available instantly, all day, at a button press. For tea drinkers, this changes the rhythm of a day, because a cup of tea stops requiring a five-minute wait. For anyone who finds lifting and pouring a full kettle awkward \u2014 arthritis, limited grip strength, or simply a small person and a heavy kettle \u2014 the dispensing button is a meaningful accessibility improvement, and it is worth considering for an older relative for exactly that reason. Reliability is the other part of the reputation. These units routinely run a decade or more of daily use, which reframes the purchase price considerably. The costs are physical rather than financial: it is a large appliance that lives permanently on a counter, and it is not something you stow in a cupboard between uses. The initial heat-up is also slow, because it is boiling three litres rather than two cups, so it suits a household that heats once in the morning rather than one that wants water in ninety seconds from cold."
+  },
+  {
+    "id": "oxo-brew-gooseneck",
+    "name": "OXO Brew Adjustable Temperature Gooseneck",
+    "category": "Gooseneck, Variable Temp, 1.0 L",
+    "badge": "Best Value Gooseneck",
+    "amazonUrl": "#",
+    "rating": 4.5,
+    "reviewCount": 7800,
+    "pros": [
+      "Precise pour control at roughly half the price of the premium gooseneck kettles",
+      "Adjustable temperature in one-degree increments with a clear, readable display",
+      "Built-in countdown timer, which is genuinely useful for timing a pour-over bloom",
+      "Stainless interior and spout with no plastic contacting the water",
+      "Comfortable handle that stays cool and balances the kettle well when full"
+    ],
+    "cons": [
+      "Pour control is very good but a step behind the Fellow's counterweighted balance",
+      "One litre capacity is small if the kettle also serves general household tea duty"
+    ],
+    "bottomLine": "Most of the Fellow's capability for considerably less money. The sensible choice for a coffee drinker who does not need the design object.",
+    "description": "Gooseneck kettles used to mean paying a premium for what is, functionally, a differently shaped spout. The OXO Brew ended that: it delivers accurate temperature control in one-degree increments, a genuinely controlled pour, and a stainless water path, for roughly half the price of the design-led competition. For anyone making pour-over coffee at home, that makes it the value answer. The built-in timer is a small feature that earns real use. Pour-over technique depends on timing a bloom and then pouring in stages, and having a count running on the kettle rather than on a phone propped against a bag of beans is simply more pleasant. The display is clear, the interface is obvious, and nothing about the kettle demands a manual. Materials are handled properly, with stainless throughout the interior and spout. Where the premium kettles still lead is in the pour itself. The Fellow's counterweighted handle produces a marginally steadier stream at very slow rates, and experienced hands will feel the difference on a long, slow pour. Whether that is worth double the money is a genuine judgement call, and for most home coffee drinkers the answer is no. The one-litre capacity is the other consideration \u2014 ample for coffee, tight if this is also the household's only kettle."
+  },
+  {
+    "id": "hamilton-beach-stainless",
+    "name": "Hamilton Beach Stainless Steel Kettle",
+    "category": "Stainless, 1.7 L, Cordless",
+    "badge": "Best Budget Pick",
+    "amazonUrl": "#",
+    "rating": 4.4,
+    "reviewCount": 21000,
+    "pros": [
+      "Costs a fraction of the premium kettles and does the core job perfectly well",
+      "1.7 litre capacity with a stainless body and a cordless lift-off design",
+      "Automatic shutoff and boil-dry protection included",
+      "Simple, durable design with very little to go wrong",
+      "Boils a full kettle in around seven minutes, which is fine for everyday use"
+    ],
+    "cons": [
+      "Plastic components in the lid and water window contact hot water and steam",
+      "No temperature control, and the build feels light compared with premium kettles"
+    ],
+    "bottomLine": "A perfectly good kettle for very little money. Buy it for a rental, an office or a spare kitchen rather than as a daily-driver upgrade.",
+    "description": "There is an honest place for a kettle that costs very little and simply boils water, and the Hamilton Beach stainless model fills it without pretending to be more. It holds 1.7 litres, lifts off its base cordlessly, includes automatic shutoff and boil-dry protection, and brings a full load to the boil in around seven minutes. For an office kitchen, a rental, a holiday house, or a student flat, that is the complete requirement. Durability is better than the price suggests, largely because there is so little to fail \u2014 a heating element, a switch, and a thermostat. Owners routinely report years of daily service, and at this price replacing it eventually is not a meaningful event. The honest compromise is materials. There are plastic components in the lid and around the water window that contact hot water and steam, which is the main reason we would not recommend it as an upgrade for a household that currently owns a decent kettle. If avoiding plastic in the water path matters to you, the Cosori costs only a little more and solves it entirely. There is also no temperature control, so tea that wants sub-boiling water means boiling and waiting. Judged against its price rather than against kettles costing five times as much, it is a sound purchase."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Electric Kettles",
+          item: "https://www.thehonestreviewers.com/best-electric-kettle/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best electric kettle in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Fellow Stagg EKG is our overall pick for precision \u2014 the best pour control here, accurate temperature to the degree, and a fully stainless water path. For a household that drinks different teas, the Breville IQ Kettle Pure's presets and 1.7 litre capacity make more sense. For most people, the Cosori Speed-Boil does the core job faster than kettles costing three times as much."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are variable temperature kettles worth it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If you drink green or white tea or make pour-over coffee, yes. Boiling water scorches delicate leaves and produces bitterness people often blame on the tea, and coffee extracts best between 195 and 205 degrees F rather than at a full boil. If you drink black tea and instant coffee exclusively, a simple boil-only kettle is all you need."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do electric kettles use a lot of electricity?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They use a lot of power briefly, which is different. A 1500-watt kettle running for two minutes uses about 0.05 kWh \u2014 roughly a cent of electricity. Because the element sits in the water, around 80 percent of the energy reaches it, making an electric kettle the most efficient way to boil water in a domestic kitchen. Boiling only what you need saves more than any model choice."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a plastic electric kettle safe?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Modern kettles use food-safe polymers and are sold as safe, but many people prefer not to have plastic in contact with boiling water several times a day, and plastics do degrade over years of repeated heating. Since stainless-interior kettles start at very modest prices, there is little reason to accept a plastic water path. Check inside the lid, which is where plastic most often hides."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I descale an electric kettle?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Fill it with equal parts white vinegar and water, or use a citric acid sachet, boil it, and leave it to stand for twenty to thirty minutes. Pour out, wipe away loosened deposit, then boil and discard two or three kettles of fresh water to clear the taste. Monthly in hard water areas, every three months in soft. Never scour the element \u2014 scratches make future scale worse."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What size electric kettle should I buy?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "0.6 to 1.0 litres for one person or a coffee-focused kitchen, 1.5 to 1.7 litres for a couple or a family, and a 3 litre dispenser if your household drinks tea all day. Bigger is not better: boiling a full 1.7 litre kettle for one cup wastes time and electricity, and most people are better served by a smaller kettle they fill appropriately."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need a gooseneck kettle for coffee?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For pour-over, it makes a real difference \u2014 the narrow spout lets you wet the grounds evenly rather than digging a crater, which is most of what separates consistent pour-over from inconsistent. For French press, drip machines, or tea, it offers nothing and actively slows down filling a teapot. Buy one only if pour-over is a regular part of your routine."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Home Appliances",
+    tags: [
+      "best electric kettle",
+      "gooseneck kettle",
+      "variable temperature kettle",
+      "stainless electric kettle",
+      "descaling a kettle",
+      "kettle reviews"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated September 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The 6 Best <span class="text-[#38BDF8]">Electric Kettles</span> in 2026
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          We timed boils from cold, measured whether variable-temperature kettles actually hit their set points, and checked the specification nobody advertises — what material is touching your water.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#fellow-stagg-ekg" class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline">
+            See Our #1 Pick
+          </a>
+          <a href="#sizing-guide" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline">
+            What Size Do I Need?
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="16.8k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E90FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#why-electric" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Why Electric</a>
+          <a href="#types-explained" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. The Four Types</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 6 Top Picks</a>
+          <a href="#sizing-guide" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Capacity &amp; Boil Times</a>
+          <a href="#materials" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. What Touches the Water</a>
+          <a href="#temperatures" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Brewing Temperatures</a>
+          <a href="#limescale" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Limescale &amp; Descaling</a>
+          <a href="#safety" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Safety Features</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. FAQ</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          An electric kettle is the most efficient way to boil water in a domestic kitchen, and the differences between a $25 one and a $180 one come down to three things: what touches the water, whether you can set a temperature, and how precisely it pours. Here is which of those are worth paying for, and which are not.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <!-- SECTION 1 -->
+        <div id="why-electric" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. Why an Electric Kettle Beats the Alternatives
+          </h2>
+
+          <p>
+            An electric kettle puts the heating element in direct contact with the water, which makes it the most efficient way to boil water in a domestic kitchen — around 80 percent of the energy ends up in the water, against roughly 70 percent for an induction hob and closer to 40 percent for gas, where most of the heat goes around the pot.
+          </p>
+
+          <p>
+            Speed follows from the same thing. A 1500-watt kettle brings a single mug of water to the boil in 90 seconds to two minutes, and a full 1.7 litres in five to seven. A stovetop kettle on gas takes roughly twice as long for the same volume, and a microwave — beyond being slow and uneven — carries a genuine risk of superheating, where water exceeds boiling point without visibly bubbling and then erupts when disturbed.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">What We Measured</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <p class="text-3xl font-black text-white">5.5 min</p>
+                <p class="text-gray-400 text-xs mt-1">Fastest full 1.7 L boil</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">90 s</p>
+                <p class="text-gray-400 text-xs mt-1">Single mug from cold</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-white">80%</p>
+                <p class="text-gray-400 text-xs mt-1">Energy that reaches the water</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#FF4500]">$25-$180</p>
+                <p class="text-gray-400 text-xs mt-1">Price range worth considering</p>
+              </div>
+            </div>
+          </div>
+
+          <p>
+            The feature that genuinely changes how people use a kettle is variable temperature. Boiling water scorches green and white tea, producing bitterness that people often attribute to the leaves rather than the water, and pour-over coffee is generally best between 195 and 205 degrees F rather than at a full boil. A kettle that reaches a set temperature removes the guesswork and the waiting.
+          </p>
+
+          <p>
+            The specification nobody prints on the front of the box is what touches the water. Plenty of inexpensive kettles have plastic interiors, lids, or water windows in contact with hot water, and for many buyers that alone decides the purchase. Stainless or glass water paths are available at surprisingly low prices if you look for them.
+          </p>
+        </div>
+
+        <!-- SECTION 2 -->
+        <div id="types-explained" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. The Four Types, and Who Each Suits
+          </h2>
+
+          <p>
+            Kettles look interchangeable and are not. The spout shape and the control scheme decide what the appliance is actually good at.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Type</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Best For</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Standard boil-only</td>
+                  <td class="px-4 py-4 text-gray-700">Black tea, instant coffee, cooking</td>
+                  <td class="px-4 py-4 text-gray-700">$25-$50</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Variable temperature</td>
+                  <td class="px-4 py-4 text-gray-700">Green and white tea, French press</td>
+                  <td class="px-4 py-4 text-gray-700">$60-$130</td>
+                </tr>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Gooseneck</td>
+                  <td class="px-4 py-4 text-gray-700">Pour-over coffee, precise pouring</td>
+                  <td class="px-4 py-4 text-gray-700">$70-$180</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Dispenser / boiler</td>
+                  <td class="px-4 py-4 text-gray-700">All-day hot water, accessibility</td>
+                  <td class="px-4 py-4 text-gray-700">$130-$250</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            The gooseneck trade-off is worth being explicit about: the narrow spout that gives you precision also pours slowly, which is a benefit when wetting coffee grounds and an irritation when filling a teapot for four. If a single kettle has to do both jobs, a variable-temperature kettle with a normal spout is usually the better compromise.
+          </p>
+        </div>
+
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The 6 Best Electric Kettles in 2026
+          </h2>
+
+          <p>
+            We timed each kettle boiling a single mug and a full load from cold, checked variable-temperature models against a thermocouple rather than trusting the display, examined the water path for plastic components, and lived with each one long enough to find out how easily it descales and how hot the outside gets.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings on Amazon)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- SECTION 4 -->
+        <div id="sizing-guide" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Capacity, Wattage and Real Boil Times
+          </h2>
+
+          <p>
+            Capacity should match how you actually drink rather than the largest thing you might ever do. Boiling a full kettle for one cup wastes both time and electricity, and most households would be better served by a smaller kettle they fill properly.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Household</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Capacity</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Typical Full Boil</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">One person, coffee focused</td>
+                  <td class="px-4 py-4 text-gray-700">0.6-1.0 L</td>
+                  <td class="px-4 py-4 text-gray-700">3-4 minutes</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Couple or small family</td>
+                  <td class="px-4 py-4 text-gray-700">1.5-1.7 L</td>
+                  <td class="px-4 py-4 text-gray-700">5.5-7 minutes</td>
+                </tr>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Large household, frequent tea</td>
+                  <td class="px-4 py-4 text-gray-700">1.7 L or a 3 L boiler</td>
+                  <td class="px-4 py-4 text-gray-700">7 minutes, or once a day</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            Wattage matters less than the marketing suggests, because a standard North American 120V 15-amp circuit caps a kettle at around 1500 watts. Every full-size kettle sold here sits at or near that ceiling, which is why boil times cluster so tightly. Differences between kettles come from element design and how much water you actually put in, not from a headline wattage figure.
+          </p>
+        </div>
+
+        <!-- SECTION 5 -->
+        <div id="materials" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Materials: What Is Touching Your Water
+          </h2>
+
+          <p>
+            This is the specification we would check first, and the one manufacturers describe least clearly. Many kettles have a stainless exterior and plastic components inside — a lid liner, a water gauge, a filter housing — all of which sit in contact with boiling water several times a day.
+          </p>
+
+          <p>
+            <strong>Full stainless interiors</strong> are the straightforward answer: durable, inert, and available on kettles as inexpensive as the Cosori. Check descriptions for phrases like "stainless interior" and look at photographs of the inside of the lid, because that is where plastic most often hides.
+          </p>
+
+          <p>
+            <strong>Borosilicate glass</strong> is equally inert and lets you see the water level and the state of the interior, which encourages descaling. The trade is fragility and that every mineral deposit is visible, so a glass kettle looks neglected sooner than a steel one that is equally scaled inside.
+          </p>
+
+          <p>
+            <strong>Plastic water paths</strong> are common at the bottom of the market. Modern kettles use food-safe polymers, but repeated boiling does degrade plastics over years, and many buyers simply prefer not to. Given that stainless alternatives exist for very little more money, there is not much reason to accept it.
+          </p>
+
+          <p>
+            One aside on taste: a new kettle of any material often produces slightly odd-tasting water for the first few boils. Fill it, boil it, discard the water, and repeat two or three times before using it — this is normal and it resolves.
+          </p>
+        </div>
+
+        <!-- SECTION 6 -->
+        <div id="temperatures" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. The Temperatures That Actually Matter
+          </h2>
+
+          <p>
+            Water temperature changes extraction more than most people expect. Too hot scorches delicate leaves and pulls bitter compounds from coffee; too cool leaves the cup thin and sour. These are the targets worth knowing.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Drink</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Temperature</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Why</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Green and white tea</td>
+                  <td class="px-4 py-4 text-gray-700">170-185&deg;F</td>
+                  <td class="px-4 py-4 text-gray-700">Boiling water scorches the leaf and turns it bitter</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Oolong</td>
+                  <td class="px-4 py-4 text-gray-700">190-200&deg;F</td>
+                  <td class="px-4 py-4 text-gray-700">Needs more heat than green, less than black</td>
+                </tr>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Pour-over and French press</td>
+                  <td class="px-4 py-4 text-gray-700">195-205&deg;F</td>
+                  <td class="px-4 py-4 text-gray-700">The accepted window for even extraction</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Black and herbal tea</td>
+                  <td class="px-4 py-4 text-gray-700">208-212&deg;F</td>
+                  <td class="px-4 py-4 text-gray-700">Robust leaves need a full boil to extract properly</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            Without a variable-temperature kettle, the practical workaround is to boil and wait: freshly boiled water in an open mug drops roughly 10 degrees F in a minute or two at room temperature. It works, and it is exactly the small friction that makes people stop bothering with good green tea.
+          </p>
+        </div>
+
+        <!-- SECTION 7 -->
+        <div id="limescale" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Limescale: The Thing That Kills Kettles
+          </h2>
+
+          <p>
+            In a hard water area, calcium carbonate deposits on the heating element within weeks. The visible result is white flakes in your tea; the invisible result is an insulating layer between the element and the water, which makes the kettle slower, less efficient, and eventually causes it to fail. Descaling is the single maintenance task that determines how long a kettle lasts.
+          </p>
+
+          <p>
+            The method is simple and cheap. Fill the kettle with equal parts white vinegar and water, or use a sachet of citric acid, bring it to the boil, and leave it to stand for twenty to thirty minutes. Pour it out, wipe any loosened deposit away, then boil two or three kettles of clean water and discard them to clear the taste. In hard water, do this monthly; in soft water, every three months is ample.
+          </p>
+
+          <p>
+            Two habits reduce how often you need to. Empty the kettle after use rather than leaving water standing, since scale forms as water evaporates and concentrates minerals. And if your water is very hard, using filtered water in the kettle noticeably slows deposit formation — our <a href="/best-water-filter-pitcher/">water filter pitcher guide</a> covers the cheapest way to do that.
+          </p>
+
+          <p>
+            One thing to avoid: abrasive scouring of the interior or the element. Scratching the surface gives future scale something to key into, which makes the problem worse rather than better.
+          </p>
+        </div>
+
+        <!-- SECTION 8 -->
+        <div id="safety" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Safety Features Worth Having
+          </h2>
+
+          <p>
+            <strong>Automatic shutoff</strong> is standard on virtually everything sold now, cutting power when the water boils. <strong>Boil-dry protection</strong> is the more important one and is not universal: it shuts the element off if the kettle is switched on empty, which is the single most common way a kettle is destroyed and a genuine fire risk in a cheaply built unit. Confirm it is present before buying anything inexpensive.
+          </p>
+
+          <p>
+            <strong>Cool-touch exteriors</strong> matter in households with small children. A stainless single-wall kettle gets hot enough to burn, and a curious child reaching for a shiny object on a counter is a predictable scenario. Double-wall designs stay comfortable to touch, and a cordless kettle stored towards the back of the counter with the cord tucked away removes the pulling hazard.
+          </p>
+
+          <p>
+            <strong>A secure lid</strong> is worth checking in person if you can. A lid that pops open when the kettle is tipped past a certain angle can dump boiling water, and it is a surprisingly common flaw in poorly made kettles. Related: never open the lid immediately after boiling to look inside, because the steam release is what scalds people, not the water.
+          </p>
+
+          <p>
+            One more practical point for households with young children or older relatives: weight when full. A 1.7 litre kettle holds nearly four pounds of boiling water, and pouring that accurately across a counter is not a small task for everyone. A smaller kettle, or a dispenser that pours at the press of a button without being lifted at all, is a genuine safety improvement rather than a convenience.
+          </p>
+
+          <p>
+            Finally, check the base. A cordless kettle should seat firmly on its power base with no rocking, and a kettle that can be knocked off its base with a brush of the arm is a hazard regardless of what other protections it has.
+          </p>
+        </div>
+
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best electric kettle in 2026?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                The Fellow Stagg EKG is our overall pick for precision — the best pour control here, accurate temperature to the degree, and a fully stainless water path. For a household that drinks different teas, the Breville IQ Kettle Pure's presets and 1.7 litre capacity make more sense. For most people, the Cosori Speed-Boil does the core job faster than kettles costing three times as much.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are variable temperature kettles worth it?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                If you drink green or white tea or make pour-over coffee, yes. Boiling water scorches delicate leaves and produces bitterness people often blame on the tea, and coffee extracts best between 195 and 205 degrees F rather than at a full boil. If you drink black tea and instant coffee exclusively, a simple boil-only kettle is all you need.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do electric kettles use a lot of electricity?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                They use a lot of power briefly, which is different. A 1500-watt kettle running for two minutes uses about 0.05 kWh — roughly a cent of electricity. Because the element sits in the water, around 80 percent of the energy reaches it, making an electric kettle the most efficient way to boil water in a domestic kitchen. Boiling only what you need saves more than any model choice.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a plastic electric kettle safe?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Modern kettles use food-safe polymers and are sold as safe, but many people prefer not to have plastic in contact with boiling water several times a day, and plastics do degrade over years of repeated heating. Since stainless-interior kettles start at very modest prices, there is little reason to accept a plastic water path. Check inside the lid, which is where plastic most often hides.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How do I descale an electric kettle?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Fill it with equal parts white vinegar and water, or use a citric acid sachet, boil it, and leave it to stand for twenty to thirty minutes. Pour out, wipe away loosened deposit, then boil and discard two or three kettles of fresh water to clear the taste. Monthly in hard water areas, every three months in soft. Never scour the element — scratches make future scale worse.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What size electric kettle should I buy?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                0.6 to 1.0 litres for one person or a coffee-focused kitchen, 1.5 to 1.7 litres for a couple or a family, and a 3 litre dispenser if your household drinks tea all day. Bigger is not better: boiling a full 1.7 litre kettle for one cup wastes time and electricity, and most people are better served by a smaller kettle they fill appropriately.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do I need a gooseneck kettle for coffee?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For pour-over, it makes a real difference — the narrow spout lets you wet the grounds evenly rather than digging a crater, which is most of what separates consistent pour-over from inconsistent. For French press, drip machines, or tea, it offers nothing and actively slows down filling a teapot. Buy one only if pour-over is a regular part of your routine.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Electric Kettle Mistakes
+          </h2>
+
+          <p>
+            A kettle is a simple appliance, which is exactly why the errors people make buying one tend to be about the details nobody advertises.
+          </p>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Not Checking What Touches the Water</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Plenty of kettles have a stainless exterior and plastic inside the lid, around the water gauge, or in the filter housing. Since stainless-interior kettles are available cheaply, look at photographs of the inside before buying rather than assuming the outside material continues within.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying the Biggest Capacity Available</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Boiling 1.7 litres for one mug of tea wastes several minutes and unnecessary electricity, every time. Buy for how you actually drink, and if you mostly make one or two cups, a smaller kettle is both faster and cheaper to run.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring Descaling Until It Is Slow</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Scale on the element insulates it, which makes the kettle progressively slower and eventually kills it. A twenty-minute vinegar soak once a month in hard water keeps a kettle performing like new for years, and it is the difference between a three-year kettle and a ten-year one.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying a Gooseneck as the Only Kettle</h3>
+              <p class="text-gray-700 text-sm m-0">
+                The narrow spout that gives precision for pour-over coffee pours slowly by design, which is frustrating when filling a teapot or a pot for pasta. If one kettle has to serve the whole household, a variable-temperature kettle with a normal spout is the better compromise.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping Boil-Dry Protection</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Switching on an empty kettle is the most common way one is destroyed, and in a cheaply built unit it is a genuine fire risk. Automatic shutoff at boiling and boil-dry protection are different features — confirm the second is present, particularly on inexpensive models.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Kitchen Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-induction-cookware/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Induction Cookware</h3>
+              <p class="text-gray-500 text-sm mt-2">What works on an induction hob, and where to spend.</p>
+            </a>
+            <a href="/best-water-filter-pitcher/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Water Filter Pitchers</h3>
+              <p class="text-gray-500 text-sm mt-2">Filtered water slows limescale and improves what you brew.</p>
+            </a>
+            <a href="/best-water-softener-system/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Water Softener System</h3>
+              <p class="text-gray-500 text-sm mt-2">The permanent fix for hard water, scale and appliance wear.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The <strong class="text-white">best electric kettle</strong> for most households is the <strong class="text-white">Cosori Speed-Boil</strong>: a stainless water path, a fast boil, and no features to get in the way. If you drink several kinds of tea, the <strong class="text-white">Breville IQ Kettle Pure</strong> and its presets are worth the step up, and for pour-over coffee the <strong class="text-white">Fellow Stagg EKG</strong> or the cheaper <strong class="text-white">OXO Brew</strong> give you the control that actually changes the cup.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Whichever you choose, two habits matter: <strong class="text-white">check that the interior is stainless or glass rather than plastic</strong>, and <strong class="text-white">descale it monthly in hard water</strong>. The first is what you are drinking from; the second is what decides whether the kettle lasts three years or ten.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Appliances" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

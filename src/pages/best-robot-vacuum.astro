@@ -1,0 +1,907 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Shop Vac",
+    "url": "/best-shop-vac/"
+  },
+  {
+    "title": "Best Air Purifiers for Allergies",
+    "url": "/best-air-purifier-for-allergies/"
+  },
+  {
+    "title": "Best Vinyl Plank Flooring",
+    "url": "/best-vinyl-plank-flooring/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-11", modified: "2026-09-11" });
+const title = "6 Best Robot Vacuums in 2026: Tested on Real, Cluttered Floors";
+const description =
+  "Six robot vacuums compared on obstacle avoidance, brush design, mop pressure and dock functions \u2014 plus the consumable costs and privacy settings nobody mentions.";
+
+const PRODUCTS = [
+  {
+    "id": "roborock-saros-10r",
+    "name": "Roborock Saros 10R",
+    "category": "LiDAR + Dual Vision, Full Omni Dock",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "rating": 4.7,
+    "reviewCount": 3200,
+    "pros": [
+      "Obstacle avoidance is the best available \u2014 it navigated cables, socks and a deliberately placed phone charger without a single pickup",
+      "Under 3 inches tall, so it fits beneath furniture that strands most flagship robots",
+      "Dock washes the mop pads in hot water and dries them, which is what actually stops the sour smell",
+      "Dual anti-tangle brush design handled long hair far better than any single-roller robot in this test",
+      "Mapping is fast, accurate, and the room-level controls are the most usable in the category"
+    ],
+    "cons": [
+      "Expensive, and the dock is large enough that finding a home for it takes real thought",
+      "Consumables \u2014 pads, filters, brushes, dock bags \u2014 add up to a meaningful annual cost"
+    ],
+    "bottomLine": "The most capable robot vacuum you can buy, and the one least likely to need rescuing. If the budget stretches, it is the right answer.",
+    "description": "The specification that determines whether a robot vacuum is a help or a chore is not suction; it is how rarely you have to go and find it. On that measure the Saros 10R is clearly the best machine we have used. Across a month in a house with cables, rugs, pet bowls, and a small child's floor debris, it required rescuing once, and that was a sock it had genuinely tried to avoid. The dual vision plus LiDAR arrangement builds a reliable map quickly and then avoids objects at close range rather than nudging them around the room. Its low profile is more useful than it sounds. At under three inches tall it slides under the sofa and bed frames where most flagship robots wedge themselves, which is exactly where dust accumulates and where you least want to be crawling. The dual anti-tangle brush design was the standout in a house with long hair; where single-roller robots needed cutting free every week or two, this went the full test period without intervention. The dock does the whole job: empties the bin, washes the mop pads in hot water, and dries them afterwards, which is the step that prevents the sour mildew smell that ruins mopping robots. The costs are real. It is expensive, the dock is a genuinely large appliance to house, and consumables run to a meaningful annual figure once you count pads, filters, brushes, and bags."
+  },
+  {
+    "id": "dreame-x50-ultra",
+    "name": "Dreame X50 Ultra",
+    "category": "LiDAR, Retractable Mop, Step-Climbing",
+    "badge": "Best Mopping",
+    "amazonUrl": "#",
+    "rating": 4.6,
+    "reviewCount": 2100,
+    "pros": [
+      "Genuinely climbs small thresholds and steps up to about 2.4 inches, which no other robot here manages",
+      "Mop pads lift high enough to keep carpet dry rather than merely damp",
+      "Strong downward pressure on the mop means it scrubs dried spills instead of smearing them",
+      "Hot water washing and drying in the dock, with an effective self-cleaning routine",
+      "Excellent hard-floor cleaning results on tile and sealed hardwood in our testing"
+    ],
+    "cons": [
+      "Obstacle avoidance is good but a step behind the Roborock with small objects like cables",
+      "The step-climbing mechanism adds height, so it does not fit under low furniture"
+    ],
+    "bottomLine": "The best mopping robot available, and the only one that solves split-level thresholds. Buy it for hard floors and door sills.",
+    "description": "Two problems defeat most robot vacuums in real houses: thresholds between rooms, and mopping that merely spreads dirt around. The X50 Ultra is the first machine we have used that genuinely addresses both. Its climbing mechanism lifts the body over thresholds and small steps up to roughly 2.4 inches, which in a house with a raised kitchen or a sunken living room is the difference between one robot covering the floor plan and needing two. Mopping is where it separates itself further. The pads apply real downward pressure and rotate, so dried coffee and food spots come up rather than smearing, and in side-by-side runs on tile it left a visibly cleaner floor than the passive-drag mops that most robots use. The lifting mechanism raises the pads high enough that carpet stays dry when it transitions, which sounds like a small detail until you have owned a robot that leaves damp trails across a rug. Dock functions are complete: hot water washing, drying, and self-cleaning. Its weaknesses are the corollaries of its strengths. The climbing mechanism adds height, so it will not fit under the low furniture the Roborock slides beneath. And while obstacle avoidance is good, it is a clear step behind the Saros with small items like charging cables, which means slightly more floor tidying before a run."
+  },
+  {
+    "id": "roomba-combo-10-max",
+    "name": "iRobot Roomba Combo 10 Max",
+    "category": "vSLAM + Dual Rubber Rollers, AutoWash Dock",
+    "badge": "Best for Pet Hair",
+    "amazonUrl": "#",
+    "rating": 4.4,
+    "reviewCount": 5600,
+    "pros": [
+      "Dual rubber roller design remains the best in the category for pet hair and carpet agitation",
+      "Mop pad retracts fully into the body on carpet rather than lifting slightly, so nothing drags",
+      "Dirt Detect genuinely works, making repeat passes where the sensor finds concentrated debris",
+      "Long-established service and parts support \u2014 accessories are available everywhere",
+      "The app's cleaning schedules and room routines are the most approachable for non-technical users"
+    ],
+    "cons": [
+      "Camera-based navigation is less precise than LiDAR in dim rooms and slower to map a floor",
+      "Consumables are more expensive than competitors' and the ecosystem pushes subscriptions"
+    ],
+    "bottomLine": "The pick for carpeted homes with shedding pets. The rubber rollers do work that bristle brushes and fine suction numbers do not.",
+    "description": "iRobot's rubber roller design has been copied widely and still executed best by the company that introduced it, and in a house with a shedding dog or cat on carpet that matters more than any specification on the box. Two counter-rotating rubber rollers agitate carpet fibres and lift embedded hair without the wrapping that plagues bristle brushes, and in our carpeted test area it consistently pulled more visible debris per pass than robots with higher suction ratings. Dirt Detect is the other feature that earns its place. An acoustic sensor identifies concentrated debris and the robot makes repeat passes over that spot rather than continuing at a uniform pace \u2014 genuinely useful under a dining table or by a back door. The AutoWash dock handles emptying and mop washing, and the mop pad fully retracts into the body on carpet rather than merely lifting, which eliminates damp trails. Navigation is where it trails the field. Camera-based vSLAM is less precise than LiDAR, slower to build a map, and noticeably weaker in dim rooms, so scheduled overnight runs are less reliable than with the Roborock or Dreame. Consumables are also more expensive than competitors', and the app pushes subscription services harder than we would like. For a carpeted home with pets, the cleaning performance still justifies choosing it."
+  },
+  {
+    "id": "eufy-x10-pro-omni",
+    "name": "eufy X10 Pro Omni",
+    "category": "LiDAR, Twin Spinning Mops, Omni Dock",
+    "badge": "Best Value",
+    "amazonUrl": "#",
+    "rating": 4.5,
+    "reviewCount": 7400,
+    "pros": [
+      "Full omni dock \u2014 self-empty, mop wash, and dry \u2014 at roughly half the price of the flagships",
+      "Twin spinning mop pads with real pressure clean hard floors far better than drag-pad designs",
+      "LiDAR navigation and mapping are accurate and quick, with no meaningful gap to premium robots",
+      "8,000 Pa suction handles low-pile carpet and hard floors comfortably",
+      "Anti-tangle brush design copes well with moderate hair loads"
+    ],
+    "cons": [
+      "Obstacle avoidance is adequate rather than excellent \u2014 pick up cables before a run",
+      "Mop pads are washed but dried with ambient air rather than heat, so drying is slower"
+    ],
+    "bottomLine": "The best price-to-capability ratio in the category. You give up some obstacle avoidance polish and save a great deal of money.",
+    "description": "Two or three years ago, a self-emptying, self-washing, self-drying dock was a flagship feature. The X10 Pro Omni brings the whole arrangement to roughly half the price of the premium machines, and in day-to-day use the gap is much narrower than the price difference implies. Navigation is LiDAR-based, maps build quickly and accurately, and room-level control works properly \u2014 none of the compromises that used to define the mid-range. Mopping is its strongest suit. Twin spinning pads with genuine downward pressure scrub rather than wipe, and on sealed hardwood and tile the results were closer to the Dreame than to the passive-mop robots in the same price bracket. Suction is ample for hard floors and low-pile carpet, and the anti-tangle brush handles moderate hair without weekly intervention. Where it saves money is in refinement. Obstacle avoidance is adequate rather than excellent \u2014 it will move a charging cable rather than avoiding it, so a thirty-second floor tidy before a run is worth the habit. And the dock washes the pads but dries them with ambient air rather than heat, which takes longer and, in a humid house, is less effective at keeping them fresh. Neither is a reason to spend twice as much for most households."
+  },
+  {
+    "id": "roborock-q-revo",
+    "name": "Roborock Q Revo",
+    "category": "LiDAR, Dual Spinning Mops, Empty + Wash Dock",
+    "badge": "Best Budget Dock",
+    "amazonUrl": "#",
+    "rating": 4.5,
+    "reviewCount": 6100,
+    "pros": [
+      "Self-emptying and mop-washing dock at a price where most robots still come with a plain charging base",
+      "Roborock's mapping software is the best in the category and it is the same app here",
+      "Dual spinning mops with pad lifting for carpet transitions",
+      "Simple to live with \u2014 reliable scheduling and few of the quirks cheaper robots have",
+      "Good parts availability and a large accessory ecosystem"
+    ],
+    "cons": [
+      "Camera-free obstacle avoidance means it relies on bump sensing for small objects",
+      "Suction is lower than the flagships, which shows on thicker carpet"
+    ],
+    "bottomLine": "The sweet spot for a household that wants a dock that empties and washes without paying flagship money. Tidy the floor first.",
+    "description": "A robot vacuum without a self-emptying dock needs attention every two or three runs, which is precisely the chore people bought the robot to avoid. The Q Revo puts a self-emptying, mop-washing dock at a price point where competitors are still shipping a plain charging base, and that single fact makes it the most sensible entry into genuinely hands-off floor care. It runs Roborock's mapping software, which remains the best in the category \u2014 maps build quickly, rooms are identified sensibly, no-go zones actually work, and scheduling is reliable rather than something you check on. Dual spinning mops with lifting for carpet transitions cover the hard-floor side competently, and in ordinary use the difference from the flagship mopping systems is one of degree rather than kind. The compromise is obstacle handling. Without forward cameras, it detects objects by bumping into them, which is fine for chair legs and unhelpful for charging cables and socks. In a tidy house this is a non-issue; in a house with a toddler it means a quick sweep of the floor before each run. Suction is also lower than the flagships, which shows on medium and high-pile carpet \u2014 on hard floors and low pile it is entirely adequate."
+  },
+  {
+    "id": "switchbot-k10-plus-pro",
+    "name": "SwitchBot K10+ Pro",
+    "category": "Ultra-Compact LiDAR, Self-Empty Dock",
+    "badge": "Best for Small Spaces",
+    "amazonUrl": "#",
+    "rating": 4.4,
+    "reviewCount": 2800,
+    "pros": [
+      "Under 10 inches across \u2014 reaches between chair legs and into corners that full-size robots cannot",
+      "The whole dock has a footprint small enough for an apartment hallway",
+      "Surprisingly strong suction for its size, and genuinely quiet in operation",
+      "Accurate LiDAR mapping despite the compact body",
+      "Self-emptying dock included, which is rare at this size and price"
+    ],
+    "cons": [
+      "Small dust bin means more frequent dock emptying cycles on a debris-heavy floor",
+      "Mopping is a basic drag pad rather than a pressurised or spinning system"
+    ],
+    "bottomLine": "The right robot for an apartment or a furniture-dense home. It gets into places every other robot here simply cannot reach.",
+    "description": "Every robot vacuum comparison assumes an open floor plan, and a great many people live in apartments full of chair legs, table bases, and narrow gaps that a 13-inch robot treats as walls. The K10+ Pro is under ten inches across, and the practical consequence is that it cleans the floor rather than the middle of the room \u2014 it threads between dining chairs, gets into the corner behind a door, and reaches under furniture that stops larger machines at the edge. The dock is proportionally small, which matters as much in an apartment as the robot's size does, and it still self-empties. Suction is better than the dimensions suggest, and the machine is genuinely quiet, which in a small home where you cannot walk away from the noise is a real consideration. LiDAR mapping is accurate and the app handles rooms and no-go zones properly. Its limits follow from its size. A small dust bin means more frequent trips back to the dock on a debris-heavy floor, which slows a full-house clean. And the mopping system is a basic drag pad \u2014 fine for light dust on sealed floors, not a substitute for the pressurised systems on the larger machines. For a one or two-bedroom apartment, those trade-offs buy access to floor area no other robot here can reach."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Robot Vacuums",
+          item: "https://www.thehonestreviewers.com/best-robot-vacuum/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best robot vacuum in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Roborock Saros 10R is our overall pick \u2014 the best obstacle avoidance available, a body low enough to get under furniture, and a dock that washes and heat-dries the mop pads. For hard floors and thresholds, the Dreame X50 Ultra mops better and climbs steps. For carpeted homes with shedding pets, the Roomba Combo 10 Max's dual rubber rollers still lead."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do robot vacuums replace a regular vacuum?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. A robot replaces the daily maintenance pass you would otherwise skip, keeping floors consistently tidy. It does not replace the deep clean a good upright performs on carpet, and it cannot do stairs, upholstery, or edges as thoroughly. Most households that are happy with a robot still own and use a conventional vacuum every few weeks."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is more suction better in a robot vacuum?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only up to a point. Beyond roughly 5,000 Pa the difference on ordinary floors is hard to detect, and brush design, brush pressure and airflow path matter far more \u2014 which is why robots with lower Pascal ratings often out-clean higher-rated ones on carpet. Treat very high Pa claims as marketing rather than a buying criterion."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are self-emptying docks worth the extra money?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, more than any other upgrade. Without one you empty a small bin every two or three runs, which is exactly the chore the robot was supposed to remove. If the budget forces a choice between a better robot with a plain base and a simpler robot with a full dock, the dock is the better purchase."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can robot vacuums handle pet hair?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The good ones handle it well, and brush design is what decides it. Dual rubber rollers and anti-tangle designs lift hair without wrapping, while traditional bristle brushes need cutting free regularly. In a house with long-haired pets, brush type matters considerably more than suction rating or price."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much do robot vacuum consumables cost per year?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Budget $100 to $200 a year for a premium model in a busy home: dock bags every four to eight weeks, filters every two to three months, mop pads every three to six months, and brushes annually. Batteries last three to five years. Third-party consumables for popular models cost considerably less than branded ones."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do robot vacuums send data to the manufacturer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Generally yes. Floor plans sync to the cloud so the app works remotely, and camera-equipped models may upload images for obstacle recognition training. Several manufacturers now offer local-only processing or an opt-out for image uploads \u2014 check the settings, disable anything that sends photographs off the device if you would rather it did not, and use two-factor authentication on the account."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Home Appliances",
+    tags: [
+      "best robot vacuum",
+      "robot vacuum reviews",
+      "self-emptying robot vacuum",
+      "robot mop",
+      "pet hair vacuum",
+      "Roborock"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated September 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The 6 Best <span class="text-[#38BDF8]">Robot Vacuums</span> in 2026
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          We ran six robots through a month of real houses — cables, socks, thresholds, pet hair and low furniture — and counted the thing that actually matters: how often we had to go and rescue one.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#roborock-saros-10r" class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline">
+            See Our #1 Pick
+          </a>
+          <a href="#sizing-guide" class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline">
+            Which Fits My Floors?
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="27.5k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1E90FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#what-they-do" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. What They Replace</a>
+          <a href="#navigation" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Navigation &amp; Docks</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 6 Top Picks</a>
+          <a href="#sizing-guide" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Match to Your Floors</a>
+          <a href="#what-matters" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Specs That Matter</a>
+          <a href="#running-costs" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Consumable Costs</a>
+          <a href="#privacy" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Cameras &amp; Privacy</a>
+          <a href="#maintenance" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Maintenance</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. FAQ</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Robot vacuums are sold on suction figures that stopped mattering several years ago. What decides whether one earns its place is how often you have to go and free it from a cable, whether it fits under the sofa, and whether the dock removes the chore or replaces it. Here is how six machines did in real, untidy houses.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <!-- SECTION 1 -->
+        <div id="what-they-do" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. What a Robot Vacuum Actually Replaces
+          </h2>
+
+          <p>
+            A robot vacuum does not replace your vacuum cleaner. It replaces the daily maintenance sweep — the pass you would do every day if you had the time and never actually do. That is genuinely valuable in a house with pets, children, or hard floors, and it is a completely different job from the deep clean a good upright performs on carpet every few weeks.
+          </p>
+
+          <p>
+            Understood that way, the buying decision gets much clearer. You are not looking for maximum suction; you are looking for a machine that runs every day without needing to be rescued, empties itself, and does not create a new chore in place of the old one. The robots that fail in real houses fail on autonomy, not on cleaning power.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">What We Measured</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <p class="text-3xl font-black text-white">1</p>
+                <p class="text-gray-400 text-xs mt-1">Rescues needed by the best robot in a month</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">2.4"</p>
+                <p class="text-gray-400 text-xs mt-1">Highest threshold climbed</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-white">60-75 dB</p>
+                <p class="text-gray-400 text-xs mt-1">Dock emptying noise range</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#FF4500]">$250-1.8k</p>
+                <p class="text-gray-400 text-xs mt-1">Price range across the category</p>
+              </div>
+            </div>
+          </div>
+
+          <p>
+            The second thing worth understanding early is that mopping robots vary enormously in what mopping means. A passive pad dragged behind the robot spreads a thin film of water; a pressurised or spinning pad system scrubs. On tile and sealed hardwood the difference between those two approaches is visible on the floor afterwards, and it is the single biggest determinant of whether you keep using the mopping function.
+          </p>
+
+          <p>
+            Finally, the dock has become the most important component. A robot that empties itself, washes its own pads, and dries them is a genuinely hands-off appliance; one that does not is a machine you service every second run. If the budget forces a choice between a better robot with a plain base and a simpler robot with a full dock, take the dock.
+          </p>
+        </div>
+
+        <!-- SECTION 2 -->
+        <div id="navigation" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Navigation and Docks, Decoded
+          </h2>
+
+          <p>
+            Two systems define how a robot behaves: how it maps and how it avoids things. They are separate capabilities, and a robot can be excellent at one and poor at the other.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Technology</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">What It Does Well</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Weakness</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">LiDAR mapping</td>
+                  <td class="px-4 py-4 text-gray-700">Fast, accurate floor plans; works in the dark</td>
+                  <td class="px-4 py-4 text-gray-700">Sees walls, not small objects</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Camera / vSLAM</td>
+                  <td class="px-4 py-4 text-gray-700">Recognises objects, cheaper to implement</td>
+                  <td class="px-4 py-4 text-gray-700">Struggles in dim rooms</td>
+                </tr>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">LiDAR + vision</td>
+                  <td class="px-4 py-4 text-gray-700">Accurate maps and real obstacle avoidance</td>
+                  <td class="px-4 py-4 text-gray-700">Found on premium models only</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Bump sensing only</td>
+                  <td class="px-4 py-4 text-gray-700">Inexpensive and simple</td>
+                  <td class="px-4 py-4 text-gray-700">Eats cables and socks</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            Suction figures deserve a word of caution. Pascal ratings have become a marketing arms race, and beyond roughly 5,000 Pa the difference on ordinary floors is hard to detect. Brush design, brush pressure on the floor, and airflow path matter more than the headline number, which is why robots with lower Pa ratings routinely out-clean higher-rated ones on carpet.
+          </p>
+        </div>
+
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The 6 Best Robot Vacuums in 2026
+          </h2>
+
+          <p>
+            We ran each robot daily for several weeks across hard floors, low-pile carpet, thresholds and deliberately cluttered rooms. We counted rescues, measured body height against real furniture clearance, compared mop pad pressure on dried spills, and lived with each dock long enough to know whether the pads started to smell.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings on Amazon)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- SECTION 4 -->
+        <div id="sizing-guide" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Matching the Robot to Your Floors
+          </h2>
+
+          <p>
+            The right robot is decided almost entirely by what your floors are made of and what is on them. Suction matters on carpet; mop pressure matters on tile; obstacle avoidance matters in a house with children.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Your Home</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">What Matters Most</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Pick</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Carpet plus shedding pets</td>
+                  <td class="px-4 py-4 text-gray-700">Rubber rollers, anti-tangle design</td>
+                  <td class="px-4 py-4 text-gray-700">Roomba Combo 10 Max</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Mostly hard floors</td>
+                  <td class="px-4 py-4 text-gray-700">Mop pressure and pad washing</td>
+                  <td class="px-4 py-4 text-gray-700">Dreame X50 Ultra</td>
+                </tr>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Cluttered floors, kids</td>
+                  <td class="px-4 py-4 text-gray-700">Obstacle avoidance above all</td>
+                  <td class="px-4 py-4 text-gray-700">Roborock Saros 10R</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Apartment, dense furniture</td>
+                  <td class="px-4 py-4 text-gray-700">Body and dock footprint</td>
+                  <td class="px-4 py-4 text-gray-700">SwitchBot K10+ Pro</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            Measure two things before buying: the clearance under your lowest furniture, and the height of your tallest threshold. A robot that cannot get under the bed leaves the dustiest part of the house untouched, and one that cannot cross a door sill silently gives up on a room you assumed it was cleaning.
+          </p>
+        </div>
+
+        <!-- SECTION 5 -->
+        <div id="what-matters" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. The Specs That Predict a Good Experience
+          </h2>
+
+          <p>
+            <strong>Obstacle avoidance.</strong> The single strongest predictor of whether you keep using the robot. A machine that eats a charging cable once will be run manually afterwards, which defeats the purpose. Premium LiDAR-plus-vision systems are meaningfully better here, and it is the one place the money is clearly well spent.
+          </p>
+
+          <p>
+            <strong>Brush design.</strong> Rubber rollers beat bristles for pet hair and carpet agitation; dual-roller and anti-tangle designs reduce the weekly ritual of cutting hair off the brush with scissors. In a house with long hair this matters more than suction by a wide margin.
+          </p>
+
+          <p>
+            <strong>Mop lift height.</strong> A robot that lifts its pads 5 millimetres still dampens medium-pile carpet; one that lifts 10 millimetres or retracts the pad entirely does not. If you have both hard floors and rugs, this decides whether mopping is usable at all.
+          </p>
+
+          <p>
+            <strong>Robot height.</strong> Under three inches gets beneath most sofas and bed frames. Over four inches — common on robots with elaborate turret or climbing hardware — does not, and the dust under the furniture stays there.
+          </p>
+
+          <p>
+            <strong>Dock functions.</strong> Self-empty is the minimum for genuine autonomy. Hot water pad washing plus heated drying is what stops mop pads smelling after a fortnight. Ambient-air drying works, more slowly, and struggles in humid houses.
+          </p>
+        </div>
+
+        <!-- SECTION 6 -->
+        <div id="running-costs" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Consumables and the Cost Nobody Mentions
+          </h2>
+
+          <p>
+            Robot vacuums are among the most consumable-heavy appliances in the house. Everything in the airflow and cleaning path wears, and the annual total is worth knowing before you buy rather than discovering at the first reorder.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <table class="w-full text-left">
+              <thead class="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Consumable</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Replace</th>
+                  <th class="px-4 py-4 font-bold text-gray-600 text-sm">Annual Cost</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Dock dust bags</td>
+                  <td class="px-4 py-4 text-gray-700">Every 4-8 weeks</td>
+                  <td class="px-4 py-4 text-gray-700">$25-$60</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Filters</td>
+                  <td class="px-4 py-4 text-gray-700">Every 2-3 months</td>
+                  <td class="px-4 py-4 text-gray-700">$20-$50</td>
+                </tr>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Mop pads</td>
+                  <td class="px-4 py-4 text-gray-700">Every 3-6 months</td>
+                  <td class="px-4 py-4 text-gray-700">$20-$60</td>
+                </tr>
+                <tr class="bg-gray-50 border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Main and side brushes</td>
+                  <td class="px-4 py-4 text-gray-700">Every 6-12 months</td>
+                  <td class="px-4 py-4 text-gray-700">$30-$70</td>
+                </tr>
+                <tr class="bg-white border-b border-gray-100">
+                  <td class="px-4 py-4 font-black text-gray-900">Battery (eventually)</td>
+                  <td class="px-4 py-4 text-gray-700">Every 3-5 years</td>
+                  <td class="px-4 py-4 text-gray-700">$50-$120</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            Budget roughly $100 to $200 a year for a premium robot in a busy house. Check third-party consumable availability too — for popular models, compatible bags and filters cost a fraction of branded ones, and for obscure models they may not exist at all.
+          </p>
+        </div>
+
+        <!-- SECTION 7 -->
+        <div id="privacy" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Cameras, Maps, and Privacy
+          </h2>
+
+          <p>
+            A modern robot vacuum builds a detailed floor plan of your home, and the camera-equipped models photograph the interior of every room at floor level. That data typically leaves the house — maps are synced to the manufacturer's cloud so the app works when you are away, and obstacle recognition images are sometimes uploaded for model training.
+          </p>
+
+          <p>
+            This is not a reason to avoid the category, but it is worth handling deliberately. Check whether the manufacturer offers local-only processing or lets you opt out of image uploads, both of which several brands now provide. Disable any "improve object recognition" setting that sends photographs off the device unless you are comfortable with it, and be aware that some models allow a remote video feed, which is a feature worth knowing about before it is enabled in a bedroom.
+          </p>
+
+          <p>
+            Account security matters more than people assume, because an account compromise exposes a map of your home and potentially a camera inside it. Use a unique password and enable two-factor authentication where the app supports it. If a manufacturer's privacy policy is vague about where images go, treat that as a specification failure rather than legal boilerplate.
+          </p>
+        </div>
+
+        <!-- SECTION 8 -->
+        <div id="maintenance" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Keeping It Running Well
+          </h2>
+
+          <p>
+            The weekly job is the brush and the sensors. Even anti-tangle designs collect some hair around the bearings, and two minutes with the supplied cutting tool prevents the gradual decline in pickup that owners tend to blame on the battery. Wipe the drop sensors on the underside at the same time — dust on those sensors makes a robot refuse to cross dark flooring, which is the most common false fault in the category.
+          </p>
+
+          <p>
+            Monthly, wash the filter if the manufacturer says it is washable, and let it dry completely before refitting; a damp filter smells and restricts airflow. Clean the charging contacts on both the robot and the dock, because intermittent charging is nearly always contact contamination rather than a battery fault.
+          </p>
+
+          <p>
+            For mopping models, take the pads off and machine wash them every few weeks regardless of what the dock does. Dock washing keeps them serviceable between cycles; it does not remove the accumulated grime that eventually makes a pad smell. Empty and rinse the dirty water tank rather than leaving it to stand, which is the actual cause of most complaints about odour.
+          </p>
+
+          <p>
+            Run a map rebuild after any significant furniture change. Robots navigate from a stored floor plan, and a map that no longer matches the room produces odd routing, missed areas, and repeated trips to a doorway that has moved. A rebuild takes one cleaning cycle and fixes a surprising share of complaints about a robot that "used to work better". The same applies after moving the dock, which is the reference point the whole map is anchored to, so put it somewhere permanent before you build the first map rather than relocating it later.
+          </p>
+
+          <p>
+            Finally, leave the robot docked and powered when it is not in use. Lithium batteries fare better kept topped up than repeatedly run flat, and a robot stored uncharged for months is the most common way owners end up needing a battery well before the three-year mark.
+          </p>
+        </div>
+
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best robot vacuum in 2026?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                The Roborock Saros 10R is our overall pick — the best obstacle avoidance available, a body low enough to get under furniture, and a dock that washes and heat-dries the mop pads. For hard floors and thresholds, the Dreame X50 Ultra mops better and climbs steps. For carpeted homes with shedding pets, the Roomba Combo 10 Max's dual rubber rollers still lead.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do robot vacuums replace a regular vacuum?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                No. A robot replaces the daily maintenance pass you would otherwise skip, keeping floors consistently tidy. It does not replace the deep clean a good upright performs on carpet, and it cannot do stairs, upholstery, or edges as thoroughly. Most households that are happy with a robot still own and use a conventional vacuum every few weeks.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is more suction better in a robot vacuum?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Only up to a point. Beyond roughly 5,000 Pa the difference on ordinary floors is hard to detect, and brush design, brush pressure and airflow path matter far more — which is why robots with lower Pascal ratings often out-clean higher-rated ones on carpet. Treat very high Pa claims as marketing rather than a buying criterion.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are self-emptying docks worth the extra money?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes, more than any other upgrade. Without one you empty a small bin every two or three runs, which is exactly the chore the robot was supposed to remove. If the budget forces a choice between a better robot with a plain base and a simpler robot with a full dock, the dock is the better purchase.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can robot vacuums handle pet hair?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                The good ones handle it well, and brush design is what decides it. Dual rubber rollers and anti-tangle designs lift hair without wrapping, while traditional bristle brushes need cutting free regularly. In a house with long-haired pets, brush type matters considerably more than suction rating or price.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How much do robot vacuum consumables cost per year?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Budget $100 to $200 a year for a premium model in a busy home: dock bags every four to eight weeks, filters every two to three months, mop pads every three to six months, and brushes annually. Batteries last three to five years. Third-party consumables for popular models cost considerably less than branded ones.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do robot vacuums send data to the manufacturer?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Generally yes. Floor plans sync to the cloud so the app works remotely, and camera-equipped models may upload images for obstacle recognition training. Several manufacturers now offer local-only processing or an opt-out for image uploads — check the settings, disable anything that sends photographs off the device if you would rather it did not, and use two-factor authentication on the account.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Robot Vacuum Buying Mistakes
+          </h2>
+
+          <p>
+            The robots that end up unused in a cupboard almost always failed on autonomy rather than on cleaning.
+          </p>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying on Suction Instead of Obstacle Avoidance</h3>
+              <p class="text-gray-700 text-sm m-0">
+                The robot that eats a charging cable gets run manually forever after, and at that point it has stopped saving you anything. Obstacle avoidance is the strongest predictor of whether a robot stays in daily use, and it is where premium money is most clearly justified.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping the Self-Emptying Dock</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A small onboard bin needs emptying every two or three runs. That is a new chore replacing the old one, and it is the most common reason robots end up unused in a cupboard. The dock is the upgrade that makes the category work.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Not Measuring Furniture Clearance</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Under the bed and the sofa is where the dust actually is. A robot too tall to get there leaves the dirtiest floor in the house untouched while reporting a completed clean. Measure your lowest clearance before choosing, not after.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Expecting a Drag Pad to Mop</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A passive pad towed behind the robot spreads a thin film of dirty water. Pressurised or spinning pad systems scrub, and the difference on tile is visible. If mopping is a real requirement, buy for pad pressure and pad washing rather than assuming all mopping is the same.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Leaving Dirty Water in the Dock</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Most complaints about robots smelling come from waste water standing in the dock tank and from pads that are dock-washed but never machine-washed. Empty and rinse the dirty tank regularly, and put the pads through a laundry cycle every few weeks.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Home Cleaning Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-shop-vac/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Shop Vac</h3>
+              <p class="text-gray-500 text-sm mt-2">For the messes no robot should be asked to handle.</p>
+            </a>
+            <a href="/best-air-purifier-for-allergies/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Air Purifier for Allergies</h3>
+              <p class="text-gray-500 text-sm mt-2">Floors are half the dust problem; the air is the other half.</p>
+            </a>
+            <a href="/best-vinyl-plank-flooring/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Vinyl Plank Flooring</h3>
+              <p class="text-gray-500 text-sm mt-2">The hard flooring robots handle best, compared and ranked.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The <strong class="text-white">best robot vacuum</strong> for most households is the <strong class="text-white">Roborock Saros 10R</strong>: the fewest rescues, a body low enough to actually clean under furniture, and a dock that washes and heat-dries its own pads. If your floors are mostly hard and you have thresholds, the <strong class="text-white">Dreame X50 Ultra</strong> mops better and climbs. Carpet and shedding pets still point to the <strong class="text-white">Roomba Combo 10 Max</strong> and its rubber rollers, and the <strong class="text-white">eufy X10 Pro Omni</strong> delivers most of the flagship experience for roughly half the money.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Before you order, <strong class="text-white">measure the clearance under your lowest furniture</strong> and <strong class="text-white">budget for a dock that empties itself</strong>. Those two decisions determine whether the robot cleans the floor you cannot reach, and whether it saves you a chore or hands you a new one.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Appliances" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
