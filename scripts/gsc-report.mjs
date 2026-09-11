@@ -22,22 +22,32 @@ const STRIKING = { minPos: 5, maxPos: 20, minImpressions: 50 };
 const LOW_CTR = { maxPos: 10, minImpressions: 100, ctrFloor: 0.02 };
 const MISSING = { minImpressions: 100, maxPos: 50 };
 
-function parseCsv(text) {
-  const rows = [];
-  let row = [], field = '', quoted = false;
-  for (let i = 0; i < text.length; i++) {
-    const c = text[i];
+// Search exports never contain newlines inside a field, so parse line by line. That
+// makes one malformed row (a stray quote, which these exports do produce) cost that
+// row's tidiness rather than silently swallowing every row after it.
+function parseLine(line) {
+  const out = [];
+  let field = '', quoted = false;
+  for (let i = 0; i < line.length; i++) {
+    const c = line[i];
     if (quoted) {
-      if (c === '"' && text[i + 1] === '"') { field += '"'; i++; }
+      if (c === '"' && line[i + 1] === '"') { field += '"'; i++; }
       else if (c === '"') quoted = false;
       else field += c;
-    } else if (c === '"') quoted = true;
-    else if (c === ',') { row.push(field); field = ''; }
-    else if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; }
-    else if (c !== '\r') field += c;
+    } else if (c === '"' && field === '') {
+      quoted = true;
+    } else if (c === ',') {
+      out.push(field); field = '';
+    } else {
+      field += c;
+    }
   }
-  if (field || row.length) { row.push(field); rows.push(row); }
-  return rows.filter((r) => r.some((c) => c.trim()));
+  out.push(field);
+  return out.map((f) => f.replace(/^"+|"+$/g, '').trim());
+}
+
+function parseCsv(text) {
+  return text.split(/\r?\n/).filter((l) => l.trim()).map(parseLine);
 }
 
 const num = (v) => Number(String(v).replace(/[%,\s]/g, '')) || 0;
@@ -95,28 +105,6 @@ for (const c of ranked) {
   for (const spoke of c.spokes) pillarOf.set(spoke, c.pillar);
 }
 
-// 1. Existing pages close enough that improving beats publishing something new.
-const striking = pages
-  .filter((p) => p.position >= STRIKING.minPos && p.position <= STRIKING.maxPos && p.impressions >= STRIKING.minImpressions)
-  .sort((a, b) => b.impressions - a.impressions);
-
-// 2. Ranking well but under-clicked — a title and description problem, not a content one.
-const lowCtr = pages
-  .filter((p) => p.position <= LOW_CTR.maxPos && p.impressions >= LOW_CTR.minImpressions && p.ctr < LOW_CTR.ctrFloor)
-  .sort((a, b) => b.impressions - a.impressions);
-
-// 3. Demand per cluster — what the topic picker uses to break ties between thin clusters.
-const demand = new Map();
-for (const p of pages) {
-  const pillar = pillarOf.get(p.slug);
-  if (!pillar) continue;
-  demand.set(pillar, (demand.get(pillar) || 0) + p.impressions);
-}
-const clusterDemand = ranked
-  .map((c) => ({ pillar: c.pillar, spokeCount: c.spokeCount, impressions: demand.get(c.pillar) || 0 }))
-  .filter((c) => c.impressions > 0)
-  .sort((a, b) => a.spokeCount - b.spokeCount || b.impressions - a.impressions);
-
 // 4. Queries pulling impressions with no page obviously built for them.
 const allSlugs = [...pillarOf.keys()];
 // Loose stem match so "drying" finds "…-to-dry". Deliberately generous: a false
@@ -132,12 +120,76 @@ const covered = (query) => {
     return hits >= Math.max(2, Math.ceil(words.length * 0.6));
   });
 };
+// Best page for a query, by how many of the query's words the slug accounts for.
+function bestMatchingSlug(query) {
+  const words = [...new Set(query.toLowerCase().split(/\s+/).filter((w) => w.length > 2))];
+  let best = null, bestScore = 0;
+  for (const slug of allSlugs) {
+    const sw = new Set(slug.split('-'));
+    const score = words.filter((w) => stemHit(w, sw)).length / Math.max(1, words.length);
+    if (score > bestScore) { bestScore = score; best = slug; }
+  }
+  return bestScore >= 0.6 ? best : null;
+}
+
+// 1. Existing pages close enough that improving beats publishing something new.
+const striking = pages
+  .filter((p) => p.position >= STRIKING.minPos && p.position <= STRIKING.maxPos && p.impressions >= STRIKING.minImpressions)
+  .sort((a, b) => b.impressions - a.impressions);
+
+// 2. Ranking well but under-clicked — a title and description problem, not a content one.
+const lowCtr = pages
+  .filter((p) => p.position <= LOW_CTR.maxPos && p.impressions >= LOW_CTR.minImpressions && p.ctr < LOW_CTR.ctrFloor)
+  .sort((a, b) => b.impressions - a.impressions);
+
+// 3. Demand per cluster — what the topic picker uses to break ties between thin clusters.
+// Page exports give this directly. Keyword-only exports (Bing Webmaster Tools, or a
+// Queries-only download) get attributed to the best-matching page instead, which is
+// approximate but enough to rank clusters against each other.
+const demand = new Map();
+if (pages.length) {
+  for (const p of pages) {
+    const pillar = pillarOf.get(p.slug);
+    if (!pillar) continue;
+    demand.set(pillar, (demand.get(pillar) || 0) + p.impressions);
+  }
+} else {
+  for (const q of queries) {
+    const slug = bestMatchingSlug(q.query);
+    const pillar = slug && pillarOf.get(slug);
+    if (!pillar) continue;
+    demand.set(pillar, (demand.get(pillar) || 0) + q.impressions);
+  }
+}
+const clusterDemand = ranked
+  .map((c) => ({ pillar: c.pillar, spokeCount: c.spokeCount, impressions: demand.get(c.pillar) || 0 }))
+  .filter((c) => c.impressions > 0)
+  .sort((a, b) => a.spokeCount - b.spokeCount || b.impressions - a.impressions);
+
+
+// Query-level versions of the page opportunities, for keyword-only exports.
+const qStriking = queries
+  .filter((q) => q.position >= 4 && q.position <= 20 && q.impressions >= STRIKING.minImpressions)
+  .sort((a, b) => b.impressions - a.impressions);
+
+const qLowCtr = queries
+  .filter((q) => q.position <= 10 && q.impressions >= LOW_CTR.minImpressions && q.ctr < LOW_CTR.ctrFloor)
+  .sort((a, b) => b.impressions - a.impressions);
+
 const gaps = queries
   .filter((q) => q.impressions >= MISSING.minImpressions && q.position <= MISSING.maxPos && !covered(q.query))
   .sort((a, b) => b.impressions - a.impressions)
   .slice(0, 25);
 
-const report = { files, striking: striking.slice(0, 20), lowCtr: lowCtr.slice(0, 15), clusterDemand: clusterDemand.slice(0, 20), gaps };
+const report = {
+  files,
+  striking: striking.slice(0, 20),
+  lowCtr: lowCtr.slice(0, 15),
+  queryStriking: qStriking.slice(0, 20),
+  queryLowCtr: qLowCtr.slice(0, 20),
+  clusterDemand: clusterDemand.slice(0, 20),
+  gaps,
+};
 
 if (process.argv.includes('--save')) {
   writeFileSync(join(DATA_DIR, 'demand.json'),
@@ -150,16 +202,37 @@ if (process.argv.includes('--json')) {
 } else {
   console.log(`Read: ${files.join(', ')}  (${queries.length} queries, ${pages.length} pages)\n`);
 
-  console.log(`IMPROVE FIRST — position ${STRIKING.minPos}-${STRIKING.maxPos}, real impressions.`);
-  console.log(`Beating these up a few places is worth more than a new article.\n`);
-  for (const p of report.striking.slice(0, 12)) {
-    console.log(`  pos ${p.position.toFixed(1).padStart(4)}  ${String(p.impressions).padStart(6)} imp  ${(p.ctr * 100).toFixed(1).padStart(4)}%  /${p.slug}/`);
+  if (report.striking.length) {
+    console.log(`IMPROVE FIRST — pages at position ${STRIKING.minPos}-${STRIKING.maxPos} with real impressions.`);
+    console.log(`Beating these up a few places is worth more than a new article.\n`);
+    for (const p of report.striking.slice(0, 12)) {
+      console.log(`  pos ${p.position.toFixed(1).padStart(4)}  ${String(p.impressions).padStart(6)} imp  ${(p.ctr * 100).toFixed(1).padStart(4)}%  /${p.slug}/`);
+    }
   }
 
   if (report.lowCtr.length) {
-    console.log(`\nREWRITE TITLE/META — ranking on page one, not being clicked.\n`);
+    console.log(`\nREWRITE TITLE/META — pages ranking on page one, not being clicked.\n`);
     for (const p of report.lowCtr.slice(0, 8)) {
       console.log(`  pos ${p.position.toFixed(1).padStart(4)}  ${String(p.impressions).padStart(6)} imp  ${(p.ctr * 100).toFixed(1).padStart(4)}%  /${p.slug}/`);
+    }
+  }
+
+  if (!pages.length && report.queryStriking.length) {
+    console.log(`IMPROVE FIRST — keywords at position 4-20 with real impressions.\n`);
+    for (const q of report.queryStriking.slice(0, 12)) {
+      const slug = bestMatchingSlug(q.query);
+      console.log(`  pos ${q.position.toFixed(1).padStart(4)}  ${String(q.impressions).padStart(7)} imp  ${(q.ctr * 100).toFixed(1).padStart(5)}%  ${q.query}${slug ? `  ->  /${slug}/` : '  ->  (no page matched)'}`);
+    }
+  }
+
+  if (!pages.length && report.queryLowCtr.length) {
+    const imp = report.queryLowCtr.reduce((n, q) => n + q.impressions, 0);
+    const clk = report.queryLowCtr.reduce((n, q) => n + q.clicks, 0);
+    console.log(`\nRANKING BUT NOT CLICKED — page-one keywords under ${LOW_CTR.ctrFloor * 100}% CTR.`);
+    console.log(`${report.queryLowCtr.length} keywords holding ${imp.toLocaleString()} impressions and ${clk} clicks.\n`);
+    for (const q of report.queryLowCtr.slice(0, 12)) {
+      const slug = bestMatchingSlug(q.query);
+      console.log(`  pos ${q.position.toFixed(1).padStart(4)}  ${String(q.impressions).padStart(7)} imp  ${(q.ctr * 100).toFixed(1).padStart(5)}%  ${q.query}${slug ? `  ->  /${slug}/` : ''}`);
     }
   }
 
