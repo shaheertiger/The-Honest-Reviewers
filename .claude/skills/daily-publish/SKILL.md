@@ -140,6 +140,23 @@ Then confirm the site builds:
 npm run build
 ```
 
+## 5b. Affiliate links for any new products
+
+If the batch added a roundup with a `PRODUCTS` array, its products have no direct
+Amazon links yet — they fall back to a tagged search until matched.
+
+```bash
+npm run images:status
+```
+
+- **Credentials present** — run `npm run images:fetch:all`, then `npm run images:review`.
+  Read the low-confidence list and delete any match pointing at a materially
+  different product from both `src/data/product-asins.json` and
+  `src/data/product-images.json`. A tagged search for the right product beats a
+  confident link to the wrong one. Commit the two JSON files with the batch.
+- **No credentials** — skip it and say so in the run report. Links still work and
+  still pay; they are just worth less. Never block a publish on this.
+
 ## 6. Publish
 
 ```bash
