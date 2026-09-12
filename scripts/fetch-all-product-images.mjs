@@ -57,7 +57,10 @@ const report = [];
 
 for (let i = 0; i < products.length; i++) {
   const { id, name, file } = products[i];
-  if (images[id]) {
+  // Skip only when BOTH the image and the ASIN are known. Checking the image alone
+  // stranded every product matched before ASIN capture existed: it has a picture, so
+  // it was skipped, so it never got the /dp/ link that pays better than a search link.
+  if (images[id] && asins[id]) {
     report.push({ id, name, file, status: "already-cached" });
     continue;
   }
