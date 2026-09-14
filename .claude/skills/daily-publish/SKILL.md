@@ -101,7 +101,7 @@ Spec fields (all required):
 
 ### Length is a hard gate
 
-`validate:words` fails below **2,500 words of body prose**. Frontmatter, tables and
+`validate:words` fails below **2,500 words of body prose**. Aim for **2,700-2,900** so a draft clears the floor on the first pass — landing on 2,48x and topping up wastes a cycle every time. Frontmatter, tables and
 markup do not count. What reliably clears it: **7 sections of 4-5 real paragraphs**,
 plus 7 FAQ answers of 50-70 words and 5 mistakes of 45-60 words. Tables and callouts
 are for scannability, not word count — they contribute almost nothing.
