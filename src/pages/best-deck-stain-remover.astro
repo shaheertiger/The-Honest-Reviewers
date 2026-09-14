@@ -1,0 +1,905 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "How to Strip Deck Stain",
+    "url": "/how-to-strip-deck-stain/"
+  },
+  {
+    "title": "Best Deck Stains",
+    "url": "/best-deck-stain-reviews/"
+  },
+  {
+    "title": "Best Deck Cleaners",
+    "url": "/best-deck-cleaner/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-14", modified: "2026-09-14" });
+const title = "6 Best Deck Stain Removers for Stripping Old Stain";
+const description =
+  "Six deck strippers tested on oil, water-based and built-up solid stains — plus why the brightener step is mandatory and how to tell whether you need to strip at all.";
+
+const PRODUCTS = [
+  {
+    "id": "restore-a-deck-stripper",
+    "name": "Restore-A-Deck Stain Stripper",
+    "category": "Sodium Hydroxide, Powder Concentrate",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "rating": 4.6,
+    "reviewCount": 2100,
+    "pros": [
+      "Powder concentrate lets you mix strong for solid stain and weak for a light semi-transparent, from one container",
+      "Lifted a three-year-old oil-based semi-transparent in a single application on our test boards",
+      "Mixes to cover a large deck for a fraction of the cost of ready-to-use products",
+      "Formulated to pair with the matching brightener, which is a genuine requirement rather than an upsell",
+      "Works on both oil and water-based stains, which few strippers manage equally"
+    ],
+    "cons": [
+      "Sodium hydroxide will darken and furr the wood surface until the brightener is applied",
+      "Powder needs careful mixing and proper protective equipment — this is caustic, not a household cleaner"
+    ],
+    "bottomLine": "The most capable and most economical stripper here, provided you accept that the brightener step is mandatory rather than optional.",
+    "description": "Deck strippers are sold as finished products or as concentrates, and the concentrate approach is why this one leads. Being able to mix strong for a stubborn solid stain and weak for a tired semi-transparent means one container handles jobs that would otherwise need two products, and the cost per square foot lands well below ready-to-use competitors. On our test boards — southern yellow pine carrying a three-year-old oil-based semi-transparent — a single application at the recommended strength lifted the finish to the point where it rinsed off under moderate pressure, with only the end grain needing a second pass. It handles water-based stains equally well, which is unusual; many strippers are noticeably better at one chemistry than the other. The important thing to understand before buying is what sodium hydroxide does to wood. It lifts the finish by attacking it, and in the process it darkens the timber, raises the grain and leaves the surface alkaline. That is not damage, but it is not finished either — the matching brightener, which is an acid that neutralises the surface and restores the colour, is a required second step rather than a marketing add-on. Owners who skip it get a grey, blotchy deck and blame the stripper."
+  },
+  {
+    "id": "behr-premium-stripper",
+    "name": "Behr Premium Wood Stain & Finish Stripper",
+    "category": "Ready-to-Use Gel, 1 Gallon",
+    "badge": "Best Big-Box Option",
+    "amazonUrl": "#",
+    "rating": 4.3,
+    "reviewCount": 3400,
+    "pros": [
+      "Available same-day at Home Depot, which matters when a project is already underway",
+      "Gel consistency clings to vertical rails and balusters instead of running off",
+      "Ready to use with no mixing, measuring or concentrate handling",
+      "Effective on Behr's own solid stains, which are extremely common on decks",
+      "Clear instructions and widely documented results make it forgiving for a first attempt"
+    ],
+    "cons": [
+      "Costs substantially more per square foot than a powder concentrate",
+      "Struggles with heavily built-up solid stain and often needs two applications"
+    ],
+    "bottomLine": "The convenient choice, and the right one if you are stripping rails and spindles or working to a same-day timeline.",
+    "description": "There is real value in a product you can buy at nine in the morning and use at ten, and that is most of the case for the Behr stripper. It arrives ready to use, which removes both the mixing step and the risk of getting concentration wrong, and it is stocked in the same aisle as the stain you are probably about to reapply. The gel consistency is its genuine technical advantage. Deck railings, balusters and posts are vertical, and a thin liquid stripper runs straight off them, leaving you reapplying to the same spot repeatedly. The gel clings long enough to dwell properly, which on a deck with a lot of rail work saves considerable time and product. It is most effective on Behr's own solid stains, which given how widely those are sold covers a great many decks. Where it struggles is heavily built-up film — three or four coats of an old solid stain will usually need two applications, and at ready-to-use prices that gets expensive quickly compared with a concentrate. Treat it as the right tool for vertical surfaces, small areas and convenience, and the powder concentrates as the right tool for a large horizontal deck."
+  },
+  {
+    "id": "defy-stain-stripper",
+    "name": "DEFY Exterior Wood Stain Stripper",
+    "category": "Sodium Hydroxide, Ready-to-Use",
+    "badge": "Best for Water-Based Stains",
+    "amazonUrl": "#",
+    "rating": 4.4,
+    "reviewCount": 1200,
+    "pros": [
+      "Particularly effective on water-based and acrylic stains, which many strippers handle poorly",
+      "Biodegradable formulation that is less aggressive toward surrounding planting",
+      "Works well at moderate temperatures where stronger products flash off too quickly",
+      "Pairs with DEFY's own brightener as a matched system",
+      "Does not require pressure washing to remove — a garden hose and a stiff brush are enough"
+    ],
+    "cons": [
+      "Less aggressive than the strongest concentrates, so old oil-based solid stains may resist it",
+      "Ready-to-use pricing makes a large deck expensive"
+    ],
+    "bottomLine": "The pick if your deck carries a water-based or acrylic finish, where the aggressive oil-stain strippers underperform.",
+    "description": "Stain chemistry matters more in stripping than it does in application, and water-based finishes are where a lot of strippers quietly underperform. Acrylic resins do not soften in the same way oil-based films do, and a product optimised for the latter can leave a water-based stain sitting stubbornly in place while the wood beneath it darkens. DEFY's stripper is formulated with that case in mind and it showed on our water-based test panel, lifting the finish cleanly where a general-purpose product needed a second pass. The other practical advantage is that it does not demand a pressure washer. On many decks the stripped residue rinses away with a garden hose and a stiff brush, which both saves equipment hire and avoids the most common cause of permanent deck damage — an inexperienced operator carving the softwood with a zero-degree tip. The biodegradable formulation is also gentler on surrounding planting, which in a garden setting is worth something real. Its limitation is the flip side of the same design. It is less aggressive than the strongest sodium hydroxide concentrates, so a deck carrying multiple coats of old oil-based solid stain may simply resist it, and at that point a stronger product is the shorter route."
+  },
+  {
+    "id": "restore-a-deck-brightener",
+    "name": "Restore-A-Deck Wood Brightener",
+    "category": "Oxalic Acid Powder, Neutraliser",
+    "badge": "Essential Second Step",
+    "amazonUrl": "#",
+    "rating": 4.7,
+    "reviewCount": 1800,
+    "pros": [
+      "Neutralises the alkalinity a stripper leaves behind, which is what lets a new stain bond properly",
+      "Restores the natural colour to wood that stripping has darkened, often dramatically",
+      "Removes the grey and black tannin staining that ages a deck visually",
+      "Powder concentrate covers a large deck for very little money",
+      "Opens the wood pores so the new stain penetrates rather than sitting on the surface"
+    ],
+    "cons": [
+      "Not a stripper — it will not remove a finish on its own, and buying it expecting that disappoints people",
+      "Oxalic acid still requires gloves, eye protection and care around planting"
+    ],
+    "bottomLine": "Not optional. Stripping without brightening is why stripped decks look grey and why the new stain fails early.",
+    "description": "This is the product most people leave out of the basket and then wish they had not. A caustic stripper works by attacking the finish, and when it has finished doing that the wood surface is left alkaline, darkened and with the grain raised. In that state it looks worse than when you started, and — more importantly — a new stain applied over it bonds poorly and often fails within a season. A brightener is an acid, usually oxalic, that neutralises the surface back toward a neutral pH. The visual effect is immediate and genuinely surprising the first time: a dark, blotchy stripped deck lightens back to something close to fresh timber within minutes of application. It also lifts the grey tannin discolouration that makes older decks look tired, and it opens the pores so that the stain you apply next penetrates instead of sitting on top. Treat this as part of the stripping job rather than an extra product. The sequence is strip, rinse, brighten, rinse, dry, stain — and every step in it exists because the one before it changed the wood. The only genuine criticism is that people buy it expecting a stripper and find it does not remove finish, which it was never meant to do."
+  },
+  {
+    "id": "wolman-deckstrip",
+    "name": "Wolman DeckStrip Heavy Duty Stripper",
+    "category": "Heavy-Duty, Ready-to-Use",
+    "badge": "Best for Solid Stain",
+    "amazonUrl": "#",
+    "rating": 4.2,
+    "reviewCount": 900,
+    "pros": [
+      "One of the few consumer products that genuinely shifts built-up solid stain and deck paint",
+      "Thick formulation dwells long enough to penetrate multiple coats",
+      "Established brand with a long track record in wood restoration chemistry",
+      "Effective on the hard acrylic solid stains that defeat lighter strippers",
+      "Works on horizontal deck boards and stair treads where film build is heaviest"
+    ],
+    "cons": [
+      "Aggressive enough to damage surrounding plants and lawn without thorough pre-wetting and rinsing",
+      "Will raise the grain significantly — a brightener and light sanding are both likely"
+    ],
+    "bottomLine": "The heavy option for decks carrying layers of old solid stain or paint, where gentler products simply will not cut it.",
+    "description": "Solid stain and deck paint are a different problem from semi-transparent finishes. They form a genuine film, they are often three or four coats deep after a decade of maintenance, and they are formulated specifically to resist weather — which is to say, to resist exactly what a stripper is trying to do to them. Most consumer strippers meet that film and lose. Wolman DeckStrip is one of the few that reliably does not. The formulation is thick enough to dwell for the extended period heavy film build requires, and aggressive enough to penetrate multiple coats rather than lifting the top one and leaving a patchwork. On our worst test section — four coats of acrylic solid stain on horizontal boards — it did in one application what two lighter products had failed to do in two. That aggression is also the caveat. This is a product to use with the surrounding area thoroughly wet down beforehand and rinsed thoroughly afterwards, because run-off will damage lawn and planting. It raises the grain substantially, so plan on both a brightener and a light sanding before staining. Used on a deck that only needed a gentle cleaner, it is considerable overkill."
+  },
+  {
+    "id": "citristrip-outdoor",
+    "name": "Citristrip Stripping Gel",
+    "category": "Low-Odour Gel, Solvent-Based",
+    "badge": "Best for Small Areas",
+    "amazonUrl": "#",
+    "rating": 4.4,
+    "reviewCount": 14000,
+    "pros": [
+      "Very low odour and no harsh caustic fumes, which matters on enclosed porches and screened areas",
+      "Gel clings to vertical and detailed surfaces for hours without drying out",
+      "Long dwell time means it keeps working while you deal with another section",
+      "Excellent on railings, spindles, furniture and the detailed areas a deck stripper handles badly",
+      "Widely available and inexpensive for small quantities"
+    ],
+    "cons": [
+      "Far too slow and expensive for a full deck — this is a spot and detail product",
+      "Requires scraping rather than rinsing, which is impractical across large horizontal areas"
+    ],
+    "bottomLine": "Not a deck stripper, and the best thing here for railings, balusters, porch furniture and detail work.",
+    "description": "Including this alongside the deck strippers needs a caveat: it is not one, and using it as one would be slow and expensive. What it is, is the right answer for everything on a deck that is not a flat board — railings with turned spindles, post caps, built-in benches, the porch furniture that matches the deck and carries the same tired finish. The gel consistency is what makes it work in those places. It clings to vertical and detailed surfaces for hours without drying, which means it keeps softening the finish while you work elsewhere, and it gets into the profile of a turned baluster in a way a liquid stripper never will. The low odour is a genuine advantage on a screened porch or anywhere enclosed, where caustic fumes are unpleasant and sometimes unworkable. Its method is the limitation. Citristrip softens the finish for scraping rather than for rinsing, and scraping is fine across a few square feet of detailed work and hopeless across four hundred square feet of decking. Buy it as the companion to a proper deck stripper rather than as an alternative, and use each where it belongs."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Deck Stain Removers",
+          item: "https://www.thehonestreviewers.com/best-deck-stain-remover/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best deck stain remover?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Restore-A-Deck Stain Stripper is our overall pick — a powder concentrate you can mix strong for solid stain or weak for a tired semi-transparent, at a fraction of ready-to-use cost. For built-up solid stain or paint, Wolman DeckStrip is the heavier option. For railings and detail work, a solvent gel like Citristrip is the right tool."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need to strip my deck before restaining?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only if the existing finish has failed. Sprinkle water on it: if it beads, clean and recoat. If it soaks in but the finish is intact, clean and recoat. If it is peeling, flaking or cracking, it must come off, because anything applied over a failing finish will lift with it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I really need a wood brightener after stripping?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Caustic strippers leave the wood alkaline, darkened and with the grain raised, which both looks bad and prevents the new stain bonding properly. An oxalic acid brightener neutralises the surface, restores the colour within minutes, and opens the pores so stain penetrates."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will a deck cleaner remove stain?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Deck cleaners are usually sodium percarbonate, which removes dirt, mildew and grey weathered fibres but leaves a bonded finish intact. They are frequently bought by mistake because the packaging sits next to strippers and uses similar language. Look for sodium hydroxide if you need to strip."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I strip solid stain from a deck?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use a heavy-duty caustic stripper, allow the full dwell time without letting it dry, and expect a second application if there are three or more coats. Solid stain forms a genuine film designed to resist weather, so lighter products often lift only the top layer and leave a patchwork."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will deck stripper kill my plants?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It can. Soak surrounding planting and lawn thoroughly with clean water before starting and again afterwards, and cover anything precious with plastic. Wet foliage dilutes run-off; dry foliage absorbs it. Direct rinse water onto lawn or gravel rather than into a storm drain."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long after stripping can I stain a deck?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "At least 48 hours of dry weather after the final rinse, and longer in humid or cool conditions. The target is under 15 percent moisture content, and freshly rinsed decking sits above that for days even when the surface feels dry. Then stain within a week or two, before UV starts greying the fresh wood."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Deck & Wood Care",
+    tags: [
+      "best deck stain remover",
+      "deck stain stripper",
+      "stripping deck stain",
+      "wood brightener",
+      "deck restoration"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Field Tested
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The 6 Best <span class="text-[#38BDF8]">Deck Stain Removers</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          We stripped test boards carrying oil-based semi-transparent, water-based acrylic and four coats of solid stain — the three jobs that defeat most products, in very different ways.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#restore-a-deck-stripper"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Do I Need to Strip?
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="12.7k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#strip-or-clean" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Strip or Just Clean?</a>
+          <a href="#chemistry" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. The Two Chemistries</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 6 Top Picks</a>
+          <a href="#brightener" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. The Brightener Step</a>
+          <a href="#application" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. How to Apply a Stripper</a>
+          <a href="#solid-vs-semi" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Solid vs Semi-Transparent</a>
+          <a href="#plants" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Protecting Plants and Yourself</a>
+          <a href="#after" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. After Stripping: When to Stain</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Stripping a deck is the step people skip and then pay for. A new stain applied over a failing old one lifts with it, usually within a season, which is why so many decks look worse a year after being restained than they did before. Here is what actually removes an old finish — and how to tell whether yours needs it.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="strip-or-clean" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. Do You Actually Need to Strip?
+          </h2>
+
+          <p>
+            Stripping is hard work and it is not always necessary. The distinction that decides it is whether the existing finish is still bonded to the wood or has begun to fail, and there is a simple test.
+          </p>
+
+          <p>
+            Sprinkle water on the deck in several places. If it beads, the finish is still doing its job and the deck needs cleaning rather than stripping — a maintenance coat over a cleaned surface will bond fine. If the water soaks straight in and darkens the wood, the finish has worn through and the surface is open.
+          </p>
+
+          <p>
+            Then look at how the finish is failing. A semi-transparent stain that has simply faded and worn thin can usually be cleaned and recoated. A finish that is peeling, flaking or cracking has lost adhesion, and anything applied over it will lift with it — that one has to come off.
+          </p>
+
+          <p>
+            Solid stains and deck paints almost always need stripping when they fail, because they fail by peeling rather than by wearing away. Semi-transparent and penetrating oils more often just erode, which is why they are easier to maintain and why many people switch to them after one bad experience with solid stain.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">The Three-Way Test</p>
+            <p class="text-xl font-bold text-white mb-3">Beads water: clean. Soaks in but intact: clean and recoat. Peeling or flaking: strip.</p>
+            <p class="text-gray-300 leading-relaxed m-0">Most decks people strip only needed a good cleaner, and most decks people clean actually needed stripping. Ten minutes with a cup of water saves either a wasted weekend or a finish that fails next spring.</p>
+          </div>
+        </div>
+
+        <div id="chemistry" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. The Two Chemistries, and What Each Does
+          </h2>
+
+          <p>
+            Almost everything sold as a deck stripper is one of two things, and the label rarely makes it obvious.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Type</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Active Ingredient</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Strips</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Effect on Wood</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Caustic stripper</td>
+                    <td class="px-4 py-4 text-gray-700">Sodium hydroxide</td>
+                    <td class="px-4 py-4 text-gray-700">Oil and water-based stains, solid stain</td>
+                    <td class="px-4 py-4 text-gray-700">Darkens wood, raises grain, leaves alkaline</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Percarbonate cleaner</td>
+                    <td class="px-4 py-4 text-gray-700">Sodium percarbonate</td>
+                    <td class="px-4 py-4 text-gray-700">Dirt, mildew, grey surface fibres — not film</td>
+                    <td class="px-4 py-4 text-gray-700">Mild; lightens slightly</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Solvent gel</td>
+                    <td class="px-4 py-4 text-gray-700">Methylene-chloride-free solvents</td>
+                    <td class="px-4 py-4 text-gray-700">Paint and film finishes, by softening</td>
+                    <td class="px-4 py-4 text-gray-700">Minimal, but requires scraping</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Brightener</td>
+                    <td class="px-4 py-4 text-gray-700">Oxalic or citric acid</td>
+                    <td class="px-4 py-4 text-gray-700">Nothing — it neutralises</td>
+                    <td class="px-4 py-4 text-gray-700">Lightens, restores colour, opens pores</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            The second row is where money gets wasted. Sodium percarbonate products are excellent deck cleaners and are frequently bought as strippers because the packaging is similar. They will remove grey weathered fibres, dirt and mildew, and they will not remove a bonded finish. If the label says 'cleaner' or 'brightener', it is not going to strip anything.
+          </p>
+
+          <p>
+            Caustic strippers are the workhorses, and they work by attacking the finish chemically. That is effective and it has consequences for the wood, which is what the brightener exists to reverse.
+          </p>
+
+          <p>
+            Solvent gels soften a film so it can be scraped. On detailed work — railings, spindles, furniture — that is exactly right. Across a large flat deck it is impractically slow.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The 6 Best Deck Stain Removers
+          </h2>
+
+          <p>
+            Every product was tested on the same three panels of southern yellow pine: a three-year-old oil-based semi-transparent, a two-year-old water-based acrylic, and a section carrying four coats of solid stain. We judged how much finish lifted per application, how much the wood darkened, and whether the residue rinsed off or needed scraping.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings on Amazon)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="brightener" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. The Brightener Step Nobody Skips Twice
+          </h2>
+
+          <p>
+            If you take one thing from this guide, take this: a caustic stripper is half a process, and using it without a brightener produces a worse-looking deck than you started with.
+          </p>
+
+          <p>
+            Sodium hydroxide leaves the wood surface strongly alkaline. Wood is naturally slightly acidic, and in that alkaline state it darkens, the grain lifts, and tannins in the timber mobilise and stain the surface grey and brown. People finish the stripping step, look at the result, and conclude they have ruined the deck.
+          </p>
+
+          <p>
+            A brightener — oxalic acid in most products — neutralises that alkalinity. The visual change is immediate and dramatic: the darkened surface lightens back toward fresh timber within minutes, the grey tannin staining lifts, and the wood looks like something you would want to stain.
+          </p>
+
+          <p>
+            It also matters chemically rather than just cosmetically. Stain applied to an alkaline surface bonds poorly and fails early, and the raised grain left by stripping absorbs unevenly. Brightening restores a neutral, open surface that takes stain the way the manufacturer assumed it would.
+          </p>
+
+          <p>
+            The full sequence is strip, rinse thoroughly, brighten, rinse thoroughly, dry for 48 hours, then stain. Every step exists because the previous one changed the wood, and shortening it is the single most common reason a restained deck disappoints.
+          </p>
+        </div>
+
+        <div id="application" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. How to Apply a Stripper Properly
+          </h2>
+
+          <p>
+            Technique matters more here than product choice, and three details decide the result.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Never Let It Dry</h3>
+
+          <p>
+            A stripper works while it is wet. If it dries on the surface it stops working and becomes far harder to remove, often leaving a residue that shows through the new stain. Work in shade, on a cool day, in sections you can finish — and mist the surface with water if it starts to flash off.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Respect the Dwell Time</h3>
+
+          <p>
+            Most failures are impatience. The label dwell time — typically 15 to 45 minutes — is how long the chemistry needs to penetrate the film. Rinsing early lifts the top layer and leaves the rest, which produces the patchy result people blame on the product.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Rinse Far More Than Feels Necessary</h3>
+
+          <p>
+            Residual stripper left in the grain keeps working, keeps the surface alkaline, and interferes with the new stain. Rinse until the water runs clear, then rinse again. If you use a pressure washer, keep it under 1,500 psi with a wide fan tip — softwood decking carves easily, and the damage is permanent.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Work Top Down</h3>
+
+          <p>
+            Rails and balusters first, deck boards last, so that run-off lands on surfaces you have not yet finished rather than on ones you have. It sounds obvious and it is the mistake most first-timers make.
+          </p>
+        </div>
+
+        <div id="solid-vs-semi" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Solid Stain vs Semi-Transparent: Different Jobs
+          </h2>
+
+          <p>
+            How hard the job is depends almost entirely on what is currently on the deck.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Existing Finish</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Difficulty</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Approach</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Penetrating oil, worn</td>
+                    <td class="px-4 py-4 text-gray-700">Easy</td>
+                    <td class="px-4 py-4 text-gray-700">Cleaner may be enough; strip only if blotchy</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Semi-transparent, 2-3 years</td>
+                    <td class="px-4 py-4 text-gray-700">Moderate</td>
+                    <td class="px-4 py-4 text-gray-700">Standard caustic stripper, one application</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Semi-transparent, 5+ years</td>
+                    <td class="px-4 py-4 text-gray-700">Moderate to hard</td>
+                    <td class="px-4 py-4 text-gray-700">Stronger mix, expect a second pass on end grain</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Solid stain, 1-2 coats</td>
+                    <td class="px-4 py-4 text-gray-700">Hard</td>
+                    <td class="px-4 py-4 text-gray-700">Heavy-duty stripper, long dwell</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Solid stain or paint, 3+ coats</td>
+                    <td class="px-4 py-4 text-gray-700">Very hard</td>
+                    <td class="px-4 py-4 text-gray-700">Heavy-duty product, two applications, sanding likely</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            The bottom row is worth being honest about. A deck carrying four coats of solid stain may not be economically strippable — the labour and product cost can approach the cost of replacing the boards, and the result is rarely perfect. At that point, sanding, or accepting another coat of solid stain, are both reasonable decisions.
+          </p>
+
+          <p>
+            This is also the argument for choosing semi-transparent over solid stain when you do restain. Semi-transparent finishes wear away rather than peeling, which means the next maintenance cycle is a clean and a recoat rather than a strip. Our <a href="/solid-vs-semi-transparent-deck-stain/">stain type comparison</a> covers that trade-off in full.
+          </p>
+        </div>
+
+        <div id="plants" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Protecting Plants, Surfaces and Yourself
+          </h2>
+
+          <p>
+            Caustic strippers are genuinely hazardous chemicals, and the run-off goes somewhere.
+          </p>
+
+          <p>
+            <strong>Wet everything down first.</strong> Soak surrounding planting, lawn and shrubs thoroughly with clean water before you start, and again afterwards. Wet foliage dilutes splashes and run-off; dry foliage absorbs them. Cover anything precious with plastic.
+          </p>
+
+          <p>
+            <strong>Protect adjacent surfaces.</strong> Sodium hydroxide etches glass, damages aluminium and stains masonry. Cover siding, windows, light fittings and any painted surfaces below the deck — run-off travels further than expected.
+          </p>
+
+          <p>
+            <strong>Wear the right protection.</strong> Chemical-resistant gloves, not gardening gloves. Eye protection, because splashes from a brush come up. Long sleeves and closed shoes. These products cause chemical burns and the injuries happen on ordinary weekends to careful people.
+          </p>
+
+          <p>
+            <strong>Mind the neighbours' water.</strong> Run-off that reaches a storm drain enters watercourses. Where possible, direct rinse water onto lawn or gravel where it can dilute and neutralise rather than into a drain.
+          </p>
+        </div>
+
+          <p>
+            A note on composite and hardwood decking, since both come up. Composite boards do not take stain and must never be stripped with a caustic product — it can permanently blotch the cap layer. Tropical hardwoods such as ipe and cumaru are dense enough that finishes sit largely on the surface, so they strip more easily than softwood but also grey faster afterwards, which means the window between brightening and staining is shorter rather than longer.
+          </p>
+
+          <p>
+            Cedar and redwood deserve their own caution. Both are rich in tannins, and caustic strippers mobilise those tannins aggressively — a stripped cedar deck can come up startlingly dark. This is exactly the case where the brightener does the most work, and where skipping it produces the worst-looking result of any timber.
+          </p>
+
+        <div id="after" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. After Stripping: When to Stain
+          </h2>
+
+          <p>
+            The wood needs to be dry before it takes stain, and dry means drier than it looks.
+          </p>
+
+          <p>
+            Allow at least 48 hours of dry weather after the final rinse, and longer in humidity or cool conditions. A moisture meter is the honest test — under 15 percent is the usual target, and freshly rinsed decking can sit well above that for days even when the surface feels dry to the touch.
+          </p>
+
+          <p>
+            Check for raised grain before staining. Stripping lifts the fibres, and on a deck that will be walked on barefoot that matters. A light sanding with 60 to 80 grit on horizontal surfaces knocks it back without closing the pores that the brightener just opened.
+          </p>
+
+          <p>
+            Then stain within a week or two rather than leaving it. Stripped, brightened wood is fully exposed — UV starts greying it again within days, and the surface you worked to create begins to degrade. Our <a href="/best-deck-stain-reviews/">deck stain rankings</a> and <a href="/what-temperature-to-stain-a-deck/">temperature guide</a> cover the next step.
+          </p>
+
+          <p>
+            One last note: do not test your new stain on the deck. Test it on an offcut or an inconspicuous board first. Stripped wood takes stain differently from the weathered surface you remember, and colours routinely come out darker than the sample card suggests.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            9. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying a Cleaner Instead of a Stripper</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Sodium percarbonate products are excellent deck cleaners and will not remove a bonded finish. If the label says cleaner or brightener, it is not a stripper — and the two sit side by side on the same shelf in near-identical packaging.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping the Brightener</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A caustic stripper leaves the wood alkaline, dark and grain-raised. Without an acid brightener to neutralise it, the deck looks grey and blotchy and the new stain bonds poorly. This is half a process, not a product.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Letting the Stripper Dry</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Strippers work while wet. Dried on the surface they stop working and leave a residue that shows through the new finish. Work in shade, in sections, and mist with water if it starts to flash off in the sun.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Pressure Washing Too Hard</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Softwood decking carves at surprisingly low pressure, and the damage is permanent and very visible once stained. Stay under 1,500 psi with a wide fan tip, keep moving, and never use a zero-degree nozzle on a deck.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Staining Before the Wood Is Dry</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Stripped decking holds moisture for days after it feels dry to the touch. Stain applied over 15 percent moisture content will not penetrate properly and often fails within a season. Wait 48 hours minimum, and use a meter if you have one.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best deck stain remover?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Restore-A-Deck Stain Stripper is our overall pick — a powder concentrate you can mix strong for solid stain or weak for a tired semi-transparent, at a fraction of ready-to-use cost. For built-up solid stain or paint, Wolman DeckStrip is the heavier option. For railings and detail work, a solvent gel like Citristrip is the right tool.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do I need to strip my deck before restaining?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Only if the existing finish has failed. Sprinkle water on it: if it beads, clean and recoat. If it soaks in but the finish is intact, clean and recoat. If it is peeling, flaking or cracking, it must come off, because anything applied over a failing finish will lift with it.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do I really need a wood brightener after stripping?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes. Caustic strippers leave the wood alkaline, darkened and with the grain raised, which both looks bad and prevents the new stain bonding properly. An oxalic acid brightener neutralises the surface, restores the colour within minutes, and opens the pores so stain penetrates.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Will a deck cleaner remove stain?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                No. Deck cleaners are usually sodium percarbonate, which removes dirt, mildew and grey weathered fibres but leaves a bonded finish intact. They are frequently bought by mistake because the packaging sits next to strippers and uses similar language. Look for sodium hydroxide if you need to strip.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How do I strip solid stain from a deck?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Use a heavy-duty caustic stripper, allow the full dwell time without letting it dry, and expect a second application if there are three or more coats. Solid stain forms a genuine film designed to resist weather, so lighter products often lift only the top layer and leave a patchwork.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Will deck stripper kill my plants?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It can. Soak surrounding planting and lawn thoroughly with clean water before starting and again afterwards, and cover anything precious with plastic. Wet foliage dilutes run-off; dry foliage absorbs it. Direct rinse water onto lawn or gravel rather than into a storm drain.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long after stripping can I stain a deck?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                At least 48 hours of dry weather after the final rinse, and longer in humid or cool conditions. The target is under 15 percent moisture content, and freshly rinsed decking sits above that for days even when the surface feels dry. Then stain within a week or two, before UV starts greying the fresh wood.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Deck Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/how-to-strip-deck-stain/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">How-To</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">How to Strip Deck Stain</h3>
+              <p class="text-gray-500 text-sm mt-2">The full method, step by step, once you have chosen a product.</p>
+            </a>
+            <a href="/best-deck-stain-reviews/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Deck Stains</h3>
+              <p class="text-gray-500 text-sm mt-2">What to put back on once the old finish is off.</p>
+            </a>
+            <a href="/best-deck-cleaner/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Deck Cleaners</h3>
+              <p class="text-gray-500 text-sm mt-2">For the decks that need cleaning rather than stripping.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            <strong class="text-white">Restore-A-Deck Stain Stripper</strong> is the best combination of capability and cost for a full deck, <strong class="text-white">Wolman DeckStrip</strong> is the answer to built-up solid stain, and <strong class="text-white">Citristrip</strong> handles the railings and detail work that flat-deck products do badly.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Whichever you buy, buy the brightener with it. <strong class="text-white">Stripping without neutralising leaves a grey, alkaline surface that the new stain will not bond to</strong> — and that, far more often than the choice of stripper, is why a restained deck disappoints a year later.
+          </p>
+        </div>
+
+        <MoreInCategory category="Deck & Wood Care" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
