@@ -6,6 +6,11 @@ import sitemap from '@astrojs/sitemap';
 // Buyer's guides that target high-volume search terms. They get a higher
 // sitemap priority than the 0.5 default so crawlers reach them sooner.
 const priorityGuides = new Set([
+  'acrylic-vs-penetrating-concrete-sealer',
+  'how-much-concrete-sealer-do-i-need',
+  'how-long-does-concrete-sealer-last',
+  'concrete-sealer-cost',
+  'how-many-coats-of-concrete-sealer',
   'what-temperature-to-seal-driveway',
   'driveway-sealer-streaks',
   'how-to-remove-driveway-sealer-from-concrete',
