@@ -6,6 +6,11 @@ import sitemap from '@astrojs/sitemap';
 // Buyer's guides that target high-volume search terms. They get a higher
 // sitemap priority than the 0.5 default so crawlers reach them sooner.
 const priorityGuides = new Set([
+  'how-to-tell-if-granite-needs-sealing',
+  'how-to-seal-granite-countertops',
+  'how-often-to-seal-granite-countertops',
+  'how-to-remove-stains-from-granite',
+  'impregnating-vs-topical-stone-sealer',
   'acrylic-vs-penetrating-concrete-sealer',
   'how-much-concrete-sealer-do-i-need',
   'how-long-does-concrete-sealer-last',
