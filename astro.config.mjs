@@ -279,6 +279,17 @@ const priorityGuides = new Set([
   'best-portable-generator',
   'best-gas-generator',
   'best-small-generator-for-home',
+  'are-ryobi-one-plus-batteries-interchangeable',
+  'ryobi-one-plus-hp-vs-standard',
+  'how-long-do-ryobi-batteries-last',
+  'ryobi-battery-not-charging',
+  'ryobi-18v-vs-40v',
+  'do-i-need-to-ground-a-portable-generator',
+  'how-to-use-a-portable-generator',
+  'how-long-can-a-generator-run-continuously',
+  'how-do-portable-generators-work',
+  'generator-extension-cord-size',
+  'best-ryobi-one-plus-tools',
 
   // September 2026: ten troubleshooting and comparison gaps identified across
   // the deck, garage floor, paver, driveway, generator, caulk and mower clusters.
