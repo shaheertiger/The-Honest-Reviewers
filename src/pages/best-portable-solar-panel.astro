@@ -1,0 +1,985 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Solar Generators",
+    "url": "/best-solar-generator/"
+  },
+  {
+    "title": "How to Charge a Power Station With Solar",
+    "url": "/how-to-charge-a-portable-power-station-with-solar/"
+  },
+  {
+    "title": "Best Portable Power Stations",
+    "url": "/best-portable-power-station/"
+  },
+  {
+    "title": "Can a Power Station Run a Refrigerator?",
+    "url": "/can-a-portable-power-station-run-a-refrigerator/"
+  },
+  {
+    "title": "Can a Power Station Run a CPAP?",
+    "url": "/can-a-portable-power-station-run-a-cpap/"
+  },
+  {
+    "title": "What Size Power Station Do I Need?",
+    "url": "/what-size-portable-power-station-do-i-need/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-29", modified: "2026-09-29" });
+const title = "7 Best Portable Solar Panels for Power Stations and Camping";
+const description =
+  "Seven folding solar panels ranked by real output, Voc, connectors, weight and weatherproofing, plus how to wire them in series or parallel for your station.";
+
+const PRODUCTS = [
+  {
+    "id": "ecoflow-220w-bifacial-solar-panel",
+    "name": "EcoFlow 220W Bifacial Portable Solar Panel",
+    "category": "220W Front / 155W Rear, Voc 21.8V, IP68",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "rating": 4.6,
+    "reviewCount": 2000,
+    "pros": [
+      "Bifacial design: the rear face is rated at up to 155W and adds real output over pale ground",
+      "21.8V open-circuit voltage makes two in series about 44V, safe on almost any 60V input",
+      "IP68 rating, the highest weather protection on this list",
+      "Carry case unfolds into an adjustable kickstand",
+      "MC4 output works with EcoFlow, Anker, Bluetti and most other stations via adapter"
+    ],
+    "cons": [
+      "Large unfolded footprint at about 72 inches long",
+      "Rear-side gain depends on what is underneath; over dark grass or soil it adds little"
+    ],
+    "bottomLine": "The best all-round portable panel: high output, easy voltage, top-tier weatherproofing, and it works with nearly any station.",
+    "description": "The EcoFlow 220W is our top pick because it gets the unglamorous details right as well as the headline number. The front face is rated at 220W and the rear face at up to 155W, collecting light reflected off the ground. That rear gain is real but conditional: over concrete, sand, snow or a light tarp it can add a useful slice of output, while over dark grass it adds much less. EcoFlow's own claim is up to 25 percent more energy, which is a best case rather than an everyday figure. The electrical numbers are what make it so versatile. An open-circuit voltage of 21.8V and a working voltage of about 18.4V mean two panels in series sit around 44V, comfortably inside the 60V limit that most portable stations share, with room left over for cold mornings. The panel uses a standard MC4 connector, so it works with EcoFlow stations directly and with most other brands through a common adapter. IP68 protection means an unexpected downpour is not a reason to run outside. The integrated case doubles as an adjustable kickstand. The drawbacks are size and expectations. Unfolded, it is about 72 inches long, which needs a proper patch of open ground, and buyers expecting 375W from the bifacial numbers will be disappointed."
+  },
+  {
+    "id": "jackery-solarsaga-100w",
+    "name": "Jackery SolarSaga 100W Solar Panel",
+    "category": "100W Monocrystalline, 9.1 lb, IP68, USB-A and USB-C",
+    "badge": "Best Lightweight",
+    "amazonUrl": "#",
+    "rating": 4.6,
+    "reviewCount": 5000,
+    "pros": [
+      "About 9.1 lb with an integrated handle, easy to carry on a short hike",
+      "Built-in USB-A and USB-C ports charge phones directly without a power station",
+      "IP68 rating on the current version",
+      "Plug-and-play with Jackery Explorer stations",
+      "Two kickstands hold it steady on uneven ground"
+    ],
+    "cons": [
+      "100W is slow for a 1kWh station: roughly three days of good sun from empty",
+      "Other brands need a DC8020 or DC7909 adapter"
+    ],
+    "bottomLine": "The panel to carry when weight matters more than wattage. Pair it with a small station, or buy two for a mid-size one.",
+    "description": "The SolarSaga 100W is the panel we would pack when every pound counts. It weighs about 9.1 pounds, folds in half with an integrated handle, and has two kickstands that hold it steady on uneven ground. It is also one of the few panels with USB-A and USB-C ports built in, so on a day hike or a short trip you can charge a phone directly from the panel without bringing a power station at all. The current version is rated IP68, which is better than most folding panels. Electrically it is straightforward, with an open-circuit voltage around 24.8V, and it plugs directly into Jackery Explorer stations. Other brands need an adapter to their own input. The limit is simple arithmetic. At 70 percent of rated output, a 100W panel delivers about 70 watts in real use, or 350Wh on a five-sun-hour day. That keeps a 250 to 300Wh station topped up comfortably, but it needs about three good days to refill a 1kWh station from empty. For a mid-size station, buy two and wire them in series or parallel, or step up to the 200W model. As a lightweight panel for small stations, phones and camping lights, it is excellent. As the only panel for a home backup kit, it is not enough."
+  },
+  {
+    "id": "anker-solix-ps100",
+    "name": "Anker SOLIX PS100 Portable Solar Panel",
+    "category": "100W Monocrystalline, Voc 28.5V, IP67",
+    "badge": "Best Budget",
+    "amazonUrl": "#",
+    "rating": 4.5,
+    "reviewCount": 1500,
+    "pros": [
+      "Kickstand locks at 30, 40, 50 or 80 degrees, the most adjustable here",
+      "Ships with MC4 extension, MC4-to-XT60 and XT60-to-DC7909 cables",
+      "Higher working voltage (about 24.5V) helps on stations with a minimum input voltage",
+      "IP67 rated against dust and water",
+      "Up to 23 percent cell efficiency"
+    ],
+    "cons": [
+      "At 28.5V open-circuit, two in series approach 57V, tight on a 60V input in cold weather",
+      "100W is slow for large stations"
+    ],
+    "bottomLine": "The best-value 100W panel, with the widest range of kickstand angles and cables in the box.",
+    "description": "The PS100 is the budget pick because it includes almost everything you need to connect to any station, and its kickstand is genuinely adjustable. It locks at 30, 40, 50 or 80 degrees, which matters more than it sounds: a panel at the wrong angle can lose a large share of its output, and the steep settings are what winter sun needs. In the box you get an MC4 extension cable, an MC4-to-XT60 cable and an XT60-to-DC7909 adapter, which covers Anker, EcoFlow and most Bluetti stations without a separate purchase. The cells are monocrystalline at up to 23 percent efficiency, and the panel is IP67 rated against dust and water. Its electrical design is slightly unusual for a 100W panel. The working voltage is around 24.5V and the open-circuit voltage around 28.5V, higher than typical 100W panels. That helps stations that need a minimum voltage to start charging, especially on hazy days. It also means two in series reach about 57V open-circuit, which is close to the 60V ceiling on many stations and can exceed it on a very cold morning. If you plan to pair two, parallel wiring is safer on a 60V station. For a single panel or a small station, it is the most complete package at the price."
+  },
+  {
+    "id": "jackery-solarsaga-200w",
+    "name": "Jackery SolarSaga 200W Solar Panel",
+    "category": "200W Bifacial, Voc ~24.8V, IP68, DC8020",
+    "badge": "Best for Jackery Owners",
+    "amazonUrl": "#",
+    "rating": 4.6,
+    "reviewCount": 1200,
+    "pros": [
+      "Bifacial design with up to 25 percent quoted cell efficiency",
+      "Plugs straight into Jackery Explorer v2 and Plus stations via DC8020",
+      "About 17.6 lb for 200W, reasonable for its output",
+      "IP68-rated construction with an ETFE surface",
+      "Low 24.8V Voc makes series pairs safe on 60V inputs"
+    ],
+    "cons": [
+      "Non-Jackery stations need a DC8020 adapter",
+      "Several versions have been sold under this name; check the listing is the current bifacial model"
+    ],
+    "bottomLine": "If you own a Jackery station, this is the panel to buy. Other brands can do better with a standard MC4 panel.",
+    "description": "For Jackery owners this is the obvious panel, and it is a good one. The current version is bifacial, rated at 200W on the front with a small boost available from light reaching the rear face, and Jackery quotes cell efficiency up to 25 percent. It weighs about 17.6 pounds, folds into a carryable package, and uses an ETFE surface with IP68-rated construction, which holds up to rain and dust better than older PET-laminated panels. The connector is Jackery's DC8020, which plugs directly into the Explorer v2 and Plus stations with no adapter, and one of the reasons Jackery kits are so easy to set up. The open-circuit voltage is about 24.8V, so two in series reach roughly 50V, which fits the 60V input on most Jackery stations. In real use, expect 120 to 160 watts on a clear day, which refills a 1kWh station in 7 to 9 hours of strong sun. Two of them roughly halve that. Two cautions. Jackery has sold more than one generation under the SolarSaga 200W name, so confirm the listing shows the bifacial, IP68 model. And if your station is not a Jackery, an MC4 panel such as the EcoFlow 220W is simpler, because you avoid the DC8020 adapter."
+  },
+  {
+    "id": "bluetti-pv350",
+    "name": "Bluetti PV350 Solar Panel",
+    "category": "350W Monocrystalline, Voc 46.5V, MC4, IP65",
+    "badge": "Best High-Voltage Panel",
+    "amazonUrl": "#",
+    "rating": 4.5,
+    "reviewCount": 900,
+    "pros": [
+      "350W in one panel, fewer connections than two or three smaller panels",
+      "Working voltage around 37.5V pairs well with high-voltage station inputs",
+      "Up to 23.4 percent cell efficiency",
+      "Standard MC4 connector works with most stations",
+      "Two in series make sense on stations with a 145V or 150V input"
+    ],
+    "cons": [
+      "About 30.6 lb, awkward to carry any distance",
+      "Only IP65, the weakest weather protection among our picks; do not leave it out in heavy rain"
+    ],
+    "bottomLine": "Best for large stations with a high-voltage input, where one big panel beats a tangle of small ones.",
+    "description": "The PV350 makes sense when you want a lot of wattage without a lot of connections. At 350W in a single folding panel, it replaces two smaller panels and their cabling, and its higher working voltage, about 37.5V, suits stations with high-voltage solar inputs. The open-circuit voltage is around 46.5V. That is fine alone on a 60V input, but two in series would reach 93V, so pairing requires a station built for it, such as the Bluetti AC200L with its 145V input or the high-voltage port on the EcoFlow DELTA Pro 3. On those stations, a pair of PV350s is one of the tidiest ways to put 700W of panel on the ground. Cell efficiency is quoted at up to 23.4 percent, and the connector is a standard MC4, so it is not tied to Bluetti. Two things hold it back. The first is weight: at about 30.6 pounds it is awkward to carry any distance, and it is really a panel for the back of a truck or a backyard. The second is weather protection. It is rated IP65, which handles splashes and light rain but not the soaking an IP67 or IP68 panel can survive. If you set it up for a day, you should be willing to bring it in when the weather turns."
+  },
+  {
+    "id": "ecoflow-400w-portable-solar-panel",
+    "name": "EcoFlow 400W Portable Solar Panel",
+    "category": "400W Monocrystalline, Voc 48V, IP68",
+    "badge": "Best for Big Stations",
+    "amazonUrl": "#",
+    "rating": 4.6,
+    "reviewCount": 1100,
+    "pros": [
+      "400W from one panel, enough to refill a 1kWh station in a single sunny day",
+      "48V open-circuit voltage fits a 60V input alone with headroom",
+      "IP68 rated",
+      "Kickstand case holds it at an adjustable angle",
+      "22.4 percent cell efficiency"
+    ],
+    "cons": [
+      "About 35 lb for the panel and nearly 42 lb in its kickstand case",
+      "Almost 8 feet long unfolded; wind catches it easily"
+    ],
+    "bottomLine": "The most output from a single portable panel on our list. Worth the bulk if you own a 2kWh station.",
+    "description": "If you own a large station and want a same-day refill, the EcoFlow 400W is the panel to buy. A single panel rated at 400W delivers about 280 watts in real use, which is roughly 1.4kWh on a five-sun-hour day. That is enough to refill a 1kWh station in one day, or to cover most of a refrigerator's daily consumption while a 2kWh station supplies the night. Its open-circuit voltage of 48V fits a standard 60V input on its own with a healthy margin for cold weather, and EcoFlow's DELTA 2 Max has two inputs, so two of these can each feed their own port. The cells are monocrystalline at 22.4 percent efficiency, and the panel is IP68 rated. The kickstand case holds it at an adjustable angle. The trade-off is physical. The panel alone weighs about 35 pounds, nearly 42 with its case, and unfolded it is almost 8 feet long and 3.5 feet wide. It needs open ground, and in a breeze it becomes a sail that should be weighted or tied down. For small stations, it is also overkill: a 400W panel on a 300W-input station wastes much of its potential. Match it to a station with at least 400W of input and it earns its bulk."
+  },
+  {
+    "id": "renogy-200w-solar-suitcase",
+    "name": "Renogy 200W Portable Solar Suitcase",
+    "category": "200W N-Type, Voc 21.5V, 20A PWM Controller Included",
+    "badge": "Best for 12V Batteries",
+    "amazonUrl": "#",
+    "rating": 4.5,
+    "reviewCount": 1400,
+    "pros": [
+      "Pre-installed Voyager 20A PWM controller charges a 12V battery directly",
+      "Rigid glass-and-aluminium panels are more durable than fabric folding panels",
+      "N-type cells with up to 25 percent quoted efficiency",
+      "21.5V open-circuit voltage is easy to pair in series",
+      "Five-year material and workmanship warranty"
+    ],
+    "cons": [
+      "About 28.5 lb, heavy for 200W",
+      "The PWM controller is redundant with a power station's MPPT; you connect a station differently"
+    ],
+    "bottomLine": "The right panel for an RV or a 12V deep-cycle battery. For a power station alone, a lighter folding panel is better.",
+    "description": "The Renogy suitcase is on this list for a different job than the others. It comes with a Voyager 20A PWM charge controller pre-installed and alligator clips with an inline 15A fuse, so it can charge a 12V lead-acid or lithium battery directly, with no power station at all. That makes it the natural choice for an RV, a boat, a trolling motor battery or an off-grid cabin with a battery bank. The panels are rigid glass in aluminium frames rather than flexible fabric-mounted cells, which makes the suitcase heavier but also tougher, and the N-type cells are quoted at up to 25 percent efficiency. Renogy backs it with a five-year material and workmanship warranty. Electrically, it has a 21.5V open-circuit voltage and an 18.65V working voltage, easy numbers to work with. For power station owners, the included controller is the catch. A power station has its own MPPT controller, and sending power through a PWM controller first wastes some of the panel's output. Check Renogy's instructions for connecting the panel directly to a station. It also weighs about 28.5 pounds for 200W, which is heavy compared with folding panels. Buy it for a 12V battery; buy a folding panel for a power station."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Portable Solar Panels",
+          item: "https://www.thehonestreviewers.com/best-portable-solar-panel/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best portable solar panel?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most people, the EcoFlow 220W Bifacial is the best all-rounder: high output, a 21.8V Voc that pairs safely in series, IP68 weather protection and a standard MC4 connector. The Jackery SolarSaga 100W is best when weight matters, and the EcoFlow 400W is best for refilling large stations quickly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much power does a 100W portable solar panel produce?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Typically 60 to 80 watts at a sunny midday, or about 350Wh on a day with five peak sun hours. That keeps a small station topped up and charges phones and lights easily, but it takes about three good days to refill a 1kWh power station from empty."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use a different brand of solar panel with my power station?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Usually yes, if the panel's voltage and current fit within the station's input window and you have the right adapter. Most panels use MC4 connectors, while stations use XT60, DC7909, DC8020 or Anderson. Check Voc with cold-weather headroom before connecting any third-party panel."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I wire solar panels in series or parallel?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Series is usually better on portable stations, because it raises voltage and keeps current within amp limits, and it loses less in long cables. Choose parallel if series would exceed the station's voltage limit, or if one panel is often shaded. Use identical panels either way."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are bifacial solar panels worth it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only if you can use the rear face. Over snow, sand, concrete or a light tarp, a bifacial panel can add useful output. Over dark grass it performs like a normal panel. Raise it off the ground so reflected light reaches the back, and do not pay a large premium if you cannot."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can portable solar panels get wet?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most can handle rain. IP67 and IP68 panels resist immersion, while IP65 panels handle splashes and light rain but should be brought in during heavy storms. Cables, adapters and USB ports are weak points on any panel, and the power station itself must always stay dry."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many portable solar panels do I need to run a refrigerator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A refrigerator uses about 1 to 2kWh per day, so you need roughly 400 to 600W of panels in good summer sun just to keep up, plus a station of 1 to 2kWh to cover the night. In winter or cloudy weather, plan on more panels or a backup charging source."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Generators & Backup Power",
+    tags: [
+      "best portable solar panel",
+      "folding solar panel",
+      "solar panel for power station",
+      "bifacial solar panel",
+      "camping solar panel",
+      "solar suitcase"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            7 Panels Compared
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best <span class="text-[#38BDF8]">Portable Solar Panels</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Folding panels ranked by the output you actually get, the voltages your station will accept, and how easy they are to carry and set up.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#ecoflow-220w-bifacial-solar-panel"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Rated vs Real Output
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="5.1k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-picked" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Picked</a>
+          <a href="#rated-vs-real" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Rated vs Real Output</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 7 Top Picks</a>
+          <a href="#voltage-connectors" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Voc and Connectors</a>
+          <a href="#series-parallel" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Series vs Parallel</a>
+          <a href="#cell-types" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Mono, Bifacial and N-Type</a>
+          <a href="#portability" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Weight and Kickstands</a>
+          <a href="#weather" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Weatherproofing</a>
+          <a href="#matching" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Matching Your Station</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          A 200W panel will not give you 200 watts. On a clear day it gives 120 to 160, and the difference between a good portable panel and a bad one is less about that number than about voltage, connectors, weight and how well it stands up to weather. Here is what to check, and which panels get it right.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-picked" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Picked
+          </h2>
+
+          <p>
+            A portable solar panel is a simple product with a surprising number of ways to go wrong. The wrong voltage can stop a station from charging or damage its controller. The wrong connector means a trip back to the store. A panel that looks light on the listing can turn out to be awkward to carry. We ranked panels on the specifications that decide whether they work well with your station, not on the wattage printed on the front.
+          </p>
+
+          <p>
+            We looked first at real-world output relative to rated watts, then at electrical compatibility: open-circuit voltage, operating voltage and current, and how easily each panel pairs in series or parallel. After that came connectors, weight and folded size, kickstand design and angle adjustment, and weather protection. Durability and warranty broke ties.
+          </p>
+
+          <p>
+            We favoured panels with standard MC4 connectors, because they work with the most stations. Brand-specific panels made the list where they are the best option for that brand's owners, such as Jackery's DC8020 panels. We also kept one panel with its own built-in charge controller, because many readers are charging 12V batteries in an RV rather than a power station.
+          </p>
+
+          <p>
+            If you have not bought a station yet, start with our <a href="/best-solar-generator/">best solar generator</a> kits, which pair a station and panels and are ranked on solar input. If you already own one, this guide will help you pick panels that suit its input limits. Our general <a href="/best-portable-power-station/">best portable power station</a> roundup covers the stations themselves.
+          </p>
+        </div>
+
+        <div id="rated-vs-real" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Rated Watts vs Real-World Output
+          </h2>
+
+          <p>
+            Every panel's rated wattage comes from standard test conditions: a cell temperature of 25°C and 1,000 watts per square metre of sunlight hitting the panel square-on. Outdoors, those conditions rarely happen at the same time. On a clear summer day at noon the sunlight may be strong enough, but the panel itself will be much hotter than 25°C, and output falls as temperature rises.
+          </p>
+
+          <p>
+            In practice, a well-placed portable panel delivers 60 to 80 percent of its rated watts at midday. A 200W panel typically shows 120 to 160 watts on the station's display. Laid flat in the morning or late afternoon, it may show half that. Thin cloud can cut output sharply. These are not defects; they are the normal behaviour of every panel on the market, including the most expensive.
+          </p>
+
+          <p>
+            That is why we plan using 70 percent of the rated figure and four to six peak sun hours in summer. Daily energy is roughly rated watts, times sun hours, times 0.7. A 100W panel gives about 350Wh on a five-sun-hour day, and a 400W panel gives about 1.4kWh. For the complete method, including where to place the panels and how to read the station's input display, see <a href="/how-to-charge-a-portable-power-station-with-solar/">how to charge a portable power station with solar</a>.
+          </p>
+
+          <p>
+            Efficiency figures, typically 22 to 25 percent for modern monocrystalline cells, tell you how much power a panel makes per square foot, not how much power it makes in total. A more efficient panel is smaller and lighter for the same wattage, which is a genuine advantage in a portable product. But a 200W panel at 22 percent and a 200W panel at 25 percent will deliver similar energy on the same day.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">WHAT TO EXPECT</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <p class="text-3xl font-black text-white">60-80%</p>
+                <p class="text-gray-400 text-xs mt-1">Of rated watts at a sunny midday</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">4-6</p>
+                <p class="text-gray-400 text-xs mt-1">Peak sun hours in a US summer</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-white">~350Wh</p>
+                <p class="text-gray-400 text-xs mt-1">Per day from a 100W panel</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">22-25%</p>
+                <p class="text-gray-400 text-xs mt-1">Typical monocrystalline efficiency</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 7 Top Picks
+          </h2>
+
+          <p>
+            The panels below cover everything from a 9-pound 100W panel for hiking to a 400W panel for refilling a large station in a day. We ranked them on real-world output, electrical compatibility with common stations, connectors, weight, kickstand design and weather protection. Specifications come from the manufacturers, and real-world figures assume 70 percent of rated output. We note which stations each panel suits and where you will need an adapter. Prices change often, so we describe value rather than quoting numbers.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings on Amazon)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="voltage-connectors" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Voc, Voltage Windows and Connectors
+          </h2>
+
+          <p>
+            The most important number on a solar panel's label is not its wattage. It is Voc, the open-circuit voltage, which is the highest voltage the panel produces when nothing is drawing current. Every power station's solar input has a voltage window, commonly 11 or 12 to 60 volts on portable models. Stay under the maximum, including on the coldest morning you expect, and you are safe. Go over, and the station may refuse to charge or be damaged.
+          </p>
+
+          <p>
+            Voc rises as temperature falls, by around 0.3 percent per degree Celsius for most silicon cells. A panel rated at 48V at 25°C can read over 52V at freezing. That is why we keep about 10 to 15 percent headroom below the station's maximum. The second number, Vmp or working voltage, matters at the other end: it must stay above the station's minimum for charging to start, which can be an issue with a single low-voltage panel on a hazy day.
+          </p>
+
+          <p>
+            Connectors are the easier problem, because adapters exist for almost every combination. MC4 is the industry standard used by EcoFlow, Anker, Bluetti and Renogy panels. Stations use XT60 (EcoFlow and Anker), DC7909 (older Jackery and many Bluetti), DC8020 (current Jackery), or Anderson Powerpole and 8mm plugs (Goal Zero). An adapter fixes a physical mismatch; it does nothing about a voltage mismatch, so always check Voc first.
+          </p>
+
+          <p>
+            Buy the adapter from the station's manufacturer or a reputable brand, and check its current rating. Cheap adapters with thin wire can run warm at 10 amps or more, which is common with 200W and larger panels. Keep connections off wet ground, and avoid running long, thin extension cables, which waste power as heat. A 10 to 12 gauge cable is appropriate for runs over about 15 feet.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Connector</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Typical use</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">MC4</td>
+                    <td class="px-4 py-4 text-gray-700">Most panels</td>
+                    <td class="px-4 py-4 text-gray-700">Weatherproof, locking; the default to look for</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">XT60</td>
+                    <td class="px-4 py-4 text-gray-700">EcoFlow, Anker inputs</td>
+                    <td class="px-4 py-4 text-gray-700">Needs MC4-to-XT60 cable, usually included</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">DC7909</td>
+                    <td class="px-4 py-4 text-gray-700">Many Bluetti, older Jackery</td>
+                    <td class="px-4 py-4 text-gray-700">Barrel plug, lower current limit</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">DC8020</td>
+                    <td class="px-4 py-4 text-gray-700">Current Jackery</td>
+                    <td class="px-4 py-4 text-gray-700">Jackery panels plug in directly</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Anderson / 8mm</td>
+                    <td class="px-4 py-4 text-gray-700">Goal Zero</td>
+                    <td class="px-4 py-4 text-gray-700">Adapters needed for other brands</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="series-parallel" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Series vs Parallel: Combining Panels
+          </h2>
+
+          <p>
+            When one panel is not enough, you connect two or more. Wiring in series connects positive of one panel to negative of the next; voltages add while current stays the same. Wiring in parallel connects positive to positive and negative to negative, usually with an MC4 branch connector; currents add while voltage stays the same. Both give the same total watts on paper. The difference is how well they fit your station's input.
+          </p>
+
+          <p>
+            Series is usually better on portable stations. Two EcoFlow 220W bifacial panels in series reach about 44V open-circuit and deliver their power at around 37V, which keeps current low and within most inputs' amp limits. Higher voltage also loses less in long cables and helps the station start charging earlier in the morning. The drawback is shade: because the current is shared, shading one panel drags down the whole string.
+          </p>
+
+          <p>
+            Parallel keeps voltage low and adds current. Two panels at 20V and 11A each become 20V and 22A, which exceeds the 15A limit on many stations, so the station clips the output. Parallel is the right choice when series would exceed the voltage limit, such as two Anker PS100s at 57V open-circuit on a 60V station, or when one panel is often in partial shade and you do not want it dragging down the other.
+          </p>
+
+          <p>
+            Only combine panels with similar electrical specifications. Wiring a 100W panel in series with a 200W panel limits the pair to the smaller panel's current, wasting much of the larger panel's output. If you mix, parallel is less wasteful, but identical panels are best. And never exceed the station's maximum voltage in series. Add each panel's Voc together, add 10 to 15 percent for cold weather, and compare with the input limit.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE RULE</p>
+            <p class="text-xl font-bold text-white mb-3">Series for amps, parallel for volts.</p>
+            <p class="text-gray-300 leading-relaxed m-0">Series wiring helps when a station's amp limit clips output. Parallel wiring helps when series would exceed the voltage limit. Check both numbers against the input, with cold-weather headroom.</p>
+          </div>
+        </div>
+
+        <div id="cell-types" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Monocrystalline, Bifacial and N-Type Cells
+          </h2>
+
+          <p>
+            Every panel on our list uses monocrystalline silicon cells, and that is now the default for portable panels. Monocrystalline cells are more efficient than the older polycrystalline and thin-film types, so a panel of the same wattage is smaller and lighter. For a product you fold up and carry, that matters more than a small price difference.
+          </p>
+
+          <p>
+            Bifacial panels have cells that collect light from both sides. The front works like any panel; the back picks up light reflected from the ground. The gain depends almost entirely on the surface below. Over snow, white gravel, sand, concrete or a pale tarp, the back face can add a meaningful amount of energy. Over dark grass or soil it adds little. Manufacturer claims of up to 25 percent more energy are best cases.
+          </p>
+
+          <p>
+            To get the most from a bifacial panel, raise it off the ground so light can reach the rear, and place it over the palest surface available. A light-coloured tarp under the panel is a cheap way to add output. A bifacial panel lying flat on a lawn performs like a normal panel of the same front rating, so do not pay much extra unless you can use the rear face.
+          </p>
+
+          <p>
+            N-type cells, used in the Renogy suitcase and increasingly in other panels, degrade more slowly and cope better with heat than older P-type cells. Renogy quotes under 0.4 percent annual degradation. For a panel used occasionally for camping, it makes little difference. For a panel used daily for years, it adds up to more energy over the panel's life.
+          </p>
+        </div>
+
+        <div id="portability" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Weight, Fold Size and Kickstands
+          </h2>
+
+          <p>
+            Portable panels range from about 9 pounds for a 100W folding panel to over 40 pounds for a 400W panel in its case. Weight scales roughly with wattage, and there is no way around it. Decide how far you will carry the panel. From a car to a campsite, a 200W panel at 15 to 20 pounds is manageable. For a walk of more than a few minutes, 100W panels are much easier, and two of them can be carried separately.
+          </p>
+
+          <p>
+            Unfolded size matters as much as weight. A 400W panel can be close to 8 feet long, which needs a large open space and can be hard to position in a crowded campsite. Folded size determines whether it fits in a car boot or behind a seat. Check both dimensions on the listing, and measure the space you have before buying the largest panel.
+          </p>
+
+          <p>
+            Kickstands decide how much of the rated output you actually get. A panel angled toward the sun captures far more than one lying flat, especially in spring, autumn and winter, when the sun is low. The Anker PS100 locks at four angles, the most adjustable here. Most other panels use a single angle or a case that folds into a stand. A rough rule is to tilt the panel at an angle close to your latitude, steeper in winter and flatter in summer.
+          </p>
+
+          <p>
+            Wind is the other practical concern. A large panel is a sail, and a gust can flip it, crack cells or pull the connectors out. Use guy lines, weigh the kickstand down, or lay the panel on a slope rather than propping it high on a windy day. Check the panel's corner eyelets for tie-down points before you need them.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Panel</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Rated W</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Weight</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Voc</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Jackery SolarSaga 100W</td>
+                    <td class="px-4 py-4 text-gray-700">100W</td>
+                    <td class="px-4 py-4 text-gray-700">~9.1 lb</td>
+                    <td class="px-4 py-4 text-gray-700">~24.8V</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Jackery SolarSaga 200W</td>
+                    <td class="px-4 py-4 text-gray-700">200W</td>
+                    <td class="px-4 py-4 text-gray-700">~17.6 lb</td>
+                    <td class="px-4 py-4 text-gray-700">~24.8V</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Bluetti PV350</td>
+                    <td class="px-4 py-4 text-gray-700">350W</td>
+                    <td class="px-4 py-4 text-gray-700">~30.6 lb</td>
+                    <td class="px-4 py-4 text-gray-700">~46.5V</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">EcoFlow 400W</td>
+                    <td class="px-4 py-4 text-gray-700">400W</td>
+                    <td class="px-4 py-4 text-gray-700">~35.3 lb (panel only)</td>
+                    <td class="px-4 py-4 text-gray-700">48V</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Renogy 200W Suitcase</td>
+                    <td class="px-4 py-4 text-gray-700">200W</td>
+                    <td class="px-4 py-4 text-gray-700">~28.5 lb</td>
+                    <td class="px-4 py-4 text-gray-700">~21.5V</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="weather" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Weatherproofing: IP65, IP67 and IP68
+          </h2>
+
+          <p>
+            Portable panels live outdoors, so weather protection matters. The IP rating gives two digits: the first for dust, the second for water. All the panels here are dust-tight (6). The difference is water. IP65 resists water jets and rain but is not designed for immersion. IP67 survives temporary immersion. IP68 is rated for longer or deeper immersion, as defined by the manufacturer.
+          </p>
+
+          <p>
+            In practical terms, an IP65 panel like the Bluetti PV350 should come in during heavy, prolonged rain, and its connectors should never sit in a puddle. An IP67 or IP68 panel, such as the Anker PS100 or EcoFlow 220W, handles a surprise storm without worry. For panels left out for days at a cabin or during a long outage, IP67 or better is worth prioritising.
+          </p>
+
+          <p>
+            The rating applies to the panel and the sealed junction box, not necessarily to the cables and adapters. Built-in USB ports, open connectors and adapters are the weak points. Keep MC4 connections off the ground and pointing downward, cap unused USB ports, and never leave an adapter lying in wet grass. The station itself is not weatherproof and should always stay dry and shaded.
+          </p>
+
+          <p>
+            Surface material also affects durability. ETFE, used on the Jackery SolarSaga panels, resists scratches, UV and yellowing better than the PET laminate on cheaper panels. Rigid glass panels like the Renogy suitcase are the most durable surface but are heavier and can crack if dropped. Fabric-backed folding panels are lightest but should be kept away from sharp edges and not folded while wet for long periods.
+          </p>
+        </div>
+
+        <div id="matching" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Matching Panels to Your Power Station
+          </h2>
+
+          <p>
+            The right panel depends on the station it will feed. Start with the station's maximum solar input in watts, its voltage window and its amp limit. Buy enough panel wattage to reach the maximum input in real-world conditions, which usually means rated panel watts of about 1.2 to 1.4 times the input limit if you want to reach it in less-than-perfect sun.
+          </p>
+
+          <p>
+            For small stations under 500Wh, a single 100W or 200W panel is plenty. For 1kWh stations with 400W to 600W inputs, two 200W panels in series are the sweet spot. For 2kWh stations with 1,000W or more of input, a pair of 400W panels or several 200W panels makes sense. Our <a href="/best-solar-generator/">best solar generator</a> guide shows each kit's input limits side by side.
+          </p>
+
+          <p>
+            Be realistic about what the panels will run. A refrigerator uses 1 to 2kWh per day, which means roughly 400 to 600W of panels in good sun just to keep up. Our guide on whether <a href="/can-a-portable-power-station-run-a-refrigerator/">a portable power station can run a refrigerator</a> covers the startup surge and runtime maths. A CPAP, a router and lights are far easier to cover with one or two panels.
+          </p>
+
+          <p>
+            Finally, think about future growth. Buying two identical panels now makes series or parallel wiring simple later. Buying one high-voltage panel may make it harder to add a second if your station has a 60V limit. If you might upgrade to a larger station with a high-voltage input, such as the stations in our <a href="/best-portable-power-station/">best portable power station</a> roundup, panels with standard MC4 connectors and moderate voltages will move with you.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">PANEL WATTS FOR COMMON STATIONS</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <p class="text-3xl font-black text-white">100-200W</p>
+                <p class="text-gray-400 text-xs mt-1">Stations under 500Wh</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">400W</p>
+                <p class="text-gray-400 text-xs mt-1">1kWh stations, one sunny day</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-white">800W+</p>
+                <p class="text-gray-400 text-xs mt-1">2kWh stations for same-day refills</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">1.2-1.4x</p>
+                <p class="text-gray-400 text-xs mt-1">Panel watts vs input limit</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Expecting the rated wattage</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A panel's rating comes from lab conditions that rarely occur outdoors. Expect 60 to 80 percent of the rated watts at a sunny midday and much less in the morning, evening or under cloud. Plan your daily energy using 70 percent of the rating and realistic peak sun hours.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring open-circuit voltage</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Checking only the connector is how controllers get damaged. Add up the Voc of panels in series, add 10 to 15 percent for cold mornings, and compare with the station's maximum input voltage. An adapter solves a plug mismatch, not a voltage problem.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Mixing different panels in series</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Combining a 100W and a 200W panel in series limits both to the smaller panel's current and wastes much of the larger panel's output. Use identical panels where possible, and if you must mix, wire them in parallel within the station's amp limit.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Laying panels flat in shade</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A flat panel in partial shade can lose half its output or more. Prop the panel toward the sun, use the kickstand at a steeper angle in winter, and move it as shadows shift. Full sun at a slightly wrong angle beats partial shade every time.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Leaving an IP65 panel out in heavy rain</h3>
+              <p class="text-gray-700 text-sm m-0">
+                IP65 resists splashes and rain but is not designed for immersion, and connectors are weak points on any panel. Bring lower-rated panels in during storms, keep connections off wet ground, and never let the power station itself get wet.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best portable solar panel?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most people, the EcoFlow 220W Bifacial is the best all-rounder: high output, a 21.8V Voc that pairs safely in series, IP68 weather protection and a standard MC4 connector. The Jackery SolarSaga 100W is best when weight matters, and the EcoFlow 400W is best for refilling large stations quickly.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How much power does a 100W portable solar panel produce?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Typically 60 to 80 watts at a sunny midday, or about 350Wh on a day with five peak sun hours. That keeps a small station topped up and charges phones and lights easily, but it takes about three good days to refill a 1kWh power station from empty.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I use a different brand of solar panel with my power station?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Usually yes, if the panel's voltage and current fit within the station's input window and you have the right adapter. Most panels use MC4 connectors, while stations use XT60, DC7909, DC8020 or Anderson. Check Voc with cold-weather headroom before connecting any third-party panel.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Should I wire solar panels in series or parallel?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Series is usually better on portable stations, because it raises voltage and keeps current within amp limits, and it loses less in long cables. Choose parallel if series would exceed the station's voltage limit, or if one panel is often shaded. Use identical panels either way.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are bifacial solar panels worth it?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Only if you can use the rear face. Over snow, sand, concrete or a light tarp, a bifacial panel can add useful output. Over dark grass it performs like a normal panel. Raise it off the ground so reflected light reaches the back, and do not pay a large premium if you cannot.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can portable solar panels get wet?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Most can handle rain. IP67 and IP68 panels resist immersion, while IP65 panels handle splashes and light rain but should be brought in during heavy storms. Cables, adapters and USB ports are weak points on any panel, and the power station itself must always stay dry.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How many portable solar panels do I need to run a refrigerator?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A refrigerator uses about 1 to 2kWh per day, so you need roughly 400 to 600W of panels in good summer sun just to keep up, plus a station of 1 to 2kWh to cover the night. In winter or cloudy weather, plan on more panels or a backup charging source.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Solar and Power Station Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-solar-generator/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Solar Generators</h3>
+              <p class="text-gray-500 text-sm mt-2">Power station and panel kits ranked by solar input, charge time and expandability.</p>
+            </a>
+            <a href="/how-to-charge-a-portable-power-station-with-solar/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">How-To</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Charging a Power Station With Solar</h3>
+              <p class="text-gray-500 text-sm mt-2">Step-by-step setup, placement and troubleshooting for solar charging.</p>
+            </a>
+            <a href="/can-a-portable-power-station-run-a-refrigerator/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#38BDF8] font-black text-xs uppercase tracking-widest mb-2">Explainer</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Can a Power Station Run a Fridge?</h3>
+              <p class="text-gray-500 text-sm mt-2">Startup surge, daily consumption and how much capacity and solar you need.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The best portable solar panel is the one that matches your station's input and your willingness to carry it. For most people that is the EcoFlow 220W Bifacial, which combines high output with an easy voltage, IP68 protection and a standard connector. Choose the SolarSaga 100W when weight matters, and the EcoFlow 400W when you need to refill a large station in a day.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Whatever you buy, check Voc before the connector, plan on 70 percent of the rated watts, and keep panels in full sun at a sensible angle. Get those right and a portable panel will keep your station topped up for years.
+          </p>
+        </div>
+
+        <MoreInCategory category="Generators & Backup Power" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
