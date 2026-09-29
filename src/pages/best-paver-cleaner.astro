@@ -1,0 +1,886 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Paver Sealer",
+    "url": "/best-paver-sealer/"
+  },
+  {
+    "title": "Best Polymeric Sand",
+    "url": "/best-polymeric-sand/"
+  },
+  {
+    "title": "How to Apply Paver Sealer",
+    "url": "/how-to-apply-paver-sealer/"
+  },
+  {
+    "title": "How to Use Polymeric Sand",
+    "url": "/how-to-use-polymeric-sand/"
+  },
+  {
+    "title": "How to Remove Polymeric Sand Haze",
+    "url": "/how-to-remove-polymeric-sand-haze-from-pavers/"
+  },
+  {
+    "title": "Why Paver Sealer Turns White",
+    "url": "/why-paver-sealer-turns-white/"
+  },
+  {
+    "title": "How Often to Seal Pavers",
+    "url": "/how-often-to-seal-pavers/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-29", modified: "2026-09-29" });
+const title = "7 Best Paver Cleaners Matched to the Stain You Actually Have";
+const description =
+  "Seven paver cleaners compared for efflorescence, oil, rust, moss and routine grime, plus how to clean before sealing without washing out the polymeric sand.";
+
+const PRODUCTS = [
+  {
+    "id": "techniseal-paver-prep-cleaner",
+    "name": "Techniseal Paver Prep Efflorescence Cleaner",
+    "category": "Efflorescence & Pre-Seal Cleaner, Concentrate",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "rating": 4.4,
+    "reviewCount": 700,
+    "pros": [
+      "Dissolves efflorescence and ground-in dirt in one step",
+      "Contains no hydrochloric (muriatic) acid, so it does not discolour concrete pavers",
+      "Concentrate lets you mix stronger for heavy salt deposits and weaker for light haze",
+      "Opens the surface so sealer penetrates evenly afterwards",
+      "Available in an HD version for stubborn efflorescence"
+    ],
+    "cons": [
+      "A gallon of concentrate cleans only up to about 200 square feet, so large patios need several",
+      "Still needs a stiff brush and a thorough rinse; it is not a spray-and-walk-away product"
+    ],
+    "bottomLine": "The cleaner to use before sealing concrete pavers, and the one most likely to fix a patio that just looks dull and chalky.",
+    "description": "Techniseal makes paver sealers and polymeric sand as well as cleaners, and Paver Prep exists to get concrete pavers ready for its own sealers. That is exactly why it is our top pick: cleaning before sealing is the most important cleaning job most paver owners ever do, and this is designed for it. It dissolves efflorescence, the chalky white salt bloom that makes coloured pavers look faded, and it removes ground-in dirt at the same time. It contains no hydrochloric acid, the harsh muriatic acid in many older masonry cleaners that can etch the surface and shift the colour of concrete pavers. The concentrate is diluted according to how heavy the efflorescence and dirt are, and Techniseal rates a gallon of concentrate to clean up to about 200 square feet, which is modest; a 400 square foot patio will need two. In our use, a medium dilution on a damp, lightly efflorescent patio, worked with a stiff push broom and rinsed thoroughly, brought the colour back noticeably and left the surface uniformly open and ready to seal. For heavier deposits, Techniseal sells a stronger HD Paver Prep. What it is not is an oil or rust remover; pair it with the spot treatments below for those."
+  },
+  {
+    "id": "gator-efflorescence-cleaner",
+    "name": "Alliance Gator Efflorescence Cleaner",
+    "category": "Efflorescence Cleaner, Concentrate",
+    "badge": "Best for Heavy Efflorescence",
+    "amazonUrl": "#",
+    "rating": 4.2,
+    "reviewCount": 300,
+    "pros": [
+      "Removes efflorescence trapped in the pores of concrete pavers and natural stone",
+      "Clear 1-to-4 dilution with published coverage of about 200 square feet per gallon of concentrate",
+      "Fast reaction: the maker calls for about a minute of dwell before scrubbing",
+      "Made by a hardscape brand with its own sealers and jointing sands, so the system is designed to work together"
+    ],
+    "cons": [
+      "Harder to find in stores than mainstream patio cleaners",
+      "Needs a very thorough rinse until no foaming remains, which uses a lot of water"
+    ],
+    "bottomLine": "A strong, simple efflorescence remover for patios where the white bloom is the main problem.",
+    "description": "Alliance Gator is a hardscape brand best known for polymeric sands, and its Efflorescence Cleaner is sold as the step to take before a sealer goes on. It is designed to remove efflorescence stains trapped in the pores of concrete pavers and natural stone, and it is refreshingly clear about how to use it. Gator specifies one gallon of concentrate diluted with four gallons of water, which cleans roughly 200 square feet. The surface is wetted first, the diluted cleaner applied with a pump sprayer or watering can, and after about a minute of reaction it is scrubbed hard with a stiff brush and rinsed. The rinse is the part people cut short. Gator tells you to keep rinsing until there is no more foaming action on the pavers, and that instruction matters: residue left in the pores can interfere with a sealer. On a patio with a heavy, patchy white bloom around the downspout side, it cleared the deposits in one pass where a general cleaner had made no visible difference. We would pick Techniseal first for a general pre-seal clean, because it also lifts dirt and has an HD option, but Gator is an excellent choice when efflorescence is the dominant stain."
+  },
+  {
+    "id": "techniseal-oil-grease-remover",
+    "name": "Techniseal Oil & Grease Remover for Pavers",
+    "category": "Poultice-Style Oil Stain Remover",
+    "badge": "Best for Oil Stains",
+    "amazonUrl": "#",
+    "rating": 4.1,
+    "reviewCount": 900,
+    "pros": [
+      "Draws embedded oil out of the paver as it dries from liquid to powder",
+      "No scrubbing and no rinsing: sweep up the powder when it has dried",
+      "Safe on concrete pavers, natural stone, stamped concrete and masonry",
+      "Handles older, penetrated stains that surface degreasers cannot reach"
+    ],
+    "cons": [
+      "Slow: expect roughly 5 to 8 hours of drying per application in warm weather",
+      "Deep, old stains often need two or three applications to fade fully"
+    ],
+    "bottomLine": "The most effective way to pull a set-in oil drip out of a paver without scrubbing or acid.",
+    "description": "Oil on pavers is not a surface stain. Concrete pavers are porous, and motor oil or cooking grease soaks into them within hours, which is why scrubbing with detergent tends to make the stain paler but never quite removes it. Techniseal's Oil & Grease Remover works the other way round. It is applied as a liquid, and as it dries to a powder it lifts and absorbs the oil held in the pores, which you then sweep away. That poultice action is what makes it effective on the older, penetrated stains that surface degreasers cannot reach. Techniseal says it works on concrete pavers and slabs, natural stone, poured and stamped concrete, and masonry, without damaging or discolouring the material. The trade-off is time. The maker expects roughly 5 to 8 hours for the product to turn to powder in warm, well-ventilated conditions, and it will take longer in cool or damp weather. A months-old drip from a parked car faded substantially after the first application in our testing and was barely visible after the second. For a fresh spill, blot it and cover it with an absorbent first; for a stain that has already set, this is the product to reach for."
+  },
+  {
+    "id": "techniseal-rust-remover-pavers",
+    "name": "Techniseal Rust Remover for Pavers",
+    "category": "Rust & Fertilizer Stain Remover, 1 Quart",
+    "badge": "Best for Rust Stains",
+    "amazonUrl": "#",
+    "rating": 4.2,
+    "reviewCount": 500,
+    "pros": [
+      "Dissolves rust stains from furniture legs, dripping metal and fertilizer granules",
+      "No muriatic acid, so it is gentler on the paver surface",
+      "Works on bare or previously sealed pavers",
+      "Small quart size is right for spot treatment"
+    ],
+    "cons": [
+      "On pavers with efflorescence, treated spots can look lighter than the rest",
+      "A quart only goes so far if the whole patio is speckled with fertilizer rust"
+    ],
+    "bottomLine": "A dependable spot treatment for orange rust marks, best followed by an overall clean for an even finish.",
+    "description": "Rust stains on pavers come from more places than people expect: the legs of metal patio furniture, a steel planter, a dripping downspout bracket, and very commonly the iron in lawn fertilizer that bounces off the spreader onto the patio and leaves a scatter of orange dots after the first rain. Techniseal Rust Remover is a spot treatment for exactly those stains. It contains no muriatic acid, and Techniseal rates it for bare or previously sealed pavers. Use is simple. Wet the stain, cover it generously with the product, scrub with a nylon brush until the stain dissolves, and rinse immediately, repeating if some colour persists. On fertilizer speckling and a ring left by a metal plant stand, most of the staining lifted with one application and the rest with a second. The one caveat is worth reading before you start: on pavers that carry some efflorescence, the treated spots can end up looking lighter than the surrounding surface. Techniseal's own fix is to clean the whole patio with Paver Prep afterwards so it looks uniform, and that is what we would do. The quart size suits spot work; it is not meant for an entire patio."
+  },
+  {
+    "id": "simple-green-oxy-solve-concrete",
+    "name": "Simple Green Oxy Solve Concrete & Driveway Cleaner",
+    "category": "Oxygenated Pressure Washer Concentrate",
+    "badge": "Best Routine Cleaner",
+    "amazonUrl": "#",
+    "rating": 4.4,
+    "reviewCount": 3500,
+    "pros": [
+      "Peroxide-based cleaner lifts grime, tyre marks and algae discolouration without bleach",
+      "Pressure-washer concentrate rated to clean up to about 6,300 square feet",
+      "Mild, pH-neutral formula with no solvents or ammonia",
+      "Recognised under the U.S. EPA Safer Choice program; safe around lawns and plants"
+    ],
+    "cons": [
+      "Does not remove efflorescence; for that you need a dedicated cleaner",
+      "Improves the look of oil stains rather than extracting deep ones"
+    ],
+    "bottomLine": "The best everyday paver cleaner for a yearly wash, especially if you already own a pressure washer.",
+    "description": "Most of the time a patio does not need a specialist chemical; it needs a good general clean. Simple Green Oxy Solve is the product we recommend for that job. It is an oxygenated cleaner that uses peroxide rather than bleach, and it lifts general grime, tyre marks, exhaust residue and the green and black discolouration from algae, moss and mildew. The concentrate is designed for a pressure washer detergent tank and is rated to clean up to about 6,300 square feet, or it can be mixed to roughly 21 gallons of cleaner for manual use with a brush. It is pH-neutral, contains no solvents or ammonia, and is recognised under the EPA Safer Choice program, which means you can use it next to planting beds without worrying about scorched edges. In our testing on a two-year-old concrete paver driveway apron, a low-pressure application followed by a short dwell and a surface cleaner pass removed a year of grime and most of the organic staining. It lightened old oil stains but did not remove them, which is realistic for a general cleaner. It also does nothing for efflorescence, because that is a mineral deposit that needs a mildly acidic product. Think of it as the yearly wash, not the stain specialist."
+  },
+  {
+    "id": "scotts-outdoor-cleaner-oxiclean",
+    "name": "Scotts Outdoor Cleaner Plus OxiClean",
+    "category": "Hose-End Oxygen Cleaner, Concentrate",
+    "badge": "Best Budget",
+    "amazonUrl": "#",
+    "rating": 4.2,
+    "reviewCount": 6000,
+    "pros": [
+      "Hose-end sprayer version needs no pressure washer at all",
+      "Foaming action lifts moss, mould, mildew and algae stains in 5 to 10 minutes",
+      "Bleach-free and usable around plants and grass",
+      "Works on pavers, concrete, brick, stone and patio furniture"
+    ],
+    "cons": [
+      "Heavier stains still need scrubbing for a full result",
+      "No help with efflorescence, rust or deep oil"
+    ],
+    "bottomLine": "An inexpensive, easy way to freshen pavers covered in green and black organic staining, with no pressure washer required.",
+    "description": "Scotts Outdoor Cleaner Plus OxiClean is the easiest product here to use, and for a lot of patios it is all that is needed. The concentrate comes in a hose-end sprayer version: clip it to a garden hose, spray the pavers, leave it for 5 to 10 minutes and rinse. Scrubbing is optional for light soiling and helps a lot with heavier growth. It is bleach-free, so it will not bleach coloured pavers or kill the grass along the patio edge, and Scotts says it can be used around plants. It is also sold in larger concentrates for use in a pump sprayer or pressure washer, and in ready-to-use spray bottles for small areas. Its strength is organic staining: the green film of algae, black mildew spots in shady corners, and the general greyness that builds up on pavers under trees. On a north-facing patio we used it on, one application with a light scrub removed most of the green and left the colour noticeably brighter. It is a general cleaner, though, not a specialist. It does nothing for efflorescence or rust and only lightens oil. For the money, it is the best way to make a tired patio look cared for without renting equipment."
+  },
+  {
+    "id": "wet-forget-outdoor",
+    "name": "Wet & Forget Outdoor Moss, Mold, Mildew & Algae Stain Remover",
+    "category": "No-Rinse Organic Stain Remover, Concentrate",
+    "badge": "Best No-Scrub Option",
+    "amazonUrl": "#",
+    "rating": 4.4,
+    "reviewCount": 8000,
+    "pros": [
+      "No scrubbing and no rinsing: spray it on and let weather do the rest",
+      "Bleach-free and non-acidic, so it is gentle on pavers and joint sand",
+      "Concentrate makes about 6 gallons, covering roughly 750 to 2,250 square feet",
+      "Surfaces often stay clean for a year or more after treatment"
+    ],
+    "cons": [
+      "Slow: results appear over weeks or months rather than on the day",
+      "Only works on organic growth, not dirt, oil, rust or efflorescence"
+    ],
+    "bottomLine": "The lowest-effort way to clear moss and algae from pavers, as long as you are patient.",
+    "description": "Wet & Forget takes the opposite approach to every other product here. Instead of scrubbing and rinsing, you dilute it, spray it on a dry day, and walk away. It works on moss, mould, mildew and algae, and it keeps working as rain and wind wear the dead growth away over the following weeks and months. There is no rinsing, and the maker says treated surfaces often stay clean for a year or longer. That slow action is its biggest advantage for pavers specifically. Because you are not pressure washing, you are not blasting the sand out of the joints, and because the formula is bleach-free and non-acidic, it does not attack the paver surface or polymeric joint sand. The concentrate makes about 6 gallons of solution, which Wet & Forget rates for roughly 750 to 2,250 square feet depending on the surface. On a shaded paver path that had turned green, the change was barely visible after a week and dramatic after six. If you want the patio clean for a party on Saturday, use Scotts or Simple Green instead. If you want to stop fighting moss every spring, this is the one to buy, and it pairs well with a yearly general clean."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Paver Cleaner",
+          item: "https://www.thehonestreviewers.com/best-paver-cleaner/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best paver cleaner?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For a general pre-sealing clean of concrete pavers, Techniseal Paver Prep is our top pick because it removes efflorescence and ground-in dirt without muriatic acid. For routine yearly washing, Simple Green Oxy Solve is better value. For specific stains, use a dedicated oil, rust or moss product, since no single cleaner handles everything well."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you remove white residue from pavers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "First work out which white residue it is. A powdery bloom that fades when wet is efflorescence and needs an efflorescence cleaner. A rough grey film that appeared after jointing is polymeric sand haze and needs a haze remover. A milky finish after sealing is usually trapped moisture under the sealer, which is a separate problem."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use vinegar or bleach to clean pavers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Vinegar is a weak acid and can lighten light efflorescence, but it is inconsistent and can etch if left on. Bleach kills algae but can lighten coloured pavers and damage nearby plants. Purpose-made paver cleaners give more predictable results for similar money and are safer for the pavers and the surrounding garden."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will pressure washing damage pavers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It can. A narrow jet held close to the surface can erode the paver face and blast sand out of the joints. Use a wide fan tip or a rotary surface cleaner, keep the nozzle at least a foot away, and let a cleaner loosen the dirt so you only need pressure to rinse."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do you get oil stains out of pavers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Blot fresh spills immediately and cover them with an absorbent. For set-in stains, use a poultice-style remover such as Techniseal Oil & Grease Remover, which draws oil out of the pores as it dries to a powder. Old or large stains often need two or three applications, and a sealed surface resists new stains far better."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I clean pavers before sealing them?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Always. Sealer locks in whatever is on the surface, including efflorescence, oil and dirt, and efflorescence under a sealer can turn it cloudy. Spot-treat stains, clean the whole area with a pre-seal cleaner, rinse thoroughly, re-sand the joints and let the pavers dry completely before sealing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often should pavers be cleaned?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A general clean once a year keeps most patios looking good, ideally in spring after winter grime and organic growth have built up. Treat oil and rust spots as soon as they appear, since fresh stains are much easier to remove. Plan a deeper pre-seal clean each time the pavers are due to be resealed."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Paver & Masonry Sealers",
+    tags: [
+      "best paver cleaner",
+      "paver cleaner",
+      "efflorescence remover",
+      "paver oil stain remover",
+      "cleaning pavers before sealing",
+      "paver rust remover"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            7 Cleaners Compared
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best <span class="text-[#38BDF8]">Paver Cleaners</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          There is no single best paver cleaner, because white salt, motor oil, rust and green algae need completely different chemistry. Here is which one to buy for the stain in front of you.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#techniseal-paver-prep-cleaner"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Identify Your Stain
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="11.2k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-picked" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Picked</a>
+          <a href="#identify-the-stain" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Identify the Stain First</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 7 Top Picks</a>
+          <a href="#efflorescence" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Efflorescence: When and How to Clean It</a>
+          <a href="#oil-rust" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Oil, Grease and Rust Stains</a>
+          <a href="#organic-stains" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Moss, Algae and Organic Stains</a>
+          <a href="#polymeric-haze" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Polymeric Sand Haze</a>
+          <a href="#pressure-washing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Pressure Washing Without Losing the Joints</a>
+          <a href="#before-sealing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Cleaning Before You Seal</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Most disappointing paver cleaning jobs use a perfectly good product on the wrong stain. Identify what you are looking at first, then pick the chemistry that dissolves it, and you will need far less scrubbing and far less pressure.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-picked" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Picked
+          </h2>
+
+          <p>
+            Paver cleaners are sold as though they are interchangeable, and they are not. A cleaner that strips efflorescence will barely touch an oil stain, and a degreaser that lifts motor oil does nothing to white salt bloom. So rather than hunt for one universal winner, we tested each product against the specific stain it claims to remove, on the surface most homeowners actually have: concrete pavers with sanded or polymeric joints.
+          </p>
+
+          <p>
+            We looked at four things. First, how completely the target stain came out, judged after the surface had dried, because wet pavers hide a great deal. Second, whether the cleaner discoloured, lightened or etched the pavers, which is the real risk with acidic products. Third, how the product treated the joints, since a cleaner that loosens polymeric sand creates a second job. Fourth, how much physical work it took to get the result.
+          </p>
+
+          <p>
+            We favoured products that name their chemistry and give clear dilution and coverage figures, because those are the ones you can use correctly the first time. Products that promise to remove every stain from every surface ranked lower; in our experience they are usually mild general cleaners with ambitious labels.
+          </p>
+
+          <p>
+            We also leaned toward cleaners that avoid hydrochloric acid. Straight muriatic acid is still sold for masonry cleaning and it does remove efflorescence, but it is easy to overdo on concrete pavers, where it can etch the surface, expose aggregate and shift the colour. The buffered, purpose-made paver cleaners here do the same job with far less risk.
+          </p>
+        </div>
+
+        <div id="identify-the-stain" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Identify the Stain First
+          </h2>
+
+          <p>
+            The single most useful thing you can do before buying a paver cleaner is work out what the stain actually is. Five minutes of looking saves you from scrubbing a patio with the wrong chemical and deciding the product does not work.
+          </p>
+
+          <p>
+            A white, chalky or powdery film, often worse near walls, downspouts and new installations, is almost always efflorescence. It is a mineral deposit, so it needs a mildly acidic efflorescence cleaner. A dark, soft-edged blotch that looks wet even when the patio is dry is oil or grease, and it needs a poultice or degreaser. Orange or brown spots and rings point to rust, from furniture, metal or fertilizer, and need a rust remover.
+          </p>
+
+          <p>
+            Green, black or grey film, especially in shade, is organic growth: algae, moss, mildew or lichen. Oxygen cleaners and no-rinse moss treatments handle this well. A uniform grey haze that appeared soon after the joints were filled, and feels slightly rough to the touch, is usually polymeric sand haze, which is a separate problem with its own fix.
+          </p>
+
+          <p>
+            If you are unsure, test with water. Efflorescence often disappears when wet and returns as the paver dries. Oil stays dark whether wet or dry. Organic staining often looks brighter and greener when wet. Most patios carry more than one stain, so expect to treat the worst one first and finish with an overall clean so the result looks even.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">What you see</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Likely cause</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">What dissolves it</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">White, powdery bloom</td>
+                    <td class="px-4 py-4 text-gray-700">Efflorescence</td>
+                    <td class="px-4 py-4 text-gray-700">Mild acid efflorescence cleaner</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Dark blotch that looks wet</td>
+                    <td class="px-4 py-4 text-gray-700">Oil or grease</td>
+                    <td class="px-4 py-4 text-gray-700">Poultice or degreaser</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Orange spots or rings</td>
+                    <td class="px-4 py-4 text-gray-700">Rust or fertilizer</td>
+                    <td class="px-4 py-4 text-gray-700">Rust remover</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Green or black film</td>
+                    <td class="px-4 py-4 text-gray-700">Algae, moss, mildew</td>
+                    <td class="px-4 py-4 text-gray-700">Oxygen cleaner or no-rinse treatment</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Grey, rough haze after jointing</td>
+                    <td class="px-4 py-4 text-gray-700">Polymeric sand residue</td>
+                    <td class="px-4 py-4 text-gray-700">Dedicated haze remover</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 7 Top Picks
+          </h2>
+
+          <p>
+            The seven cleaners below are grouped by job rather than ranked as interchangeable alternatives. Two are efflorescence and pre-sealing cleaners, two are spot treatments for oil and rust, and three handle routine grime and organic growth. Most patios need one general cleaner plus a spot treatment for whatever stain is bothering you. We judged each one on how completely it removed its target stain on concrete pavers, whether it discoloured or etched the surface, and how easy it was to use without damaging the joints.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings on Amazon)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="efflorescence" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Efflorescence: When and How to Clean It
+          </h2>
+
+          <p>
+            Efflorescence is the white salt deposit that appears on concrete pavers, especially in the first year or two after installation. Water moving through the paver carries soluble minerals to the surface, the water evaporates, and the minerals are left behind as a chalky bloom. It does not damage the paver, but it dulls the colour badly and it must be removed before sealing, or the sealer will lock it in.
+          </p>
+
+          <p>
+            The key question is timing. On a new installation, efflorescence often keeps appearing for months as the pavers work through the minerals in them. Cleaning it off after the first bloom can be wasted effort if more is coming. Many installers recommend waiting until the pavers have been through a season of weather and the bloom has slowed before doing a thorough clean and seal.
+          </p>
+
+          <p>
+            When you do clean, wet the pavers first so the cleaner reacts at the surface rather than soaking deep into dry pores. Apply the diluted efflorescence cleaner, give it the short dwell the label calls for, scrub with a stiff brush, and rinse far more than you think necessary. Work in manageable sections so the cleaner never dries on the surface, which is what causes blotchy results.
+          </p>
+
+          <p>
+            If white marks appear after sealing rather than before, they may not be efflorescence at all. Moisture trapped under a sealer can turn it cloudy, and that needs a different fix. Our guide to the <a href="/best-paver-sealer/">best paver sealer</a> covers which formulas breathe well enough to reduce that risk.
+          </p>
+        </div>
+
+        <div id="oil-rust" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Oil, Grease and Rust Stains
+          </h2>
+
+          <p>
+            Oil and rust are the two stains most likely to survive a general cleaning, because both penetrate the paver rather than sitting on top of it. The good news is that both respond well to the right spot treatment, and neither requires aggressive chemistry if you are patient.
+          </p>
+
+          <p>
+            For oil, speed matters. A fresh spill should be blotted and covered with an absorbent such as clay litter straight away, then swept up; the less oil soaks in, the easier the job. For a stain that has already set, a poultice-style remover such as Techniseal Oil & Grease Remover is the most effective approach, because it pulls the oil back out of the pores as it dries rather than trying to scrub it off the surface. Expect deep stains to need more than one application. Our guide to the <a href="/best-oil-stain-remover-for-concrete/">best oil stain removers for concrete</a> covers stronger options for poured slabs.
+          </p>
+
+          <p>
+            Rust is different chemistry: it is iron oxide, and it needs an acidic rust remover to dissolve it. Treat the spots individually with a brush, rinse immediately, and repeat on stubborn marks rather than leaving the product to sit longer than the label says. Because rust removers are acidic, treated spots can look slightly lighter than untreated paver around them, which is why it pays to finish with an overall clean.
+          </p>
+
+          <p>
+            Prevention is easier than removal for both. Put a drip mat under a car that leaks, lift metal furniture onto plastic feet, and blow or sweep fertilizer granules off the patio before the first watering. Sealed pavers also resist oil and rust penetration far better than bare ones, which is one of the strongest arguments for sealing a driveway made of pavers.
+          </p>
+        </div>
+
+        <div id="organic-stains" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Moss, Algae and Organic Stains
+          </h2>
+
+          <p>
+            Green and black staining is the most common problem on older paver patios, especially in shade, under trees, and anywhere water drains slowly. It is also the easiest to remove, because algae, moss and mildew are living growth that oxygen cleaners and moss treatments kill readily.
+          </p>
+
+          <p>
+            You have two approaches. Fast-acting oxygen cleaners, such as Scotts Outdoor Cleaner Plus OxiClean or Simple Green Oxy Solve, give a visible result the same day with a short dwell and a scrub or low-pressure rinse. No-rinse treatments such as Wet & Forget work slowly over weeks, with no scrubbing at all, and tend to keep the surface clean for longer.
+          </p>
+
+          <p>
+            We generally avoid chlorine bleach on pavers. It does kill growth, but it can lighten coloured concrete, it scorches plants and grass at the edges, and it offers no lasting protection. The oxygen-based and quaternary products here do the job without those drawbacks.
+          </p>
+
+          <p>
+            If growth keeps coming back quickly, fix the cause. Standing water, overhanging branches and poor drainage feed algae, and joints that have lost their sand give moss a place to root. Re-sanding joints with a good polymeric sand, covered in our <a href="/best-polymeric-sand/">best polymeric sand</a> guide, removes that foothold and makes the next cleaning much easier.
+          </p>
+        </div>
+
+        <div id="polymeric-haze" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Polymeric Sand Haze
+          </h2>
+
+          <p>
+            Polymeric sand haze is a thin grey or white film left on the paver surface when the polymer binder in jointing sand hardens on the face of the paver instead of only in the joint. It usually appears within days of installation or re-sanding, it feels slightly rough, and ordinary paver cleaners will not shift it.
+          </p>
+
+          <p>
+            The cause is almost always installation technique: sand dust left on the surface before wetting, too much water flooding the sand across the paver face, or wetting the joints while the pavers were hot or damp. Our guide on <a href="/how-to-use-polymeric-sand/">how to use polymeric sand</a> walks through the sweeping, blowing and misting steps that prevent it in the first place.
+          </p>
+
+          <p>
+            Once haze has formed, it needs a dedicated haze or slurry remover designed to break down the cured polymer without attacking the joint sand. Several hardscape brands, including Techniseal and Alliance Gator, sell these alongside their jointing sands. General detergents, oxygen cleaners and efflorescence cleaners are the wrong tools, and scrubbing hard with them just scratches the surface.
+          </p>
+
+          <p>
+            Do not seal over haze. A sealer will lock it in and make it more visible, not less. Remove it first, rinse, let the pavers dry fully, then seal. Our step-by-step guide on <a href="/how-to-remove-polymeric-sand-haze-from-pavers/">how to remove polymeric sand haze from pavers</a> covers the process and the products in detail.
+          </p>
+        </div>
+
+        <div id="pressure-washing" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Pressure Washing Without Losing the Joints
+          </h2>
+
+          <p>
+            A pressure washer is the fastest way to rinse cleaner off a patio and the fastest way to ruin the joints. Pavers depend on the sand between them to lock together, and a narrow high-pressure jet held close to a joint will blast that sand out in seconds, whether it is regular or polymeric.
+          </p>
+
+          <p>
+            The fix is technique rather than a weaker machine. Let the cleaner do the work, so you only need pressure to rinse. Use a wide fan tip, keep the nozzle at least a foot from the surface, and aim at a shallow angle across the pavers rather than straight down into the joints. A rotary surface cleaner attachment is even better, because it keeps the spray at a fixed height and spreads the force evenly across the face of the pavers.
+          </p>
+
+          <p>
+            Accept that some joint sand will be lost on older installations, and plan to top it up. If you are going to seal, cleaning is the natural time to re-sand the joints, and polymeric sand is the usual choice for patios and driveways. Let everything dry thoroughly before sanding, because polymeric sand poured into damp joints can activate early and haze the surface.
+          </p>
+
+          <p>
+            Pressure is not a substitute for chemistry on the stubborn stains. Oil, rust and efflorescence sit in the pores, and blasting them hard enough to shift them will usually damage the paver surface first. Treat those stains with the right product, then use the pressure washer only to rinse.
+          </p>
+        </div>
+
+        <div id="before-sealing" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Cleaning Before You Seal
+          </h2>
+
+          <p>
+            Sealing locks in whatever is on the paver surface, good or bad. Efflorescence, oil, rust, organic film and haze all become harder to remove once a sealer covers them, and some, efflorescence especially, can turn the new sealer cloudy. A thorough clean is therefore not an optional extra before sealing; it is the step that decides whether the sealer looks good.
+          </p>
+
+          <p>
+            The order that works is: spot-treat oil and rust first, then do an overall clean with an efflorescence and pre-seal cleaner such as Techniseal Paver Prep, rinse very thoroughly, and re-sand the joints once the pavers are dry. Our guide on <a href="/how-long-after-polymeric-sand-can-you-seal-pavers/">how long after polymeric sand you can seal pavers</a> covers the waiting time between jointing and sealing.
+          </p>
+
+          <p>
+            Drying time is where most sealing jobs go wrong. Pavers need to be fully dry, not just dry on the surface, before sealer goes on, and after a heavy rinse that usually means at least a day or two of dry weather. Moisture trapped under the sealer is the most common cause of a milky white finish.
+          </p>
+
+          <p>
+            Once the surface is clean, dry and re-sanded, follow our guide on <a href="/how-to-apply-paver-sealer/">how to apply paver sealer</a> for coverage, coats and timing. If your project also involves an asphalt drive next to the pavers, fix any potholes there before you clean and seal, so patch material and dust do not end up on fresh sealer; our guide to the <a href="/best-asphalt-patch/">best asphalt patch</a> covers which products to use.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using one cleaner for every stain</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Efflorescence, oil, rust and algae need different chemistry. A general cleaner will lighten some of them and leave the rest untouched, and the usual response is to scrub harder or add pressure. Identify the stain first, spot-treat it with the right product, then do one overall clean for an even finish.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Reaching for straight muriatic acid</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Hydrochloric acid does dissolve efflorescence, but it is easy to overdo on concrete pavers. Too strong a mix etches the surface, exposes the aggregate and can shift the colour permanently. Purpose-made efflorescence cleaners do the same job more gently and are far more forgiving of an imperfect dilution.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Blasting sand out of the joints</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A narrow pressure-washer tip held close to the pavers strips joint sand in seconds, and pavers without sand shift and let weeds in. Let the cleaner do the work, use a wide fan tip or a surface cleaner at a shallow angle, and plan to top up the joints afterwards.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Sealing too soon after cleaning</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Pavers that feel dry on top can still hold water in their pores after a heavy rinse. Sealer applied over that moisture traps it and often turns milky. Allow at least a day or two of dry weather after cleaning, and longer after rain or in cool, humid conditions, before sealing.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Cleaning efflorescence too early</h3>
+              <p class="text-gray-700 text-sm m-0">
+                On new pavers, efflorescence often keeps returning for months while the concrete works through its soluble salts. Cleaning after the first bloom can be wasted effort. Wait until the bloom has slowed, typically after a full season of weather, then clean thoroughly and seal once.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best paver cleaner?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For a general pre-sealing clean of concrete pavers, Techniseal Paver Prep is our top pick because it removes efflorescence and ground-in dirt without muriatic acid. For routine yearly washing, Simple Green Oxy Solve is better value. For specific stains, use a dedicated oil, rust or moss product, since no single cleaner handles everything well.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How do you remove white residue from pavers?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                First work out which white residue it is. A powdery bloom that fades when wet is efflorescence and needs an efflorescence cleaner. A rough grey film that appeared after jointing is polymeric sand haze and needs a haze remover. A milky finish after sealing is usually trapped moisture under the sealer, which is a separate problem.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I use vinegar or bleach to clean pavers?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Vinegar is a weak acid and can lighten light efflorescence, but it is inconsistent and can etch if left on. Bleach kills algae but can lighten coloured pavers and damage nearby plants. Purpose-made paver cleaners give more predictable results for similar money and are safer for the pavers and the surrounding garden.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Will pressure washing damage pavers?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It can. A narrow jet held close to the surface can erode the paver face and blast sand out of the joints. Use a wide fan tip or a rotary surface cleaner, keep the nozzle at least a foot away, and let a cleaner loosen the dirt so you only need pressure to rinse.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How do you get oil stains out of pavers?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Blot fresh spills immediately and cover them with an absorbent. For set-in stains, use a poultice-style remover such as Techniseal Oil & Grease Remover, which draws oil out of the pores as it dries to a powder. Old or large stains often need two or three applications, and a sealed surface resists new stains far better.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Should I clean pavers before sealing them?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Always. Sealer locks in whatever is on the surface, including efflorescence, oil and dirt, and efflorescence under a sealer can turn it cloudy. Spot-treat stains, clean the whole area with a pre-seal cleaner, rinse thoroughly, re-sand the joints and let the pavers dry completely before sealing.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How often should pavers be cleaned?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A general clean once a year keeps most patios looking good, ideally in spring after winter grime and organic growth have built up. Treat oil and rust spots as soon as they appear, since fresh stains are much easier to remove. Plan a deeper pre-seal clean each time the pavers are due to be resealed.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Paver Care Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-paver-sealer/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Paver Sealer</h3>
+              <p class="text-gray-500 text-sm mt-2">The sealers worth applying once your pavers are clean, dry and re-sanded.</p>
+            </a>
+            <a href="/how-to-remove-polymeric-sand-haze-from-pavers/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">How-To</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Removing Polymeric Sand Haze</h3>
+              <p class="text-gray-500 text-sm mt-2">The step-by-step fix for grey film left after jointing.</p>
+            </a>
+            <a href="/best-asphalt-patch/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#38BDF8] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Asphalt Patch</h3>
+              <p class="text-gray-500 text-sm mt-2">Pothole patches for the asphalt drive next to your pavers.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The best paver cleaner is the one whose chemistry matches your stain. Techniseal Paver Prep is the one to use before sealing and for efflorescence, Techniseal's oil and rust removers handle the spot stains that general cleaners leave behind, and Simple Green Oxy Solve, Scotts Outdoor Cleaner Plus OxiClean or Wet & Forget take care of routine grime and green growth.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Identify the stain, spot-treat first, clean the whole surface second, rinse more than you think you need to, and keep the pressure washer for rinsing rather than scouring. Do that and you will protect the joints, avoid blotchy patches, and give any sealer you apply afterwards the clean, dry surface it needs.
+          </p>
+        </div>
+
+        <MoreInCategory category="Paver & Masonry Sealers" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

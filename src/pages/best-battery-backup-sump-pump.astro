@@ -1,0 +1,935 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Sump Pumps",
+    "url": "/best-sump-pump/"
+  },
+  {
+    "title": "Sump Pump Battery Backup vs Generator",
+    "url": "/sump-pump-battery-backup-vs-generator/"
+  },
+  {
+    "title": "What Size Sump Pump Do I Need?",
+    "url": "/what-size-sump-pump-do-i-need/"
+  },
+  {
+    "title": "What Size Generator Runs a Sump Pump?",
+    "url": "/what-size-generator-runs-a-sump-pump/"
+  },
+  {
+    "title": "Basement Water Alarms",
+    "url": "/basement-water-alarm/"
+  },
+  {
+    "title": "Best Portable Power Stations",
+    "url": "/best-portable-power-station/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-29", modified: "2026-09-29" });
+const title = "6 Best Battery Backup Sump Pumps for Power Outages and Pump Failures";
+const description =
+  "Six backup sump pumps compared on flow at real head, switches and monitoring, with runtime math, AGM vs lithium, and when a water-powered backup is the better buy.";
+
+const PRODUCTS = [
+  {
+    "id": "wayne-esp25-battery-backup",
+    "name": "Wayne ESP25 12-Volt Battery Backup Sump Pump",
+    "category": "Standalone 12V Backup, Top Suction",
+    "badge": "Best Standalone Backup",
+    "amazonUrl": "#",
+    "rating": 4.3,
+    "reviewCount": 1400,
+    "pros": [
+      "About 1,680 GPH at 10 feet of lift, strong for a 12-volt backup",
+      "Top suction design keeps pit-floor debris out of the impeller",
+      "Maximum head of about 20 feet covers deep basements",
+      "Controller with audible alarm and battery status monitoring",
+      "Adds to an existing pit and primary pump without replacing either"
+    ],
+    "cons": [
+      "Battery is sold separately, so budget for a quality deep-cycle AGM",
+      "Two-year warranty is shorter than many primary pumps"
+    ],
+    "bottomLine": "The backup to add when your primary pump is sound and you want the strongest 12-volt pump you can fit alongside it.",
+    "description": "If your primary pump is in good shape, you do not need a combo system. You need a strong backup that sits beside the pump you already have, and the ESP25 is the best of those we compared. Wayne rates it at about 1,680 gallons per hour at 10 feet of lift, roughly 28 gallons a minute, with around 2,500 GPH at zero head and a maximum head of about 20 feet. That is enough to keep pace with the inflow of most basements during a heavy storm, which is the whole point of a backup. The pump uses a top suction design, so it draws water from above its base rather than off the pit floor, keeping grit and silt out of the impeller of a pump that may sit idle for months between runs. The controller charges and monitors the battery and sounds an alarm when the backup runs or the battery needs attention. The battery is not included, and the choice matters: a maintenance-free group 27 or larger AGM deep-cycle battery gives the best combination of runtime and low upkeep. The warranty is two years, shorter than we would like, so register the pump and test it twice a year. As a standalone backup, it is our first choice."
+  },
+  {
+    "id": "basement-watchdog-big-combo-cits-50",
+    "name": "Basement Watchdog Big Combo CITS-50",
+    "category": "1/2 HP Primary + 12V Backup Combo",
+    "badge": "Best Combo System",
+    "amazonUrl": "#",
+    "rating": 4.4,
+    "reviewCount": 1100,
+    "pros": [
+      "1/2 HP cast iron primary rated about 3,540 GPH at 10 feet",
+      "Primary and backup are matched and designed to install together",
+      "Dual reed switch design on the primary instead of a single mechanical float",
+      "Controller monitors the battery and sounds alarms when the backup runs",
+      "Maximum head of about 25 feet on the primary"
+    ],
+    "cons": [
+      "Battery sold separately, adding meaningful cost",
+      "Takes up more pit space than a standalone backup"
+    ],
+    "bottomLine": "The best way to replace an ageing primary and add backup protection in a single, matched installation.",
+    "description": "A combo system makes the most sense when your primary pump is old enough to replace anyway, and the Big Combo is the most complete package of those we looked at. The primary is a 1/2 HP cast iron pump rated at about 3,540 gallons per hour at 10 feet of lift, around 59 gallons a minute, with a maximum near 4,400 GPH and a maximum head of about 25 feet. That is a genuinely strong primary, well able to handle deep basements and heavy spring inflow. Instead of a single mechanical float it uses a dual reed switch design, which removes the swinging float arm that causes so many sump pump failures. The 12-volt backup pump and controller come in the same box, designed to share the pit and discharge. The controller keeps the battery charged, checks its condition and sounds an alarm when the backup takes over or the battery needs attention. Like most systems here, the battery is sold separately, and we would pair it with a large AGM. The downside is size. Two pumps, a check valve and switches need room, so measure your pit before buying. In a standard 18-inch basin or larger, it is the best all-in-one upgrade available."
+  },
+  {
+    "id": "wayne-wss30v-battery-backup",
+    "name": "Wayne WSS30V Combination Sump Pump System",
+    "category": "1/2 HP Cast Iron Primary + 12V Backup",
+    "badge": "Best Combo Runner-Up",
+    "amazonUrl": "#",
+    "rating": 4.3,
+    "reviewCount": 1500,
+    "pros": [
+      "1/2 HP cast iron primary rated about 3,840 GPH at 10 feet and 2,040 GPH at 20 feet",
+      "Top suction primary resists clogging and air lock",
+      "Vertical float switch on the primary suits standard pits",
+      "Controller sounds alarms for backup operation and battery problems",
+      "Maximum head around 25 feet on the primary"
+    ],
+    "cons": [
+      "Battery sold separately",
+      "Top suction leaves a few inches of standing water in the pit"
+    ],
+    "bottomLine": "A strong alternative to the Big Combo with the better primary pump curve at high head, and the pick for tall lifts.",
+    "description": "The WSS30V is Wayne's answer to the Big Combo, and on the primary side it arguably wins. Its 1/2 HP cast iron pump is rated at about 3,840 gallons per hour at 10 feet of lift, roughly 64 gallons a minute, and still around 2,040 GPH at 20 feet, with a maximum head near 25 feet. That strong high-head performance makes it the better choice for deep basements and long discharge runs. The primary uses a vertical float switch with turn-on around 9 inches and turn-off around 4, and a top suction design that keeps grit off the impeller and prevents air lock. The system adds a 12-volt backup pump and a controller that sounds an alarm when the backup runs and monitors battery condition, so you know when the battery needs replacing rather than finding out in a storm. As with the Watchdog, you supply the battery, and a group 27 or larger AGM is what we would use. Where it trails the Big Combo is the primary switch: a vertical float is reliable, but it is still a moving float, where the Watchdog uses sealed reed switches. For a basement with high head, the WSS30V's stronger curve outweighs that. For a typical basement, choose on price and availability."
+  },
+  {
+    "id": "basement-watchdog-special-bwsp",
+    "name": "Basement Watchdog Special BWSP Battery Backup",
+    "category": "Standalone 12V Backup, Thermoplastic",
+    "badge": "Best Budget Backup",
+    "amazonUrl": "#",
+    "rating": 4.3,
+    "reviewCount": 2400,
+    "pros": [
+      "About 1,850 GPH at 10 feet, more than several pricier backups",
+      "Dual reed switch design rather than a swinging float",
+      "Compact enough to fit beside most primary pumps",
+      "Controller with audible alarm for backup operation and battery condition",
+      "Budget-tier price for a complete standalone backup"
+    ],
+    "cons": [
+      "Maximum head of about 16 feet rules it out for deep basements",
+      "Thermoplastic housing and a battery sold separately"
+    ],
+    "bottomLine": "The best value backup for a typical basement with a moderate lift, provided your total head stays well under 16 feet.",
+    "description": "The BWSP proves that a budget backup does not have to be a weak one. Basement Watchdog rates it at about 1,850 gallons per hour at 10 feet of lift, around 31 gallons a minute, which is more than some pricier standalone backups manage at the same height. It uses a dual reed switch design rather than a swinging float, and the controller sounds an alarm whenever the backup runs and when the battery needs attention. The pump is compact, which matters in a crowded pit where the primary, discharge pipe and check valve already take up room. The limit to respect is head. The maximum head is about 16 feet, which means flow falls away quickly as you approach 12 to 14 feet of total head, and many basements land there once friction is counted. If your pump lifts water out of a deep basement or runs a long discharge line, choose the Wayne ESP25 instead. The housing is thermoplastic, which is acceptable in a backup that runs only occasionally, and the battery is sold separately. For a typical basement with a modest lift, it is the most protection per dollar in this roundup."
+  },
+  {
+    "id": "basepump-rb750-ez",
+    "name": "Basepump RB750-EZ Water-Powered Backup Sump Pump",
+    "category": "Water-Powered Backup, No Battery",
+    "badge": "Best Water-Powered",
+    "amazonUrl": "#",
+    "rating": 4.3,
+    "reviewCount": 600,
+    "pros": [
+      "Needs no electricity or battery, so runtime is unlimited while city water flows",
+      "About 700 to 900 GPH at 10 feet, depending on water pressure",
+      "Includes a water alarm, float valve and check valve",
+      "No battery to replace every few years",
+      "Five-year limited warranty"
+    ],
+    "cons": [
+      "Needs at least 40 psi of municipal water pressure, so it is useless on a well",
+      "Uses about one gallon of city water for every two gallons it removes"
+    ],
+    "bottomLine": "The right backup for a house on city water that faces long outages, where a battery would run flat before the power returns.",
+    "description": "Every battery backup has the same weakness: the battery runs out. A water-powered backup does not, because it uses the pressure of your municipal water supply to pull water out of the pit through a venturi. There is no motor and no battery, and it will keep running for as long as your water pressure holds. Base Products rates the RB750-EZ at about 700 gallons per hour at 10 feet of lift at 40 psi, rising to 750 at 60 psi and roughly 900 at 90 psi. That is lower than a battery backup, but it never stops, which during a three-day outage is worth more than peak flow. It needs a minimum of 40 psi of static water pressure, which you can check with an inexpensive gauge on an outdoor tap. It uses about one gallon of city water to remove roughly two gallons from the pit, so it costs water while it runs. It cannot work on a private well, because the well pump itself needs electricity. Plumbing codes in many areas require a backflow preventer, and the installation is a real plumbing job. The kit includes a water alarm, float valve and check valve. For a house on city water in an area prone to long outages, it is the most dependable backup there is."
+  },
+  {
+    "id": "basepump-hb1000",
+    "name": "Basepump HB1000 Water-Powered Backup Sump Pump",
+    "category": "Water-Powered Backup, Higher Capacity",
+    "badge": "Best High-Capacity Water-Powered",
+    "amazonUrl": "#",
+    "rating": 4.3,
+    "reviewCount": 200,
+    "pros": [
+      "About 950 to 1,400 GPH at 10 feet, depending on water pressure",
+      "Unlimited runtime without power as long as city water flows",
+      "Includes a water alarm, float valve and check valve",
+      "Five-year limited warranty"
+    ],
+    "cons": [
+      "Same municipal water requirement as the RB750, so not for well water",
+      "Higher cost and higher water use during long runs"
+    ],
+    "bottomLine": "Choose it over the RB750-EZ when your inflow during storms exceeds what the smaller model can move at your water pressure.",
+    "description": "The HB1000 is the bigger sibling of the RB750-EZ, and it exists for basements where a small water-powered backup cannot keep up. Base Products rates it at about 950 gallons per hour at 10 feet of lift at 40 psi, 1,000 at 60 psi, 1,200 at 80 psi and about 1,400 at 90 psi. At higher household pressures that puts it close to the lower end of battery backup performance, with the advantage that it never runs flat. Like the RB750-EZ, it works through a venturi using municipal water pressure, needs at least 40 psi, and uses roughly one gallon of city water for every two it removes from the pit. It is not an option on a private well, and a backflow preventer is required by many local codes. The kit includes a water alarm, float valve and check valve, and carries a five-year limited warranty. The practical way to choose between the two models is to measure your peak inflow during a heavy storm and compare it with each pump's rating at your water pressure. If the RB750-EZ would be close to its limit, the HB1000 gives you real margin. If your inflow is modest, the smaller model does the job for less money and uses less water."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Battery Backup Sump Pumps",
+          item: "https://www.thehonestreviewers.com/best-battery-backup-sump-pump/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best battery backup sump pump?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most homes with a working primary pump, the Wayne ESP25 is the best standalone backup, with about 1,680 gallons per hour at 10 feet and a top suction design. If your primary is old, a combo system such as the Basement Watchdog Big Combo replaces it and adds a matched backup in one installation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long will a battery backup sump pump run?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on inflow and battery size. A 75 amp-hour AGM battery gives roughly 2.5 hours of continuous pumping, which can stretch to half a day or more when the pump runs only part of the time. In a heavy storm with constant inflow, expect a few hours. Larger or dual batteries roughly double runtime."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What battery should I use for a sump pump backup?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A group 27 or larger AGM deep-cycle battery suits most systems. It is sealed, maintenance-free and handles long periods on a float charge. Flooded batteries cost less but need topping up and ventilation. Lithium lasts longer and gives more usable capacity, but only use it if your controller is designed for lithium charging."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are water-powered backup sump pumps any good?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, if your house is on city water with at least 40 psi of pressure. They need no battery and run as long as water flows, which makes them ideal for long outages. They move less water than battery backups, use about one gallon of city water per two gallons pumped, and will not work on a well."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need a combo system or just a backup?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If your primary pump is under five years old and working well, add a standalone backup. If the primary is seven or more years old, of unknown age or undersized, a combo system replaces it and adds a matched backup at once, which is usually cheaper than replacing each separately later and makes the pit easier to plan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can a battery backup sump pump run the main pump?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Standard battery backups run their own 12-volt pump, not your 120-volt primary. To run the primary during an outage, you need an inverter-based system, a generator, or a portable power station with enough surge capacity and a pure sine wave output. Only a dedicated backup or UPS-style setup switches over automatically."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often should I replace a sump pump backup battery?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Every three to five years for lead-acid batteries, and sooner if the controller reports weak capacity or the battery fails a load test. Write the install date on the battery and set a calendar reminder. Batteries rarely give obvious warning, and a dead one leaves you with no protection when the power fails."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Basement Waterproofing",
+    tags: [
+      "best battery backup sump pump",
+      "sump pump battery backup",
+      "backup sump pump",
+      "water powered backup sump pump",
+      "sump pump combo system"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            6 Backups Compared
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best <span class="text-[#38BDF8]">Battery Backup</span> Sump Pumps
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          The storm that fills your sump is usually the one that cuts the power. These are the backup systems that start on their own, keep pace with real inflow and warn you before the battery dies.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#wayne-esp25-battery-backup"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            How to Choose
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="11.2k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-picked" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Picked</a>
+          <a href="#standalone-vs-combo" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Standalone vs Combo</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 6 Top Picks</a>
+          <a href="#runtime" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Runtime Math</a>
+          <a href="#battery-type" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Battery Type</a>
+          <a href="#water-powered" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Water-Powered Backups</a>
+          <a href="#alarms" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Alarms and Wi-Fi</a>
+          <a href="#installation" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Installation</a>
+          <a href="#power-stations" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Generator or Power Station</a>
+          <a href="#maintenance" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Testing and Batteries</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">12. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          A battery backup sump pump is the cheapest insurance a finished basement can have, but only if it is strong enough at your head height, has a controller that tests its battery, and is actually tested by you. Most backups that fail were never checked after the day they were installed.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-picked" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Picked
+          </h2>
+
+          <p>
+            A backup sump pump has one job: keep the water below the floor when the primary pump cannot. That happens in two situations, a power cut and a primary pump failure, and the best backups cover both automatically, with no one home to flip a switch. We judged every system on how well it does that job, not on the length of the feature list.
+          </p>
+
+          <p>
+            Flow at realistic head came first. We compared each backup's rated gallons per hour at 10 feet of lift, because a backup that looks strong at zero head can be nearly useless in a real basement. We also noted maximum head, which is where some budget backups quietly fall short. Switch design came second, because a backup that sits idle for months must start the first time it is asked.
+          </p>
+
+          <p>
+            Monitoring came third. A backup with a dead battery is worse than no backup, because it creates false confidence. We favoured controllers that test the battery, alarm when the backup runs and warn when the battery weakens. Finally, we looked at the honest cost of ownership, including the battery that most systems leave out of the box.
+          </p>
+
+          <p>
+            We included two water-powered backups because, for houses on city water, they solve the problem a battery cannot: an outage that lasts days. Every product listed is a real, currently sold model. If you have not yet settled your primary pump, start with our guide to the <a href="/best-sump-pump/">best sump pumps</a>, since a backup is only as useful as the system it supports.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE RULE</p>
+            <p class="text-xl font-bold text-white mb-3">A backup you never test is a backup you do not have.</p>
+            <p class="text-gray-300 leading-relaxed m-0">Batteries fail quietly and are usually discovered dead in the storm that needed them. Whatever you buy, choose a controller that tests the battery and alarms, and test the whole system yourself twice a year.</p>
+          </div>
+        </div>
+
+        <div id="standalone-vs-combo" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Standalone Backup vs Combo System
+          </h2>
+
+          <p>
+            Backup systems come in two forms. A standalone backup is a 12-volt pump, a controller and a battery that you add to the pit alongside your existing primary pump. A combo system replaces both: it ships a new primary pump and a matched backup pump designed to install together, with a single controller watching the whole pit.
+          </p>
+
+          <p>
+            The deciding question is the age of your primary. If it is under five years old, working well and correctly sized, a standalone backup is the better buy. There is no reason to throw away a good pump. If the primary is seven or more years old, or you are unsure how old it is, a combo system replaces the pump most likely to fail and adds the backup in one job.
+          </p>
+
+          <p>
+            Pit size matters as well. A standalone backup has to fit beside whatever primary you already have, with room for both floats to travel without touching each other or the pit wall. Combo systems are designed for the pumps to sit together, which often makes them the easier fit in an 18-inch pit. In a pit narrower than that, measure carefully before buying anything.
+          </p>
+
+          <p>
+            There is also the discharge to think about. Most backups tie into the primary's discharge line with a tee and a second check valve, so each pump cannot push water back through the other. Combo systems usually include the fittings for this. Standalone backups often need you to buy the fittings separately, which is a small cost but a common source of mid-project trips to the hardware store.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Choose</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">When</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Standalone battery backup</td>
+                    <td class="px-4 py-4 text-gray-700">Primary pump under 5 years old and sized correctly</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Combo system</td>
+                    <td class="px-4 py-4 text-gray-700">Primary 7+ years old, unknown age or undersized</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Water-powered backup</td>
+                    <td class="px-4 py-4 text-gray-700">City water at 40+ psi and long outages are common</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Battery plus water-powered</td>
+                    <td class="px-4 py-4 text-gray-700">Finished basement with high inflow and frequent outages</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 6 Top Picks
+          </h2>
+
+          <p>
+            The six systems below cover the three real choices: a standalone battery backup added to a good existing pump, a combo system that replaces an ageing primary and adds a backup at once, and a water-powered backup for houses on city water that face long outages. For most homes with a sound primary, the Wayne ESP25 is the one to buy. If your primary is old, go straight to the Basement Watchdog Big Combo or the Wayne WSS30V.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings on Amazon)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="runtime" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Runtime Math: How Long Will It Last?
+          </h2>
+
+          <p>
+            Runtime claims on backup sump pump boxes are almost impossible to compare, because the answer depends on how hard the pump works. A backup facing light seepage might last two days on one battery. The same backup facing a storm might run the battery flat in a few hours. The honest way to estimate your own runtime is to do the math with your own inflow.
+          </p>
+
+          <p>
+            Start with the battery. A deep-cycle battery rated at 75 amp-hours can, in theory, deliver 75 amps for one hour or 7.5 amps for ten. In practice, a lead-acid battery should not be drained much past half its capacity if you want it to last, and capacity drops at the high currents a pump draws. A realistic usable figure for a 75 amp-hour AGM battery is around 35 to 40 amp-hours.
+          </p>
+
+          <p>
+            Next, the pump. A 12-volt backup pump typically draws somewhere in the range of 10 to 20 amps while running, and one Basement Watchdog model lists 20 amps. At 15 amps, 37 usable amp-hours gives about 2.5 hours of continuous pumping. At around 1,700 gallons per hour at 10 feet, that is roughly 4,200 gallons of water before the battery is spent.
+          </p>
+
+          <p>
+            Now apply your inflow. The pump does not run constantly. If water enters the pit at 5 gallons per minute and the backup moves 28, it runs about 18 percent of the time, so 2.5 hours of pumping stretches to roughly 14 hours of protection. At 15 gallons per minute inflow, it runs over half the time and the same battery lasts about 4 to 5 hours. To measure your inflow, see our guide to <a href="/what-size-sump-pump-do-i-need/">what size sump pump you need</a>, which walks through timing the pit fill.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">WORKED EXAMPLE, 75 AH AGM BATTERY</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <p class="text-3xl font-black text-white">~37 Ah</p>
+                <p class="text-gray-400 text-xs mt-1">Realistic usable capacity</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">~2.5 hr</p>
+                <p class="text-gray-400 text-xs mt-1">Continuous pumping at 15 A</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-white">~14 hr</p>
+                <p class="text-gray-400 text-xs mt-1">Protection at 5 GPM inflow</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">~4-5 hr</p>
+                <p class="text-gray-400 text-xs mt-1">Protection at 15 GPM inflow</p>
+              </div>
+            </div>
+          </div>
+
+          <p>
+            The lesson is that battery size is the lever you control. Doubling to two batteries, or moving to a larger 100 amp-hour or group 31 battery, roughly doubles runtime. If your outages last longer than a night, that is money well spent.
+          </p>
+        </div>
+
+        <div id="battery-type" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Battery Type: Flooded, AGM or Lithium
+          </h2>
+
+          <p>
+            Most backup systems leave the battery choice to you, and it matters as much as the pump. There are three options, and each makes sense in different basements.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Flooded lead-acid</h3>
+
+          <p>
+            Flooded, or wet-cell, deep-cycle batteries are the cheapest per amp-hour. They need their water level checked and topped up with distilled water, and they vent small amounts of hydrogen while charging, so they need ventilation and a battery box. They are acceptable in an unfinished basement where you will remember the maintenance, and they are the reason many old backups failed: the electrolyte dried out and nobody noticed.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">AGM</h3>
+
+          <p>
+            Absorbed glass mat batteries are sealed, spill-proof and maintenance-free. They cost more than flooded batteries but tolerate the float-charging a backup system does for months at a time, and they do not need topping up. For almost everyone, a group 27 or larger AGM deep-cycle battery is the right choice. Most backup manufacturers sell their own AGM batteries, but any quality deep-cycle AGM of the right size and terminal type will work.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Lithium iron phosphate</h3>
+
+          <p>
+            LiFePO4 batteries are lighter, last many more cycles and allow far deeper discharge, so a 100 amp-hour lithium battery delivers roughly twice the usable energy of a 100 amp-hour lead-acid one. The catch is charging. A controller built for lead-acid may not charge lithium properly, and some combinations are unsafe or void the warranty. Only use lithium if the backup manufacturer explicitly supports it, or sells a lithium kit for your controller.
+          </p>
+
+          <p>
+            Whatever you choose, write the install date on the battery. Lead-acid backup batteries typically last three to five years, and replacement should go on the calendar, not wait for the controller to complain.
+          </p>
+        </div>
+
+        <div id="water-powered" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Water-Powered Backups
+          </h2>
+
+          <p>
+            A water-powered backup uses the pressure in your municipal water line to pull water out of the pit through a venturi. Water rushes through a narrow nozzle, creates suction, and draws pit water along with it into the discharge. There is no motor and no battery, so there is nothing to charge and nothing to run flat.
+          </p>
+
+          <p>
+            That makes water-powered backups the answer to the one question battery backups cannot answer: what happens on day two of an outage. As long as the city water keeps flowing, the pump keeps working. In areas where ice storms or hurricanes cut power for several days, that is a decisive advantage.
+          </p>
+
+          <p>
+            The requirements are strict. You need municipal water with at least 40 psi of static pressure, which you can check with a gauge on an outdoor tap. If your house is on a private well, a water-powered backup will not work, because the well pump needs electricity. The system also uses water: roughly one gallon of city water for every one and a half to two gallons it removes from the pit. In a long storm that adds up, but it is small compared with the cost of a flooded basement.
+          </p>
+
+          <p>
+            Installation is a real plumbing job. The backup connects to your water supply and to the discharge line, and most local codes require an approved backflow preventer so pit water can never be drawn back into the drinking supply. Check your local rules and budget for a plumber if you are not comfortable working on supply lines.
+          </p>
+
+          <p>
+            Flow is lower than battery backups: roughly 700 to 1,400 gallons per hour at 10 feet for the Basepump models depending on model and pressure. For many basements that keeps up comfortably. For heavy inflow, pairing a water-powered backup with a battery backup gives you both peak flow and unlimited runtime.
+          </p>
+        </div>
+
+        <div id="alarms" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Alarms, Controllers and Wi-Fi
+          </h2>
+
+          <p>
+            The controller is the most underrated part of a backup system. It charges the battery, decides when to run the backup pump, and tells you when something is wrong. A good one tests the battery regularly, sounds an alarm when the backup runs, and warns when the battery is weak or disconnected. A cheap one just charges the battery and hopes.
+          </p>
+
+          <p>
+            An audible alarm is the minimum. It tells anyone in the house that the backup has kicked on, which usually means the primary has failed or the power is out, and that is information you want at once rather than when the battery runs flat. The best controllers also distinguish between alarms, so you can tell a high-water event from a battery fault.
+          </p>
+
+          <p>
+            Wi-Fi monitoring adds the one thing an audible alarm cannot: a notification when nobody is home. Both Wayne and Basement Watchdog offer connected controllers or add-on modules in parts of their lineups, so check the exact model before buying if app alerts matter to you. Be aware that home Wi-Fi usually goes down with the power unless your router is on its own battery, so a connected system is most useful for primary pump failures and for alerts in the first minutes of an outage.
+          </p>
+
+          <p>
+            For that reason, we suggest a separate water alarm as well. A standalone battery-powered alarm on the floor next to the pit costs little and works regardless of what the controller is doing. Our guide to <a href="/basement-water-alarm/">basement water alarms</a> covers which ones will reach your phone and which only beep in an empty house.
+          </p>
+
+          <p>
+            Finally, whatever the controller does, test it. Unplug the primary, fill the pit with a bucket, and confirm the backup starts and the alarm sounds. It takes five minutes, and it is the only way to know the system works.
+          </p>
+        </div>
+
+        <div id="installation" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Installing a Backup in an Existing Pit
+          </h2>
+
+          <p>
+            Most standalone backups are a manageable DIY job if you are comfortable cutting PVC and working in a cramped pit. The key is getting the heights right so the two pumps never fight each other.
+          </p>
+
+          <p>
+            The backup float must sit above the primary's turn-on level, typically by a few inches. That way the primary handles normal inflow, and the backup only runs when the water rises past the point the primary should have caught it. Set it too low and the backup runs with the primary, wearing out the battery; set it too high and water may reach the floor before it starts.
+          </p>
+
+          <p>
+            Each pump needs its own check valve, installed before the two discharge lines join at a tee. Without a check valve on each branch, the running pump will simply circulate water back through the idle one and into the pit. Many combo systems pre-assemble this; with a standalone backup, buy the fittings the manufacturer recommends and do not skip either valve.
+          </p>
+
+          <p>
+            Mount the controller and battery above any possible flood level, on a shelf or wall bracket, and keep the battery in a proper box with its vent routed correctly if it is a flooded type. Plug the charger into a dedicated outlet rather than the same outlet as the primary, so a tripped GFCI does not disable both at once.
+          </p>
+
+          <p>
+            Before you close the lid, run a full test: unplug the primary, fill the pit, and watch the backup cycle. Then plug the primary back in and confirm it takes over. Check that both floats move freely without touching each other, the pumps or the pit wall.
+          </p>
+        </div>
+
+        <div id="power-stations" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Backup Pump vs Generator vs Power Station
+          </h2>
+
+          <p>
+            A battery backup is not the only way to keep a pit dry during an outage, but it is the only one that works automatically without anyone home. That is the core difference, and it decides which option suits your house. We compare them in detail in our guide to <a href="/sump-pump-battery-backup-vs-generator/">sump pump battery backup vs generator</a>.
+          </p>
+
+          <p>
+            A generator runs your primary pump, at full capacity, for as long as there is fuel. That makes it the best tool for a multi-day outage, but only once someone has placed it safely outdoors, started it and connected it. It does nothing at three in the morning, and it does nothing while you are away for the weekend.
+          </p>
+
+          <p>
+            A portable power station sits between the two. A unit with a pure sine wave inverter and enough surge capacity can run a typical 1/3 or 1/2 HP primary pump, and some models offer a pass-through or UPS mode that switches over automatically when the power fails. Runtime depends on capacity and how often the pump cycles: a pump drawing around 500 watts that runs a quarter of the time uses about 125 watt-hours per hour, so a 1,000 watt-hour station covers several hours. Our guide to the <a href="/best-portable-power-station/">best portable power stations</a> covers which have the surge capacity for motor loads.
+          </p>
+
+          <p>
+            For most homes, the best arrangement is layered: a battery backup that works automatically, a generator or power station for long outages, and a water alarm for everything else. Each covers a failure the others cannot.
+          </p>
+        </div>
+
+        <div id="maintenance" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            10. Testing and Battery Replacement
+          </h2>
+
+          <p>
+            A backup sump pump spends almost all of its life doing nothing, which is exactly why it fails. Moving parts stiffen, float switches stick, and batteries lose capacity silently. The fix is a simple routine.
+          </p>
+
+          <p>
+            Twice a year, ideally before the spring thaw and before the autumn storm season, test the whole system. Unplug the primary pump, fill the pit with a bucket or hose, and confirm the backup starts at the right level, pumps the pit down and stops. Check that the alarm sounds, then plug the primary back in and confirm it resumes normal operation.
+          </p>
+
+          <p>
+            Check the battery at the same time. If your controller has a battery test function, run it. If your battery is a flooded type, check the electrolyte level and top up with distilled water. Clean any corrosion from the terminals, and make sure the connections are tight.
+          </p>
+
+          <p>
+            Replace lead-acid backup batteries every three to five years, regardless of what the controller says, and sooner if the controller reports weak capacity. Write the install date on the battery with a marker. The cost of a new battery is small next to the cost of a flooded basement discovered after the old one quietly died.
+          </p>
+
+          <p>
+            Finally, look at the backup pump itself. Clear silt from around its intake, confirm its float moves freely, and check that the discharge line and check valves are clear. Five minutes, twice a year, is what separates a backup that works from one that only looks like it does.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Never Testing the Battery</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Backup batteries lose capacity silently and are usually found dead in the storm that needed them. Choose a controller that tests the battery, test the whole system twice a year by unplugging the primary and filling the pit, and replace lead-acid batteries every three to five years regardless of how they seem.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Setting the Backup Float Too Low</h3>
+              <p class="text-gray-700 text-sm m-0">
+                If the backup float sits at or below the primary's turn-on level, both pumps run together and the battery drains during ordinary rain. Set the backup a few inches above the primary's on point, so it only runs when the primary has failed or the power is out.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping the Second Check Valve</h3>
+              <p class="text-gray-700 text-sm m-0">
+                When the backup and primary share a discharge, each needs its own check valve before the tee. Without one, the running pump circulates water back through the idle pump into the pit, moving nothing out of the house. It is the most common installation error we see.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying on Maximum GPH</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Backup pumps quote flow at zero head, which no basement has. A backup that looks strong on the box can fall to a trickle at 12 feet. Compare flow at 10 feet and check the maximum head, especially for budget models whose limit may be only 16 feet.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Relying on Wi-Fi Alone</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Connected controllers are useful, but home Wi-Fi usually fails with the power. Put your router on a small battery backup if app alerts matter, and add a separate battery-powered water alarm by the pit. Layered alerts are what get you home before the water reaches the floor.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            12. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best battery backup sump pump?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most homes with a working primary pump, the Wayne ESP25 is the best standalone backup, with about 1,680 gallons per hour at 10 feet and a top suction design. If your primary is old, a combo system such as the Basement Watchdog Big Combo replaces it and adds a matched backup in one installation.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long will a battery backup sump pump run?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It depends on inflow and battery size. A 75 amp-hour AGM battery gives roughly 2.5 hours of continuous pumping, which can stretch to half a day or more when the pump runs only part of the time. In a heavy storm with constant inflow, expect a few hours. Larger or dual batteries roughly double runtime.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What battery should I use for a sump pump backup?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A group 27 or larger AGM deep-cycle battery suits most systems. It is sealed, maintenance-free and handles long periods on a float charge. Flooded batteries cost less but need topping up and ventilation. Lithium lasts longer and gives more usable capacity, but only use it if your controller is designed for lithium charging.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are water-powered backup sump pumps any good?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes, if your house is on city water with at least 40 psi of pressure. They need no battery and run as long as water flows, which makes them ideal for long outages. They move less water than battery backups, use about one gallon of city water per two gallons pumped, and will not work on a well.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do I need a combo system or just a backup?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                If your primary pump is under five years old and working well, add a standalone backup. If the primary is seven or more years old, of unknown age or undersized, a combo system replaces it and adds a matched backup at once, which is usually cheaper than replacing each separately later and makes the pit easier to plan.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can a battery backup sump pump run the main pump?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Standard battery backups run their own 12-volt pump, not your 120-volt primary. To run the primary during an outage, you need an inverter-based system, a generator, or a portable power station with enough surge capacity and a pure sine wave output. Only a dedicated backup or UPS-style setup switches over automatically.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How often should I replace a sump pump backup battery?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Every three to five years for lead-acid batteries, and sooner if the controller reports weak capacity or the battery fails a load test. Write the install date on the battery and set a calendar reminder. Batteries rarely give obvious warning, and a dead one leaves you with no protection when the power fails.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Sump Pump Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-sump-pump/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Sump Pumps</h3>
+              <p class="text-gray-500 text-sm mt-2">Seven primary pumps compared on flow at real head heights, switch design and cast iron build.</p>
+            </a>
+            <a href="/sump-pump-battery-backup-vs-generator/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Comparison</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Battery Backup vs Generator</h3>
+              <p class="text-gray-500 text-sm mt-2">What each protects against, how long each lasts, and why many basements need both.</p>
+            </a>
+            <a href="/basement-water-alarm/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#38BDF8] font-black text-xs uppercase tracking-widest mb-2">Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Basement Water Alarms</h3>
+              <p class="text-gray-500 text-sm mt-2">The inexpensive last line of defense, and the alarms that reach your phone when you are away.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            For most homes with a sound primary pump, the Wayne ESP25 paired with a large AGM battery is the backup to buy. If your primary is past its best, the Basement Watchdog Big Combo or Wayne WSS30V replaces it and adds protection in one job. On city water with long outages, a Basepump water-powered backup is the one option that never runs flat.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Whichever you choose, the system only protects you if it works on the day it is needed. Set the float heights correctly, fit a check valve on each pump, add a separate water alarm, test twice a year, and replace the battery on schedule. That routine is worth more than any feature on the box.
+          </p>
+        </div>
+
+        <MoreInCategory category="Basement Waterproofing" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

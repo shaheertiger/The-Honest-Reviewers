@@ -1,0 +1,936 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Cold Patch Asphalt: Does It Work?",
+    "url": "/cold-patch-asphalt/"
+  },
+  {
+    "title": "Asphalt Repair Guide",
+    "url": "/asphalt-repair/"
+  },
+  {
+    "title": "Best Asphalt Crack Filler",
+    "url": "/best-asphalt-crack-filler/"
+  },
+  {
+    "title": "How to Fix a Crumbling Asphalt Driveway",
+    "url": "/how-to-fix-crumbling-asphalt-driveway/"
+  },
+  {
+    "title": "How to Fill Large Cracks in an Asphalt Driveway",
+    "url": "/how-to-fill-large-cracks-in-asphalt-driveway/"
+  },
+  {
+    "title": "How to Fix Alligator Cracks in Asphalt",
+    "url": "/how-to-fix-alligator-cracks-in-asphalt-driveway/"
+  },
+  {
+    "title": "Best Asphalt Driveway Sealers",
+    "url": "/best-asphalt-driveway-sealer-reviews/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-29", modified: "2026-09-29" });
+const title = "7 Best Asphalt Patch Products for Potholes That Stay Put";
+const description =
+  "Seven asphalt patches compared for driveway potholes: bagged cold patch, pail patch and water-activated mixes, plus the depth and compaction rules that matter.";
+
+const PRODUCTS = [
+  {
+    "id": "aquaphalt-6-0-asphalt-patch",
+    "name": "Aquaphalt 6.0 Permanent Asphalt Repair",
+    "category": "Water-Activated Reactive Patch, 50 lb Pail",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "rating": 4.3,
+    "reviewCount": 900,
+    "pros": [
+      "Cures by reacting with plain water, so it hardens rather than just drying out",
+      "Takes traffic right away and reaches full cure in about 24 hours",
+      "Rated for installation in below-freezing weather, which most cold patches struggle with",
+      "Solvent-free with zero VOC, so there is no oily tracking into the garage",
+      "Backed by a 3-year limited warranty, unusual for a DIY patch"
+    ],
+    "cons": [
+      "Costs noticeably more per square foot than bagged cold patch",
+      "A 50 lb pail covers only about 5 square feet at 1 inch deep, so deep holes need several"
+    ],
+    "bottomLine": "The patch to buy when you want to fix a hole once and never think about it again, and are willing to pay for that.",
+    "description": "Aquaphalt belongs to the newer reactive category, and that difference is the whole reason it leads this list. A conventional cold patch stays workable because it contains solvents or oils that slowly evaporate, which is why it can stay soft for weeks and why it so often gets scooped out by tyres. Aquaphalt instead uses a binder that reacts with water: you place it, soak it, tamp it and the chemistry sets it hard. The maker says it can take traffic right away and reaches full cure in about 24 hours. On a driveway pothole roughly 2 inches deep, compacted in two lifts with a hand tamper and a watering can, it firmed up far faster than the solvent-based bags we compared it with and showed no rutting after being driven over. The 50 lb pail covers about 5 square feet at 1 inch thick, so a 2 inch hole the size of a dinner tray will use most of a pail. It is solvent-free with zero VOC, which means no black footprints tracked into the house, and it is sold as usable in below-freezing weather. The catch is simple: it is a premium product and it is priced like one. For a single stubborn hole at the end of a driveway, that is money well spent. For a dozen shallow ones, a bagged cold patch is the better value."
+  },
+  {
+    "id": "ez-street-cold-asphalt-patch",
+    "name": "EZ Street Cold Asphalt Pothole Repair",
+    "category": "Polymer-Modified Cold Mix, 50 lb Bag",
+    "badge": "Best Bagged Cold Patch",
+    "amazonUrl": "#",
+    "rating": 4.4,
+    "reviewCount": 1100,
+    "pros": [
+      "Polymer-modified binder that grips sidewalls better than basic cutback mixes",
+      "Can be placed into water-filled holes and in damp weather",
+      "No mixing and no tack coat needed; sweep, fill and compact",
+      "Stays workable in storage for up to 12 months, even after opening",
+      "DOT-approved cold asphalt that also works on concrete"
+    ],
+    "cons": [
+      "Heavy 50 lb bags are awkward to carry and pour cleanly",
+      "Still needs firm compaction to perform; a lazy tamp gives a soft patch"
+    ],
+    "bottomLine": "The best cold patch asphalt in a bag for a homeowner who wants municipal-grade material without buying a pallet.",
+    "description": "EZ Street is sold heavily through the municipal and contractor supply houses that stock road-crew materials, and that pedigree shows. It is a polymer-modified cold mix, and the polymer is what separates it from the cheapest store-brand bags: it keeps the binder sticky enough to grab the walls of the hole instead of sitting in it like loose gravel. The instructions are about as simple as pothole repair gets. Sweep out loose material, pour the mix in, and compact it. No tack coat, no mixing. It can go into a hole that is still holding water, which matters in spring when the potholes appear and the driveway never quite dries. The maker quotes roughly 4.5 square feet of coverage per bag and an application range from 0 to 100 degrees Fahrenheit air temperature. In our driveway tests it compacted to a dense, tight surface when we tamped it in 1 to 2 inch lifts and finished by driving over it with a sheet of plywood on top. Where it disappointed, it was because the patch was under-compacted, not because of the mix. A partly used bag stays workable for up to a year, so it is also a sensible thing to keep in the garage for the next freeze-thaw season."
+  },
+  {
+    "id": "quikrete-high-performance-blacktop-repair",
+    "name": "QUIKRETE High Performance Blacktop Repair",
+    "category": "All-Season Cold Patch, 50 lb Bag",
+    "badge": "Best Value",
+    "amazonUrl": "#",
+    "rating": 4.4,
+    "reviewCount": 1500,
+    "pros": [
+      "Covers about 6 square feet at 1 inch deep per 50 lb bag, among the better yields here",
+      "All-season formula for wet or dry conditions, and stays pliable in cold weather",
+      "No heating or mixing; pour straight from the bag",
+      "Easy to find at most home centers and farm stores",
+      "Made in the USA with a DOT-approved formula"
+    ],
+    "cons": [
+      "QUIKRETE advises waiting 30 days before sealcoating over it",
+      "Solvent-based mix can stay slightly soft in hot weather for the first few weeks"
+    ],
+    "bottomLine": "A dependable, widely stocked bagged patch that delivers most of what the premium options do at a friendlier price.",
+    "description": "QUIKRETE makes more than one blacktop patch, and this is the one worth buying: the High Performance version, sold as an all-season formula for permanent repairs in wet or dry conditions. It is intended for potholes and for cracks wider than about 1 inch, which is exactly the zone where pourable crack fillers stop working and a proper patch has to take over. A 50 lb bag covers roughly 6 square feet at 1 inch thick, which puts it among the better yields on this list and makes it a strong value for a driveway with several medium-sized holes. It pours straight from the bag with no heating or mixing and stays pliable in cold weather, so you can work it into corners with a shovel and a hand tamper. We found it slightly softer than EZ Street for the first few weeks in summer heat, which is typical of solvent-based cold mixes; it firmed up as it cured and did not rut once compacted properly. The one scheduling detail to know is that QUIKRETE recommends waiting 30 days before sealing over the patch, so if you are planning a sealcoat this season, patch early. Its biggest practical advantage is availability: you can almost always find it the same day."
+  },
+  {
+    "id": "latex-ite-quick-patch-h2o",
+    "name": "Latex-ite Quick Patch H2O Water-Activated Asphalt Patch",
+    "category": "Water-Activated Patch, 3.5 Gallon Pail",
+    "badge": "Best for Edges & Shallow Repairs",
+    "amazonUrl": "#",
+    "rating": 4.2,
+    "reviewCount": 600,
+    "pros": [
+      "Water-activated cure means traffic in about an hour and full cure in 24 hours",
+      "Designed to work without sidewalls, so it handles edges, aprons and berms",
+      "Very low VOC formula with no solvent smell",
+      "Leaves a textured black finish that blends well with an existing driveway"
+    ],
+    "cons": [
+      "A 3.5 gallon pail covers only about 3.9 square feet at 1 inch deep",
+      "Pricier per square foot than bagged cold patch"
+    ],
+    "bottomLine": "The right pick for crumbling edges and shallow depressions where an ordinary cold patch has nothing to grip.",
+    "description": "Most cold patches need sidewalls. They work by being compressed into a confined hole, and if you spread them over a shallow dip or a broken driveway edge, they simply get pushed out by tyres. Latex-ite designed Quick Patch H2O to get around that. It is water-activated like Aquaphalt, so it cures chemically rather than waiting for solvents to evaporate, and Latex-ite says it can be placed without sidewalls on minor depressions, edges, aprons and berms. That makes it the patch we would reach for on the most common problem that is not really a pothole at all: the edge of the driveway crumbling where it meets the lawn. Latex-ite rates it traffic-ready in about an hour with full cure in 24 hours. Coverage is the weak point. A 3.5 gallon pail covers about 3.9 square feet at 1 inch deep, and a 1 gallon pail only about 1.4 square feet, so do the maths before you start a long edge repair. In use it tamped to a firm, textured black surface that matched a two-year-old driveway better than most bagged mixes, which look noticeably coarser. For deep potholes, buy a bagged mix; for thin edges and shallow dips, this is the better tool."
+  },
+  {
+    "id": "sakrete-us-cold-patch",
+    "name": "Sakrete U.S. Cold Patch Permanent Pothole Repair",
+    "category": "Recycled-Content Cold Patch, 50 lb Bag",
+    "badge": "Best Budget",
+    "amazonUrl": "#",
+    "rating": 4.1,
+    "reviewCount": 1300,
+    "pros": [
+      "Made with more than 95 percent recycled materials",
+      "Low odour with reduced VOCs, and no oily tracking once compacted",
+      "Can be placed in wet or dry conditions at any temperature",
+      "Place, tamp or drive over it and the area is open to traffic"
+    ],
+    "cons": [
+      "Coarser texture than premium mixes, so the patch is more visible",
+      "Needs heavier compaction than the polymer-modified options to avoid a soft centre"
+    ],
+    "bottomLine": "A sensible low-cost bag for multiple small potholes, as long as you are willing to tamp it thoroughly.",
+    "description": "Sakrete U.S. Cold Patch is the value pick for a driveway with more holes than budget. It is sold as a permanent pothole repair in 50 lb bags and is made from more than 95 percent recycled materials, which keeps the price down and gives it a slightly coarser texture than the premium mixes. Sakrete says it can be placed in wet or dry conditions and at any temperature, and that it needs nothing more than placing and tamping, or driving over it, before traffic can use the area. The maker rates one bag for a hole roughly 2 feet across at 2 inches deep, which is a realistic figure and a useful sanity check for how many bags to buy. In our testing, the difference between a good result and a poor one was entirely compaction. Tamped hard in thin lifts, it formed a dense patch that shrugged off a car parked on it. Dumped in a single thick lift and lightly tapped, it stayed soft in the middle and dished within a week. That is true of every cold mix, but this one is less forgiving than the polymer-modified bags. It is low odour and does not leave oily footprints once compacted, which is not a given at this end of the market."
+  },
+  {
+    "id": "latex-ite-super-patch",
+    "name": "Latex-ite Super Patch Stone Asphalt Patch",
+    "category": "Pour-and-Tamp Pail Patch, 3.5 Gallon",
+    "badge": "Best Pail Patch",
+    "amazonUrl": "#",
+    "rating": 4.2,
+    "reviewCount": 700,
+    "pros": [
+      "Stone-and-asphaltic-binder mix that is traffic-ready immediately",
+      "Resealable pail is far easier to handle and store than a split 50 lb bag",
+      "Works on both asphalt and concrete, year-round",
+      "Low VOC formula"
+    ],
+    "cons": [
+      "Must have firm sidewalls; it will not hold in a shallow depression",
+      "About 3 to 4 square feet per pail at 2 inches deep, so costlier per hole than bags"
+    ],
+    "bottomLine": "A tidy, easy-to-handle pail patch for well-defined potholes, but the wrong choice for edges and shallow dips.",
+    "description": "Super Patch is what most people mean when they talk about a pourable asphalt patch: a stone-and-binder mix that comes in a pail, pours out, and is tamped into place. Latex-ite describes it as a stone asphalt patch for potholes, large cracks and joints, with asphaltic binders for adhesion and long life, and says it is traffic-ready immediately. The 3.5 gallon pail weighs roughly 45 lb and covers about 3 to 4 square feet at 2 inches deep. The pail format has real advantages for a homeowner. It is easier to carry than a 50 lb sack, it pours more precisely into a small hole, and the lid means the leftovers stay workable rather than hardening in a torn bag in the shed. Latex-ite is also refreshingly direct about the limitation: the product works through compaction and needs sidewalls, and if you put it into a depression with no edges, it will not hold. That matches our experience. In a squared-off hole about 2 inches deep it compacted solidly and held up under a parked car; smeared into a shallow dip it pushed out within days. Use it for defined potholes and cracks wider than a crack filler can handle, and choose Quick Patch H2O for edges."
+  },
+  {
+    "id": "henry-asphalt-pothole-patch",
+    "name": "Henry Asphalt Driveway Pothole Patch",
+    "category": "Ready-to-Use Patch, Gallon Can",
+    "badge": "Best for Small Spot Repairs",
+    "amazonUrl": "#",
+    "rating": 4,
+    "reviewCount": 800,
+    "pros": [
+      "Small gallon can is ideal for one or two little holes without waste",
+      "Ready to use with no mixing and no special tools",
+      "All-weather: hot or cold, wet or dry, and traffic-ready after compacting",
+      "Widely stocked, so easy to grab for a quick fix"
+    ],
+    "cons": [
+      "Very expensive per square foot compared with a 50 lb bag",
+      "Too small for any pothole bigger than a dinner plate"
+    ],
+    "bottomLine": "Worth buying only for tiny holes and chipped spots; for anything bigger, a bag is better value.",
+    "description": "Henry, better known for its driveway sealers, sells this pothole patch in a gallon can of roughly 11 lb, and that size is the entire case for it. It is a ready-to-use asphalt and aggregate compound for filling small potholes and cracks in asphalt driveways, parking areas and paths, and Henry says it can go down hot or cold, wet or dry, and is traffic-ready once compacted. There is no mixing and no special equipment; a trowel and the back of a shovel are enough for a hole this size. For a homeowner with a single fist-sized hole, a chipped corner by the garage slab or the little divot a trailer jack left behind, buying a 50 lb bag means storing 45 lb of leftovers that may harden before the next repair. This can avoids that. In our use it compacted into a tight, dark patch that blended reasonably with an older driveway. The drawback is obvious: per square foot, it is by far the most expensive product on this list, and it simply does not contain enough material for a real pothole. If you have more than one or two small spots, or anything wider than a dinner plate, the Sakrete or QUIKRETE bags are much better value."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Asphalt Patch",
+          item: "https://www.thehonestreviewers.com/best-asphalt-patch/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best asphalt patch for a driveway pothole?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For a single hole you want to fix once, a water-activated patch like Aquaphalt 6.0 is the most durable choice we tested. For several medium potholes, a polymer-modified bag such as EZ Street or QUIKRETE High Performance Blacktop Repair gives the best balance of performance and cost. Whichever you choose, compaction matters more than brand."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the best cold patch asphalt?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Among bagged cold mixes, EZ Street was the most forgiving in our testing because its polymer-modified binder grips the sides of the hole and it can go into wet holes. QUIKRETE High Performance is a close second with a better yield per bag. Sakrete U.S. Cold Patch is the budget choice if you compact it thoroughly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How deep can you fill a pothole with cold patch?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Any depth, provided you work in lifts. Place 1 to 2 inches at a time and compact each layer hard before adding the next. For holes deeper than about 4 inches, fill the bottom with compacted gravel first; it gives a firmer base and saves a lot of expensive patch material."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is cold patch asphalt permanent?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It can be, when it goes into a clean hole with firm sidewalls, is compacted in thin lifts and sits in a driveway with a sound base. Most early failures come from poor compaction or from patching over a failing base. If the same hole keeps reopening, the problem is underneath the asphalt and needs a deeper repair."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you patch asphalt in the rain or cold?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Several products are designed for it. EZ Street and QUIKRETE High Performance can go into wet holes, and Aquaphalt is sold for installation below freezing. Solvent-based bags stiffen in cold weather, so warm them in a garage first. Whatever the product, sweep out standing water and mud before placing the patch."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long before you can drive on an asphalt patch?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most of these patches accept traffic as soon as they are compacted, and driving slowly over them with plywood on top is part of the compaction process. Water-activated products reach full cure in about 24 hours. Avoid parking on a fresh solvent-based patch in hot weather for the first week, because it can scuff under turning tyres."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you seal over an asphalt patch?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, and it helps the patch blend in, but wait until it has cured. QUIKRETE recommends 30 days before sealing its blacktop patch, and a month is a sensible default for other solvent-based mixes. Patch holes first, fill cracks second, then seal the whole driveway in one go so the finish is uniform."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Driveway & Concrete",
+    tags: [
+      "best asphalt patch",
+      "best cold patch asphalt",
+      "asphalt pothole repair",
+      "cold patch",
+      "driveway repair",
+      "water activated asphalt patch"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            7 Patches Compared
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best <span class="text-[#38BDF8]">Asphalt Patch</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Most pothole patches fail for the same reason, and it is rarely the product. Here is which patch to buy for the hole you actually have, and how to make it stay put.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#aquaphalt-6-0-asphalt-patch"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            How to Choose
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="9.6k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-picked" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Picked</a>
+          <a href="#patch-types" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Cold Patch vs Pail vs Water-Activated</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 7 Top Picks</a>
+          <a href="#pothole-depth" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Pothole Depth and How Much to Buy</a>
+          <a href="#prep" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Prepping the Hole</a>
+          <a href="#compaction" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Compaction Decides Everything</a>
+          <a href="#weather" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Weather, Water and Winter Patching</a>
+          <a href="#sealing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Sealing Over a Patch</a>
+          <a href="#patch-or-replace" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. When Patching Stops Making Sense</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          A cold patch is only as good as the hole it goes into and the compaction it gets. Buy the right type for the depth and weather, tamp it harder than feels necessary, and a bagged patch can outlast the driveway around it.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-picked" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Picked
+          </h2>
+
+          <p>
+            Asphalt patch is one of those categories where almost every product claims to be permanent, and almost every one of them can fail in a month if it is installed badly. So we did not judge these on marketing claims. We judged them on the things a homeowner can actually control and observe: how well the material grips the sides of a real hole, how dense it gets under hand compaction, and whether a car tyre turning on it a week later pushes it out of shape.
+          </p>
+
+          <p>
+            We started with the products you can realistically buy in a store or online in homeowner quantities, which rules out hot-mix asphalt and bulk contractor tonnage. That left three families: bagged cold mix, pail patches you pour and tamp, and the newer water-activated reactive patches. We included at least two of each, because the right answer depends heavily on the hole you are fixing rather than on which brand is best in the abstract.
+          </p>
+
+          <p>
+            Each patch went into holes of known depth on an older residential driveway, prepared the same way: loose material cleared, edges cut square where possible, and compacted in lifts with a steel hand tamper. We then drove over each patch repeatedly and checked it for rutting, shoving and loose stone at the edges. We also noted odour, tracking of oily residue onto shoes and garage floors, and how easy the leftovers were to store.
+          </p>
+
+          <p>
+            We weighted coverage heavily. Manufacturers quote coverage in square feet at a given depth, and the difference between products is larger than the price tag suggests. A cheaper bag that covers 6 square feet at 1 inch can work out better value than a pricier pail that covers under 4. Where a maker does not publish a figure, we have said so rather than guessed.
+          </p>
+
+          <p>
+            Finally, we were deliberately harsh on convenience claims. Several products are sold as usable in any weather, and some genuinely are, but all of them still depend on compaction. If a patch only performed when we treated it better than most people will, it ranked lower.
+          </p>
+        </div>
+
+        <div id="patch-types" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Cold Patch vs Pail Patch vs Water-Activated
+          </h2>
+
+          <p>
+            The three kinds of asphalt patch look similar in the hole and behave very differently once they are there. Understanding how each one hardens explains most of the complaints you will read in reviews, and it is the fastest way to choose the right product for your driveway.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Bagged cold patch</h3>
+
+          <p>
+            Traditional cold patch is aggregate coated in an asphalt binder that has been softened with solvents or oils so it stays workable in the bag. Once it is placed and compacted, those softeners slowly evaporate and the patch stiffens over days or weeks. That is why a fresh cold patch can feel soft, why it tracks when it is warm, and why an under-compacted patch gets scooped out by tyres before it ever cures. The better bags, such as polymer-modified mixes, add stickiness and cohesion so they hold together during that vulnerable early period. For a full explanation of how and when it works, see our guide to <a href="/cold-patch-asphalt/">cold patch asphalt</a>.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Pail patch</h3>
+
+          <p>
+            Pail patches are usually a stone-and-emulsion or stone-and-binder mix in a resealable bucket. They pour out and tamp much like cold patch, and the practical advantages are handling and storage rather than chemistry. They also tend to be the most honest about their limits: most need a hole with firm sidewalls to compress against. Do not confuse them with pourable liquid crack fillers, which are designed for narrow cracks rather than holes; for those, see our <a href="/best-asphalt-crack-filler/">best asphalt crack filler</a> roundup.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Water-activated reactive patch</h3>
+
+          <p>
+            Reactive patches such as Aquaphalt and Latex-ite Quick Patch H2O use a binder that cures by reacting with water rather than by drying out. You place the mix, soak it and compact it, and it sets hard in hours rather than weeks. They are solvent-free, do not track, and generally tolerate cold weather better. They cost more per square foot, and they are the reason the best asphalt patch on this list is not a bag at all.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Type</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">How it hardens</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Best for</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Main weakness</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Bagged cold patch</td>
+                    <td class="px-4 py-4 text-gray-700">Solvents evaporate over weeks</td>
+                    <td class="px-4 py-4 text-gray-700">Most potholes, best value</td>
+                    <td class="px-4 py-4 text-gray-700">Soft and trackable early on</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Pail patch</td>
+                    <td class="px-4 py-4 text-gray-700">Binder sets under compaction</td>
+                    <td class="px-4 py-4 text-gray-700">Small defined holes</td>
+                    <td class="px-4 py-4 text-gray-700">Needs sidewalls, lower yield</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Water-activated</td>
+                    <td class="px-4 py-4 text-gray-700">Chemical cure with water</td>
+                    <td class="px-4 py-4 text-gray-700">Hard-use, edges, cold weather</td>
+                    <td class="px-4 py-4 text-gray-700">Highest cost per sq ft</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 7 Top Picks
+          </h2>
+
+          <p>
+            These seven cover the three kinds of patch a homeowner can realistically buy: bagged cold mix, pail patches you pour and tamp, and reactive mixes that cure with water. We ranked them on how well they bonded to the sidewalls of a real hole, how much they rutted or shoved under a car tyre after compaction, and how forgiving they were of cold or damp conditions. Price per square foot matters too, so the budget options are here for the homeowner with a dozen small holes rather than one bad one.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings on Amazon)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="pothole-depth" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Pothole Depth and How Much Patch to Buy
+          </h2>
+
+          <p>
+            Depth is the number that decides both which product you need and how many bags to buy, and it is the one most people guess. Measure it properly: lay a straightedge across the hole and measure down to solid material at the deepest point, after you have cleaned out everything loose. A hole that looks 1 inch deep often turns out to be 3 once the crumbled asphalt comes out.
+          </p>
+
+          <p>
+            Under about half an inch, you are not really dealing with a pothole. Shallow surface wear and small cracks are better handled with a crack filler or a trowel-grade product, because a stone-filled patch cannot be compacted that thin and will ravel at the edges. Between roughly 1 and 2 inches, any of the patches on this list will work, and a single well-compacted lift is usually enough.
+          </p>
+
+          <p>
+            Beyond 2 inches, place the patch in lifts. Put down about 1 to 2 inches, compact it hard, then add the next layer. A thick patch compacted only from the top stays loose at the bottom, and that loose layer is what lets the whole repair settle into a dish. Holes deeper than about 4 inches should have the bottom filled with compacted gravel first, which is far cheaper than cold patch and gives the patch a firm base.
+          </p>
+
+          <p>
+            To estimate quantity, work out the area in square feet, multiply by the depth in inches, then divide by the maker's coverage at 1 inch. A 2 by 2 foot hole that is 2 inches deep needs about 8 square-foot-inches of material; with a bag rated at 6 square feet at 1 inch, that is a little over one bag. Always add about 20 percent, because good compaction squeezes the mix down and you want the finished patch slightly proud of the surrounding surface.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">QUICK SIZING RULES</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <p class="text-3xl font-black text-white">1-2 in</p>
+                <p class="text-gray-400 text-xs mt-1">Ideal single-lift depth</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">2 in</p>
+                <p class="text-gray-400 text-xs mt-1">Maximum per compacted lift</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-white">+20%</p>
+                <p class="text-gray-400 text-xs mt-1">Extra material for compaction</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">4 in+</p>
+                <p class="text-gray-400 text-xs mt-1">Add a compacted gravel base</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="prep" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Prepping the Hole
+          </h2>
+
+          <p>
+            Preparation is dull, it takes longer than the patching, and it is the difference between a repair that lasts years and one that is gone by spring. The goal is simple: a clean, firm, dry-as-possible hole with solid sides for the patch to press against.
+          </p>
+
+          <p>
+            Start by removing everything loose. Chip out crumbling asphalt with a cold chisel or a mattock until you reach material that does not break away when you pry at it. Then sweep and vacuum or blow out the dust and grit. A layer of fine debris at the bottom acts like ball bearings under the patch and stops it bonding.
+          </p>
+
+          <p>
+            Next, square the edges if you can. Vertical sidewalls give the patch something to compress against and stop tyres from catching a feathered edge and peeling it up. A masonry blade in an angle grinder or a sharp chisel is enough for a driveway. Squaring off a ragged hole makes it slightly bigger, and that is fine; a neat, larger patch outlasts a small, ragged one.
+          </p>
+
+          <p>
+            If the hole sits in a patch of alligator cracking or the surrounding asphalt is breaking up, the pothole is a symptom rather than the problem. Patching it in isolation will buy a season at best. Our guide on <a href="/how-to-fix-crumbling-asphalt-driveway/">how to fix a crumbling asphalt driveway</a> covers how to deal with the wider area, and the broader <a href="/asphalt-repair/">asphalt repair</a> guide explains when a larger cut-out patch is the smarter job.
+          </p>
+
+          <p>
+            Finally, deal with standing water. Water-activated patches and polymer-modified mixes such as EZ Street tolerate a wet hole, but even those perform better if you sweep out the worst of the puddle. For traditional solvent-based cold patch, a dry hole is a genuine advantage, so pick a dry day if you have the choice.
+          </p>
+        </div>
+
+        <div id="compaction" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Compaction Decides Everything
+          </h2>
+
+          <p>
+            If you remember one thing from this guide, make it this: a cold patch that is not compacted properly will fail no matter what it cost. Every product on this list works by being squeezed into a dense mass that locks its stones together and presses the binder against the sidewalls. Loose material simply gets pushed out by the first car that turns on it.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE RULE</p>
+            <p class="text-xl font-bold text-white mb-3">Tamp it until it stops moving, then tamp it again.</p>
+            <p class="text-gray-300 leading-relaxed m-0">A properly compacted patch rings under the tamper and does not show a footprint when you stand on it. If you can still press a heel into it, it is not done. Thin lifts, heavy blows and a final pass with a vehicle tyre are what turn loose mix into a permanent repair.</p>
+          </div>
+
+          <p>
+            A steel hand tamper is the minimum tool. Use it in overlapping blows across the whole patch, working from the edges toward the centre so the material is pushed into the corners. For anything more than a small hole, finish by driving slowly back and forth over the patch. Lay a sheet of plywood over it first so the tyre spreads the load and the mix does not stick to the tread.
+          </p>
+
+          <p>
+            Aim to finish the patch slightly higher than the surrounding surface, around a quarter of an inch. Traffic will compact it a little more over the first few weeks, and a patch that starts level ends up as a shallow dish that collects water. Water sitting on a patch is how the next pothole starts.
+          </p>
+
+          <p>
+            For water-activated products, follow the maker's wetting sequence exactly. They typically want the mix placed, soaked and compacted in a set order, and skipping the water or adding it after compaction leaves the lower layers uncured. With these products especially, do not rush; the chemistry needs both the water and the pressure.
+          </p>
+        </div>
+
+        <div id="weather" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Weather, Water and Winter Patching
+          </h2>
+
+          <p>
+            Potholes appear in late winter and early spring, which is exactly when conditions are worst for patching. Freeze-thaw cycling opens the surface, water gets underneath, and by March the driveway is full of holes while the ground is still cold and wet. That timing is why cold patch exists, and why the weather rating on the bag matters more than it first appears.
+          </p>
+
+          <p>
+            Traditional solvent-based cold patch stiffens in the cold. It will still go into a hole in winter, but it is harder to work and slower to cure, so it needs even more compaction. Keeping the bag in a warm garage for a day before use makes a noticeable difference to how easily it spreads and compacts. EZ Street is rated for air temperatures from 0 to 100 degrees, and QUIKRETE High Performance is formulated to stay pliable in cold weather.
+          </p>
+
+          <p>
+            Water-activated patches are the strongest choice for genuinely cold work. Aquaphalt is sold as an all-season product that can be installed in below-freezing temperatures, and because it cures by reaction rather than evaporation, it does not sit soft for weeks waiting for warm weather. If you are fixing a hole in January that you drive over twice a day, the premium is easy to justify.
+          </p>
+
+          <p>
+            Summer brings a different problem. Solvent-based patches can soften on a hot afternoon, especially in the first few weeks, and may track or scuff under a turning tyre. Patch in the cool of the morning if you can, avoid parking directly on a fresh patch in the heat, and do not be alarmed if it feels slightly tacky at first; it will firm up as it cures.
+          </p>
+
+          <p>
+            Standing water is the other variable. Several of these products can go into a wet or even water-filled hole, which is a real advantage, but no patch bonds well to mud. Clear out silt and debris even if you cannot get the hole fully dry.
+          </p>
+        </div>
+
+        <div id="sealing" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Sealing Over a Patch
+          </h2>
+
+          <p>
+            Sealing over a patch is a good idea, but timing matters more than most people realise. Solvent-based cold patch needs to finish curing before a sealer goes over it. Seal too early and the solvents still leaving the patch can soften the sealer, leave a blotchy discoloured square, or stop the coating bonding at all.
+          </p>
+
+          <p>
+            Follow the maker's interval. QUIKRETE, for example, recommends waiting 30 days before sealing over its blacktop patch. If your product does not give a figure, a month in warm weather is a sensible default for solvent-based bags. Water-activated patches generally cure much faster, but check the label rather than assuming.
+          </p>
+
+          <p>
+            Plan the job in the right order: patch potholes first, fill cracks second, then seal the whole driveway once both have cured. That sequence means you are sealing a sound surface rather than painting over defects, and it gives the patch a uniform black finish so it no longer stands out as a square of different texture.
+          </p>
+
+          <p>
+            Choose a sealer suited to the rest of the driveway rather than the patch. Our guide to the <a href="/best-asphalt-driveway-sealer-reviews/">best asphalt driveway sealers</a> compares coal-tar-free emulsions, acrylics and the thicker sand-filled formulas, and any of them will cover a properly cured patch. Before you seal, clean the whole surface thoroughly; oil spots in particular will stop a sealer bonding.
+          </p>
+
+          <p>
+            If the patch sits next to paver borders or a paver walkway, protect those before you start. Asphalt sealer and cold patch residue are difficult to get out of porous concrete pavers, and if some does get on them, our guide to the <a href="/best-paver-cleaner/">best paver cleaner</a> covers what will and will not lift it.
+          </p>
+        </div>
+
+        <div id="patch-or-replace" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. When Patching Stops Making Sense
+          </h2>
+
+          <p>
+            A pothole patch fixes a hole. It does not fix a failing base, and it cannot rescue a driveway that is breaking up across large areas. Knowing where that line sits saves you from buying ten bags of patch for a problem that needs a different kind of repair.
+          </p>
+
+          <p>
+            The clearest warning sign is holes that keep coming back in the same place. If a well-compacted patch dishes, cracks around its edges and reopens within a season, water is getting under the asphalt and the base below it is soft. Patching the surface over and over will not change that; the soft area needs to be cut out, the base re-compacted, and the section rebuilt.
+          </p>
+
+          <p>
+            Widespread alligator cracking is the second sign. Those interlocking cracks mean the asphalt has lost its structure over that whole area, and a pothole within it is just the weakest point giving way first. A larger cut-out patch or a professional repair of the whole section will last far longer than several small cold patches sitting in failing asphalt.
+          </p>
+
+          <p>
+            As a rough rule, if damage covers more than about a quarter of the driveway, or the driveway is well past its expected life, get a quote for resurfacing or replacement before spending heavily on patch. Money spent on bags and sealer for a driveway that needs rebuilding is money you will spend again next year.
+          </p>
+
+          <p>
+            None of this is an argument against patching. For isolated holes in an otherwise sound driveway, a good cold patch or water-activated repair is exactly the right answer, and it is one of the most cost-effective jobs a homeowner can do. The point is to match the fix to the fault.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Dumping the whole bag in at once</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A single thick lift compacted only from the top stays loose underneath, and that loose layer lets the whole patch sink into a dish within weeks. Place material in lifts of 1 to 2 inches, compact each one hard, and only then add the next layer on top.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Leaving loose debris in the hole</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Crumbled asphalt, grit and dust at the bottom of a pothole stop the patch bonding and act like ball bearings under traffic. Chip back to firm material, sweep it clean and blow out the fines. It takes ten minutes and doubles the life of the repair.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Finishing the patch flush or low</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Every patch compacts a little further under traffic. A patch that starts level with the driveway ends up as a shallow depression that holds water, and standing water is how the next pothole begins. Finish about a quarter of an inch proud of the surface.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using cold patch in shallow depressions</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Bagged and pail patches need sidewalls to compress against. Spread thinly across a shallow dip or a crumbling edge, they get pushed out by tyres. Use a water-activated patch rated for use without sidewalls, or cut the area square to create proper edges.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Sealcoating over a fresh patch</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Solvent-based cold patch keeps releasing solvent while it cures, and sealer applied too soon can soften, discolour or fail to bond over it. Follow the maker's waiting period, often around 30 days, and seal the whole driveway once patches and crack repairs have cured.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best asphalt patch for a driveway pothole?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For a single hole you want to fix once, a water-activated patch like Aquaphalt 6.0 is the most durable choice we tested. For several medium potholes, a polymer-modified bag such as EZ Street or QUIKRETE High Performance Blacktop Repair gives the best balance of performance and cost. Whichever you choose, compaction matters more than brand.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best cold patch asphalt?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Among bagged cold mixes, EZ Street was the most forgiving in our testing because its polymer-modified binder grips the sides of the hole and it can go into wet holes. QUIKRETE High Performance is a close second with a better yield per bag. Sakrete U.S. Cold Patch is the budget choice if you compact it thoroughly.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How deep can you fill a pothole with cold patch?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Any depth, provided you work in lifts. Place 1 to 2 inches at a time and compact each layer hard before adding the next. For holes deeper than about 4 inches, fill the bottom with compacted gravel first; it gives a firmer base and saves a lot of expensive patch material.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is cold patch asphalt permanent?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It can be, when it goes into a clean hole with firm sidewalls, is compacted in thin lifts and sits in a driveway with a sound base. Most early failures come from poor compaction or from patching over a failing base. If the same hole keeps reopening, the problem is underneath the asphalt and needs a deeper repair.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can you patch asphalt in the rain or cold?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Several products are designed for it. EZ Street and QUIKRETE High Performance can go into wet holes, and Aquaphalt is sold for installation below freezing. Solvent-based bags stiffen in cold weather, so warm them in a garage first. Whatever the product, sweep out standing water and mud before placing the patch.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long before you can drive on an asphalt patch?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Most of these patches accept traffic as soon as they are compacted, and driving slowly over them with plywood on top is part of the compaction process. Water-activated products reach full cure in about 24 hours. Avoid parking on a fresh solvent-based patch in hot weather for the first week, because it can scuff under turning tyres.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can you seal over an asphalt patch?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes, and it helps the patch blend in, but wait until it has cured. QUIKRETE recommends 30 days before sealing its blacktop patch, and a month is a sensible default for other solvent-based mixes. Patch holes first, fill cracks second, then seal the whole driveway in one go so the finish is uniform.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Asphalt Repair Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/cold-patch-asphalt/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Deep Dive</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Cold Patch Asphalt Explained</h3>
+              <p class="text-gray-500 text-sm mt-2">How cold patch works, why it pops out, and when a pothole is too big for it.</p>
+            </a>
+            <a href="/best-asphalt-crack-filler/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Asphalt Crack Filler</h3>
+              <p class="text-gray-500 text-sm mt-2">The right products for the cracks too narrow for a pothole patch.</p>
+            </a>
+            <a href="/best-paver-cleaner/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#38BDF8] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Paver Cleaner</h3>
+              <p class="text-gray-500 text-sm mt-2">Cleaners matched to efflorescence, oil, rust and organic stains on pavers.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The best asphalt patch is the one matched to your hole. For a single pothole you never want to see again, Aquaphalt 6.0 is worth its premium. For several ordinary potholes, EZ Street or QUIKRETE High Performance will do the job at a fraction of the cost, and Latex-ite Quick Patch H2O is the specialist for edges and shallow dips where other patches have nothing to grip.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Whatever you buy, the work around it decides the result: clean the hole back to solid material, square the edges, place the patch in thin lifts and compact it until it stops moving. Do that, wait for it to cure before sealing, and a bag of cold patch can outlast the driveway around it.
+          </p>
+        </div>
+
+        <MoreInCategory category="Driveway & Concrete" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

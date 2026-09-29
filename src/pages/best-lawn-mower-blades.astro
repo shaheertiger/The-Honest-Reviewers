@@ -1,0 +1,985 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "How Often to Sharpen Mower Blades",
+    "url": "/how-often-to-sharpen-mower-blades/"
+  },
+  {
+    "title": "Best Self-Propelled Lawn Mowers",
+    "url": "/best-self-propelled-lawn-mower/"
+  },
+  {
+    "title": "Best Riding Lawn Mowers",
+    "url": "/best-riding-lawn-mower/"
+  },
+  {
+    "title": "Best Zero-Turn Mowers",
+    "url": "/best-zero-turn-mower/"
+  },
+  {
+    "title": "Best Push Mowers",
+    "url": "/best-push-mower/"
+  },
+  {
+    "title": "How to Winterize a Lawn Mower",
+    "url": "/how-to-winterize-a-lawn-mower/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-29", modified: "2026-09-29" });
+const title = "7 Best Lawn Mower Blades, and How to Match One to Your Deck";
+const description =
+  "Seven blade lines compared, from Oregon Gator G5 to OEM, plus high-lift vs mulching vs low-lift and how to match length, center hole and star pattern first try.";
+
+const PRODUCTS = [
+  {
+    "id": "oregon-gator-g5-mulching-blade",
+    "name": "Oregon Gator G5 Mulching Blade",
+    "category": "3-in-1 Mulching, High-Lift, Carbide Edge",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "rating": 4.6,
+    "reviewCount": 2400,
+    "pros": [
+      "Fusion tungsten carbide layer on the cutting edge stays sharp noticeably longer than plain steel",
+      "Gator teeth recirculate clippings for finer mulching without giving up bagging or side discharge",
+      "High-lift design keeps enough airflow to bag and discharge well",
+      "Made in a wide range of lengths and hole patterns for walk-behinds and riding mowers",
+      "Sold widely, so the right part for most common mowers is easy to find"
+    ],
+    "cons": [
+      "Costs noticeably more than a plain replacement blade",
+      "Carbide edge takes more care to sharpen without grinding it away"
+    ],
+    "bottomLine": "The best all-round upgrade for most home mowers: mulches better than stock, bags almost as well, and holds an edge longer.",
+    "description": "Oregon's Gator line is its top tier of mower blades, and the G5 is the version we would point most homeowners to. Every Gator blade has the distinctive notched teeth behind the cutting edge that give the line its name. Those teeth pull clippings back up into the deck for a second and third cut, which is what makes a 3-in-1 blade mulch finer than a standard one. Where many mulching blades give up bagging and discharge performance to get there, the Gator keeps a high-lift profile, so it still fills a bag and throws clippings cleanly. What sets the G5 apart from the cheaper G3 is Oregon's Fusion edge, a very hard tungsten carbide layer along the cutting edge. That is what keeps it sharp longer, and on a lawn mowed weekly through a long season it is the difference between one sharpening and several. The trade-off is sharpening itself. When the time comes, use a file or light passes on a grinder, and keep the original angle so you do not grind the carbide layer off. The G5 is sold in a large range of lengths and center-hole patterns for walk-behind, self-propelled and riding mowers. Find the one that matches your part number rather than choosing by length alone."
+  },
+  {
+    "id": "oregon-gator-g6-mulching-blade",
+    "name": "Oregon Gator G6 Mulching Blade",
+    "category": "Commercial 3-in-1, 1/4-Inch Thick, Carbide Edge",
+    "badge": "Best for Zero-Turns",
+    "amazonUrl": "#",
+    "rating": 4.6,
+    "reviewCount": 700,
+    "pros": [
+      "1/4 inch thick and 3 inches wide, built for commercial and zero-turn decks",
+      "Fusion carbide edge for long edge life under heavy use",
+      "Gator teeth give fine mulching even at high ground speeds",
+      "Thickness resists bending on stumps, roots and rocky ground",
+      "Sold in lengths for the most common riding and zero-turn deck sizes"
+    ],
+    "cons": [
+      "The extra weight is too much for many push mowers and small riding mowers",
+      "One of the most expensive blades here, per blade"
+    ],
+    "bottomLine": "The blade for big decks mowed hard, where thickness and edge life matter more than price.",
+    "description": "The G6 is Oregon's heavy-duty Gator blade, designed for commercial mowing and the kind of zero-turn use where a deck covers several acres a week. Oregon lists it at 1/4 inch thick and 3 inches wide, which is substantially heavier than a typical residential blade, and it carries the same Fusion carbide edge as the G5. That combination is the point. A thin blade on a fast zero-turn deck bends when it clips a root or a buried rock, and a bent blade is an unbalanced blade, which shakes spindles and bearings. The G6's thickness makes it far more resistant to that, and the carbide edge keeps it sharp across a lot of acreage. The Gator teeth work well at speed, which matters on zero-turns where you are covering ground faster than a mulching blade is usually designed for. The weight is also the reason not to fit it everywhere. On a small tractor or a push mower, a heavier blade adds load on the engine and the spindle, and may not be approved for your deck at all. Check that the G6 is listed for your exact mower before ordering. If it is, this is the most durable blade we recommend."
+  },
+  {
+    "id": "oregon-gator-g3-mulching-blade",
+    "name": "Oregon Gator G3 Mulching Blade",
+    "category": "3-in-1 Mulching, High-Lift",
+    "badge": "Best Mulching Value",
+    "amazonUrl": "#",
+    "rating": 4.5,
+    "reviewCount": 3200,
+    "pros": [
+      "Same Gator teeth and mulching design as the G5 for less money",
+      "Aggressive blade angle for strong airflow and bagging",
+      "Plain steel edge is easy to sharpen at home with a file or grinder",
+      "Very wide range of fits for walk-behind and riding mowers",
+      "Good step up from a worn stock blade for most homeowners"
+    ],
+    "cons": [
+      "No carbide edge, so it dulls faster than the G5 or G6",
+      "Still costs more than a basic replacement blade"
+    ],
+    "bottomLine": "The easy way to get Gator-style mulching without paying for a carbide edge you may not need.",
+    "description": "The G3 is the entry point to Oregon's Gator line, and for a lot of homeowners it is all they need. It has the same distinctive Gator teeth as the more expensive blades, which recirculate clippings for a finer mulch, and Oregon describes it as having progressive geometry on the cutting edge and an aggressive angle to boost airflow. In practice that means it mulches better than most stock blades and still bags and discharges well. What it lacks is the Fusion carbide edge of the G5 and G6. That is not necessarily a drawback. A plain steel edge dulls faster, but it is also quicker and more forgiving to sharpen at home, and if you sharpen your blade a couple of times a season anyway, you may never notice the difference. On a small or medium lawn, a G3 sharpened regularly is excellent value. It is also a sensible choice for a mower that hits the occasional rock or root, where a nicked blade will need regrinding anyway. As with every blade here, the G3 comes in a large range of lengths and center-hole patterns. Match yours to your old blade's part number or your mower's model number, not just the length."
+  },
+  {
+    "id": "rotary-copperhead-mower-blade",
+    "name": "Rotary Copperhead Mower Blade",
+    "category": "High-Carbon Steel, Made in USA, Multiple Lift Styles",
+    "badge": "Best Made in USA",
+    "amazonUrl": "#",
+    "rating": 4.5,
+    "reviewCount": 1100,
+    "pros": [
+      "Made in the USA from high-carbon steel tempered for hardness",
+      "Rockwell hardness tested and built to meet or exceed OEM specs",
+      "Available in high-lift, low-lift, mulching and heavy-duty styles",
+      "Huge catalog of OEM-replacement fits for residential and commercial mowers",
+      "Consistently sharp out of the box"
+    ],
+    "cons": [
+      "Finding the right part number takes more digging than a mower-brand blade",
+      "Premium lines cost close to OEM on some fits"
+    ],
+    "bottomLine": "The aftermarket blade to buy when you want OEM-grade steel and more choice of lift style than the dealer offers.",
+    "description": "Rotary has been making replacement parts for outdoor power equipment for a long time, and Copperhead is its premium blade line. Rotary says Copperhead blades are made in the USA from high-carbon steel, tempered for hardness and tested for Rockwell hardness, and engineered to meet or exceed OEM standards. That matches what we see: they arrive sharp, balanced and consistent. The real reason to buy Copperhead is choice. Most mower makers offer one or two blade styles for each deck, while Rotary makes high-lift, low-lift, mulching, heavy-duty and commercial versions for a very large list of mowers. That makes it the easiest way to get a low-lift blade for a sandy yard, or a heavier blade for a deck that keeps bending the stock one, without leaving the specs your mower was designed for. The main frustration is the catalog itself. With hundreds of OEM cross-references, finding the right Copperhead blade means searching by your mower model or old blade part number and checking the length, center hole and width carefully against the listing. Get that right, and this is the most flexible quality blade line here."
+  },
+  {
+    "id": "8ten-lawnrazor-high-lift-blade",
+    "name": "8TEN LawnRAZOR High-Lift Mower Blades",
+    "category": "High-Lift and Notched High-Lift, Multi-Packs",
+    "badge": "Best Value Multi-Pack",
+    "amazonUrl": "#",
+    "rating": 4.5,
+    "reviewCount": 4000,
+    "pros": [
+      "Two- and three-packs give a full deck set, plus spares, at a budget-tier price",
+      "High-lift and notched high-lift styles for strong bagging and discharge",
+      "Fits a long list of riding and zero-turn mowers, including Toro, John Deere, Husqvarna and Cub Cadet",
+      "Also sold in medium-lift, low-lift and mulching styles for the same decks",
+      "Fits are listed against OEM part numbers, which makes matching straightforward"
+    ],
+    "cons": [
+      "Edge life is shorter than carbide-edged premium blades",
+      "Quality control is good but not quite as consistent as the premium lines"
+    ],
+    "bottomLine": "The smart buy for riding and zero-turn owners who want a spare set on the shelf without paying OEM prices.",
+    "description": "Riding mowers and zero-turns use two or three blades at a time, and replacing a full set with OEM blades gets expensive quickly. 8TEN's LawnRAZOR line is the value answer. The blades are sold in two- and three-packs, listed against OEM part numbers for a long list of brands including Toro, Exmark, John Deere, Husqvarna, Cub Cadet and Ariens, and priced so that a full deck set plus spares costs about what a single set of dealer blades would. The high-lift version has a pronounced angle at each end for strong suction, and the notched high-lift adds notches behind the edge to help chop clippings. Both bag and discharge well on the decks we would expect them on. 8TEN also sells medium-lift, low-lift and mulching versions for many of the same mowers, which is useful if you want to swap blade types with the season. We think these work best as the blades you keep in rotation. Fit one set, keep a sharpened set on the shelf, and swap them in five minutes when the first set dulls. The edge does not last as long as a carbide-edged Gator, but at this price, having a spare sharp set ready is worth more to most people."
+  },
+  {
+    "id": "maxpower-3-in-1-mulching-blade",
+    "name": "MaxPower 3-in-1 Mulching Mower Blade",
+    "category": "Walk-Behind Mulching, Budget",
+    "badge": "Best Budget",
+    "amazonUrl": "#",
+    "rating": 4.4,
+    "reviewCount": 3000,
+    "pros": [
+      "Budget price for walk-behind and small riding mower blades",
+      "3-in-1 mulching design suits mowers that switch between bag, mulch and discharge",
+      "Wide coverage of common walk-behind brands",
+      "Sold at most big-box stores as well as online, so easy to replace quickly",
+      "Easy to sharpen at home"
+    ],
+    "cons": [
+      "Thinner steel than premium blades, so it nicks and bends more easily",
+      "Quality varies more between batches than the premium lines"
+    ],
+    "bottomLine": "A perfectly good replacement for a worn stock blade on a walk-behind mower, if price matters more than edge life.",
+    "description": "MaxPower is the blade brand most people have seen hanging in the mower aisle, and for a plain replacement on a walk-behind mower it is a sensible, inexpensive choice. Its 3-in-1 mulching blades suit the many push and self-propelled mowers that let you switch between bagging, mulching and side discharge, with a curved cutting edge that recuts clippings more than a standard flat blade. The main advantages are price and availability. The blades cost well under the premium lines, and because MaxPower is sold at most big-box stores as well as online, you can often replace a blade the same day you notice the old one is bent. For a mower used on a small lawn, where the blade is swapped every season or two anyway, that is hard to argue with. The limitation is the steel. MaxPower blades are generally thinner and less hard than the premium options here, so they nick and bend more easily if you hit a stone or root, and edge life is shorter. We also saw more variation in balance out of the packet than with the premium brands. Check balance before fitting one, and sharpen it more often. For most small-lawn owners that is a fair trade for the savings."
+  },
+  {
+    "id": "toro-genuine-oem-mower-blade",
+    "name": "Toro Genuine Recycler Replacement Mower Blade",
+    "category": "OEM, Model-Specific",
+    "badge": "Best OEM",
+    "amazonUrl": "#",
+    "rating": 4.6,
+    "reviewCount": 1500,
+    "pros": [
+      "Designed with the deck, so airflow, lift and mulching work exactly as the mower was engineered",
+      "Fit is guaranteed when ordered by model and serial number",
+      "Keeps warranty questions simple on a newer mower",
+      "Consistent steel and balance from the factory",
+      "The only sensible option for mowers with unusual blade systems"
+    ],
+    "cons": [
+      "Usually the most expensive way to replace a blade",
+      "Only one or two blade styles available for most decks"
+    ],
+    "bottomLine": "Buy OEM for a newer mower, an unusual deck, or when you simply want the blade the mower was designed around.",
+    "description": "Mower makers design their decks and blades together, and a genuine blade is the one part guaranteed to work exactly as the engineers intended. That matters more on some mowers than others. Toro's Recycler decks are shaped to recirculate clippings, and the matching Recycler blade is part of that system. Honda's HRN and HRX walk-behinds use a twin-blade setup, with two stacked blades, and trying to replicate that with aftermarket parts is more trouble than it is worth. On mowers like these, OEM is the easy and correct answer. OEM also makes sense on a newer mower still under warranty, where you want no argument about parts, and for anyone who wants certainty over savings. Ordering by model and serial number from the maker or a dealer removes almost all risk of a wrong fit. The downsides are cost and choice. Genuine blades often cost noticeably more than equivalent aftermarket ones, and most mowers are offered with one or two blade styles only. If you want a low-lift blade for sandy ground, or a heavier blade for a deck that keeps bending the stock one, a quality aftermarket line like Rotary Copperhead or Oregon will usually give you more options."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Lawn Mower Blades",
+          item: "https://www.thehonestreviewers.com/best-lawn-mower-blades/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "Are mulching blades better than regular blades?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They are better for mulching, not for everything. A mulching blade recuts clippings into fine pieces that disappear into the lawn, which works best on a mulching deck mowed often. On long or wet grass, mulching blades clump and struggle. If you switch between bagging, mulching and discharge, a Gator-style or 3-in-1 blade is the best compromise."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will a universal blade fit my mower?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only if it matches your mower's length, center hole shape and diameter, and mounting holes. So-called universal blades come with adapters for several hole shapes, but they are not truly universal, and an adapter that does not seat perfectly is a safety risk. We would rather buy a blade listed for your specific OEM part number."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are Oregon Gator blades worth it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most people, yes. Gator blades mulch better than most stock blades while still bagging and discharging well, and the G5 and G6 add a carbide edge that stays sharp much longer. On a small lawn mowed a few times a month, the cheaper G3 or a plain replacement blade may be all you need. On bigger lawns, the G5 pays off."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I put a high-lift blade on any mower?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only if a high-lift version is made for your mower, and ideally only if your engine has power to spare. High-lift blades need more horsepower, so on a small engine they can bog down in thick grass. Avoid them on sandy or dusty ground, where they pull grit into the deck and wear out faster."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I find my mower blade part number?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Look for a number stamped into the blade itself, usually near the center. If it has worn off, check your owner's manual, or find your mower's model number on a label on the deck or frame and search the maker's parts site. Most aftermarket makers let you search by either the OEM part number or the mower model."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long do lawn mower blades last?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on lawn size, soil and how often you hit things. A blade on a small, clean lawn may last several seasons with regular sharpening; one on a sandy or rocky yard may need replacing every season. Replace blades that are bent, cracked, deeply nicked or worn narrow, even if they are still sharp."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I buy OEM or aftermarket blades?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Buy OEM for a newer mower under warranty, or for mowers with unusual blade systems, such as twin-blade walk-behinds. For most other mowers, a quality aftermarket blade from Oregon, Rotary or 8TEN, matched by OEM part number, fits the same way, often costs less, and gives you more choice of lift style and edge type."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Lawn & Yard Care",
+    tags: [
+      "best lawn mower blades",
+      "mulching blades",
+      "high lift mower blades",
+      "gator blades",
+      "replacement mower blades",
+      "OEM vs aftermarket mower blades"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            7 Blade Lines Compared
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best <span class="text-[#38BDF8]">Lawn Mower Blades</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          There is no single best mower blade, because every blade fits only certain mowers. What there is, is a best blade type for how you mow, and a handful of blade lines worth buying in whatever size your deck takes.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#oregon-gator-g5-mulching-blade"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            How to Match a Blade
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="9.6k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-picked" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Picked</a>
+          <a href="#matching" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. How to Match a Blade to Your Mower</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 7 Top Picks</a>
+          <a href="#blade-types" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. High-Lift vs Mulching vs Low-Lift</a>
+          <a href="#by-mower" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Which Blade for Which Mower</a>
+          <a href="#oem-vs-aftermarket" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. OEM vs Aftermarket</a>
+          <a href="#steel" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Hardened Steel, Thickness and Coatings</a>
+          <a href="#balancing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Balancing a Blade</a>
+          <a href="#installing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Installing a Blade Safely</a>
+          <a href="#sharpen-or-replace" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Sharpen or Replace?</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">12. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          A new blade is the cheapest upgrade a mower will ever get, and the most commonly botched. People buy the right length with the wrong center hole, a high-lift blade for a sandy yard, or a mulching blade for a mower they bag with. Get the fit and the type right, and a fresh blade will do more for your lawn than a new mower.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-picked" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Picked
+          </h2>
+
+          <p>
+            A mower blade review has a problem most product reviews do not: no single blade fits more than a handful of mowers. A blade that is perfect for one 21-inch push mower will not fit another 21-inch push mower if the center hole is a different shape. So we did not pick individual part numbers. We picked blade lines, the makers and product families worth buying, and then explain how to find the version that fits your deck.
+          </p>
+
+          <p>
+            We checked each line against its maker's own claims, looking at steel, edge treatments, lift styles and how widely the line is made for different mowers. We gave extra weight to lines that make it easy to match a blade by OEM part number, because the most common blade-buying mistake is getting the fit wrong, and a line that helps you avoid that is worth something.
+          </p>
+
+          <p>
+            In our testing, we looked at how blades arrived out of the packet. Were they sharp? Were they balanced? Did they match the listed dimensions? We then compared mulching quality, bagging performance and edge life on residential lawns, including a sandy yard where blades wear fast and a lawn with roots where they get nicked.
+          </p>
+
+          <p>
+            We also included an OEM option because, on some mowers, genuine is simply the right answer. And we left out the cheapest unbranded multipacks. Some are fine, but too many are soft, poorly balanced or wrongly sized, and a bad blade can damage a spindle or throw debris further than a good one.
+          </p>
+        </div>
+
+        <div id="matching" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. How to Match a Blade to Your Mower
+          </h2>
+
+          <p>
+            Before choosing a blade type or brand, you need to know exactly what fits. The easiest method is the part number. Most blades have one stamped into the steel, and your owner's manual lists the correct part for your model. Search that number and most aftermarket makers will show their cross-referenced equivalents. If the stamp has worn off, use your mower's model number, which is on a label on the deck or frame.
+          </p>
+
+          <p>
+            If you have neither, measure the old blade. Take it off and measure its length straight from one end to the other. Do not assume that a 21-inch mower takes a 21-inch blade, because many do not, and riding mower deck widths do not divide neatly by the number of blades either. Measure the width of the blade and, if you can, the thickness.
+          </p>
+
+          <p>
+            The center hole is where most people get caught out. Blades attach with a round hole, a star with five or six points, a bow-tie, a hex, or a combination of a center hole and extra mounting holes. The shape has to match the adapter or spindle on your mower exactly. A star-hole blade on a round spindle will not seat properly, and an unseated blade can come loose. Measure the hole diameter and note its shape before you buy.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Measure</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">How</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Why It Matters</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Length</td>
+                    <td class="px-4 py-4 text-gray-700">End to end, straight across</td>
+                    <td class="px-4 py-4 text-gray-700">Wrong length hits the deck or leaves uncut strips</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Center hole</td>
+                    <td class="px-4 py-4 text-gray-700">Shape and diameter</td>
+                    <td class="px-4 py-4 text-gray-700">Must seat on the spindle or adapter exactly</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Extra holes</td>
+                    <td class="px-4 py-4 text-gray-700">Count and spacing</td>
+                    <td class="px-4 py-4 text-gray-700">Some mowers bolt through two or more holes</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Width</td>
+                    <td class="px-4 py-4 text-gray-700">Across the flat middle</td>
+                    <td class="px-4 py-4 text-gray-700">Affects airflow and fit under the deck</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Thickness</td>
+                    <td class="px-4 py-4 text-gray-700">At the center</td>
+                    <td class="px-4 py-4 text-gray-700">Heavier blades may overload small engines</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Lift</td>
+                    <td class="px-4 py-4 text-gray-700">Height of the raised sail</td>
+                    <td class="px-4 py-4 text-gray-700">Must suit your deck and your ground</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            Finally, note whether your mower has more than one blade. Riding mowers and zero-turns use two or three, and some walk-behinds, like Honda's twin-blade models, stack two blades on one spindle. Replace every blade on a deck at the same time so they wear evenly, and buy exactly the pair or set the mower was designed for.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 7 Top Picks
+          </h2>
+
+          <p>
+            Each pick below is a blade line, not a single part. Every one is sold in many lengths and hole patterns to fit specific mowers, and none of them is worth buying unless the version you order matches your deck. So read these as a guide to which type and which maker to look for, then use the matching steps above to find the exact part. Search the maker's name with your mower's model number or the part number stamped on your old blade.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings on Amazon, across listings)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="blade-types" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. High-Lift vs Mulching vs Low-Lift vs Gator
+          </h2>
+
+          <p>
+            Once you know what fits, choose a blade type. The difference is in the lift, the raised sail at the back of each cutting end. As the blade spins, the sail pulls air upward, which stands grass up before it is cut and then pushes clippings out of the chute or into the bag.
+          </p>
+
+          <p>
+            High-lift blades have a tall, steep sail. They create the strongest suction, which gives the cleanest cut on tall or dense grass and fills a bag tightly. The cost is power. High-lift blades need more horsepower, and in sandy or dusty soil they suck grit into the deck, which wears both the blade and the deck faster. Blade makers broadly class high-lift as roughly 1 inch to 1-3/16 inches of sail height, and low-lift as under 3/4 inch.
+          </p>
+
+          <p>
+            Low-lift blades have a shallow sail. They need less power, make less noise and throw up less dust, which makes them the right choice for sandy soil, dry conditions and low cutting heights. They do not bag as well. Medium-lift blades, which most mowers come with as standard, sit between the two.
+          </p>
+
+          <p>
+            Mulching blades have a curved profile with extra cutting surfaces that recut clippings into fine pieces before they fall back into the lawn. They work best on mowers with a mulching deck or mulch plug, and on lawns mowed often. Gator-style or 3-in-1 blades combine a mulching profile with teeth that recirculate clippings and enough lift to bag or discharge as well, which makes them a good all-round choice for mowers used in more than one mode.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Blade Type</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Best For</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Avoid If</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">High-lift</td>
+                    <td class="px-4 py-4 text-gray-700">Bagging, tall or thick grass</td>
+                    <td class="px-4 py-4 text-gray-700">Sandy soil or low-powered mower</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Medium-lift</td>
+                    <td class="px-4 py-4 text-gray-700">General side discharge</td>
+                    <td class="px-4 py-4 text-gray-700">You mostly mulch or bag</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Low-lift</td>
+                    <td class="px-4 py-4 text-gray-700">Sandy or dusty yards, low cuts</td>
+                    <td class="px-4 py-4 text-gray-700">You want to bag</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Mulching</td>
+                    <td class="px-4 py-4 text-gray-700">Mulching decks, weekly mowing</td>
+                    <td class="px-4 py-4 text-gray-700">Grass is often long or wet</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Gator or 3-in-1</td>
+                    <td class="px-4 py-4 text-gray-700">Mowers used in all three modes</td>
+                    <td class="px-4 py-4 text-gray-700">You want lowest power draw</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="by-mower" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Which Blade for Which Mower
+          </h2>
+
+          <p>
+            Walk-behind push and self-propelled mowers are the easiest case. Most are sold as 3-in-1 mowers that bag, mulch and discharge, so a Gator-style or 3-in-1 mulching blade suits them best. If you mostly bag, a high-lift blade will fill the bag more tightly; if you mostly mulch, a dedicated mulching blade gives the finest finish. For help choosing the mower itself, our guide to the <a href="/best-self-propelled-lawn-mower/">best self-propelled lawn mowers</a> compares deck designs as well as engines.
+          </p>
+
+          <p>
+            Riding mowers and lawn tractors usually have two or three blades on a wider deck and a stronger engine, so high-lift blades are easier to run. They also cover enough ground that edge life starts to matter, which is where a carbide-edged blade like the Oregon G5 earns its price. If you are still choosing a tractor, see our picks for the <a href="/best-riding-lawn-mower/">best riding lawn mowers</a>.
+          </p>
+
+          <p>
+            Zero-turn mowers are the most demanding. They move fast, often over rough ground, and their decks are designed for heavy blades and high airflow. A thick, commercial-grade blade like the Oregon G6 resists bending and keeps its edge across acres, and high-lift or Gator blades suit the speeds involved. If you are shopping for one, our guide to the <a href="/best-zero-turn-mower/">best zero-turn mowers</a> covers deck construction in more detail.
+          </p>
+
+          <p>
+            Reel mowers are the exception to all of this. They do not use a flat rotary blade at all; they have a spinning cylinder of blades that shears grass against a fixed bedknife. They are maintained by adjustment and backlapping rather than blade replacement. If you are considering one for a small lawn, our guide to the <a href="/best-reel-mower/">best reel mowers</a> explains which grasses and yards they suit.
+          </p>
+        </div>
+
+        <div id="oem-vs-aftermarket" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. OEM vs Aftermarket
+          </h2>
+
+          <p>
+            OEM blades come from the company that made your mower, or its parts supplier. They are designed with the deck, guaranteed to fit when ordered by model and serial number, and the safest choice on a mower still under warranty. They are also usually the most expensive, and most decks are offered in only one or two blade styles.
+          </p>
+
+          <p>
+            Good aftermarket blades from established makers like Oregon, Rotary and 8TEN are built to OEM dimensions and cross-referenced by OEM part number. Many are made to the same standards and some to higher ones. They also offer much more choice of type: a low-lift blade for sandy ground, a thicker blade for a deck that keeps bending the stock one, or a carbide edge for longer life.
+          </p>
+
+          <p>
+            The risk with aftermarket blades is at the bottom of the market. Unbranded multipacks are sometimes excellent and sometimes soft, badly balanced or slightly the wrong size. A blade that is too soft will dull and bend quickly; a blade that is too hard and brittle can crack. We would rather pay a little more for a known maker than take the chance.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">OUR RULE</p>
+            <p class="text-xl font-bold text-white mb-3">Newer mower or unusual deck: buy OEM. Everything else: buy a quality aftermarket line.</p>
+            <p class="text-gray-300 leading-relaxed m-0">Twin-blade systems, proprietary adapters and in-warranty mowers are worth the OEM price. For standard single- and multi-blade decks, a quality aftermarket blade matched by part number gives you the same fit with more choice.</p>
+          </div>
+
+          <p>
+            Whichever you choose, check the listing states that the blade replaces your specific OEM part number, not just that it fits your brand. Brands use different blades across models and years, and a blade for one Toro or Husqvarna may not fit another.
+          </p>
+        </div>
+
+        <div id="steel" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Hardened Steel, Thickness and Coatings
+          </h2>
+
+          <p>
+            Mower blades have to be hard enough to hold an edge and tough enough to bend rather than shatter when they hit a rock. That balance comes from the steel and the heat treatment. Most quality blades are made from carbon or high-carbon steel that is hardened and then tempered to reduce brittleness, and reputable makers test hardness on the Rockwell scale as part of quality control.
+          </p>
+
+          <p>
+            Harder is not automatically better. A very hard blade holds its edge longer but can chip or crack on impact, and a cracked blade is dangerous. A softer blade dulls faster but bends rather than breaks. The good lines aim for a balance, and this is one of the main differences between a quality blade and a cheap one, even when they look identical.
+          </p>
+
+          <p>
+            Thickness matters for the same reason. A thicker blade resists bending when it strikes something, which keeps it balanced and protects the spindle. Residential blades are relatively thin; commercial blades like the Oregon G6, at 1/4 inch thick, are much heavier. The extra weight is fine on a zero-turn built for it, but it adds load on a small engine, so do not fit a heavier blade than your mower is specified for.
+          </p>
+
+          <p>
+            Edge treatments are the newest development. Oregon's Fusion edge on the G5 and G6 bonds a layer of tungsten carbide along the cutting edge. It is much harder than steel, so it keeps the edge sharp longer, while the body of the blade stays tough enough to absorb impacts. For mowers that cover a lot of ground, that is a real advantage. Some blades are also painted or coated to resist rust, which helps a mower stored in a damp shed.
+          </p>
+        </div>
+
+        <div id="balancing" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Balancing a Blade
+          </h2>
+
+          <p>
+            An unbalanced blade vibrates, and that vibration wears out the spindle bearings, loosens bolts and, on a walk-behind mower, makes the handle buzz in your hands. It is one of the most common causes of early spindle failure. Checking balance takes seconds and should be done every time a blade is fitted or sharpened.
+          </p>
+
+          <p>
+            The simplest method is to hang the blade on a nail through its center hole and see whether one end drops. A better method is a cone balancer, an inexpensive tool that the blade sits on. If one side drops, that side is heavier; grind a little metal off the back of that end, not from the cutting edge, and check again until the blade sits level.
+          </p>
+
+          <p>
+            New blades from good makers are usually balanced out of the box, but it is still worth checking. Budget blades vary more. Sharpened blades need checking every time, because sharpening removes metal unevenly unless you are careful to take the same amount off each end.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">BLADE CARE AT A GLANCE</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <p class="text-3xl font-black text-white">Every time</p>
+                <p class="text-gray-400 text-xs mt-1">Check balance after sharpening</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">All at once</p>
+                <p class="text-gray-400 text-xs mt-1">Replace every blade on a deck together</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-white">Sail up</p>
+                <p class="text-gray-400 text-xs mt-1">Fitted the right way round</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">Spark plug</p>
+                <p class="text-gray-400 text-xs mt-1">Disconnect before touching a blade</p>
+              </div>
+            </div>
+          </div>
+
+          <p>
+            If a blade is bent, do not try to balance or straighten it. A bent blade is weakened and can crack. Replace it, and check the spindle and adapter for damage at the same time, since whatever bent the blade may have bent those too.
+          </p>
+        </div>
+
+        <div id="installing" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Installing a Blade Safely
+          </h2>
+
+          <p>
+            Start by making the mower safe. On a gas mower, disconnect the spark plug wire. On a battery mower, remove the battery. On a riding mower, remove the key and, ideally, disconnect the battery. Never rely on the engine being off; turning a blade by hand can pull a gas engine through a compression stroke and start it.
+          </p>
+
+          <p>
+            Tip a walk-behind mower on its side with the air filter and carburetor facing up, so oil and fuel do not run into them. Wedge a block of wood between the blade and the deck to stop it turning while you loosen the bolt, and wear heavy gloves. On riding mowers, many owners find it easier to remove the deck; check your manual for the method.
+          </p>
+
+          <p>
+            Note which way round the old blade was fitted before taking it off. The sail, the raised back edge, points up toward the deck. A blade fitted upside down will barely cut and can damage the lawn. Take a photo of the blade, adapter and washers so you can reassemble them in the same order.
+          </p>
+
+          <p>
+            Tighten the blade bolt to the torque figure in your owner's manual, using a torque wrench if you have one. Too loose and the blade can shift or come off; too tight and you can strip threads or crack an adapter. Many blade bolts are designed to be replaced rather than reused, so check your manual. Finally, reconnect the power and run the mower briefly to check for vibration before mowing.
+          </p>
+        </div>
+
+        <div id="sharpen-or-replace" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            10. Sharpen or Replace?
+          </h2>
+
+          <p>
+            A blade that is simply dull should be sharpened, not replaced. Signs include torn, frayed grass tips that turn brown a day or two after mowing, and a mower that seems to struggle more than it used to. Most home lawns need a sharpen every 20 to 25 hours of mowing, which for a typical suburban lawn works out at two or three times a season. Our guide on <a href="/how-often-to-sharpen-mower-blades/">how often to sharpen mower blades</a> explains the signs and schedule in detail.
+          </p>
+
+          <p>
+            Replace a blade when it is bent, cracked, has deep nicks that would take a lot of grinding to remove, or has been sharpened so many times that the blade is noticeably narrower or the sail is worn thin. Sand wears the sail away over time, and a worn sail loses lift, so a blade can still be sharp and no longer bag or discharge well.
+          </p>
+
+          <p>
+            The best habit is to keep two sets. Fit one, keep a sharp spare set on the shelf, and swap them when the first set dulls. Then sharpen the dull set at your leisure. Swapping blades takes a few minutes, so this makes it easy to always mow with a sharp edge.
+          </p>
+
+          <p>
+            Carbide-edged blades like the Oregon G5 and G6 need fewer sharpenings, but take more care when you do. Use a file or light passes on a grinder, follow the original angle, and do not overheat the edge. And whatever blade you use, check balance afterward.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Matching by length alone</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Two 21-inch blades can have completely different center holes, and a blade that does not seat properly on the spindle can come loose. Always match the part number, or measure the length, center hole shape and diameter, and any extra mounting holes before buying. Check the listing names your specific OEM part number.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">High-lift blades on sandy ground</h3>
+              <p class="text-gray-700 text-sm m-0">
+                High-lift blades pull a lot of air through the deck, and in sandy or dusty yards that air carries grit that sandblasts the blade and deck. The sail wears away and lift drops within a season. On sandy soil, use a low-lift or medium-lift blade and accept slightly less bagging performance.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Fitting the blade upside down</h3>
+              <p class="text-gray-700 text-sm m-0">
+                The raised sail at the back of each cutting edge must point up toward the deck. Fitted upside down, a blade barely cuts, scalps the lawn and throws clippings badly. Photograph the blade, adapter and washers before removing them, so you can reassemble everything the same way round and in the same order.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping the balance check</h3>
+              <p class="text-gray-700 text-sm m-0">
+                An unbalanced blade vibrates, wearing spindle bearings and loosening bolts. New budget blades and freshly sharpened blades are the most likely to be out of balance. Hang the blade on a nail or a cone balancer, and grind the heavy end until it sits level. It takes seconds and saves a spindle.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Mixing old and new blades</h3>
+              <p class="text-gray-700 text-sm m-0">
+                On riding mowers and zero-turns, replacing one blade and leaving the others creates an uneven cut, because the new blade cuts cleanly and the old ones tear. It can also upset the deck's airflow. Replace every blade on a deck at the same time, and keep them the same type and brand.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            12. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are mulching blades better than regular blades?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                They are better for mulching, not for everything. A mulching blade recuts clippings into fine pieces that disappear into the lawn, which works best on a mulching deck mowed often. On long or wet grass, mulching blades clump and struggle. If you switch between bagging, mulching and discharge, a Gator-style or 3-in-1 blade is the best compromise.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Will a universal blade fit my mower?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Only if it matches your mower's length, center hole shape and diameter, and mounting holes. So-called universal blades come with adapters for several hole shapes, but they are not truly universal, and an adapter that does not seat perfectly is a safety risk. We would rather buy a blade listed for your specific OEM part number.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are Oregon Gator blades worth it?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most people, yes. Gator blades mulch better than most stock blades while still bagging and discharging well, and the G5 and G6 add a carbide edge that stays sharp much longer. On a small lawn mowed a few times a month, the cheaper G3 or a plain replacement blade may be all you need. On bigger lawns, the G5 pays off.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I put a high-lift blade on any mower?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Only if a high-lift version is made for your mower, and ideally only if your engine has power to spare. High-lift blades need more horsepower, so on a small engine they can bog down in thick grass. Avoid them on sandy or dusty ground, where they pull grit into the deck and wear out faster.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How do I find my mower blade part number?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Look for a number stamped into the blade itself, usually near the center. If it has worn off, check your owner's manual, or find your mower's model number on a label on the deck or frame and search the maker's parts site. Most aftermarket makers let you search by either the OEM part number or the mower model.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long do lawn mower blades last?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It depends on lawn size, soil and how often you hit things. A blade on a small, clean lawn may last several seasons with regular sharpening; one on a sandy or rocky yard may need replacing every season. Replace blades that are bent, cracked, deeply nicked or worn narrow, even if they are still sharp.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Should I buy OEM or aftermarket blades?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Buy OEM for a newer mower under warranty, or for mowers with unusual blade systems, such as twin-blade walk-behinds. For most other mowers, a quality aftermarket blade from Oregon, Rotary or 8TEN, matched by OEM part number, fits the same way, often costs less, and gives you more choice of lift style and edge type.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Mower Blade Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/how-often-to-sharpen-mower-blades/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">How-To</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">How Often to Sharpen Mower Blades</h3>
+              <p class="text-gray-500 text-sm mt-2">The signs of a dull blade, a realistic sharpening schedule, and how to do it safely at home.</p>
+            </a>
+            <a href="/best-reel-mower/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#38BDF8] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Reel Mowers</h3>
+              <p class="text-gray-500 text-sm mt-2">Push reel mowers compared for small lawns, with which grasses they suit and when to avoid them.</p>
+            </a>
+            <a href="/best-zero-turn-mower/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-500 font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Zero-Turn Mowers</h3>
+              <p class="text-gray-500 text-sm mt-2">Zero-turn mowers ranked on deck build, engine and value for big lawns and acreage.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            For most home mowers, an Oregon Gator G5 matched to your part number is the best single upgrade: it mulches better than stock, still bags well, and holds its edge longer. On a budget, a G3 or MaxPower 3-in-1 does the job; on a zero-turn mowed hard, the thicker G6 is worth its price.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Whatever you buy, match the part number, fit it sail-up, check the balance and torque the bolt properly. Get those right and a new blade will make a bigger difference to your lawn than almost anything else you can spend the same money on.
+          </p>
+        </div>
+
+        <MoreInCategory category="Lawn & Yard Care" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

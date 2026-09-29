@@ -1,0 +1,993 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "What Size Sump Pump Do I Need?",
+    "url": "/what-size-sump-pump-do-i-need/"
+  },
+  {
+    "title": "Best Battery Backup Sump Pumps",
+    "url": "/best-battery-backup-sump-pump/"
+  },
+  {
+    "title": "Sump Pump Battery Backup vs Generator",
+    "url": "/sump-pump-battery-backup-vs-generator/"
+  },
+  {
+    "title": "Basement Drainage Systems",
+    "url": "/basement-drainage-system/"
+  },
+  {
+    "title": "Best Basement Waterproofing Systems",
+    "url": "/best-basement-waterproofing-systems/"
+  },
+  {
+    "title": "Water Coming Through the Basement Floor",
+    "url": "/water-coming-through-basement-floor/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-09-29", modified: "2026-09-29" });
+const title = "7 Best Sump Pumps for Basements That Actually Flood";
+const description =
+  "Seven sump pumps compared on flow at real head heights, switch design and build. Which to buy for your pit, when 1/2 HP is worth it, and what fails first.";
+
+const PRODUCTS = [
+  {
+    "id": "zoeller-m53-mighty-mate",
+    "name": "Zoeller M53 Mighty-Mate",
+    "category": "Cast Iron Submersible, Mechanical Float",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "rating": 4.6,
+    "reviewCount": 2800,
+    "pros": [
+      "Rated around 34 GPM at 10 feet of head, which covers the inflow of the large majority of basements",
+      "Cast iron housing and oil-filled motor shed heat well and tolerate long run cycles",
+      "Non-clog vortex impeller passes solids up to 1/2 inch",
+      "Decades-long track record, so parts, switches and plumber familiarity are everywhere",
+      "Stocked by nearly every plumbing supplier, so a same-day replacement is easy to find"
+    ],
+    "cons": [
+      "Actually a 3/10 HP motor, so it runs out of steam past roughly 15 feet of head",
+      "The hinged float arm needs more clear pit width than a vertical float pump"
+    ],
+    "bottomLine": "The default answer for a typical basement with an ordinary pit and a normal discharge run, and the pump most plumbers would install in their own house.",
+    "description": "The M53 is the pump plumbers reach for when nobody has asked for anything special, and there is a reason it has outlived several generations of flashier competition. It is a cast iron, oil-filled submersible with a non-clog vortex impeller and a float-operated mechanical switch, and Zoeller rates it at about 43 gallons per minute at 5 feet of head and around 34 GPM at 10 feet, with shut-off just under 20 feet. That curve matters more than the horsepower label. Most houses lift water 9 to 12 feet and add a few feet of friction, which lands squarely in the part of the curve where this pump is still moving 30-plus gallons a minute, several times the inflow of a normal wet basement. The honest caveat is the motor: it is a 3/10 HP unit, often shelved alongside 1/3 HP pumps, and at 15 feet of total head the flow falls off sharply. If your discharge climbs out of a deep basement and runs 40 feet across the yard, look at the M98 instead. The float arm also swings in an arc, so it wants a pit of reasonable width with nothing for the float to catch on. In a standard 18-inch basin with a sensible discharge, this is the pump to beat."
+  },
+  {
+    "id": "liberty-pumps-257",
+    "name": "Liberty Pumps 257 1/3 HP Sump Pump",
+    "category": "1/3 HP Cast Iron, Vertical Magnetic Float",
+    "badge": "Best for Narrow Pits",
+    "amazonUrl": "#",
+    "rating": 4.6,
+    "reviewCount": 900,
+    "pros": [
+      "Vertical magnetic float switch has no mechanical microswitch arm to wear or snag",
+      "Operates in a pit as narrow as 10 inches in diameter",
+      "Around 45 GPM at 5 feet of head, among the strongest 1/3 HP curves here",
+      "Quick-disconnect power cord can be replaced without opening the motor",
+      "Cast iron housing, oil-filled motor and 1/2 inch solids handling"
+    ],
+    "cons": [
+      "Harder to find on store shelves than Zoeller or Wayne",
+      "Fixed on and off points leave little room to tune cycle length"
+    ],
+    "bottomLine": "The best 1/3 HP pump for a tight or cluttered pit, with a switch design that removes the most common failure point.",
+    "description": "Liberty is the brand you tend to find in contractor supply houses rather than big-box aisles, and the 257 is the model that earns it that reputation. It is a one-piece cast iron, oil-filled 1/3 HP pump rated at about 45 GPM at 5 feet of head, with a maximum near 50 GPM and solids handling up to half an inch. The reason it sits on this list is the switch. The VMF vertical magnetic float slides on a shaft and trips a sealed magnetic reed rather than a mechanical lever, which means there is no arm to bend, no tether to tangle and no microswitch contacts to pit. Switch failure is the leading cause of sump pump failure, so a switch design that removes the moving mechanical parts is worth more than an extra quarter horsepower. Because the float travels straight up and down, the pump runs in a pit as narrow as 10 inches, which makes it the answer for older houses with small clay-tile or bucket-sized pits. The quick-disconnect cord is a small thing that becomes a big thing the day a cord is nicked. The main downside is that its fixed switch points produce short cycles in a small pit, which is a pit problem rather than a pump problem."
+  },
+  {
+    "id": "zoeller-m98-flow-mate",
+    "name": "Zoeller M98 Flow-Mate",
+    "category": "1/2 HP Cast Iron Submersible",
+    "badge": "Best 1/2 HP",
+    "amazonUrl": "#",
+    "rating": 4.6,
+    "reviewCount": 700,
+    "pros": [
+      "Roughly 61 GPM at 10 feet and still about 45 GPM at 15 feet of head",
+      "Shut-off head of about 23 feet handles deep basements and long discharge runs",
+      "Same cast iron, oil-filled construction and service network as the M53",
+      "Handles the heavy spring inflow that overwhelms 1/3 HP pumps",
+      "Available in longer cord lengths for deep pits"
+    ],
+    "cons": [
+      "Overkill in a small pit, where it will short-cycle",
+      "Priced in the premium tier for a residential pump"
+    ],
+    "bottomLine": "The upgrade to make when your head height or inflow genuinely exceeds what a 1/3 HP pump can handle, and not before.",
+    "description": "The M98 is the pump for the basements where the M53 is honestly not enough, and the curve shows exactly why. Zoeller rates it at about 61 gallons per minute at 10 feet of head, roughly 45 GPM at 15 feet and still around 25 GPM at 20 feet, with a maximum of about 72 GPM and shut-off near 23 feet. Compare that with a 1/3 HP pump that has nearly given up at 15 to 18 feet and the purpose is clear. This is the pump for a deep basement with a tall vertical lift, a discharge line that runs a long way to daylight, or a high water table where the pit refills in a couple of minutes during a spring thaw. Construction mirrors the M53: cast iron housing, oil-filled motor for heat transfer, and a float-operated switch that plumbers have been servicing for decades. The mistake to avoid is buying it because bigger feels safer. In an ordinary pit with modest inflow, a pump this strong empties the basin in seconds, starts far more often, and wears its switch and motor faster than a correctly sized pump. Measure your inflow and your head first. If both point here, the M98 is the most dependable way to get there."
+  },
+  {
+    "id": "wayne-cdu980e-sump-pump",
+    "name": "Wayne CDU980E 3/4 HP Sump Pump",
+    "category": "3/4 HP Cast Iron and Stainless, Vertical Float",
+    "badge": "Best for Heavy Inflow",
+    "amazonUrl": "#",
+    "rating": 4.5,
+    "reviewCount": 2300,
+    "pros": [
+      "About 4,700 GPH at 10 feet of lift, the highest flow in this roundup",
+      "Top suction design keeps pit-bottom debris out of the impeller and avoids air lock",
+      "Integrated vertical float with a solid float that cannot waterlog",
+      "Stainless and cast iron construction with a 5-year warranty",
+      "No weep hole to drill or clog"
+    ],
+    "cons": [
+      "Far more pump than a typical basement needs, and it will short-cycle in a small pit",
+      "Top suction leaves several inches of standing water in the pit"
+    ],
+    "bottomLine": "The pick for high water tables and basements that genuinely see heavy, sustained inflow, installed in a pit big enough to let it run properly.",
+    "description": "The CDU980E is what you buy when you have watched a 1/3 HP pump run nonstop through a storm and still lose ground. Wayne rates it at roughly 4,700 gallons per hour at 10 feet of lift, which is about 79 gallons a minute, well over double the M53 at the same height. It pairs a cast iron motor housing with stainless steel, and uses a top suction design: the pump draws water from above the base rather than the pit floor, so the sediment and grit that collect at the bottom of every sump stay out of the impeller, and the pump does not air-lock, which is why there is no weep hole to drill. The vertical float uses a solid polypropylene float that cannot fill with water, with turn-on around 9 inches and turn-off around 4 inches. Those numbers expose the trade-off. A pump this strong in a standard 18-inch pit clears a 5-inch drawdown in seconds, so it starts constantly unless inflow is truly heavy. Put it in a 24-inch or larger basin and it runs longer, calmer cycles. Top suction also leaves a few inches of water in the pit permanently, which is normal but surprises people. For a high water table or a failing drainage field, it is the right tool."
+  },
+  {
+    "id": "wayne-halo-50-smart-sump-pump",
+    "name": "Wayne Basement Guardian HALO 50 Smart Sump Pump",
+    "category": "1/2 HP Stainless, Electronic Switch, Wi-Fi",
+    "badge": "Best Smart Pump",
+    "amazonUrl": "#",
+    "rating": 4.2,
+    "reviewCount": 300,
+    "pros": [
+      "Electronic water-level switch with no float to stick, snag or waterlog",
+      "Wi-Fi app reports run frequency, cycle length and alerts to your phone",
+      "About 3,840 GPH at 10 feet, a strong 1/2 HP curve",
+      "Top suction design and a 5-year warranty",
+      "Alexa compatible, and monitoring continues to log pump health over time"
+    ],
+    "cons": [
+      "Premium price for a 1/2 HP pump, and the smarts depend on your home Wi-Fi",
+      "Electronics are one more thing that can fail in a damp pit"
+    ],
+    "bottomLine": "The right choice for rental properties, second homes and anyone who wants to know a pump is struggling before the basement tells them.",
+    "description": "Most sump pumps fail silently. The HALO 50 is Wayne's answer to that, and it is the only pump here that tells you what it is doing. Instead of a float, it uses an electronic switch that senses water level directly, with turn-on around 9 inches and turn-off around 4 inches, so the most common failure mode on this list, a float that sticks against the pit wall or snags on a cord, simply does not exist. An embedded controller monitors the motor's electrical signature and pushes run history, cycle frequency and warnings to Wayne's Basement Guardian app over home Wi-Fi, and the app can flag a pump that is starting to labor before it quits. Performance is respectable rather than extraordinary: roughly 3,840 gallons per hour at 10 feet of lift, about 64 GPM, with a maximum head near 20 feet. It is a stainless steel, top suction design with a 5-year warranty. The caveats are real. Alerts need working Wi-Fi, which is often the first thing lost in the storm that fills the pit, and electronics living in a humid basement add a failure point a plain float pump does not have. Pair it with a battery backup and a cellular or battery-powered alarm, and it becomes the most informative primary pump you can buy."
+  },
+  {
+    "id": "superior-pump-92341",
+    "name": "Superior Pump 92341 1/3 HP Cast Iron Sump Pump",
+    "category": "1/3 HP Cast Iron, Vertical Float",
+    "badge": "Best Budget",
+    "amazonUrl": "#",
+    "rating": 4.5,
+    "reviewCount": 1500,
+    "pros": [
+      "Cast iron housing at a budget price point",
+      "Up to about 2,760 GPH at low head, in line with name-brand 1/3 HP pumps",
+      "Vertical float switch and a 10-foot power cord",
+      "Low running current, around 4 amps",
+      "Handles solids up to 3/8 inch"
+    ],
+    "cons": [
+      "Smaller solids rating than the Zoeller and Liberty pumps",
+      "Less long-term reliability data than the pro-grade brands"
+    ],
+    "bottomLine": "The best value for a replacement in an ordinary basement, and a far better buy than a thermoplastic pump at the same price.",
+    "description": "Superior Pump has built a reputation on offering cast iron at prices usually reserved for plastic, and the 92341 is the clearest example. It is a 1/3 HP submersible with a cast iron housing, a vertical float switch and a 10-foot cord, rated to move up to about 2,760 gallons per hour, around 46 gallons a minute, at low head, with a listed maximum head of 25 feet. That puts its headline flow in the same bracket as the name-brand 1/3 HP pumps above it. The motor draws only around 4 amps while running, which is useful when you later size a generator or backup power source. Solids handling is 3/8 inch, smaller than the half-inch passages on the Zoeller and Liberty, so a pit that collects gravel or silt should be cleaned out and fitted with a proper basin lid before this goes in. Where it gives ground to the pro brands is history. Zoeller and Liberty pumps have decades of field data behind them, while Superior's reputation is good but younger. For a straightforward replacement in a house with ordinary inflow and a pit that stays clean, it delivers cast iron durability without the premium, and it is the budget pump we would actually install."
+  },
+  {
+    "id": "wayne-spf50-sump-pump",
+    "name": "Wayne SPF50 1/2 HP Thermoplastic Sump Pump",
+    "category": "1/2 HP Thermoplastic, Vertical Float",
+    "badge": "Best Thermoplastic",
+    "amazonUrl": "#",
+    "rating": 4.4,
+    "reviewCount": 1200,
+    "pros": [
+      "About 3,360 GPH at 10 feet, strong for a thermoplastic pump",
+      "Epoxy-coated steel motor housing sheds heat better than all-plastic designs",
+      "Top suction design resists clogging and air lock",
+      "Lightweight and easy to lower into a deep pit",
+      "Budget-to-mid-range price for 1/2 HP output"
+    ],
+    "cons": [
+      "Needs a basin of at least 11 inches in diameter",
+      "Thermoplastic base will not match cast iron for longevity under heavy use"
+    ],
+    "bottomLine": "A sensible choice if you need 1/2 HP flow on a tight budget and your pump runs occasionally rather than constantly.",
+    "description": "Thermoplastic pumps have a poor reputation, and much of it is earned by the cheapest all-plastic models. The SPF50 is a better-built hybrid: an epoxy-coated steel motor housing on a corrosion-resistant thermoplastic pump base. That matters because heat is what kills small pump motors, and steel pulls heat into the surrounding water far better than plastic. Wayne rates it at about 3,360 gallons per hour at 10 feet of lift, roughly 56 GPM, with 4,300 GPH at zero head and a maximum lift of 20 feet, which is a genuinely useful 1/2 HP curve at a price that undercuts the cast iron competition. Like the CDU980E it uses top suction, so debris on the pit floor stays out of the impeller. It needs a basin at least 11 inches across, and its turn-on and turn-off levels make a larger pit a good idea to avoid short-cycling. Where thermoplastic falls short is sustained duty. In a basement where the pump runs dozens of times a day through the spring, cast iron will outlast it. In a house where the pump runs a handful of times after heavy rain, the SPF50 gives you ample capacity for less money, and it is light enough that one person can pull and service it."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Sump Pumps",
+          item: "https://www.thehonestreviewers.com/best-sump-pump/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best sump pump for most homes?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A 1/3 HP cast iron submersible with a reliable switch, such as the Zoeller M53 or Liberty 257. These deliver roughly 30 to 45 gallons a minute at typical basement head heights, several times the inflow of an ordinary wet basement. Only move to 1/2 HP if your head height or measured inflow genuinely requires it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is 1/3 or 1/2 HP better for a sump pump?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Neither is better in general. A 1/2 HP pump moves more water at greater head, which helps in deep basements, long discharge runs and high water tables. In an ordinary basement it empties the pit too quickly and short-cycles. Compare flow at your calculated total head, and pick the smallest pump that still delivers about double your peak inflow."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a cast iron sump pump better than plastic?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For a primary pump, yes. Cast iron conducts heat away from the motor into the pit water, which is what lets it tolerate long cycles during heavy rain. Thermoplastic pumps run hotter and generally wear out sooner under heavy use. A plastic pump is acceptable in a basement where the pump runs only occasionally after storms."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which sump pump switch is most reliable?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Vertical magnetic floats and electronic switches have the fewest failure points, because nothing swings and nothing can snag. Tethered floats need a wide pit to work reliably. Whatever the type, the switch is the part most likely to fail, so test it twice a year by filling the pit with a bucket and watching a full cycle."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does a sump pump last?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Seven to ten years is typical for a quality primary pump, though a hard-working thermoplastic pump may last three and a lightly used cast iron one fifteen or more. The number of starts matters more than age. Replace a pump over seven years old that guards a finished basement before it fails, not after."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What size pit does a sump pump need?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Check the pump's minimum basin size, which can be as small as 10 or 11 inches for vertical float designs. For good pump life, though, 18 inches in diameter is a practical minimum and 24 inches is better, because a larger pit means fewer, longer cycles. Leave room for a backup pump if you plan to add one."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need a battery backup sump pump?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If the basement is finished or stores anything you care about, yes. Power cuts and heavy rain tend to arrive together, and a primary pump does nothing without electricity. A battery backup sits in the same pit and runs automatically when the water rises past the primary's on point, covering both power outages and a failed primary pump."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Basement Waterproofing",
+    tags: [
+      "best sump pump",
+      "sump pump reviews",
+      "cast iron sump pump",
+      "1/3 hp sump pump",
+      "1/2 hp sump pump",
+      "sump pump switch types"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            7 Pumps Compared
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best <span class="text-[#38BDF8]">Sump Pumps</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Horsepower sells pumps. Flow at your head height and a switch that does not stick are what keep a basement dry. Here are the seven pumps that get both right.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#zoeller-m53-mighty-mate"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            How to Choose
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="14.8k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-picked" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Picked</a>
+          <a href="#what-matters" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. What Actually Matters</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 7 Top Picks</a>
+          <a href="#pump-curves" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Horsepower vs Head Height</a>
+          <a href="#materials" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Cast Iron vs Thermoplastic</a>
+          <a href="#switches" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Float and Switch Types</a>
+          <a href="#pit-size" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Pit Size and Cycling</a>
+          <a href="#check-valves" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Check Valves</a>
+          <a href="#replacement" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. When to Replace</a>
+          <a href="#backup" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Backup Protection</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">12. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          The best sump pump for most basements is a 1/3 HP cast iron pump with a reliable switch, sized to the height it actually has to push water, not the biggest motor on the shelf. Bigger pumps short-cycle and die younger, and the switch fails long before the motor does.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-picked" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Picked
+          </h2>
+
+          <p>
+            Every pump on this list was judged on the numbers that decide whether a basement stays dry, not on the horsepower printed across the box. We pulled each manufacturer's performance data and compared flow at 10 and 15 feet of total head, which is where real installations operate. A pump that looks strong at zero feet can be nearly useless at 15, and that is the pump that fails in a storm.
+          </p>
+
+          <p>
+            We then weighed the parts that actually fail. The switch comes first, because a stuck or worn float switch ends more pumps than any motor fault. Housing material comes second, because a cast iron motor housing sheds heat into the pit water and a small plastic one cooks. We also looked at solids handling, cord design, and whether the pump can be serviced or has to be thrown away when one part quits.
+          </p>
+
+          <p>
+            Finally, we checked the practical fit. A pump that needs a 14-inch pit is the wrong pump for an 11-inch clay tile, however good its curve. We noted minimum pit sizes where makers publish them, and flagged the pumps that will short-cycle in a standard basin. Every pick here is a real, currently sold model you can find on Amazon and at plumbing suppliers.
+          </p>
+
+          <p>
+            What we did not reward: marketing horsepower, stainless trim on otherwise ordinary pumps, and bundled kits that pad the box with a cheap check valve and a length of hose. If you have not yet worked out your inflow and head height, start with our guide to <a href="/what-size-sump-pump-do-i-need/">what size sump pump you need</a>, then come back here with two numbers in hand.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE RULE</p>
+            <p class="text-xl font-bold text-white mb-3">Buy for flow at your head height, then buy the best switch you can afford.</p>
+            <p class="text-gray-300 leading-relaxed m-0">Horsepower tells you almost nothing. Gallons per minute at your actual total head tells you whether the pump can keep up, and the switch design tells you how long it will keep trying.</p>
+          </div>
+        </div>
+
+        <div id="what-matters" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. What Actually Matters
+          </h2>
+
+          <p>
+            Four things decide whether a sump pump does its job: flow at your head height, switch reliability, how well the motor handles heat, and whether the pit gives the pump room to run proper cycles. Everything else on the box is secondary.
+          </p>
+
+          <p>
+            Flow at head height is the big one. Total dynamic head is the vertical lift from the bottom of the pit to the highest point of the discharge, plus friction from the pipe, elbows and check valve. A typical basement lands at 12 to 18 feet once friction is counted, not the 8 or 9 feet people guess by looking at the wall. A pump rated at 2,700 gallons per hour at zero head might deliver half that at 15 feet.
+          </p>
+
+          <p>
+            Horsepower only matters in so far as it moves the curve. A well-designed 1/3 HP pump can outperform a cheap 1/2 HP pump at 10 feet. What you want is a pump whose curve still shows comfortable flow, at least double your measured peak inflow, at your calculated head. For most homes that is a good 1/3 HP cast iron pump. For deep basements, long runs or high water tables it is 1/2 HP. Very few houses need 3/4 HP.
+          </p>
+
+          <p>
+            Switch reliability matters because the switch moves every cycle while the motor only works when told to. A pump that runs 40 times a day for five years has flipped its switch 70,000 times. Motor cooling matters because every start produces a surge of heat, and cast iron carries it away far better than plastic. The pit matters because a small one forces short, frequent cycles, and it is starts rather than run hours that wear a pump out.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">THE NUMBERS THAT DECIDE IT</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <p class="text-3xl font-black text-white">12-18 ft</p>
+                <p class="text-gray-400 text-xs mt-1">Typical real total head</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">2x</p>
+                <p class="text-gray-400 text-xs mt-1">Flow margin over peak inflow</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-white">7-10 yrs</p>
+                <p class="text-gray-400 text-xs mt-1">Typical primary pump life</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">18 in</p>
+                <p class="text-gray-400 text-xs mt-1">Minimum pit diameter we'd want</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 7 Top Picks
+          </h2>
+
+          <p>
+            The seven pumps below cover every common situation, from a narrow clay-tile pit in an older house to a deep basement sitting in a high water table. Start with the Zoeller M53 unless you have a specific reason not to. Step up to the Zoeller M98 or Wayne CDU980E only if your head height or measured inflow demands it, pick the Liberty 257 for a narrow pit, and choose the Wayne HALO 50 if you want to know what your pump is doing when you are not there.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings on Amazon)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="pump-curves" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Horsepower vs Head Height: Reading the Curve
+          </h2>
+
+          <p>
+            Every serious pump maker publishes a performance curve, a chart or table showing gallons per minute or per hour at different heights of head. It is the single most useful thing you can look at, and most buyers never do. The curve always slopes downward: the higher the pump has to push, the less water it moves, until it reaches shut-off head, the height at which flow drops to zero.
+          </p>
+
+          <p>
+            The practical way to read it is to find your total head on the horizontal axis and read across. If your head is 14 feet and the pump shows 30 GPM there, and your worst-case inflow is 8 GPM, you have a comfortable margin. If the same pump shows 12 GPM at 14 feet, it will keep up in a normal rain and lose ground in the storm that matters.
+          </p>
+
+          <p>
+            Here is how the picks compare, using manufacturer figures converted to gallons per minute. Where a maker publishes flow at 10 feet, roughly the vertical lift of a typical basement before friction is added, we use that; where it only publishes a low-head figure, we say so. These are the numbers to compare rather than the horsepower.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Pump</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Motor</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Rated flow</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Shut-off / max head</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Zoeller M53</td>
+                    <td class="px-4 py-4 text-gray-700">3/10 HP</td>
+                    <td class="px-4 py-4 text-gray-700">About 34 GPM at 10 ft</td>
+                    <td class="px-4 py-4 text-gray-700">About 19 ft</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Liberty 257</td>
+                    <td class="px-4 py-4 text-gray-700">1/3 HP</td>
+                    <td class="px-4 py-4 text-gray-700">About 45 GPM at 5 ft</td>
+                    <td class="px-4 py-4 text-gray-700">Varies by listing</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Superior 92341</td>
+                    <td class="px-4 py-4 text-gray-700">1/3 HP</td>
+                    <td class="px-4 py-4 text-gray-700">Up to 46 GPM at low head</td>
+                    <td class="px-4 py-4 text-gray-700">25 ft listed</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Wayne SPF50</td>
+                    <td class="px-4 py-4 text-gray-700">1/2 HP</td>
+                    <td class="px-4 py-4 text-gray-700">About 56 GPM at 10 ft</td>
+                    <td class="px-4 py-4 text-gray-700">20 ft</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Zoeller M98</td>
+                    <td class="px-4 py-4 text-gray-700">1/2 HP</td>
+                    <td class="px-4 py-4 text-gray-700">About 61 GPM at 10 ft</td>
+                    <td class="px-4 py-4 text-gray-700">About 23 ft</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Wayne HALO 50</td>
+                    <td class="px-4 py-4 text-gray-700">1/2 HP</td>
+                    <td class="px-4 py-4 text-gray-700">About 64 GPM at 10 ft</td>
+                    <td class="px-4 py-4 text-gray-700">20 ft</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Wayne CDU980E</td>
+                    <td class="px-4 py-4 text-gray-700">3/4 HP</td>
+                    <td class="px-4 py-4 text-gray-700">About 79 GPM at 10 ft</td>
+                    <td class="px-4 py-4 text-gray-700">About 20 ft</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            Two things stand out. First, the gap between 1/3 and 1/2 HP pumps is far larger at 15 feet than at 5, because the smaller pumps approach their shut-off head sooner. That is the real case for stepping up in a deep basement. Second, a shut-off head close to your total head is a warning sign even if the flow looks fine on paper, because pumps working near shut-off run hot and move very little water.
+          </p>
+
+          <p>
+            Maximum flow at zero head is the number on the front of the box, and it is the least useful one. No installed pump runs at zero head. If a listing only quotes maximum GPH, find the spec sheet before you buy.
+          </p>
+        </div>
+
+        <div id="materials" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Cast Iron vs Thermoplastic
+          </h2>
+
+          <p>
+            The housing material is not cosmetic. A submersible pump motor is cooled by the water around it, and the housing is the path heat takes to get there. Cast iron conducts heat well and has a lot of thermal mass, so it absorbs the heat of a start and passes it into the pit. Thermoplastic insulates, so a plastic-bodied motor runs hotter, and heat is what breaks down windings and bearings over time.
+          </p>
+
+          <p>
+            That is why the pumps with the best long-term reputations are almost all cast iron with oil-filled motors. The oil carries heat from the windings to the housing and lubricates the bearings, and the combination tolerates long run cycles in heavy rain without tripping its thermal overload. Cast iron is also heavy, which helps it sit still in the pit rather than twisting on start-up and nudging the float against the wall.
+          </p>
+
+          <p>
+            Thermoplastic still has a place. It does not corrode, it is light enough to lift out of a deep pit one-handed, and it is cheaper. The better thermoplastic pumps, like the Wayne SPF50, put the motor in a steel housing and use plastic only for the pump base, which recovers much of the cooling advantage. For a pump that runs a few times after a heavy rain, that is a reasonable trade.
+          </p>
+
+          <p>
+            Where we would not use thermoplastic is a basement where the pump runs constantly through the wet season, or as the only line of defense in a finished basement. Stainless steel sits in between: it resists corrosion and conducts heat better than plastic, though a thin stainless shell has less thermal mass than cast iron. Most premium Wayne pumps combine stainless and cast iron to get both.
+          </p>
+
+          <p>
+            One thing to avoid entirely is the small all-plastic utility pump with a tethered float, such as the 1/4 HP Superior Pump 92250. It is a fine tool for draining a flooded window well or a water heater pan, but it is not built to sit in a basement pit for years.
+          </p>
+        </div>
+
+        <div id="switches" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Vertical Float vs Tethered vs Electronic Switches
+          </h2>
+
+          <p>
+            If you remember one thing from this guide, make it this: the switch fails before the motor. Pull the dead pump out of almost any flooded basement and the motor still runs when you plug it in directly. What failed was the switch, stuck in the off position, or a float jammed against the pit wall.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Tethered floats</h3>
+
+          <p>
+            A tethered float is a sealed ball on a length of cord that swings up as the water rises and tips an internal switch. Tethered floats allow a long draw-down, which means longer, calmer cycles, but they need a wide pit to swing freely. In an 18-inch pit with a discharge pipe, a backup pump and a check valve in the way, a tethered float can catch on any of them and stay down. We avoid them for primary basement pumps unless the pit is 24 inches or more.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Vertical floats</h3>
+
+          <p>
+            A vertical float rides up and down a fixed rod, so it needs almost no side clearance and cannot tangle. It is the most common design on good residential pumps, and it suits standard and narrow pits. The weak point on older designs was a mechanical switch at the top of the rod. Magnetic versions, like the Liberty VMF, trip a sealed reed switch instead, which removes the contacts that pit and burn over time.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Mechanical arm floats</h3>
+
+          <p>
+            Pumps like the Zoeller M53 use a float on a hinged arm that trips a switch inside a sealed housing. It is a proven design with a long service record, but the arc of the arm needs a little more pit width than a vertical float, and debris in the pit can stop it swinging.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Electronic switches</h3>
+
+          <p>
+            Electronic switches, like the one on the Wayne HALO 50, sense water level with no moving parts at all. Nothing sticks, nothing waterlogs, and the switch can be paired with monitoring that logs every cycle. The trade-off is electronics living in a damp pit and a higher price. For a vacation home or rental, the visibility alone is worth it.
+          </p>
+        </div>
+
+        <div id="pit-size" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Pit Size and Short-Cycling
+          </h2>
+
+          <p>
+            The pit is half the system, and it is the half most people never think about. Every start of a sump pump motor draws a surge of current several times the running load and produces a spike of heat. A pump that starts 20 times an hour wears out years sooner than one that starts 5 times, even if both move the same total volume of water.
+          </p>
+
+          <p>
+            The pit controls how often the pump starts. A standard 18-inch diameter pit holds about 1.1 gallons per inch of depth. If the switch turns on at 9 inches and off at 4, the pump removes about 5.5 gallons per cycle. A pump moving 40 gallons a minute clears that in under 10 seconds. That is too short. A good cycle is 30 to 90 seconds of running, which is long enough for the motor to settle into steady running and short enough not to overheat.
+          </p>
+
+          <p>
+            A 24-inch pit holds nearly twice as much per inch, and a 30-inch pit about 2.8 times as much, so the same pump runs proportionally longer, calmer cycles. If you are digging a new pit or rebuilding one as part of a larger project, go as wide as practical. It is one of the cheapest ways to extend pump life, and it also leaves room for a backup pump alongside the primary.
+          </p>
+
+          <p>
+            Depth matters too. The pit should be deep enough that the pump sits on a solid base a couple of inches off any silt, with the housing still covered by water at the off level, which helps keep the motor cool. A pit with a solid bottom, a perforated liner and a sealed lid keeps out debris and radon and keeps the pump from sucking up gravel.
+          </p>
+
+          <p>
+            If your pit is fed by interior drain tile, the capacity of that drainage matters as much as the pump. Our guide to <a href="/basement-drainage-system/">basement drainage systems</a> covers how perimeter drains, weeping tile and the pit work together, and when an undersized pit is the real bottleneck.
+          </p>
+        </div>
+
+        <div id="check-valves" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Check Valves and the Discharge Line
+          </h2>
+
+          <p>
+            A check valve is the one accessory every sump pump needs. Without it, the water standing in the vertical discharge pipe drains back into the pit each time the pump stops. A 10-foot run of 1-1/2 inch pipe holds nearly a gallon, so the pump spends part of every cycle moving the same water again, and it starts more often than it needs to.
+          </p>
+
+          <p>
+            Fit the valve on the vertical pipe, within a foot or two above the pump, and drill a small relief hole in the discharge between the pump and the valve if the manufacturer calls for one. That hole, often called a weep hole, lets trapped air escape so the pump does not air-lock. Top suction pumps like the Wayne CDU980E and SPF50 are designed not to need one.
+          </p>
+
+          <p>
+            Choose the valve with the room above it in mind. Standard swing check valves slam shut with a loud thunk that carries through the floor joists, which is a real annoyance under a bedroom. Spring-loaded silent check valves close before the water column reverses and are worth the small premium. Whatever you buy, use a valve with union or rubber coupling ends so the pump can be pulled for service without cutting pipe.
+          </p>
+
+          <p>
+            The rest of the discharge line matters as much. Keep the diameter at the pump's outlet size or larger, use as few elbows as possible, and end the line far enough from the foundation that the water does not soak straight back into the ground around the wall. At least 10 to 20 feet, sloping away, is a sensible target. Freezing is the other risk. An exterior line that holds water will freeze solid in a cold snap, so slope it to drain and fit an ice-guard fitting at the wall.
+          </p>
+
+          <p>
+            If water still reaches the basement even with a pump running, the discharge and drainage are rarely the whole story. Our guide on <a href="/how-to-waterproof-a-basement/">how to waterproof a basement</a> walks through grading, gutters and wall sealing, and the <a href="/best-basement-waterproofing-systems/">best basement waterproofing systems</a> roundup compares full interior and exterior systems.
+          </p>
+        </div>
+
+        <div id="replacement" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. When to Replace a Sump Pump
+          </h2>
+
+          <p>
+            A typical primary sump pump lasts about seven to ten years, and the realistic range runs from three years for a small thermoplastic pump that works hard to fifteen or more for a quality cast iron pump that rarely runs. The number that matters is not age but starts. A pump in a wet basement that cycles 50 times a day in spring is doing a decade of light-duty work in a couple of years.
+          </p>
+
+          <p>
+            Watch for the signs. A pump that runs noticeably longer to empty the same pit has lost impeller efficiency or has a partial clog. Grinding, rattling or a new vibration usually means a bearing or impeller problem. A pump that hums without moving water may have a jammed impeller or a failing start. Visible rust on the housing, a switch that needs a nudge, or a breaker that trips on start are all reasons to replace rather than wait.
+          </p>
+
+          <p>
+            Our rule is simple. If the pump is past seven years old and protects a finished basement, replace it on your own schedule, in dry weather, rather than on the pump's schedule during a storm. The cost of a new pump is small compared with the cost of drywall, carpet and a ruined furnace.
+          </p>
+
+          <p>
+            Test it twice a year. Pour a bucket or two of water into the pit until the switch trips, and watch a full cycle. Check that the float moves freely, the discharge flows outside, and the check valve closes. While you are there, clear any silt from the pit floor and make sure the cord and plug are dry and secure.
+          </p>
+
+          <p>
+            When you replace, replace the switch and check valve with it. Reusing a tired switch on a new pump throws away most of the benefit, and a new check valve costs little compared with the labour of doing the job twice.
+          </p>
+        </div>
+
+        <div id="backup" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            10. The Primary Pump Is Only Half the Plan
+          </h2>
+
+          <p>
+            The storm that fills your pit fastest is usually the same storm that cuts the power. That is not bad luck, it is weather: saturating rain and high winds arrive together. A primary pump, however good, protects you only while the utility power holds and the pump itself keeps working.
+          </p>
+
+          <p>
+            That is why most basements that matter need a second line of defense. A battery backup sump pump sits in the same pit with its own float set a little higher than the primary, and it runs automatically when the water rises past the primary's on point, whether because the power is out or because the primary has failed. We compare the systems worth buying in our guide to the <a href="/best-battery-backup-sump-pump/">best battery backup sump pumps</a>, including combination units that pair a new primary with a backup in one package.
+          </p>
+
+          <p>
+            A generator covers longer outages, but only once someone is home to start it. If you already own one or are shopping for one, our guide to <a href="/what-size-generator-runs-a-sump-pump/">what size generator runs a sump pump</a> works through the running and starting watts, which is also why the low running current of a pump like the Superior 92341 is worth knowing.
+          </p>
+
+          <p>
+            The cheapest layer of all is a water alarm. A battery-powered alarm on the floor next to the pit costs very little and tells you the moment water rises past where it should be. If your pump is in a finished basement, a Wi-Fi alarm that texts you is a small price for knowing about a problem while you can still do something about it.
+          </p>
+
+          <p>
+            Layer them in that order: a correctly sized cast iron primary, a battery backup, and an alarm. Each covers a failure the others cannot.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying by Horsepower</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Horsepower says little about how much water a pump moves at your head height. A good 1/3 HP pump can outperform a cheap 1/2 HP one at 10 feet. Calculate total head, including friction, and compare flow at that height on the manufacturer's curve before comparing anything else on the box.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Oversizing the Pump</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A pump far bigger than your inflow empties the pit in seconds and starts constantly. Starts are what wear motors and switches, so an oversized pump often dies sooner than a modest one. Aim for flow of about double your measured peak inflow at your total head, and no more than that.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping the Check Valve</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Without a check valve, the water in the discharge pipe falls back into the pit after every cycle, and the pump moves it again. That adds needless starts and wear. Fit a spring-loaded check valve just above the pump, with rubber couplings so the pump can come out for service.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Letting the Float Hang Up</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Tethered and arm floats catch on pit walls, cords and backup pumps. Before closing the lid, run a full cycle with a bucket of water and watch the float travel. If anything touches it, reposition the pump, trim the clutter or switch to a vertical float design.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Waiting for the Pump to Die</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Most sump pumps are replaced after they fail, which means during a storm and after the damage is done. If your pump is seven or more years old and protects a finished space, replace it in dry weather, along with the check valve and switch, on your own schedule.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            12. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best sump pump for most homes?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A 1/3 HP cast iron submersible with a reliable switch, such as the Zoeller M53 or Liberty 257. These deliver roughly 30 to 45 gallons a minute at typical basement head heights, several times the inflow of an ordinary wet basement. Only move to 1/2 HP if your head height or measured inflow genuinely requires it.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is 1/3 or 1/2 HP better for a sump pump?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Neither is better in general. A 1/2 HP pump moves more water at greater head, which helps in deep basements, long discharge runs and high water tables. In an ordinary basement it empties the pit too quickly and short-cycles. Compare flow at your calculated total head, and pick the smallest pump that still delivers about double your peak inflow.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a cast iron sump pump better than plastic?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For a primary pump, yes. Cast iron conducts heat away from the motor into the pit water, which is what lets it tolerate long cycles during heavy rain. Thermoplastic pumps run hotter and generally wear out sooner under heavy use. A plastic pump is acceptable in a basement where the pump runs only occasionally after storms.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Which sump pump switch is most reliable?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Vertical magnetic floats and electronic switches have the fewest failure points, because nothing swings and nothing can snag. Tethered floats need a wide pit to work reliably. Whatever the type, the switch is the part most likely to fail, so test it twice a year by filling the pit with a bucket and watching a full cycle.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long does a sump pump last?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Seven to ten years is typical for a quality primary pump, though a hard-working thermoplastic pump may last three and a lightly used cast iron one fifteen or more. The number of starts matters more than age. Replace a pump over seven years old that guards a finished basement before it fails, not after.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What size pit does a sump pump need?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Check the pump's minimum basin size, which can be as small as 10 or 11 inches for vertical float designs. For good pump life, though, 18 inches in diameter is a practical minimum and 24 inches is better, because a larger pit means fewer, longer cycles. Leave room for a backup pump if you plan to add one.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do I need a battery backup sump pump?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                If the basement is finished or stores anything you care about, yes. Power cuts and heavy rain tend to arrive together, and a primary pump does nothing without electricity. A battery backup sits in the same pit and runs automatically when the water rises past the primary's on point, covering both power outages and a failed primary pump.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Sump Pump Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-battery-backup-sump-pump/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Battery Backup Sump Pumps</h3>
+              <p class="text-gray-500 text-sm mt-2">Standalone backups, combo systems and water-powered pumps compared, with honest runtime math for real outages.</p>
+            </a>
+            <a href="/what-size-sump-pump-do-i-need/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Sizing Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">What Size Sump Pump Do I Need?</h3>
+              <p class="text-gray-500 text-sm mt-2">How to measure inflow, calculate total head and read a pump curve before you buy.</p>
+            </a>
+            <a href="/basement-water-alarm/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#38BDF8] font-black text-xs uppercase tracking-widest mb-2">Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Basement Water Alarms</h3>
+              <p class="text-gray-500 text-sm mt-2">The cheapest layer of flood protection, and which alarms actually reach you when you are away from home.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            For most basements, the right sump pump is a 1/3 HP cast iron pump with a dependable switch, and the Zoeller M53 remains the one to beat. Step up to 1/2 HP only when your head height or inflow calls for it, and give whatever you buy a pit large enough to let it run calm, full cycles.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Then finish the job. Fit a quiet check valve, route the discharge well away from the foundation, test the pump twice a year, and add a battery backup and a water alarm. A pump is only as good as the system around it, and the storm that tests it is usually the one that takes the power with it.
+          </p>
+        </div>
+
+        <MoreInCategory category="Basement Waterproofing" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
