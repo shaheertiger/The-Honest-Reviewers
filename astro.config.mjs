@@ -6,6 +6,16 @@ import sitemap from '@astrojs/sitemap';
 // Buyer's guides that target high-volume search terms. They get a higher
 // sitemap priority than the 0.5 default so crawlers reach them sooner.
 const priorityGuides = new Set([
+  'tankless-water-heater-cost',
+  'tankless-water-heater-pros-and-cons',
+  'how-to-flush-a-tankless-water-heater',
+  'what-size-tankless-water-heater-do-i-need',
+  'ceiling-fan-direction-summer-and-winter',
+  'what-size-ceiling-fan-do-i-need',
+  'why-is-my-ceiling-fan-wobbling',
+  'jackery-vs-ecoflow',
+  'generac-vs-kohler',
+  'ryobi-vs-greenworks-pressure-washer',
   'best-impact-wrench',
   'best-oscillating-tool',
   'best-lawn-aerator',

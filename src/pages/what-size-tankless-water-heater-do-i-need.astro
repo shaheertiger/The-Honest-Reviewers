@@ -1,0 +1,806 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Tankless Water Heaters",
+    "url": "/best-tankless-water-heater/"
+  },
+  {
+    "title": "Best Heat Pump Water Heaters",
+    "url": "/best-heat-pump-water-heater/"
+  },
+  {
+    "title": "Best Gas Water Heaters",
+    "url": "/best-gas-water-heater/"
+  },
+  {
+    "title": "Best Water Softener Systems",
+    "url": "/best-water-softener-system/"
+  },
+  {
+    "title": "What Size Generator Do I Need for My House?",
+    "url": "/what-size-generator-do-i-need-for-my-house/"
+  },
+  {
+    "title": "Can a Portable Generator Power an Electric Water Heater?",
+    "url": "/can-a-portable-generator-power-an-electric-water-heater/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-01", modified: "2026-10-01" });
+const title = "What Size Tankless Water Heater Do I Need? The Two-Number Method";
+const description =
+  "Size a tankless heater from peak GPM and winter temperature rise, not the box. Fixture flow rates, groundwater by region, BTU and kW math, and worked examples.";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Guides",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "What Size Tankless Water Heater Do I Need",
+          item: "https://www.thehonestreviewers.com/what-size-tankless-water-heater-do-i-need/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What size tankless water heater do I need for a family of 4?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most families of four have a peak of two showers at once, about 5 GPM. In a warm climate a 150,000 to 199,000 BTU gas unit covers that easily. In a cold climate with a 70 to 80 degree rise, you need a 199,000 BTU condensing unit, ideally with WaterSense showerheads. Electric only works for a family of four in genuinely warm regions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a 199,000 BTU tankless water heater big enough?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most homes with up to three bathrooms, yes. A 199,000 BTU condensing unit delivers about 8.4 GPM at a 45 degree rise and about 5.4 GPM at a 70 degree rise, which covers two simultaneous showers in most of the country. Four-bathroom homes in cold climates usually need two linked units to cover realistic peak demand."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many GPM do I need for two showers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Two standard 2.5 GPM showerheads need 5 GPM, or about 4 GPM of heated water once you account for mixing with cold at the valve. With WaterSense heads at 2.0 GPM, the requirement falls to about 4 GPM total. Size the heater to deliver that at your winter temperature rise, not at the rating printed on the box."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What size electric tankless water heater do I need for a whole house?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In a warm climate with a 45 degree rise, a 27 kW unit delivers about 4 GPM and a 36 kW unit about 5.5 GPM, enough for a small to medium home. In cold climates even 36 kW manages only about 3 to 3.5 GPM, one shower, so whole-house electric is rarely practical there. Check your panel first."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I find my groundwater temperature?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Measure it. On a winter morning before anyone has used water, run a cold tap for a few minutes and hold a kitchen thermometer in the stream. If you are sizing in summer, subtract 10 to 15 degrees. Otherwise use a regional range: roughly 35 to 45 degrees in the northern states and 62 to 77 across the Gulf and Florida."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can a tankless water heater be too big?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, though it is a smaller problem than too small. An oversized unit costs more, may need a larger gas line, and can struggle to modulate down for a single low-flow tap, cycling on and off. Choose a unit with wide modulation if you oversize, and match the size to realistic peak demand rather than the worst case you can imagine."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I get two smaller tankless heaters or one large one?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "One large unit is simpler and cheaper in most homes up to three bathrooms. Two linked units make sense when peak demand exceeds what one 199,000 BTU heater delivers at your winter rise, typically large homes in cold climates. Linked units also give redundancy, since one can still provide hot water if the other needs service."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      description: description,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Home Improvement",
+    tags: [
+      "what size tankless water heater do i need",
+      "tankless water heater sizing",
+      "tankless water heater size calculator",
+      "tankless water heater gpm",
+      "tankless water heater btu",
+      "tankless water heater"
+    ],
+  }}
+  jsonLd={schema}
+  stickyCta={{
+    text: "See Our Top Tankless Picks",
+    link: "/best-tankless-water-heater/",
+  }}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Sizing Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Field Tested
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          What Size <span class="text-[#38BDF8]">Tankless Water Heater</span> Do I Need?
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Two numbers decide it: how many gallons per minute you run at once, and how many degrees your winter water has to be heated. Here is how to find both and turn them into BTU or kilowatts.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#short-answer"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            Start Sizing
+          </a>
+          <a
+            href="#faq"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Jump to the FAQ
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="11.8k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#short-answer" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. The Short Answer</a>
+          <a href="#gpm-per-fixture" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. GPM per Fixture</a>
+          <a href="#temperature-rise" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Temperature Rise by Region</a>
+          <a href="#gas-btu" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Gas: BTU Math</a>
+          <a href="#electric-kw" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Electric: kW and Amps</a>
+          <a href="#worked-examples" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Worked Examples</a>
+          <a href="#sizing-table" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Sizing Table</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Most two-bathroom homes need a gas tankless heater delivering 5 to 6 gallons per minute at their winter temperature rise, which in practice means a 160,000 to 199,000 BTU condensing unit. Smaller homes in warm climates can get by on less, and four-bathroom homes in the north usually need two units. To size your own, add up the fixtures you run at the same time, subtract your winter groundwater temperature from 120 degrees, and check the heater can deliver that flow at that rise. The rating printed on the box almost never answers the question.
+        </p>
+
+        <div id="short-answer" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. The Short Answer: Two Numbers Decide It
+          </h2>
+
+          <p>
+            A tankless heater has a fixed amount of heating power. That power can raise a small flow of water by a lot of degrees, or a large flow by a few degrees, but not both. So the size you need is set by two numbers multiplied together: your peak flow in gallons per minute, and your temperature rise, which is the difference between the water coming in and the water you want coming out.
+          </p>
+
+          <p>
+            Peak flow is the total of the hot water fixtures you realistically run at the same moment. Temperature rise is 120 degrees, the setpoint the Department of Energy recommends for most homes, minus your incoming water temperature in the coldest month. Multiply them and you know how much heat the unit must deliver. For a gas heater that is expressed in BTU per hour; for an electric heater, in kilowatts.
+          </p>
+
+          <p>
+            Here is why the box misleads. A heater advertised at 11 gallons per minute is rated at a small temperature rise, typically around 35 degrees, which only happens when incoming water is already about 85 degrees. Nobody has that in January. The same unit at a 70 degree rise, a normal winter figure for much of the country, delivers about half the advertised flow. Our <a href="/best-tankless-water-heater/">tankless water heater buyer's guide</a> tested units at winter inlet temperatures for exactly this reason.
+          </p>
+
+          <p>
+            If you want a fast rule before doing the math: a one-bathroom home anywhere, or a two-bathroom home in the South, is well served by a mid-sized gas unit or, in warm climates only, a large electric one. A two to three bathroom home in the Midwest or Northeast needs a full-size 199,000 BTU condensing gas unit. A four-bathroom home in a cold state needs two units or a different approach. The rest of this guide shows where those answers come from so you can check your own house.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">The Numbers That Matter</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <p class="text-3xl font-black text-white">120°F</p>
+                <p class="text-gray-400 text-xs mt-1">Recommended setpoint</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">35-77°F</p>
+                <p class="text-gray-400 text-xs mt-1">US winter inlet range</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-white">199,000</p>
+                <p class="text-gray-400 text-xs mt-1">Typical max BTU, residential gas</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">2.5 GPM</p>
+                <p class="text-gray-400 text-xs mt-1">Federal max for a showerhead</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="gpm-per-fixture" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Step 1: Add Up GPM per Fixture
+          </h2>
+
+          <p>
+            Start by listing the hot water fixtures in the house and their flow rates. Federal law caps new showerheads at 2.5 gallons per minute and bathroom and kitchen faucets at 2.2, and products carrying the EPA WaterSense label go lower: 2.0 GPM or less for showerheads and 1.5 GPM or less for bathroom faucets. If your fixtures are older than the early 1990s, they may run well above those caps, and it is worth timing how long one takes to fill a one-gallon jug.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Fixture</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Typical Flow</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Showerhead, standard</td>
+                    <td class="px-4 py-4 text-gray-700">2.5 GPM</td>
+                    <td class="px-4 py-4 text-gray-700">Federal maximum since 1994</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Showerhead, WaterSense</td>
+                    <td class="px-4 py-4 text-gray-700">1.5-2.0 GPM</td>
+                    <td class="px-4 py-4 text-gray-700">Cuts tankless demand meaningfully</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Bathroom faucet</td>
+                    <td class="px-4 py-4 text-gray-700">1.0-1.5 GPM</td>
+                    <td class="px-4 py-4 text-gray-700">Federal max 2.2 GPM</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Kitchen faucet</td>
+                    <td class="px-4 py-4 text-gray-700">1.5-2.2 GPM</td>
+                    <td class="px-4 py-4 text-gray-700">Often run hot for dishes</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Dishwasher</td>
+                    <td class="px-4 py-4 text-gray-700">1-2 GPM</td>
+                    <td class="px-4 py-4 text-gray-700">Only while filling</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Washing machine, hot cycle</td>
+                    <td class="px-4 py-4 text-gray-700">1-2 GPM</td>
+                    <td class="px-4 py-4 text-gray-700">Many cycles now use little hot water</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Bathtub spout</td>
+                    <td class="px-4 py-4 text-gray-700">4-6 GPM</td>
+                    <td class="px-4 py-4 text-gray-700">Unregulated and the biggest single draw</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Body sprays or rain head</td>
+                    <td class="px-4 py-4 text-gray-700">2-5+ GPM</td>
+                    <td class="px-4 py-4 text-gray-700">Multi-head showers can double demand</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            Now the important part: decide which of those run at the same time. Not which could, but which realistically do on a busy weekday morning. In most homes the true peak is two showers at once, or a shower plus the kitchen tap and a running dishwasher. Two standard showers add up to 5.0 GPM. A shower, a kitchen tap and a dishwasher come to around 5.5. A household with teenagers and three bathrooms might genuinely run three showers, which is 7.5 GPM on its own.
+          </p>
+
+          <p>
+            Two adjustments make the number more accurate. First, a shower does not run straight hot water. You mix it down to around 105 degrees at the valve, so only part of that 2.5 GPM comes from the heater; with 50 degree incoming water and a 120 degree setpoint, about 80 percent of the flow is hot. Second, a tub is the exception to every rule. Filling one runs at 4 to 6 GPM, so if a soaking tub is part of your peak, it alone can set the size of the heater.
+          </p>
+
+          <p>
+            Our recommendation is to size on the full fixture flow and treat the mixing effect as your safety margin. It covers the cold-snap week when incoming water drops further than average, the shower that someone turns hotter than usual, and the gradual loss of output as scale builds between flushes. Sizing to the blended figure leaves you no margin at all.
+          </p>
+        </div>
+
+        <div id="temperature-rise" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Step 2: Find Your Temperature Rise
+          </h2>
+
+          <p>
+            Temperature rise is the number that most sizing mistakes get wrong. Incoming water temperature depends mainly on the ground it travels through, which tracks the local average annual air temperature, and it falls in winter wherever the supply is a lake, a reservoir or shallow pipe. The Department of Energy suggests assuming 50 degrees if you do not know your own figure, which is reasonable for the middle of the country and optimistic for the northern tier.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Region (Approximate)</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Winter Inlet Temp</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Rise to 120°F</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Upper Midwest, northern New England, northern Plains, high-elevation Mountain West</td>
+                    <td class="px-4 py-4 text-gray-700">35-45°F</td>
+                    <td class="px-4 py-4 text-gray-700">75-85°F</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Lower Midwest, Mid-Atlantic, Pacific Northwest, southern New England</td>
+                    <td class="px-4 py-4 text-gray-700">45-55°F</td>
+                    <td class="px-4 py-4 text-gray-700">65-75°F</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Upper South, central California, Kansas to Oklahoma</td>
+                    <td class="px-4 py-4 text-gray-700">55-62°F</td>
+                    <td class="px-4 py-4 text-gray-700">58-65°F</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Gulf Coast, Texas, Southwest deserts, southern California</td>
+                    <td class="px-4 py-4 text-gray-700">62-72°F</td>
+                    <td class="px-4 py-4 text-gray-700">48-58°F</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Central and South Florida, far south Texas</td>
+                    <td class="px-4 py-4 text-gray-700">70-77°F</td>
+                    <td class="px-4 py-4 text-gray-700">43-50°F</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            Those ranges follow the groundwater temperature maps the major heater manufacturers publish, and they are broad on purpose. Altitude pulls a location colder than its latitude suggests, which is why Denver behaves more like Chicago than Dallas. Large city systems drawing on deep reservoirs or rivers can run several degrees colder in February than local groundwater, while deep wells hold a steadier temperature all year.
+          </p>
+
+          <p>
+            The easiest way to get your own number is to measure it. On a cold morning in the middle of winter, before anyone has used water, run a cold tap for a few minutes and hold a kitchen thermometer in the stream. That is your inlet temperature. If you are sizing in summer, subtract 10 to 15 degrees from what you measure, more in the north. Then subtract the result from 120 and you have your design temperature rise.
+          </p>
+
+          <p>
+            Use the coldest month, not the average. A heater sized for an average 55 degree inlet will be fine eight months of the year and disappointing in January and February, which is exactly when people take long hot showers. If you plan to run the setpoint above 120 degrees, for example to feed a dishwasher without its own heater, add the difference to your rise as well.
+          </p>
+        </div>
+
+        <div id="gas-btu" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Step 3: Gas Heaters and the BTU Math
+          </h2>
+
+          <p>
+            For gas, the formula is simple enough to do on a phone calculator. Required BTU per hour equals GPM times 500 times the temperature rise, divided by the heater's efficiency. The 500 comes from water weighing about 8.33 pounds per gallon multiplied by 60 minutes, and it takes one BTU to raise one pound of water one degree. Turn it around and a heater's real-world flow is its BTU input times efficiency, divided by 500 times your rise.
+          </p>
+
+          <p>
+            The ceiling for most residential gas tankless heaters is just under 200,000 BTU per hour, which is why so many full-size models are rated at 199,000 or 199,900 BTU. That is not a coincidence of engineering; the Department of Energy classifies gas instantaneous water heaters below 200,000 BTU per hour as residential products. A condensing unit runs at around 95 percent efficiency, so a 199,000 BTU model puts about 189,000 BTU into the water every hour.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Temperature Rise</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">199k Condensing (~95%)</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">199k Non-Condensing (~82%)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">35°F (box rating)</td>
+                    <td class="px-4 py-4 text-gray-700">10.8 GPM</td>
+                    <td class="px-4 py-4 text-gray-700">9.3 GPM</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">45°F</td>
+                    <td class="px-4 py-4 text-gray-700">8.4 GPM</td>
+                    <td class="px-4 py-4 text-gray-700">7.3 GPM</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">60°F</td>
+                    <td class="px-4 py-4 text-gray-700">6.3 GPM</td>
+                    <td class="px-4 py-4 text-gray-700">5.4 GPM</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">70°F</td>
+                    <td class="px-4 py-4 text-gray-700">5.4 GPM</td>
+                    <td class="px-4 py-4 text-gray-700">4.7 GPM</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">80°F</td>
+                    <td class="px-4 py-4 text-gray-700">4.7 GPM</td>
+                    <td class="px-4 py-4 text-gray-700">4.1 GPM</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            That table is the most useful thing on this page. A full-size condensing unit that says 11 GPM on the box gives you about 8.4 GPM in Miami, 5.4 GPM in Philadelphia and 4.7 GPM in Minneapolis. Every number is from the same heater; only the incoming water changed. It also shows why condensing matters beyond running cost: at the same gas input, the extra efficiency is worth most of a gallon per minute in winter.
+          </p>
+
+          <p>
+            Do not forget the gas supply. A 199,000 BTU heater burns roughly 190 to 200 cubic feet of natural gas an hour at full fire, far more than a tank heater, and many houses have a half-inch line that cannot deliver it over any distance. A three-quarter inch line back toward the meter is common on a retrofit, and the meter itself sometimes needs upsizing. Some manufacturers, Navien among them, design condensing units to run on half-inch pipe over shorter runs, but your installer has to check the actual length and the other appliances on the line. That cost belongs in the budget; our guide to <a href="/tankless-water-heater-cost/">tankless water heater cost</a> breaks it down.
+          </p>
+        </div>
+
+        <div id="electric-kw" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Electric: kW, Amps, and Why Cold Climates Break It
+          </h2>
+
+          <p>
+            Electric sizing uses the same physics with different units. Required kilowatts equal GPM times 500 times the temperature rise, divided by 3,412, the number of BTU in a kilowatt-hour. Electric heaters are close to 100 percent efficient at the point of use, so there is no efficiency term to worry about. A handy shortcut: flow in GPM is roughly kilowatts times 6.8, divided by your temperature rise.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Unit Size</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Amps at 240V</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Typical Breakers</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Flow at 45°F Rise</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Flow at 70°F Rise</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">18 kW</td>
+                    <td class="px-4 py-4 text-gray-700">75 A</td>
+                    <td class="px-4 py-4 text-gray-700">Two 40 A double-pole</td>
+                    <td class="px-4 py-4 text-gray-700">2.7 GPM</td>
+                    <td class="px-4 py-4 text-gray-700">1.8 GPM</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">27 kW</td>
+                    <td class="px-4 py-4 text-gray-700">112.5 A</td>
+                    <td class="px-4 py-4 text-gray-700">Three 40 A double-pole</td>
+                    <td class="px-4 py-4 text-gray-700">4.1 GPM</td>
+                    <td class="px-4 py-4 text-gray-700">2.6 GPM</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">36 kW</td>
+                    <td class="px-4 py-4 text-gray-700">150 A</td>
+                    <td class="px-4 py-4 text-gray-700">Four 40 A double-pole</td>
+                    <td class="px-4 py-4 text-gray-700">5.5 GPM</td>
+                    <td class="px-4 py-4 text-gray-700">3.5 GPM</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            The amps column is the first wall people hit. A 27 kW whole-house unit draws 112.5 amps on its own, and a 36 kW unit draws 150. In a house with 200 amp service, a 36 kW heater would claim three-quarters of the panel whenever someone showers, alongside the range, dryer, heat pump and everything else. Most electricians want 200 amp service as a minimum for the larger units, and in many older homes with 100 or 150 amp service the answer is a service upgrade that can cost more than the heater.
+          </p>
+
+          <p>
+            The second wall is physics, and this is why electric whole-house tankless struggles in cold climates. The Department of Energy notes that a typical electric demand heater delivers about 2 GPM at a 70 degree rise, against roughly 5 GPM for gas. Even the largest 36 kW residential unit manages about 3.5 GPM at that rise, which is one shower and a bathroom sink. At a northern 80 degree rise it falls to about 3 GPM. There is no larger plug-in answer, because the next step up would need well over 150 amps.
+          </p>
+
+          <p>
+            In the South the picture is genuinely different. At a 45 degree rise, a 27 kW unit delivers about 4 GPM and a 36 kW unit about 5.5, enough for two showers. That is why electric tankless is a solid whole-house choice in Florida and southern Texas, and why we keep recommending it there and nowhere colder. In a cold climate, use a small electric tankless for a point-of-use job such as a distant bathroom, and solve the main water heater another way.
+          </p>
+
+          <p>
+            If you want electric water heating in the north, a heat pump water heater is usually the better answer. It runs on a standard 30 amp, 240 volt circuit, or on an ordinary outlet for the 120 volt models, uses a fraction of the electricity of resistance heating, and stores its hot water so winter inlet temperatures only affect recovery time. Our <a href="/best-heat-pump-water-heater/">heat pump water heater picks</a> cover the models worth buying. And if backup power matters, note that a gas tankless needs only a small amount of electricity for its controls and fan, while a 27 kW electric unit is far beyond any portable generator; our <a href="/what-size-generator-do-i-need-for-my-house/">generator sizing guide</a> covers the arithmetic.
+          </p>
+        </div>
+
+        <div id="worked-examples" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Worked Examples: 1-2, 2-3 and 4 Bathroom Homes
+          </h2>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">A 1-2 bathroom home with a moderate winter</h3>
+
+          <p>
+            Picture a two-bedroom house in Dallas or Nashville, where winter inlet water runs about 55 degrees. The rise to 120 is 65 degrees. Peak use is one shower and a bathroom sink, or one shower and the kitchen tap: call it 3.5 GPM. For gas, 3.5 times 500 times 65 gives 113,750 BTU of heat into the water, or about 120,000 BTU of input from a condensing unit. A mid-sized unit in the 120,000 to 160,000 BTU class covers it, though full-size 199,000 BTU units are often priced close enough that the extra headroom is worth having.
+          </p>
+
+          <p>
+            Electric is possible but tight. The same 3.5 GPM at a 65 degree rise needs about 33 kW, which means a 36 kW unit and 150 amps of breakers. A 27 kW unit gives about 2.8 GPM, which handles one shower at a time comfortably and not much more. For a single person or a couple who rarely overlap, that can be fine; for anyone else, gas is the safer choice.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">A 2-3 bathroom home in a cold-winter state</h3>
+
+          <p>
+            Now a family house in Columbus or Philadelphia with 45 degree winter water, a 75 degree rise. Peak demand is two showers plus the kitchen tap, which is 6.5 GPM on the full-flow method. That needs about 257,000 BTU of input, more than any single residential unit. A 199,000 BTU condensing heater delivers about 5.0 GPM at that rise. Accounting for shower mixing, two 2.5 GPM showers draw about 4 GPM of heated water, so one full-size unit covers the two showers and copes with a little tap use.
+          </p>
+
+          <p>
+            The practical answer for this house is one 199,000 BTU condensing unit with WaterSense showerheads. Swapping to 2.0 GPM heads cuts peak demand by a full gallon per minute and costs far less than a second heater. If the household routinely runs two showers and a dishwasher at once in midwinter, then a second unit or a different type of heater is the honest recommendation.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">A 4 bathroom home in the north</h3>
+
+          <p>
+            A large house in Minneapolis with 40 degree winter water faces an 80 degree rise. Three showers plus the kitchen tap is 9 GPM, which needs about 380,000 BTU of input. No single residential unit can do that; a 199,000 BTU condensing heater manages about 4.7 GPM at this rise. The answer is two units linked together, which the major manufacturers support; Rinnai, for example, links two units with a dedicated cable, and larger cascade systems are available. Two units give about 9.4 GPM, enough for the peak with a small margin.
+          </p>
+
+          <p>
+            Electric is not a realistic option at this size and climate. Nine GPM at an 80 degree rise would need more than 100 kW, or over 400 amps, which is more than the entire service to most houses. This is also the house where a high-output gas tank, or a tank paired with a tankless unit, deserves a fair comparison on cost, which we look at in our <a href="/best-gas-water-heater/">gas water heater guide</a>.
+          </p>
+        </div>
+
+        <div id="sizing-table" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. The Tankless Sizing Table, and When to Go Bigger
+          </h2>
+
+          <p>
+            The table below runs the same formulas for typical homes. Gas figures are BTU of input for a 95 percent efficient condensing unit; electric figures are kilowatts. Anything above 199,000 BTU means two gas units, and anything above 36 kW is beyond residential electric tankless.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Home and Peak Flow</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Warm (50°F Rise)</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Moderate (65°F Rise)</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Cold (80°F Rise)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">1 bath, 3.5 GPM</td>
+                    <td class="px-4 py-4 text-gray-700">92k BTU / 26 kW</td>
+                    <td class="px-4 py-4 text-gray-700">120k BTU / 33 kW</td>
+                    <td class="px-4 py-4 text-gray-700">147k BTU / 41 kW</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">2 bath, 5 GPM</td>
+                    <td class="px-4 py-4 text-gray-700">132k BTU / 37 kW</td>
+                    <td class="px-4 py-4 text-gray-700">171k BTU / 48 kW</td>
+                    <td class="px-4 py-4 text-gray-700">211k BTU / 59 kW</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">3 bath, 7 GPM</td>
+                    <td class="px-4 py-4 text-gray-700">184k BTU / 51 kW</td>
+                    <td class="px-4 py-4 text-gray-700">239k BTU / 67 kW</td>
+                    <td class="px-4 py-4 text-gray-700">295k BTU / 82 kW</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">4 bath, 9 GPM</td>
+                    <td class="px-4 py-4 text-gray-700">237k BTU / 66 kW</td>
+                    <td class="px-4 py-4 text-gray-700">308k BTU / 86 kW</td>
+                    <td class="px-4 py-4 text-gray-700">379k BTU / 106 kW</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            Read it like this. Find your row by realistic peak flow rather than bathroom count if they disagree, then your column by winter rise. If the gas figure is under 199,000 BTU, one condensing unit covers you. If it is between about 200,000 and 260,000, one full-size unit plus low-flow showerheads is usually workable, and a second unit is the cautious choice. Above that, plan for two units. On the electric side, only the warm 1 bath cell is comfortably inside a single 27 kW unit, and the warm 2 bath cell sits right at the limit of a 36 kW unit with heavy electrical service; for a whole house, nothing else on the electric side is realistic.
+          </p>
+
+          <p>
+            Do not oversize blindly. A heater with far more capacity than you need costs more, may need a larger gas line, and has to be able to turn down to a single low-flow tap. Most units need around half a gallon per minute to fire at all, and a heater whose minimum output is still too high for a trickling bathroom faucet will cycle on and off. Wide modulation, which the better condensing units have, is what makes a large unit behave well at low flow.
+          </p>
+
+          <p>
+            Some features change the sizing picture slightly. A recirculation system, built in on units such as the Navien NPE-240A2, keeps the hot line warm and slightly raises the effective inlet temperature, but it does not add capacity at peak. Planned changes count too: if a soaking tub or a multi-head shower is coming in a future remodel, size for it now, because adding a second unit later costs more than buying the right one first.
+          </p>
+
+          <p>
+            Once you have your target, the units we tested and would buy are in our <a href="/best-tankless-water-heater/">best tankless water heater picks</a>, sorted by gas and electric and with real winter flow figures rather than box ratings. Whatever you buy, budget an hour a year to keep it at full output; our guide on <a href="/how-to-flush-a-tankless-water-heater/">how to flush a tankless water heater</a> covers the job, because scale quietly takes back the capacity you just paid for.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            8. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Sizing From the GPM on the Box</h3>
+              <p class="text-gray-700 text-sm m-0">
+                The headline flow is measured at a temperature rise of around 35 degrees, which almost no one sees in winter. At a typical 70 degree rise the same heater delivers about half. Always convert the rating to your own winter rise using the BTU or kW figure before deciding a unit is big enough for your household.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using Summer Tap Water Temperature</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Measuring the cold tap in July and sizing to that number builds in a winter shortfall of 10 to 20 degrees, which is a large slice of capacity. Use the coldest month, measured or taken from a regional range, because January is when long hot showers happen and when an undersized heater gives up.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Counting Fixtures That Never Run Together</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Adding up every hot tap in the house produces a figure no family ever reaches and pushes you toward two heaters you do not need. Size for the realistic busy-morning peak, usually two showers or one shower plus the kitchen, and add a tub only if someone genuinely fills it while others shower.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Choosing Electric Without Checking the Panel</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A 27 kW unit needs 112.5 amps and a 36 kW unit 150 amps, on three or four dedicated double-pole breakers. Many homes cannot supply that without a service upgrade that costs more than the heater. Have an electrician confirm your service and panel capacity before buying any whole-house electric tankless model.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring the Gas Line</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A full-size gas tankless burns roughly 200 cubic feet of gas per hour at full fire, and an undersized line starves it, so it never reaches rated output no matter what the label says. Have the installer check pipe size, run length and the other appliances on the line, and budget for a larger line.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            9. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What size tankless water heater do I need for a family of 4?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Most families of four have a peak of two showers at once, about 5 GPM. In a warm climate a 150,000 to 199,000 BTU gas unit covers that easily. In a cold climate with a 70 to 80 degree rise, you need a 199,000 BTU condensing unit, ideally with WaterSense showerheads. Electric only works for a family of four in genuinely warm regions.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a 199,000 BTU tankless water heater big enough?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most homes with up to three bathrooms, yes. A 199,000 BTU condensing unit delivers about 8.4 GPM at a 45 degree rise and about 5.4 GPM at a 70 degree rise, which covers two simultaneous showers in most of the country. Four-bathroom homes in cold climates usually need two linked units to cover realistic peak demand.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How many GPM do I need for two showers?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Two standard 2.5 GPM showerheads need 5 GPM, or about 4 GPM of heated water once you account for mixing with cold at the valve. With WaterSense heads at 2.0 GPM, the requirement falls to about 4 GPM total. Size the heater to deliver that at your winter temperature rise, not at the rating printed on the box.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What size electric tankless water heater do I need for a whole house?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                In a warm climate with a 45 degree rise, a 27 kW unit delivers about 4 GPM and a 36 kW unit about 5.5 GPM, enough for a small to medium home. In cold climates even 36 kW manages only about 3 to 3.5 GPM, one shower, so whole-house electric is rarely practical there. Check your panel first.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How do I find my groundwater temperature?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Measure it. On a winter morning before anyone has used water, run a cold tap for a few minutes and hold a kitchen thermometer in the stream. If you are sizing in summer, subtract 10 to 15 degrees. Otherwise use a regional range: roughly 35 to 45 degrees in the northern states and 62 to 77 across the Gulf and Florida.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can a tankless water heater be too big?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes, though it is a smaller problem than too small. An oversized unit costs more, may need a larger gas line, and can struggle to modulate down for a single low-flow tap, cycling on and off. Choose a unit with wide modulation if you oversize, and match the size to realistic peak demand rather than the worst case you can imagine.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Should I get two smaller tankless heaters or one large one?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                One large unit is simpler and cheaper in most homes up to three bathrooms. Two linked units make sense when peak demand exceeds what one 199,000 BTU heater delivers at your winter rise, typically large homes in cold climates. Linked units also give redundancy, since one can still provide hot water if the other needs service.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Tankless Water Heater Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-tankless-water-heater/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Tankless Water Heaters</h3>
+              <p class="text-gray-500 text-sm mt-2">Seven units tested at winter inlet temperatures, gas and electric.</p>
+            </a>
+            <a href="/how-to-flush-a-tankless-water-heater/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Maintenance</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">How to Flush a Tankless Water Heater</h3>
+              <p class="text-gray-500 text-sm mt-2">The one-hour descale that keeps a heater at its rated output.</p>
+            </a>
+            <a href="/best-heat-pump-water-heater/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Heat Pump Water Heaters</h3>
+              <p class="text-gray-500 text-sm mt-2">The better electric answer for cold climates, tested and costed.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The right size tankless water heater comes from two numbers: your realistic peak flow, usually 3.5 to 9 GPM, and your winter temperature rise, from about 45 degrees in Florida to 85 in the far north. Multiply them, convert to BTU or kilowatts, and compare against what a unit delivers at your rise rather than what the box says.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            For most homes that lands on a single 199,000 BTU condensing gas unit, with low-flow showerheads doing the cheap part of the work. Electric whole-house tankless is a warm-climate product, and big homes in the north need two units. Size it once properly and the endless hot water tankless promises is actually what you get.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Improvement" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
