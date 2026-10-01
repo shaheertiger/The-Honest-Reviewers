@@ -28,8 +28,11 @@ for (const file of files) {
   const arrEnd = src.indexOf("\n];", arrStart);
   const block = src.slice(arrStart, arrEnd === -1 ? undefined : arrEnd);
 
-  const ids = [...block.matchAll(/^\s*id: "([^"]+)"/gm)].map((m) => m[1]);
-  const names = [...block.matchAll(/^\s*name: "([^"]+)"/gm)].map((m) => m[1]);
+  // Hand-written pages use bare keys (id: "..."); scaffold-roundup.mjs emits JSON
+  // with quoted keys ("id": "..."). Accept both, and unescape the string value.
+  const field = (key) => new RegExp(`^\\s*"?${key}"?: ("(?:[^"\\\\]|\\\\.)*")`, "gm");
+  const ids = [...block.matchAll(field("id"))].map((m) => JSON.parse(m[1]));
+  const names = [...block.matchAll(field("name"))].map((m) => JSON.parse(m[1]));
 
   if (ids.length !== names.length) {
     console.warn(`MISMATCH in ${file}: ${ids.length} ids vs ${names.length} names`);
