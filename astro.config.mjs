@@ -6,6 +6,16 @@ import sitemap from '@astrojs/sitemap';
 // Buyer's guides that target high-volume search terms. They get a higher
 // sitemap priority than the 0.5 default so crawlers reach them sooner.
 const priorityGuides = new Set([
+  'do-air-purifiers-help-with-mold',
+  'air-purifier-vs-dehumidifier',
+  'how-to-get-rid-of-mold-in-basement',
+  'what-pans-work-on-induction',
+  'does-cast-iron-work-on-induction',
+  'induction-vs-gas-cooktop',
+  'where-are-tekton-tools-made',
+  'tekton-vs-icon',
+  'bluetti-vs-ecoflow',
+  'ryobi-vs-dewalt',
   'tankless-water-heater-cost',
   'tankless-water-heater-pros-and-cons',
   'how-to-flush-a-tankless-water-heater',

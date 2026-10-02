@@ -1,0 +1,886 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Portable Power Stations",
+    "url": "/best-portable-power-station/"
+  },
+  {
+    "title": "Jackery vs EcoFlow",
+    "url": "/jackery-vs-ecoflow/"
+  },
+  {
+    "title": "Best Solar Generators",
+    "url": "/best-solar-generator/"
+  },
+  {
+    "title": "What Size Portable Power Station Do I Need",
+    "url": "/what-size-portable-power-station-do-i-need/"
+  },
+  {
+    "title": "LiFePO4 vs Lithium-Ion Power Stations",
+    "url": "/lifepo4-vs-lithium-ion-power-stations/"
+  },
+  {
+    "title": "How to Charge a Portable Power Station With Solar",
+    "url": "/how-to-charge-a-portable-power-station-with-solar/"
+  },
+  {
+    "title": "Can a Portable Power Station Run a Refrigerator",
+    "url": "/can-a-portable-power-station-run-a-refrigerator/"
+  },
+  {
+    "title": "Portable Power Station vs Generator",
+    "url": "/portable-power-station-vs-generator/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-02", modified: "2026-10-02" });
+const title = "Bluetti vs EcoFlow: Every Size Class Compared, With a Clear Pick for Each Buyer";
+const description =
+  "Bluetti vs EcoFlow compared tier by tier, from 300 Wh to whole-home: output, charging, solar, cycles, UPS speed, weight and warranty, plus who should buy which.";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Guides",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Bluetti vs EcoFlow",
+          item: "https://www.thehonestreviewers.com/bluetti-vs-ecoflow/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "Is Bluetti or EcoFlow better?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Neither wins outright. EcoFlow is better for most home backup buyers because of its faster wall charging, its 3000W expandable 2 kWh unit and its more mature home ecosystem. Bluetti is better if you want higher cycle ratings, the lightest 1 kWh unit, a 0 ms UPS mode on the Apex 300 or the lowest price per watt-hour when its units are discounted."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which is better, the Bluetti Elite 100 V2 or the EcoFlow DELTA 3 Plus?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They share 1024 Wh, 1800W output, 4,000 cycles to 80 percent, 1000W of solar and sub-10 ms UPS. The Elite 100 V2 is 2.6 pounds lighter. The DELTA 3 Plus charges faster from the wall and expands to 5 kWh, which the Bluetti cannot. Choose the EcoFlow for backup that may grow, the Bluetti for portability."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the Bluetti AC200L better than the EcoFlow DELTA 3 Max Plus?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The DELTA 3 Max Plus has more output at 3000W against 2400W, a faster 10 ms class switchover and 13 pounds less weight. The AC200L has more solar input with a wider voltage window, a faster 2400W charger and a 30A RV outlet, and it is often discounted more deeply. Most backup buyers should prefer the EcoFlow; solar-heavy and budget buyers the Bluetti."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do Bluetti and EcoFlow both use LiFePO4 batteries?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Every current model compared here uses LiFePO4 cells, and both brands rate cycle life to 80 percent of original capacity, so their numbers compare directly. EcoFlow quotes 3,000 to 4,000 cycles on current models and Bluetti 3,000 to 6,000. If you buy older or used units, check the spec sheet, since some early models from both brands used NMC cells."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which charges faster, Bluetti or EcoFlow?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "EcoFlow at most sizes. The DELTA 3 Plus fills from empty in 56 minutes on a 1500W charger, while Bluetti's Elite 100 V2 and AC180 reach 80 percent in about 45 minutes. At 2 kWh the AC200L's 2400W input is the quickest on paper. On big home units, headline times assume more power than a standard 15A outlet supplies."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use Bluetti panels with EcoFlow or the other way round?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Usually, yes. Both brands accept third-party solar panels within each unit's voltage and wattage window, sometimes with an adapter cable for the connector. Expansion batteries are a different matter: they are brand and model specific, so an EcoFlow extra battery will not work with a Bluetti station, and not every battery works with every unit in the same brand."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which brand has the better warranty?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They are effectively tied on paper at five years. EcoFlow describes its five years on current DELTA models as three standard plus two on app registration. Bluetti lists five years on its current AC, Elite and Apex models. In both cases, buy from the maker or an authorised retailer and register the unit promptly to secure the full term."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      description: description,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Tools & Equipment",
+    tags: [
+      "bluetti vs ecoflow",
+      "ecoflow vs bluetti",
+      "bluetti or ecoflow",
+      "bluetti elite 100 v2 vs ecoflow delta 3",
+      "bluetti ac200l vs ecoflow delta 3 max plus",
+      "bluetti apex 300 vs ecoflow delta pro 3"
+    ],
+  }}
+  jsonLd={schema}
+  stickyCta={{
+    text: "See Our Top Power Station Picks",
+    link: "/best-portable-power-station/",
+  }}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Head to Head
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Field Tested
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Bluetti vs <span class="text-[#38BDF8]">EcoFlow</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Both brands sell LiFePO4 power stations from a 300 Wh camping box to a 120/240V home system, and both rate their batteries to the same 80 percent standard. EcoFlow usually wins on charging speed, 2 kWh output and expansion. Bluetti usually wins on cycle ratings, 1 kWh weight and street price. Here is how each size class lines up.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#verdict"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            Get the Verdict
+          </a>
+          <a
+            href="#faq"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Jump to the FAQ
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="12.6k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#verdict" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. The Short Verdict</a>
+          <a href="#small" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Small: River 3 vs Elite 30 V2</a>
+          <a href="#one-kwh" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. 1 kWh: DELTA 3 Plus vs Elite 100 V2</a>
+          <a href="#two-kwh" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. 2 kWh: DELTA 3 Max Plus vs AC200L</a>
+          <a href="#whole-home" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Whole Home: DELTA Pro 3 vs Apex 300</a>
+          <a href="#ownership" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Charging, UPS, App and Warranty</a>
+          <a href="#who-should-buy" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Who Should Buy Which</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          If you want the fastest wall charging, the most output at 2 kWh and the most mature home-backup ecosystem, buy EcoFlow. If you want the lightest 1 kWh box, the longest cycle ratings and the lowest price per watt-hour on sale, buy Bluetti. Neither brand wins every size class, which is exactly why our power station rankings recommend models from both. Decide the size first, then let the one spec you care about most choose the brand.
+        </p>
+
+        <div id="verdict" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. The Short Verdict
+          </h2>
+
+          <p>
+            Bluetti and EcoFlow are the two brands most likely to end up on the same shortlist once a buyer has decided they want long-life LiFePO4 cells and a unit that can grow into home backup. Their catalogues mirror each other closely: a 300 Wh class box for camping, a 1 kWh unit for a fridge and a router, a 2 kWh unit for real outages, and a 120/240V system for a sub-panel. That makes this comparison unusually clean, because you can pair a model from one brand against a direct rival from the other at almost every size.
+          </p>
+
+          <p>
+            It is also cleaner than our <a href="/jackery-vs-ecoflow/">Jackery vs EcoFlow comparison</a> in one important way. Jackery rates its battery cycles to 70 percent of original capacity, which makes its numbers hard to line up against anyone else. Bluetti and EcoFlow both rate cycles to 80 percent, so when Bluetti quotes 6,000 cycles and EcoFlow quotes 4,000, those numbers mean the same thing and you can compare them directly.
+          </p>
+
+          <p>
+            Across the current lineups a consistent pattern appears. EcoFlow charges faster from the wall, puts more inverter into its expandable 2 kWh unit, carries less weight per kilowatt-hour at the 2 kWh size, and has the more developed home-backup ecosystem around its big units. Bluetti answers with higher cycle ratings on its newest models, the lightest 1 kWh box in this comparison, a 0 ms UPS mode on its Apex 300 home unit, and street prices that are frequently lower once both brands run their constant sales.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">The Numbers That Separate Them</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <p class="text-3xl font-black text-white">6,000</p>
+                <p class="text-gray-400 text-xs mt-1">Apex 300 cycles to 80%</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">4,000</p>
+                <p class="text-gray-400 text-xs mt-1">DELTA Pro 3 cycles to 80%</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-white">3,000W</p>
+                <p class="text-gray-400 text-xs mt-1">DELTA 3 Max Plus output</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">25 lb</p>
+                <p class="text-gray-400 text-xs mt-1">Elite 100 V2 weight</p>
+              </div>
+            </div>
+          </div>
+
+          <p>
+            That split is why our <a href="/best-portable-power-station/">best portable power station guide</a> names an EcoFlow as the best overall pick and a Bluetti, the AC200L, as the best high-capacity pick, with the EcoFlow River 3 and Bluetti EB3A covering the small end. Neither brand is simply better. Each one is better at particular jobs, and the rest of this page shows which jobs, size class by size class, using the makers' own published specifications.
+          </p>
+
+          <p>
+            Two pieces of housekeeping before the detail. First, prices in this category move constantly, often by 30 to 50 percent during sale events, so every price on this page is a range rather than a quote; check the day you buy. Second, if you have not settled on a capacity yet, do that first with our guide to <a href="/what-size-portable-power-station-do-i-need/">what size portable power station you need</a>, because buying the right size matters far more than buying the right logo.
+          </p>
+        </div>
+
+        <div id="small" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Small: EcoFlow River 3 vs Bluetti Elite 30 V2
+          </h2>
+
+          <p>
+            The small class is for phones, laptops, camera batteries, camp lights, a CPAP for a night, and keeping a router alive through a short outage. It is not for fridges, kettles or space heaters, and buying a unit this size expecting it to back up a house is the single most common mistake in the category. EcoFlow's entries are the River 3 and the River 3 Plus. Bluetti's direct rival is the Elite 30 V2, with the older EB3A still on sale alongside it.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Spec (maker's figures)</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">EcoFlow River 3</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">EcoFlow River 3 Plus</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Bluetti Elite 30 V2</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Capacity</td>
+                    <td class="px-4 py-4 text-gray-700">245 Wh</td>
+                    <td class="px-4 py-4 text-gray-700">286 Wh, expands to 858 Wh</td>
+                    <td class="px-4 py-4 text-gray-700">288 Wh</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Chemistry and cycles</td>
+                    <td class="px-4 py-4 text-gray-700">LiFePO4, 3,000 to 80%</td>
+                    <td class="px-4 py-4 text-gray-700">LiFePO4, 3,000 to 80%</td>
+                    <td class="px-4 py-4 text-gray-700">LiFePO4, 3,000 to 80%</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">AC output</td>
+                    <td class="px-4 py-4 text-gray-700">300W, X-Boost 600W</td>
+                    <td class="px-4 py-4 text-gray-700">600W, X-Boost 1200W</td>
+                    <td class="px-4 py-4 text-gray-700">600W</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Solar input</td>
+                    <td class="px-4 py-4 text-gray-700">110W</td>
+                    <td class="px-4 py-4 text-gray-700">220W</td>
+                    <td class="px-4 py-4 text-gray-700">200W</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Wall charging</td>
+                    <td class="px-4 py-4 text-gray-700">About 1 hour</td>
+                    <td class="px-4 py-4 text-gray-700">About 1 hour</td>
+                    <td class="px-4 py-4 text-gray-700">80% in about 45 min</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">UPS switchover</td>
+                    <td class="px-4 py-4 text-gray-700">Under 20 ms</td>
+                    <td class="px-4 py-4 text-gray-700">Under 10 ms</td>
+                    <td class="px-4 py-4 text-gray-700">10 ms</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Weight</td>
+                    <td class="px-4 py-4 text-gray-700">About 7.7 lb</td>
+                    <td class="px-4 py-4 text-gray-700">10.4 lb</td>
+                    <td class="px-4 py-4 text-gray-700">About 9.5 lb</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Typical price range</td>
+                    <td class="px-4 py-4 text-gray-700">Roughly $150-250</td>
+                    <td class="px-4 py-4 text-gray-700">Roughly $230-320</td>
+                    <td class="px-4 py-4 text-gray-700">Roughly $200-300</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            The River 3 is the lightest and cheapest unit here, and it is the compact pick in our rankings for good reason: under eight pounds, long-life cells, and enough capacity for a weekend of devices. Its limit is the 300W inverter. X-Boost lets resistive loads like a small kettle run at reduced voltage, but anything with a motor or a sensitive power supply above 300W simply will not start. If the job is charging and lighting, that does not matter. If you want to run a blender or a small TV, it does.
+          </p>
+
+          <p>
+            The Elite 30 V2 and River 3 Plus are the better comparison with each other. Both give you 600W of continuous output from roughly 290 Wh, both rate their cells to 3,000 cycles at 80 percent, and both quote 10 ms class UPS switchover, which is fast enough to keep a router, modem and most desktop computers running through a grid drop. The Bluetti is about a pound lighter. The EcoFlow takes a little more solar and, crucially, can add an extra battery to reach 858 Wh, which no other unit in this class offers.
+          </p>
+
+          <p>
+            Bluetti's EB3A, the ultraportable pick in our main guide, remains a sensible buy if you find it discounted: 268 Wh and 600W at around ten pounds. It is the older design, though, and the Elite 30 V2 matches its output in a slightly larger battery with a faster UPS figure, so compare the two prices before choosing the EB3A by default.
+          </p>
+
+          <p>
+            Our verdict at this size: the River 3 if you only need devices charged and want the least weight and cost. The River 3 Plus if you think you might want more capacity later. The Elite 30 V2 if you want 600W in the lightest box and know you will never need to expand. All three are genuine LiFePO4 units, so there is no wrong answer on battery life.
+          </p>
+        </div>
+
+        <div id="one-kwh" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. 1 kWh: DELTA 3 Plus vs Elite 100 V2 and AC180
+          </h2>
+
+          <p>
+            This is the size most people buy: enough to keep a fridge, a router and some lights going through an evening outage, or to run a campsite for a long weekend. EcoFlow's contender is the DELTA 3 family, of which the DELTA 3 Plus is the one to compare because it doubles the plain DELTA 3's solar input. Bluetti has two: the newer Elite 100 V2 and the older, heavier but slightly larger AC180.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Spec (maker's figures)</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">EcoFlow DELTA 3 Plus</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Bluetti Elite 100 V2</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Bluetti AC180</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Capacity</td>
+                    <td class="px-4 py-4 text-gray-700">1024 Wh</td>
+                    <td class="px-4 py-4 text-gray-700">1024 Wh</td>
+                    <td class="px-4 py-4 text-gray-700">1152 Wh</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Cycles to 80%</td>
+                    <td class="px-4 py-4 text-gray-700">4,000</td>
+                    <td class="px-4 py-4 text-gray-700">4,000</td>
+                    <td class="px-4 py-4 text-gray-700">3,500</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">AC output</td>
+                    <td class="px-4 py-4 text-gray-700">1800W, X-Boost 2200W</td>
+                    <td class="px-4 py-4 text-gray-700">1800W, 2700W Power Lifting</td>
+                    <td class="px-4 py-4 text-gray-700">1800W, 2700W Power Lifting</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Wall charging</td>
+                    <td class="px-4 py-4 text-gray-700">1500W, full in 56 min</td>
+                    <td class="px-4 py-4 text-gray-700">1200W, 80% in 45 min</td>
+                    <td class="px-4 py-4 text-gray-700">1440W, 80% in 45 min</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Solar input</td>
+                    <td class="px-4 py-4 text-gray-700">1000W, 2 x 500W</td>
+                    <td class="px-4 py-4 text-gray-700">1000W, 12-60V</td>
+                    <td class="px-4 py-4 text-gray-700">500W, 12-60V</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Expansion</td>
+                    <td class="px-4 py-4 text-gray-700">Yes, up to 5 kWh</td>
+                    <td class="px-4 py-4 text-gray-700">No expansion battery listed</td>
+                    <td class="px-4 py-4 text-gray-700">Power bank mode only, via DC input</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">UPS switchover</td>
+                    <td class="px-4 py-4 text-gray-700">Under 10 ms</td>
+                    <td class="px-4 py-4 text-gray-700">10 ms or less</td>
+                    <td class="px-4 py-4 text-gray-700">20 ms</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Weight</td>
+                    <td class="px-4 py-4 text-gray-700">27.6 lb</td>
+                    <td class="px-4 py-4 text-gray-700">25 lb</td>
+                    <td class="px-4 py-4 text-gray-700">35.3 lb</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Typical price range</td>
+                    <td class="px-4 py-4 text-gray-700">Roughly $500-900</td>
+                    <td class="px-4 py-4 text-gray-700">Roughly $450-800</td>
+                    <td class="px-4 py-4 text-gray-700">Roughly $450-700</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            On paper the DELTA 3 Plus and the Elite 100 V2 are nearly the same machine: 1024 Wh, 1800W continuous, 4,000 cycles to 80 percent, 1000W of solar input and sub-10 ms UPS switchover. The differences are at the edges. The Bluetti is 2.6 pounds lighter, which makes it the lightest 1 kWh unit in this comparison and noticeably easier to carry to a campsite or up from a basement. The EcoFlow charges faster from the wall, reaching full in under an hour where the Bluetti quotes 80 percent in 45 minutes from a smaller 1200W charger.
+          </p>
+
+          <p>
+            The deciding difference is expansion. The DELTA 3 Plus accepts EcoFlow's extra batteries and grows to 5 kWh, so it can start as a camping unit and turn into a serious outage system later. Bluetti does not list an expansion battery for the Elite 100 V2, so what you buy is what you have. If there is any chance you will want two or three days of fridge runtime later, that alone settles it in EcoFlow's favour; our guide to whether a <a href="/can-a-portable-power-station-run-a-refrigerator/">portable power station can run a refrigerator</a> works through how fast a fridge drains 1 kWh.
+          </p>
+
+          <p>
+            The AC180 is the value play. It holds 128 Wh more than either rival, has a 1440W charger that reaches 80 percent in 45 minutes, and on Bluetti's own store it has recently sold for well under the other two. The costs are weight, at 35.3 pounds, half the solar input at 500W, and a slower 20 ms UPS switchover. Bluetti says it works with its B80, B230 and B300 batteries, but those connect through the DC input in power bank mode, feeding the AC180 one way rather than expanding it the way an EcoFlow extra battery does. Treat it as a fixed-capacity unit.
+          </p>
+
+          <p>
+            Power Lifting on both Bluettis and X-Boost on the EcoFlow do the same job: they let resistive loads above the inverter rating, such as a 2000W kettle or hair dryer, run by lowering the voltage. That is fine for heating elements and useless for anything with a motor or electronics, so do not count it as real output. On real output all three are tied at 1800W, enough for a full-size microwave or a 1500W space heater.
+          </p>
+
+          <p>
+            Our verdict at this size: the DELTA 3 Plus for home backup, because it can grow and charges fastest. The Elite 100 V2 if weight and solar input top your list and 1 kWh is all you will ever need. The AC180 if you want the most capacity for the least money and can live with the weight. If you see the older EcoFlow DELTA 2, the best overall pick in our main guide, at a good discount, it remains a capable expandable 1 kWh unit too.
+          </p>
+        </div>
+
+        <div id="two-kwh" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. 2 kWh: DELTA 3 Max Plus vs AC200L and Elite 200 V2
+          </h2>
+
+          <p>
+            At 2 kWh the units stop being portable in any casual sense and start being home backup: enough to run an efficient fridge for more than a day, a CPAP for several nights, or a home office through a working day. EcoFlow's expandable unit here is the DELTA 3 Max Plus, with the fixed-capacity DELTA 3 Max beside it. Bluetti's are the expandable AC200L, the high-capacity pick in our rankings, and the newer fixed-capacity Elite 200 V2, which Bluetti names as the replacement for the discontinued AC200MAX.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Spec (maker's figures)</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">EcoFlow DELTA 3 Max Plus</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Bluetti AC200L</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Bluetti Elite 200 V2</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Capacity</td>
+                    <td class="px-4 py-4 text-gray-700">2048 Wh</td>
+                    <td class="px-4 py-4 text-gray-700">2048 Wh</td>
+                    <td class="px-4 py-4 text-gray-700">2073.6 Wh</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Cycles to 80%</td>
+                    <td class="px-4 py-4 text-gray-700">Maker quotes about 10 years of use</td>
+                    <td class="px-4 py-4 text-gray-700">3,000+</td>
+                    <td class="px-4 py-4 text-gray-700">6,000+</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">AC output</td>
+                    <td class="px-4 py-4 text-gray-700">3000W, X-Boost 3800W</td>
+                    <td class="px-4 py-4 text-gray-700">2400W, 30A RV outlet</td>
+                    <td class="px-4 py-4 text-gray-700">2600W, 3900W lifting</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Wall charging</td>
+                    <td class="px-4 py-4 text-gray-700">1800W, 0-80% in 64 min</td>
+                    <td class="px-4 py-4 text-gray-700">Up to 2400W input</td>
+                    <td class="px-4 py-4 text-gray-700">TurboBoost, 80% in about 1 hr</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Solar input</td>
+                    <td class="px-4 py-4 text-gray-700">1000W</td>
+                    <td class="px-4 py-4 text-gray-700">1200W, wide voltage window</td>
+                    <td class="px-4 py-4 text-gray-700">1000W, 12-60V</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Expansion</td>
+                    <td class="px-4 py-4 text-gray-700">Yes, up to 10 kWh</td>
+                    <td class="px-4 py-4 text-gray-700">Yes, up to about 7.6-8.2 kWh</td>
+                    <td class="px-4 py-4 text-gray-700">No</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">UPS switchover</td>
+                    <td class="px-4 py-4 text-gray-700">Under 10 ms</td>
+                    <td class="px-4 py-4 text-gray-700">20 ms</td>
+                    <td class="px-4 py-4 text-gray-700">15 ms</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Weight</td>
+                    <td class="px-4 py-4 text-gray-700">48.7 lb</td>
+                    <td class="px-4 py-4 text-gray-700">61.6 lb</td>
+                    <td class="px-4 py-4 text-gray-700">53.4 lb</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Typical price range</td>
+                    <td class="px-4 py-4 text-gray-700">Roughly $700-1,900</td>
+                    <td class="px-4 py-4 text-gray-700">Roughly $700-1,600</td>
+                    <td class="px-4 py-4 text-gray-700">Roughly $950-1,400</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            The DELTA 3 Max Plus's 3000W inverter is the headline. That is enough to start most 120V well pumps, run a window air conditioner and a fridge together, or run a full-size microwave with other loads on, where 2400W and 2600W start to get tight. It is also the lightest of the three by a wide margin, 13 pounds lighter than the AC200L, and its sub-10 ms switchover is the fastest here. For a unit that will live in a utility room as outage backup, it is the strongest all-round package.
+          </p>
+
+          <p>
+            The AC200L earns its place with solar and price. Its 1200W solar input accepts a much wider voltage window than the 60V ceiling on most portable units, which lets you string three or four panels in series and run a long, thin cable from a sunny corner of the yard without overloading the input; our guide on <a href="/how-to-charge-a-portable-power-station-with-solar/">how to charge a portable power station with solar</a> explains why that matters on cold mornings. It also has a 30A RV outlet, and its 2400W charger is the fastest wall input in this group. Expansion runs to roughly 7.6 kWh with Bluetti's current B300K battery, or about 8.2 kWh with two of the older B300 packs if you can still find them.
+          </p>
+
+          <p>
+            Its weaknesses are weight, at 61.6 pounds, and the slowest UPS switchover here at 20 ms, which most network gear and desktop computers ride through but some older power supplies do not. Price is the wild card. The AC200L's list price is in the same band as the EcoFlow, but it has been discounted heavily and often, at times to well under $1,000, and at those prices it is the best capacity per dollar in this comparison.
+          </p>
+
+          <p>
+            The Elite 200 V2 is the odd one out: fixed capacity, but with a 6,000-plus cycle rating and Bluetti's figure of a 17-year expected service life, which is the longest-lived battery at this size. It weighs 53.4 pounds and offers 2600W. Choose it if you want a 2 kWh unit you will never expand and plan to cycle hard, for example running it daily off solar at a cabin. If expansion is on the table at all, one of the other two is the better foundation.
+          </p>
+
+          <p>
+            Our verdict at this size: the DELTA 3 Max Plus for most home backup buyers, on output, weight and switchover speed. The AC200L if you plan to lean on solar or can buy it at a deep discount. The Elite 200 V2 if you want the longest cycle life in a fixed box. For complete panel-and-station bundles at this size, our <a href="/best-solar-generator/">best solar generator</a> roundup compares the kits directly.
+          </p>
+        </div>
+
+        <div id="whole-home" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Whole Home: DELTA Pro 3 vs Bluetti Apex 300
+          </h2>
+
+          <p>
+            At the top end both brands sell 120/240V systems meant to power well pumps, central air handlers and sub-panels through a transfer switch or smart panel. EcoFlow's is the DELTA Pro 3. Bluetti's current flagship is the Apex 300, which Bluetti now names as the replacement for its older EP500 home battery, and which sits above the long-running AC300 and AC500 modular units, both of which have been heavily discounted and are worth checking against current models before you buy.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Spec (maker's figures)</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">EcoFlow DELTA Pro 3</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Bluetti Apex 300</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Capacity per unit</td>
+                    <td class="px-4 py-4 text-gray-700">4096 Wh</td>
+                    <td class="px-4 py-4 text-gray-700">2764.8 Wh</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Cycles to 80%</td>
+                    <td class="px-4 py-4 text-gray-700">4,000</td>
+                    <td class="px-4 py-4 text-gray-700">6,000</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">AC output</td>
+                    <td class="px-4 py-4 text-gray-700">4000W, X-Boost 6000W, 120/240V</td>
+                    <td class="px-4 py-4 text-gray-700">3840W, 7680W lifting, 120/240V</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Solar input</td>
+                    <td class="px-4 py-4 text-gray-700">2600W: 1600W high-voltage plus 1000W low-voltage</td>
+                    <td class="px-4 py-4 text-gray-700">2400W: 2 x 1200W, 12-60V</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Expansion</td>
+                    <td class="px-4 py-4 text-gray-700">Up to 12 kWh per unit, 48 kWh system</td>
+                    <td class="px-4 py-4 text-gray-700">Up to 6 B300K per unit, 58 kWh system</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">UPS switchover</td>
+                    <td class="px-4 py-4 text-gray-700">10 ms</td>
+                    <td class="px-4 py-4 text-gray-700">0 ms in online mode, 20 ms standard</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Weight</td>
+                    <td class="px-4 py-4 text-gray-700">113.5 lb</td>
+                    <td class="px-4 py-4 text-gray-700">About 83.8 lb</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Warranty</td>
+                    <td class="px-4 py-4 text-gray-700">5 years, 3 + 2 on app registration</td>
+                    <td class="px-4 py-4 text-gray-700">5 years</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Typical price, unit alone</td>
+                    <td class="px-4 py-4 text-gray-700">Roughly $2,800-3,700</td>
+                    <td class="px-4 py-4 text-gray-700">Roughly $1,400-1,700</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            The two take different approaches. The DELTA Pro 3 puts 4 kWh and a 4000W inverter in one wheeled box, and adds high-voltage solar input that lets a long string of rooftop-style panels feed it efficiently. The Apex 300 is smaller per unit, 2.76 kWh, but cheaper to start with, about 30 pounds lighter, and built to scale outward: up to six B300K batteries on one unit, and up to three Apex 300s linked for 11.5 kW of output and 58 kWh of storage. If you need more output, you add another Apex rather than replacing the whole system.
+          </p>
+
+          <p>
+            Bluetti's headline advantages are the cycle rating and the UPS mode. At 6,000 cycles to 80 percent the Apex 300's battery is rated for half as many cycles again as the DELTA Pro 3's, and its online UPS mode quotes 0 ms switchover, which suits equipment that cannot tolerate even a brief interruption, such as some medical devices, servers and aquarium controllers. EcoFlow's answer is the more mature ecosystem: its Smart Home Panel 2 and Smart Generator integrations are well established, and the DELTA Pro 3's 50-minute charge to 80 percent is fast for a unit this size.
+          </p>
+
+          <p>
+            A note on those charging times. A standard 120V, 15A household outlet tops out around 1,800W, so headline figures for 4 kWh class units assume a 240V source or several inputs at once. From an ordinary outlet, expect several hours to refill either system. If your plan relies on a gas generator to recharge between outages, read our comparison of <a href="/portable-power-station-vs-generator/">portable power stations and generators</a> to see how the two work together.
+          </p>
+
+          <p>
+            Our verdict at this size: the DELTA Pro 3 if you want the most capacity and output in one box and value EcoFlow's home integration. The Apex 300 if you want a lower entry price, a 0 ms UPS mode, the longest-rated battery and a system you can grow a unit at a time. At this level the system matters more than the box, so budget for an electrician-installed transfer switch or smart panel either way, and compare full kits, because both brands sell these mostly as bundles.
+          </p>
+        </div>
+
+        <div id="ownership" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Charging, Solar, UPS, App and Warranty
+          </h2>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Battery chemistry and cycle ratings</h3>
+
+          <p>
+            Every current model in this comparison uses LiFePO4, lithium iron phosphate, cells. That trades a little energy density for far longer cycle life and better thermal stability than the NMC lithium-ion used in older power stations, and our explainer on <a href="/lifepo4-vs-lithium-ion-power-stations/">LiFePO4 vs lithium-ion power stations</a> covers why that is worth paying for. Because both brands rate to 80 percent, their cycle numbers line up directly. EcoFlow quotes 3,000 cycles on the River 3 models and 4,000 on the DELTA 3 and DELTA Pro 3. Bluetti ranges from 3,000 on the AC200L and Elite 30 V2 to 6,000 on the Elite 200 V2 and Apex 300.
+          </p>
+
+          <p>
+            In practice even 3,000 cycles is more than most owners will ever use. A unit that is fully cycled once a week, which is heavy use for backup or camping, takes nearly 60 years to reach 3,000 cycles. The higher Bluetti ratings matter if you plan daily solar cycling, at a cabin or as part of a load-shifting setup; for an outage box they are a tiebreaker, not a reason to buy.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Wall charging and solar input</h3>
+
+          <p>
+            EcoFlow is faster from the wall at most sizes, with its X-Stream charging filling the DELTA 3 Plus in 56 minutes. Bluetti's TurboBoost is close behind at 1 kWh, at 80 percent in about 45 minutes, and the AC200L's 2400W input is actually the quickest at 2 kWh. For solar, the brands trade blows: EcoFlow leads at 1 kWh against the AC180 but ties the Elite 100 V2 at 1000W, the AC200L leads at 2 kWh on wattage and voltage window, and the DELTA Pro 3 leads at the top with its high-voltage input. Both accept third-party panels within their voltage limits; our <a href="/best-portable-solar-panel/">best portable solar panels</a> guide covers matching panels to these inputs.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">UPS switchover</h3>
+
+          <p>
+            Both brands sell their units as uninterruptible power supplies. EcoFlow quotes under 10 ms across the DELTA 3 family and the River 3 Plus, and 10 ms on the DELTA Pro 3. Bluetti varies more by model: 10 ms on the Elite 30 V2 and Elite 100 V2, 15 ms on the Elite 200 V2, 20 ms on the AC180 and AC200L, and 0 ms in the Apex 300's online mode. If you are buying to keep a desktop PC or a home server alive through flickers, prefer anything at 10 ms or below.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">App and warranty</h3>
+
+          <p>
+            Both apps connect over Wi-Fi and Bluetooth on most models and let you monitor input and output, toggle outlets and set charge limits; the AC180 is Bluetooth only. EcoFlow's app is the more ambitious, with time-of-use charging and a storm mode that tops the battery up when severe weather is forecast. On warranty, EcoFlow lists five years on its current DELTA models, described as three years standard plus two on app registration. Bluetti lists five years on the AC180, AC200L, Elite 30 V2, Elite 200 V2 and Apex 300. Buy from the maker or an authorised seller, register on day one and keep the receipt.
+          </p>
+        </div>
+
+        <div id="who-should-buy" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Who Should Buy Which
+          </h2>
+
+          <p>
+            Buy EcoFlow if your priority is a home backup system that can grow and recharge quickly. The DELTA 3 Plus is the 1 kWh unit to start with if you might expand later, because Bluetti's lighter Elite 100 V2 cannot. The DELTA 3 Max Plus is the 2 kWh unit to choose if you need 3000W for a well pump or a window air conditioner alongside a fridge. And EcoFlow's faster wall charging is what you want when a storm is forecast and the battery is half empty.
+          </p>
+
+          <p>
+            Buy Bluetti if you value cycle life, low weight at 1 kWh or the most capacity for the money. The Elite 100 V2 is the lightest 1 kWh unit here with a full 1000W of solar input. The AC180 and AC200L, when discounted, are the best capacity per dollar in their classes, and the AC200L's wide solar window makes it the better 2 kWh unit for a real solar setup. At the top end, the Apex 300 is the pick if you want a 0 ms UPS mode, a 6,000-cycle battery and a home system you can grow one module at a time.
+          </p>
+
+          <p>
+            If you are torn, decide by the one number that matters most. Need to expand a 1 kWh unit later? EcoFlow. Need the lightest 1 kWh box? Bluetti. Need more than 2600W from a 2 kWh unit? EcoFlow. Need the widest solar voltage window at 2 kWh? Bluetti. Need the most capacity in a single whole-home box? EcoFlow. Need zero switchover? Bluetti. Most buyers find one of those questions settles it in seconds.
+          </p>
+
+          <p>
+            For small units the choice is mostly about weight and output. The River 3 is the lightest and cheapest way into LiFePO4 for device charging. The River 3 Plus and Elite 30 V2 both give you 600W; pick the EcoFlow if you might add a battery, the Bluetti if you want the lighter box. Either way, do not expect any unit under 300 Wh to back up a house.
+          </p>
+
+          <p>
+            Whichever brand you lean toward, check it against the Jackery and Anker options before you buy. All of them, with the specific use each suits best, are in our <a href="/best-portable-power-station/">portable power station rankings</a>, and our <a href="/jackery-vs-ecoflow/">Jackery vs EcoFlow</a> head to head covers the other brand pairing most buyers ask about.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            8. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Counting Power Lifting or X-Boost as real output</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Bluetti's Power Lifting and EcoFlow's X-Boost let resistive loads like kettles and hair dryers run above the inverter rating by lowering voltage. They do nothing for motors, compressors or electronics. Compare the continuous output figure, 1800W, 2400W, 3000W and so on, when deciding what a unit can actually run.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Assuming every Bluetti battery truly expands every Bluetti unit</h3>
+              <p class="text-gray-700 text-sm m-0">
+                The AC180 can draw from B80, B230 and B300 batteries only through its DC input in power bank mode, which is one-way charging rather than true expansion, and the Elite 100 V2 lists no expansion battery at all. If you want to grow capacity later, check the specific model's expansion support before you buy.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying 1 kWh when the plan is whole-day backup</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A 1 kWh unit runs an efficient fridge for roughly a day at best, and less once you add lights, a router and phone charging. If you need to ride out a full day without sun or a generator, start at 2 kWh or buy a 1 kWh unit that genuinely expands, such as the DELTA 3 Plus.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring UPS switchover time for computers</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A 20 ms switchover, as on the AC180 and AC200L, is fine for most routers and laptops but can reset some desktop PCs and older power supplies. If the unit will sit between the wall and a computer or server, choose a model rated at 10 ms or below, or the Apex 300 in online mode.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Paying list price</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Both brands run sales so often that list prices are close to fiction; the AC200L and DELTA 3 Max Plus have both been offered at less than half of list. Set a price alert, compare the maker's store with major retailers, and do not buy at full price unless you need the unit before the next sale.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            9. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is Bluetti or EcoFlow better?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Neither wins outright. EcoFlow is better for most home backup buyers because of its faster wall charging, its 3000W expandable 2 kWh unit and its more mature home ecosystem. Bluetti is better if you want higher cycle ratings, the lightest 1 kWh unit, a 0 ms UPS mode on the Apex 300 or the lowest price per watt-hour when its units are discounted.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Which is better, the Bluetti Elite 100 V2 or the EcoFlow DELTA 3 Plus?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                They share 1024 Wh, 1800W output, 4,000 cycles to 80 percent, 1000W of solar and sub-10 ms UPS. The Elite 100 V2 is 2.6 pounds lighter. The DELTA 3 Plus charges faster from the wall and expands to 5 kWh, which the Bluetti cannot. Choose the EcoFlow for backup that may grow, the Bluetti for portability.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is the Bluetti AC200L better than the EcoFlow DELTA 3 Max Plus?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                The DELTA 3 Max Plus has more output at 3000W against 2400W, a faster 10 ms class switchover and 13 pounds less weight. The AC200L has more solar input with a wider voltage window, a faster 2400W charger and a 30A RV outlet, and it is often discounted more deeply. Most backup buyers should prefer the EcoFlow; solar-heavy and budget buyers the Bluetti.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do Bluetti and EcoFlow both use LiFePO4 batteries?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes. Every current model compared here uses LiFePO4 cells, and both brands rate cycle life to 80 percent of original capacity, so their numbers compare directly. EcoFlow quotes 3,000 to 4,000 cycles on current models and Bluetti 3,000 to 6,000. If you buy older or used units, check the spec sheet, since some early models from both brands used NMC cells.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Which charges faster, Bluetti or EcoFlow?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                EcoFlow at most sizes. The DELTA 3 Plus fills from empty in 56 minutes on a 1500W charger, while Bluetti's Elite 100 V2 and AC180 reach 80 percent in about 45 minutes. At 2 kWh the AC200L's 2400W input is the quickest on paper. On big home units, headline times assume more power than a standard 15A outlet supplies.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I use Bluetti panels with EcoFlow or the other way round?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Usually, yes. Both brands accept third-party solar panels within each unit's voltage and wattage window, sometimes with an adapter cable for the connector. Expansion batteries are a different matter: they are brand and model specific, so an EcoFlow extra battery will not work with a Bluetti station, and not every battery works with every unit in the same brand.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Which brand has the better warranty?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                They are effectively tied on paper at five years. EcoFlow describes its five years on current DELTA models as three standard plus two on app registration. Bluetti lists five years on its current AC, Elite and Apex models. In both cases, buy from the maker or an authorised retailer and register the unit promptly to secure the full term.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Power Station Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-portable-power-station/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Portable Power Stations</h3>
+              <p class="text-gray-500 text-sm mt-2">Our ranked picks from EcoFlow, Bluetti, Jackery and Anker, with the use each one suits.</p>
+            </a>
+            <a href="/jackery-vs-ecoflow/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Head to Head</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Jackery vs EcoFlow</h3>
+              <p class="text-gray-500 text-sm mt-2">The other big brand pairing, compared model for model at 1, 2 and 5 kWh.</p>
+            </a>
+            <a href="/what-size-portable-power-station-do-i-need/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Explainer</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">What Size Do I Need?</h3>
+              <p class="text-gray-500 text-sm mt-2">Work out the capacity and output your loads need before choosing a brand.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            EcoFlow builds the faster-charging, more expandable and better-integrated home backup units, and its DELTA 3 Max Plus is the strongest 2 kWh package in either lineup. Bluetti builds the lighter 1 kWh box, the longer-rated batteries and the more aggressively priced units, and its Apex 300 offers a 0 ms UPS mode and a modular path to whole-home storage at a lower entry price. Both use LiFePO4 cells rated to the same 80 percent standard, and both offer five-year warranties.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Pick the size first, then let the one spec that matters most to you choose the brand, and never pay list price. Our full rankings, with Jackery and Anker in the mix, are in the <a href="/best-portable-power-station/">best portable power station guide</a>.
+          </p>
+        </div>
+
+        <MoreInCategory category="Tools & Equipment" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
