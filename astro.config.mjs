@@ -6,6 +6,21 @@ import sitemap from '@astrojs/sitemap';
 // Buyer's guides that target high-volume search terms. They get a higher
 // sitemap priority than the 0.5 default so crawlers reach them sooner.
 const priorityGuides = new Set([
+  'condensing-vs-non-condensing-tankless-water-heater',
+  'tankless-water-heater-not-heating',
+  'how-long-do-tankless-water-heaters-last',
+  'does-uv-light-kill-mold',
+  'do-ozone-generators-kill-mold',
+  'whole-house-fan-vs-attic-fan',
+  'ceiling-fan-light-not-working',
+  'dc-vs-ac-ceiling-fan',
+  'how-to-find-a-stud-without-a-stud-finder',
+  'does-vinegar-kill-weeds',
+  'how-to-kill-weeds-in-driveway-cracks',
+  'how-to-restring-a-weed-eater',
+  'zero-turn-vs-riding-mower',
+  'self-propelled-mower-not-self-propelling',
+  'lvp-vs-laminate',
   'do-air-purifiers-help-with-mold',
   'air-purifier-vs-dehumidifier',
   'how-to-get-rid-of-mold-in-basement',
