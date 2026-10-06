@@ -1,0 +1,957 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Chainsaws",
+    "url": "/best-chainsaw/"
+  },
+  {
+    "title": "Best Pole Saws",
+    "url": "/best-pole-saw/"
+  },
+  {
+    "title": "Best Log Splitters",
+    "url": "/best-log-splitter/"
+  },
+  {
+    "title": "Best Bench Vises",
+    "url": "/best-bench-vise/"
+  },
+  {
+    "title": "Best Hookaroons",
+    "url": "/best-hookaroon-reviews/"
+  },
+  {
+    "title": "Best Angle Grinders",
+    "url": "/best-angle-grinder/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-06", modified: "2026-10-06" });
+const title = "7 Best Chainsaw Sharpeners in 2026: Files, Jigs & Grinders";
+const description =
+  "Seven chainsaw sharpeners compared, from file guides and bar-mounted jigs to 12V and bench grinders, plus how to match file size, pitch and depth gauges.";
+
+const PRODUCTS = [
+  {
+    "id": "stihl-5605-750-4305",
+    "name": "STIHL 2-in-1 Easy File Chain Sharpener, 3/8-Inch Pitch (5605 750 4305)",
+    "category": "Hand File Guide, 3/8\" Pitch",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "rating": 4.7,
+    "reviewCount": 2400,
+    "pros": [
+      "Sharpens the cutter and lowers the depth gauge in a single pass",
+      "Holds the round and flat files at fixed positions, so angles stay consistent",
+      "Small enough to carry in a pocket and use on the saw in the field",
+      "Sold in versions matched to each chain pitch",
+      "No power, no setup and nothing to adjust"
+    ],
+    "cons": [
+      "Each version fits only one chain pitch, so a mixed fleet needs several",
+      "Third-party listings vary; buy from a STIHL dealer to be sure it is genuine"
+    ],
+    "bottomLine": "For anyone who runs one or two saws on the same chain pitch, the fastest, most foolproof way to keep a chain sharp between bench grindings.",
+    "description": "STIHL's 2-in-1 Easy File is the sharpener we would buy first, because it fixes the single most common filing mistake: forgetting the depth gauges. The tool holds a round file and a flat file side by side in a guide that sits on top of the chain. Each stroke sharpens the cutter with the round file while the flat file takes down the depth gauge in front of it, so the two stay in the right relationship as the cutter gets shorter. That is exactly what most people fail to do by hand, and it is why a lot of home-sharpened chains cut fine for ten minutes and then start skating. Because the files are held at fixed positions, the angle and depth are set by the guide rather than by your wrist, and you can get consistent results the first time you use it. It is small enough to keep in a jacket pocket and use on the saw, on the stump, between cuts. The catch is that each version fits a single pitch. The version listed here is for 3/8-inch chain, the size on most mid-size gas saws; STIHL also sells versions for other pitches, including 3/8-inch low-profile and .325-inch chain, so check the pitch stamped on your drive links before ordering."
+  },
+  {
+    "id": "oregon-410-120",
+    "name": "Oregon Professional Compact 120V Bench Chain Grinder (410-120)",
+    "category": "Bench Grinder, 220W",
+    "badge": "Best Bench Grinder",
+    "amazonUrl": "#",
+    "rating": 4.6,
+    "reviewCount": 3000,
+    "pros": [
+      "Sharpens chain up to .404-inch pitch, including 1/4, 3/8 low profile and .325",
+      "Includes 3.2 mm and 4.7 mm grinding wheels plus a 6.0 mm flat disc for depth gauges",
+      "Manual chain clamping vise and built-in work light",
+      "One-way motor rotation for operator safety",
+      "Mounts to a bench or wall with the included bolts"
+    ],
+    "cons": [
+      "Needs a careful setup and a light touch to avoid overheating cutters",
+      "Only the 3.2 mm and 4.7 mm wheels are included, so some chains need a different wheel"
+    ],
+    "bottomLine": "The bench grinder for a homeowner who cuts firewood every year and has more than one chain to keep sharp.",
+    "description": "If you run more than one saw, or rotate through several chains in a firewood season, a bench grinder pays for itself, and Oregon's 410-120 is the one we would put in a home workshop. It is a compact version of Oregon's professional grinders, with a 220-watt, 3,150 RPM direct-drive motor and a 5-3/4-inch wheel. Oregon rates it for chain up to .404-inch pitch, which covers virtually every homeowner and farm saw, and it ships with 3.2 mm and 4.7 mm grinding wheels plus a 6.0 mm flat disc for dressing depth gauges. A manual vise clamps the chain, a built-in light makes it easier to see the cutter edge, and the motor turns in one direction only, which Oregon cites as a safety feature. It mounts to a bench or wall with the included bolts and weighs 17 pounds. The real advantage of a grinder is consistency: once the angles are set, every cutter on the loop gets the same treatment, which brings a damaged or hand-filed chain back to true. The caution is heat. Grinding too long on one cutter can blue the steel and soften it, so learn to use quick, light touches. For most people, this grinder plus a hand file for the field is the ideal system."
+  },
+  {
+    "id": "granberg-g-106b",
+    "name": "Granberg File-N-Joint Bar-Mounted Chainsaw Sharpener (G-106B)",
+    "category": "Bar-Mounted File Guide",
+    "badge": "Best Bar-Mounted Guide",
+    "amazonUrl": "#",
+    "rating": 4.3,
+    "reviewCount": 1400,
+    "pros": [
+      "Clamps to the bar and guides the file at a precise, repeatable angle",
+      "Sharpens every tooth to the same length",
+      "Also lowers depth gauges",
+      "Cast aluminum and zinc-plated steel construction, made in the USA",
+      "Fits standard chain pitches"
+    ],
+    "cons": [
+      "Files are not included",
+      "Slower to set up than a handheld guide"
+    ],
+    "bottomLine": "The best way to get grinder-like accuracy from a hand file, on the saw, without electricity.",
+    "description": "Granberg's File-N-Joint has been the standard bar-mounted sharpener for decades, and it remains the best way to get grinder-like consistency without a grinder. Rather than relying on your hand to hold the angle, it clamps to the guide bar and carries the file on a rigid carriage. You set the top-plate angle and the cutter length once, and every tooth on the loop is filed to the same length and angle. That matters more than people realize: uneven cutters make a chain pull to one side and cut a curved kerf, which is one of the most common complaints from people who file by eye. The G-106B also lowers depth gauges, so you can bring them down to the correct height as the cutters shorten. The body is cast aluminum with zinc-plated steel parts, and Granberg makes it in the USA. It fits standard chain pitches, but files are not included, so you will need to buy a round file of the correct diameter for your chain. The drawback is speed. Setting up the jig takes longer than picking up a handheld guide, and it is more fiddly in the woods. It is best used at a bench or tailgate when you have a few minutes and want a chain that cuts perfectly straight."
+  },
+  {
+    "id": "oregon-520-120",
+    "name": "Oregon Professional 120V Bench Saw Chain Grinder (520-120)",
+    "category": "Bench Grinder, 300W",
+    "badge": "Best for High-Volume Sharpening",
+    "amazonUrl": "#",
+    "rating": 4.7,
+    "reviewCount": 700,
+    "pros": [
+      "300-watt, 3,400 RPM motor for high-volume sharpening",
+      "Self-centering chain vise that slides forward and aft",
+      "Top plate and down angle adjustments, plus a wheel wear adjustment",
+      "Sharpens up to .404-inch pitch, and 3/4-inch harvester chain with an optional vise",
+      "Includes 3.2 mm and 4.7 mm wheels and a 6.0 mm depth gauge disc"
+    ],
+    "cons": [
+      "More grinder than a homeowner with one saw needs",
+      "At 20 pounds, it belongs permanently mounted in a shop"
+    ],
+    "bottomLine": "The grinder for tree services, farms and anyone sharpening dozens of chains a season, where speed and repeatability pay back the cost.",
+    "description": "Oregon's 520-120 is the step up from the compact 410-120, built for people who sharpen chains in volume: tree services, farms, saw shops and serious firewood cutters. The motor is more powerful at 300 watts and 3,400 RPM, and the vise is the biggest upgrade. It is self-centering and slides forward and aft, so the chain sits in exactly the same position for every cutter, and the vise handle position can be customized for comfort when you are sharpening loop after loop. The grinder adds adjustments for both the top plate angle and the down angle, which lets you match the exact grind specified for different chain types, and a wheel wear adjustment compensates as the grinding wheel gets smaller, so your results stay consistent through the life of the wheel. Oregon rates it for chain up to .404-inch pitch, and up to 3/4-inch harvester chain with an optional vise. It includes 3.2 mm and 4.7 mm grinding wheels, a 6.0 mm flat disc for depth gauges, a dressing brick and a profile guide, and it weighs 20 pounds. For one or two homeowner saws, it is more than you need, and the 410-120 is the better buy. For anyone sharpening a box of chains every week, the accuracy and speed are worth it."
+  },
+  {
+    "id": "oregon-575214",
+    "name": "Oregon 12V Sure Sharp Handheld Electric Chain Sharpener (575214)",
+    "category": "12V Handheld Grinder",
+    "badge": "Best 12V Field Sharpener",
+    "amazonUrl": "#",
+    "rating": 4.6,
+    "reviewCount": 1300,
+    "pros": [
+      "Runs from a vehicle's 12V socket or directly from a battery with the included clips",
+      "Long cable, about 16 feet",
+      "Sharpens round-ground 1/4, 3/8 low profile, .325, 3/8 and .404 chain",
+      "Includes 5/32, 3/16 and 7/32-inch sharpening stones and a collet wrench",
+      "Angle adjustment guide helps keep the grind consistent"
+    ],
+    "cons": [
+      "Easy to remove too much metal if you hold the stone on too long",
+      "Freehand control means results depend more on technique than a jig"
+    ],
+    "bottomLine": "A fast way to touch up chains in the field from a truck or tractor battery, for people who find hand filing slow.",
+    "description": "Oregon's 12V Sure Sharp is a small handheld grinder that runs from a vehicle, and it is aimed at people who cut away from the shop and find hand filing slow. It comes with both a 12-volt car adapter and battery clips, and a cable of about 16 feet, so you can sharpen on the tailgate or next to a tractor. The motor spins at around 25,000 RPM, and Oregon rates it for any round-ground chain in 1/4-inch, 3/8-inch low profile, .325-inch, 3/8-inch or .404-inch pitch, which covers most saws. Three stones are included, in 5/32-inch, 3/16-inch and 7/32-inch diameters, along with a collet wrench for changing them, and replacement stones are easy to find. An angle adjustment guide helps you hold the stone at a consistent angle to the cutter. Used well, it restores an edge in a fraction of the time it takes to file. The caveat is control. A spinning stone removes metal quickly, so a heavy hand or a long dwell on one cutter can overheat it or grind it shorter than its neighbors. Use quick, light passes and count them. It does not address depth gauges, so pair it with a flat file and a gauge tool."
+  },
+  {
+    "id": "dremel-1453",
+    "name": "Dremel Chainsaw Sharpening Kit for Rotary Tools (1453)",
+    "category": "Rotary Tool Attachment",
+    "badge": "Best for Dremel Owners",
+    "amazonUrl": "#",
+    "rating": 4.5,
+    "reviewCount": 1500,
+    "pros": [
+      "Sharpening angle guide attachment for a Dremel rotary tool",
+      "Four grinding stones: 4.0, 4.5, 4.8 and 5.6 mm",
+      "Adjustment gauge included",
+      "Covers several common chain sizes in one kit",
+      "Inexpensive if you already own a Dremel"
+    ],
+    "cons": [
+      "Requires a Dremel rotary tool, sold separately",
+      "Easy to overheat cutters at high speed without a light touch"
+    ],
+    "bottomLine": "The cheapest powered sharpening option if a Dremel rotary tool is already sitting in your drawer.",
+    "description": "If you already own a Dremel rotary tool, the 1453 kit turns it into a chainsaw sharpener for very little money. The kit includes a sharpening angle guide attachment that threads onto the rotary tool, an adjustment gauge, and four grinding stones in 4.0, 4.5, 4.8 and 5.6 mm diameters, which covers the cutter sizes on most homeowner chains, from small low-profile chain up to standard 3/8-inch. The guide is the important part. Freehand sharpening with a rotary tool is a well-known way to ruin a chain, because it is hard to keep the angle consistent and easy to grind too deep. The guide positions the stone at a set angle to the cutter, which makes the job far more repeatable. In use, it is quick: a light touch on each cutter restores the edge in a second or two, and you can sharpen a whole loop on the saw in a few minutes. The cautions are the same as any powered sharpener. Rotary tools spin fast, so dwell too long and you will overheat the cutter, and the stones wear quickly and need replacing. It does not lower depth gauges, so you still need a flat file. If you do not already own a Dremel, buy a file guide or the Oregon 12V grinder instead."
+  },
+  {
+    "id": "oregon-617067",
+    "name": "Oregon Universal Chainsaw Field Sharpening Kit (617067)",
+    "category": "Manual File Kit",
+    "badge": "Best Budget Kit",
+    "amazonUrl": "#",
+    "rating": 4.7,
+    "reviewCount": 7900,
+    "pros": [
+      "5/32, 3/16 and 7/32-inch round files cover most common chains",
+      "6-inch flat file for lowering depth gauges",
+      "File guide for depth gauge setting and consistent results",
+      "Universal file handle and rolled canvas pouch",
+      "Instruction sheet with a filing chart to match files to chains"
+    ],
+    "cons": [
+      "Relies on your technique to hold the filing angle",
+      "Basic file guide is less precise than a bar-mounted jig"
+    ],
+    "bottomLine": "Everything you need to start hand filing, in one inexpensive pouch, with the files to fit almost any saw in the garage.",
+    "description": "Every chainsaw owner should have a field kit, even if they also own a grinder, and Oregon's universal kit is the one we recommend for beginners. It includes the three round files that cover most homeowner chains, in 5/32-inch, 3/16-inch and 7/32-inch diameters, plus a 6-inch flat file for lowering depth gauges, a file guide, a universal handle and a rolled canvas pouch with a pocket for each tool. The instruction sheet includes a filing chart, which is the most valuable thing in the box for a new owner, because using the wrong file size is one of the most common reasons a hand-filed chain cuts badly. The file guide helps set depth gauges correctly and keeps your strokes consistent. Because it covers three file sizes, one kit handles a small battery saw, a pole saw and a mid-size gas saw, which makes it ideal for a household with more than one chain. The limitation is that you supply the precision. Without a fixed jig, keeping the angle consistent across 30 to 70 cutters takes practice. Start with an old chain, count your strokes per cutter, and you will get there quickly. For the money, nothing else gets you sharpening sooner."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Chainsaw Sharpeners",
+          item: "https://www.thehonestreviewers.com/best-chainsaw-sharpener/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best chainsaw sharpener for beginners?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A handheld file guide that also lowers the depth gauges, like STIHL's 2-in-1 Easy File, is the easiest to get right because the guide sets the angle and depth for you. An Oregon field kit is the cheapest place to start if you have several chain sizes, since it includes three file sizes and a filing chart."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is it better to file or grind a chainsaw chain?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Both work. Hand filing removes less metal, works anywhere and is what most professionals do between tanks. Bench grinding is faster and more consistent, and it is the best way to restore a damaged chain. Many owners file in the field and grind once or twice a season to bring the chain back to true."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What size file do I need for my chainsaw chain?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on the chain pitch. As a rough guide, 3/8-inch low-profile and 1/4-inch chains use a 5/32-inch file, .325-inch uses 3/16-inch, and full 3/8-inch uses 13/64 or 7/32-inch. Always confirm with the chain maker's chart, because file size can vary by chain series, and the pitch is usually stamped on the drive links or printed on the chain box."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often should I sharpen a chainsaw chain?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Touch it up whenever it starts making dust instead of chips, needs pushing, or pulls to one side, which for many users is every tank of fuel or battery charge. Hitting dirt or a rock dulls it instantly. Light, frequent filing keeps it cutting better and lasting longer than waiting until it is very dull."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What angle should I sharpen a chainsaw chain?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most standard chisel and semi-chisel chains use a top-plate angle of around 30 degrees, though some low-kickback and specialty chains specify 25 or 35 degrees, and ripping chain is much shallower. Check the witness marks on the cutters or the chain maker's specification, and keep the angle consistent on every cutter."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are electric chainsaw sharpeners worth it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A bench grinder is worth it if you run several chains or cut a lot of firewood, because it sharpens quickly and consistently. Handheld 12V and rotary tool sharpeners are fast for field touch-ups but easy to overheat or overgrind. For one saw used occasionally, a good file guide is all you need."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many times can a chainsaw chain be sharpened?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Many chains can be sharpened ten times or more, depending on how much metal each sharpening removes. Light filing extends chain life, while heavy grinding to repair damage shortens it. Replace the chain when cutters reach the minimum length marked on the top plate, or when they are cracked or broken."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: "Alex Rivers",
+    section: "Home Improvement",
+    tags: [
+      "best chainsaw sharpener",
+      "chainsaw chain sharpener",
+      "electric chainsaw sharpener",
+      "chainsaw file guide",
+      "bench chain grinder"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            7 Sharpeners Compared
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best <span class="text-[#38BDF8]">Chainsaw Sharpeners</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          A sharp chain is faster and safer than a new saw. Here is how to pick the right sharpener for your chain, and the depth gauge step most people skip.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#stihl-5605-750-4305"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            See the Top Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="6.9k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-picked" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Picked</a>
+          <a href="#types" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Files, Guides, Jigs and Grinders</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 7 Top Picks</a>
+          <a href="#matching" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Pitch, Gauge and File Size</a>
+          <a href="#depth-gauges" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Depth Gauges</a>
+          <a href="#angles" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Sharpening Angles</a>
+          <a href="#technique" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. How to File a Chain</a>
+          <a href="#when-to-sharpen" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Sharpen or Replace</a>
+          <a href="#grinders" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Bench Grinder Tips</a>
+          <a href="#pole-and-battery" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Small Battery and Pole Saw Chains</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">12. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          The best chainsaw sharpener is the one that gets the angle right and handles the depth gauges, every time. For most owners that is a pitch-matched file guide for touch-ups and a bench grinder, or a saw shop, once or twice a season. Expensive electric gadgets matter less than matching the file to your chain.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-picked" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Picked
+          </h2>
+
+          <p>
+            We compared every common type of chainsaw sharpener: plain file kits, handheld file guides, bar-mounted jigs, 12-volt and rotary tool grinders, and bench grinders. Then we picked the best example of each type, because the right sharpener depends much more on how you use your saw than on any single feature.
+          </p>
+
+          <p>
+            We weighted three things. Accuracy, meaning how consistently the tool holds the right angle and cutter length. Depth gauge handling, because a sharpener that ignores the depth gauges only does half the job. And fit, meaning whether it suits the chain pitches and saws people actually own, from a 12-inch battery saw to a 20-inch gas saw.
+          </p>
+
+          <p>
+            Specifications come from the manufacturers and retail listings, and star ratings are Amazon figures at the time of writing, rounded down. We left out products sold only from their own websites, products we could not verify, and several cheap unbranded electric sharpeners whose specifications did not hold up. Prices change too often to quote, so we describe value in words.
+          </p>
+
+          <p>
+            One point before the picks: a sharpener does not replace a chain forever. Chains wear out, and a chain that has hit rocks, nails or dirt repeatedly may be cheaper to replace than to restore. We explain how to tell the difference below.
+          </p>
+        </div>
+
+        <div id="types" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Files, Guides, Jigs and Grinders
+          </h2>
+
+          <p>
+            A round file in a handle is the simplest sharpener and the one professional fallers use most. It is cheap, works anywhere and removes very little metal, so chains last longer. The difficulty is holding the angle and depth consistently by hand, which is what file guides and jigs exist to fix.
+          </p>
+
+          <p>
+            Handheld file guides, like STIHL's 2-in-1 Easy File, sit on the chain and hold the files at the right height and angle. Bar-mounted jigs, like Granberg's File-N-Joint, clamp to the bar and carry the file on a rigid carriage for even more precision. Both still use a file, so they are quiet, portable and gentle on the chain.
+          </p>
+
+          <p>
+            Powered sharpeners are faster. Handheld 12-volt grinders and rotary tool kits restore an edge in seconds per cutter and can be used on the saw. Bench grinders clamp the chain in a vise and grind every cutter to identical angles, which makes them the best tool for restoring a badly damaged chain or sharpening many chains at once.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Type</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Best for</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Strengths</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Weaknesses</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">File kit</td>
+                    <td class="px-4 py-4 text-gray-700">Every owner, field touch-ups</td>
+                    <td class="px-4 py-4 text-gray-700">Cheap, portable, gentle on chain</td>
+                    <td class="px-4 py-4 text-gray-700">Technique-dependent</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Handheld guide</td>
+                    <td class="px-4 py-4 text-gray-700">One or two saws, same pitch</td>
+                    <td class="px-4 py-4 text-gray-700">Fast, consistent, does depth gauges</td>
+                    <td class="px-4 py-4 text-gray-700">One pitch per guide</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Bar-mounted jig</td>
+                    <td class="px-4 py-4 text-gray-700">Precise filing at a bench or tailgate</td>
+                    <td class="px-4 py-4 text-gray-700">Even cutter length and angle</td>
+                    <td class="px-4 py-4 text-gray-700">Slow setup</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">12V or rotary grinder</td>
+                    <td class="px-4 py-4 text-gray-700">Quick field sharpening</td>
+                    <td class="px-4 py-4 text-gray-700">Very fast</td>
+                    <td class="px-4 py-4 text-gray-700">Easy to overheat or overgrind</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Bench grinder</td>
+                    <td class="px-4 py-4 text-gray-700">Multiple chains, damaged chains</td>
+                    <td class="px-4 py-4 text-gray-700">Most consistent results</td>
+                    <td class="px-4 py-4 text-gray-700">Cost, setup, needs a shop</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            Most people are best served by two tools: a hand file or guide for touch-ups every tank or two, and a bench grinder or a trip to a saw shop once or twice a season to bring the chain back to true. If you only own one, make it a file guide that handles the depth gauges.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 7 Top Picks
+          </h2>
+
+          <p>
+            We picked the best example of each sharpener type rather than seven versions of the same thing. STIHL's 2-in-1 file guide leads because it handles depth gauges automatically, Oregon's compact bench grinder is the workshop pick, and Granberg's jig gives grinder-like accuracy with a file. Oregon's professional grinder, 12V field sharpener and file kit, plus Dremel's rotary tool kit, cover the remaining jobs and budgets. Specifications are the manufacturers' own.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings on Amazon)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="matching" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Match Pitch, Gauge and File Size
+          </h2>
+
+          <p>
+            Before you buy any sharpener, identify your chain. Pitch is the spacing of the drive links, and it determines the size of the cutters and therefore the file or stone diameter. The common pitches are 1/4-inch, 3/8-inch low profile, .325-inch, 3/8-inch and .404-inch. Gauge is the thickness of the drive links, typically .043, .050, .058 or .063 inch.
+          </p>
+
+          <p>
+            The pitch and gauge are usually stamped on the drive links or the bar, printed on the chain box, and listed in your saw's manual. Many small battery saws and pole saws use 3/8-inch low-profile or 1/4-inch chain; mid-size gas saws commonly use .325-inch or 3/8-inch; large professional saws use 3/8-inch or .404-inch.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Chain pitch</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Typical file size</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Commonly found on</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">1/4-inch</td>
+                    <td class="px-4 py-4 text-gray-700">5/32 inch (4.0 mm)</td>
+                    <td class="px-4 py-4 text-gray-700">Some pole saws and small top-handle saws</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">3/8-inch low profile</td>
+                    <td class="px-4 py-4 text-gray-700">5/32 inch (4.0 mm)</td>
+                    <td class="px-4 py-4 text-gray-700">Battery saws, pole saws, small gas saws</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">.325-inch</td>
+                    <td class="px-4 py-4 text-gray-700">3/16 inch (4.8 mm)</td>
+                    <td class="px-4 py-4 text-gray-700">Mid-size gas saws</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">3/8-inch</td>
+                    <td class="px-4 py-4 text-gray-700">13/64 to 7/32 inch (5.2 to 5.5 mm)</td>
+                    <td class="px-4 py-4 text-gray-700">Larger homeowner and pro saws</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">.404-inch</td>
+                    <td class="px-4 py-4 text-gray-700">7/32 inch (5.5 mm)</td>
+                    <td class="px-4 py-4 text-gray-700">Large professional saws</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            Treat that table as a starting point, not a rule. File size can vary with the chain series and the manufacturer, so always confirm against the chain maker's chart. Oregon's field kit includes one, and it is the most useful piece of paper in the box. A file that is too small cuts a hook into the cutter; one that is too large leaves the edge blunt.
+          </p>
+
+          <p>
+            Gauge does not change the file size, but it matters when you buy replacement chain and when you clamp a chain in a grinder vise. If you own several saws, keep a note of each saw's pitch, gauge and drive link count on the inside of the case lid. It saves a lot of guessing at the store.
+          </p>
+        </div>
+
+        <div id="depth-gauges" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Depth Gauges: The Half of Sharpening People Skip
+          </h2>
+
+          <p>
+            Each cutter on a chain has a small hump in front of it called the depth gauge, or raker. It controls how deeply the cutter bites. As you sharpen, the cutter gets shorter and lower, while the depth gauge stays the same height, so after several sharpenings the gauge prevents the cutter from reaching the wood at all.
+          </p>
+
+          <p>
+            That is why a freshly filed chain can still cut slowly and produce dust instead of chips. The fix is to lower the depth gauges with a flat file, using a depth gauge tool that sits over the cutter and exposes only the part of the gauge that needs removing. The correct setting is specified by the chain maker and is commonly around 0.025 inch for many standard chains, smaller on some low-kickback chains.
+          </p>
+
+          <p>
+            Do not overdo it. Depth gauges that are too low make the chain grab, vibrate and kick back more readily, which is a safety problem, not just a cutting one. Lower them only a little at a time, and round the front edge afterward to keep the original profile.
+          </p>
+
+          <p>
+            This is where STIHL's 2-in-1 file guide earns its top spot. It files the cutter and the depth gauge in the same stroke, so the two always stay in proportion. Bar-mounted jigs and bench grinders also handle depth gauges, but you have to remember to do it. Most hand-filing kits rely on you.
+          </p>
+        </div>
+
+        <div id="angles" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Top-Plate, Side-Plate and Down Angles
+          </h2>
+
+          <p>
+            Three angles define a sharpened cutter. The top-plate angle is the angle of the file across the chain, viewed from above. Most standard chisel and semi-chisel chains use around 30 degrees, though some low-kickback and specialty chains call for 25 or 35, and ripping chain uses a much shallower angle.
+          </p>
+
+          <p>
+            The down angle, or tilt of the file, is usually held level or tilted slightly downward depending on the chain, and the side-plate angle is mostly set by holding the file at the correct height in the cutter. File guides and the witness marks stamped on many cutters make these easier to get right, so look for them before you start.
+          </p>
+
+          <p>
+            Consistency matters more than perfection. A chain with every cutter at 28 degrees will cut straighter than one with cutters ranging from 25 to 35. Inconsistent angles, and especially inconsistent cutter lengths from side to side, are why chains pull to one side and cut a curve.
+          </p>
+
+          <p>
+            Bench grinders and bar-mounted jigs excel here because the angle is set mechanically and repeated for every tooth. If you file by hand, use a guide with angle lines, keep the file at the same height every stroke, and sharpen all the cutters on one side before turning the saw around to do the other.
+          </p>
+        </div>
+
+        <div id="technique" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. How to File a Chain Properly
+          </h2>
+
+          <p>
+            Secure the saw first. Clamp the bar in a vise, set the chain brake, and on a gas saw remove the spark plug wire; on a battery saw remove the pack. A chain that moves while you file will never sharpen evenly. If you are working at a bench, our guide to the <a href="/best-bench-vise/" class="text-[#1E90FF] font-bold hover:underline">best bench vises</a> covers vises that grip a bar securely, and a stump vise does the same job in the field.
+          </p>
+
+          <p>
+            Find the shortest cutter on the chain and use it as your reference; every cutter needs to end up the same length. File from the inside of the cutter toward the outside, pushing the file forward with steady, even pressure and lifting it on the return stroke. Rotate the file slightly as you go so it wears evenly.
+          </p>
+
+          <p>
+            Count your strokes, typically three to five per cutter, and use the same number on every one. Mark the starting cutter with a paint pen so you know where you began. Sharpen all the cutters facing one way, then move to the other side of the saw and do the rest.
+          </p>
+
+          <p>
+            Finish with the depth gauges, then check your work. A sharp cutter has a bright, clean edge with no rounded corner, and it should feel grabby under a fingernail. Test cut a log: a sharp chain pulls itself into the wood and throws coarse chips, not fine dust. If the cut wanders, check that the cutters on each side are the same length.
+          </p>
+        </div>
+
+        <div id="when-to-sharpen" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. When to Sharpen and When to Replace
+          </h2>
+
+          <p>
+            Sharpen when the saw starts telling you. The signs are fine sawdust instead of chips, needing to push the saw into the cut, smoke from the cut, or the saw pulling to one side. A light touch-up with a file every tank of fuel or battery charge keeps a chain cutting far better than waiting until it is badly dull.
+          </p>
+
+          <p>
+            Dirt, sand and rocks dull a chain faster than anything else. One contact with the ground can take the edge off every cutter that touched it. Keep the bar out of the dirt, clean the bark of muddy logs before cutting, and expect to sharpen immediately after hitting anything hard.
+          </p>
+
+          <p>
+            Replace the chain when the cutters have been filed back to the minimum length marked on the top plate, when cutters are cracked or broken, or when the chain has stretched so much that it can no longer be tensioned. A bench grinder can rescue a chain with damaged cutters, but if the damage is deep, a new chain is often the cheaper option.
+          </p>
+
+          <p>
+            Sharpening schedules work the same way for other blades around the yard: little and often beats occasional heavy grinding. Our guide to <a href="/how-often-to-sharpen-mower-blades/" class="text-[#1E90FF] font-bold hover:underline">how often to sharpen mower blades</a> follows the same logic. If you burn through chains cutting firewood, pairing a sharp saw with a good <a href="/best-log-splitter/" class="text-[#1E90FF] font-bold hover:underline">log splitter</a> is the quickest way to cut the work in half.
+          </p>
+        </div>
+
+        <div id="grinders" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Using a Bench Grinder Without Ruining a Chain
+          </h2>
+
+          <p>
+            Bench grinders are the most accurate way to sharpen a chain, and the easiest way to ruin one. The danger is heat. Hold the wheel against a cutter for too long and the steel turns blue, which means it has lost its hardness and will dull almost immediately. Use quick, light touches, and let the cutter cool if it gets warm.
+          </p>
+
+          <p>
+            Match the wheel to the chain. Oregon's grinders come with 3.2 mm and 4.7 mm wheels for different cutter sizes, and the wheel thickness must suit your pitch. Dress the wheel with the dressing brick whenever it glazes or loses its profile, because a worn wheel grinds the wrong shape into every cutter.
+          </p>
+
+          <p>
+            Set the angles from the chain maker's specification, not from memory, and use the grinder's stop so every cutter is ground to the same length. Grind all the cutters on one side, then reset the vise angle and do the other side. Finish the depth gauges with the flat disc or a hand file.
+          </p>
+
+          <p>
+            Wear safety glasses and keep hands clear of the wheel. A bench grinder for chains is a different tool from a general-purpose grinder or an <a href="/best-angle-grinder/" class="text-[#1E90FF] font-bold hover:underline">angle grinder</a>, and you should never freehand a chain on either of those. The vise and stops on a dedicated chain grinder are what make the result accurate and safe.
+          </p>
+        </div>
+
+        <div id="pole-and-battery" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            10. Sharpening Small Battery and Pole Saw Chains
+          </h2>
+
+          <p>
+            Small battery chainsaws and pole saws often use 3/8-inch low-profile or 1/4-inch chain, which has smaller cutters than a typical gas saw and needs a smaller file, usually 5/32 inch. Using a .325-inch or 3/8-inch file on these chains is a common mistake that ruins the cutter shape.
+          </p>
+
+          <p>
+            These chains are also thinner and narrower, so they dull faster when they touch dirt and lose more of their life with each heavy sharpening. Light, frequent touch-ups with a correctly sized file are the best approach. Low-profile chains often have built-in low-kickback features, so follow the maker's depth gauge setting closely.
+          </p>
+
+          <p>
+            Pole saw chains are particularly worth keeping sharp, because a dull chain makes you push, and pushing a saw 12 feet overhead is tiring and inaccurate. If you prune with a pole saw, see our guide to the <a href="/best-pole-saw/" class="text-[#1E90FF] font-bold hover:underline">best pole saws</a> for the chain sizes the popular models use, and keep the right file in the kit with the saw.
+          </p>
+
+          <p>
+            Some battery saw owners prefer to swap chains rather than sharpen in the field, carrying a spare loop and sharpening both at home. That is a sensible approach: a chain takes seconds to change on most saws with tool-free tensioning, and you can sharpen properly at a bench with a vise rather than on your knee. Our <a href="/best-chainsaw/" class="text-[#1E90FF] font-bold hover:underline">chainsaw buyer's guide</a> notes which saws make chain changes easy.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using the Wrong File Size</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A file that is too small hooks the cutter; one that is too large leaves it blunt. Check the pitch stamped on the drive links and confirm the file size against the chain maker's chart. Small battery and pole saw chains usually need a smaller file than gas saws.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring the Depth Gauges</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Sharpening the cutters without lowering the depth gauges leaves a chain that looks sharp but makes dust instead of chips. Check the gauges every few sharpenings with a depth gauge tool and lower them to the maker's setting, then round the front edge. Go slowly, because gauges filed too low make the chain grab and kick.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Uneven Cutter Lengths</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Filing one side harder than the other makes the chain pull and cut a curve. Use the shortest cutter as your reference, count strokes, and keep every cutter the same length. A bar-mounted jig or bench grinder makes this much easier than freehand filing, and a paint mark on the first cutter stops you losing count.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Overheating Cutters on a Grinder</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Holding a grinding wheel or rotary stone on a cutter too long turns the steel blue and soft, and the edge will not last. Use quick, light touches, keep the wheel dressed, and let the chain cool. A blue cutter needs grinding back past the damage.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Sharpening a Chain That Should Be Replaced</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Once cutters reach the minimum length marked on the top plate, or are cracked or badly chipped, sharpening wastes time. Replace the chain instead. Keep a spare loop with the saw so you can swap it in the field when one goes dull, then sharpen the old chain properly at home with a vise and good light.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            12. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best chainsaw sharpener for beginners?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A handheld file guide that also lowers the depth gauges, like STIHL's 2-in-1 Easy File, is the easiest to get right because the guide sets the angle and depth for you. An Oregon field kit is the cheapest place to start if you have several chain sizes, since it includes three file sizes and a filing chart.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is it better to file or grind a chainsaw chain?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Both work. Hand filing removes less metal, works anywhere and is what most professionals do between tanks. Bench grinding is faster and more consistent, and it is the best way to restore a damaged chain. Many owners file in the field and grind once or twice a season to bring the chain back to true.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What size file do I need for my chainsaw chain?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It depends on the chain pitch. As a rough guide, 3/8-inch low-profile and 1/4-inch chains use a 5/32-inch file, .325-inch uses 3/16-inch, and full 3/8-inch uses 13/64 or 7/32-inch. Always confirm with the chain maker's chart, because file size can vary by chain series, and the pitch is usually stamped on the drive links or printed on the chain box.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How often should I sharpen a chainsaw chain?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Touch it up whenever it starts making dust instead of chips, needs pushing, or pulls to one side, which for many users is every tank of fuel or battery charge. Hitting dirt or a rock dulls it instantly. Light, frequent filing keeps it cutting better and lasting longer than waiting until it is very dull.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What angle should I sharpen a chainsaw chain?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Most standard chisel and semi-chisel chains use a top-plate angle of around 30 degrees, though some low-kickback and specialty chains specify 25 or 35 degrees, and ripping chain is much shallower. Check the witness marks on the cutters or the chain maker's specification, and keep the angle consistent on every cutter.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are electric chainsaw sharpeners worth it?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A bench grinder is worth it if you run several chains or cut a lot of firewood, because it sharpens quickly and consistently. Handheld 12V and rotary tool sharpeners are fast for field touch-ups but easy to overheat or overgrind. For one saw used occasionally, a good file guide is all you need.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How many times can a chainsaw chain be sharpened?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Many chains can be sharpened ten times or more, depending on how much metal each sharpening removes. Light filing extends chain life, while heavy grinding to repair damage shortens it. Replace the chain when cutters reach the minimum length marked on the top plate, or when they are cracked or broken.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Chainsaw Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-chainsaw/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Chainsaws</h3>
+              <p class="text-gray-500 text-sm mt-2">Gas and battery chainsaws ranked for firewood, storm cleanup and property work.</p>
+            </a>
+            <a href="/best-pole-saw/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Pole Saws</h3>
+              <p class="text-gray-500 text-sm mt-2">Battery, manual and gas pole saws compared on reach, bar length and weight.</p>
+            </a>
+            <a href="/best-bench-vise/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#38BDF8] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Bench Vises</h3>
+              <p class="text-gray-500 text-sm mt-2">A solid vise holds the bar still while you file, which is half of sharpening well.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Match the sharpener to the way you cut. One or two saws on the same chain pitch: buy a STIHL 2-in-1 file guide in the right size and keep it with the saw. Several saws or a lot of firewood: add an Oregon bench grinder and true the chains up once or twice a season.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Whatever you choose, the fundamentals matter more than the tool: the right file size for your pitch, the same angle and cutter length on every tooth, and depth gauges kept at the maker's setting. Do those three things and any sharpener on this list will keep your saw cutting like new.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Improvement" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

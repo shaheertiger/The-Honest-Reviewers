@@ -6,6 +6,21 @@ import sitemap from '@astrojs/sitemap';
 // Buyer's guides that target high-volume search terms. They get a higher
 // sitemap priority than the 0.5 default so crawlers reach them sooner.
 const priorityGuides = new Set([
+  'best-electric-tankless-water-heater',
+  'best-attic-fan',
+  'best-mold-remover',
+  'best-moisture-meter',
+  'best-garage-door-opener',
+  'best-hedge-trimmer',
+  'best-pole-saw',
+  'best-lawn-edger',
+  'best-chainsaw-sharpener',
+  'best-leaf-vacuum',
+  'best-miter-saw',
+  'best-reciprocating-saw',
+  'best-angle-grinder',
+  'best-wood-filler',
+  'best-garden-hose-nozzle',
   'condensing-vs-non-condensing-tankless-water-heater',
   'tankless-water-heater-not-heating',
   'how-long-do-tankless-water-heaters-last',
