@@ -1,5 +1,6 @@
 ---
 import { amazonLink } from "../data/affiliate";
+import AdUnit from "./AdUnit.astro";
 
 interface Product {
   id: string;
@@ -42,6 +43,21 @@ const top = products[0];
     We may earn a commission when you buy through these links, at no extra cost to you.
   </p>
 </div>
+
+<!-- On phones the layout's top ad sat above the headline and pushed the picks
+     several screens down. Pages with a picks box hide it below md and show the
+     same unit here instead; display:none units are not requested by AdSense. -->
+<div class="qp-ad md:hidden my-8">
+  <AdUnit variant="top" />
+</div>
+
+<style is:global>
+  @media (max-width: 767px) {
+    body:has(#quick-picks) .top-ad {
+      display: none;
+    }
+  }
+</style>
 
 {top && (
   <div
