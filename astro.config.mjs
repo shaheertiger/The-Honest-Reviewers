@@ -6,6 +6,16 @@ import sitemap from '@astrojs/sitemap';
 // Buyer's guides that target high-volume search terms. They get a higher
 // sitemap priority than the 0.5 default so crawlers reach them sooner.
 const priorityGuides = new Set([
+  'how-often-should-you-seal-a-deck',
+  'how-long-does-deck-sealer-take-to-dry',
+  'does-thompsons-water-seal-work',
+  'should-you-seal-pressure-treated-wood',
+  'how-much-does-it-cost-to-seal-a-deck',
+  'how-long-does-concrete-paint-take-to-dry',
+  'concrete-stain-vs-paint',
+  'how-to-paint-a-concrete-floor',
+  'why-is-my-concrete-floor-paint-peeling',
+  'how-much-does-it-cost-to-paint-a-concrete-floor',
   'heated-driveway-cost',
   'does-salt-damage-concrete',
   'gravel-driveway-cost',
