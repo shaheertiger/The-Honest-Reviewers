@@ -555,6 +555,13 @@ const priorityGuides = new Set([
   'point-of-use-water-heater',
   'replace-water-heater-with-tankless',
   'water-heater-brands',
+
+  // October 2026 batch: electric snow blower cluster.
+  'electric-vs-gas-snow-blower',
+  'electric-snow-shovel',
+  'ego-snow-blower',
+  'toro-electric-snow-blower',
+  'snow-joe-snow-blower',
 ]);
 
 export default defineConfig({
