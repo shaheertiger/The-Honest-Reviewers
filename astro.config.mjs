@@ -581,6 +581,15 @@ const priorityGuides = new Set([
   'best-small-humidifier',
   'best-humidifier-for-allergies',
   'humidifier-air-purifier-combo',
+
+  // October 2026 batch: snow shovel and snow tools cluster.
+  'best-snow-shovel',
+  'best-cordless-snow-shovel',
+  'best-snow-shovel-for-car',
+  'snow-removal-tools',
+  'self-propelled-snow-blower',
+  'greenworks-snow-blower',
+  'ryobi-snow-blower',
 ]);
 
 export default defineConfig({
