@@ -1,0 +1,989 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Garage Heaters",
+    "url": "/best-garage-heater/"
+  },
+  {
+    "title": "Best Mini Split Heat Pumps",
+    "url": "/best-mini-split-heat-pump/"
+  },
+  {
+    "title": "Ceiling Fan Direction in Summer and Winter",
+    "url": "/ceiling-fan-direction-summer-and-winter/"
+  },
+  {
+    "title": "Best Ceiling Fans With Lights",
+    "url": "/best-ceiling-fans-with-lights/"
+  },
+  {
+    "title": "Do You Need a Dehumidifier in Winter?",
+    "url": "/do-you-need-a-dehumidifier-in-winter/"
+  },
+  {
+    "title": "Can a Power Station Run a Space Heater?",
+    "url": "/can-a-portable-power-station-run-a-space-heater/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-17", modified: "2026-10-17" });
+const title = "Best Electric Space Heaters for Winter 2026–2027: 7 Honest Picks";
+const description =
+  "Seven electric space heaters for winter 2026–2027, one per type, plus the 1,500-watt physics, room sizing, real running costs and the safety rules that matter.";
+
+const PRODUCTS = [
+  {
+    "id": "vornado-avh2-whole-room-heater",
+    "name": "Vornado AVH2 Advanced Whole Room Heater",
+    "category": "Ceramic Fan-Forced Circulator, 1,500/750W",
+    "badge": "Best Overall",
+    "description": "The AVH2 is the heater we would put in most bedrooms, home offices and living-room corners, and the reason is control rather than output. Like every plug-in heater on this list it tops out at 1,500 watts, but Vornado's Auto Climate control is an electronic thermostat that steps between the 1,500-watt high and 750-watt low settings to hold the temperature you set, instead of cycling the full 1,500 watts on and off. Vornado's vortex fan is designed to throw the warm air across the room rather than leave it pooled in front of the grille, and how evenly a room warms decides how comfortable you are at a given setting far more than any efficiency claim does. The owner's guide lists a tip-over switch and a multilevel overheat shut-off, the case is rated cool-touch, the grille spirals are tight enough to keep small fingers out, and a timer runs up to 12 hours. At 4.48 pounds it is easy to carry from the office to the bedroom at night, and Vornado backs it with a five-year warranty, the longest of the portables here. The trade-offs are a fan you will hear, no remote, and a spec sheet that does not name its safety listing, so check the rating label for a UL, ETL or CSA mark before you keep it.",
+    "pros": [
+      "Auto Climate electronic thermostat steps between 1,500 W and 750 W to hold a set temperature",
+      "Tip-over switch and multilevel overheat shut-off, per Vornado's owner's guide",
+      "Cool-touch case and tight grille spirals around the fan",
+      "Timer up to 12 hours, plus continuous or auto fan modes",
+      "Five-year warranty and a 4.48 lb weight that makes it easy to move between rooms"
+    ],
+    "cons": [
+      "Fan-forced, so it is never silent; light sleepers may prefer a radiator",
+      "No remote, and the listing mark is not stated on the spec sheet, so check the label"
+    ],
+    "bottomLine": "For most rooms, the Vornado AVH2 is the electric space heater to buy: every 1,500-watt heater makes the same heat, so what you are paying for is a real electronic thermostat, a tip-over switch and a five-year warranty, and the AVH2 has all three."
+  },
+  {
+    "id": "lasko-ar122-smart-tower-heater",
+    "name": "Lasko AR122 22-Inch Smart Ceramic Tower Heater",
+    "category": "Smart Ceramic Tower, 750/1,300/1,500W",
+    "badge": "Best Smart Heater",
+    "description": "If the heater in your house routinely runs in an empty room, this is the one that can genuinely cut the bill, because the cheapest heat is the heat you never make. Lasko's ClimaSense feature is built to detect whether the room is occupied, hold your set temperature while it is, and switch the heater off on its own when the room empties. Around that sits a full smart-home kit: control and scheduling in the Aria for Home app, voice control through Alexa or Google Assistant, front touch controls, a 12-hour timer and a Night Mode that dims the display. Output steps through three settings, 750, 1,300 and 1,500 watts, which gives the thermostat a useful middle ground. Lasko lists 360-degree topple sensing with lift and tip-over sensors, automatic overheat protection, a cool-touch housing and ETL listing, and the tower weighs 4.0 pounds. It oscillates to spread warm air across a living room. The caveat is the usual one for connected appliances: the smart features depend on the app and your Wi-Fi, and an app is only as good as the company's willingness to keep supporting it. Lasko's warranty is three years.",
+    "pros": [
+      "ClimaSense occupancy detection can turn the heater off when the room is empty",
+      "Three output levels: 750, 1,300 and 1,500 watts",
+      "App scheduling plus Alexa and Google Assistant voice control",
+      "Topple, lift and tip-over sensing, overheat protection and ETL listing, per Lasko",
+      "12-hour timer and Night Mode; three-year warranty"
+    ],
+    "cons": [
+      "The features that save money depend on the app and Wi-Fi",
+      "A fan heater, so expect some noise on high"
+    ],
+    "bottomLine": "Pick the Lasko AR122 if heaters in your home get left on: occupancy sensing and app schedules are the features that actually cut running hours."
+  },
+  {
+    "id": "delonghi-dragon-trd40615e",
+    "name": "De'Longhi Dragon Digital TRD40615E Oil-Filled Radiator",
+    "category": "Oil-Filled Radiator, 700 to 1,500W",
+    "badge": "Best Oil-Filled Radiator",
+    "description": "An oil-filled radiator does not make heat more cheaply than a ceramic heater; the oil is a heat store, not a fuel. What it does is change how the heat arrives. The Dragon's sealed oil reservoir and six fins warm up slowly, then give off steady radiant and convected heat with no fan at all, and they keep radiating after the elements cycle off, which evens out the temperature swings a thermostat creates. That makes it the quiet choice for bedrooms and nurseries. This digital version has an LED control panel, three power settings between a 700-watt minimum and 1,500-watt maximum, an ECO function De'Longhi says regulates power and temperature, a 24-hour timer, anti-freeze protection, a child lock, a thermal cut-off and a safety thermostat. It rolls on pre-assembled SmartSnap castors, which you will appreciate, because De'Longhi lists it at 25.61 pounds. Two honest notes from De'Longhi's own US listing: it says the heater is only suitable for well-insulated spaces or occasional use, and its spec table does not spell out a tip-over switch, so confirm that on the box if it matters to you. The listing shows a two-year warranty.",
+    "pros": [
+      "No fan: silent operation suited to bedrooms",
+      "Digital thermostat, three power settings from 700 to 1,500 watts, and an ECO mode",
+      "24-hour timer, child lock, anti-freeze setting and thermal cut-off",
+      "Keeps radiating after it cycles off, which smooths temperature swings",
+      "Pre-assembled castors and a sealed reservoir that never needs refilling"
+    ],
+    "cons": [
+      "Slow to warm a cold room compared with a fan heater",
+      "Heavy at 25.61 lb, and the US spec table does not list a tip-over switch"
+    ],
+    "bottomLine": "The De'Longhi Dragon is the quiet bedroom pick: no fan, steady radiant warmth and a real digital thermostat, at the cost of a slow warm-up and a lot of steel."
+  },
+  {
+    "id": "delonghi-hmp1500-mica-panel",
+    "name": "De'Longhi HMP1500 Mica Thermic Panel Heater",
+    "category": "Micathermic Panel, 750/1,500W",
+    "badge": "Best Panel Heater",
+    "description": "A micathermic panel sits between an oil radiator and a fan heater. Its heating element is sheathed in thin sheets of mica, so there is no reservoir of oil to warm first and the panel starts radiating sooner, while still heating mainly by radiation and convection. One caution about De'Longhi's own listing: it says in one place there is no fan and in another that the unit has a dual lateral fan system for heat distribution, so expect quiet rather than guaranteed silence. The HMP1500 is a slim panel with two settings, 1,500 and 750 watts, an adjustable thermostat on a dial, an internal tip-over switch, a thermal shut-off and a standby setting De'Longhi says helps prevent frozen pipes. It ships with roll-around castors and a wall bracket, so you can hang it on a wall and get it off the floor entirely, which is a real advantage in a room with pets or toddlers. De'Longhi's marketing says mica heaters convert 100 percent of electricity into heat, which is true and also true of every other resistance heater on this page. The dial thermostat is less precise than the electronic controls on our top picks, and some colour versions show as out of stock on De'Longhi's US site, so check the exact model number when you buy. The listing shows a two-year warranty.",
+    "pros": [
+      "Slim panel that heats mostly by radiation and convection, so it is quiet",
+      "Two settings, 1,500 and 750 watts, with an adjustable thermostat",
+      "Internal tip-over switch, thermal shut-off and anti-freeze standby setting",
+      "Includes castors and a wall bracket for floor or wall mounting",
+      "Light enough to move easily, unlike an oil-filled radiator"
+    ],
+    "cons": [
+      "Dial thermostat is less precise than an electronic one",
+      "Some versions show out of stock on De'Longhi's US site; match the model number"
+    ],
+    "bottomLine": "Choose the HMP1500 when you want radiator-style quiet without radiator weight, or a heater you can hang on the wall out of reach."
+  },
+  {
+    "id": "dr-infrared-dr968-space-heater",
+    "name": "Dr. Infrared Heater DR-968 Portable Space Heater",
+    "category": "Infrared Quartz and PTC Cabinet, 1,000/1,500W",
+    "badge": "Best Infrared Heater",
+    "description": "The DR-968 pairs infrared quartz tubes with a PTC element and a blower inside a wood-look cabinet. The manual lists 1,500 watts on high, 1,000 on low, and an ECO mode that switches between the two to reach and hold the set temperature, with an electronic thermostat Dr. Heater lists at 50 to 85 degrees. It comes with a remote, an LED display, a 1-to-12-hour timer and a Night Mode that, once the room reaches the set temperature, samples it only every 30 minutes instead of every 4, for quieter nights. Safety is well covered: the manual describes a tip-over switch, an overheat cut-off, a separate inlet-air overheat cut-off if the intake is blocked, and a cool-touch cabinet, and Dr. Heater says the unit is UL certified. Ignore the marketing line that it produces up to 60 percent more heat. The same manual rates it at 5,200 BTU, which is simply the 5,118 BTU per hour every 1,500-watt heater produces, rounded up. What earns it a place is longevity: Dr. Heater sells replacement heating elements, blower motors, thermal fuses and control boards for this model, which is rare in a category where most heaters are thrown away when one part fails. The washable rear filter needs cleaning about monthly, and the manual lists 23.5 pounds. It carries a three-year limited warranty.",
+    "pros": [
+      "Electronic thermostat, ECO mode and a remote control",
+      "Tip-over switch, overheat cut-off and inlet-air overheat protection, per the manual",
+      "UL certified, per Dr. Heater",
+      "Replacement elements, blower motor and control board sold for this model",
+      "Night Mode reduces how often the blower cycles; three-year warranty"
+    ],
+    "cons": [
+      "\"Up to 60% more heat\" marketing is not physically possible at 1,500 watts",
+      "Bulky cabinet at 23.5 lb, and the filter needs regular cleaning"
+    ],
+    "bottomLine": "Buy the DR-968 for its thermostat, remote and replaceable parts, not for its \"more heat\" claim; it makes the same heat as every other 1,500-watt heater."
+  },
+  {
+    "id": "cadet-com-pak-csc151tw",
+    "name": "Cadet Com-Pak CSC151TW 1500W Wall Heater",
+    "category": "Hardwired Fan-Forced Wall Heater, 1,500W 120V",
+    "badge": "Best Wall Heater",
+    "description": "For a room that is cold every single winter, such as a bedroom over the garage or a finished basement room the ducts never reached, a hardwired wall heater beats any portable. There is no cord to trip on, nothing to tip over, nothing for a curtain to fall onto and no outlet doing a job it was never built for. The CSC151TW is Cadet's complete Com-Pak unit: a recessed heater assembly with a built-in thermostat, galvanized wall can and grille, rated by Cadet at 1,500 watts, 120 volts, 12.5 amps and 5,120 BTU. It recesses into a rough opening of 8 by 10-1/8 by 4 inches, Cadet recommends mounting it about 12 inches off the floor, and it includes a high-temperature safety shutoff. Because it is a fixed heater on its own circuit, it needs wiring: Cadet's manual limits the load on a breaker to 80 percent of its rating, and 12.5 amps is more than 80 percent of a 15-amp breaker, so plan on a 20-amp circuit and a licensed electrician if you are not comfortable in the panel. Cadet also makes 240-volt versions that draw half the amperage for the same heat. The warranty is two years.",
+    "pros": [
+      "Built-in thermostat, wall can and grille in one complete unit",
+      "Hardwired: no cord, no outlet strain and nothing to tip over",
+      "High-temperature safety shutoff",
+      "Recesses into an 8 x 10-1/8 x 4 inch rough opening",
+      "240-volt versions available for a lower-amperage circuit"
+    ],
+    "cons": [
+      "Requires a dedicated circuit and wiring, so budget for an electrician",
+      "Fixed in place; it heats one room, permanently"
+    ],
+    "bottomLine": "The Cadet Com-Pak is the right answer for a room that is always cold: a permanent, thermostat-controlled heater with no cord to misuse."
+  },
+  {
+    "id": "lasko-cd09475-ceramic-heater",
+    "name": "Lasko CD09475 9-Inch Oscillating Ceramic Space Heater",
+    "category": "Personal Ceramic Heater, 900/1,500W",
+    "badge": "Best for a Desk",
+    "description": "Sometimes the efficient move is to heat the person rather than the room, and a small heater under a desk does that well. The CD09475 is a 3.1-pound, 9-inch ceramic heater with high and low settings that Lasko's spec sheet puts at 1,500 and 900 watts, base oscillation to spread the warmth across your legs, a tip-over switch, what Lasko calls 2X overheat protection, a cool-touch housing, ETL listing, a removable easy-clean filter and a 6-foot cord. Here is the honest catch, and the reason it is not ranked higher: it has no thermostat. The manual shows a heat button that toggles high and low and a timer you can set for 1, 2 or 4 hours; without the timer it shuts itself off after 8 hours. That means it draws its full wattage the whole time it runs, so used as a room heater it can cost more than a thermostat-controlled model that throttles back. Used as intended, for a couple of hours at a desk with the house thermostat turned down, it is a sensible, cheap way to stay warm. Lasko's warranty is three years.",
+    "pros": [
+      "Small and light at 3.1 lb, with oscillation for under-desk use",
+      "Tip-over switch, overheat protection, cool-touch housing and ETL listing",
+      "1, 2 or 4-hour timer, plus an automatic 8-hour shutoff",
+      "Removable easy-clean filter; three-year warranty"
+    ],
+    "cons": [
+      "No thermostat: it runs at full wattage until the timer or you switch it off",
+      "Sized for personal warmth, not for heating a whole room"
+    ],
+    "bottomLine": "Use the Lasko CD09475 to warm yourself at a desk for a few hours, not to heat a room; with no thermostat it never throttles back."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Electric Space Heaters",
+          item: "https://www.thehonestreviewers.com/best-electric-space-heater/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "Do energy-efficient space heaters really use less electricity?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not per unit of heat. Every resistance heater converts nearly all its electricity into heat, so a 1,500-watt model makes about 5,118 BTU per hour regardless of the technology. A so-called efficient heater can use less electricity overall only by running less, through a precise thermostat, a low setting, a timer or occupancy sensing that shuts it off in an empty room."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does it cost to run a space heater all night?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "At the US average residential price of 18.31 cents per kWh that EIA reported for July 2026, a 1,500-watt heater running flat out for 8 hours uses 12 kWh and costs about $2.20. A thermostat model that cycles half the time costs about half that. Use the price on your own bill, since rates vary widely by state."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What size space heater do I need for a 12x12 room?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A 12-by-12 room is 144 square feet. At the common rule of thumb of about 10 watts per square foot, it needs roughly 1,440 watts as its main heat source, so a standard 1,500-watt heater is right. A drafty room or one with a ceiling higher than 8 feet may need more than one plug-in heater can deliver."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is an oil-filled radiator cheaper to run than a ceramic heater?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. At the same wattage both make the same heat for the same money. The oil stores heat and releases it slowly, so a radiator is quieter and gives steadier warmth, which may let you set the thermostat a little lower. It also warms a cold room more slowly, so it is not cheaper per hour of use."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is it safe to leave a space heater on overnight?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "CPSC advises turning heaters off when you sleep, and the US Fire Administration says to switch them off when you leave the room or go to bed. If you heat a bedroom, run it before bed with a timer set to shut it off, keep bedding at least three feet away, and choose a heater with a tip-over switch and overheat protection."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I plug a space heater into an extension cord or power strip?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. CPSC says to plug space heaters directly into a wall outlet, never an extension cord or power strip, and heater manuals add surge protectors and multi-outlet adapters to that list. A heater's 12.5-amp continuous draw can overheat those devices at their connections. If you need heat where there is no outlet, a hardwired wall heater is the safer fix."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a space heater cheaper than central heat?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only when it lets you heat less space. Heating one closed room with a space heater while the central thermostat is set back can cut costs; the Department of Energy says a 7 to 10 degree setback for 8 hours a day can save up to 10 percent a year. If you heat with a heat pump, resistance heat costs more per unit of warmth."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home & Garage",
+    tags: [
+      "electric space heater",
+      "best space heater",
+      "energy efficient space heater",
+      "oil filled radiator heater",
+      "infrared space heater",
+      "space heater safety",
+      "space heater running cost"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated for Winter 2026–2027
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best Electric <span class="text-[#38BDF8]">Space Heaters</span> for Winter 2026–2027
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Seven heaters, one for each type, chosen for thermostats, safety features and warranties, because every 1,500-watt heater makes exactly the same heat.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#vornado-avh2-whole-room-heater"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Compare All 7 Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Shaheer Ali Khan</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Consumer Product Testing &amp; Materials Performance Specialist</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="14.6k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-chose" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Chose</a>
+          <a href="#btu-truth" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. The 5,118 BTU Truth</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 7 Picks</a>
+          <a href="#heater-types" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Heater Types Compared</a>
+          <a href="#sizing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Sizing to the Room</a>
+          <a href="#running-cost" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Running Costs</a>
+          <a href="#safety" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Safety Essentials</a>
+          <a href="#outlets" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Outlets and Circuits</a>
+          <a href="#zone-heating" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Saving Money</a>
+          <a href="#wrong-answer" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. When Not to Use One</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">12. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Every 1,500-watt electric space heater turns electricity into the same 5,118 BTU per hour, so the "energy efficient" label on the box is mostly marketing. What actually separates a good heater from a bad one is a thermostat that throttles back, a tip-over switch and listing mark you can trust, heat delivery that suits the room, and the habit of turning the central heat down while it runs.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-chose" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Chose These Heaters
+          </h2>
+
+          <p>
+            Start with the honest part. We did not run our own heat-up tests for this guide, so you will not find invented numbers about how many degrees a heater raised a room in how many minutes. Every specification here comes from the manufacturer's spec sheet, owner's manual or product listing, and where those sources disagree or leave something out, we say so.
+          </p>
+
+          <p>
+            That is less limiting than it sounds, because the most important fact about electric space heaters is not something a test would reveal: every 1,500-watt resistance heater turns its electricity into the same amount of heat. So we judged heaters on the things that genuinely differ.
+          </p>
+
+          <p>
+            First, thermostat quality. An electronic thermostat that steps down to a low setting holds a room steady without running at full power longer than needed; a heater with no thermostat runs flat out until you switch it off. Second, documented safety: a tip-over switch, overheat protection and a listing mark from a recognized testing laboratory such as UL, Intertek (ETL) or CSA. Third, how the heat arrives, fan-forced or radiant, which decides whether a heater suits a bedroom or a drafty den. Finally, we chose one pick per heater type rather than seven versions of the same ceramic box, and favoured long warranties and available replacement parts.
+          </p>
+        </div>
+
+        <div id="btu-truth" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. The 5,118 BTU Truth About "Energy Efficient" Heaters
+          </h2>
+
+          <p>
+            One watt of electricity converted to heat equals about 3.412 BTU per hour. A heater drawing 1,500 watts therefore produces about 5,118 BTU per hour, whether it is a ceramic cube, an oil-filled radiator, a mica panel or a wood-cabinet infrared heater. Resistance heating is effectively 100 percent efficient at the point of use: all the electricity becomes heat, because there is nowhere else for it to go. The fan motor and the display lights end up as heat in the room too.
+          </p>
+
+          <p>
+            So claims of "more heat" from a plug-in heater should make you suspicious. One manufacturer on our list advertises up to 60 percent more heat output, while its own manual rates the heater at 5,200 BTU, which is 5,118 rounded up. Another says its panel converts 100 percent of electricity into heat, which is true of the cheapest heater on the shelf too. The 1,500-watt cap is practical: at 120 volts it draws 12.5 amps, close to the limit of the 15-amp circuits most rooms are wired with.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE RULE</p>
+            <p class="text-xl font-bold text-white mb-3">Watts in equals heat out. No plug-in heater beats the physics.</p>
+            <p class="text-gray-300 leading-relaxed m-0">A 1,500-watt heater makes about 5,118 BTU per hour, full stop. What a better heater can do is make less heat when less is needed, and put the heat where you are.</p>
+          </div>
+
+          <p>
+            So what does "energy efficient" mean on a heater box? Done honestly, it means a heater that wastes less of its output. A precise thermostat and a low setting stop it overheating a room you only needed warm. Timers and occupancy sensing stop it heating an empty room. Good air circulation or radiant delivery lets you feel comfortable at a lower setpoint. Those features can save real money. The heating element itself cannot.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The 7 Best Electric Space Heaters for 2026–2027
+          </h2>
+
+          <p>
+            One pick per heater type, from a fan-forced ceramic circulator to a hardwired wall unit. Specifications come from each manufacturer's spec sheet, owner's manual or product listing, and where a source leaves something out, such as a listing mark or a tip-over switch, the card says so. Prices move constantly, so check the current one at the link.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="heater-types" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Ceramic, Oil-Filled, Mica, Infrared or Wall: Which Type Fits
+          </h2>
+
+          <p>
+            Since every type makes the same heat per watt, the choice comes down to how quickly the heat arrives, how it feels, how much noise you will tolerate and where the heater has to live.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Ceramic fan heaters</h3>
+
+          <p>
+            A ceramic heater blows air across a self-regulating ceramic element. It warms you within a minute or two, it is light and cheap, and a good one, like the Vornado AVH2, circulates the warm air instead of blasting a hot spot. The costs are fan noise and dust; Vornado's manual recommends cleaning the outside weekly.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Oil-filled radiators</h3>
+
+          <p>
+            An oil-filled radiator heats a sealed reservoir of oil, which warms the fins and the room by radiation and convection. It is silent and keeps giving off heat after it cycles off, but it is slow to take the chill off a cold room and it is heavy. It suits a bedroom you warm before you need it.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Micathermic panels</h3>
+
+          <p>
+            A mica panel uses an element sheathed in thin mica sheets. With no oil to warm, it responds faster than a radiator but stays quiet, slim and often wall-mountable.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Infrared, quartz and wall heaters</h3>
+
+          <p>
+            Infrared heaters warm the people and objects they face rather than the air first, which is why they feel effective in drafty rooms. Cabinet models like the Dr. Infrared DR-968 add a blower, so they behave much like a quiet fan heater with a radiant component. A hardwired fan-forced wall heater, like the Cadet Com-Pak, is permanent heat for a room that needs it every winter: no cord, nothing to tip, but it needs its own circuit.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Type</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Warm-up</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Noise</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Best for</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Our pick</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Ceramic fan</td>
+                    <td class="px-4 py-4 text-gray-700">Fast</td>
+                    <td class="px-4 py-4 text-gray-700">Fan noise</td>
+                    <td class="px-4 py-4 text-gray-700">Offices, living rooms</td>
+                    <td class="px-4 py-4 text-gray-700">Vornado AVH2</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Oil-filled</td>
+                    <td class="px-4 py-4 text-gray-700">Slow</td>
+                    <td class="px-4 py-4 text-gray-700">Silent</td>
+                    <td class="px-4 py-4 text-gray-700">Bedrooms, nurseries</td>
+                    <td class="px-4 py-4 text-gray-700">De'Longhi Dragon</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Micathermic</td>
+                    <td class="px-4 py-4 text-gray-700">Moderate</td>
+                    <td class="px-4 py-4 text-gray-700">Quiet</td>
+                    <td class="px-4 py-4 text-gray-700">Wall mounting, pets</td>
+                    <td class="px-4 py-4 text-gray-700">De'Longhi HMP1500</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Infrared/quartz</td>
+                    <td class="px-4 py-4 text-gray-700">Fast at you</td>
+                    <td class="px-4 py-4 text-gray-700">Quiet blower</td>
+                    <td class="px-4 py-4 text-gray-700">Drafty rooms</td>
+                    <td class="px-4 py-4 text-gray-700">Dr. Infrared DR-968</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Wall, hardwired</td>
+                    <td class="px-4 py-4 text-gray-700">Fast</td>
+                    <td class="px-4 py-4 text-gray-700">Fan noise</td>
+                    <td class="px-4 py-4 text-gray-700">Rooms cold every winter</td>
+                    <td class="px-4 py-4 text-gray-700">Cadet Com-Pak</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="sizing" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. How to Size a Space Heater to the Room
+          </h2>
+
+          <p>
+            The rule of thumb heater retailers publish, Sylvane's buying guide among them, is about 10 watts of heat per square foot of floor when the heater is the main heat source in a room with ordinary 8-foot ceilings and average insulation. By that rule a 1,500-watt heater covers about 150 square feet as primary heat, a 12-by-12 bedroom with a little to spare. As supplemental heat, topping up a room the furnace already warms, it will stretch further.
+          </p>
+
+          <p>
+            Adjust for the room you actually have. Older rooms with single-pane windows, little insulation or an outside wall on two sides need more, and installers commonly use 12 to 15 watts per square foot for drafty spaces. Ceilings higher than 8 feet need more too, because there is more air to warm. A tight, modern room can get by with less. Ignore any BTU figure printed beside a watt rule unless it uses the right conversion; a watt is about 3.4 BTU per hour, not 5.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Room</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Floor area</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Watts at 10 W/sq ft</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">What that means</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Small bedroom or office</td>
+                    <td class="px-4 py-4 text-gray-700">100 sq ft</td>
+                    <td class="px-4 py-4 text-gray-700">1,000 W</td>
+                    <td class="px-4 py-4 text-gray-700">One heater, often on low</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">12 x 12 bedroom</td>
+                    <td class="px-4 py-4 text-gray-700">144 sq ft</td>
+                    <td class="px-4 py-4 text-gray-700">1,440 W</td>
+                    <td class="px-4 py-4 text-gray-700">One 1,500 W heater</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">12 x 16 family room</td>
+                    <td class="px-4 py-4 text-gray-700">192 sq ft</td>
+                    <td class="px-4 py-4 text-gray-700">1,920 W</td>
+                    <td class="px-4 py-4 text-gray-700">One heater as top-up only</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Open living area</td>
+                    <td class="px-4 py-4 text-gray-700">300 sq ft</td>
+                    <td class="px-4 py-4 text-gray-700">3,000 W</td>
+                    <td class="px-4 py-4 text-gray-700">Two heaters on separate circuits, or a heat pump</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            Be wary of boxes that promise one plug-in heater will warm 500 or 1,000 square feet. At 5,118 BTU per hour that is only possible as a gentle top-up in a space that is already mostly warm. If the room is too big for one 1,500-watt heater, there is no "more powerful" plug-in to buy; the answer is two heaters on two different circuits, a hardwired 240-volt heater, or a proper fix such as a mini split. And if your heater runs on high for hours without reaching its set temperature, the room is losing heat faster than 5,118 BTU per hour, and no mode setting will change that.
+          </p>
+        </div>
+
+        <div id="running-cost" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. What a Space Heater Costs to Run in Winter 2026–2027
+          </h2>
+
+          <p>
+            The formula fits on a sticky note: watts divided by 1,000, times your electricity price per kilowatt-hour, equals the cost per hour. The US Energy Information Administration's most recent monthly figure, for July 2026 in its Electric Power Monthly, puts the average US residential price at 18.31 cents per kWh, up from 17.45 cents a year earlier. Your own rate could be well above or below that, so check the per-kWh price on your bill and substitute it.
+          </p>
+
+          <p>
+            At 18.31 cents, a heater running flat out at 1,500 watts costs about 27 cents an hour. That is the most it can cost, and it is the same for every 1,500-watt model. The table below shows the ceiling for each common setting on the heaters in this guide.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Setting</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Per hour</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">8-hour night</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">30 nights of 8 hours</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">1,500 W (high on all picks)</td>
+                    <td class="px-4 py-4 text-gray-700">27.5 cents</td>
+                    <td class="px-4 py-4 text-gray-700">$2.20</td>
+                    <td class="px-4 py-4 text-gray-700">$65.92</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">1,300 W (Lasko AR122 medium)</td>
+                    <td class="px-4 py-4 text-gray-700">23.8 cents</td>
+                    <td class="px-4 py-4 text-gray-700">$1.90</td>
+                    <td class="px-4 py-4 text-gray-700">$57.13</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">1,000 W (DR-968 low)</td>
+                    <td class="px-4 py-4 text-gray-700">18.3 cents</td>
+                    <td class="px-4 py-4 text-gray-700">$1.46</td>
+                    <td class="px-4 py-4 text-gray-700">$43.94</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">750 W (AVH2, HMP1500 low)</td>
+                    <td class="px-4 py-4 text-gray-700">13.7 cents</td>
+                    <td class="px-4 py-4 text-gray-700">$1.10</td>
+                    <td class="px-4 py-4 text-gray-700">$32.96</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            Those are worst-case figures. A heater with a thermostat throttles back or cycles once the room is warm, and how much of the time it runs depends on the weather, the room and your setpoint; if it runs half the time, halve the numbers. A heater with no thermostat, like our desk pick, really does draw full wattage the whole time it is on. To find your real cost, put a plug-in electricity usage meter between the plug and the wall for a week and multiply the kilowatt-hours by your rate.
+          </p>
+        </div>
+
+        <div id="safety" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Safety: The Features and Habits That Actually Matter
+          </h2>
+
+          <p>
+            Space heaters are one of the few appliances in a house that can start a fire while working exactly as designed. The Consumer Product Safety Commission estimates that portable heaters, including electric space heaters, were involved in an average of 1,600 fires a year from 2020 to 2022, causing an average of 70 deaths and 150 injuries annually. The National Fire Protection Association counts an estimated average of 38,881 home heating equipment fires a year from 2019 to 2023, with 432 civilian deaths, and space heaters and heating stoves were the equipment involved in 29 percent of them.
+          </p>
+
+          <p>
+            Three features should be non-negotiable. A listing mark from a nationally recognized testing laboratory, such as UL, Intertek's ETL or CSA, means the design was tested against a safety standard; Massachusetts' Department of Fire Services, among others, tells buyers to look for one. A tip-over switch cuts power if the heater falls. Overheat protection shuts it down if the intake is blocked or it runs too hot. Be particularly careful with no-name heaters from online marketplaces, where a listing mark printed in a photo is not the same as one on the rating label.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE THREE-FOOT RULE</p>
+            <p class="text-xl font-bold text-white mb-3">Keep anything that can burn at least 3 feet away.</p>
+            <p class="text-gray-300 leading-relaxed m-0">CPSC and the US Fire Administration give the same distance: three feet from drapes, furniture, bedding and anything else that can burn. The heater manuals we read say the same.</p>
+          </div>
+
+          <p>
+            Habits matter as much as hardware. CPSC says to turn heaters off when sleeping, and the US Fire Administration says to turn them off when you leave the room or go to bed, so warm a bedroom before bed and let the timer finish the job. Keep pets and children out of the three-foot zone, never run the cord under a rug, and keep working smoke alarms on every level.
+          </p>
+        </div>
+
+        <div id="outlets" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Outlets, Circuits and Why Extension Cords Are Out
+          </h2>
+
+          <p>
+            CPSC's instruction is blunt: plug electric space heaters directly into a wall outlet, never into an extension cord or power strip. The heater manuals we read say the same; Lasko's adds surge protectors, multi-outlet adapters and cord reels to the banned list. The reason is current. A 1,500-watt heater draws 12.5 amps continuously for hours, and a light-duty extension cord or a cheap power strip was never designed for that load, so it heats up at its connections, which is exactly where fires start.
+          </p>
+
+          <p>
+            The wall outlet can be the weak link too. An old receptacle with worn contacts grips the plug loosely, the connection heats, and the plug or faceplate gets hot. Dr. Heater's manual tells owners to check the plug and outlet often while the heater runs and to have the outlet replaced if either gets hot. A plug that feels warm is normal; one too hot to hold is not.
+          </p>
+
+          <p>
+            Then there is the circuit. A typical bedroom circuit is 15 amps and also feeds lamps, a TV and chargers. If the breaker trips, Vornado's manual suggests running only one heater at once, unplugging other electrical products while it runs, or having an electrician add a circuit. Two heaters in one room belong on two different circuits. A hardwired heater like the Cadet Com-Pak sidesteps all of this on its own circuit; Cadet's manual caps a breaker's load at 80 percent of its rating, so a 1,500-watt, 120-volt unit belongs on a 20-amp circuit.
+          </p>
+        </div>
+
+        <div id="zone-heating" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. How to Use a Space Heater to Actually Save Money
+          </h2>
+
+          <p>
+            A space heater only saves money when it lets you turn something else down. Run one in the living room while the furnace keeps the whole house at 70 degrees, and you have simply added up to 27 cents an hour to your bill. The saving comes from zone heating: keeping the room you are in comfortable while the central thermostat sits lower for the rest of the house. The Department of Energy says turning a thermostat back 7 to 10 degrees for 8 hours a day can save up to 10 percent a year on heating and cooling, and a space heater is what makes that setback livable in the one room you occupy.
+          </p>
+
+          <p>
+            Close the door so the warmth stays with you, set the heater to the lowest temperature you are comfortable at, and use the timer. With a smart model like the Lasko AR122, let occupancy sensing switch it off when you walk out.
+          </p>
+
+          <p>
+            Move the warm air, too. Heat rises and pools at the ceiling, so in winter run a ceiling fan on low in the reverse, clockwise direction to push it gently back down without creating a chilly breeze; our guide to <a href="/ceiling-fan-direction-summer-and-winter/">ceiling fan direction in summer and winter</a> explains the switch.
+          </p>
+
+          <p>
+            Watch the humidity rather than the marketing. Heating air lowers its relative humidity because warm air can hold more moisture, so any heater can make a room feel drier, even the radiators sold as not drying the air. If the room feels dry, that is a humidifier question; if you are fighting condensation on cold windows instead, read <a href="/do-you-need-a-dehumidifier-in-winter/">whether you need a dehumidifier in winter</a>.
+          </p>
+        </div>
+
+        <div id="wrong-answer" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            10. When a Space Heater Is the Wrong Answer
+          </h2>
+
+          <p>
+            If you are heating the same room every evening all winter, look at the bill honestly. A heat pump moves heat from outside rather than making it from resistance, and the Department of Energy's Energy Saver guidance puts the reduction in electricity used for heating at roughly half or more compared with electric resistance heat, including plug-in space heaters. If your home already heats with a heat pump, a resistance space heater produces heat less efficiently than the system it supplements, so it only pays in a single room with the rest of the house set well back. For a cold addition or a converted garage, a ductless unit is usually the better long-term buy; see our <a href="/best-mini-split-heat-pump/">best mini split heat pumps</a>.
+          </p>
+
+          <p>
+            A garage or workshop is another poor fit. At 5,118 BTU per hour, a plug-in heater barely warms your hands at a bench in a two-car garage, and space heater manuals warn against using them where gasoline, paint or other flammable liquids are stored. A properly sized 240-volt or vented gas unit is the right tool, covered in our guide to the <a href="/best-garage-heater/">best garage heaters</a>.
+          </p>
+
+          <p>
+            Power outages are the third trap. A space heater is one of the hungriest things you can plug into a battery: at 1,500 watts, a 1,000 watt-hour power station would be empty in about 40 minutes even before inverter losses. Our explainer on <a href="/can-a-portable-power-station-run-a-space-heater/">whether a portable power station can run a space heater</a> runs the numbers and covers better ways to stay warm.
+          </p>
+
+          <p>
+            And never bring a fuel-burning heater made for outdoor or garage use into a living space. Unvented combustion heaters can produce carbon monoxide; an electric heater does not.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Paying extra for an "energy saving" heating element</h3>
+              <p class="text-gray-700 text-sm m-0">
+                No element, mica, quartz, ceramic or oil, makes more heat per watt than another; at 1,500 watts they all make about 5,118 BTU per hour. Pay for the features that reduce running time, an electronic thermostat, a low setting, a timer or occupancy sensing, and ignore claims of extra heat output.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Plugging into a power strip or extension cord</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A heater draws 12.5 amps for hours, which overheats light-duty cords and power strips at their connections. CPSC and every manual we read say to plug straight into a wall outlet. If the plug or faceplate gets too hot to hold, stop and have the outlet replaced.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Sizing by the square footage on the box</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Coverage claims of 500 or 1,000 square feet assume a well-insulated room that is already mostly warm. As primary heat, plan on about 10 watts per square foot, or 150 square feet for a 1,500-watt heater, and more for drafty rooms or high ceilings.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Running it with the central heat unchanged</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A space heater only saves money when the main thermostat goes down while it runs. Heating one room on top of a whole house at 70 degrees just adds up to 27 cents an hour at the current average power price. Close the door and set the house back.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Crowding it or leaving it on overnight</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Bedding, curtains and sofas within three feet of a heater are how most heater fires start. Keep the three-foot zone clear, keep the cord out from under rugs, and follow CPSC's advice to switch heaters off when you sleep; warm the room first and let the timer finish the job.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            12. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do energy-efficient space heaters really use less electricity?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Not per unit of heat. Every resistance heater converts nearly all its electricity into heat, so a 1,500-watt model makes about 5,118 BTU per hour regardless of the technology. A so-called efficient heater can use less electricity overall only by running less, through a precise thermostat, a low setting, a timer or occupancy sensing that shuts it off in an empty room.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How much does it cost to run a space heater all night?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                At the US average residential price of 18.31 cents per kWh that EIA reported for July 2026, a 1,500-watt heater running flat out for 8 hours uses 12 kWh and costs about $2.20. A thermostat model that cycles half the time costs about half that. Use the price on your own bill, since rates vary widely by state.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What size space heater do I need for a 12x12 room?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A 12-by-12 room is 144 square feet. At the common rule of thumb of about 10 watts per square foot, it needs roughly 1,440 watts as its main heat source, so a standard 1,500-watt heater is right. A drafty room or one with a ceiling higher than 8 feet may need more than one plug-in heater can deliver.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is an oil-filled radiator cheaper to run than a ceramic heater?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                No. At the same wattage both make the same heat for the same money. The oil stores heat and releases it slowly, so a radiator is quieter and gives steadier warmth, which may let you set the thermostat a little lower. It also warms a cold room more slowly, so it is not cheaper per hour of use.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is it safe to leave a space heater on overnight?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                CPSC advises turning heaters off when you sleep, and the US Fire Administration says to switch them off when you leave the room or go to bed. If you heat a bedroom, run it before bed with a timer set to shut it off, keep bedding at least three feet away, and choose a heater with a tip-over switch and overheat protection.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I plug a space heater into an extension cord or power strip?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                No. CPSC says to plug space heaters directly into a wall outlet, never an extension cord or power strip, and heater manuals add surge protectors and multi-outlet adapters to that list. A heater's 12.5-amp continuous draw can overheat those devices at their connections. If you need heat where there is no outlet, a hardwired wall heater is the safer fix.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a space heater cheaper than central heat?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Only when it lets you heat less space. Heating one closed room with a space heater while the central thermostat is set back can cut costs; the Department of Energy says a 7 to 10 degree setback for 8 hours a day can save up to 10 percent a year. If you heat with a heat pump, resistance heat costs more per unit of warmth.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Heating Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-mini-split-heat-pump/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Mini Split Heat Pumps</h3>
+              <p class="text-gray-500 text-sm mt-2">When you heat the same room every winter, a heat pump uses far less electricity than resistance heat.</p>
+            </a>
+            <a href="/best-garage-heater/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Garage Heaters</h3>
+              <p class="text-gray-500 text-sm mt-2">240V electric and vented gas heaters sized for garages a plug-in heater cannot touch.</p>
+            </a>
+            <a href="/can-a-portable-power-station-run-a-space-heater/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Explainer</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Power Stations and Space Heaters</h3>
+              <p class="text-gray-500 text-sm mt-2">Runtime math for heating on battery power during an outage, and better options.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Buy the heater for its controls and its safety record, not its heating element. Every 1,500-watt model on the market makes the same 5,118 BTU per hour, so the money is in a thermostat that throttles back, a tip-over switch, a real listing mark and a warranty long enough to matter. For most rooms that is the Vornado AVH2; for a silent bedroom, the De'Longhi Dragon; for a room that is cold every winter, a hardwired Cadet.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Then use it like a zone heater: close the door, turn the house thermostat down, plug it straight into the wall, and keep three feet clear around it. Do that and a space heater is a cheap, safe way through winter 2026–2027. Skip those steps and it is an expensive one.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home & Garage" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
