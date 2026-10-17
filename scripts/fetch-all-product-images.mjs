@@ -2,6 +2,12 @@ import { ApiClient, TypedDefaultApi, SearchItemsRequestContent } from "amazon-cr
 import { readFileSync, writeFileSync, existsSync } from "fs";
 import { join } from "path";
 
+// Credentials pasted from a "<your-id-here>" template keep the angle brackets, and
+// Amazon then rejects them with a 401. Strip brackets and stray whitespace up front.
+for (const name of Object.keys(process.env).filter((k) => k.startsWith("AMAZON_CREATORS_"))) {
+  process.env[name] = process.env[name].trim().replace(/^<(.*)>$/, "$1").trim();
+}
+
 const requiredEnvVars = ["AMAZON_CREATORS_CLIENT_ID", "AMAZON_CREATORS_CLIENT_SECRET", "AMAZON_CREATORS_PARTNER_TAG"];
 for (const name of requiredEnvVars) {
   if (!process.env[name]) {
@@ -52,6 +58,22 @@ function isConfidentMatch(queryName, resultTitle) {
   return tokens.some((t) => t.length >= 3 && title.includes(t));
 }
 
+// The Creators API allows about one request per second; going faster gets ThrottleException.
+const DELAY_MS = 1100;
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+async function searchWithRetry(req, attempts = 4) {
+  for (let n = 1; ; n++) {
+    try {
+      return await api.searchItems(client.marketplace, req);
+    } catch (err) {
+      const throttled = err?.type === "ThrottleException" || err?.body?.type === "ThrottleException";
+      if (!throttled || n >= attempts) throw err;
+      await sleep(DELAY_MS * 2 ** n);
+    }
+  }
+}
+
 const images = { ...existingImages };
 const report = [];
 
@@ -71,7 +93,7 @@ for (let i = 0; i < products.length; i++) {
     req.itemCount = 3;
     req.searchIndex = "All";
     req.resources = ["itemInfo.title", "images.primary.medium"];
-    const result = await api.searchItems(client.marketplace, req);
+    const result = await searchWithRetry(req);
     const items = result?.searchResult?.items || [];
     const match = items.find((it) => isConfidentMatch(name, it?.itemInfo?.title?.displayValue));
 
@@ -83,11 +105,13 @@ for (let i = 0; i < products.length; i++) {
       report.push({ id, name, file, status: "rejected", topResultTitle: items[0]?.itemInfo?.title?.displayValue || null });
     }
   } catch (err) {
-    report.push({ id, name, file, status: "error", error: err?.message || String(err) });
+    // API errors arrive as plain objects, so String(err) would only say "[object Object]".
+    const detail = typeof err?.message === "string" ? err.message : JSON.stringify(err?.body ?? err?.message ?? err);
+    report.push({ id, name, file, status: "error", error: detail });
   }
 
   if (i % 10 === 0) console.log(`${i + 1}/${products.length}...`);
-  await new Promise((r) => setTimeout(r, 300));
+  await sleep(DELAY_MS);
 }
 
 writeFileSync(OUTPUT_PATH, JSON.stringify(images, null, 2) + "\n");

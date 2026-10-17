@@ -16,6 +16,12 @@ import { ApiClient, TypedDefaultApi, GetItemsRequestContent } from 'amazon-creat
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
+// Credentials pasted from a "<your-id-here>" template keep the angle brackets, and
+// Amazon then rejects them with a 401. Strip brackets and stray whitespace up front.
+for (const name of Object.keys(process.env).filter((k) => k.startsWith('AMAZON_CREATORS_'))) {
+  process.env[name] = process.env[name].trim().replace(/^<(.*)>$/, '$1').trim();
+}
+
 for (const name of ['AMAZON_CREATORS_CLIENT_ID', 'AMAZON_CREATORS_CLIENT_SECRET', 'AMAZON_CREATORS_PARTNER_TAG']) {
   if (!process.env[name]) {
     console.error(`Missing required environment variable: ${name}`);
@@ -60,6 +66,9 @@ const targets = products.filter((p) => asins[p.id]);
 console.log(`Verifying ${targets.length} stored ASINs through GetItems...\n`);
 
 const BATCH = 10; // GetItems accepts up to 10 ItemIds per request.
+// The Creators API allows about one request per second; going faster gets ThrottleException.
+const DELAY_MS = 1100;
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const results = [];
 
 // Resolves a set of ASINs to titles. Returns null if the whole request failed,
@@ -78,6 +87,7 @@ async function lookup(ids) {
 for (let i = 0; i < targets.length; i += BATCH) {
   const slice = targets.slice(i, i + BATCH);
   const ids = slice.map((p) => asins[p.id]);
+  if (i > 0) await sleep(DELAY_MS);
   try {
     let byAsin;
     try {
@@ -93,7 +103,7 @@ for (let i = 0; i < targets.length; i += BATCH) {
         } catch {
           /* leave unresolved */
         }
-        await new Promise((r) => setTimeout(r, 250));
+        await sleep(DELAY_MS);
       }
     }
 

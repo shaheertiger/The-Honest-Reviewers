@@ -2,6 +2,12 @@ import { ApiClient, TypedDefaultApi, GetItemsRequestContent } from "amazon-creat
 import { readFileSync, writeFileSync } from "fs";
 import { join } from "path";
 
+// Credentials pasted from a "<your-id-here>" template keep the angle brackets, and
+// Amazon then rejects them with a 401. Strip brackets and stray whitespace up front.
+for (const name of Object.keys(process.env).filter((k) => k.startsWith("AMAZON_CREATORS_"))) {
+  process.env[name] = process.env[name].trim().replace(/^<(.*)>$/, "$1").trim();
+}
+
 // One-time/manual data-refresh script, NOT run automatically during `npm run build`.
 // Requires AMAZON_CREATORS_CLIENT_ID, AMAZON_CREATORS_CLIENT_SECRET, and
 // AMAZON_CREATORS_PARTNER_TAG as environment variables — never hardcode credentials here.
