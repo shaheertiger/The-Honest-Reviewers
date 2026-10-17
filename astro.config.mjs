@@ -6,6 +6,9 @@ import sitemap from '@astrojs/sitemap';
 // Buyer's guides that target high-volume search terms. They get a higher
 // sitemap priority than the 0.5 default so crawlers reach them sooner.
 const priorityGuides = new Set([
+  'best-christmas-gifts-for-men',
+  'christmas-gifts-for-men-under-50',
+  'christmas-gifts-for-men-who-have-everything',
   'best-electric-space-heater',
   'small-brown-bugs-in-house',
   'small-black-flying-bugs-in-house',
