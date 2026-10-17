@@ -342,10 +342,10 @@ const schema = {
       <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
         <h2 class="text-lg font-black text-gray-900 mb-4">In This Guide</h2>
         <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <a href="#paint-types" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Deck Paint Types: Paint vs Resurfacer vs Stain</a>
-          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Our 7 Top Picks Reviewed</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Our 7 Top Picks Reviewed</a>
+          <a href="#paint-types" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Deck Paint Buying Guide: Paint vs Resurfacer vs Stain</a>
           <a href="#how-to-paint" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. How to Paint a Deck</a>
-          <a href="#prep" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Surface Prep: The Step Everyone Underestimates</a>
+          <a href="#prep" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. How to Prep a Deck for Painting</a>
           <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. FAQ</a>
         </nav>
       </div>
@@ -381,9 +381,90 @@ const schema = {
 
         <QuickPicks products={PRODUCTS} />
 
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. The 7 Best Deck Paints in 2026 — Tested & Ranked
+          </h2>
+          <p>
+            We applied each product to matching test panels of weathered cedar and pressure-treated pine, then exposed them to 12 months of real-world conditions: full sun on south-facing surfaces, foot traffic from a household of five, plus heavy rain, snow, and freeze-thaw cycling. Here are the only products that earned our recommendation.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">{index + 1}</span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">{product.badge}</span>
+                </div>
+                <div class="p-6">
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings on Amazon)</span>
+                  </div>
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
         <div id="paint-types" class="scroll-mt-24">
           <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
-            1. Deck Paint Types: The Decision That Comes Before Brand
+            2. Deck Paint Buying Guide: Paint vs Resurfacer vs Stain
           </h2>
           <p>
             Not all "deck paints" are the same product. The category includes three fundamentally different technologies that serve different purposes. Choosing the right type matters more than choosing the right brand.
@@ -449,87 +530,6 @@ const schema = {
           </div>
         </div>
 
-        <div id="top-picks" class="scroll-mt-24">
-          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
-            2. The 7 Best Deck Paints in 2026 — Tested & Ranked
-          </h2>
-          <p>
-            We applied each product to matching test panels of weathered cedar and pressure-treated pine, then exposed them to 12 months of real-world conditions: full sun on south-facing surfaces, foot traffic from a household of five, plus heavy rain, snow, and freeze-thaw cycling. Here are the only products that earned our recommendation.
-          </p>
-
-          {PRODUCTS.map((product, index) => (
-            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
-              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
-                  <div class="flex items-center gap-3">
-                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">{index + 1}</span>
-                    {productImages[product.id] && (
-                      <img
-                        src={productImages[product.id]}
-                        alt={product.name}
-                        loading="lazy"
-                        width="40"
-                        height="40"
-                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
-                      />
-                    )}
-                    <div>
-                      <p class="text-white font-black text-lg">{product.name}</p>
-                      <p class="text-gray-400 text-xs">{product.category}</p>
-                    </div>
-                  </div>
-                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">{product.badge}</span>
-                </div>
-                <div class="p-6">
-                  <div class="flex items-center gap-2 mb-4">
-                    <div class="flex text-yellow-400">
-                      {[...Array(5)].map((_, i) => (
-                        <svg class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                      ))}
-                    </div>
-                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
-                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings on Amazon)</span>
-                  </div>
-
-                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
-
-                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                    <div class="bg-green-50 rounded-xl p-4">
-                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
-                      <ul class="space-y-2">
-                        {product.pros.map((pro) => (
-                          <li class="flex items-start gap-2 text-sm text-green-800">
-                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                            {pro}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div class="bg-red-50 rounded-xl p-4">
-                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
-                      <ul class="space-y-2">
-                        {product.cons.map((con) => (
-                          <li class="flex items-start gap-2 text-sm text-red-800">
-                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                            {con}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
-                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
-                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
         <div id="how-to-paint" class="scroll-mt-24">
           <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
             3. How to Paint a Deck: The Right Way
@@ -571,7 +571,7 @@ const schema = {
 
         <div id="prep" class="scroll-mt-24">
           <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
-            4. Surface Prep: The Step That Determines Your Results
+            4. How to Prep a Deck for Painting
           </h2>
           <p>
             The most common deck painting failure is treating preparation as optional. Surface preparation determines 80% of the final result — the best paint in the world will fail quickly on a dirty, weathered, or improperly prepared surface.
@@ -602,7 +602,7 @@ const schema = {
 
         <div class="scroll-mt-24">
           <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6 font-sans border-b pb-4">
-            When Paint Is the Right Answer (and When It Isn't)
+            Should You Paint or Stain a Deck? When Paint Is the Right Answer
           </h2>
           <p>
             Deck paint is a significant commitment. Once you paint, returning to stain or natural wood appearance requires either complete stripping or replacement. Make sure paint is actually the right choice for your situation.
@@ -617,7 +617,7 @@ const schema = {
           </p>
 
           <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6 font-sans border-b pb-4">
-            Climate Considerations
+            Best Deck Paint for Your Climate
           </h2>
           <p>
             Different climates stress deck paint in different ways. The same product can excel in one region and underperform in another. Matching paint chemistry to climate matters.
@@ -658,7 +658,7 @@ const schema = {
           </p>
 
           <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6 font-sans border-b pb-4">
-            Maintenance: Making Your Deck Paint Last
+            Deck Paint Maintenance: Making It Last
           </h2>
           <p>
             Painted decks need ongoing maintenance to maximize service life. The single most important practice is annual cleaning — at the start of each season, sweep the deck thoroughly, wash it with a dedicated deck cleaner or oxygen bleach solution, and rinse with a garden hose. Accumulated dirt, pollen, and biological material trap moisture against the paint surface and accelerate failure. Decks that are cleaned annually consistently outlast decks that are left to accumulate debris.
