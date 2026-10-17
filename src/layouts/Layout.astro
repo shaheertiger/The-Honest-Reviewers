@@ -3,6 +3,8 @@ import SEO from "../components/SEO.astro";
 import MobileNav from "../components/MobileNav";
 import Analytics from "@vercel/analytics/astro";
 import AdUnit from "../components/AdUnit.astro";
+import { amazonLink } from "../data/affiliate";
+import TOP_PICKS from "../data/top-picks.json";
 
 interface Props {
   title?: string;
@@ -31,6 +33,14 @@ const {
   jsonLd,
   noindex,
 } = Astro.props;
+
+// On a supporting article, the mobile sticky bar offers its guide's #1 pick
+// directly instead of only linking to the guide (see scripts/build-top-picks.mjs).
+const pageSlug = Astro.url.pathname.replace(/^\/|\/$/g, "");
+const pickPillar = (TOP_PICKS.spokes as Record<string, string>)[pageSlug];
+const spokePick = pickPillar
+  ? (TOP_PICKS.pillars as Record<string, { id: string; name: string; badge?: string; amazonUrl?: string }>)[pickPillar]
+  : undefined;
 ---
 
 <!doctype html>
@@ -388,7 +398,45 @@ const {
 
       <!-- Mobile Sticky CTA -->
       {
-        stickyCta && (
+        spokePick && (
+          <div
+            data-pick-sticky
+            hidden
+            class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-3 z-50 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]"
+          >
+            <div class="flex items-center gap-3">
+              <a href={`/${pickPillar}/`} class="min-w-0 flex-1 no-underline">
+                <p class="text-[10px] font-black uppercase tracking-widest text-[#FF4500] m-0">Our #1 Pick</p>
+                <p class="text-sm font-bold text-gray-900 m-0 truncate">{spokePick.name}</p>
+              </a>
+              <a
+                href={amazonLink(spokePick.amazonUrl, spokePick.name, spokePick.id)}
+                target="_blank"
+                rel="sponsored nofollow noopener"
+                class="shrink-0 bg-[#FF4500] hover:bg-[#E63E00] text-white text-sm font-black px-5 py-3 rounded-xl no-underline whitespace-nowrap"
+              >
+                Check Price
+              </a>
+            </div>
+          </div>
+        )
+      }
+      {
+        spokePick && (
+          <script is:inline>
+            (function () {
+              var bar = document.querySelector("[data-pick-sticky]");
+              if (!bar) return;
+              // Keep the headline clear: show the bar once the reader has started reading.
+              function update() { bar.hidden = window.scrollY < 500; }
+              update();
+              window.addEventListener("scroll", update, { passive: true });
+            })();
+          </script>
+        )
+      }
+      {
+        stickyCta && !spokePick && (
           <div data-layout-sticky class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 z-50 shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
             <a
               href={stickyCta.link}
