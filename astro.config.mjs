@@ -562,6 +562,25 @@ const priorityGuides = new Set([
   'ego-snow-blower',
   'toro-electric-snow-blower',
   'snow-joe-snow-blower',
+
+  // October 2026 batch: humidifier cluster.
+  'best-humidifier',
+  'best-humidifier-for-bedroom',
+  'best-humidifier-for-large-room',
+  'best-whole-house-humidifier',
+  'whole-house-humidifier',
+  'evaporative-vs-ultrasonic-humidifier',
+  'warm-mist-vs-cool-mist-humidifier',
+  'how-to-clean-a-humidifier',
+  'what-size-humidifier-do-i-need',
+  'ideal-indoor-humidity',
+  'best-warm-mist-humidifier',
+  'types-of-humidifiers',
+  'stainless-steel-humidifier',
+  'how-much-does-a-humidifier-cost',
+  'best-small-humidifier',
+  'best-humidifier-for-allergies',
+  'humidifier-air-purifier-combo',
 ]);
 
 export default defineConfig({

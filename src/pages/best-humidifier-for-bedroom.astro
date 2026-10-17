@@ -1,0 +1,888 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Humidifiers",
+    "url": "/best-humidifier/"
+  },
+  {
+    "title": "Best Humidifiers for Large Rooms",
+    "url": "/best-humidifier-for-large-room/"
+  },
+  {
+    "title": "Evaporative vs Ultrasonic Humidifier",
+    "url": "/evaporative-vs-ultrasonic-humidifier/"
+  },
+  {
+    "title": "Warm Mist vs Cool Mist Humidifier",
+    "url": "/warm-mist-vs-cool-mist-humidifier/"
+  },
+  {
+    "title": "What Size Humidifier Do I Need?",
+    "url": "/what-size-humidifier-do-i-need/"
+  },
+  {
+    "title": "Ideal Indoor Humidity",
+    "url": "/ideal-indoor-humidity/"
+  },
+  {
+    "title": "Best Hygrometers",
+    "url": "/best-hygrometer/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-17", modified: "2026-10-17" });
+const title = "6 Best Humidifiers for Bedrooms: Quiet Picks That Won't Wake You";
+const description =
+  "Quiet, dark and easy to clean: six bedroom humidifiers chosen on published noise ratings, sleep modes, tank size and cleaning, plus sizing and placement advice.";
+
+const PRODUCTS = [
+  {
+    "id": "levoit-classic-300s",
+    "name": "Levoit Classic 300S Smart Ultrasonic Humidifier",
+    "badge": "Best Overall",
+    "category": "Ultrasonic Cool Mist, 6L Top-Fill, Smart",
+    "amazonUrl": "#",
+    "description": "The Levoit Classic 300S is the bedroom humidifier we would point most people to, because it pairs a big tank with a genuinely quiet rating and a sleep mode that actually goes dark. Levoit lists a 6-liter top-fill tank, a run time of up to 60 hours on the lowest mist setting, a noise rating of 30 dB or less, and a recommended room size of roughly 215 to 505 square feet, which covers everything from a small guest room to a large primary bedroom. Sleep mode switches the unit to automatic misting and turns off the display and night light, so the only thing you notice at 3 a.m. is the air. It connects to the VeSync app for schedules and a target humidity, and its built-in humidity sensor lets it throttle back once the room reaches your setpoint instead of misting all night. The tank opens from the top, which makes refilling and wiping it out far easier than the old flip-and-twist designs. The trade-offs are the usual ultrasonic ones: hard tap water will leave white dust on nearby furniture, and the tank needs a weekly clean to stay fresh. Use distilled water and it is close to the ideal bedroom machine.",
+    "pros": [
+      "6L tank rated for up to 60 hours on low, per Levoit",
+      "Rated at 30 dB or less",
+      "Sleep mode runs auto misting with the display and night light off",
+      "Top-fill tank is easy to refill and clean",
+      "App schedules and a target humidity setting"
+    ],
+    "cons": [
+      "Ultrasonic design spreads white dust with hard tap water",
+      "Larger footprint than a nightstand-sized unit",
+      "Built-in sensor sits close to the mist, so a separate hygrometer is worth having"
+    ],
+    "bottomLine": "For most bedrooms, the Levoit Classic 300S is the one to buy: a 6-liter top-fill tank rated for up to 60 hours, a 30 dB or quieter rating, and a sleep mode that turns every light off."
+  },
+  {
+    "id": "dreo-hm311",
+    "name": "Dreo HM311 4L Top-Fill Ultrasonic Humidifier",
+    "badge": "Quietest Pick",
+    "category": "Ultrasonic Cool Mist, 4L Top-Fill",
+    "amazonUrl": "#",
+    "description": "The Dreo HM311 is the pick for light sleepers who want the lowest published noise number at a modest price. Dreo's listing rates it at 28 dB or less, gives it a 4-liter top-fill tank, and lists up to 36 hours of run time on the low setting, with coverage of roughly 300 square feet, which is the right size for a typical bedroom. Rated output is up to 250 milliliters per hour, enough to raise a closed bedroom's humidity on a cold night without fogging the window. The top-fill tank means you can pour water in without carrying the tank to the sink, and the opening is wide enough to reach inside with a brush when it is time to clean. The smart version, the HM311S, adds app and voice control plus an automatic humidity mode; the standard HM311 keeps things simple with physical controls. As with every ultrasonic machine, hard water produces white dust, and owners recommend distilled water for that reason. Some owners of the smart variant have reported the lid seating loosely, so check that it clicks down fully after each refill.",
+    "pros": [
+      "Rated at 28 dB or less, per Dreo's listing",
+      "4L top-fill tank, up to 36 hours on low",
+      "Sized for rooms of about 300 square feet",
+      "Up to 250 mL per hour rated output",
+      "Smart HM311S variant adds app control and auto mode"
+    ],
+    "cons": [
+      "White dust with hard tap water",
+      "Some HM311S owners report a loose-fitting lid",
+      "Standard model has no app or humidity sensor"
+    ],
+    "bottomLine": "If quiet is the priority, the Dreo HM311 has the lowest published noise rating here at 28 dB or less, with a 4-liter top-fill tank sized for a typical bedroom."
+  },
+  {
+    "id": "canopy-bedside-humidifier",
+    "name": "Canopy Bedside Humidifier",
+    "badge": "Best Bedside & Easiest to Clean",
+    "category": "Evaporative, 2.5L, Dishwasher-Safe Parts",
+    "amazonUrl": "#",
+    "description": "The Canopy Bedside Humidifier is the one to put on a nightstand if cleaning is the reason your last humidifier ended up in a closet. It is evaporative rather than ultrasonic: water wicks into a paper filter and a fan pushes air through it, so moisture leaves as invisible vapor rather than a visible mist, and Canopy says the filter traps minerals that would otherwise become white dust. Canopy lists a 2.5-liter tank, coverage of up to 500 square feet, and a run time of roughly 18 to 36 hours per tank depending on how dry the room is. The headline feature is that the tank, cap and water tray can go in the dishwasher, which takes the weekly clean from a chore to a cycle. There is no open standing water in the design you can see, and the unit is small enough, at roughly 10 by 8 by 7 inches by Canopy's figures, to sit beside the bed. The costs are the filter and the fan: Canopy recommends replacing the filter about monthly with hard tap water, or every six weeks with distilled water, and an evaporative fan makes a soft whoosh rather than the near silence of an ultrasonic unit. It is also one of the more expensive machines for its size.",
+    "pros": [
+      "Tank, cap and tray are dishwasher-safe, per Canopy",
+      "Evaporative design, so no visible mist or white dust",
+      "Compact enough for a nightstand",
+      "Rated for rooms up to 500 square feet",
+      "Filter reminder light"
+    ],
+    "cons": [
+      "Filter replacement roughly every 4 to 6 weeks adds ongoing cost",
+      "Fan noise is audible, unlike ultrasonic units",
+      "Expensive for a 2.5L tank"
+    ],
+    "bottomLine": "For a nightstand humidifier that is easy to keep clean, the Canopy Bedside is the pick: evaporative, no white dust, and dishwasher-safe tank parts, at the cost of ongoing filters."
+  },
+  {
+    "id": "honeywell-hcm-350",
+    "name": "Honeywell HCM-350 Germ Free Cool Mist Humidifier",
+    "badge": "Best Evaporative",
+    "category": "Evaporative with UV, 1.1 Gallon",
+    "amazonUrl": "#",
+    "description": "The Honeywell HCM-350 is the long-running evaporative choice for people who want no white dust and are happy to trade a little fan noise for it. Honeywell lists a 1.1-gallon tank that runs up to 24 hours, rates it for medium rooms, and pairs the wick filter with ultraviolet treatment that the company says kills a large share of bacteria and mold in the water before it reaches the wick. Because it is evaporative, it is self-regulating in a way ultrasonic units are not: as the room gets more humid, less water evaporates from the wick, so it is much harder to over-humidify a bedroom and end up with condensation on the windows. The wick also catches minerals, which is why there is no white dust even with hard tap water. The downsides are practical. The wick needs replacing regularly, and owners note that replacement wicks are not cheap. The fan, even on low, makes a steady white-noise sound that some sleepers like and others do not. And at around 18 by 10 by 13 inches it is wider than a nightstand unit, so it belongs on a dresser or the floor of a larger bedroom on a tray.",
+    "pros": [
+      "1.1-gallon tank rated for up to 24 hours",
+      "Evaporative design self-limits humidity and avoids white dust",
+      "UV treatment of the water, per Honeywell",
+      "Handles hard tap water well because the wick traps minerals",
+      "Rated for medium rooms"
+    ],
+    "cons": [
+      "Replacement wicks are an ongoing cost",
+      "Fan is audible on every setting",
+      "Wide footprint for a nightstand"
+    ],
+    "bottomLine": "If you have hard water and want no white dust, the Honeywell HCM-350 is the evaporative pick: a 1.1-gallon tank rated for 24 hours and a wick that self-limits humidity."
+  },
+  {
+    "id": "levoit-dual-200s",
+    "name": "Levoit Dual 200S Smart Humidifier",
+    "badge": "Best for Small Bedrooms",
+    "category": "Ultrasonic Cool Mist, 3L Top-Fill, Smart",
+    "amazonUrl": "#",
+    "description": "The Levoit Dual 200S is the small-room version of our top pick and the better fit for a child's room, a guest room or a compact apartment bedroom. Retail listings give it a 3-liter top-fill tank, up to 25 hours of run time on the lowest setting, a maximum noise rating of 28 dB, and recommended coverage of roughly 290 square feet. Sleep mode turns off the display and indicator lights, and the unit connects to the same VeSync app as the larger Levoit, with schedules and an automatic humidity mode. A small aroma pad tray is included for people who want it, though we would leave essential oils out of a bedroom humidifier entirely unless the manual specifically allows it. The smaller tank is the real compromise: 25 hours on low means a nightly refill is realistic in very dry weather, and on higher settings it will run less than a full day. It is also an ultrasonic machine, so distilled water is the answer to white dust. For a room under about 300 square feet, though, it is quiet, compact and easy to live with.",
+    "pros": [
+      "Rated 28 dB maximum, per retail listings",
+      "Compact 3L top-fill tank",
+      "Sleep mode turns off display and indicator lights",
+      "App schedules and auto humidity mode",
+      "Right-sized for rooms up to about 290 square feet"
+    ],
+    "cons": [
+      "Up to 25 hours on low means frequent refills in dry weather",
+      "White dust with hard tap water",
+      "Too small for large primary bedrooms"
+    ],
+    "bottomLine": "For a bedroom under about 300 square feet, the Levoit Dual 200S gives you the top pick's quiet, dark sleep mode and app control in a smaller 3-liter package."
+  },
+  {
+    "id": "pure-enrichment-mistaire",
+    "name": "Pure Enrichment MistAire Ultrasonic Cool Mist Humidifier",
+    "badge": "Best Budget",
+    "category": "Ultrasonic Cool Mist, 1.5L",
+    "amazonUrl": "#",
+    "description": "The Pure Enrichment MistAire is the inexpensive option that still does the basic bedroom job. Pure Enrichment lists a 1.5-liter tank, coverage of up to 250 square feet, and run time of up to 25 hours on low or 12 hours on high, with rated output of 60 to 120 milliliters per hour. Some retailers and reviewers list a shorter run time of about 16 hours, so plan around a nightly refill rather than the best case. It has a simple control knob, an optional night light, and an auto shut-off when the tank runs dry, which is the one safety feature every bedroom humidifier should have. The small size means it fits on a nightstand or a crowded dresser, and its compact tank is easy to rinse in a bathroom sink. What it gives up is everything the more expensive picks add: there is no humidity sensor, so it will keep misting even after the room is humid enough, no app, and a smaller tank. That makes a cheap hygrometer a sensible companion purchase. Like every ultrasonic unit it needs distilled water if you want to avoid white dust.",
+    "pros": [
+      "Inexpensive and compact",
+      "Up to 25 hours on low, per Pure Enrichment",
+      "Optional night light and auto shut-off",
+      "Rated for rooms up to 250 square feet",
+      "Easy to rinse in a sink"
+    ],
+    "cons": [
+      "No humidity sensor, so it can over-humidify a closed room",
+      "Some listings and reviews cite about 16 hours of run time",
+      "White dust with hard tap water"
+    ],
+    "bottomLine": "On a tight budget, the Pure Enrichment MistAire covers a small bedroom with a 1.5-liter tank and auto shut-off; pair it with a hygrometer because it has no humidity sensor."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Humidifiers for Bedrooms",
+          item: "https://www.thehonestreviewers.com/best-humidifier-for-bedroom/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best humidifier for a bedroom?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most bedrooms, the Levoit Classic 300S is our pick. Levoit lists a 6-liter top-fill tank rated for up to 60 hours on low, a noise rating of 30 dB or less, and a sleep mode that turns off the display and night light. For small rooms, the Levoit Dual 200S is the better size."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is it good to sleep with a humidifier on?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most people, yes, as long as humidity stays between about 30 and 50 percent and the machine is clean. It can ease dry mouth, scratchy throats and dry skin in winter. Keep it a few feet from the bed, empty it daily, and use a hygrometer so the room does not get too humid."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How far should a humidifier be from your bed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Aim for at least a few feet, with the nozzle pointing into the room rather than at the bed. Mist that lands on bedding before it evaporates leaves it damp. Place the unit on a raised, level surface such as a dresser and keep it a foot or more from walls and windows."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which is quieter, ultrasonic or evaporative?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ultrasonic humidifiers are usually quieter because they do not need a large fan; the quietest picks here are rated at 28 dB. Evaporative units always make some fan noise, which some sleepers like as white noise. If you are a light sleeper, choose ultrasonic and use distilled water."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does a humidifier help with dry mouth at night?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It can help when the dryness comes from dry winter air, which is common in heated bedrooms. It will not fix dry mouth caused by medication, mouth breathing from a blocked nose, or sleep apnea. If dry mouth or loud snoring persists, talk to a doctor rather than relying on a humidifier."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What size humidifier do I need for a bedroom?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Match the coverage rating to the room's floor area. A 1.5 to 3 liter unit suits rooms under 150 square feet, 3 to 4 liters suits 150 to 300 square feet, and 4 to 6 liters suits larger primary bedrooms. Size up for vaulted ceilings or drafty rooms and down for small closed ones."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I use distilled water in a bedroom humidifier?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In an ultrasonic humidifier, yes. Tap water minerals become white dust on furniture and build up as scale inside the machine. Distilled water prevents both. Evaporative humidifiers can run on tap water because the filter traps the minerals, though the filter will need replacing more often with hard water."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home & Indoor Air Quality",
+    tags: [
+      "best humidifier for bedroom",
+      "best humidifiers for bedroom",
+      "humidifier for bedroom",
+      "quiet humidifier",
+      "small humidifier for bedroom",
+      "bedside humidifier for dry mouth"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Buyer's Guide
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best Humidifiers <span class="text-[#38BDF8]">for Bedrooms</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Six quiet humidifiers with dark sleep modes, sized for real bedrooms and easy enough to clean that you will actually keep them running.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#levoit-classic-300s"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Sizing and Placement
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="14.6k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-chose" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Chose</a>
+          <a href="#noise" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Noise</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 6 Picks</a>
+          <a href="#sizing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Sizing</a>
+          <a href="#placement" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Placement</a>
+          <a href="#sleep" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Humidity and Sleep</a>
+          <a href="#white-dust" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. White Dust</a>
+          <a href="#lights" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Lights and Sleep Mode</a>
+          <a href="#cleaning" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Cleaning</a>
+          <a href="#match" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Match a Pick</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">12. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          The best bedroom humidifier is the one you forget is running: quiet enough not to wake you, dark enough not to light the room, and easy enough to clean that it never smells. Most people need a small ultrasonic unit and distilled water; people with hard water should go evaporative.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-chose" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Chose These Six
+          </h2>
+
+          <p>
+            A bedroom humidifier has a narrower job than a living-room one, and a harder one. It runs while you are asleep, a few feet from your head, in a closed room that is usually between 120 and 300 square feet. That means noise, light and over-humidification matter more than raw output, and a machine that is a chore to clean will end up growing something in its tank within a couple of weeks of neglect. We built this list around those four problems rather than around the biggest tank or the highest mist rating.
+          </p>
+
+          <p>
+            Every specification on this page comes from the maker's product page, owner's manual or the retail listing, and we say so as we go. Where sources disagree, which happens often with humidifier run times, we give the range and tell you which number to plan around. Where a manufacturer does not publish a figure, such as a noise rating for an evaporative fan, we say that instead of guessing. None of the decibel or run-time figures below are our own measurements; they are the published ratings, and you should read them that way.
+          </p>
+
+          <p>
+            Four criteria decided the shortlist. First, a published noise rating at or below about 30 dB for ultrasonic machines, or a low fan setting for evaporative ones. Second, a sleep mode or a way to turn every light off, because a glowing display is a surprisingly common reason people stop using a bedroom humidifier. Third, a tank sized to last at least one full night on a low setting in a typical bedroom. Fourth, a design you can clean in a few minutes: top-fill tanks, wide openings, or dishwasher-safe parts.
+          </p>
+
+          <p>
+            We also deliberately mixed technologies. Four picks are ultrasonic, which are quieter but spread white dust with hard water, and two are evaporative, which are louder but self-limiting and dust-free. Which one suits you depends on your water and how you sleep, and the sections after the picks walk through that choice. If you want the broader comparison, our <a href="/evaporative-vs-ultrasonic-humidifier/">evaporative vs ultrasonic humidifier guide</a> covers it in depth, and our <a href="/best-humidifier/">best humidifier guide</a> ranks machines for every room in the house, not just the bedroom.
+          </p>
+        </div>
+
+        <div id="noise" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Noise: Why Ultrasonic Usually Wins at Night
+          </h2>
+
+          <p>
+            Noise is the first thing that separates a good bedroom humidifier from a bad one, and the technology decides most of it. An ultrasonic humidifier uses a small ceramic plate vibrating at a frequency you cannot hear to break water into a fine mist, and a small fan pushes that mist out of the nozzle. With no large fan, the main sounds are a faint hum and the occasional gurgle as water moves from the tank into the reservoir. That is why the quietest published ratings on this list, 28 dB for the Dreo HM311 and the Levoit Dual 200S, both belong to ultrasonic machines.
+          </p>
+
+          <p>
+            An evaporative humidifier works differently. A wick or paper filter soaks up water from the tank, and a fan blows room air through it, so moisture leaves as invisible vapor. The fan is the whole mechanism, so you will always hear it. On low it is a soft, steady whoosh, which many people find soothing and some actively use as white noise. On high it is loud enough that most people will not want it running beside the bed. Manufacturers of evaporative units rarely publish decibel ratings, which is itself a hint that they are not competing on silence.
+          </p>
+
+          <p>
+            Context matters as much as the number. A 30 dB rating is roughly the level of a quiet whisper, and in a bedroom with a running furnace or a ceiling fan you will not hear it at all. In a silent room in the middle of the night, even a soft gurgle can be noticeable to a light sleeper. If you are sensitive to irregular sounds, an ultrasonic machine with a top-fill tank tends to gurgle less than an old bottle-style tank that glugs as the water level drops. If you find steady noise relaxing, an evaporative fan on low may actually help you sleep.
+          </p>
+
+          <p>
+            Two practical tips cut noise on any machine. Set it on a firm, level surface, because a wobbly nightstand turns small vibrations into a rattle. And run it on its lowest setting overnight, with a higher setting earlier in the evening to bring the room up to target before you go to bed. A model with an automatic humidity mode does this for you, ramping down once the room is humid enough, which is one reason our top pick earns its place.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE RULE</p>
+            <p class="text-xl font-bold text-white mb-3">Light sleeper? Choose ultrasonic and distilled water.</p>
+            <p class="text-gray-300 leading-relaxed m-0">Ultrasonic machines carry the lowest published noise ratings. Their weakness is white dust from hard water, and distilled water solves it. If you cannot use distilled water, an evaporative unit on its lowest fan speed is the better compromise.</p>
+          </div>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 6 Picks
+          </h2>
+
+          <p>
+            These six cover every bedroom we could think of: a do-everything top pick, the quietest rated machine, a compact smart unit for small rooms, two evaporative options for hard water, and a budget pick. Every tank size, run time, coverage and noise figure below is the published rating from the manufacturer or the retail listing; where sources disagree, we say so.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="sizing" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Sizing a Humidifier to Your Bedroom
+          </h2>
+
+          <p>
+            Most bedrooms are smaller than the rooms humidifiers are marketed for, which is good news: you rarely need a large machine, and an oversized one in a small closed room is how windows end up streaming with condensation. Start with the floor area. A typical secondary bedroom is around 100 to 150 square feet, a standard primary bedroom 200 to 300, and a large primary suite 300 to 450. Match that against the maker's coverage figure, and treat the figure as a ceiling rather than a target.
+          </p>
+
+          <p>
+            Coverage ratings assume an average ceiling height of about 8 feet and a reasonably tight room. Vaulted ceilings, a drafty older house, an open door to a hallway or a forced-air heating system running constantly all increase how much moisture the room needs. If two of those apply, size up one step. If the room is small and closed with the door shut all night, size down, or use the lowest setting. Our <a href="/what-size-humidifier-do-i-need/">humidifier sizing guide</a> goes through the math for every room in the house.
+          </p>
+
+          <p>
+            Run time is the other half of sizing. What you actually want is a tank that lasts a full night on the setting you will use, with some margin. The manufacturer's longest run time is always on the lowest setting, so a machine rated for 25 hours on low might last 10 to 12 hours on a medium setting in a very dry room. That is why we lean towards 3 to 6 liters for most bedrooms: a smaller tank means a nightly refill, and a larger one means refilling every two or three days.
+          </p>
+
+          <p>
+            If your bedroom is unusually large or opens onto a sitting area, you are really shopping for a living-room machine, and our <a href="/best-humidifier-for-large-room/">best humidifier for large rooms</a> guide is the better starting point. For anything under about 300 square feet, one of the compact picks above, especially the Levoit Dual 200S or Dreo HM311, is the right size.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Bedroom Size</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Tank to Look For</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Our Pick</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Under 150 sq ft</td>
+                    <td class="px-4 py-4 text-gray-700">1.5 to 3 liters</td>
+                    <td class="px-4 py-4 text-gray-700">Levoit Dual 200S or Pure Enrichment MistAire</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">150 to 300 sq ft</td>
+                    <td class="px-4 py-4 text-gray-700">3 to 4 liters</td>
+                    <td class="px-4 py-4 text-gray-700">Dreo HM311 or Canopy Bedside</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">300 to 500 sq ft</td>
+                    <td class="px-4 py-4 text-gray-700">4 to 6 liters</td>
+                    <td class="px-4 py-4 text-gray-700">Levoit Classic 300S or Honeywell HCM-350</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="placement" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Where to Put It: Distance From the Bed and Off the Floor
+          </h2>
+
+          <p>
+            Placement decides whether a humidifier helps or causes problems. The most common mistake is putting it on the nightstand with the nozzle pointing straight at the bed. Mist that lands on bedding, a headboard or your face before it evaporates leaves things damp, and damp bedding is uncomfortable at best and a mold problem at worst. Aim for a few feet of distance between the nozzle and the bed, and point the mist into open air rather than at you.
+          </p>
+
+          <p>
+            Get it off the floor. Mist released at floor level often settles on the carpet before it can mix with the room air, leaving a damp patch around the unit, especially with ultrasonic machines on a high setting. A dresser, a sturdy table or a nightstand on the far side of the room works well. If you do place it on the floor, use a waterproof tray underneath and keep it on the lowest setting. Evaporative units are less fussy about height because they release vapor rather than droplets, but they still benefit from a raised, level spot.
+          </p>
+
+          <p>
+            Keep it away from walls, windows and wood furniture. A nozzle that sprays at a wall will eventually stain paint or wallpaper, and mist that settles on a wooden dresser can raise the grain or leave white rings. Give the unit a foot or more of clearance from the wall and aim it towards the middle of the room. Windows deserve special attention in winter: cold glass is where excess humidity shows up first as condensation, and the frame is where mold starts if that happens every night.
+          </p>
+
+          <p>
+            Finally, think about electrical safety and children. Run the cord where nobody will trip on it, and keep the unit out of reach of small children and pets. Warm-mist humidifiers heat water to boiling and are a burn risk on a low nightstand in a child's room, which is one reason most pediatric guidance favors cool-mist units. Our <a href="/warm-mist-vs-cool-mist-humidifier/">warm mist vs cool mist humidifier</a> guide covers that trade-off in more detail.
+          </p>
+        </div>
+
+        <div id="sleep" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Humidity and Sleep: Dry Mouth, Congestion and Snoring
+          </h2>
+
+          <p>
+            Most people buy a bedroom humidifier because they wake up with a dry mouth, a scratchy throat, cracked lips or a stuffy nose, and those symptoms track closely with dry winter air. When outdoor air is cold, it holds very little moisture, and heating it indoors drops the relative humidity sharply, sometimes into the teens in a heated bedroom. Adding moisture back into that air is what a humidifier does, and many people find it makes a noticeable difference to how they feel in the morning.
+          </p>
+
+          <p>
+            The target range matters more than the machine. The EPA and most health organizations recommend keeping indoor relative humidity between about 30 and 50 percent. Below that, dry-air symptoms are more common; above it, dust mites and mold thrive, which is the opposite of what someone with allergies wants. In very cold weather, aim for the lower end of that range, because humid air against cold windows condenses. Our <a href="/ideal-indoor-humidity/">ideal indoor humidity guide</a> explains how to adjust the target as the temperature outside drops.
+          </p>
+
+          <p>
+            A humidifier is not a treatment for anything, and we are careful not to sell it as one. It can make dry air more comfortable, which may ease some congestion and dryness. It will not fix snoring caused by sleep apnea, a deviated septum or other medical causes, and if you have persistent dry mouth, loud snoring, or wake up gasping, that is worth raising with a doctor rather than solving with an appliance. Mouth breathing at night is a common cause of dry mouth, and a humidifier helps with the dryness without addressing why it happens.
+          </p>
+
+          <p>
+            If allergies are part of the picture, keep humidity below 50 percent and keep the humidifier scrupulously clean, because a dirty tank can release the very things you are trying to avoid. A good air purifier often helps more than a humidifier for allergy symptoms; our <a href="/best-air-purifier-for-allergies/">best air purifier for allergies</a> guide covers that. And the only way to know your actual humidity is to measure it: a basic digital hygrometer costs little, and our <a href="/best-hygrometer/">best hygrometer</a> guide picks the accurate ones.
+          </p>
+        </div>
+
+        <div id="white-dust" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. White Dust and Why Distilled Water Matters
+          </h2>
+
+          <p>
+            White dust is the single most common complaint about ultrasonic humidifiers, and it is entirely about your water. Tap water contains dissolved minerals, mostly calcium and magnesium. An ultrasonic humidifier turns water into a mist without separating those minerals out, so when the droplets evaporate in the air, the minerals are left behind as a fine powder. It settles on furniture, electronics and floors as a gray-white film, and the harder your water, the more of it you will see.
+          </p>
+
+          <p>
+            Distilled water is the fix. It has had nearly all of its minerals removed, so there is nothing left behind when the mist evaporates. It also means less mineral scale inside the tank and on the ultrasonic plate, which makes cleaning easier and extends the life of the machine. Most ultrasonic manufacturers recommend distilled or demineralized water in their manuals for exactly this reason. The cost is a few dollars a week for a bedroom unit, which is the real running cost of an ultrasonic humidifier.
+          </p>
+
+          <p>
+            Some ultrasonic models include a demineralization cartridge, and filtered pitcher water reduces some minerals, but neither fully replaces distilled water. Reverse-osmosis water is close to distilled and works well if you already have an RO system. Softened water is not a substitute: a softener swaps calcium for sodium, which still leaves residue behind.
+          </p>
+
+          <p>
+            Evaporative humidifiers, including the Canopy and Honeywell picks above, avoid white dust differently. The minerals stay in the wick or filter as the water evaporates, so only pure vapor reaches the room. That is why those filters discolor over time and need replacing. If you have hard water and do not want to buy distilled water, an evaporative unit is the simplest answer; if you prefer the quiet of ultrasonic, budget for distilled water from the start.
+          </p>
+        </div>
+
+        <div id="lights" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Night Lights, Displays and Sleep Mode
+          </h2>
+
+          <p>
+            A humidifier's lights are easy to overlook in a store and impossible to ignore at 2 a.m. A bright blue display, a glowing water-level indicator or a built-in night light can be enough to disrupt sleep in a dark room, and many otherwise good humidifiers end up turned off because of it. Before you buy, check whether every light can be switched off, not just dimmed, and whether the setting stays off or resets every time you power the unit on.
+          </p>
+
+          <p>
+            A proper sleep mode does more than dim the display. On the Levoit Classic 300S and Dual 200S, sleep mode turns off the display and indicator lights and switches to a quiet automatic misting mode, so the machine ramps itself down once the room reaches a comfortable level. That combination of darkness, quiet and automatic control is what makes a humidifier pleasant to sleep next to rather than merely tolerable.
+          </p>
+
+          <p>
+            Night lights are a matter of taste. For a child's room, a soft built-in light can double as a nightlight and save a separate plug-in. For an adult bedroom, most people prefer none. The Pure Enrichment MistAire's night light is optional, which is the right design. Look for amber or warm-colored lights if you want one at all, since blue and white light are the most disruptive at night.
+          </p>
+
+          <p>
+            Smart features are useful in a bedroom mainly for scheduling. Being able to start the humidifier an hour before bed so the room is comfortable when you get in, then have it switch to sleep mode automatically, is genuinely convenient. App control, voice assistants and remote monitoring are nice to have but not essential, and a simple machine with a timer and an automatic shut-off is perfectly adequate.
+          </p>
+        </div>
+
+        <div id="cleaning" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Cleaning: The Part That Decides Whether It Helps
+          </h2>
+
+          <p>
+            A dirty humidifier is worse than no humidifier at all. Standing water in a warm room is an ideal place for bacteria and mold to grow, and an ultrasonic machine will happily spread whatever is growing in its tank into the air you breathe all night. That is not a reason to avoid humidifiers, but it is the reason cleaning ease is one of the four criteria behind every pick on this list.
+          </p>
+
+          <p>
+            The routine is simple. Empty the tank every day rather than topping it up, rinse it, and refill with fresh water. Once a week, clean the tank and base thoroughly following the manufacturer's instructions, which usually means soaking with white vinegar to dissolve scale, then rinsing, and sometimes a diluted bleach or hydrogen peroxide rinse to disinfect. Always rinse well afterwards, and never run cleaning solution through the machine. Our <a href="/how-to-clean-a-humidifier/">how to clean a humidifier</a> guide covers each step for ultrasonic and evaporative units.
+          </p>
+
+          <p>
+            Design makes a big difference to how likely you are to keep up with it. Top-fill tanks, like those on the Levoit and Dreo picks, let you reach inside with a brush and avoid the narrow neck of older bottle-style tanks. Wide openings dry out properly between uses. Dishwasher-safe parts, which the Canopy offers for its tank, cap and tray, make the weekly clean nearly effortless. Machines with hard-to-reach corners and small openings are the ones that end up growing film inside.
+          </p>
+
+          <p>
+            Evaporative units add filter maintenance. The wick or filter traps minerals and needs replacing on the maker's schedule, typically every four to six weeks with daily use, sooner with hard water. A filter that is stiff, crusted or smells musty has stopped working well and should be replaced immediately. Factor that cost in before you buy: filters are the evaporative equivalent of an ultrasonic unit's distilled water.
+          </p>
+        </div>
+
+        <div id="match" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            10. Match a Pick to Your Bedroom
+          </h2>
+
+          <p>
+            If you want one answer, the Levoit Classic 300S is it. It has the capacity to run for days in a typical bedroom, a sleep mode that is genuinely dark and quiet, a top-fill tank that is easy to clean, and an automatic humidity mode that stops it over-humidifying the room. Use distilled water and it is close to ideal.
+          </p>
+
+          <p>
+            For light sleepers who want the lowest published noise rating at a lower price, the Dreo HM311 is the better choice, and the Levoit Dual 200S is the right size for a small bedroom, a child's room or a guest room. If budget is the main constraint, the Pure Enrichment MistAire will do the job in a small room, provided you pair it with a hygrometer so you know when to turn it down.
+          </p>
+
+          <p>
+            If you have hard water and do not want to buy distilled water, go evaporative. The Honeywell HCM-350 is the long-running choice for a medium to large bedroom, and the Canopy Bedside is the compact nightstand option whose dishwasher-safe parts make it the easiest machine here to keep clean. Both make some fan noise, and both need filters, but neither leaves white dust.
+          </p>
+
+          <p>
+            Whichever you choose, the habits matter as much as the machine: keep humidity between 30 and 50 percent, empty and rinse the tank daily, clean it weekly, and keep the nozzle pointed away from the bed. For the full picture across every room in the house, see our <a href="/best-humidifier/">best humidifier guide</a>.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Pointing the Mist at the Bed</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Mist that lands on bedding, a headboard or your pillow before it evaporates leaves things damp, and damp bedding is a mold risk. Keep the nozzle a few feet from the bed and point it into open air in the middle of the room, not towards you or the wall.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using Hard Tap Water in an Ultrasonic Unit</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Ultrasonic humidifiers turn the minerals in tap water into a fine white dust that settles on furniture and electronics. Use distilled water, or choose an evaporative model whose filter traps the minerals instead of spreading them around the room.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Topping Up Instead of Emptying</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Adding fresh water on top of yesterday's leaves stagnant water in the tank to grow bacteria and film. Empty, rinse and refill the tank every day, and clean it properly once a week following the manual, before anything has a chance to grow.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Running It With No Hygrometer</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Without a humidity reading, it is easy to push a closed bedroom past 50 percent, which feeds dust mites and mold and fogs the windows. A cheap hygrometer tells you when to turn it down, especially on models with no built-in sensor.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying a Living-Room Machine for a Small Bedroom</h3>
+              <p class="text-gray-700 text-sm m-0">
+                An oversized humidifier in a small closed room over-humidifies quickly and runs at settings that are louder than they need to be. Match the coverage rating to the room's floor area and treat the rating as a ceiling, not a target.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            12. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best humidifier for a bedroom?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most bedrooms, the Levoit Classic 300S is our pick. Levoit lists a 6-liter top-fill tank rated for up to 60 hours on low, a noise rating of 30 dB or less, and a sleep mode that turns off the display and night light. For small rooms, the Levoit Dual 200S is the better size.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is it good to sleep with a humidifier on?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most people, yes, as long as humidity stays between about 30 and 50 percent and the machine is clean. It can ease dry mouth, scratchy throats and dry skin in winter. Keep it a few feet from the bed, empty it daily, and use a hygrometer so the room does not get too humid.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How far should a humidifier be from your bed?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Aim for at least a few feet, with the nozzle pointing into the room rather than at the bed. Mist that lands on bedding before it evaporates leaves it damp. Place the unit on a raised, level surface such as a dresser and keep it a foot or more from walls and windows.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Which is quieter, ultrasonic or evaporative?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Ultrasonic humidifiers are usually quieter because they do not need a large fan; the quietest picks here are rated at 28 dB. Evaporative units always make some fan noise, which some sleepers like as white noise. If you are a light sleeper, choose ultrasonic and use distilled water.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Does a humidifier help with dry mouth at night?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It can help when the dryness comes from dry winter air, which is common in heated bedrooms. It will not fix dry mouth caused by medication, mouth breathing from a blocked nose, or sleep apnea. If dry mouth or loud snoring persists, talk to a doctor rather than relying on a humidifier.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What size humidifier do I need for a bedroom?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Match the coverage rating to the room's floor area. A 1.5 to 3 liter unit suits rooms under 150 square feet, 3 to 4 liters suits 150 to 300 square feet, and 4 to 6 liters suits larger primary bedrooms. Size up for vaulted ceilings or drafty rooms and down for small closed ones.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Should I use distilled water in a bedroom humidifier?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                In an ultrasonic humidifier, yes. Tap water minerals become white dust on furniture and build up as scale inside the machine. Distilled water prevents both. Evaporative humidifiers can run on tap water because the filter traps the minerals, though the filter will need replacing more often with hard water.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Humidifier Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-humidifier/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Humidifiers</h3>
+              <p class="text-gray-500 text-sm mt-2">Our top picks for every room, from nightstands to open-plan living spaces.</p>
+            </a>
+            <a href="/evaporative-vs-ultrasonic-humidifier/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Comparison</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Evaporative vs Ultrasonic</h3>
+              <p class="text-gray-500 text-sm mt-2">Noise, white dust, running cost and maintenance, compared honestly.</p>
+            </a>
+            <a href="/how-to-clean-a-humidifier/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Maintenance</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">How to Clean a Humidifier</h3>
+              <p class="text-gray-500 text-sm mt-2">The daily rinse and weekly descale that keep a tank from growing mold.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The <strong class="text-white">best humidifier for a bedroom</strong> for most people is the <strong class="text-white">Levoit Classic 300S</strong>: a 6-liter top-fill tank, a 30 dB or quieter rating and a sleep mode that turns every light off. Light sleepers on a budget should look at the <strong class="text-white">Dreo HM311</strong>, and small rooms suit the <strong class="text-white">Levoit Dual 200S</strong>.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            If you have hard water and will not buy distilled, go evaporative with the <strong class="text-white">Honeywell HCM-350</strong> or the <strong class="text-white">Canopy Bedside</strong>. Whichever you choose, keep humidity between 30 and 50 percent, empty the tank daily and point the mist away from the bed.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home & Indoor Air Quality" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

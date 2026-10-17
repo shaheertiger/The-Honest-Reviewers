@@ -1,0 +1,905 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Humidifiers",
+    "url": "/best-humidifier/"
+  },
+  {
+    "title": "Whole House Humidifiers Explained",
+    "url": "/whole-house-humidifier/"
+  },
+  {
+    "title": "Best Humidifiers for Large Rooms",
+    "url": "/best-humidifier-for-large-room/"
+  },
+  {
+    "title": "What Size Humidifier Do I Need?",
+    "url": "/what-size-humidifier-do-i-need/"
+  },
+  {
+    "title": "Evaporative vs Ultrasonic Humidifiers",
+    "url": "/evaporative-vs-ultrasonic-humidifier/"
+  },
+  {
+    "title": "Ideal Indoor Humidity",
+    "url": "/ideal-indoor-humidity/"
+  },
+  {
+    "title": "Best Hygrometers",
+    "url": "/best-hygrometer/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-17", modified: "2026-10-17" });
+const title = "6 Best Whole House Humidifiers: Bypass, Fan-Powered and Steam";
+const description =
+  "The best whole house humidifiers for forced-air homes, from Aprilaire bypass to steam, plus a console for homes without ducts, sized by home tightness.";
+
+const PRODUCTS = [
+  {
+    "id": "aprilaire-600-bypass-humidifier",
+    "name": "Aprilaire 600 Whole House Bypass Humidifier",
+    "badge": "Best Overall",
+    "category": "Bypass Evaporative, Furnace-Mounted",
+    "description": "The Aprilaire 600 is the whole house humidifier most HVAC contractors reach for first, and the specs explain why. Aprilaire's spec sheet rates it at 0.7 gallons per hour, or 17 gallons per day, and retailer Sylvane passes on Aprilaire's sizing tiers: up to 4,000 square feet in a tightly sealed home, 2,000 in an average home and 1,500 in a loose one. It is a bypass unit, so it has no fan of its own and relies on the furnace blower pushing air through a 6-inch bypass duct and across the water panel. That keeps it simple and quiet, and it draws only 24 volts at half an amp per the spec sheet. The automatic version pairs with an outdoor temperature sensor and adjusts the target humidity as it gets colder outside, which is the single best defence against condensation on windows. The spec sheet lists a 10 to 45 percent setting range. The water panel is Aprilaire's #35, which retailers say should be replaced once per heating season and more often on hard water. The catch is that a bypass unit only humidifies while the furnace blower runs, and it sends a share of its water to the drain rather than into the air.",
+    "pros": [
+      "Rated 17 gallons per day on Aprilaire's spec sheet",
+      "Sized for up to 4,000 sq ft in a tightly sealed home, per Aprilaire's tiers",
+      "No fan or motor: quiet, simple and low on electricity",
+      "Automatic model uses an outdoor sensor to cut humidity as it gets colder",
+      "Common #35 water panel is easy to find at supply houses"
+    ],
+    "cons": [
+      "Only humidifies when the furnace blower is running",
+      "Sends part of its water to the drain rather than into the air",
+      "Needs room on the supply or return plenum for a 6-inch bypass duct"
+    ],
+    "bottomLine": "For most forced-air homes up to about 2,000 to 4,000 square feet, the Aprilaire 600 is the whole house humidifier to buy: 17 gallons per day, no fan to fail, and an automatic control that protects your windows."
+  },
+  {
+    "id": "aprilaire-700-fan-powered-humidifier",
+    "name": "Aprilaire 700 Fan-Powered Whole House Humidifier",
+    "badge": "Best Fan-Powered",
+    "category": "Fan-Powered Evaporative, Furnace-Mounted",
+    "description": "The Aprilaire 700 uses the same water panel idea as the 600 but adds its own fan, which pulls warm air from the plenum through the panel instead of relying on a bypass duct. Aprilaire rates it at 18 gallons per day and sizes it for tightly sealed homes up to 4,200 square feet, average homes up to 2,100 and loosely sealed homes up to 1,050, according to retailer listings that repeat the manufacturer's figures. The practical gains are installation flexibility, because there is no bypass duct to route, and slightly more output in a compact footprint. The trade is a 120-volt fan motor, listed at 0.8 amps, which means a receptacle or hardwired circuit near the furnace and one more moving part to wear out. Like the 600, it uses the #35 water panel and the automatic version works with an outdoor sensor. One retailer review complains about the included saddle valve leaking, which is a common complaint about saddle valves generally rather than this humidifier, and a good reason to have the installer fit a proper tee and shutoff instead.",
+    "pros": [
+      "Rated 18 gallons per day, sized for up to 4,200 sq ft in a tight home",
+      "Built-in fan means no bypass duct to route",
+      "Fits plenums where a bypass unit will not",
+      "Same #35 water panel as the Aprilaire 600"
+    ],
+    "cons": [
+      "Needs 120V power at the furnace for the fan",
+      "A fan motor is one more part to fail",
+      "Still sends some water to the drain like any flow-through unit"
+    ],
+    "bottomLine": "Choose the Aprilaire 700 over the 600 when your ductwork has no clean place for a bypass duct or you want a little more output; otherwise the simpler 600 does the same job."
+  },
+  {
+    "id": "aprilaire-800-steam-humidifier",
+    "name": "Aprilaire 800 Whole House Steam Humidifier",
+    "badge": "Best Steam",
+    "category": "Electric Steam, Duct-Mounted",
+    "description": "The Aprilaire 800 is a different animal: it boils water in a replaceable canister and injects steam into the ductwork, so it does not depend on warm furnace air to evaporate anything. That is why it is the right choice for heat pumps, high-efficiency furnaces with cooler supply air, and very large or very dry homes. Its output depends on how it is wired. Aprilaire's spec sheet tabulates roughly 11.5 gallons per day at 120 volts, 20.5 at 208 volts and 23.3 at 240 volts, with a higher setting of about 34.6 gallons per day at 240 volts at its higher amperage. Retailers list it as a 20.5-gallon nominal unit and say it can serve homes up to 6,200 square feet. Because it can run independently of the heating cycle, it can hold humidity steadier than a bypass unit. The costs are real, though: it needs its own dedicated electrical circuit, uses far more electricity than an evaporative unit, and the steam canister is a consumable that must be replaced as minerals build up, more often on hard water. It also costs considerably more to buy and install.",
+    "pros": [
+      "Output of roughly 11.5 to 34.6 gallons per day depending on wiring, per Aprilaire",
+      "Works with heat pumps and low-temperature supply air",
+      "Can humidify without waiting for a heating call",
+      "Listed for homes up to 6,200 sq ft"
+    ],
+    "cons": [
+      "Needs a dedicated 120V or 240V circuit",
+      "Much higher electricity use than evaporative units",
+      "Steam canister is a recurring replacement cost, faster on hard water",
+      "Highest purchase and installation cost on this list"
+    ],
+    "bottomLine": "Buy the Aprilaire 800 if you have a heat pump, a large or leaky house that a bypass unit cannot keep up with, or you want precise humidity control and accept the electricity and canister costs."
+  },
+  {
+    "id": "honeywell-he280-bypass-humidifier",
+    "name": "Honeywell Home HE280 Whole House Bypass Humidifier",
+    "badge": "Best Aprilaire Alternative",
+    "category": "Bypass Evaporative, Furnace-Mounted",
+    "description": "The Honeywell Home HE280 is the main rival to the Aprilaire 600 and works the same way: a bypass duct, a water panel, and humidification only while the furnace blower runs. Honeywell Home's product page describes it as suited to homes up to 4,000 square feet, and retailer Sylvane says the current HE280D covers up to 4,000 square feet in homes less than 20 years old but about 2,000 square feet in older homes, and quotes roughly 17 gallons per day. Honeywell markets the unit's water distribution tray as saving water compared with conventional flow-through designs, with listings citing a 30 percent saving, though that figure is the manufacturer's claim. Retailers most consistently name the HC26A1016 pad as its replacement water panel, and Sylvane suggests changing it twice per heating season. Pair it with a Honeywell Home thermostat or humidistat that can control humidity, and confirm the exact pad and control your installer is fitting before you buy filters in bulk.",
+    "pros": [
+      "Rated for homes up to 4,000 sq ft per Honeywell Home",
+      "Roughly 17 gallons per day, per retailer listings",
+      "Water-saving distribution tray, per Honeywell",
+      "Integrates with Honeywell Home thermostats that control humidity"
+    ],
+    "cons": [
+      "Only humidifies when the furnace blower runs",
+      "Coverage drops to about 2,000 sq ft in homes over 20 years old, per Sylvane",
+      "Replacement pad part numbers vary by listing, so confirm before ordering"
+    ],
+    "bottomLine": "The HE280 is a solid alternative to the Aprilaire 600, especially if your installer prefers Honeywell or you already run a Honeywell Home thermostat that can manage humidity."
+  },
+  {
+    "id": "generalaire-1042lh-bypass-humidifier",
+    "name": "GeneralAire 1042LH Bypass Humidifier",
+    "badge": "Best Value Bypass",
+    "category": "Bypass Evaporative, Furnace-Mounted",
+    "description": "GeneralAire's 1042LH is a straightforward bypass humidifier that tends to cost less than the big two. Retailers list it at about 17 gallons per day, based on a 120-degree plenum temperature, with one drain-type listing quoting 19.2 gallons per day, and size it for homes up to 2,800 square feet. It runs on 24 volts, uses a 6-inch bypass duct, and the listings say it ships with a manual humidistat covering 10 to 75 percent. SupplyHouse lists a five-year limited warranty. Note the plenum temperature in the rating: output from any bypass unit falls when the air feeding it is cooler, which is why the same box performs differently on a high-efficiency furnace or a heat pump. For a typical gas furnace in a mid-sized home, it does the same job as the Aprilaire 600 for less money. The trade-offs are a smaller service network, fewer installers who stock its parts, and the manual humidistat, which you will need to turn down as outdoor temperatures drop unless you add an automatic control.",
+    "pros": [
+      "Rated about 17 gallons per day at a 120-degree plenum, per retailers",
+      "Sized for homes up to 2,800 sq ft",
+      "Five-year limited warranty listed by SupplyHouse",
+      "Usually cheaper than equivalent Aprilaire and Honeywell units"
+    ],
+    "cons": [
+      "Ships with a manual humidistat in the listings we found",
+      "Fewer contractors stock its water panels and parts",
+      "Output falls with cooler supply air, like any bypass unit"
+    ],
+    "bottomLine": "Pick the GeneralAire 1042LH for a gas-furnace home up to about 2,800 square feet when price matters, and budget for an automatic control if you do not want to adjust it by hand."
+  },
+  {
+    "id": "aircare-ma1201-console-humidifier",
+    "name": "AIRCARE MA1201 Whole-House Console Humidifier",
+    "badge": "Best Without Ductwork",
+    "category": "Portable Evaporative Console",
+    "description": "If your home has no forced-air ductwork, or you rent and cannot cut into a plenum, the AIRCARE MA1201 is the most sensible whole house option. It is a portable evaporative console with a 3.6-gallon reservoir that retailers rate at about 11.44 gallons of output per day, rounded to 12 on some listings, for homes up to 3,600 square feet. That coverage assumes open air movement; retailers note that output spreads less well across multiple floors, so put it centrally, near the bottom of a stairwell if you can. Being evaporative, it does not throw the white mineral dust that ultrasonic units do. The built-in humidistat is listed as adjustable from 25 to 65 percent, and the manufacturer warranty is listed at two years. The realities of any console apply: you fill it by hand, often daily at full output, the wick filters need regular replacement, and it will never match the hands-off convenience of a plumbed furnace humidifier.",
+    "pros": [
+      "No ductwork, plumbing or electrician needed",
+      "Rated about 11.44 gallons per day for up to 3,600 sq ft",
+      "Evaporative, so no white dust",
+      "Built-in humidistat, listed range 25 to 65 percent"
+    ],
+    "cons": [
+      "Must be filled by hand, often daily at full output",
+      "Coverage drops across multiple floors",
+      "Wick filters are an ongoing cost",
+      "Two-year warranty is short next to ducted units"
+    ],
+    "bottomLine": "The AIRCARE MA1201 is the whole house humidifier for homes without forced-air ducts or for renters, as long as you accept refilling it by hand."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Whole House Humidifiers",
+          item: "https://www.thehonestreviewers.com/best-whole-house-humidifier/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best whole house humidifier?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most homes with a gas or oil furnace, the Aprilaire 600 is the best whole house humidifier. Aprilaire rates it at 17 gallons per day and sizes it for up to 4,000 square feet in a tight home or 2,000 in an average one. Its automatic control adjusts humidity to the outdoor temperature, which prevents window condensation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a bypass or fan-powered humidifier better?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They perform similarly; the difference is installation. A bypass unit needs room for a 6-inch duct between plenums and has no fan to fail. A fan-powered unit like the Aprilaire 700 needs 120-volt power but no bypass duct and offers slightly more output. Choose based on your ductwork and what your installer recommends."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need a steam humidifier with a heat pump?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In most cases, yes. Evaporative units rely on warm supply air to evaporate water, and heat pumps deliver cooler air than gas furnaces. A steam humidifier makes its own heat, so it works regardless of supply temperature. Expect a dedicated circuit, higher electricity use and periodic canister replacement."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often should I replace the water panel?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Aprilaire sells its #35 panel as a once-per-heating-season replacement, and retailers recommend more often on hard water. Sylvane suggests twice per season for the Honeywell HC26-series pads. Replace it at the start of every heating season at minimum, and inspect it midwinter if your water is hard."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I install a whole house humidifier myself?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A capable DIYer can, but it involves cutting the plenum, tapping a water line, running a drain and low-voltage wiring. Aprilaire recommends professional installation, and some warranties depend on it. Steam units also need a dedicated electrical circuit, which is a job for a licensed electrician in most areas."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What humidity should a whole house humidifier be set to?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Generally 30 to 40 percent in moderate cold, lower as it gets colder outside, sometimes into the 20s on the coldest nights in cold climates. The limit is window condensation. An automatic control with an outdoor sensor handles this for you; with a manual humidistat, turn it down before cold snaps."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will a whole house humidifier cause mold?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not if it is sized and controlled properly. Mold problems come from humidity set too high for the outdoor temperature, which causes condensation on cold windows and walls, or from a neglected unit with standing water. Use an outdoor-sensor control, check rooms with a hygrometer, and service the unit every season."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home & Indoor Air Quality",
+    tags: [
+      "best whole house humidifier",
+      "whole house humidifier best",
+      "best whole home humidifier",
+      "furnace humidifier",
+      "hvac humidifier",
+      "best humidifier for whole house"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated October 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The 6 Best <span class="text-[#38BDF8]">Whole House Humidifiers</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Bypass, fan-powered and steam units for forced-air homes, plus one console for houses without ducts. Sized by how tight your house is, not the biggest number on the box.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#aprilaire-600-bypass-humidifier"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Jump to the Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="11.4k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-picked" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Picked</a>
+          <a href="#types" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Bypass vs Fan-Powered vs Steam</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 6 Picks</a>
+          <a href="#sizing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Sizing by Home Tightness</a>
+          <a href="#installation" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Installation</a>
+          <a href="#humidity-settings" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Setting Humidity by Outdoor Temp</a>
+          <a href="#maintenance" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Water Panels and Maintenance</a>
+          <a href="#running-cost" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Running Cost</a>
+          <a href="#console" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. When a Console Wins</a>
+          <a href="#match" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Match a Pick to Your House</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">12. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          For most homes with a gas furnace, the Aprilaire 600 is the whole house humidifier to buy. Heat pump owners need steam, and homes without ducts need a console. The rest of this guide is about getting the size and the controls right, which matters more than the brand.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-picked" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Picked These Humidifiers
+          </h2>
+
+          <p>
+            We did not install six furnace humidifiers in a test house and run them for a winter, and we will not pretend otherwise. This guide is built from manufacturer specification sheets, retailer listings that repeat the manufacturer's ratings, installation manuals and the way these units are actually specified by HVAC contractors. Every capacity, coverage and electrical figure on this page is attributed to its source, and where sources disagree we say so.
+          </p>
+
+          <p>
+            That approach suits this category better than you might think. Whole house humidifiers are mature, mechanically simple products. A bypass unit is a water valve, a distribution tray, an evaporator pad and a duct. What separates a good result from a bad one is mostly sizing, the type of heating system, the control strategy and the quality of the installation. Those are the things this guide spends its time on.
+          </p>
+
+          <p>
+            We weighted four things. First, the right type for the heating system, because a bypass humidifier on a heat pump is a waste of money. Second, honest capacity for real home sizes, using the manufacturer's tightness tiers rather than the biggest number on the box. Third, controls, because an automatic humidistat with an outdoor sensor prevents most of the problems people blame on humidifiers. Fourth, the cost and availability of consumables, since a water panel or steam canister you cannot find locally is a problem every winter.
+          </p>
+
+          <p>
+            If you are still deciding whether you want a whole house system at all or a few room units, start with our <a href="/best-humidifier/">best humidifier guide</a>, which covers portable models, and our <a href="/whole-house-humidifier/">whole house humidifier explainer</a>, which covers how these systems work and what they cost to install. This page assumes you have decided on whole house and want to know which unit to put on your furnace.
+          </p>
+        </div>
+
+        <div id="types" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Bypass vs Fan-Powered vs Steam
+          </h2>
+
+          <p>
+            Every furnace-mounted humidifier falls into one of three designs, and the choice is mostly made for you by your heating system and home size. Pick the type first and the model second.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Bypass</h3>
+
+          <p>
+            A bypass humidifier mounts on the supply or return plenum and connects to the other side with a short, usually 6-inch, duct. When the furnace blower runs, pressure difference pushes some warm air through the bypass, across a water-soaked panel, and back into the system carrying moisture. There is no fan and no heater, so it is cheap, quiet and reliable. The Aprilaire 600, Honeywell HE280 and GeneralAire 1042LH are all bypass units. The limitation is that it only works while the blower runs and works best with hot supply air from a gas or oil furnace.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Fan-powered</h3>
+
+          <p>
+            A fan-powered unit is the same evaporative idea with its own fan. It pulls air from the plenum through the panel without needing a bypass duct, which helps where there is no room to run one, and it typically delivers a little more output from a similar footprint. The Aprilaire 700 is the standard example. You need 120-volt power at the furnace, and the fan is a part that can eventually wear out.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Steam</h3>
+
+          <p>
+            A steam humidifier boils water electrically and injects steam into the duct. Because it does not rely on warm air to evaporate water, it is the type to choose with a heat pump, a high-efficiency furnace that runs long cycles at lower supply temperatures, or a large house that a bypass unit cannot keep up with. It also controls humidity more precisely. The costs are a dedicated electrical circuit, much higher electricity use and a canister that needs periodic replacement. The Aprilaire 800 is our steam pick.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Type</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Needs</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Best for</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Main drawback</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Bypass</td>
+                    <td class="px-4 py-4 text-gray-700">24V control, water line, drain, bypass duct</td>
+                    <td class="px-4 py-4 text-gray-700">Gas or oil furnace, most homes</td>
+                    <td class="px-4 py-4 text-gray-700">Only works when blower runs</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Fan-powered</td>
+                    <td class="px-4 py-4 text-gray-700">120V power, water line, drain</td>
+                    <td class="px-4 py-4 text-gray-700">Tight plenums, slightly more output</td>
+                    <td class="px-4 py-4 text-gray-700">Fan motor to maintain</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Steam</td>
+                    <td class="px-4 py-4 text-gray-700">Dedicated 120V or 240V circuit, water, drain</td>
+                    <td class="px-4 py-4 text-gray-700">Heat pumps, large or very dry homes</td>
+                    <td class="px-4 py-4 text-gray-700">Electricity and canister cost</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Console</td>
+                    <td class="px-4 py-4 text-gray-700">An outlet and a tap</td>
+                    <td class="px-4 py-4 text-gray-700">Homes without ducts, renters</td>
+                    <td class="px-4 py-4 text-gray-700">Filled by hand</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 6 Picks
+          </h2>
+
+          <p>
+            Every figure below comes from the manufacturer's specification sheet or a retailer listing repeating it, and we note where sources disagree. We did not lab-test these units; we picked them on type, rated capacity, controls and the cost of keeping them running.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="sizing" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Sizing by Home Size and Tightness
+          </h2>
+
+          <p>
+            The biggest mistake buyers make is reading the largest square-footage number on a box and stopping there. Aprilaire publishes its ratings in three tiers for exactly this reason. The Model 600, for example, is listed for up to 4,000 square feet in a tightly sealed home, 2,000 in an average home and 1,500 in a loosely sealed one. The difference between the top and bottom tier is more than double, and it comes down to how fast dry outdoor air leaks in and replaces your humidified air.
+          </p>
+
+          <p>
+            A tightly sealed home is usually newer construction with good windows, sealed ducts and a continuous air barrier. An average home is a typical house that has had some weatherization. A loose home is an older house with original windows, an unsealed attic, a fireplace and plenty of drafts. Honeywell makes the same point in simpler terms: Sylvane's listing for the HE280D says it covers up to 4,000 square feet in homes under 20 years old but about 2,000 in older homes. If you are unsure, assume average, because almost nobody overestimates how leaky their house is.
+          </p>
+
+          <p>
+            Next, match the type to your supply air. Bypass and fan-powered evaporative units are rated at a specific plenum temperature, and GeneralAire is unusually honest about stating its 17 gallons per day at a 120-degree plenum. A gas furnace delivers air in that range. A heat pump typically delivers much cooler air and runs long, gentle cycles, so an evaporative unit will produce noticeably less. If you heat with a heat pump, size for steam.
+          </p>
+
+          <p>
+            Finally, think about how dry your winters are. A house in a mild, damp climate needs far less added moisture than one in a cold, dry region where outdoor air at 0 degrees holds almost nothing. If you are in the second group and your home is large or leaky, the extra output of a steam unit like the Aprilaire 800 is worth considering even with a gas furnace. For the full room-by-room method and how portable units fit in, see our <a href="/what-size-humidifier-do-i-need/">humidifier sizing guide</a>.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE RULE</p>
+            <p class="text-xl font-bold text-white mb-3">Size to the middle tier, not the top one.</p>
+            <p class="text-gray-300 leading-relaxed m-0">Use the manufacturer's average-home rating unless you know your house is tight. A unit sized to the tight-home number in a typical house will run constantly and still fall short on the coldest days.</p>
+          </div>
+        </div>
+
+        <div id="installation" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Installation: Water, Drain, Wiring and Control
+          </h2>
+
+          <p>
+            A furnace humidifier touches three trades at once: sheet metal, plumbing and low-voltage electrical. That is why Aprilaire recommends professional installation and why some manufacturers tie warranty coverage to it. A capable DIYer can do it, but each connection has a right and a wrong way, and the wrong ways cause water damage or a humidifier that never runs.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Water supply</h3>
+
+          <p>
+            Evaporative and steam units need a cold or hot water feed, depending on the model and the manual. Many kits still include a self-piercing saddle valve that clamps onto a copper line. Saddle valves are cheap and fast but are a well-known source of slow leaks and clogs, and one owner review of the Aprilaire 700 calls out exactly that. A proper tee with a quarter-turn shutoff costs a few dollars more and is the better connection. Fit a shutoff you can reach so the humidifier can be isolated in summer.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Drain</h3>
+
+          <p>
+            Flow-through evaporative units send excess water to a drain to rinse minerals off the panel, and steam units periodically flush the canister. You need a floor drain, a laundry standpipe or a condensate pump within reach, with an air gap where required by local code. A drain line that kinks or freezes will back up into the unit, so route it with a steady fall and keep it inside conditioned space.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Wiring and control</h3>
+
+          <p>
+            Bypass units run on 24 volts, usually from the furnace transformer, and the solenoid valve should only open when the blower is running, which is normally done by wiring through a relay or the furnace's humidifier terminals. Fan-powered units add 120-volt power for the fan. Steam units need a dedicated circuit sized to the model and voltage in the manual. The control matters as much as the humidifier: an automatic humidistat with an outdoor temperature sensor, like the one on Aprilaire's automatic models, lowers the target as it gets colder outside. A manual dial set once in November and forgotten is how windows end up streaming with condensation. A smart thermostat that manages humidity can also do this job.
+          </p>
+
+          <p>
+            Expect a professional install of a bypass unit to take a few hours, with steam taking longer because of the electrical work. Get the quote in writing and confirm it includes the water tee and shutoff, a proper drain connection, the control you want and a test run. For more on what the full job costs, see our <a href="/whole-house-humidifier/">whole house humidifier guide</a>.
+          </p>
+        </div>
+
+        <div id="humidity-settings" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Window Condensation and Setting Humidity by Outdoor Temperature
+          </h2>
+
+          <p>
+            The right indoor humidity in winter is not a single number. It depends on how cold it is outside, because the inside surface of your windows gets colder as outdoor temperature drops. Once that surface falls below the dew point of your indoor air, water condenses on the glass. Leave that happening for weeks and you get peeling paint, rotting sills and mold in the corners of window frames.
+          </p>
+
+          <p>
+            That is why the common guidance is to aim for roughly 30 to 40 percent in moderate cold and to drop progressively lower as temperatures fall, sometimes into the 20s on the coldest nights in very cold climates. The exact numbers vary with your windows: modern double or triple glazing tolerates more humidity than single-pane glass before it fogs. We cover the reasoning and a full temperature table in our <a href="/ideal-indoor-humidity/">ideal indoor humidity guide</a>.
+          </p>
+
+          <p>
+            This is the job an outdoor-sensor control does automatically. Aprilaire's automatic models read outdoor temperature and adjust the setpoint so you get the most humidity your windows can tolerate without condensation. With a manual humidistat, you have to do it yourself, turning it down a notch before every cold snap. Most people do not, which is how humidifiers get a reputation for causing mold.
+          </p>
+
+          <p>
+            Measure rather than guess. A furnace humidistat reads the return air, which may not reflect the bedroom at the far end of the house. Put an inexpensive digital hygrometer in two or three rooms for the first few weeks of the season and compare. Our <a href="/best-hygrometer/">best hygrometer guide</a> covers models accurate enough to trust. If the windows fog, turn it down; if the house still feels dry and static shocks continue, turn it up a little.
+          </p>
+
+          <p>
+            Remember that the season flips. The same house that needs added moisture in January may need moisture removed in July, especially in the basement. Close the humidifier water supply and bypass damper in spring, and if summer humidity is the bigger problem in your home, our <a href="/whole-house-vs-portable-dehumidifier/">whole house vs portable dehumidifier comparison</a> covers the other half of the year.
+          </p>
+        </div>
+
+        <div id="maintenance" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Water Panels, Scale and Yearly Maintenance
+          </h2>
+
+          <p>
+            The water panel is the heart of an evaporative humidifier and the part that wears out. Water flows over it, minerals are left behind as water evaporates, and over a season the panel crusts up with scale until it holds less water and passes less air. A scaled panel can cut output dramatically while the unit looks like it is working.
+          </p>
+
+          <p>
+            Aprilaire's #35 panel, used in the 600 and 700, is sold as a once-per-heating-season replacement, and retailers suggest changing it more often on hard water. Sylvane recommends replacing the HC26-series pad used in Honeywell bypass units twice per heating season. The cost is modest, but plan on it every year. If your water is very hard, a water softener upstream of the humidifier feed can extend panel life, though check your manual on whether softened water is recommended for your model.
+          </p>
+
+          <p>
+            At the start of each heating season: shut off the water, replace the panel, clean the distribution tray and the drain spout, check the drain line runs freely, open the bypass damper if your unit has a summer and winter setting, turn the water back on and confirm the solenoid opens and water reaches the drain on a heating call. At the end of the season, close the water shutoff and the bypass damper so the unit does not dump water or let humid summer air short-circuit the system.
+          </p>
+
+          <p>
+            Steam units have a different routine. The canister collects minerals as water boils off and must be replaced when it is spent; the controller on most units signals when. On hard water that can be every season or more often, and the canister is the biggest maintenance cost of steam humidification. Budget for it before you choose steam.
+          </p>
+        </div>
+
+        <div id="running-cost" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Running Cost: Water, Power and Panels
+          </h2>
+
+          <p>
+            Evaporative furnace humidifiers are cheap to run electrically. A bypass unit's solenoid draws a fraction of an amp at 24 volts, per Aprilaire's spec sheet, and a fan-powered unit adds a small fan motor. Neither will be noticeable on your electric bill.
+          </p>
+
+          <p>
+            Water is the hidden cost. Flow-through designs deliberately send more water over the panel than evaporates and drain the rest to keep minerals moving. That drained water is the price of a self-cleaning panel. Honeywell markets its HE280 tray as using less water than conventional designs, with listings quoting a 30 percent saving, and it is worth asking any installer how much drain water the unit they propose uses. In most homes on municipal water the cost is modest over a heating season, but on a well with a weak pump or a septic system, the extra flow is worth thinking about.
+          </p>
+
+          <p>
+            Steam is the opposite. It wastes little water but uses a lot of electricity, because boiling water takes real energy. A unit drawing many amps at 240 volts for hours a day through a cold winter will show up on your bill, and the canister replacements add to it. For a heat pump home, that is simply the cost of doing the job properly, since an evaporative unit will underperform.
+          </p>
+
+          <p>
+            Do not forget the offsetting saving. Air at 35 percent humidity feels warmer than the same temperature at 15 percent, so many people find they are comfortable with the thermostat a degree or two lower once humidity is right. That will not pay for a steam humidifier on its own, but it narrows the gap.
+          </p>
+        </div>
+
+        <div id="console" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. When a Console Beats a Ducted Unit
+          </h2>
+
+          <p>
+            A furnace-mounted humidifier is the better system when you have forced-air ductwork, but plenty of homes do not. Houses heated by hot-water radiators, baseboard electric heat, radiant floors or ductless mini-splits have nowhere to mount one. For those homes, a large console humidifier like the AIRCARE MA1201 is the realistic whole house option.
+          </p>
+
+          <p>
+            A console also makes sense for renters who cannot modify the furnace, for people who only need help in one large open living area, and for homes where the furnace is in a garage or crawl space with no water or drain nearby. AIRCARE's rating of about 11.44 gallons per day for up to 3,600 square feet is generous, and retailers note that coverage drops across multiple floors, so treat it as one floor of a larger home or most of a smaller one.
+          </p>
+
+          <p>
+            The trade-offs are convenience and consistency. You refill a console by hand, often every day at full output, and the wicks need replacing. Humidity will be highest near the unit and lower in distant rooms. If you have ducts and own the house, a furnace unit is the better long-term answer. For large single rooms specifically, our <a href="/best-humidifier-for-large-room/">large room humidifier guide</a> compares consoles and big tabletop units.
+          </p>
+
+          <p>
+            Whichever you choose, evaporative beats ultrasonic for whole house use. Ultrasonic units can leave a fine white mineral dust when run on tap water, and at whole house output that becomes visible on furniture and electronics. We explain the difference in our <a href="/evaporative-vs-ultrasonic-humidifier/">evaporative vs ultrasonic comparison</a>, and you can compare all portable picks in our <a href="/best-humidifier/">main humidifier roundup</a>.
+          </p>
+        </div>
+
+        <div id="match" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            10. Match a Pick to Your House
+          </h2>
+
+          <p>
+            If you have a gas or oil furnace and a typical home up to about 2,000 square feet, or 4,000 if it is genuinely tight, buy the Aprilaire 600 with the automatic control. It is the default for good reason and the one your installer will know best.
+          </p>
+
+          <p>
+            If your plenums are crowded and there is no clean route for a bypass duct, or you want a little more output, the Aprilaire 700 is the same system with a fan. If your installer prefers Honeywell or you already have a Honeywell Home thermostat that manages humidity, the HE280 is an equal alternative. If budget is the priority and your home is under about 2,800 square feet with a gas furnace, the GeneralAire 1042LH does the job for less.
+          </p>
+
+          <p>
+            If you heat with a heat pump, live in a very cold and dry climate with a large or leaky house, or want precise humidity control, go steam with the Aprilaire 800 and budget for the circuit, the electricity and the canisters. If you have no ducts or cannot alter the system, the AIRCARE MA1201 console is the practical answer.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Sizing to the Tight-Home Number</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Manufacturers publish their biggest coverage figure for tightly sealed homes. Most houses are average or worse. Size to the middle tier unless you know your house is tight, or the humidifier will run nonstop and still leave the house dry on the coldest days of the year.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Putting a Bypass Unit on a Heat Pump</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Bypass and fan-powered units evaporate water using warm supply air. Heat pumps deliver much cooler air over long cycles, so output drops sharply. If you heat with a heat pump, a steam humidifier is the type that actually delivers the moisture you are paying for.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Leaving a Manual Humidistat at One Setting</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A setting that is comfortable in November will soak the windows in a January cold snap. Without an outdoor-sensor control, turn the humidistat down as temperatures drop, or you will get condensation, peeling paint and mold on window frames before spring.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Trusting the Saddle Valve</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Self-piercing saddle valves are fast to install but prone to slow leaks and clogging. Have the installer fit a proper tee with a quarter-turn shutoff, and make sure the shutoff is somewhere you can reach to isolate the unit for summer.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping the Annual Panel Change</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A scaled water panel can cut output drastically while the humidifier looks like it is working. Replace the panel at the start of each heating season, more often on hard water, and clean the tray and drain while you are there.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            12. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best whole house humidifier?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most homes with a gas or oil furnace, the Aprilaire 600 is the best whole house humidifier. Aprilaire rates it at 17 gallons per day and sizes it for up to 4,000 square feet in a tight home or 2,000 in an average one. Its automatic control adjusts humidity to the outdoor temperature, which prevents window condensation.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a bypass or fan-powered humidifier better?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                They perform similarly; the difference is installation. A bypass unit needs room for a 6-inch duct between plenums and has no fan to fail. A fan-powered unit like the Aprilaire 700 needs 120-volt power but no bypass duct and offers slightly more output. Choose based on your ductwork and what your installer recommends.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do I need a steam humidifier with a heat pump?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                In most cases, yes. Evaporative units rely on warm supply air to evaporate water, and heat pumps deliver cooler air than gas furnaces. A steam humidifier makes its own heat, so it works regardless of supply temperature. Expect a dedicated circuit, higher electricity use and periodic canister replacement.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How often should I replace the water panel?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Aprilaire sells its #35 panel as a once-per-heating-season replacement, and retailers recommend more often on hard water. Sylvane suggests twice per season for the Honeywell HC26-series pads. Replace it at the start of every heating season at minimum, and inspect it midwinter if your water is hard.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I install a whole house humidifier myself?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A capable DIYer can, but it involves cutting the plenum, tapping a water line, running a drain and low-voltage wiring. Aprilaire recommends professional installation, and some warranties depend on it. Steam units also need a dedicated electrical circuit, which is a job for a licensed electrician in most areas.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What humidity should a whole house humidifier be set to?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Generally 30 to 40 percent in moderate cold, lower as it gets colder outside, sometimes into the 20s on the coldest nights in cold climates. The limit is window condensation. An automatic control with an outdoor sensor handles this for you; with a manual humidistat, turn it down before cold snaps.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Will a whole house humidifier cause mold?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Not if it is sized and controlled properly. Mold problems come from humidity set too high for the outdoor temperature, which causes condensation on cold windows and walls, or from a neglected unit with standing water. Use an outdoor-sensor control, check rooms with a hygrometer, and service the unit every season.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Humidifier Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-humidifier/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Humidifiers</h3>
+              <p class="text-gray-500 text-sm mt-2">Portable room humidifiers ranked for bedrooms, living rooms and easy cleaning.</p>
+            </a>
+            <a href="/whole-house-humidifier/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Whole House Humidifiers Explained</h3>
+              <p class="text-gray-500 text-sm mt-2">How furnace humidifiers work, what installation costs and whether you need one.</p>
+            </a>
+            <a href="/ideal-indoor-humidity/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Ideal Indoor Humidity</h3>
+              <p class="text-gray-500 text-sm mt-2">The right humidity by outdoor temperature, and how to avoid window condensation.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The <strong class="text-white">best whole house humidifier</strong> for most forced-air homes is the <strong class="text-white">Aprilaire 600</strong> with its automatic outdoor-sensor control. Choose the <strong class="text-white">Aprilaire 700</strong> if a bypass duct will not fit, the <strong class="text-white">Aprilaire 800</strong> steam unit for heat pumps and large dry houses, and the <strong class="text-white">AIRCARE MA1201</strong> console if you have no ducts.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Size to your home's tightness, fit a proper water shutoff and drain, let an outdoor sensor set the humidity, and change the water panel every season. Get those right and any of these units will keep your house comfortable all winter.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home & Indoor Air Quality" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
