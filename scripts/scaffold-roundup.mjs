@@ -116,6 +116,7 @@ import MoreInCategory from "../components/MoreInCategory.astro";
 import { authorSchema } from "../data/authors";
 import AuthorAvatar from "../components/AuthorAvatar.astro";
 import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
 import AuthorBio from "../components/AuthorBio.astro";
 import { amazonLink } from "../data/affiliate";
 import TrustBadge from "../components/TrustBadge.astro";
@@ -400,6 +401,8 @@ ${after}
 ${mistakesHtml}
           </div>
         </div>
+
+        <PlanTheJob />
 
         <!-- FAQ -->
         <div id="faq" class="scroll-mt-24 mt-16">

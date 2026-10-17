@@ -123,4 +123,44 @@ for (const [spoke, pillar] of Object.entries(spokes)) {
 }
 
 writeFileSync(OUT, JSON.stringify({ pillars, spokes }, null, 2) + '\n');
+
+// ---------------------------------------------------------------------------
+// src/data/guide-links.json, for PlanTheJob.astro on every guide:
+//   titles: every guide's short title (for "Also needed for this job" links)
+//   questions: per guide, its supporting articles (same confidence rule as above,
+//   single-product reviews included), sizing and cost questions first.
+// ---------------------------------------------------------------------------
+const LINKS_OUT = join(ROOT, 'src', 'data', 'guide-links.json');
+const pageTitle = (src) => {
+  const m = src?.match(/const title =\s*\n?\s*"((?:[^"\\]|\\.)*)"/);
+  if (!m) return undefined;
+  const t = JSON.parse(`"${m[1]}"`);
+  // Keep the question or claim, drop the subtitle: "Is X Worth It? Who Should..." -> "Is X Worth It?"
+  const q = t.indexOf('?');
+  const head = q > 0 ? t.slice(0, q + 1) : t.split(':')[0];
+  return head.replace(/\s*\((?:20\d\d[^)]*)\)/g, '').trim();
+};
+const priority = (slug) =>
+  /^what-size|^how-much|-cost$|^how-many|calculator/.test(slug) ? 0
+  : /^how-long|^how-often|^when-|^what-temperature/.test(slug) ? 1
+  : /-vs-/.test(slug) ? 2
+  : /^(can|do|does|is|are|should|will)-/.test(slug) ? 3
+  : 4;
+const titles = {};
+const questions = {};
+for (const { pillar, spokes: list } of ranked) {
+  titles[pillar] = guideTitle(sources.get(pillar) ?? readFileSync(join(PAGES_DIR, `${pillar}.astro`), 'utf8'));
+  const g = tokens(pillar);
+  const keep = list.filter((spoke) => {
+    const cta = sources.get(spoke)?.match(/stickyCta=\{\{[\s\S]*?link:\s*"\/([a-z0-9-]+)\/"/);
+    return (cta && cta[1] === pillar) || [...tokens(spoke)].some((w) => g.has(w) && !BROAD.has(w));
+  });
+  const items = keep
+    .map((slug) => ({ slug, title: pageTitle(sources.get(slug)) }))
+    .filter((x) => x.title)
+    .sort((a, b) => priority(a.slug) - priority(b.slug) || a.slug.localeCompare(b.slug));
+  if (items.length) questions[pillar] = items;
+}
+writeFileSync(LINKS_OUT, JSON.stringify({ titles, questions }, null, 2) + '\n');
+console.log(`[guide-links] ${Object.keys(questions).length} guides with supporting questions`);
 console.log(`[top-picks] ${Object.keys(pillars).length} guides with a #1 pick, ${Object.keys(spokes).length} supporting pages mapped`);
