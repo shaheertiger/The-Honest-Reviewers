@@ -13,6 +13,7 @@
 // informational article needs.
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { AUTHORS, authorForPath } from '../src/data/authors.ts';
 
 const PAGES_DIR = join(import.meta.dirname, '..', 'src', 'pages');
 const q = (s) => JSON.stringify(s);
@@ -57,6 +58,10 @@ ${row.map((cell, j) => `                    <td class="px-4 py-4 ${j === 0 ? 'fo
 }
 
 export function render(spec) {
+  // Visible byline is written literally (the word-count gate reads page text);
+  // it follows the same routing as the schema and meta author.
+  const a = AUTHORS[authorForPath(`/${spec.slug}/`)];
+  const byline = { name: a.name, role: a.role.replace(/&/g, '&amp;') };
   const tocItems = [...spec.toc, ['mistakes', 'Common Mistakes'], ['faq', 'FAQ']];
   const toc = tocItems.map(([a, l], i) =>
     `          <a href="#${a}" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">${i + 1}. ${l}</a>`
@@ -113,7 +118,7 @@ ${renderBlocks(s.blocks)}        </div>
   return `---
 import Layout from "../layouts/Layout.astro";
 import MoreInCategory from "../components/MoreInCategory.astro";
-import { authorSchema } from "../data/authors";
+import { authorSchema, authorName } from "../data/authors";
 import AuthorAvatar from "../components/AuthorAvatar.astro";
 import QuickPicks from "../components/QuickPicks.astro";
 import PlanTheJob from "../components/PlanTheJob.astro";
@@ -165,7 +170,7 @@ const schema = {
     {
       "@type": "Article",
       headline: title,
-      author: authorSchema(),
+      author: authorSchema(Astro.url.pathname),
       datePublished: dates.published,
       dateModified: dates.modified,
       publisher: { "@type": "Organization", name: "The Honest Reviewers" },
@@ -201,7 +206,7 @@ const schema = {
   article={{
     publishedTime: dates.published,
     modifiedTime: dates.modified,
-    author: "Alex Rivers",
+    author: authorName(Astro.url.pathname),
     section: ${q(spec.section)},
     tags: ${indent(spec.tags, 4)},
   }}
@@ -252,8 +257,8 @@ const schema = {
         <div class="flex items-center gap-3">
           <AuthorAvatar size={48} />
           <div>
-            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
-            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+            <p class="text-sm font-bold text-gray-900">${byline.name}</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">${byline.role}</p>
           </div>
         </div>
         <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
@@ -318,7 +323,7 @@ ${before}
                       />
                     )}
                     <div>
-                      <p class="text-white font-black text-lg">{product.name}</p>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
                       <p class="text-gray-400 text-xs">{product.category}</p>
                     </div>
                   </div>
@@ -327,6 +332,7 @@ ${before}
                   </span>
                 </div>
                 <div class="p-6">
+                  {product.rating && product.reviewCount && (
                   <div class="flex items-center gap-2 mb-4">
                     <div class="flex text-yellow-400">
                       {[...Array(5)].map((_, i) => (
@@ -343,6 +349,7 @@ ${before}
                     <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
                     <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ${spec.ratingLabel})</span>
                   </div>
+                  )}
 
                   <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
 

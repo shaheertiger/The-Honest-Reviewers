@@ -6,6 +6,12 @@ import sitemap from '@astrojs/sitemap';
 // Buyer's guides that target high-volume search terms. They get a higher
 // sitemap priority than the 0.5 default so crawlers reach them sooner.
 const priorityGuides = new Set([
+  'best-electric-space-heater',
+  'small-brown-bugs-in-house',
+  'small-black-flying-bugs-in-house',
+  'best-battery-string-trimmer',
+  'best-under-cabinet-lighting',
+  'what-temperature-should-a-refrigerator-be',
   'how-often-should-you-seal-a-deck',
   'how-long-does-deck-sealer-take-to-dry',
   'does-thompsons-water-seal-work',

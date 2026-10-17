@@ -1,0 +1,956 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Ceiling Fans With Lights",
+    "url": "/best-ceiling-fans-with-lights/"
+  },
+  {
+    "title": "Ceiling Fan Light Not Working?",
+    "url": "/ceiling-fan-light-not-working/"
+  },
+  {
+    "title": "DC vs AC Ceiling Fans",
+    "url": "/dc-vs-ac-ceiling-fan/"
+  },
+  {
+    "title": "Induction vs Gas Cooktop",
+    "url": "/induction-vs-gas-cooktop/"
+  },
+  {
+    "title": "Best Induction Cookware",
+    "url": "/best-induction-cookware/"
+  },
+  {
+    "title": "How to Seal Granite Countertops",
+    "url": "/how-to-seal-granite-countertops/"
+  },
+  {
+    "title": "Best Granite Sealers",
+    "url": "/best-granite-sealer/"
+  },
+  {
+    "title": "Best Dishwashers",
+    "url": "/best-dishwasher/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-17", modified: "2026-10-17" });
+const title = "Best Under Cabinet Lighting: 7 Picks Sorted by Power Source";
+const description =
+  "Best under cabinet lighting, chosen by power source first: plug-in, hardwired, tape and battery picks compared on CRI, color temperature and lumens per foot.";
+
+const PRODUCTS = [
+  {
+    "id": "ge-premium-3-color-hd-24",
+    "name": "GE Premium 3-Color HD Undercabinet LED Light Fixture 24 in.",
+    "badge": "Best Overall",
+    "category": "Plug-In or Direct-Wire LED Bar",
+    "description": "The GE Premium 3-Color HD is the bar we would put in most kitchens because it refuses to make you choose your power source up front. GE says it can be plugged in, direct-wired, or both, so a renter can run it off an outlet today and an owner can wire it to a wall switch during a remodel without buying a different fixture. The 24-inch version is rated at 17 watts and 1,110 lumens, which works out to roughly 555 lumens per foot, the brightest per-foot figure among our picks. GE lists 3000K, 4000K and 5000K color options in the one fixture and a CRI of 90, so you can run warm in the evening and cooler for prep, or simply pick the one that matches your ceiling lights. It is listed as dimmable with a dimmer switch, mounts with built-in captive screws, and links to additional GE bars and pucks through linking cables or flush-mount adapters from a single power source. GE lists a five-year warranty. The weak spots are documentation, not hardware: the product page does not explain how the color is selected, does not list a rated life, and does not name compatible dimmers, so check the install guide before buying a dimmer to match.",
+    "pros": [
+      "Plug in, direct-wire, or both, per GE",
+      "Rated 1,110 lumens from 24 inches, about 555 lumens per foot",
+      "3000K, 4000K and 5000K options with a listed CRI of 90",
+      "Links to more GE bars and pucks from one power source",
+      "Five-year warranty listed"
+    ],
+    "cons": [
+      "Product page does not name compatible dimmer types",
+      "No rated lifespan listed on the GE page",
+      "5000K setting is too cool for most warm kitchens"
+    ],
+    "bottomLine": "For most kitchens, the GE Premium 3-Color HD is the under cabinet light to buy: it plugs in or hardwires, is rated at 1,110 lumens and 90 CRI from a 24-inch bar, and lets you pick 3000K, 4000K or 5000K."
+  },
+  {
+    "id": "wac-120v-3-cct-barlight",
+    "name": "WAC Lighting 120V 3-CCT Barlight BA-AC24-CS-WT",
+    "badge": "Best Hardwired",
+    "category": "120V Driverless LED Bar",
+    "description": "If you are opening walls anyway, this is the fixture we would ask the electrician to install. WAC's 120V 3-CCT Barlight runs straight off line voltage with what WAC calls ACLED driverless technology, so there is no transformer to hide in a cabinet. The spec sheet lists four lengths: 8 inches at 355 lumens, 18 inches at 600, 24 inches at 910 and 30 inches at 1,075, which puts the 24-inch model around 455 lumens per foot. Color temperature is switchable across 2700K, 3000K and 3500K, which covers the warm range most kitchens want and stops short of the blue-white end. CRI is listed at 90. Dimming is ELV from 100 to 10 percent, so it wants an electronic low-voltage dimmer rather than a basic one. WAC describes a backlit parabolic reflector and an acrylic diffuser with minimal gaps between fixtures for a continuous line, a true one-inch profile, damp-location listing, Title 24 JA8 compliance, a 50,000-hour rated life and a five-year warranty. It only comes in white, and WAC sells interconnect cables and a power cord as separate accessories, so price the full run before committing.",
+    "pros": [
+      "120V driverless, so no transformer to hide",
+      "Switchable 2700K, 3000K or 3500K with a listed CRI of 90",
+      "ELV dimming from 100 to 10 percent",
+      "Damp-location listed and Title 24 JA8 compliant",
+      "Five-year warranty and 50,000-hour rated life"
+    ],
+    "cons": [
+      "White finish only",
+      "Interconnects and power cord are sold separately",
+      "Needs an ELV-compatible dimmer, not a basic one"
+    ],
+    "bottomLine": "The hardwired bar to specify during a remodel: warm switchable color, 90 CRI, ELV dimming and no driver to hide."
+  },
+  {
+    "id": "armacost-ribbonflex-pro-cob-24v",
+    "name": "Armacost Lighting RibbonFlex Pro 24V COB LED Strip Light 3000K",
+    "badge": "Best Tape Light",
+    "category": "Low-Voltage COB Tape (Driver Required)",
+    "description": "Tape light is the answer when you want the light source to disappear completely, and COB tape is the version that does not leave a row of dots reflected in a polished counter. Armacost's RibbonFlex Pro COB strip packs its chips tightly, 97 LEDs per foot per the retailer listing, under a continuous phosphor line. It is rated at 165 lumens per foot and 1.2 watts per foot, with a listed CRI of 90 or higher, and it comes in 2700K, 3000K and 4000K. The roll is 16.4 feet, which is also the listed maximum run, and it can be cut every 2 inches and rejoined with the included connector, so it fits awkward cabinet runs that a fixed-length bar cannot. It is 8 millimeters wide with 3M adhesive backing and support clips, UL listed, IP20 for indoor dry locations, and carries a three-year warranty. It is PWM dimmable with compatible dimmers and controllers. The catch is that it runs on 24 volts DC, so you need a 24-volt power supply sold separately, and ideally an aluminum channel with a diffuser if the strip will be visible. At 165 lumens per foot it is gentler than a bar, so treat it as even ambient and accent light more than heavy task light.",
+    "pros": [
+      "COB construction for a continuous line instead of dots",
+      "Listed CRI of 90+ in 2700K, 3000K or 4000K",
+      "Cut every 2 inches to fit any run",
+      "16.4-foot roll at a rated 1.2 watts per foot",
+      "UL listed with a three-year warranty"
+    ],
+    "cons": [
+      "Requires a separate 24V power supply",
+      "Rated 165 lumens per foot, softer than a bar fixture",
+      "IP20, so not for wet or damp spots"
+    ],
+    "bottomLine": "The cleanest-looking option for glossy counters if you are willing to add a 24V driver and a channel."
+  },
+  {
+    "id": "ikea-mittled-countertop-strip",
+    "name": "IKEA MITTLED LED Kitchen Countertop Lighting Strip Dimmable",
+    "badge": "Best Smart System",
+    "category": "Modular Driver-Based Strip with Smart Control",
+    "description": "MITTLED is the easiest way to get app and remote control under cabinets without stitching together third-party parts, as long as you accept that it is an IKEA system and buy it from IKEA. The strips come in 12, 15, 18 and 24-inch lengths sized for SEKTION cabinets, and IKEA lists the 15-inch strip at 300 lumens and 4.3 watts, about 240 lumens per foot. Every length is warm white at 2700K with a listed CRI above 90, which is exactly where we would set a kitchen used mostly in the evening. The strip is dimmable with the BILRESA remote, sold separately, and it is part of IKEA's smart home range, connecting to the DIRIGERA hub and the IKEA Home smart app for schedules and grouping. IKEA says it installs without an electrician. What the price tag hides is the parts list: each run needs a TRÅDFRI LED driver and an ANSLUTA power cord, sold separately, plus one VÅGDAL connection cord per group of strips. The product page does not state how many strips one driver can carry, so add up the wattage before buying. Owner reviews on IKEA's page note the warm, yellow-leaning tone and the extra cords needed to connect strips at different heights.",
+    "pros": [
+      "2700K with a listed CRI above 90",
+      "Dimmable with the BILRESA remote, app control via DIRIGERA",
+      "Sized for SEKTION cabinets, no electrician needed per IKEA",
+      "Four lengths from 12 to 24 inches"
+    ],
+    "cons": [
+      "Driver, power cord and connection cords all sold separately",
+      "Only one color temperature",
+      "Sold through IKEA, so Amazon availability is third-party"
+    ],
+    "bottomLine": "The simplest route to remote and app control under cabinets, if you count the driver and cords in the price."
+  },
+  {
+    "id": "wac-120v-3-cct-puck-kit",
+    "name": "WAC Lighting 120V 3-CCT Puck Light Kit HR-AC73",
+    "badge": "Best Hardwired Puck",
+    "category": "120V Driverless Puck Lights",
+    "description": "Pucks make sense in two places: inside glass-front cabinets and under shallow open shelving where a long bar looks heavy. WAC's 120V 3-CCT pucks are the version we would choose because they carry the same driverless ACLED design and specs as the brand's bars. Each puck is rated at 4 watts and 290 lumens with a CRI of 90, and color is switchable across 2700K, 3000K and 3500K. Dimming is ELV from 100 to 10 percent. They can be recessed or surface mounted, and WAC lists up to 20 pucks per run, with a hardwire box, interconnect cable and power cord available as accessories. The HR-AC73 kit bundles two double-wire pucks, one single-wire puck and a cord. Finishes are black, brushed nickel and white, and WAC rates them for 50,000 hours. The trade-off is the physics of any puck: light comes out in pools, so on a long counter you will see bright circles with dimmer gaps between them unless you space them closely.",
+    "pros": [
+      "290 lumens and a listed CRI of 90 per puck",
+      "Switchable 2700K, 3000K or 3500K",
+      "Recessed or surface mount, up to 20 per run",
+      "Black, brushed nickel or white finishes"
+    ],
+    "cons": [
+      "Pools of light rather than an even wash on long counters",
+      "Needs an ELV-compatible dimmer"
+    ],
+    "bottomLine": "The puck to buy for glass-front cabinets and open shelving, with the same warm color range and 90 CRI as WAC's bars."
+  },
+  {
+    "id": "energizer-rechargeable-motion-light-bar",
+    "name": "Energizer Rechargeable Motion-Sensing Light Bar 81758",
+    "badge": "Best Rechargeable",
+    "category": "USB-C Rechargeable Motion Bar",
+    "description": "This is not countertop task lighting, and we would not pretend otherwise. It is the right tool for the places a wired fixture cannot reach without a contractor: a pantry, the inside of a deep base cabinet, a coffee corner with no outlet. Energizer rates it at 200 lumens total and powers it with a 3.7-volt, 800 mAh lithium polymer battery that charges over the included 1-foot USB-C cable from a USB-A port or adapter, which is not included. A three-position switch selects always on, off, or auto, and in auto the light turns on when it detects movement within 15 feet. It mounts with an included magnetic strip that attaches to most metal surfaces. Energizer's listing does not give a color temperature, CRI or runtime per charge, so if light quality is the point, this is the wrong pick. If the point is never fumbling in a dark cupboard again, it does exactly that with no wiring at all.",
+    "pros": [
+      "No wiring: USB-C rechargeable battery",
+      "Motion activation within a rated 15 feet",
+      "On, off and auto modes",
+      "Magnetic mounting strip included"
+    ],
+    "cons": [
+      "200 lumens total, not enough for prep work",
+      "No color temperature, CRI or runtime listed",
+      "USB power adapter not included"
+    ],
+    "bottomLine": "The pick for pantries and cabinet interiors where any light beats none and running a wire is not an option."
+  },
+  {
+    "id": "brilliant-evolution-wireless-puck-brrc134",
+    "name": "Brilliant Evolution Wireless LED Puck Light with Remote BRRC134",
+    "badge": "Best Battery Puck",
+    "category": "AA Battery Puck Lights with IR Remote",
+    "description": "For renters who want a warm glow under the cabinets tonight and nothing they cannot peel off later, battery pucks are the honest answer, and Brilliant Evolution's remote-controlled pucks are well documented. The owner's manual lists 55 lumens per puck at 3000K warm white from three LEDs with a 120-degree beam, running on three AA batteries per puck with a rated 100 hours of run time. The infrared remote works up to 15 feet away and one remote can control up to 12 pucks; it sets brightness to 50 or 100 percent, adjusts it up or down, and offers 15, 30, 60 and 120-minute auto-off timers. Each puck can also be turned on or off by pressing the lens. They mount with adhesive tape or screws and measure 3-3/8 inches across and 1-1/4 inches high. Keep expectations in line with the numbers: 55 lumens is accent light, three LEDs will show as bright points on a glossy counter, the remote needs line of sight, and you will be buying AA batteries regularly.",
+    "pros": [
+      "No wiring at all, adhesive or screw mount",
+      "Rated 3000K warm white",
+      "IR remote with dimming and 15 to 120-minute timers",
+      "One remote controls up to 12 pucks"
+    ],
+    "cons": [
+      "55 lumens per puck is accent light only",
+      "Three AA batteries per puck to replace",
+      "Infrared remote needs line of sight"
+    ],
+    "bottomLine": "The no-tools option for renters who want warm accent light under cabinets and accept battery swaps."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Under Cabinet Lighting",
+          item: "https://www.thehonestreviewers.com/best-under-cabinet-lighting/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What color temperature is best for under cabinet lighting?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most kitchens, 2700K to 3000K warm white looks best because it matches typical ceiling lighting and flatters wood, cream and warm stone. Choose 4000K if your kitchen is white and gray or you do detailed prep at night and prefer a crisper light. The more important rule is matching your existing overhead lights so the counter does not look like a separate room."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What CRI should under cabinet lights have?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Look for a listed CRI of 90 or higher. CRI describes how accurately a light renders colors, and lower values make food, wood and stone look flat or slightly gray. Every wired pick on this page lists 90 or higher. Treat CRI as a manufacturer rating, and if color accuracy matters to you, install one fixture and judge it at night before buying the full run."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many lumens do I need for under cabinet lighting?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Compare lumens per foot rather than total lumens. For a main prep counter, the bar fixtures on this page land at several hundred lumens per foot, which is the tier we would use for task lighting, ideally on a dimmer. For accent light where overhead lighting is already strong, tape or strip lights in the 150 to 250 lumens per foot range are usually enough."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should under cabinet lights go at the front or back of the cabinet?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Toward the front, in most kitchens. Mounting just behind the face frame or a light rail spreads light across the full depth of the counter and keeps the light source out of your line of sight and out of reflections in the counter. Back-mounted lights over-light the backsplash and leave the working edge of the counter in shadow."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need an electrician to install under cabinet lighting?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not for plug-in, battery or rechargeable lights, which are straightforward DIY. Hardwiring a fixture to a circuit, adding a switch or running cable in a wall is electrical work that may require a permit and inspection depending on where you live. If you are not experienced with household wiring, hire a licensed electrician, especially during a remodel."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are puck lights or light bars better under cabinets?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Light bars are better for countertops because they produce a continuous, even wash. Puck lights create pools of light with dimmer gaps between them, which looks great inside glass-front cabinets and under open shelving but scalloped on a long counter. If you want pucks over a work surface, space them closely and choose a high-output model."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can under cabinet lights be dimmed and controlled from an app?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Many can. Hardwired fixtures like the WAC bars dim with a compatible ELV dimmer, which can itself be a smart dimmer if it is rated for that load. IKEA's MITTLED system dims with its own remote and connects to the IKEA Home app through the DIRIGERA hub. Battery pucks typically offer simple remote dimming and timers rather than app control."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home Improvement",
+    tags: [
+      "under cabinet lighting",
+      "under cabinet lights",
+      "LED under cabinet lighting",
+      "under cabinet light bar",
+      "under cabinet LED tape light",
+      "under cabinet puck lights",
+      "kitchen under cabinet lighting"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated October 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The 7 Best <span class="text-[#38BDF8]">Under Cabinet Lighting</span> Picks
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Sorted the way the decision actually works: power source first, then shape, color, CRI and placement. Every spec comes from the manufacturer, and we say where one is missing.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#ge-premium-3-color-hd-24"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Jump to the Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="3.4k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#power-source" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Choose by Power Source</a>
+          <a href="#form-factor" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Bar vs Puck vs Tape</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 7 Picks</a>
+          <a href="#color-and-cri" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Color Temperature and CRI</a>
+          <a href="#brightness" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Lumens per Foot</a>
+          <a href="#placement" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Placement and Glare</a>
+          <a href="#dimming-and-smart" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Dimming and Smart Control</a>
+          <a href="#installation" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Install Notes</a>
+          <a href="#match-your-kitchen" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Match a Pick to Your Kitchen</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Most under cabinet lighting disappoints for one of three reasons: it was the wrong power type for the kitchen, it was mounted at the back of the cabinet, or it had a color and CRI that made the counter look cheap. Pick the power source first and the rest gets easy.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="power-source" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. Start With the Power Source, Not the Fixture
+          </h2>
+
+          <p>
+            Most under cabinet lighting guides start with the fixture and leave power until the end. That is backwards. How the light gets electricity decides what you can buy, whether you need an electrician, how the finished job looks, and what you will be maintaining in five years. Decide this first and the shortlist almost writes itself.
+          </p>
+
+          <p>
+            <strong>Plug-in fixtures</strong> run off a standard outlet, usually through a cord that drops down to the backsplash. They are the fastest install and the easiest to undo, and good ones are bright enough for real task lighting. The cost is a visible cord and an outlet you give up. Many plug-in bars, including our top pick, can later be converted to direct wire, which is the best of both worlds if you think you might remodel.
+          </p>
+
+          <p>
+            <strong>Hardwired 120-volt fixtures</strong> connect to a circuit and are usually run from a wall switch. Nothing dangles, nothing occupies an outlet, and the light behaves like part of the kitchen rather than an accessory. This is the right choice during a remodel or when the walls are already open. Newer driverless designs, like the WAC bars and pucks in our picks, skip the transformer entirely.
+          </p>
+
+          <p>
+            <strong>Low-voltage systems</strong> run on 12 or 24 volts DC from a separate driver, sometimes called a power supply or transformer. Tape light lives here, and so do modular kits like IKEA's MITTLED. They give the most flexible layouts and the slimmest profiles, but you need somewhere to put the driver where it stays ventilated and reachable.
+          </p>
+
+          <p>
+            <strong>Battery and rechargeable lights</strong> need no wiring at all. They are the only realistic option in many rentals, and motion-sensing versions are excellent inside pantries and deep cabinets. They are also the dimmest and least consistent category, so they belong in the accent and convenience role, not over the cutting board.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Power source</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Install</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Typical role</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Watch for</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Plug-in 120V</td>
+                    <td class="px-4 py-4 text-gray-700">DIY, minutes</td>
+                    <td class="px-4 py-4 text-gray-700">Task lighting for renters and quick upgrades</td>
+                    <td class="px-4 py-4 text-gray-700">Visible cord, uses an outlet</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Hardwired 120V</td>
+                    <td class="px-4 py-4 text-gray-700">Electrician in most cases</td>
+                    <td class="px-4 py-4 text-gray-700">Remodels, permanent task lighting</td>
+                    <td class="px-4 py-4 text-gray-700">Dimmer compatibility, local rules</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Low-voltage with driver</td>
+                    <td class="px-4 py-4 text-gray-700">DIY to moderate</td>
+                    <td class="px-4 py-4 text-gray-700">Tape light, slim modular systems</td>
+                    <td class="px-4 py-4 text-gray-700">Driver placement and sizing</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Battery / rechargeable</td>
+                    <td class="px-4 py-4 text-gray-700">DIY, peel and stick</td>
+                    <td class="px-4 py-4 text-gray-700">Pantries, accents, no-outlet spots</td>
+                    <td class="px-4 py-4 text-gray-700">Low output, battery upkeep</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="form-factor" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Bar, Puck or Tape: What Each One Looks Like on the Counter
+          </h2>
+
+          <p>
+            Once you know the power source, the form factor decides what the light actually looks like on the counter. The three shapes produce genuinely different results, and picking the wrong one is the most common reason people are disappointed by a perfectly good fixture.
+          </p>
+
+          <p>
+            <strong>Bars</strong> are the default for kitchens. A rigid aluminum housing with a diffuser spreads light along its length, so a row of bars gives a continuous wash across the counter. They are the brightest option per foot among our picks, at roughly 455 to 555 lumens per foot for the hardwired and plug-in bars, and they are the easiest to mount cleanly with screws. Their weakness is fixed lengths: a 30-inch cabinet run with a 24-inch bar leaves a darker stretch at the end, so measure each cabinet before ordering.
+          </p>
+
+          <p>
+            <strong>Pucks</strong> are small round lights that throw a cone of light. That makes them lovely inside glass-front cabinets and under open shelves, where you want pools of light on displayed objects. Over a long counter the same pools turn into a scalloped pattern of bright circles and dim gaps. If you love the look, space them closely; if you want an even work surface, choose bars or tape instead.
+          </p>
+
+          <p>
+            <strong>Tape light</strong> is a flexible circuit with LEDs along its length, cut to size and stuck in place. It is the most adaptable and the least visible, especially recessed in an aluminum channel. Older tape shows individual LED dots, both on the strip itself and reflected in shiny countertops. COB tape, which places chips so densely that the light reads as one line, largely solves that problem, which is why our tape pick is a COB product.
+          </p>
+
+          <p>
+            A useful test: stand where you normally prep and look at the counter, not at the cabinet. If what you see reflected is a row of points, you will notice it every day. If it is a soft line, you will forget the light is there, which is the goal.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The 7 Best Under Cabinet Lights
+          </h2>
+
+          <p>
+            These seven cover every power type: a plug-in bar that can also be hardwired, a driverless hardwired bar and puck, a low-voltage COB tape, a modular smart strip, a rechargeable motion bar and a battery puck. Every lumen, kelvin, CRI and dimming figure below is the published rating, taken from the manufacturer's page, spec sheet or owner's manual, and where a maker does not publish a number, we say so instead of guessing.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="color-and-cri" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Color Temperature and CRI: The Two Numbers That Decide How It Looks
+          </h2>
+
+          <p>
+            Brightness gets the attention, but color temperature and color rendering are what make under cabinet lighting look expensive or cheap. Both numbers are printed on any decent spec sheet, and every pick on this page lists at least one of them except the Energizer bar, which is why it is limited to pantry duty.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Color temperature: match the room, then the task</h3>
+
+          <p>
+            Color temperature is measured in kelvin. Around 2700K to 3000K reads as warm white, close to traditional incandescent bulbs, and it flatters wood cabinets, cream tile and warm stone. Around 4000K reads as neutral white, crisper and more clinical, and it suits white-and-gray kitchens and people who do serious prep at night. 5000K and above looks like daylight and tends to feel stark in a home kitchen.
+          </p>
+
+          <p>
+            The bigger rule is consistency. Under cabinet lights that are cooler than your ceiling fixtures make the counter look like a separate room. Check the bulbs or fixtures already overhead, including any ceiling fan light kit, and match them. If you are also choosing a fan, our <a href="/best-ceiling-fans-with-lights/">guide to ceiling fans with lights</a> lists the color temperature of each light kit for exactly this reason. Selectable fixtures like the GE and WAC picks let you settle the question after installation.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">CRI: why 90 is the floor for a kitchen</h3>
+
+          <p>
+            The color rendering index describes how accurately a light source shows colors compared with a reference source, on a scale up to 100. Many standard LEDs are rated around 80, and lower color rendering is what makes raw meat look gray, tomatoes look dull and a granite or quartz counter look flatter than it did in the showroom. For a kitchen we treat a listed CRI of 90 as the minimum. GE, WAC, Armacost and IKEA all list 90 or higher on the fixtures we picked.
+          </p>
+
+          <p>
+            CRI is a manufacturer rating, and owner impressions sometimes differ from it. Reviews of IKEA's strip, for example, describe its 2700K as yellow-leaning. That is partly the color temperature doing exactly what it says, and a good reason to buy one fixture first, install it, and look at it at night before buying the whole run.
+          </p>
+        </div>
+
+        <div id="brightness" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. How Bright Is Bright Enough: Lumens per Foot
+          </h2>
+
+          <p>
+            Total lumens on a box tell you very little, because a 36-inch bar and a 12-inch bar with the same total will light a counter completely differently. The number that actually compares fixtures is lumens per foot: rated lumens divided by length. Do that math and our picks fall into clear tiers.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Pick</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Rated output</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Approx. per foot</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">GE Premium 3-Color HD 24 in.</td>
+                    <td class="px-4 py-4 text-gray-700">1,110 lm</td>
+                    <td class="px-4 py-4 text-gray-700">About 555 lm/ft</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">WAC 3-CCT Barlight 24 in.</td>
+                    <td class="px-4 py-4 text-gray-700">910 lm</td>
+                    <td class="px-4 py-4 text-gray-700">About 455 lm/ft</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">IKEA MITTLED 15 in.</td>
+                    <td class="px-4 py-4 text-gray-700">300 lm</td>
+                    <td class="px-4 py-4 text-gray-700">About 240 lm/ft</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Armacost RibbonFlex Pro COB</td>
+                    <td class="px-4 py-4 text-gray-700">165 lm/ft</td>
+                    <td class="px-4 py-4 text-gray-700">165 lm/ft</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">WAC 3-CCT Puck</td>
+                    <td class="px-4 py-4 text-gray-700">290 lm each</td>
+                    <td class="px-4 py-4 text-gray-700">Depends on spacing</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Energizer Light Bar</td>
+                    <td class="px-4 py-4 text-gray-700">200 lm total</td>
+                    <td class="px-4 py-4 text-gray-700">Accent only</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Brilliant Evolution Puck</td>
+                    <td class="px-4 py-4 text-gray-700">55 lm each</td>
+                    <td class="px-4 py-4 text-gray-700">Accent only</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            For a primary prep counter, especially one without strong overhead lighting, we would aim for the bar tier, several hundred lumens per foot, with a dimmer so you can turn it down in the evening. That is what lets you see the edge of a knife and the color of a sauce. If the kitchen already has good recessed lighting and you mainly want a warm glow and a lit backsplash, the strip and tape tier is plenty and often looks better because it is softer.
+          </p>
+
+          <p>
+            Battery lights are a separate category entirely. A 55-lumen puck is a nightlight with ambitions, and a 200-lumen motion bar is perfect for finding the cereal at 6 a.m. Neither will light a work surface, and no amount of extra units fixes the uneven pattern.
+          </p>
+
+          <p>
+            Two caveats keep this honest. First, the per-foot figures here are simple division of manufacturer ratings, not measurements, and the diffuser, mounting depth and color of your counter all change how bright it looks. Second, more is not always better. A very bright fixture mounted toward the back of the cabinet will mostly light the backsplash and bounce glare off a polished counter, which brings us to placement.
+          </p>
+        </div>
+
+        <div id="placement" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Placement: Front Edge, Glare and Glossy Stone
+          </h2>
+
+          <p>
+            Where you mount the fixture matters as much as which fixture you buy. The most common install, tucked against the wall at the back of the cabinet, is also usually the worst. It lights the backsplash brilliantly, leaves the front of the counter where you actually work in relative shadow, and points the light source straight at your eyes in the reflection off the counter.
+          </p>
+
+          <p>
+            The better default is to mount the fixture toward the front of the cabinet's underside, just behind the face frame or light rail, so the light falls across the full depth of the counter and the backsplash gets a softer graze. Most framed cabinets have a recessed lip at the front that hides a slim bar or tape channel from view when you are standing. If your cabinets are frameless, a light rail molding does the same job and is worth the small cost.
+          </p>
+
+          <p>
+            Glossy counters change the rules. Polished granite, quartz and solid surfaces act like a dark mirror, and anything you can see in that mirror you will notice every day. Individual LED dots, gaps between bars and the bright face of a puck all show up as reflections. This is where diffusers and COB tape earn their place, and where angling or recessing the fixture so its lens cannot be seen from a standing position pays off. If the stone itself needs attention before the lights go in, our <a href="/how-to-seal-granite-countertops/">granite sealing guide</a> covers the job, and it is easier to do with the counter clear and the fixtures not yet mounted.
+          </p>
+
+          <p>
+            Matte surfaces such as honed stone, butcher block and many laminates are far more forgiving. Here a dotted tape or a row of pucks may be perfectly acceptable, and you can prioritize brightness over diffusion.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE PLACEMENT RULE</p>
+            <p class="text-xl font-bold text-white mb-3">Mount toward the front, aim back, and hide the lens.</p>
+            <p class="text-gray-300 leading-relaxed m-0">If you can see the light source from where you stand, or see it reflected in the counter, move it forward, recess it, or add a diffuser. The best under cabinet lighting is noticed only as a well-lit counter.</p>
+          </div>
+        </div>
+
+        <div id="dimming-and-smart" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Dimming, Linking and Smart Control
+          </h2>
+
+          <p>
+            Dimming is what turns task lighting into the light you leave on at night, and it is where good fixtures and cheap ones separate. The catch is that dimming is a system: the fixture, the dimmer and sometimes the driver all have to agree.
+          </p>
+
+          <p>
+            The WAC bars and pucks list ELV dimming from 100 to 10 percent. ELV, or electronic low voltage, refers to a dimmer type that pairs well with many LED electronics, and using a basic dimmer instead is a common cause of flicker and buzzing. GE lists its bar as dimmable with a dimmer switch but does not name compatible models on the product page, so check its install guide. Tape light dims through its driver or a controller between driver and strip, and Armacost lists PWM dimming with compatible dimmers. If you are diagnosing flicker on lights you already own, many of the causes overlap with our <a href="/ceiling-fan-light-not-working/">ceiling fan light troubleshooting guide</a>, especially loose connections and mismatched dimmers.
+          </p>
+
+          <p>
+            Linking is the second system question. A good under cabinet setup runs several fixtures from one power source and one switch. GE says its Premium bars link to more bars and pucks with linking cables or flush-mount adapters. WAC lists up to 20 of its pucks per run. IKEA's MITTLED needs one VÅGDAL connection cord per group of strips on a TRÅDFRI driver, and the Brilliant Evolution remote controls up to 12 pucks. Before buying, sketch the cabinet runs, note any gaps such as a range hood or window, and count the connectors you need to bridge them.
+          </p>
+
+          <p>
+            Smart control comes in two flavors. A system like MITTLED is smart by design, with the BILRESA remote and the IKEA Home app via the DIRIGERA hub. The other route is to keep the fixture simple and make the wall switch smart. For a hardwired run on its own switch, a smart dimmer that is rated for the fixture's dimming type gives you schedules and voice control without tying the lights to one brand's app. Either way, a schedule that brings the counter up to a low level in the early morning is the single most useful smart feature here.
+          </p>
+        </div>
+
+        <div id="installation" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Install Notes: When You Need an Electrician
+          </h2>
+
+          <p>
+            Plug-in, battery and rechargeable lights are true DIY. Plan the cord route so it drops behind an appliance or into a corner, use the mounting screws rather than tape on fixtures that get warm, and keep cords well away from the cooktop. Whether you cook on gas or induction, as weighed in our <a href="/induction-vs-gas-cooktop/">induction vs gas comparison</a>, the cabinet area beside a range gets hot and splattered, so that is not where to leave a loose cord or a driver.
+          </p>
+
+          <p>
+            Hardwiring is different. Connecting a fixture to a circuit, adding a switch, or running a new cable inside a wall is electrical work, and in many places it requires a permit and inspection, with rules that vary by city, county and country. If you are not experienced with household wiring, hire a licensed electrician. If you are, the basics still apply: shut off the breaker, confirm the circuit is dead with a tester, use approved junction boxes, and follow the fixture's instructions exactly. Kitchen circuits often have specific code requirements, which is another reason to involve a professional during a remodel.
+          </p>
+
+          <p>
+            Low-voltage systems sit in between. The tape or strip itself runs on low voltage, but the driver plugs in or is wired to 120 volts. Put the driver somewhere ventilated and accessible, such as on top of a cabinet or inside one with airflow, never buried in insulation or sealed in a wall cavity. Size it with headroom over the total wattage of the run. Armacost's strip is rated at 1.2 watts per foot, so a full 16.4-foot roll is about 20 watts before adding margin.
+          </p>
+
+          <p>
+            Finally, test before you fix anything permanently. Lay the fixtures out, power them, and look at the counter at night from where you stand. Fixing a placement or color mistake at this stage takes five minutes; fixing it after the adhesive has set takes an afternoon.
+          </p>
+        </div>
+
+        <div id="match-your-kitchen" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Matching a Pick to Your Kitchen
+          </h2>
+
+          <p>
+            If you rent or want a weekend upgrade, start with the GE Premium 3-Color HD as plug-in bars, run them from one outlet with linking cables, and choose 3000K. You get real task lighting and a 90 CRI rating without touching the wiring, and you can take it with you when you move. Add Brilliant Evolution pucks inside a glass-front cabinet if you want accent light without cords.
+          </p>
+
+          <p>
+            If you are remodeling, specify the WAC 120V 3-CCT Barlight on a dedicated switch with an ELV-rated dimmer, and use the matching WAC pucks in glass cabinets so the color and CRI match. Ask the electrician to place the feed toward the front of the cabinet run, not the back.
+          </p>
+
+          <p>
+            If you have glossy stone and hate seeing dots, use Armacost's COB tape in an aluminum channel with a diffuser, mounted at the front lip, and power it with a properly sized 24-volt driver. It is the most work of any option here and gives the cleanest result.
+          </p>
+
+          <p>
+            If you want app and remote control with no electrician and you have IKEA cabinets, MITTLED is the most coherent system. If you just need light in a pantry or a dark corner cabinet, put up a few Energizer motion bars and stop thinking about it. And if induction is part of the plan, our <a href="/best-induction-cookware/">best induction cookware guide</a> covers the other half of a modern kitchen upgrade.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying the fixture before choosing the power source</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A great hardwired bar is useless to a renter, and a battery puck will never be task lighting. Decide plug-in, hardwired, low-voltage or battery first, based on your outlets, your lease and whether walls are open, then shop only within that category. It removes most of the options on any shopping page in one step.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Mounting the light at the back of the cabinet</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Tucking fixtures against the wall lights the backsplash and leaves the front of the counter, where you chop and read recipes, in shadow. It also puts the light source in the counter's reflection. Mount toward the front lip or behind a light rail and let the light fall back across the whole surface.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring CRI and color temperature</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A bright light with a low CRI makes food and stone look dull, and a 5000K light in a warm kitchen makes the counter feel like an office. Look for a listed CRI of 90 or higher and match the color temperature to your ceiling lights, usually 2700K to 3000K in a warm kitchen.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Pairing the wrong dimmer</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Many LED fixtures specify a dimmer type, such as ELV, and a mismatched dimmer is a common cause of flicker, buzzing and a short dimming range. Check the fixture's spec sheet or install guide for the dimmer type and compatible models before buying the switch, not after the lights start misbehaving.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using dotted tape over glossy stone</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Inexpensive LED tape shows a row of bright points, and a polished granite or quartz counter reflects every one of them. On glossy surfaces use COB tape, a channel with a diffuser, or a diffused bar fixture. On matte counters the dots matter much less, so you can save money there.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What color temperature is best for under cabinet lighting?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most kitchens, 2700K to 3000K warm white looks best because it matches typical ceiling lighting and flatters wood, cream and warm stone. Choose 4000K if your kitchen is white and gray or you do detailed prep at night and prefer a crisper light. The more important rule is matching your existing overhead lights so the counter does not look like a separate room.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What CRI should under cabinet lights have?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Look for a listed CRI of 90 or higher. CRI describes how accurately a light renders colors, and lower values make food, wood and stone look flat or slightly gray. Every wired pick on this page lists 90 or higher. Treat CRI as a manufacturer rating, and if color accuracy matters to you, install one fixture and judge it at night before buying the full run.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How many lumens do I need for under cabinet lighting?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Compare lumens per foot rather than total lumens. For a main prep counter, the bar fixtures on this page land at several hundred lumens per foot, which is the tier we would use for task lighting, ideally on a dimmer. For accent light where overhead lighting is already strong, tape or strip lights in the 150 to 250 lumens per foot range are usually enough.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Should under cabinet lights go at the front or back of the cabinet?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Toward the front, in most kitchens. Mounting just behind the face frame or a light rail spreads light across the full depth of the counter and keeps the light source out of your line of sight and out of reflections in the counter. Back-mounted lights over-light the backsplash and leave the working edge of the counter in shadow.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do I need an electrician to install under cabinet lighting?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Not for plug-in, battery or rechargeable lights, which are straightforward DIY. Hardwiring a fixture to a circuit, adding a switch or running cable in a wall is electrical work that may require a permit and inspection depending on where you live. If you are not experienced with household wiring, hire a licensed electrician, especially during a remodel.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are puck lights or light bars better under cabinets?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Light bars are better for countertops because they produce a continuous, even wash. Puck lights create pools of light with dimmer gaps between them, which looks great inside glass-front cabinets and under open shelving but scalloped on a long counter. If you want pucks over a work surface, space them closely and choose a high-output model.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can under cabinet lights be dimmed and controlled from an app?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Many can. Hardwired fixtures like the WAC bars dim with a compatible ELV dimmer, which can itself be a smart dimmer if it is rated for that load. IKEA's MITTLED system dims with its own remote and connects to the IKEA Home app through the DIRIGERA hub. Battery pucks typically offer simple remote dimming and timers rather than app control.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Kitchen Lighting Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-ceiling-fans-with-lights/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Ceiling Fans With Lights</h3>
+              <p class="text-gray-500 text-sm mt-2">Match your overhead light kit's color temperature to your counters.</p>
+            </a>
+            <a href="/ceiling-fan-light-not-working/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Troubleshooting</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Ceiling Fan Light Not Working?</h3>
+              <p class="text-gray-500 text-sm mt-2">Seven checks for dead, flickering or dimming lights, in order.</p>
+            </a>
+            <a href="/how-to-seal-granite-countertops/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#38BDF8] font-black text-xs uppercase tracking-widest mb-2">How-To</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">How to Seal Granite Countertops</h3>
+              <p class="text-gray-500 text-sm mt-2">Protect the stone your new lights are about to show off.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Under cabinet lighting is one of the cheapest upgrades that changes how a kitchen works every day, but only if you choose in the right order. Settle the power source first, then pick bars for counters, pucks for display and COB tape for glossy stone, and insist on a listed CRI of 90 with a color temperature that matches your ceiling lights.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            For most kitchens that means the GE Premium 3-Color HD, plugged in now and wired in later if you want. Remodelers should look hard at WAC's driverless bars, and anyone with polished stone should consider COB tape in a channel. Mount everything toward the front edge, and test at night before you commit.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Improvement" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

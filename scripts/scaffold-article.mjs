@@ -9,6 +9,7 @@
 // for the spec fields and an example.
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { AUTHORS, authorForPath } from '../src/data/authors.ts';
 
 const PAGES_DIR = join(import.meta.dirname, '..', 'src', 'pages');
 const q = (s) => JSON.stringify(s);
@@ -53,6 +54,10 @@ ${row.map((cell, j) => `                    <td class="px-4 py-4 ${j === 0 ? 'fo
 }
 
 export function render(spec) {
+  // Visible byline is written literally (the word-count gate reads page text);
+  // it follows the same routing as the schema and meta author.
+  const a = AUTHORS[authorForPath(`/${spec.slug}/`)];
+  const byline = { name: a.name, role: a.role.replace(/&/g, '&amp;') };
   const tocItems = [...spec.toc.map(([a, l]) => [a, l]), ['mistakes', 'Common Mistakes'], ['faq', 'FAQ']];
   const toc = tocItems.map(([a, l], i) =>
     `          <a href="#${a}" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">${i + 1}. ${l}</a>`
@@ -104,7 +109,7 @@ ${renderBlocks(s.blocks)}        </div>
 import Layout from "../layouts/Layout.astro";
 import MoreInCategory from "../components/MoreInCategory.astro";
 import AuthorBio from "../components/AuthorBio.astro";
-import { authorSchema } from "../data/authors";
+import { authorSchema, authorName } from "../data/authors";
 import AuthorAvatar from "../components/AuthorAvatar.astro";
 import TrustBadge from "../components/TrustBadge.astro";
 import SocialProof from "../components/SocialProof.astro";
@@ -151,7 +156,7 @@ const schema = {
       "@type": "Article",
       headline: title,
       description: description,
-      author: authorSchema(),
+      author: authorSchema(Astro.url.pathname),
       datePublished: dates.published,
       dateModified: dates.modified,
       publisher: { "@type": "Organization", name: "The Honest Reviewers" },
@@ -167,7 +172,7 @@ const schema = {
   article={{
     publishedTime: dates.published,
     modifiedTime: dates.modified,
-    author: "Alex Rivers",
+    author: authorName(Astro.url.pathname),
     section: ${q(spec.section)},
     tags: ${indent(spec.tags, 4)},
   }}
@@ -221,8 +226,8 @@ const schema = {
         <div class="flex items-center gap-3">
           <AuthorAvatar size={48} />
           <div>
-            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
-            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+            <p class="text-sm font-bold text-gray-900">${byline.name}</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">${byline.role}</p>
           </div>
         </div>
         <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
