@@ -110,6 +110,11 @@ Write to the site's established voice: direct, specific, willing to say when
 something is not worth buying. Concrete numbers beat adjectives. Every section should
 tell the reader something they could act on.
 
+**Only describe testing that actually happened.** Results, measurements and test
+durations in an article must come from the lab's real test records for that product.
+Never invent a number, a test, or a result; where no test data exists for a point,
+attribute it instead ("rated for", "the label specifies", "owners commonly report").
+
 ## 4. Wire the batch in
 
 An unlinked page is an orphan and the gate will fail it. For every article:
