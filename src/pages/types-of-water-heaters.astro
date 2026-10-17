@@ -1,0 +1,660 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import TopPick from "../components/TopPick.astro";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Tankless Water Heaters",
+    "url": "/best-tankless-water-heater/"
+  },
+  {
+    "title": "Best Gas Water Heaters",
+    "url": "/best-gas-water-heater/"
+  },
+  {
+    "title": "Best Heat Pump Water Heaters",
+    "url": "/best-heat-pump-water-heater/"
+  },
+  {
+    "title": "What Is a Tankless Water Heater?",
+    "url": "/what-is-a-tankless-water-heater/"
+  },
+  {
+    "title": "Point of Use Water Heaters",
+    "url": "/point-of-use-water-heater/"
+  },
+  {
+    "title": "Water Heater Brands",
+    "url": "/water-heater-brands/"
+  },
+  {
+    "title": "How Long Do Water Heaters Last?",
+    "url": "/how-long-do-water-heaters-last/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-17", modified: "2026-10-17" });
+const title = "Types of Water Heaters: The Five Kinds, and Which One Fits Your House";
+const description =
+  "Tank, tankless, heat pump, solar and boiler-fed water heaters compared on cost, efficiency, lifespan and fit, with a table that settles which suits your home.";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Guides",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Types of Water Heaters",
+          item: "https://www.thehonestreviewers.com/types-of-water-heaters/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What are the main types of water heaters?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "There are five: conventional storage tanks (gas or electric), tankless or on-demand heaters, heat pump or hybrid heaters, solar water heaters, and indirect or combi systems heated by a boiler. Most homes choose among the first three, because solar and boiler-fed systems depend on a suitable roof or an existing hydronic boiler."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which type of water heater is most energy efficient?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Heat pump water heaters are the most efficient common type, typically rated around UEF 3.3 to 4.0 or higher, because they move heat from the air rather than generating it. Solar systems can offset even more energy in sunny climates, but they cost more and still rely on backup heating in winter."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What type of water heater lasts the longest?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tankless heaters typically last around twenty years, and well-maintained indirect tanks and solar collectors can last similarly long. Conventional gas tanks commonly last 8 to 12 years and electric tanks 10 to 15, with lifespan driven mostly by the anode rod, water hardness and how often sediment is flushed out."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a conventional water heater?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A conventional water heater is a storage tank, usually 40 to 80 gallons, that keeps water hot around the clock using a gas burner or electric elements. It is the most common type in American homes, the cheapest to buy and install, and the one most plumbers can replace the same day it fails."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is tankless better than a tank water heater?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on the house. Tankless suits gas homes that want endless showers, wall-mounted compactness and a long lifespan, and can justify a higher install cost. A tank suits tighter budgets, simple swaps and households that need high flow from several fixtures at once without upgrading gas lines or electrical service."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I switch from one type of water heater to another?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, but switching adds work. Going from a gas tank to tankless often needs a bigger gas line and new venting. Going from electric resistance to a heat pump model needs space and a drain. Switching fuels entirely usually means new circuits or a new gas line, which can add thousands to the job."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What size water heater do I need?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tanks are sized by first-hour rating, roughly 40 to 50 gallons for two to four people and larger for bigger households. Tankless units are sized by gallons per minute at your winter temperature rise. Heat pump tanks are often sized one step larger than the tank they replace because they recover more slowly."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      description: description,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home Improvement",
+    tags: [
+      "types of water heaters",
+      "conventional water heaters",
+      "tank water heaters",
+      "kinds of water heaters",
+      "water heater types compared"
+    ],
+  }}
+  jsonLd={schema}
+  stickyCta={{
+    text: "See Our Top Tankless Picks",
+    link: "/best-tankless-water-heater/",
+  }}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Primer
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Field Tested
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Types of <span class="text-[#38BDF8]">Water Heaters</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          There are five ways to make hot water at home, and each one trades upfront cost, running cost and installation work differently. Here is what each does well, where each falls down, and how to pick.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#short-answer"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            Compare the Five Types
+          </a>
+          <a
+            href="#faq"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Jump to the FAQ
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Shaheer Ali Khan</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Consumer Product Testing &amp; Materials Performance Specialist</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="11.4k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#short-answer" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. The Short Answer</a>
+          <a href="#storage-tank" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Storage Tank</a>
+          <a href="#tankless" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Tankless</a>
+          <a href="#heat-pump" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Heat Pump</a>
+          <a href="#solar-and-boiler" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Solar and Boiler-Fed</a>
+          <a href="#compare" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Side by Side</a>
+          <a href="#how-to-choose" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. How to Choose</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Most people replace a water heater with whatever was there before, because the old one failed on a Tuesday and the plumber had a matching tank on the truck. That is the most expensive way to choose. The type you pick decides your energy bill for the next ten to twenty years, and the right answer depends on your fuel, your climate, your household size and where the heater sits, not on which brand is on sale.
+        </p>
+
+        <TopPick />
+
+        <div id="short-answer" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. The Short Answer: Five Types, Three Real Contenders
+          </h2>
+
+          <p>
+            Residential water heaters come in five basic designs: the conventional storage tank (gas or electric), the tankless or on-demand heater, the heat pump or hybrid heater, the solar water heater, and the indirect or combi system that borrows heat from a boiler. Every one of them does the same job, raising cold incoming water to somewhere around 120°F, but they get there in very different ways, and that is where the cost and comfort differences come from.
+          </p>
+
+          <p>
+            For most homes the real decision is between three of them. A storage tank is the cheapest to buy and the easiest to install, which is why it is still in the majority of American basements. A tankless heater costs more up front but never runs out of hot water within its flow limit and typically lasts around twenty years. A heat pump water heater costs the most of the three before rebates but uses roughly a third to a quarter of the electricity of a standard electric tank, which makes it the cheapest to run by a wide margin in many homes.
+          </p>
+
+          <p>
+            Solar and boiler-fed systems are not bad choices, they are situational ones. Solar thermal makes sense in sunny climates where the roof faces the right way and the owner plans to stay a long time. An indirect tank or combi boiler makes sense almost exclusively in homes that already heat with a hydronic boiler. If neither of those describes your house, you can mostly set them aside.
+          </p>
+
+          <p>
+            The fastest way to narrow the field is to start with what the house already has. Gas line or not, panel capacity, the space around the current heater, and whether that space stays warm all year will rule out at least one option before you look at a single price tag. The rest of this guide takes each type in turn and finishes with a table and a decision path.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE RULE</p>
+            <p class="text-xl font-bold text-white mb-3">Choose on running cost and fit, not sticker price.</p>
+            <p class="text-gray-300 leading-relaxed m-0">A heater runs every day for a decade or more. The difference between a $1,200 tank and a $3,500 alternative is often recovered in energy savings, and sometimes it is not. Your fuel prices and your install decide which.</p>
+          </div>
+        </div>
+
+        <div id="storage-tank" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Storage Tank Water Heaters: The Conventional Default
+          </h2>
+
+          <p>
+            A conventional water heater is an insulated steel tank, usually 40 to 80 gallons, lined with glass and kept hot around the clock. Cold water enters through a dip tube at the bottom, a burner or electric elements heat it, and hot water leaves from the top. Because the water is already hot when you open the tap, a tank delivers high flow to several fixtures at once with no minimum flow rate and no warm-up lag beyond the pipe run.
+          </p>
+
+          <p>
+            Gas tanks heat with a burner under the tank and vent combustion gases through a flue. They recover quickly, often reheating 40 or more gallons an hour, which is why a 40 or 50 gallon gas tank serves a typical family well. Standard atmospheric models usually carry a Uniform Energy Factor (UEF) in the high 0.50s to mid 0.60s, power-vent models a little higher, and condensing gas tanks can reach the 0.80s or above. Our <a href="/best-gas-water-heater/">best gas water heater</a> guide breaks down the venting options and what each costs to install.
+          </p>
+
+          <p>
+            Electric tanks use two resistance elements and need no venting at all, so they can go almost anywhere with a 240V circuit. On paper they are efficient, typically rated around 0.90 to 0.95 UEF, because nearly all the electricity becomes heat. In practice electricity usually costs more per unit of heat than natural gas, and electric elements recover slowly, so an electric tank is often sized one step larger than the gas tank it replaces.
+          </p>
+
+          <p>
+            The weaknesses are standby loss and lifespan. A tank loses heat through its walls all day, whether or not anyone uses water, and the steel eventually corrodes once the sacrificial anode rod is spent. Gas tanks commonly last 8 to 12 years and electric tanks 10 to 15, a range our <a href="/how-long-do-water-heaters-last/">water heater lifespan guide</a> explains in detail. A typical installed price for a like-for-like swap runs roughly $1,200 to $2,500, more for large or power-vent units.
+          </p>
+
+          <p>
+            Choose a conventional tank when the budget is tight, when you need high simultaneous flow from a simple install, or when you want the option every plumber can service on the same day. It is the default for good reasons. It is just rarely the cheapest heater to own over fifteen years.
+          </p>
+        </div>
+
+        <div id="tankless" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Tankless Water Heaters: Heat Only When You Need It
+          </h2>
+
+          <p>
+            A tankless heater has no storage at all. When a tap opens and water flows past a sensor, a gas burner or a bank of electric elements fires and heats the water as it passes through a heat exchanger. Close the tap and it shuts off. If you want the mechanics in more depth, our explainer on <a href="/what-is-a-tankless-water-heater/">what a tankless water heater is</a> walks through the flow sensor, modulation and heat exchanger step by step.
+          </p>
+
+          <p>
+            The appeal is obvious: you cannot run out of hot water, and there is no standby loss from a tank sitting hot all day. Gas tankless units typically carry UEF ratings from the low 0.80s for non-condensing models to the mid 0.90s for condensing ones. Electric tankless models are rated near 0.98 or higher. They are also compact, wall-mounted and typically last around twenty years, with heat exchanger warranties that often run 10 to 15 years.
+          </p>
+
+          <p>
+            The catch is the flow ceiling. A tankless heater delivers unlimited hot water only up to its capacity, measured in gallons per minute at a given temperature rise. In a cold-groundwater region in January, a large gas unit might support two showers and a sink, while an electric whole-house unit may manage only one or two fixtures at full temperature. Electric whole-house models also need very large electrical service, often 120 to 160 amps or more, which many older panels cannot supply. Our <a href="/best-electric-tankless-water-heater/">electric tankless guide</a> covers that panel math.
+          </p>
+
+          <p>
+            Installation is where tankless costs climb. Gas units often need a larger gas line, new venting and a condensate drain, and a retrofit commonly lands between $2,500 and $5,000 or more installed. Our <a href="/tankless-water-heater-cost/">tankless cost breakdown</a> itemizes those charges, and if you are swapping out an existing tank, the guide to <a href="/replace-water-heater-with-tankless/">replacing a water heater with tankless</a> lays out the work in order.
+          </p>
+
+          <p>
+            Choose tankless when you have natural gas or propane, adequate gas supply, hard-to-spare floor space, and a household that wants long showers back to back. For the honest trade-offs, read our <a href="/tankless-water-heater-pros-and-cons/">tankless pros and cons</a>, and when you are ready to buy, our <a href="/best-tankless-water-heater/">best tankless water heater</a> picks are ranked by real winter flow rather than the number on the box.
+          </p>
+        </div>
+
+        <div id="heat-pump" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Heat Pump Water Heaters: The Efficiency Leader
+          </h2>
+
+          <p>
+            A heat pump water heater, often called a hybrid, is a storage tank with a small heat pump mounted on top. Instead of making heat with a resistance element, it pulls heat from the surrounding air and moves it into the water, the same principle a refrigerator uses in reverse. Because it moves heat rather than creating it, it delivers several units of heat for each unit of electricity, and current models are commonly rated at UEF 3.3 to 4.0 or higher.
+          </p>
+
+          <p>
+            That efficiency is the whole case. The Department of Energy estimates heat pump water heaters can be two to three times more efficient than conventional electric resistance tanks, and for a household that currently heats water with electricity, the annual saving is often several hundred dollars. When demand outruns the heat pump, the unit falls back to built-in resistance elements, so you still get hot water during a houseful of guests, just less efficiently.
+          </p>
+
+          <p>
+            The constraints are physical. A heat pump water heater needs space, typically several hundred cubic feet of surrounding air or a ducted connection, and it works best where the air stays above roughly 40 to 50°F. It cools and dehumidifies the room it sits in, which is a bonus in a damp basement and a nuisance in a heated utility closet. It also needs a condensate drain and makes a modest fan and compressor hum. Newer 120V plug-in models avoid the dedicated 240V circuit, which can make them a practical swap for a gas tank.
+          </p>
+
+          <p>
+            Installed cost is typically $2,500 to $5,000 before incentives. The federal 25C tax credit ended for equipment placed in service after December 31, 2025, but many utilities and state programs still offer rebates, sometimes large ones, so check before you price. Lifespan is similar to an electric tank, roughly 10 to 15 years, since the tank itself is the usual failure point.
+          </p>
+
+          <p>
+            Choose a heat pump water heater when you are on electric now, have a basement, garage or large utility room in a mild-to-warm space, and want the lowest running cost available. Our <a href="/best-heat-pump-water-heater/">best heat pump water heater</a> guide compares the models, including the 120V options.
+          </p>
+        </div>
+
+        <div id="solar-and-boiler" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Solar and Boiler-Fed Systems: The Situational Two
+          </h2>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Solar Water Heaters</h3>
+
+          <p>
+            A solar water heater uses roof-mounted collectors to absorb the sun's heat and transfer it to a storage tank, either directly or through a glycol loop that protects against freezing. Almost every residential system pairs the solar tank with a conventional backup, gas or electric, for cloudy stretches and winter. Depending on climate and sizing, solar can cover a large share of annual water heating, with DOE noting typical solar fractions of roughly half to most of the load in sunny areas.
+          </p>
+
+          <p>
+            The barriers are cost and fit. Installed systems commonly run well above the cost of a heat pump water heater, the roof needs good southern exposure, and freeze protection and periodic glycol changes add maintenance. Collectors can last twenty years or more, but the payback depends heavily on sun hours and the fuel you are displacing. Today, many homeowners find a heat pump water heater, or a heat pump paired with rooftop photovoltaic panels, reaches similar savings for less money and less roof plumbing.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Indirect Tanks and Combi Boilers</h3>
+
+          <p>
+            An indirect water heater is a well-insulated tank with no burner of its own. Hot water from the home's boiler circulates through a coil inside the tank and heats the domestic water. Because the boiler is already sized for space heating, recovery is fast, and because the tank has no flue or combustion, it loses little heat and often lasts longer than a conventional tank, especially stainless-lined models. A combi boiler goes one step further and heats domestic water on demand, like a tankless heater built into the boiler.
+          </p>
+
+          <p>
+            These systems only make sense with a hydronic boiler already in place. Installed against an existing boiler, an indirect tank is often competitive with a conventional replacement, and its efficiency is tied to the boiler's. In a home heated by a furnace or heat pump, there is no reason to add a boiler just for water. A combi boiler is worth considering when the boiler itself needs replacing anyway, so one appliance can take over both jobs.
+          </p>
+        </div>
+
+        <div id="compare" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. The Five Types Side by Side
+          </h2>
+
+          <p>
+            The table below uses typical ranges, not quotes. Your installed price depends on local labor, permits, whether venting, gas or electrical upgrades are needed, and available rebates. Efficiency is shown as the Uniform Energy Factor, the DOE rating printed on the yellow EnergyGuide label, where a higher number means less energy per gallon of hot water.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Type</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Typical installed cost</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Typical UEF</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Typical lifespan</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Best fit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Gas storage tank</td>
+                    <td class="px-4 py-4 text-gray-700">$1,200–$2,500</td>
+                    <td class="px-4 py-4 text-gray-700">0.58–0.70 (condensing 0.80+)</td>
+                    <td class="px-4 py-4 text-gray-700">8–12 years</td>
+                    <td class="px-4 py-4 text-gray-700">Tight budgets, high simultaneous flow</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Electric storage tank</td>
+                    <td class="px-4 py-4 text-gray-700">$1,000–$2,000</td>
+                    <td class="px-4 py-4 text-gray-700">0.90–0.95</td>
+                    <td class="px-4 py-4 text-gray-700">10–15 years</td>
+                    <td class="px-4 py-4 text-gray-700">No gas, simple swaps</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Tankless (gas)</td>
+                    <td class="px-4 py-4 text-gray-700">$2,500–$5,000+</td>
+                    <td class="px-4 py-4 text-gray-700">0.81–0.97</td>
+                    <td class="px-4 py-4 text-gray-700">~20 years</td>
+                    <td class="px-4 py-4 text-gray-700">Gas homes, endless showers, small spaces</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Heat pump / hybrid</td>
+                    <td class="px-4 py-4 text-gray-700">$2,500–$5,000 before rebates</td>
+                    <td class="px-4 py-4 text-gray-700">3.3–4.0+</td>
+                    <td class="px-4 py-4 text-gray-700">10–15 years</td>
+                    <td class="px-4 py-4 text-gray-700">Electric homes with room and mild space</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Solar with backup</td>
+                    <td class="px-4 py-4 text-gray-700">Highest of the five</td>
+                    <td class="px-4 py-4 text-gray-700">Varies by climate</td>
+                    <td class="px-4 py-4 text-gray-700">20+ years (collectors)</td>
+                    <td class="px-4 py-4 text-gray-700">Sunny climates, long ownership</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Indirect / combi</td>
+                    <td class="px-4 py-4 text-gray-700">Varies; competitive with existing boiler</td>
+                    <td class="px-4 py-4 text-gray-700">Tied to boiler</td>
+                    <td class="px-4 py-4 text-gray-700">Often 15–20+ years</td>
+                    <td class="px-4 py-4 text-gray-700">Homes with hydronic boilers</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            Two things stand out. First, the cheapest heater to buy is rarely the cheapest to own. An electric tank and a heat pump water heater use the same fuel, but the heat pump typically uses a fraction of the electricity, and the gap compounds every month. Second, the efficiency column is not comparable across fuels without prices. A gas tank at 0.62 can cost less to run than an electric tank at 0.93 when gas is cheap relative to power.
+          </p>
+
+          <p>
+            Lifespan matters more than it looks. A tankless heater that lasts twenty years replaces roughly two conventional tanks, which narrows the upfront gap considerably. Heat pump models are newer and their long-term track record is shorter, so treat their lifespan as similar to an electric tank until more data accumulates.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">Typical Ranges Worth Remembering</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <p class="text-3xl font-black text-white">8–12 yrs</p>
+                <p class="text-gray-400 text-xs mt-1">Gas tank lifespan</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">~20 yrs</p>
+                <p class="text-gray-400 text-xs mt-1">Tankless lifespan</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-white">3.3–4.0+</p>
+                <p class="text-gray-400 text-xs mt-1">Heat pump UEF</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">120°F</p>
+                <p class="text-gray-400 text-xs mt-1">Common setpoint</p>
+              </div>
+            </div>
+          </div>
+
+          <p>
+            Brand matters less than type, and less than installation quality. If you want to know who actually makes what, and which names are rebadges of the same factory, our rundown of <a href="/water-heater-brands/">water heater brands</a> covers the major manufacturers and where each sells.
+          </p>
+        </div>
+
+        <div id="how-to-choose" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. How to Choose: A Five-Question Decision Path
+          </h2>
+
+          <p>
+            Start with fuel. If the house has natural gas and the gas line has spare capacity, your realistic shortlist is a gas tank, a condensing gas tank or a gas tankless unit. If the house is all electric, the shortlist is an electric tank, a heat pump water heater, or electric tankless if the panel is large and groundwater is not too cold. Changing fuels is possible but usually adds thousands to the job.
+          </p>
+
+          <p>
+            Next, look at the space. A heat pump water heater needs a large, reasonably warm room. Tankless needs a wall, a vent route and, for condensing models, a drain. A conventional tank fits where the old tank was. If the heater lives in a cramped closet inside living space, a heat pump becomes harder, and a tankless unit or a like-for-like tank becomes easier.
+          </p>
+
+          <p>
+            Then match the usage pattern. Large households that run several showers in a row favor tankless or a generously sized tank. Households that use most of their hot water at one fixture far from the heater may be better served by adding a small <a href="/point-of-use-water-heater/">point-of-use water heater</a> near that fixture rather than upsizing the main unit.
+          </p>
+
+          <p>
+            Fourth, check incentives and electrical service. Utility rebates can swing the math toward heat pump models, and panel capacity can rule out electric tankless entirely. Finally, decide how long you will stay. If you plan to move within five years, a straightforward tank replacement usually wins. If you are staying fifteen years, the higher-efficiency options have time to pay back.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">QUICK PICKS</p>
+            <p class="text-xl font-bold text-white mb-3">Gas home, big family, small space: tankless. Electric home with a basement: heat pump. Tight budget or short stay: conventional tank.</p>
+            <p class="text-gray-300 leading-relaxed m-0">Those three rules cover most houses. Solar and boiler-fed systems earn a place only when the roof or the existing boiler already points that way.</p>
+          </div>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            8. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Replacing like for like without thinking</h3>
+              <p class="text-gray-700 text-sm m-0">
+                When a tank fails, the path of least resistance is an identical tank. That is fine if you have compared the options, but many owners never do, and lock in the highest running cost for another decade. Even a rushed replacement leaves time for one phone call about a heat pump or tankless quote.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Comparing UEF across different fuels</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A higher UEF means less energy per gallon, but energy is priced differently. A 0.93 electric tank is not automatically cheaper to run than a 0.65 gas tank. Multiply each by your local gas and electricity rates, or use the annual operating cost on the EnergyGuide label, before deciding which is cheaper to own.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring the panel and the gas line</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Electric tankless units can demand more amps than an older panel can spare, and gas tankless heaters often need a larger gas line than a tank did. Discovering either problem after the purchase turns a weekend install into a costly upgrade. Have the electrical service and gas supply checked first.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Putting a heat pump unit in a closet</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A heat pump water heater pulls heat from the air around it. Squeeze it into a small sealed closet and it cools the room, loses efficiency and leans on its resistance elements. Follow the manufacturer's minimum air volume, or use a louvered door or ducting kit where the model allows.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Forgetting long-term maintenance</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Every type needs some care. Tanks need anode checks and sediment flushing, tankless heaters need periodic descaling in hard water, heat pumps need filter cleaning, and solar loops need glycol changes. Skipping it shortens life on all of them, so factor the routine into the decision rather than discovering it later.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            9. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What are the main types of water heaters?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                There are five: conventional storage tanks (gas or electric), tankless or on-demand heaters, heat pump or hybrid heaters, solar water heaters, and indirect or combi systems heated by a boiler. Most homes choose among the first three, because solar and boiler-fed systems depend on a suitable roof or an existing hydronic boiler.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Which type of water heater is most energy efficient?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Heat pump water heaters are the most efficient common type, typically rated around UEF 3.3 to 4.0 or higher, because they move heat from the air rather than generating it. Solar systems can offset even more energy in sunny climates, but they cost more and still rely on backup heating in winter.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What type of water heater lasts the longest?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Tankless heaters typically last around twenty years, and well-maintained indirect tanks and solar collectors can last similarly long. Conventional gas tanks commonly last 8 to 12 years and electric tanks 10 to 15, with lifespan driven mostly by the anode rod, water hardness and how often sediment is flushed out.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is a conventional water heater?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A conventional water heater is a storage tank, usually 40 to 80 gallons, that keeps water hot around the clock using a gas burner or electric elements. It is the most common type in American homes, the cheapest to buy and install, and the one most plumbers can replace the same day it fails.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is tankless better than a tank water heater?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It depends on the house. Tankless suits gas homes that want endless showers, wall-mounted compactness and a long lifespan, and can justify a higher install cost. A tank suits tighter budgets, simple swaps and households that need high flow from several fixtures at once without upgrading gas lines or electrical service.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I switch from one type of water heater to another?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes, but switching adds work. Going from a gas tank to tankless often needs a bigger gas line and new venting. Going from electric resistance to a heat pump model needs space and a drain. Switching fuels entirely usually means new circuits or a new gas line, which can add thousands to the job.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What size water heater do I need?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Tanks are sized by first-hour rating, roughly 40 to 50 gallons for two to four people and larger for bigger households. Tankless units are sized by gallons per minute at your winter temperature rise. Heat pump tanks are often sized one step larger than the tank they replace because they recover more slowly.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Water Heater Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-tankless-water-heater/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Tankless Water Heaters</h3>
+              <p class="text-gray-500 text-sm mt-2">Gas and electric tankless units ranked by real winter flow and installed cost.</p>
+            </a>
+            <a href="/best-heat-pump-water-heater/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Heat Pump Water Heaters</h3>
+              <p class="text-gray-500 text-sm mt-2">The most efficient type compared, including 120V plug-in models.</p>
+            </a>
+            <a href="/what-is-a-tankless-water-heater/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Explainer</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">What Is a Tankless Water Heater?</h3>
+              <p class="text-gray-500 text-sm mt-2">How on-demand heating works, from flow sensor to heat exchanger.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The type of water heater you choose matters more than the brand. For most homes the decision comes down to a conventional tank, a tankless unit or a heat pump water heater, and your fuel, space and household size usually make the choice for you before price enters the picture.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            If you have gas and want endless showers, start with our <a href="/best-tankless-water-heater/">tested tankless picks</a>. If you are on electric and have the room, a heat pump will almost always be the cheapest to run. And if the budget is tight or you are moving soon, a well-chosen conventional tank is still a sensible, honest choice.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Improvement" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

@@ -548,6 +548,13 @@ const priorityGuides = new Set([
   'how-to-prepare-a-driveway-for-winter',
   'do-you-need-a-dehumidifier-in-winter',
   'how-to-clean-gutters-before-winter',
+
+  // October 2026 batch: water heater cluster.
+  'types-of-water-heaters',
+  'what-is-a-tankless-water-heater',
+  'point-of-use-water-heater',
+  'replace-water-heater-with-tankless',
+  'water-heater-brands',
 ]);
 
 export default defineConfig({
