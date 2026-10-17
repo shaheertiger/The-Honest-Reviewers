@@ -70,6 +70,9 @@ const FORCE = {
     'switchbot-k10-plus-pro', 'husqvarna-automower-430x', 'grizzly-g0899', 'grizzly-g7943',
     'wac-120v-3-cct-puck-kit', 'energizer-rechargeable-motion-light-bar',
     'brilliant-evolution-wireless-puck-brrc134',
+    // Hand-checked on main: breaker bar, 20V drill, other wrench, 46-piece set, Ryobi kit, Gen 2.
+    'tekton-24335-click', 'dewalt-12v-max-drill-driver', 'tekton-torque-wrench',
+    'tekton-socket-ratchet-set', 'ryobi-inflator', 'anker-solix-c1000',
   ].map((id) => [id, otherModel])),
   ...Object.fromEntries([
     'rapid-set-cement-all', 'tsunami-seal-garage-threshold', 'green-mount-thumb-control-nozzle',
