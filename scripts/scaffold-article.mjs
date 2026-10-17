@@ -108,6 +108,7 @@ import { authorSchema } from "../data/authors";
 import AuthorAvatar from "../components/AuthorAvatar.astro";
 import TrustBadge from "../components/TrustBadge.astro";
 import SocialProof from "../components/SocialProof.astro";
+import TopPick from "../components/TopPick.astro";
 import { pageDates } from "../data/dates";
 
 const moreInCategory = ${indent(spec.moreInCategory, 0)};
@@ -253,6 +254,8 @@ ${toc}
         <p class="text-2xl font-medium text-gray-900 mb-8 italic">
           ${spec.lede}
         </p>
+
+        <TopPick />
 
 ${sections}
         <!-- Common Mistakes -->
