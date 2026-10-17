@@ -548,6 +548,48 @@ const priorityGuides = new Set([
   'how-to-prepare-a-driveway-for-winter',
   'do-you-need-a-dehumidifier-in-winter',
   'how-to-clean-gutters-before-winter',
+
+  // October 2026 batch: water heater cluster.
+  'types-of-water-heaters',
+  'what-is-a-tankless-water-heater',
+  'point-of-use-water-heater',
+  'replace-water-heater-with-tankless',
+  'water-heater-brands',
+
+  // October 2026 batch: electric snow blower cluster.
+  'electric-vs-gas-snow-blower',
+  'electric-snow-shovel',
+  'ego-snow-blower',
+  'toro-electric-snow-blower',
+  'snow-joe-snow-blower',
+
+  // October 2026 batch: humidifier cluster.
+  'best-humidifier',
+  'best-humidifier-for-bedroom',
+  'best-humidifier-for-large-room',
+  'best-whole-house-humidifier',
+  'whole-house-humidifier',
+  'evaporative-vs-ultrasonic-humidifier',
+  'warm-mist-vs-cool-mist-humidifier',
+  'how-to-clean-a-humidifier',
+  'what-size-humidifier-do-i-need',
+  'ideal-indoor-humidity',
+  'best-warm-mist-humidifier',
+  'types-of-humidifiers',
+  'stainless-steel-humidifier',
+  'how-much-does-a-humidifier-cost',
+  'best-small-humidifier',
+  'best-humidifier-for-allergies',
+  'humidifier-air-purifier-combo',
+
+  // October 2026 batch: snow shovel and snow tools cluster.
+  'best-snow-shovel',
+  'best-cordless-snow-shovel',
+  'best-snow-shovel-for-car',
+  'snow-removal-tools',
+  'self-propelled-snow-blower',
+  'greenworks-snow-blower',
+  'ryobi-snow-blower',
 ]);
 
 export default defineConfig({
