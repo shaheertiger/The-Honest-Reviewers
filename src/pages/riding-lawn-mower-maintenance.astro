@@ -1,0 +1,603 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import TopPick from "../components/TopPick.astro";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Riding Lawn Mowers",
+    "url": "/best-riding-lawn-mower/"
+  },
+  {
+    "title": "Riding Mower Won't Start?",
+    "url": "/riding-mower-wont-start/"
+  },
+  {
+    "title": "How Long Do Riding Mowers Last?",
+    "url": "/how-long-do-riding-lawn-mowers-last/"
+  },
+  {
+    "title": "How to Winterize a Lawn Mower",
+    "url": "/how-to-winterize-a-lawn-mower/"
+  },
+  {
+    "title": "How Often to Sharpen Mower Blades",
+    "url": "/how-often-to-sharpen-mower-blades/"
+  },
+  {
+    "title": "Best Lawn Mower Blades",
+    "url": "/best-lawn-mower-blades/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-18", modified: "2026-10-18" });
+const title = "Riding Lawn Mower Maintenance: The Schedule by Hours and Season";
+const description =
+  "The riding lawn mower maintenance schedule: oil and filters by hours, blades, belts, tires, battery, grease points, deck leveling and winter storage, in order.";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Guides",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Riding Lawn Mower Maintenance",
+          item: "https://www.thehonestreviewers.com/riding-lawn-mower-maintenance/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "How often should you change the oil in a riding mower?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most riding mower engine manuals specify an oil change every 50 to 100 hours or at least once a season, with an earlier first change after break-in on a new engine. Heavy use, dusty conditions or towing justify the shorter end. Follow your engine manufacturer's interval, since it varies by engine."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What maintenance does a riding lawn mower need every year?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "At minimum: change the oil and filter, replace the air filter and spark plug, sharpen or replace the blades, replace the fuel filter, grease all fittings, level the deck, check belts and tire pressures, and prepare the fuel and battery for winter storage. Larger properties may need some tasks more than once a year."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often should riding mower blades be sharpened?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Typically every 25 to 50 hours of use, which is once or twice a season for most residential lawns. Sandy soil, roots and stones dull blades faster. Torn, ragged grass tips that turn brown after mowing are the clearest sign the blades need attention."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What tire pressure should a riding mower have?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Riding mower tires typically run at low pressures, often somewhere around 10 to 20 PSI depending on the tire size and type. The correct figure is printed on the tire sidewall or in the manual. Keep left and right sides matched, since uneven pressure tilts the deck and produces an uneven cut."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I run my riding mower out of gas for winter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Either running it dry or filling it with stabilized fuel works, and manufacturers differ on which they prefer. Running dry removes the fuel that would gum the carburetor; stabilized fuel keeps seals from drying out. Follow your manual, and never leave untreated ethanol-blended fuel in the system over winter."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need to grease my riding lawn mower?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, if it has grease fittings, which many riders do on deck spindles, front axle pivots and steering components. Greasing them a couple of times a season pushes out moisture and old grease and prevents bearing and bushing wear. Some machines use sealed components that need no grease; your manual lists the points."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I know if my riding mower deck is level?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Park on a flat surface with tires correctly inflated, turn the blades so the tips point side to side, and measure tip height from the ground on each side; then turn them front to back and measure again. Compare with the manual's specification, which usually has the front slightly lower than the rear."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      description: description,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Lawn & Yard Care",
+    tags: [
+      "riding lawn mower maintenance",
+      "riding mower maintenance schedule",
+      "lawn tractor maintenance",
+      "how often to change riding mower oil",
+      "riding mower tune up"
+    ],
+  }}
+  jsonLd={schema}
+  stickyCta={{
+    text: "See Our Top Riding Mowers",
+    link: "/best-riding-lawn-mower/",
+  }}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Maintenance
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Field Tested
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Riding Lawn Mower <span class="text-[#38BDF8]">Maintenance</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          An hour of work a season, done in the right order, prevents most of the repairs that end a riding mower early.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#schedule"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See the Schedule
+          </a>
+          <a
+            href="#faq"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Jump to the FAQ
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="12.7k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#schedule" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. The Maintenance Schedule</a>
+          <a href="#every-mow" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Before and After Every Mow</a>
+          <a href="#engine" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Engine: Oil, Filters and Plugs</a>
+          <a href="#deck" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Deck, Blades and Belts</a>
+          <a href="#chassis" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Tires, Grease and Steering</a>
+          <a href="#battery-fuel" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Battery and Fuel</a>
+          <a href="#storage" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. End of Season and Storage</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Riding mowers fail in predictable ways: stale fuel gums the carburetor, dry spindles wear their bearings, dirty oil wears the engine, dull blades tear the grass and strain everything behind them, and a battery left flat over winter refuses to recover. Every one of those is preventable with a short list of tasks done on schedule. Here is the schedule, organized by every mow, by engine hours and by season, with the details that manuals mention once and owners forget.
+        </p>
+
+        <TopPick />
+
+        <div id="schedule" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. The Maintenance Schedule at a Glance
+          </h2>
+
+          <p>
+            Most riding mower manuals organize maintenance by engine hours, with a seasonal fallback for owners whose machines lack an hour meter. The intervals below are typical of residential lawn tractors and zero-turns; your manual's figures override them, and dusty conditions, heavy grass or towing call for shorter intervals. The aim is to do small jobs often rather than large repairs rarely. Machines built for it, with washout ports, spin-on oil filters and greaseable spindles, make the whole schedule quicker, which is part of why our <a href="/best-riding-lawn-mower/">riding lawn mower rankings</a> favor them.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Interval</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Task</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Every mow</td>
+                    <td class="px-4 py-4 text-gray-700">Check oil level, clear debris from engine screen and deck, look over blades and belts</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">First 5-8 hours (new engine)</td>
+                    <td class="px-4 py-4 text-gray-700">First oil change, per most engine manuals</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Every 25 hours</td>
+                    <td class="px-4 py-4 text-gray-700">Clean foam pre-filter, check tire pressure, check battery terminals</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Every 50-100 hours or yearly</td>
+                    <td class="px-4 py-4 text-gray-700">Change oil and filter, replace air filter, replace spark plug</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Every 25-50 hours</td>
+                    <td class="px-4 py-4 text-gray-700">Sharpen blades (more often in sandy or rough conditions)</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">A couple of times a season</td>
+                    <td class="px-4 py-4 text-gray-700">Grease spindles, axles and steering pivots</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Yearly</td>
+                    <td class="px-4 py-4 text-gray-700">Level deck, replace fuel filter, inspect belts and pulleys</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">End of season</td>
+                    <td class="px-4 py-4 text-gray-700">Stabilize or drain fuel, charge and store battery, clean deck, store covered</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            If your mower has no hour meter, an inexpensive aftermarket one is worth fitting, since hours rather than calendar dates determine when oil and filters need changing. Lacking one, use the seasonal fallback: oil, filters and plug every spring, blades every season, grease twice a season, and full storage preparation every fall.
+          </p>
+
+          <p>
+            Keep a simple log of dates and hours for each task. It makes it obvious what is due, adds value at resale and supports warranty claims, since manufacturers can ask for evidence of maintenance when a covered component fails. A note on the inside of the shed door or a phone note is enough.
+          </p>
+
+          <p>
+            Maintenance pays for itself. Our guide to <a href="/how-long-do-riding-lawn-mowers-last/">how long riding lawn mowers last</a> shows how storage, oil, grease and fuel habits separate machines that last five seasons from those that last fifteen, and our <a href="/how-much-does-a-riding-lawn-mower-cost/">riding mower cost guide</a> shows how doing it yourself cuts annual running costs roughly in half.
+          </p>
+        </div>
+
+        <div id="every-mow" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Before and After Every Mow
+          </h2>
+
+          <p>
+            Before starting, check the engine oil level on the dipstick with the mower on level ground. Low oil is the fastest way to destroy an engine, and riding mower engines can consume a little between changes, particularly older ones. Top up to the full mark with the oil grade the manual specifies; do not overfill, since excess oil can cause smoking and seal problems.
+          </p>
+
+          <p>
+            Walk around the machine. Look for loose or missing bolts, damaged belts hanging from the deck, low tires and anything wrapped around the blade spindles. Clear grass clippings and debris from the engine's cooling screen and around the cylinder fins, because air-cooled engines rely on clean airflow and overheat when packed with clippings.
+          </p>
+
+          <p>
+            Walk the lawn too. Picking up sticks, stones, toys and dog leads before mowing protects blades, spindles and the flywheel key, and protects bystanders from thrown objects. A blade strike on a rock or a root is a common cause of bent blades, damaged spindles and a sheared flywheel key, which in turn causes a no-start.
+          </p>
+
+          <p>
+            After mowing, let the engine cool, then brush or blow clippings off the deck top and engine. If the deck has a washout port, connect a hose and run the blades for a couple of minutes per the manual to flush clippings from underneath. Wet clippings packed under the deck hold moisture against the steel and are one of the main causes of deck rust-through.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">WORTH KNOWING</p>
+            <p class="text-xl font-bold text-white mb-3">Disconnect the plug wire before working under the deck.</p>
+            <p class="text-gray-300 leading-relaxed m-0">Any task that puts hands near the blades, belts or pulleys starts with the key out, the parking brake set and the spark plug wire disconnected. A mower that unexpectedly starts while you are clearing a jammed belt can cause severe injury.</p>
+          </div>
+        </div>
+
+        <div id="engine" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Engine: Oil, Filters and Spark Plugs
+          </h2>
+
+          <p>
+            Change the oil and filter at the interval in the engine manual, commonly every 50 to 100 hours or at least once a season, with a shorter first change after the break-in period on a new engine. Run the engine for a few minutes first so the oil flows easily and carries contaminants out, then drain it through the drain valve or plug, replace the spin-on filter if fitted, and refill with the specified grade and quantity.
+          </p>
+
+          <p>
+            Use the oil the manual specifies. Many air-cooled small engines call for SAE 30 in warm weather or a multigrade such as 10W-30 for a wider temperature range, and some manufacturers specify synthetic. Lightly oil the new filter's gasket before spinning it on hand-tight, then check for leaks after a short run. Dispose of used oil at a recycling point.
+          </p>
+
+          <p>
+            Replace the air filter on schedule and clean the foam pre-filter between changes, more often in dusty conditions. A clogged filter starves the engine of air, causing rich running, black smoke, power loss and hard starting, and a damaged filter lets dust in that wears the cylinder. Never run the engine without the filter in place, even briefly.
+          </p>
+
+          <p>
+            Replace the spark plug once a season or at the manual's hour interval, gapped to the manual's specification. Twin-cylinder engines have two plugs; replace both together. A fresh plug costs little and improves starting, idle and fuel economy. While the plug is out, look at its condition, since a black, oily or white plug can reveal fuel, oil or overheating problems early.
+          </p>
+
+          <p>
+            Replace the inline fuel filter yearly. It is usually a small clear canister in the fuel line between the tank and carburetor, and a partially blocked one causes surging and stalling under load. Note the flow direction arrow when fitting the new one, and pinch or clamp the fuel line while swapping it to avoid spilling fuel.
+          </p>
+        </div>
+
+        <div id="deck" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Deck, Blades and Belts
+          </h2>
+
+          <p>
+            Sharpen blades every 25 to 50 hours, roughly once or twice a season for most residential lawns, and more often in sandy soil or on lawns with roots and stones. Sharp blades cut cleanly, which keeps grass healthy and reduces the strain on the engine and spindles. Balance each blade after sharpening, since an unbalanced blade causes vibration that wears spindle bearings quickly. Our guide on <a href="/how-often-to-sharpen-mower-blades/">how often to sharpen mower blades</a> covers the signs and technique, and our <a href="/best-lawn-mower-blades/">blade guide</a> covers replacements.
+          </p>
+
+          <p>
+            Level the deck once a year, or whenever the cut looks stepped or uneven. With the mower on a flat surface and tires correctly inflated, measure the blade tip height on each side and front to back, then adjust per the manual. Most manuals specify the front slightly lower than the rear by a small amount. Deck level drifts with use and is the most common cause of an uneven cut.
+          </p>
+
+          <p>
+            Inspect belts for cracks, glazing, fraying and stretch, and check that idler pulleys spin freely without wobble or bearing noise. A deck belt failure is the most common reason a riding mower stops mid-season, and keeping a spare deck belt on the shelf saves days of downtime. Photograph the belt routing before removing one; the routing diagram is also usually on a decal on the deck.
+          </p>
+
+          <p>
+            Check the deck underside for rust and the anti-scalp wheels for wear. Scrape off caked clippings at least once a season and touch up any bare steel with paint to slow rust. Inspect spindle housings for cracks and listen for grinding or roughness when spinning each blade by hand with gloves on, since rough spindle bearings are cheaper to replace before they fail completely.
+          </p>
+        </div>
+
+        <div id="chassis" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Tires, Grease and Steering
+          </h2>
+
+          <p>
+            Check tire pressures every few weeks with a low-pressure gauge. Riding mower tires run at far lower pressures than car tires, often in the range of roughly 10 to 20 PSI depending on the tire, and the correct figure is on the tire sidewall or in the manual. Uneven pressure tilts the deck and produces an uneven cut, so keep both sides matched.
+          </p>
+
+          <p>
+            Grease every fitting a couple of times a season. Typical grease points include deck spindles, front axle pivot, front wheel bearings and steering spindles. Wipe each fitting clean, pump grease in until fresh grease appears at the joint, and wipe off the excess. Greaseable spindles that are kept serviced last much longer than those left dry, and this ten-minute job prevents some of the most expensive wear on a rider.
+          </p>
+
+          <p>
+            Inspect steering and linkages for play. Loose tie rods, worn bushings and steering gear slop make the machine wander and accelerate wear. On zero-turns, check that the lap bars track evenly; if the machine pulls to one side with both bars fully forward, the tracking adjustment in the manual usually corrects it.
+          </p>
+
+          <p>
+            Look at the transmission. On hydrostatic machines with serviceable fluid, check the level and change it at the manual's interval, which is often measured in hundreds of hours. Keep cooling fins and fans on the transaxle clear of clippings, since heat is the main enemy of hydrostatic transmissions. Machines with sealed transaxles have no fluid service but benefit just as much from staying cool and unoverloaded.
+          </p>
+        </div>
+
+        <div id="battery-fuel" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Battery and Fuel
+          </h2>
+
+          <p>
+            Keep the battery terminals clean and tight, and check the charge if the mower sits for more than a few weeks. A fully charged 12-volt lead-acid battery typically reads around 12.6 to 12.7 volts at rest. Riding mower charging systems are modest, and short mowing sessions may not fully recharge a battery that was drained by repeated starts, so a maintainer or smart charger is a worthwhile accessory.
+          </p>
+
+          <p>
+            Use fresh fuel. Ethanol-blended gasoline can begin to degrade within about a month, so buy fuel in quantities you will use within that time and keep it in a sealed, approved container. Many owners add fuel stabilizer to every can as a matter of course. Ethanol-free fuel, where available, stores longer and reduces carburetor problems in small engines.
+          </p>
+
+          <p>
+            Watch for fuel system warning signs: surging at idle, stalling under load, hard starting and black smoke. These often trace back to old fuel, a dirty fuel filter or a partially blocked carburetor jet, and catching them early prevents a full no-start. Our troubleshooting guide for when a <a href="/riding-mower-wont-start/">riding mower won't start</a> walks through the diagnosis order.
+          </p>
+
+          <p>
+            Electric riders replace this section with battery care. Follow the manufacturer's charging guidance, avoid storing the pack fully depleted, keep it within the recommended temperature range and store it at the charge level the manual specifies for the off-season. Keep connectors clean and dry and check the motor and controller vents for clippings.
+          </p>
+        </div>
+
+        <div id="storage" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. End of Season and Winter Storage
+          </h2>
+
+          <p>
+            Handle the fuel first. Either fill the tank with fresh fuel, add stabilizer at the labeled ratio and run the engine for several minutes to carry treated fuel into the carburetor, or run the tank completely dry. Untreated fuel left over winter is the leading cause of spring no-starts. Our guide on <a href="/how-to-winterize-a-lawn-mower/">how to winterize a lawn mower</a> covers both approaches in detail.
+          </p>
+
+          <p>
+            Change the oil before storage rather than in spring, since used oil contains acids and contaminants that sit against engine internals all winter. Clean the deck thoroughly, scrape the underside, touch up bare metal, and remove or sharpen the blades so the machine is ready on the first spring mow. Grease all fittings to push out moisture.
+          </p>
+
+          <p>
+            Remove the battery or connect a maintainer. A lead-acid battery left discharged in a cold shed often will not recover, and freezing can damage a deeply discharged battery. Store a removed battery somewhere cool and dry, off concrete if you prefer, and top it up with a charger every month or two if not on a maintainer.
+          </p>
+
+          <p>
+            Store the mower under a roof, out of rain and direct sun, and block access for rodents, which nest in engine compartments and chew wiring over winter. Inflate tires to the correct pressure to avoid flat spots. When you are ready to compare a replacement, our <a href="/best-riding-lawn-mower/">best riding lawn mowers guide</a> highlights machines with greaseable spindles, serviceable transmissions and washout ports that make this whole schedule easier, and for the full range of machine types see our <a href="/zero-turn-vs-riding-mower/">zero-turn vs riding mower comparison</a>.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            8. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Changing Oil by Calendar Instead of Hours</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A machine mowing four acres accumulates hours several times faster than one mowing half an acre. Changing oil once a year regardless of use can leave a high-use engine running on worn oil for months. Fit an hour meter and follow the manual's hour intervals.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Never Leveling the Deck</h3>
+              <p class="text-gray-700 text-sm m-0">
+                An uneven, stepped cut is usually blamed on blades or the mower itself, when the deck has simply drifted out of level. With tires correctly inflated, leveling takes about fifteen minutes with a tape measure and improves cut quality more than almost any other task.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Sharpening Without Balancing Blades</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Grinding more off one end of a blade leaves it unbalanced, and the vibration wears spindle bearings and loosens hardware quickly. Check balance on a simple blade balancer or a nail after every sharpening and grind the heavy side until it hangs level.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping the Grease Fittings</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Spindles, axle pivots and steering joints with grease fittings wear quickly when left dry, and the resulting repairs are among the more expensive on a rider. A grease gun and ten minutes a couple of times a season prevents much of that wear.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Storing With Untreated Fuel and a Flat Battery</h3>
+              <p class="text-gray-700 text-sm m-0">
+                These two habits cause most spring no-starts and many repair bills. Stabilize or drain the fuel and keep the battery charged over winter; together they take less than half an hour and avoid carburetor cleaning and a new battery.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            9. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How often should you change the oil in a riding mower?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Most riding mower engine manuals specify an oil change every 50 to 100 hours or at least once a season, with an earlier first change after break-in on a new engine. Heavy use, dusty conditions or towing justify the shorter end. Follow your engine manufacturer's interval, since it varies by engine.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What maintenance does a riding lawn mower need every year?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                At minimum: change the oil and filter, replace the air filter and spark plug, sharpen or replace the blades, replace the fuel filter, grease all fittings, level the deck, check belts and tire pressures, and prepare the fuel and battery for winter storage. Larger properties may need some tasks more than once a year.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How often should riding mower blades be sharpened?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Typically every 25 to 50 hours of use, which is once or twice a season for most residential lawns. Sandy soil, roots and stones dull blades faster. Torn, ragged grass tips that turn brown after mowing are the clearest sign the blades need attention.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What tire pressure should a riding mower have?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Riding mower tires typically run at low pressures, often somewhere around 10 to 20 PSI depending on the tire size and type. The correct figure is printed on the tire sidewall or in the manual. Keep left and right sides matched, since uneven pressure tilts the deck and produces an uneven cut.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Should I run my riding mower out of gas for winter?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Either running it dry or filling it with stabilized fuel works, and manufacturers differ on which they prefer. Running dry removes the fuel that would gum the carburetor; stabilized fuel keeps seals from drying out. Follow your manual, and never leave untreated ethanol-blended fuel in the system over winter.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do I need to grease my riding lawn mower?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes, if it has grease fittings, which many riders do on deck spindles, front axle pivots and steering components. Greasing them a couple of times a season pushes out moisture and old grease and prevents bearing and bushing wear. Some machines use sealed components that need no grease; your manual lists the points.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How do I know if my riding mower deck is level?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Park on a flat surface with tires correctly inflated, turn the blades so the tips point side to side, and measure tip height from the ground on each side; then turn them front to back and measure again. Compare with the manual's specification, which usually has the front slightly lower than the rear.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Riding Mower Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/riding-mower-wont-start/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Troubleshooting</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Riding Mower Won't Start?</h3>
+              <p class="text-gray-500 text-sm mt-2">The diagnosis order for interlocks, battery, solenoid and fuel.</p>
+            </a>
+            <a href="/how-long-do-riding-lawn-mowers-last/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Lifespan</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">How Long Do Riding Mowers Last?</h3>
+              <p class="text-gray-500 text-sm mt-2">Engine hours by class, what fails first, and repair versus replace.</p>
+            </a>
+            <a href="/best-riding-lawn-mower/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Riding Lawn Mowers</h3>
+              <p class="text-gray-500 text-sm mt-2">Machines ranked with serviceability and longevity weighted heavily.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Riding lawn mower maintenance comes down to a short list done on schedule: oil and filters by engine hours, sharp and balanced blades, a level deck, greased fittings, even tire pressures, fresh fuel and a charged battery. None of it is difficult, and together it takes a few hours a season.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Skip it and the same predictable failures arrive early: gummed carburetors, worn spindles, a stretched belt mid-season and a battery that will not recover in spring. Keep a log, follow your manual's intervals over any general guide, and the machine will reward you with years of extra service.
+          </p>
+        </div>
+
+        <MoreInCategory category="Lawn & Yard Care" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
