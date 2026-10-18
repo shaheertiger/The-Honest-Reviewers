@@ -1,0 +1,817 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Under Sink Water Filters",
+    "url": "/best-under-sink-water-filter/"
+  },
+  {
+    "title": "Best Water Softener Systems",
+    "url": "/best-water-softener-system/"
+  },
+  {
+    "title": "Best Water Filtration Systems for Home",
+    "url": "/best-water-filtration-system-for-home/"
+  },
+  {
+    "title": "Best Water Filter Pitchers",
+    "url": "/best-water-filter-pitcher/"
+  },
+  {
+    "title": "Why Does My Water Smell Like Rotten Eggs?",
+    "url": "/why-does-my-water-smell-like-rotten-eggs/"
+  },
+  {
+    "title": "How Often to Change a Brita Filter",
+    "url": "/how-often-to-change-brita-filter/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-19", modified: "2026-10-19" });
+const title = "6 Best Shower Head Filters: What They Remove, and What They Cannot Fix";
+const description =
+  "Shower head filters compared on NSF/ANSI 177 claims, filter media, cartridge life and flow, with an honest look at chlorine, chloramine and hard water.";
+
+const PRODUCTS = [
+  {
+    "id": "aquasana-aq-4100",
+    "name": "Aquasana AQ-4100 Shower Filter",
+    "badge": "Best Overall",
+    "category": "Inline Filter or With Showerhead, 10,000 Gallons",
+    "amazonUrl": "#",
+    "description": "The Aquasana AQ-4100 is our pick because it pairs a clear, specific claim with a long cartridge life. Aquasana says it was independently tested to NSF/ANSI 177 and reduces over 90% of chlorine for 10,000 gallons or up to six months, with the details on its performance data sheet. That is the kind of claim you can hold a brand to: a standard, a reduction level and a rated life. Aquasana sells a version with its own adjustable showerhead and an AQ-4100NSH version that installs between your pipe and the showerhead you already own, and it recommends keeping flow around 2.5 gallons per minute, warning that higher flow can reduce filtration. Like every pick here, it targets chlorine; it will not soften hard water.",
+    "pros": [
+      "Tested to NSF/ANSI 177 with over 90% chlorine reduction per Aquasana",
+      "Rated for 10,000 gallons or six months",
+      "Works with your own showerhead (AQ-4100NSH)",
+      "Performance data sheet spells out the claims"
+    ],
+    "cons": [
+      "Inline housing adds length at the shower arm",
+      "Not designed for chloramine claims",
+      "Does not soften water"
+    ],
+    "bottomLine": "The best shower filter for most city-water homes: a specific NSF/ANSI 177 claim, a 10,000-gallon rating and a version that keeps your showerhead."
+  },
+  {
+    "id": "jolie-filtered-showerhead",
+    "name": "Jolie Filtered Showerhead",
+    "badge": "Best Design",
+    "category": "Filtered Showerhead, KDF-55 and Calcium Sulfite",
+    "amazonUrl": "#",
+    "description": "Jolie is the filtered showerhead people buy because it looks like a good showerhead first and a filter second. Retail listings describe a high-impact ABS head with a 1.8 gpm flow rating for California and New York compliance, a filter cartridge that sits in the neck, and a media mix of KDF-55 and calcium sulfite, two materials commonly used because they work in hot water. Jolie says its filter removes over 84% of chlorine through the life of the cartridge and describes that as exceeding the NSF-177 benchmark, but we did not find a certification listing, so treat it as a brand claim. Replacement cartridges are listed at about $33 to $38 and Jolie says to swap them every 90 days, which makes it one of the more expensive filters to run.",
+    "pros": [
+      "KDF-55 and calcium sulfite media suited to hot water",
+      "1.8 gpm head meets California and New York limits",
+      "Cartridge hides inside the neck",
+      "Fits standard 1/2-inch shower pipes per Jolie"
+    ],
+    "cons": [
+      "Chlorine claim is Jolie's, not a certification listing",
+      "90-day cartridges add up to roughly $130 to $150 a year at listed prices",
+      "Premium price for the head"
+    ],
+    "bottomLine": "Buy it if you want a filtered showerhead that looks and feels premium, and you accept a 90-day cartridge and a brand-stated chlorine claim."
+  },
+  {
+    "id": "canopy-filtered-showerhead",
+    "name": "Canopy Filtered Showerhead",
+    "badge": "Best for Chloramine Areas",
+    "category": "Filtered Showerhead, Carbon, KDF and Calcium Sulfite",
+    "amazonUrl": "#",
+    "description": "Canopy is the pick if your utility uses chloramine instead of chlorine, because its media includes calcium sulfite, which Canopy says helps reduce both. Canopy lists three media types, granular activated carbon, copper-zinc (KDF) and calcium sulfite, and says the filter is tested to NSF-177 for chlorine reduction. Its site lists chloramine among the contaminants its ingredients have been shown to help reduce, with an asterisk noting the filter is not independently tested for every contaminant on that list, which is an honest disclosure most brands skip. Canopy says to replace the cartridge every 90 days, and ships a 1.8 gpm low-flow head with a high-flow restrictor depending on your state.",
+    "pros": [
+      "Calcium sulfite media for chlorine and chloramine per Canopy",
+      "Tested to NSF-177 for chlorine per Canopy",
+      "Honest disclosure on which claims are not independently tested",
+      "Flow tuned to state restrictions"
+    ],
+    "cons": [
+      "90-day cartridge replacement",
+      "Chloramine claim is not independently tested per Canopy's own note",
+      "Showerhead style is fixed"
+    ],
+    "bottomLine": "The best choice for chloramine-treated water, with media chosen for it and unusually candid labeling about what is and is not tested."
+  },
+  {
+    "id": "culligan-wsh-c125",
+    "name": "Culligan WSH-C125 Wall-Mounted Shower Filter",
+    "badge": "Best Budget Certified",
+    "category": "Inline Filter With Massage Head, 10,000 Gallons",
+    "amazonUrl": "#",
+    "description": "The Culligan WSH-C125 is the inexpensive filter with a real certification behind it. Retailers describe it as certified by NSF International to NSF/ANSI 177 for reduction of free available chlorine, and Culligan's manual says to replace the WHR-140 cartridge about every six months or 10,000 gallons, whichever comes first. Culligan's data sheet lists a 2.5 gpm rated flow, though some listings say 2.0 gpm. It is not a beauty product: a review notes it does not remove lead or bacteria, and its bacteriostatic media limits growth on the media rather than treating the water. One retailer lists the showerhead as discontinued while still selling the cartridge, so check availability and confirm you can buy WHR-140 replacements before committing.",
+    "pros": [
+      "Certified to NSF/ANSI 177 for free chlorine per retailer listings",
+      "10,000 gallons or six months per Culligan's manual",
+      "Low cost to buy and run",
+      "Includes a massage showerhead"
+    ],
+    "cons": [
+      "Some retailers list the head as discontinued",
+      "Chlorine only; no lead or bacteria reduction",
+      "Dated, bulky look"
+    ],
+    "bottomLine": "The cheapest way to get an NSF/ANSI 177-certified chlorine filter, if you can still find one and its WHR-140 cartridges."
+  },
+  {
+    "id": "sprite-ho2-wh",
+    "name": "Sprite High Output HO2-WH Shower Filter",
+    "badge": "Longest Cartridge Life",
+    "category": "Inline Filter, Uses Your Showerhead",
+    "amazonUrl": "#",
+    "description": "The Sprite HO2 has been around for decades, and its appeal is a cartridge you change once a year. A current retailer listing says it is NSF Standard 177 certified and good for one year or 30,000 gallons, while another lists 20,000 gallons or 12 months, and an older Sprite manual rated an earlier cartridge at 10,000 gallons and one year. Those figures conflict, so plan around the one-year time limit and check the rating on the cartridge you actually buy. Allfilters lists a 2.5 gpm flow rate. It installs inline between your shower arm and your existing showerhead, which makes it the best option if you already love your showerhead.",
+    "pros": [
+      "NSF/ANSI 177 certification per retailer listing",
+      "One-year cartridge life",
+      "Keeps your existing showerhead",
+      "Simple, proven design"
+    ],
+    "cons": [
+      "Gallon ratings conflict between sources",
+      "Plain plastic housing",
+      "Chlorine only"
+    ],
+    "bottomLine": "The low-maintenance pick: install it behind your favorite showerhead and change the cartridge once a year."
+  },
+  {
+    "id": "aquabliss-sf100",
+    "name": "AquaBliss SF100 Multi-Stage Shower Filter",
+    "badge": "Best Budget Multi-Stage",
+    "category": "Inline Filter, Multi-Stage Media With Vitamin C",
+    "amazonUrl": "#",
+    "description": "AquaBliss is the bestselling budget inline filter, and it is a reasonable buy if you understand what it is. A retailer listing for its SFC100 cartridge describes a 12-stage mix including calcium sulfite, redox media, activated carbon, vitamin C, ceramic mineral beads and tourmaline, aimed at chlorine, sediment, organic impurities and odors in hot and cold water. AquaBliss's own guidance says to change the cartridge at least every six months, and a retailer estimates three to six months depending on your water. We did not find an NSF certification for it, so its performance claims are the brand's. The calcium sulfite and vitamin C are the stages doing the useful work in hot water; the mineral beads and tourmaline are marketing.",
+    "pros": [
+      "Low price",
+      "Calcium sulfite and vitamin C stages suited to hot water",
+      "Fits behind your existing showerhead",
+      "Cartridges easy to find"
+    ],
+    "cons": [
+      "No NSF certification found",
+      "Twelve stages is marketing more than engineering",
+      "Cartridge life of three to six months"
+    ],
+    "bottomLine": "A fine budget filter for chlorine taste and smell, as long as you treat its long list of stages as marketing and its claims as unverified."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Shower Head Filters",
+          item: "https://www.thehonestreviewers.com/best-shower-head-filter/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best shower head filter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most city-water homes, the Aquasana AQ-4100 is our pick, because Aquasana says it was tested to NSF/ANSI 177 with over 90% chlorine reduction for 10,000 gallons or six months. For chloramine water, the Canopy filtered showerhead is the better choice."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do shower filters work for hard water?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not in any meaningful way. Hardness is dissolved calcium and magnesium, which shower filters are not designed to remove. A water softener is the fix for hard water, and some homes pair one with a shower filter for chlorine."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do shower filters remove chloramine?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Some do, more slowly. Calcium sulfite and vitamin C are the media brands use for chloramine; KDF and ordinary carbon are commonly described as weak against it. Canopy, for example, lists calcium sulfite for chlorine and chloramine, while noting not every claim is independently tested."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often should I change a shower filter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Follow the brand's interval. Our picks range from about 90 days for Jolie and Canopy to six months for Aquasana and Culligan and one year for the Sprite HO2, according to their makers and retailers. Heavier use or chloramine shortens cartridge life."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does NSF/ANSI 177 mean?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is the standard for shower filtration systems, covering reduction of free available chlorine. Certified means an accredited body verified the claim; tested to means testing was done to the method, often commissioned by the brand. It does not cover claims about skin, hair or heavy metals."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will a shower filter lower my water pressure?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Slightly, in some cases. Filters add resistance, and many filtered showerheads use 1.8 gpm heads to meet state limits. A clogging cartridge also reduces flow, which is a sign to replace it or to look at sediment filtration for the whole house."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use a shower filter with a handheld shower?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, if you install an inline filter on the shower arm before the hose, so all water to the handheld passes through it. Filtered showerheads replace the head itself, so they only work with handhelds designed for them."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home Improvement",
+    tags: [
+      "best shower head filter",
+      "shower filter",
+      "filtered shower head",
+      "shower filter for hard water",
+      "shower filter for chlorine"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Buyer's Guide
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best Shower Head <span class="text-[#38BDF8]">Filters</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Six filtered showerheads and inline shower filters, chosen on the certifications and media each maker lists, with a straight answer on the one thing most of them cannot do: soften hard water.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#aquasana-aq-4100"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            See the Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="7.1k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-chose" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Chose</a>
+          <a href="#what-it-does" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. What a Shower Filter Can Do</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 6 Picks</a>
+          <a href="#nsf-177" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. NSF/ANSI 177 Explained</a>
+          <a href="#media" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. KDF, Sulfite and Vitamin C</a>
+          <a href="#hard-water" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Hard Water</a>
+          <a href="#fit" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Fit and Flow</a>
+          <a href="#cartridge-cost" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Cartridge Life and Cost</a>
+          <a href="#living-with-one" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Installing and Living With One</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          A shower filter does one job well: it reduces chlorine in hot, fast-moving water. That can make a real difference to how your skin, hair and bathroom smell after a shower on city water. What it does not do, despite what a lot of packaging implies, is soften hard water, and choosing a filter starts with being clear about that.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-chose" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Chose
+          </h2>
+
+          <p>
+            We did not lab-test these filters. We chose them by reading what each brand claims, which standard it cites, which media it uses and how long its cartridge lasts, then checking those claims against retailer listings and manuals. Shower filters are a category full of vague promises about skin and hair, so we gave the most weight to the claims that can actually be checked.
+          </p>
+
+          <p>
+            The most important of those is NSF/ANSI 177, the standard written specifically for shower filtration systems. It covers reduction of free available chlorine. A filter certified to NSF/ANSI 177 has been verified by an accredited body; a filter tested to it has had testing done, usually commissioned by the brand. Both are better than nothing, and we say which applies to each pick.
+          </p>
+
+          <p>
+            Next we looked at the media. Activated carbon, which does most of the work in a drinking-water filter, is commonly described as much less effective in hot, fast-moving shower water. The media you want in a shower are those used precisely because they work in hot water: KDF copper-zinc, calcium sulfite and vitamin C. Every pick here uses at least one of them.
+          </p>
+
+          <p>
+            Finally we compared cartridge life and running cost, because a filter you stop replacing is just a plastic fitting. A cartridge that lasts a year at a reasonable price is worth more than a cheaper one you forget to change after three months.
+          </p>
+        </div>
+
+        <div id="what-it-does" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. What a Shower Filter Can and Cannot Do
+          </h2>
+
+          <p>
+            A shower filter's real job is reducing chlorine, the disinfectant most US utilities add to tap water. Chlorine is what gives a hot shower a pool-like smell, and many people find it dries their skin and hair. A good shower filter can reduce it noticeably, and if chlorine bothers you, that is a worthwhile improvement.
+          </p>
+
+          <p>
+            Many utilities use chloramine instead of chlorine, because it lasts longer in the pipes. Chloramine is harder to remove. KDF and ordinary carbon are commonly described as weak against it, while calcium sulfite and vitamin C are the media brands use when they claim chloramine reduction. If your utility's annual water report says chloramine, pick a filter built for it, like the Canopy, and expect a shorter cartridge life.
+          </p>
+
+          <p>
+            What a shower filter cannot do is soften hard water. Hardness is dissolved calcium and magnesium, and removing it takes ion exchange in a water softener or reverse osmosis, neither of which fits in a showerhead. Some filters claim to reduce scale or improve hard water, but the physics does not allow a cartridge that size to remove meaningful hardness from gallons of water per minute.
+          </p>
+
+          <p>
+            Shower filters are also not a fix for a rotten-egg smell, iron staining or sediment across the whole house. Those problems come from the water supply or the water heater and need treatment at the source; our guide to <a href="/why-does-my-water-smell-like-rotten-eggs/">why water smells like rotten eggs</a> explains how to tell which. And none of these filters makes shower water safe to drink if it is not already.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 6 Picks
+          </h2>
+
+          <p>
+            We researched these six from manufacturer specifications, published certifications and retailer listings, not from our own testing. A shower filter's performance depends heavily on your water's chlorine or chloramine level and temperature, so every capacity and chlorine claim below is attributed to the brand or retailer that makes it. Where a brand says its filter was tested to NSF/ANSI 177 rather than certified, we say so.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="nsf-177" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. NSF/ANSI 177 and the Claims Worth Trusting
+          </h2>
+
+          <p>
+            NSF/ANSI 177 is the standard for shower filtration systems, and it is narrow by design: it covers reduction of free available chlorine. A filter certified to it has been checked by an accredited certifier against that requirement over its rated life. It does not certify claims about softer hair, vitamin infusions or heavy metals.
+          </p>
+
+          <p>
+            Brands use three kinds of wording, and they mean different things. Certified to NSF/ANSI 177 means an accredited body verified it, which is the strongest claim; retailers describe the Culligan WSH-C125 and Sprite HO2 this way. Tested to NSF/ANSI 177 means testing was done to the standard's method, usually commissioned by the brand; Aquasana and Canopy use this wording. Exceeds NSF-177 is a brand comparing its own results to the standard, which is how Jolie describes its filter.
+          </p>
+
+          <p>
+            A specific number with a specific life is the claim to look for. Aquasana says the AQ-4100 reduces over 90% of chlorine for 10,000 gallons or six months. That is checkable against its performance data sheet. A claim like removes 99% of impurities with no standard, no life and no test behind it is not.
+          </p>
+
+          <p>
+            Be especially skeptical of claims about lead, bacteria and heavy metals in shower filters. KDF media is often described as reducing some heavy metals, but we found no shower filter on this list with a certification for that. If lead is a concern, address it with a certified drinking-water filter such as those in our <a href="/best-under-sink-water-filter/">under sink water filter</a> guide or a certified <a href="/best-water-filter-pitcher/">filter pitcher</a>, and test your water.
+          </p>
+        </div>
+
+        <div id="media" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. KDF, Calcium Sulfite and Vitamin C Compared
+          </h2>
+
+          <p>
+            KDF is a copper-zinc granular media that reduces chlorine through a redox reaction, and it is popular in shower filters because it keeps working in hot water. It is commonly paired with other media, because on its own it is less effective against chloramine. Jolie's KDF-55 and Canopy's copper-zinc stage are examples.
+          </p>
+
+          <p>
+            Calcium sulfite reacts quickly with chlorine and is widely described as effective in hot water and against chloramine, which is why Jolie, Canopy and AquaBliss all include it. It is often the stage doing most of the work in a modern shower filter, and its capacity sets the cartridge life.
+          </p>
+
+          <p>
+            Vitamin C, in the form of ascorbic acid or sodium ascorbate, neutralizes chlorine and chloramine very quickly and is used in some inline filters and cartridges. The trade-off is capacity: vitamin C cartridges tend to be used up faster, so they need replacing more often. AquaBliss includes a vitamin C stage in its multi-stage cartridge.
+          </p>
+
+          <p>
+            Everything else on a shower filter's ingredient list should be read with skepticism. Ceramic mineral beads, tourmaline and infrared balls appear on many cheap filters, but they do not reduce chlorine in any meaningful way. A filter's useful stages are the ones that react with chlorine; the rest is there to make the stage count larger.
+          </p>
+        </div>
+
+        <div id="hard-water" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Hard Water: Why a Shower Filter Is the Wrong Fix
+          </h2>
+
+          <p>
+            Hard water is the most common reason people shop for a shower filter, and it is the problem shower filters are worst at. Scale on the glass, soap that will not lather and the dry, squeaky feel of hard water all come from dissolved calcium and magnesium. A shower filter is built to react with chlorine, not to pull minerals out of solution.
+          </p>
+
+          <p>
+            Some filters claim to reduce scale. At best, a few media can slightly change how scale forms on surfaces, but no shower-sized cartridge removes meaningful hardness from the several gallons a minute a shower uses. If a filter promises softer water, look for a test result showing hardness reduction over its rated life; you will not find one on the picks here, and we did not include any filter that leaned on that claim.
+          </p>
+
+          <p>
+            The real fix is a water softener, which uses ion exchange to replace calcium and magnesium with sodium or potassium for the whole house. That protects every fixture, appliance and the water heater, not just the shower. Our guide to the <a href="/best-water-softener-system/">best water softener systems</a> covers how to size one and what it costs to run.
+          </p>
+
+          <p>
+            Many homes on hard city water benefit from both: a softener for scale and a shower filter for chlorine. If you have to choose one and hardness is your main complaint, the softener is the one that solves it.
+          </p>
+        </div>
+
+        <div id="fit" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Showerhead, Inline or Handheld: Fit and Flow
+          </h2>
+
+          <p>
+            Shower filters come in two main forms. Filtered showerheads, like Jolie and Canopy, replace your showerhead entirely and hide the cartridge in the head or neck. Inline filters, like the Aquasana AQ-4100NSH, Sprite HO2 and AquaBliss SF100, screw onto the shower arm and let you keep your existing showerhead, which is the better choice if you already have a head you like or a rain head.
+          </p>
+
+          <p>
+            Most US shower arms use a standard 1/2-inch NPT thread, which is what these filters are designed for, so fit is rarely a problem. The bigger issue is length and weight: an inline filter adds several inches at the arm, which can put a fixed showerhead lower than you want and strain a weak shower arm. Measure the clearance before you buy.
+          </p>
+
+          <p>
+            Flow rate affects both comfort and filtration. Federal rules cap showerheads at 2.5 gallons per minute, and some states, including California and New York, require lower flow, which is why Jolie and Canopy ship 1.8 gpm heads. Aquasana recommends staying around 2.5 gpm through its filter and says higher flow can reduce filtration quality, because water spends less time in contact with the media.
+          </p>
+
+          <p>
+            If you use a handheld shower, an inline filter on the arm, before the hose, filters the handheld too. Filtered showerheads replace the head, so they will not work with a separate handheld unless the filter is designed for it.
+          </p>
+        </div>
+
+        <div id="cartridge-cost" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Cartridge Life and Running Cost
+          </h2>
+
+          <p>
+            Cartridge life varies more than shower filter prices do. The longest-lived pick, the Sprite HO2, uses a one-year cartridge. Aquasana and Culligan rate theirs at 10,000 gallons or six months. Jolie and Canopy recommend replacement every 90 days, and AquaBliss suggests three to six months depending on your water.
+          </p>
+
+          <p>
+            That means running cost often matters more than purchase price. At Jolie's listed $33 to $38 per cartridge every 90 days, a year of filtering costs roughly $130 to $150. A filter with a six-month cartridge at a similar price costs half that. Run the numbers before choosing, because a cheap showerhead with expensive frequent refills can cost more over two years than a pricier one with long-life cartridges.
+          </p>
+
+          <p>
+            Actual cartridge life depends on how much water you use and how much chlorine or chloramine is in it. A family of four taking long showers will exhaust a cartridge faster than one person, and water heavy in chloramine uses up media sooner. The time limit is still the one to follow, because media can be exhausted or channel even if the gallons are not used up.
+          </p>
+
+          <p>
+            The sign that a cartridge is spent is usually the chlorine smell coming back. Do not wait for that if you can avoid it; set a calendar reminder when you install a new cartridge, the same way you would for a <a href="/how-often-to-change-brita-filter/">pitcher filter</a>.
+          </p>
+        </div>
+
+        <div id="living-with-one" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Installing and Living With One
+          </h2>
+
+          <p>
+            Installation takes a few minutes. Unscrew the old showerhead, clean the threads on the shower arm, wrap them with plumber's tape in the direction of the threads, and screw on the filter or filtered head hand-tight plus a little more. Run the water for a minute or two to flush loose media fines, which can make the first water cloudy or tinted.
+          </p>
+
+          <p>
+            Check for drips at the connection after the first shower. A small leak at the arm usually means the tape was wrapped the wrong way or the washer is missing. Avoid over-tightening plastic housings with a wrench, because cracked threads are the most common way these filters fail.
+          </p>
+
+          <p>
+            To change a cartridge, follow the brand's instructions; most twist out of the housing or neck. Flush the new cartridge before you step in. If the flow drops noticeably before the cartridge is due, sediment may be clogging it, which suggests your water would benefit from whole-house sediment filtration; our guide to the <a href="/best-water-filtration-system-for-home/">best whole-house filtration systems</a> covers that.
+          </p>
+
+          <p>
+            Keep expectations realistic. A shower filter should make chlorinated water smell less like a pool and may make your skin and hair feel less dry. It will not cure eczema, it will not soften hard water and it will not make up for problems that start at the water heater or the well. Bought for the right reason, it is an inexpensive, worthwhile upgrade.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying a Shower Filter for Hard Water</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Shower filters target chlorine, not calcium and magnesium. If scale and squeaky skin are the problem, a whole-house water softener is the fix. A filter that promises soft water without hardness test data is overselling.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring Chloramine</h3>
+              <p class="text-gray-700 text-sm m-0">
+                If your utility uses chloramine, a filter built only around KDF or carbon will struggle. Check your water report and choose a filter with calcium sulfite or vitamin C media, and expect to replace the cartridge more often.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Trusting Stage Counts</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Fifteen stages sounds better than three, but mineral beads and tourmaline do little for chlorine. Judge a filter by its reactive media and its NSF/ANSI 177 claim, not by how many layers are printed on the box.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Forgetting the Cartridge</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A spent cartridge is just a plastic fitting. Set a reminder for the brand's replacement interval when you install it, because the chlorine smell usually comes back gradually and is easy to miss.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Over-Tightening the Housing</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Plastic filter housings crack when forced with a wrench. Use plumber's tape on clean threads, tighten by hand plus a little, and check for drips after the first shower instead of cranking it down.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best shower head filter?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most city-water homes, the Aquasana AQ-4100 is our pick, because Aquasana says it was tested to NSF/ANSI 177 with over 90% chlorine reduction for 10,000 gallons or six months. For chloramine water, the Canopy filtered showerhead is the better choice.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do shower filters work for hard water?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Not in any meaningful way. Hardness is dissolved calcium and magnesium, which shower filters are not designed to remove. A water softener is the fix for hard water, and some homes pair one with a shower filter for chlorine.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do shower filters remove chloramine?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Some do, more slowly. Calcium sulfite and vitamin C are the media brands use for chloramine; KDF and ordinary carbon are commonly described as weak against it. Canopy, for example, lists calcium sulfite for chlorine and chloramine, while noting not every claim is independently tested.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How often should I change a shower filter?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Follow the brand's interval. Our picks range from about 90 days for Jolie and Canopy to six months for Aquasana and Culligan and one year for the Sprite HO2, according to their makers and retailers. Heavier use or chloramine shortens cartridge life.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What does NSF/ANSI 177 mean?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It is the standard for shower filtration systems, covering reduction of free available chlorine. Certified means an accredited body verified the claim; tested to means testing was done to the method, often commissioned by the brand. It does not cover claims about skin, hair or heavy metals.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Will a shower filter lower my water pressure?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Slightly, in some cases. Filters add resistance, and many filtered showerheads use 1.8 gpm heads to meet state limits. A clogging cartridge also reduces flow, which is a sign to replace it or to look at sediment filtration for the whole house.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I use a shower filter with a handheld shower?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes, if you install an inline filter on the shower arm before the hose, so all water to the handheld passes through it. Filtered showerheads replace the head itself, so they only work with handhelds designed for them.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Water Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-water-softener-system/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Water Softener Systems</h3>
+              <p class="text-gray-500 text-sm mt-2">The real fix for hard water, scale and squeaky skin, sized for your home.</p>
+            </a>
+            <a href="/best-under-sink-water-filter/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Under Sink Water Filters</h3>
+              <p class="text-gray-500 text-sm mt-2">Certified carbon and reverse osmosis systems for drinking water at the sink.</p>
+            </a>
+            <a href="/best-water-filtration-system-for-home/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Whole-House Filtration Systems</h3>
+              <p class="text-gray-500 text-sm mt-2">Point-of-entry systems for sediment, chlorine, iron and well water.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The best shower head filter for most homes is the <strong class="text-white">Aquasana AQ-4100</strong>, which Aquasana says was tested to NSF/ANSI 177 with over 90% chlorine reduction for 10,000 gallons. Pick the <strong class="text-white">Canopy</strong> if your utility uses chloramine, the <strong class="text-white">Sprite HO2</strong> if you want a once-a-year cartridge behind your own showerhead, and the <strong class="text-white">Culligan WSH-C125</strong> for a certified filter on a budget.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Buy a shower filter for chlorine and chloramine, not for hard water. Check whether a claim is certified, tested or just stated, choose media that works in hot water, and replace the cartridge on schedule. If scale is your real problem, put the money toward a water softener instead.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Improvement" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

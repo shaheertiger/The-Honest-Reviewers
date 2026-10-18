@@ -1,0 +1,869 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Riding Lawn Mowers",
+    "url": "/best-riding-lawn-mower/"
+  },
+  {
+    "title": "Best Zero Turn Mowers",
+    "url": "/best-zero-turn-mower/"
+  },
+  {
+    "title": "Zero Turn vs Riding Mower",
+    "url": "/zero-turn-vs-riding-mower/"
+  },
+  {
+    "title": "What Size Riding Mower Do I Need?",
+    "url": "/what-size-riding-mower-do-i-need/"
+  },
+  {
+    "title": "Riding Lawn Mower Maintenance",
+    "url": "/riding-lawn-mower-maintenance/"
+  },
+  {
+    "title": "Best Mowers for Large Yards",
+    "url": "/best-lawn-mower-for-large-yard/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-19", modified: "2026-10-19" });
+const title = "7 Best Lawn Tractors: Mid-Range, Garden and Electric Picks by Acreage";
+const description =
+  "The best lawn tractors for one to four acres, from a budget gear-drive model to garden tractors and an electric pick, compared on engine, transaxle, deck and warranty.";
+
+const PRODUCTS = [
+  {
+    "id": "john-deere-x350-42",
+    "name": "John Deere X350 42\" Lawn Tractor",
+    "badge": "Best Overall",
+    "category": "Twin-Cylinder Lawn Tractor, 42-Inch Deck, Hydrostatic",
+    "description": "The John Deere X350 is the lawn tractor we would point most one-to-two-acre owners toward if the budget stretches past entry level, because it is built a class above the big-box tractors without crossing into garden-tractor money. Dealer listings for the current model give a Kawasaki FR651V V-twin, 726 cc and rated at 21.5 hp, with a full-pressure lube system and a spin-on oil filter, which is the kind of engine detail that separates a tractor that runs for a decade from one that runs for five seasons. The transaxle is a K46 hydrostatic, the 42-inch Accel Deep deck is built from 12-gauge stamped steel, and Deere lists 13 cutting positions from 1 to 4 inches in quarter-inch steps with a preset feature that returns the deck to your usual height. Towing capacity is listed at 600 pounds and the fuel tank at 3.3 gallons. Deere backs it with a 4-year or 300-hour bumper-to-bumper warranty, whichever comes first, which is longer than most competitors in this price band. Older X350s were built with different Kawasaki engines, so if you buy used, check the engine plate rather than trusting the listing.",
+    "pros": [
+      "Kawasaki 726 cc V-twin rated 21.5 hp with full-pressure lube and oil filter, per dealer listings",
+      "K46 hydrostatic transaxle and 600 lb listed towing capacity",
+      "13 cutting heights from 1 to 4 in with a preset return feature",
+      "4-year/300-hour bumper-to-bumper warranty listed"
+    ],
+    "cons": [
+      "Costs noticeably more than big-box 42-inch tractors",
+      "42-inch deck is slow beyond about two acres",
+      "Engine on older units differs, so used buyers must check the plate"
+    ],
+    "bottomLine": "For one to two acres, the X350 is the lawn tractor to buy if you want twin-cylinder smoothness, a strong hydrostatic transaxle and a long warranty without paying garden-tractor prices."
+  },
+  {
+    "id": "husqvarna-ts-146x",
+    "name": "Husqvarna TS 146X 46\" Lawn Tractor",
+    "badge": "Best Value 46-Inch",
+    "category": "Twin-Cylinder Lawn Tractor, 46-Inch Deck, Pedal Hydrostatic",
+    "description": "The Husqvarna TS 146X gets you a 46-inch deck and a twin-cylinder Kawasaki engine for less than most branded tractors charge for a 42-inch machine. Husqvarna's US product page lists a 46-inch cutting width, 21.5 hp and 44.3 cubic inches of displacement, with a top forward speed of 5.2 mph and 2.2 mph in reverse, and a retailer listing names the engine as the Kawasaki FR651V with a 3-gallon fuel tank, 15-inch front and 20-inch rear wheels. Husqvarna's Canadian support page confirms hydrostatic transmission with pedal drive, so you control speed with your foot rather than a lever. The four extra inches of deck over a 42-inch tractor add roughly 10 percent to every pass, which matters more than it sounds on an acre and a half. Watch the model name: Husqvarna's own support page lists the near-identical TS 146XK with a Kohler 7000 Series engine instead of the Kawasaki, and retailers sometimes mix the two up, so confirm which engine you are buying.",
+    "pros": [
+      "46-inch deck with a 21.5 hp Kawasaki V-twin, per Husqvarna and retailer listings",
+      "Pedal-operated hydrostatic drive",
+      "5.2 mph listed top speed",
+      "Typically priced below branded 42-inch twin-cylinder tractors"
+    ],
+    "cons": [
+      "Stamped deck, not fabricated",
+      "TS 146X and TS 146XK use different engines and are easy to confuse",
+      "Dealer support varies more by area than Deere or Cub Cadet"
+    ],
+    "bottomLine": "The TS 146X is the value pick for one to two acres: a 46-inch deck and a Kawasaki twin for less than most 42-inch branded tractors, as long as you confirm the engine."
+  },
+  {
+    "id": "cub-cadet-xt1-lt46",
+    "name": "Cub Cadet XT1 LT46 Lawn Tractor",
+    "badge": "Best Mid-Range",
+    "category": "Twin-Cylinder Lawn Tractor, 46-Inch Deck, Hydrostatic",
+    "description": "The Cub Cadet XT1 LT46 has been one of the most common mid-range lawn tractors for most of a decade, and its spec sheet explains why it sells. Cub Cadet's model page lists a 22 hp Kohler 7000 Series twin, a 46-inch stamped 12-gauge twin-blade deck with 12 cutting positions and a 16-inch turning radius, and a hydrostatic transmission. TractorData lists the engine as a Kohler KT725 at 725 cc, a 3-gallon tank and a weight of about 420 pounds, and some retailers quote 23 hp for the same engine. The 16-inch turning radius is tight for a lawn tractor and makes mowing around trees and beds less tedious. Cub Cadet rates it for up to 1.5 acres of mostly flat ground and backs it with a 3-year warranty with no hour limit that includes the powertrain. The model page we found is listed under prior-year models, so check the current XT1 lineup and spec sheet before buying, because Cub Cadet updates engines and model numbers between seasons.",
+    "pros": [
+      "22 hp Kohler 7000 Series twin, per Cub Cadet",
+      "46-inch 12-gauge stamped deck and a tight 16-inch turning radius",
+      "3-year no-hour-limit warranty including powertrain",
+      "Widely stocked, so parts are easy to find"
+    ],
+    "cons": [
+      "Cub Cadet rates it for up to 1.5 acres of mostly flat ground",
+      "Listed horsepower varies between 22 and 23 hp by source",
+      "Current model numbers change between seasons"
+    ],
+    "bottomLine": "The XT1 LT46 is the dependable middle choice for up to an acre and a half, with a tight turning radius and a no-hour-limit warranty."
+  },
+  {
+    "id": "john-deere-x380-48",
+    "name": "John Deere X380 48\" Lawn Tractor",
+    "badge": "Best for Two Acres",
+    "category": "Twin-Cylinder Lawn Tractor, 48-Inch Deck, Hydrostatic",
+    "description": "The John Deere X380 is the step up from the X350 for owners mowing closer to two acres, and the changes are where they count: a wider deck and a heavier transaxle. Dealer listings give a Kawasaki FR691V V-twin at 726 cc and 23 hp, with full-pressure lube, an oil filter and cast-iron cylinder liners, plus a 3.3-gallon tank and a 12-amp charging system. The deck is a 48-inch Accel Deep, compatible with Deere's MulchControl kit, and the transaxle steps up to a K58 hydrostatic controlled by Deere's Twin Touch pedals. TractorData lists the weight at about 508 pounds and the wheelbase at 49.4 inches, so this is a more substantial machine than the X350. The warranty matches the X350 at 4 years or 300 hours bumper to bumper. Some used dealers list the engine at 22 hp; the 23 hp figure is the one Deere-sourced listings and TractorData agree on.",
+    "pros": [
+      "Kawasaki 726 cc V-twin rated 23 hp with cast-iron liners, per dealer listings",
+      "48-inch deck and heavier K58 hydrostatic transaxle",
+      "Twin Touch pedal control",
+      "4-year/300-hour bumper-to-bumper warranty listed"
+    ],
+    "cons": [
+      "Premium price for a lawn tractor",
+      "Around 508 lb, per TractorData, so it is heavier on soft ground",
+      "Still a stamped deck, not fabricated"
+    ],
+    "bottomLine": "For close to two acres with a few obstacles, the X380 adds the deck width and transaxle strength that keep a lawn tractor working past the first few seasons."
+  },
+  {
+    "id": "cub-cadet-xt2-gx54-d-fab",
+    "name": "Cub Cadet XT2 GX54 D FAB Garden Tractor",
+    "badge": "Best Garden Tractor",
+    "category": "Garden Tractor, 54-Inch Fabricated Deck, Hydrostatic With Diff Lock",
+    "description": "The Cub Cadet XT2 GX54 D FAB is the pick if you are mowing two to four acres or want a tractor that does more than mow. Cub Cadet's current listing gives a 26 hp Kohler 7000 Series V-twin, a 3-gallon fuel tank and a 54-inch fabricated triple-blade AeroForce deck built from 11-gauge steel, which Cub Cadet says improves airflow, reduces clumping and helps bagging. The transmission is hydrostatic with a foot-pedal rear differential lock, which is the garden-tractor feature that keeps both rear wheels pulling on wet grass or when towing a load. Cub Cadet lists 5.5 mph forward and 3 mph reverse. The warranty is 3 years with no hour limit including powertrain, 5 years on the chassis and front axle, and limited lifetime on the fabricated deck shell. Engine listings vary by year, from a 24 hp 725 cc unit on an Enduro SLX variant to the 26 hp KT726 on the current FAB model, so match the model number before comparing horsepower.",
+    "pros": [
+      "54-inch 11-gauge fabricated deck with a limited lifetime warranty on the deck shell",
+      "26 hp Kohler 7000 Series twin, per Cub Cadet's current listing",
+      "Hydrostatic drive with a foot-pedal rear differential lock",
+      "Marketed for 2 to 4 acres of mostly flat ground"
+    ],
+    "cons": [
+      "Large and heavy for small sheds and narrow gates",
+      "Engine specs vary across model years and variants",
+      "More tractor than a one-acre lawn needs"
+    ],
+    "bottomLine": "For two to four acres, or if you tow and haul as much as you mow, the GX54 D FAB is the garden tractor to buy for its fabricated deck, diff lock and deck warranty."
+  },
+  {
+    "id": "ryobi-80v-hp-42-lawn-tractor",
+    "name": "Ryobi 80V HP Brushless 42\" Riding Lawn Tractor (RYRM8060)",
+    "badge": "Best Electric",
+    "category": "Battery Lawn Tractor, 42-Inch Deck",
+    "description": "The Ryobi 80V HP 42-inch lawn tractor is the battery option for owners who want steering-wheel control without oil changes, spark plugs or fuel storage. Ryobi lists it as model RYRM8060, and Pro Tool Reviews reports three brushless motors that Ryobi rates as equivalent to a 21 hp gas engine, running on three 80V 10Ah batteries. Ryobi rates it to cut up to 2 acres per charge and says it recharges in under 2.5 hours with the included Hyper Charger or the on-board charging port. Listed features include a 7 mph top speed, a CrossCut four-blade deck, 13 manual deck positions from 1.5 to 4.5 inches, and a 500-pound towing capacity. The 2-acre figure is a manufacturer rating, and battery mowers lose runtime in tall, wet or thick grass, so treat it as a best case. Ryobi also sells a larger 46-inch version, the RYRM8070, rated for up to 2.5 acres per charge.",
+    "pros": [
+      "No gas, oil, spark plugs or air filters to maintain",
+      "Rated up to 2 acres per charge, per Ryobi",
+      "Under 2.5-hour recharge listed",
+      "7 mph top speed and 500 lb towing listed"
+    ],
+    "cons": [
+      "Runtime falls in tall or wet grass",
+      "Higher purchase price than a comparable gas tractor",
+      "Battery replacement is a large future cost"
+    ],
+    "bottomLine": "If you want a lawn tractor that starts silently and never needs an oil change, the Ryobi 80V 42-inch is the electric pick for up to about two acres."
+  },
+  {
+    "id": "craftsman-t110-42",
+    "name": "Craftsman T110 42\" Lawn Tractor",
+    "badge": "Best Budget",
+    "category": "Single-Cylinder Lawn Tractor, 42-Inch Deck, Gear Drive",
+    "description": "The Craftsman T110 is the cheapest way into a real lawn tractor, and it is honest about what that money buys. Craftsman and retailer listings give a 17.5 hp Briggs and Stratton single-cylinder engine, listed at 500 cc by Ace Hardware, a 42-inch steel deck and a 7-speed manual gear transmission, not hydrostatic. Ace lists cutting heights from 1.5 to 4 inches, a 1.36-gallon fuel tank and an 18-inch turning radius, and lists the price at $2,199 at the time of our research. Lowe's and Ace describe it as suited to lawns up to 1.5 acres. The gear drive means you stop to change speed, which is fine on an open, simple lawn and tiresome on one with lots of beds and trees. Warranty terms differ between Craftsman's own product pages, which list either 2 or 3 years, so check the listing you buy from.",
+    "pros": [
+      "Lowest price among our picks, listed at $2,199 by Ace",
+      "Simple single-cylinder engine and gear drive",
+      "Listed for lawns up to 1.5 acres",
+      "Widely available at big-box stores"
+    ],
+    "cons": [
+      "Gear drive, not hydrostatic, so speed changes require stopping",
+      "Small 1.36-gallon fuel tank",
+      "Warranty listed as 2 or 3 years depending on the page"
+    ],
+    "bottomLine": "For an open, simple lawn under an acre and a half on a tight budget, the T110 does the job, as long as you accept gear drive."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Lawn Tractors",
+          item: "https://www.thehonestreviewers.com/best-lawn-tractor/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best lawn tractor for most people?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For one to two acres, the John Deere X350 is our top pick for its Kawasaki V-twin, K46 hydrostatic transaxle and 4-year or 300-hour warranty, per dealer listings. The Husqvarna TS 146X is the better value if you want a 46-inch deck for less money."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between a lawn tractor and a garden tractor?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A garden tractor is a heavier lawn tractor, usually with a fabricated deck, stronger transaxle, differential lock and bigger rear tires. It tows heavier loads and some models pull ground-engaging tools. Lawn tractors are lighter and cheaper, and built mainly for mowing and light towing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a lawn tractor or a zero-turn better?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A zero-turn is faster on flat lawns with many obstacles. A lawn tractor is better on moderate slopes, easier for new drivers and far more useful for towing carts, spreaders and sweepers. Our zero-turn vs riding mower guide compares them in detail."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What size lawn tractor do I need for 2 acres?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A 46- to 48-inch deck is a sensible minimum for two acres, and a 50- to 54-inch deck mows it noticeably faster. The John Deere X380 with a 48-inch deck or a 54-inch garden tractor are good fits, depending on your gates and storage space."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are electric lawn tractors any good?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Battery lawn tractors such as the Ryobi 80V 42-inch are quiet and need no oil changes, and Ryobi rates that model for up to 2 acres per charge. Runtime drops in tall or wet grass, and the price is higher than a comparable gas tractor."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does a lawn tractor last?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Entry-level tractors often last five to eight seasons, mid-range twin-cylinder hydrostatic tractors ten to twelve, and garden tractors with fabricated decks fifteen or more with good care. Covered storage and regular maintenance make the biggest difference."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is hydrostatic transmission worth it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most lawns, yes. Hydrostatic drive lets you change speed smoothly with a pedal or lever without stopping, which saves time around trees and beds and makes towing smoother. Gear drive only makes sense on open, simple lawns where you mow at one speed."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Lawn & Yard Care",
+    tags: [
+      "best lawn tractor",
+      "lawn tractor",
+      "best garden tractor",
+      "lawn tractor vs riding mower",
+      "best lawn tractor for 2 acres"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated October 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The 7 Best <span class="text-[#38BDF8]">Lawn Tractors</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Steering-wheel riding mowers for one to four acres, from a budget gear-drive tractor to a fabricated-deck garden tractor, chosen on transaxle, engine design, deck and warranty.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#john-deere-x350-42"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Jump to the Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="9.6k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-picked" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Picked</a>
+          <a href="#tractor-vs-zero-turn" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Lawn Tractor vs Zero-Turn</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 7 Picks</a>
+          <a href="#sizing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Deck Size and Acreage</a>
+          <a href="#engines" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Single vs Twin Engines</a>
+          <a href="#transmission" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Hydrostatic vs Gear Drive</a>
+          <a href="#decks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Stamped vs Fabricated Decks</a>
+          <a href="#attachments" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Towing and Attachments</a>
+          <a href="#ownership" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Warranty and Lifespan</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          For most one-to-two-acre lawns, the John Deere X350 is the lawn tractor to buy, with the Husqvarna TS 146X the value alternative. Past two acres, or if you tow every week, step up to a garden tractor like the Cub Cadet XT2 GX54.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-picked" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Picked
+          </h2>
+
+          <p>
+            A lawn tractor is a long purchase. A good one runs for 10 to 15 seasons, and a poor match for your lawn makes every one of those seasons longer. We built this list from manufacturer specification sheets, dealer listings and reference databases such as TractorData, and we did not run these machines through a lab or a timed mowing test. Every engine, deck and warranty figure on the product cards is credited to the source we found it in, and where sources disagree we say so rather than picking the more flattering number.
+          </p>
+
+          <p>
+            We weighted four things above everything else. The first is the transmission, because a hydrostatic drive that wears out is the most expensive repair a lawn tractor can need. The second is the engine: a twin-cylinder engine with a full-pressure lubrication system and an oil filter outlasts a splash-lubricated single in almost every case. The third is the deck, because a wider deck saves more time than a bigger engine, and a fabricated deck survives where a stamped one rusts. The fourth is the warranty, especially whether it carries an hour limit and whether it covers the powertrain.
+          </p>
+
+          <p>
+            We also deliberately covered the whole range of yards. A one-acre suburban lot, a two-acre lot with trees and a four-acre property where the tractor also tows a cart all need different machines. So the list runs from a budget gear-drive tractor through mid-range hydrostatic tractors to a garden tractor with a fabricated deck, plus one battery machine for owners who want to stop buying gas and oil.
+          </p>
+
+          <p>
+            If you have not yet decided whether a lawn tractor is the right type at all, read the comparison in the next section first, or go straight to our <a href="/zero-turn-vs-riding-mower/">zero-turn vs riding mower</a> guide. And if you are still working out deck width, our guide to <a href="/what-size-riding-mower-do-i-need/">what size riding mower you need</a> walks through the acreage math in more detail than we have room for here.
+          </p>
+        </div>
+
+        <div id="tractor-vs-zero-turn" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Lawn Tractor vs Zero-Turn vs Garden Tractor
+          </h2>
+
+          <p>
+            A lawn tractor is a riding mower with a steering wheel, front-mounted engine and a deck slung underneath between the axles. It is the most common riding mower in America because it is the most versatile: it mows, it tows a cart, it pulls a lawn sweeper or a spreader, and on some models it takes a front blade or snow thrower. It handles moderate slopes better than a zero-turn because steering is through the front wheels rather than by braking the rear ones.
+          </p>
+
+          <p>
+            A zero-turn steers with two lap bars that drive each rear wheel independently, so it can pivot in place and mow around trees without three-point turns. On a flat, open lawn with lots of obstacles it is faster than a lawn tractor, often considerably so. On slopes it is less forgiving, because the front casters do not steer and the rear wheels can lose grip side to side. Our <a href="/best-zero-turn-mower/">zero-turn mower picks</a> cover that type in depth.
+          </p>
+
+          <p>
+            A garden tractor is a heavier lawn tractor. It usually has a fabricated deck, a stronger transaxle, a differential lock, larger rear tires and, on the true ground-engaging models, the frame and hitch to pull soil tools such as a plow or tiller. Garden tractors cost more and weigh more, but they last longer and do far more than mow. If you have three or more acres, or you tow loads every week, the extra cost usually pays off.
+          </p>
+
+          <p>
+            The simplest way to choose is to count obstacles and look at the ground. Lots of trees and beds on flat ground favors a zero-turn. Moderate slopes, a need to tow, or a lawn that is mostly open strips favors a lawn tractor. Big acreage, heavy towing or ground-engaging work favors a garden tractor. Our wider <a href="/best-riding-lawn-mower/">riding mower roundup</a> covers both tractors and zero-turns side by side if you want a single list.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Type</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Best For</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Steering</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Slopes</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Typical Acreage</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Lawn tractor</td>
+                    <td class="px-4 py-4 text-gray-700">Mowing plus light towing</td>
+                    <td class="px-4 py-4 text-gray-700">Steering wheel</td>
+                    <td class="px-4 py-4 text-gray-700">Moderate</td>
+                    <td class="px-4 py-4 text-gray-700">1/2 to 2 acres</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Garden tractor</td>
+                    <td class="px-4 py-4 text-gray-700">Heavy towing, bigger lots</td>
+                    <td class="px-4 py-4 text-gray-700">Steering wheel</td>
+                    <td class="px-4 py-4 text-gray-700">Moderate, with diff lock</td>
+                    <td class="px-4 py-4 text-gray-700">2 to 4+ acres</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Zero-turn</td>
+                    <td class="px-4 py-4 text-gray-700">Flat lawns with obstacles</td>
+                    <td class="px-4 py-4 text-gray-700">Lap bars</td>
+                    <td class="px-4 py-4 text-gray-700">Gentle only</td>
+                    <td class="px-4 py-4 text-gray-700">1 to 5+ acres</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 7 Picks
+          </h2>
+
+          <p>
+            These picks are researched from manufacturer spec sheets, dealer listings and reference databases, not lab-tested. Every figure is credited to its source, and we note where sources disagree.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="sizing" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Deck Size and Acreage
+          </h2>
+
+          <p>
+            Deck width does more for mowing time than horsepower does. A 42-inch deck covers each pass about 10 percent faster than a 38-inch deck, and a 54-inch deck covers each pass nearly 30 percent faster than a 42-inch one. On a two-acre lawn that difference turns a two-hour job into a ninety-minute one, every week of the season.
+          </p>
+
+          <p>
+            As a starting point, manufacturers and dealers commonly pair a 42-inch deck with up to about one and a half acres, a 46- to 48-inch deck with roughly one to two acres, and a 50- to 54-inch deck with two acres and up. Those are not hard limits. A lawn with long open runs mows faster than its acreage suggests, and a lawn broken up by beds, trees and fences mows slower, so adjust up or down for your layout.
+          </p>
+
+          <p>
+            Before you buy the widest deck you can afford, measure two things. The first is your narrowest gate or path, because a 54-inch deck plus its discharge chute will not fit through a 4-foot gate. The second is your storage space, because a garden tractor with a 54-inch deck needs roughly a full single-car-garage bay once you allow room to walk around it.
+          </p>
+
+          <p>
+            Turning radius matters too. Cub Cadet lists a 16-inch radius on the XT1 LT46 and Craftsman lists 18 inches on the T110, while larger garden tractors turn wider. On a lawn full of trees and beds a tight radius saves more time than an extra few inches of deck. If your yard is genuinely large and open, our <a href="/best-lawn-mower-for-large-yard/">guide to mowers for large yards</a> compares tractors against zero-turns and wide walk-behinds by acreage.
+          </p>
+        </div>
+
+        <div id="engines" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Engines: Single vs Twin, and What Horsepower Means
+          </h2>
+
+          <p>
+            Horsepower is the least useful number on a lawn tractor spec sheet. Engine makers rate gross horsepower at a specific speed in lab conditions, so two engines with the same rating can behave very differently cutting thick wet grass. What predicts longevity and smoothness is the engine design, not the headline number.
+          </p>
+
+          <p>
+            Single-cylinder engines, like the Briggs and Stratton unit Craftsman lists for the T110, are cheaper to build and lighter, and they are adequate on a flat, regularly mowed lawn. They vibrate more and many use splash lubrication rather than a pressurized oil system, which tends to shorten life under heavy use.
+          </p>
+
+          <p>
+            V-twin engines, like the Kawasaki and Kohler twins on our other gas picks, run smoother, hold speed better under load and usually have full-pressure lubrication with a spin-on oil filter. John Deere's listings for the X350 and X380 both call out full-pressure lube and an oil filter, and the X380's listing adds cast-iron cylinder liners, which resist wear. That combination is the strongest single predictor of a tractor that is still running in year twelve.
+          </p>
+
+          <p>
+            Brand matters less than it once did, but parts availability matters a lot. Kawasaki, Kohler and Briggs and Stratton engines all have deep parts networks in the US. Before buying, check that a dealer or small-engine shop near you services the engine you are buying, because a tractor that waits three weeks for a part in June is a tractor you resent.
+          </p>
+        </div>
+
+        <div id="transmission" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Hydrostatic vs Gear Drive
+          </h2>
+
+          <p>
+            Almost every lawn tractor above the entry level now uses a hydrostatic transmission. It works like a hydraulic pump and motor rather than a set of gears, so you change speed smoothly with a pedal or lever without stopping or using a clutch. On a lawn with lots of trees and beds that is a real time saver, and it is easier for newer drivers.
+          </p>
+
+          <p>
+            Gear-drive tractors, like the Craftsman T110 with its 7-speed manual transmission, make you stop to change gears. They are cheaper, simpler and fine for open lawns where you pick one speed and stay in it, but they are tiring on a busy lawn. They also tow less smoothly, because you cannot feather speed under load.
+          </p>
+
+          <p>
+            Not all hydrostatic transaxles are equal. Light-duty units are sized for mowing and occasional light towing, while heavier units such as the K58 that John Deere lists on the X380 are built for more load and more hours. Garden tractors go further still, often adding a differential lock like the foot-pedal rear diff lock Cub Cadet lists on the XT2 GX54, which keeps both rear wheels pulling on wet grass or when towing uphill.
+          </p>
+
+          <p>
+            If you tow regularly, pull a heavy cart of firewood or mulch, or mow on slopes, prioritize the transaxle over the engine. Transaxle failure is the repair that most often makes an older tractor not worth fixing, so a heavier unit is worth paying for. Our <a href="/riding-lawn-mower-maintenance/">riding mower maintenance schedule</a> covers the checks that help any transaxle last.
+          </p>
+        </div>
+
+        <div id="decks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Stamped vs Fabricated Decks
+          </h2>
+
+          <p>
+            Most lawn tractors use a stamped deck, pressed from a single sheet of steel. Stamped decks are lighter, cheaper and perfectly adequate for mowing a residential lawn. Their weakness is rust: grass clippings hold moisture against the steel, and over years the deck thins and cracks, especially along the welds and around the spindles.
+          </p>
+
+          <p>
+            A fabricated deck is welded from thicker plate steel, often 10 or 11 gauge. Cub Cadet lists the XT2 GX54 D FAB's deck as 11-gauge fabricated steel with a limited lifetime warranty on the deck shell, which tells you how confident the maker is in it. Fabricated decks resist impact from roots and stumps far better and usually outlast the tractor they are mounted on.
+          </p>
+
+          <p>
+            Deck depth matters as well. Deeper decks, like the Accel Deep design John Deere uses on the X350 and X380, give clippings more room to circulate before they are discharged, which helps in thick or wet grass and improves bagging. Shallow decks clog sooner and leave more windrows.
+          </p>
+
+          <p>
+            Whatever deck you buy, clean the underside after mowing, keep the blades sharp, and check the deck level each spring. A dull or unbalanced blade tears grass and stresses the spindles. Our guides to the <a href="/best-lawn-mower-blades/">best lawn mower blades</a> and <a href="/how-often-to-sharpen-mower-blades/">how often to sharpen them</a> cover both jobs.
+          </p>
+        </div>
+
+        <div id="attachments" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Towing, Bagging and Attachments
+          </h2>
+
+          <p>
+            The reason many people buy a lawn tractor rather than a zero-turn is the hitch. A rear hitch turns the tractor into a yard workhorse: a dump cart for mulch and firewood, a lawn sweeper for leaves, a broadcast spreader for fertilizer, a dethatcher or aerator for spring renovation. John Deere lists 600 pounds of towing capacity for the X350 and Ryobi lists 500 pounds for its 42-inch battery tractor, which is plenty for a loaded cart on level ground.
+          </p>
+
+          <p>
+            Bagging is the other common add-on. Most tractors take a two- or three-bin rear bagger, sold separately. Bagging is slow, because you stop to empty every few passes, so most owners mulch or side-discharge most of the season and bag only in leaf season or for a tidy finish. Deep decks and fabricated decks generally bag better because the airflow is stronger.
+          </p>
+
+          <p>
+            Front attachments such as a dozer blade or a snow thrower are where lawn tractors and garden tractors split. Many lawn tractors can take a front blade, but snow throwers and ground-engaging tools usually need a garden tractor's heavier frame and transaxle. If winter snow clearing is part of your plan, check the attachment list for the exact model before buying.
+          </p>
+
+          <p>
+            Weight and traction limit everything. A lawn tractor towing a heavy cart down a slope can be pushed by the load, so stay well within rated towing capacity, use wheel weights or chains if the maker offers them, and never tow on slopes steeper than the manual allows. Our <a href="/best-lawn-mower-for-hills/">guide to mowers for hills</a> goes into slope safety in more detail.
+          </p>
+        </div>
+
+        <div id="ownership" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Warranty, Maintenance and Lifespan
+          </h2>
+
+          <p>
+            Read the warranty before the spec sheet. A warranty with an hour limit, like John Deere's 4-year or 300-hour bumper-to-bumper coverage on the X350 and X380, ends at whichever limit you reach first, so a heavy user may run out of hours before years. A warranty with no hour limit, like the 3-year coverage Cub Cadet lists on the XT1 LT46 and XT2 GX54, is more forgiving for big lawns. Also check whether the powertrain is included and whether a dealer must do the repairs.
+          </p>
+
+          <p>
+            Routine maintenance is the same on every gas tractor: change the oil and filter on the schedule in the manual, replace the air filter and spark plug, sharpen the blades, check belt wear and tire pressure, and keep the battery charged over winter. Most owners can do all of it with basic tools. A battery tractor like the Ryobi skips the engine items but still needs blade, belt and tire care.
+          </p>
+
+          <p>
+            How long a lawn tractor lasts depends mostly on the class. Entry-level single-cylinder tractors often reach five to eight seasons, mid-range twin-cylinder hydrostatic tractors commonly reach ten to twelve, and garden tractors with fabricated decks and heavy transaxles can run fifteen or more with care. Storage under cover and regular deck cleaning add years to all of them.
+          </p>
+
+          <p>
+            When something major fails out of warranty, compare the repair cost with the tractor's value. A new engine or transaxle on a budget tractor often costs more than half of a replacement, while the same repair on a premium tractor is usually worth doing. Our <a href="/riding-lawn-mower-maintenance/">maintenance schedule</a> and our guide to <a href="/how-long-do-riding-lawn-mowers-last/">how long riding mowers last</a> cover both in more depth.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying on Horsepower Alone</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Gross horsepower is measured in lab conditions and says little about how a tractor mows thick grass or how long it lasts. A twin-cylinder engine with full-pressure lubrication and an oil filter on a strong hydrostatic transaxle matters far more than two extra rated horsepower.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring the Gate Width</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A 54-inch deck will not fit through a 4-foot gate, and you only find out after delivery. Measure your narrowest gate, path and shed door before choosing a deck size, and allow a few inches for the discharge chute.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Choosing Gear Drive for a Busy Lawn</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A manual gear transmission is cheaper, but on a lawn full of trees and beds you will stop to change speed dozens of times a week. Unless your lawn is open and simple, the extra cost of hydrostatic drive pays for itself in time.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Overloading the Hitch on Slopes</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Rated towing capacity assumes level ground. A loaded cart can push a tractor downhill and cause a loss of control. Stay well under the rating on slopes, use the maker's wheel weights if offered, and follow the slope limits in the manual.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping the Warranty Fine Print</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Some warranties end at an hour limit before the years run out, and some exclude the powertrain or require dealer service. Read whether the coverage has an hour cap and what it covers before comparing prices.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best lawn tractor for most people?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For one to two acres, the John Deere X350 is our top pick for its Kawasaki V-twin, K46 hydrostatic transaxle and 4-year or 300-hour warranty, per dealer listings. The Husqvarna TS 146X is the better value if you want a 46-inch deck for less money.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the difference between a lawn tractor and a garden tractor?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A garden tractor is a heavier lawn tractor, usually with a fabricated deck, stronger transaxle, differential lock and bigger rear tires. It tows heavier loads and some models pull ground-engaging tools. Lawn tractors are lighter and cheaper, and built mainly for mowing and light towing.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a lawn tractor or a zero-turn better?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A zero-turn is faster on flat lawns with many obstacles. A lawn tractor is better on moderate slopes, easier for new drivers and far more useful for towing carts, spreaders and sweepers. Our zero-turn vs riding mower guide compares them in detail.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What size lawn tractor do I need for 2 acres?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A 46- to 48-inch deck is a sensible minimum for two acres, and a 50- to 54-inch deck mows it noticeably faster. The John Deere X380 with a 48-inch deck or a 54-inch garden tractor are good fits, depending on your gates and storage space.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are electric lawn tractors any good?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Battery lawn tractors such as the Ryobi 80V 42-inch are quiet and need no oil changes, and Ryobi rates that model for up to 2 acres per charge. Runtime drops in tall or wet grass, and the price is higher than a comparable gas tractor.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long does a lawn tractor last?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Entry-level tractors often last five to eight seasons, mid-range twin-cylinder hydrostatic tractors ten to twelve, and garden tractors with fabricated decks fifteen or more with good care. Covered storage and regular maintenance make the biggest difference.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is hydrostatic transmission worth it?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most lawns, yes. Hydrostatic drive lets you change speed smoothly with a pedal or lever without stopping, which saves time around trees and beds and makes towing smoother. Gear drive only makes sense on open, simple lawns where you mow at one speed.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Riding Mower Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-riding-lawn-mower/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Riding Lawn Mowers</h3>
+              <p class="text-gray-500 text-sm mt-2">Lawn tractors and zero-turns ranked side by side for one to three acres.</p>
+            </a>
+            <a href="/best-zero-turn-mower/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Zero Turn Mowers</h3>
+              <p class="text-gray-500 text-sm mt-2">Lap-bar mowers for flat lawns with lots of trees and beds.</p>
+            </a>
+            <a href="/best-lawn-mower-for-large-yard/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Mowers for Large Yards</h3>
+              <p class="text-gray-500 text-sm mt-2">Tractors, zero-turns and wide walk-behinds compared by acreage.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The right lawn tractor is the one sized to your lawn and built around a transaxle that will last. For one to two acres, the John Deere X350 is our pick, with the Husqvarna TS 146X the value choice and the Cub Cadet XT1 LT46 the dependable middle option.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Past two acres or with regular towing, step up to the John Deere X380 or a garden tractor like the Cub Cadet XT2 GX54. If you want to give up gas and oil entirely, the Ryobi 80V 42-inch is the electric pick, and the Craftsman T110 is there for tight budgets on simple lawns.
+          </p>
+        </div>
+
+        <MoreInCategory category="Lawn & Yard Care" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

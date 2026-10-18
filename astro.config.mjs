@@ -644,6 +644,28 @@ const priorityGuides = new Set([
   'pickleball-court-dimensions',
   'pickleball-shoes-vs-tennis-shoes',
   'can-you-wear-running-shoes-for-pickleball',
+
+  // October 2026 run: 20 money pages.
+  'best-garage-floor-mat',
+  'best-garage-door-insulation-kit',
+  'best-lawn-tractor',
+  'best-lawn-mower-for-large-yard',
+  'best-caulk-for-concrete',
+  'best-caulk-for-windows',
+  'best-whole-house-dehumidifier',
+  'best-dehumidifier-for-garage',
+  'best-manual-transfer-switch',
+  'best-rv-generator',
+  'best-flooring-for-basement',
+  'best-hydraulic-cement',
+  'best-cordless-shop-vac',
+  'milwaukee-vs-makita',
+  'best-under-sink-water-filter',
+  'best-shower-head-filter',
+  'best-electric-water-heater',
+  'best-pressure-washer-for-concrete',
+  'best-wood-chipper',
+  'best-crabgrass-preventer',
 ]);
 
 export default defineConfig({

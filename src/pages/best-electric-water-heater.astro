@@ -1,0 +1,900 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Gas Water Heaters",
+    "url": "/best-gas-water-heater/"
+  },
+  {
+    "title": "Best Heat Pump Water Heaters",
+    "url": "/best-heat-pump-water-heater/"
+  },
+  {
+    "title": "Best Tankless Water Heaters",
+    "url": "/best-tankless-water-heater/"
+  },
+  {
+    "title": "Types of Water Heaters",
+    "url": "/types-of-water-heaters/"
+  },
+  {
+    "title": "Water Heater Brands",
+    "url": "/water-heater-brands/"
+  },
+  {
+    "title": "How Long Do Water Heaters Last?",
+    "url": "/how-long-do-water-heaters-last/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-19", modified: "2026-10-19" });
+const title = "7 Best Electric Water Heaters: Tank and Hybrid Picks by Household Size";
+const description =
+  "The best electric water heaters for every household, compared on first-hour rating, UEF, element wattage and warranty, from 40-gallon tanks to 80-gallon hybrids.";
+
+const PRODUCTS = [
+  {
+    "id": "rheem-performance-platinum-50-electric",
+    "name": "Rheem Performance Platinum 50-Gallon Electric",
+    "badge": "Best Overall",
+    "category": "50 Gal, Dual 5,500 W Elements, 12-Year Warranty",
+    "amazonUrl": "#",
+    "description": "The Performance Platinum is the electric tank we would put in most family homes, because it pairs a strong first-hour number with the longest standard warranty in the mainstream Rheem range. Rheem's spec sheet lists the 50-gallon medium model with PlusOne controls (XE50M12EC55U1) at a 63-gallon first-hour rating and a 0.93 UEF, with 25 gallons per hour of recovery at a 90-degree rise. That first-hour figure is what decides whether the last shower of the morning runs warm, and 63 gallons comfortably covers a household of three to four. Rheem's product summary for the electric Performance line cites up to a 12-year tank and parts warranty and up to three years of in-home labor, and a retailer listing for the 50-gallon Gladiator version states a 12-year limited warranty. The labor term varies by exact model, so read the certificate for the unit you buy. The catch is price: the 12-year models cost noticeably more than six-year tanks with identical tanks of water, so you are paying mainly for the warranty and the controls. For an owner who plans to stay put, that is money well spent.",
+    "pros": [
+      "63-gallon first-hour rating and 0.93 UEF on the 50-gallon medium model, per Rheem's spec sheet",
+      "25 GPH recovery at a 90°F rise, per the same sheet",
+      "Up to 12-year tank and parts warranty and up to 3 years in-home labor across the line, per Rheem",
+      "Widely stocked, so a replacement or part is easy to find"
+    ],
+    "cons": [
+      "Costs more than six-year tanks that hold the same water",
+      "Labor coverage depends on the exact model number",
+      "Higher-wattage elements on some versions may need a larger circuit, so check the nameplate"
+    ],
+    "bottomLine": "For most homes, the Rheem Performance Platinum 50-gallon is the electric water heater to buy: a 63-gallon first-hour rating, a 0.93 UEF and up to a 12-year warranty, per Rheem."
+  },
+  {
+    "id": "ao-smith-signature-100-50-electric",
+    "name": "A.O. Smith Signature 100 50-Gallon Electric (E6-50R45D)",
+    "badge": "Best Value",
+    "category": "50 Gal Short, Dual 4,500 W Elements, 6-Year Warranty",
+    "amazonUrl": "#",
+    "description": "The Signature 100 is the value pick, and the one most Lowe's shoppers will see first. Lowe's lists the 50-gallon short model E6-50R45D with two 4,500-watt elements, a 0.92 UEF and a 62-gallon first-hour delivery, which is within a gallon of our top pick. Its warranty is a six-year limited tank and parts guarantee with one year of limited labor, per the same listing. The short height suits basements with low ceilings, closets under stairs and replacements where the old tank was squat. You give up the long warranty and the smart controls of premium tanks, and that is the whole trade: the water you get in the first hour is nearly the same. Other Signature 100 variants exist, including a 5,500-watt version listed with a nine-year warranty, so match the model number on the box to the one you meant to buy, and confirm the first-hour figure on A.O. Smith's own spec sheet, since the Lowe's listing was the only source we found for it.",
+    "pros": [
+      "62-gallon first-hour delivery and 0.92 UEF, per the Lowe's listing",
+      "Dual 4,500 W elements suit the common 30 A circuit",
+      "Short height fits low basements and closets",
+      "Six-year tank and parts warranty plus one year of labor, per Lowe's"
+    ],
+    "cons": [
+      "Only six years on the tank",
+      "First-hour figure comes from a retailer listing, not A.O. Smith's own sheet",
+      "Several Signature 100 variants with different warranties are sold side by side"
+    ],
+    "bottomLine": "The A.O. Smith Signature 100 E6-50R45D gives you nearly the hot water of a premium tank, a listed 62 gallons in the first hour, for less money, in exchange for a six-year warranty."
+  },
+  {
+    "id": "rheem-marathon-50-electric",
+    "name": "Rheem Marathon 50-Gallon Electric (MR50245)",
+    "badge": "Longest Warranty",
+    "category": "50 Gal Tall, Polybutene Tank, Lifetime Tank Warranty",
+    "amazonUrl": "#",
+    "description": "The Marathon is the electric heater for people who never want to replace a tank again. Instead of a glass-lined steel tank that an anode has to protect, it uses a non-metallic tank that cannot rust, and Ferguson lists a lifetime limited tank warranty with a six-year limited parts warranty. Rheem's Marathon spec sheet lists the tall 50-gallon MR50245C at a 0.91 UEF and a 57-gallon first-hour rating with 21 gallons per hour of recovery, and a rated capacity of 48 gallons. Other listings for the MR50245 give 61 gallons and a 0.94 energy factor, and one distributor shows a five-year tank warranty, so the figures depend on the exact suffix; confirm with the certificate for your model. The Marathon costs more than an ordinary tank and its first-hour number is slightly lower than our top pick, but you will replace elements and thermostats over the decades rather than the whole heater. For a house you plan to keep for good, that changes the long-term math.",
+    "pros": [
+      "Non-metallic tank that cannot rust, with a lifetime limited tank warranty and six-year parts warranty, per Ferguson",
+      "57-gallon first-hour rating and 21 GPH recovery on the MR50245C, per Rheem's spec sheet",
+      "No anode to replace",
+      "Well insulated, per Rheem's description of the line"
+    ],
+    "cons": [
+      "Costs more than a standard tank",
+      "Slightly lower first-hour rating than our top pick",
+      "Specs and warranty differ between model suffixes, so verify yours"
+    ],
+    "bottomLine": "The Rheem Marathon is the electric water heater to buy if you never want to replace the tank: a rust-proof tank with a lifetime limited tank warranty, per Ferguson."
+  },
+  {
+    "id": "bradford-white-re350s6-electric",
+    "name": "Bradford White RE350S6 50-Gallon Short Electric",
+    "badge": "Best Pro-Installed",
+    "category": "50 Gal Short, Dual 4,500 W Elements, Hydrojet",
+    "amazonUrl": "#",
+    "description": "Bradford White sells only through plumbers and wholesalers, so this is the pick if a contractor is supplying and fitting the heater. Retailer listings describe the RE350S6 as a 50-gallon short tank with dual 4,500-watt elements at 240 volts (3,500 watts at 208 volts) and a UEF of 0.92, with one listing showing 0.93. First-hour figures vary between listings at 60 and 63 gallons, and several give about 21 gallons per hour of recovery at a 90-degree rise. The Hydrojet sediment-reducing system is the feature Bradford White leans on: a listing describes it as reducing sediment, increasing first-hour delivery and minimizing temperature build-up in the tank. It carries a six-year limited tank warranty per the listings, and at roughly 47 inches tall it fits the same low spaces as our value pick. You cannot easily buy one at a big-box store, but if your plumber stocks Bradford White, it is a dependable choice.",
+    "pros": [
+      "Dual 4,500 W elements and a 0.92 UEF, per retailer listings",
+      "Hydrojet system aimed at reducing sediment build-up",
+      "About 47 in tall, suits low spaces",
+      "Sold and supported through professional installers"
+    ],
+    "cons": [
+      "Not sold at big-box stores",
+      "First-hour figure varies by listing (60 or 63 gallons)",
+      "Six-year tank warranty only"
+    ],
+    "bottomLine": "If a plumber is supplying the heater, the Bradford White RE350S6 is a solid 50-gallon short tank, listed with dual 4,500 W elements, a 0.92 UEF and Hydrojet sediment control."
+  },
+  {
+    "id": "rheem-performance-40-electric",
+    "name": "Rheem Performance 40-Gallon Electric (XE40M06ST45U1)",
+    "badge": "Best for Small Households",
+    "category": "40 Gal Medium, Dual 4,500 W Elements, 6-Year Warranty",
+    "amazonUrl": "#",
+    "description": "Plenty of households do not need 50 gallons, and the 40-gallon Rheem Performance is the sensible size for one to three people or a smaller home. Rheem's product page lists the XE40M06ST45U1 at a 0.93 UEF with a six-year limited tank and parts warranty and a height of 53.75 inches. HD Supply lists a 53-gallon first-hour delivery and dual 4,500-watt elements, and describes it as suiting households of two to four. A smaller tank costs less to buy and loses a little less heat standing, though the real saving is modest because standby loss on a well-insulated tank is small. The medium height makes it a straightforward swap for most older 40-gallon heaters. If anyone in your house takes long showers back to back, step up to a 50-gallon model, because a 40-gallon tank is the one that runs out first.",
+    "pros": [
+      "0.93 UEF and six-year tank and parts warranty, per Rheem",
+      "53-gallon first-hour delivery, per HD Supply",
+      "Dual 4,500 W elements on a common circuit",
+      "Medium 53.75 in height swaps easily for most 40-gallon tanks"
+    ],
+    "cons": [
+      "Runs short for larger families or back-to-back long showers",
+      "Only six years on the tank",
+      "First-hour figure comes from a retailer listing"
+    ],
+    "bottomLine": "For one to three people, the Rheem Performance 40-gallon is the right-sized, low-cost electric tank, listed at a 0.93 UEF with a six-year warranty."
+  },
+  {
+    "id": "rheem-proterra-50-hybrid",
+    "name": "Rheem ProTerra 50-Gallon Hybrid Heat Pump (PROPH50 T2 RH375-30)",
+    "badge": "Most Efficient",
+    "category": "50 Gal Heat Pump Hybrid, 3.88 UEF",
+    "amazonUrl": "#",
+    "description": "If you are replacing an electric tank anyway, a heat pump hybrid is the upgrade that pays back, and the ProTerra is the one we would look at first. Rheem's page for the PROPH50 T2 RH375-30 lists a 3.88 UEF and says the line runs from 3.75 to 4.07 UEF depending on configuration, roughly four times the efficiency of a standard element tank. A retailer lists a 67-gallon first-hour delivery and 27 gallons per hour of recovery for this model, which is more hot water in the first hour than any standard tank here. The cost is the purchase price, the space and the location: a heat pump needs room around it, pulls heat from the air so it cools the space it sits in, and needs a condensate drain. Our full guide to heat pump water heaters covers the placement rules; read it before you buy, because a hybrid in a cramped closet will not deliver its rated efficiency.",
+    "pros": [
+      "3.88 UEF on this model and up to 4.07 across the line, per Rheem",
+      "67-gallon first-hour delivery and 27 GPH recovery, per a retailer listing",
+      "Still runs as a standard electric tank when demand is high"
+    ],
+    "cons": [
+      "Costs much more up front than a standard tank",
+      "Needs space, airflow and a condensate drain",
+      "Cools the room it sits in, which matters in a heated living space"
+    ],
+    "bottomLine": "If your space allows it, the Rheem ProTerra hybrid is the most efficient electric water heater here, with a 3.88 UEF and a 67-gallon first-hour delivery listed for this model."
+  },
+  {
+    "id": "ao-smith-proline-80-hybrid",
+    "name": "A.O. Smith ProLine 80-Gallon Hybrid (FPTU-80)",
+    "badge": "Best for Large Households",
+    "category": "80 Gal Heat Pump Hybrid, 84-Gallon First Hour",
+    "amazonUrl": "#",
+    "description": "Large households with soaking tubs or several bathrooms in use at once need more than 50 gallons, and the standard 80-gallon electric tanks we checked have largely been replaced by hybrids. A.O. Smith's own standard 80-gallon electric ProLine (EGR-80) is listed as discontinued, with the hybrid named as its replacement. Retailer listings for the 80-gallon ProLine hybrid FPTU-80 series give an 84-gallon first-hour rating and a six-year limited tank warranty, and note two heating elements that help it recover quickly during heavy demand. That is the most hot water in the first hour of anything on this list. It carries the same caveats as any heat pump model, and at 80 gallons it is a large, heavy tank that needs a solid floor and plenty of room. If you only need an extra few gallons, a 50-gallon hybrid with a higher first-hour rating may be all you need.",
+    "pros": [
+      "84-gallon first-hour rating, per retailer listings",
+      "Heat pump efficiency with two backup elements for fast recovery",
+      "The natural replacement for discontinued standard 80-gallon electric tanks"
+    ],
+    "cons": [
+      "Large, heavy and expensive",
+      "Six-year tank warranty only, per the listings",
+      "Needs the same space, airflow and drain as any hybrid"
+    ],
+    "bottomLine": "For a big household, the A.O. Smith ProLine 80-gallon hybrid delivers the most hot water here, with an 84-gallon first-hour rating listed by retailers."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Electric Water Heaters",
+          item: "https://www.thehonestreviewers.com/best-electric-water-heater/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best electric water heater?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most homes, the Rheem Performance Platinum 50-gallon, which Rheem's spec sheet lists at a 63-gallon first-hour rating and 0.93 UEF, with up to a 12-year warranty across the line. For lower cost, the A.O. Smith Signature 100 50-gallon is listed by Lowe's at a 62-gallon first-hour delivery with a six-year warranty."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does an electric water heater last?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Electric tanks typically last around 10 to 15 years, longer on average than gas tanks because there is no burner heating the tank bottom. Anode condition, water hardness and sediment shorten or extend that. A non-metallic tank such as the Rheem Marathon is designed not to rust, and carries a lifetime limited tank warranty per Ferguson."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What size breaker does an electric water heater need?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A common 4,500-watt, 240-volt heater draws about 18.75 amps, and installers typically put it on a 30-amp two-pole breaker with 10-gauge copper wire, because water heaters are treated as continuous loads. Higher-wattage elements can need more. Always follow the nameplate and installation manual, and have an electrician confirm."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What size electric water heater do I need?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "As a guide, one to two people suit a 30 to 40-gallon tank, three to four people a 50-gallon tank, and five or more a 65 to 80-gallon tank or a high-output hybrid. Compare first-hour ratings against your busiest hour, because electric tanks recover slowly once they run low."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a heat pump water heater worth it over a standard electric tank?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Often, if you have the space. On our stated assumptions, a 3.88 UEF hybrid uses roughly a quarter of the electricity of a 0.93 UEF tank, which can save several hundred dollars a year. It costs more up front and needs airflow and a condensate drain, so check placement and local rebates first."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does it cost to run an electric water heater?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on use and your rate. Heating 50 gallons a day by 70 degrees at a 0.93 UEF works out to roughly 3,350 kWh a year, or about $570 at 17 cents per kWh. Lower thermostat settings, pipe insulation and fixing hot-water leaks all reduce it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I install an electric water heater myself?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A like-for-like replacement is within reach of a handy homeowner, but many areas require a permit, a properly piped relief valve and sometimes a drain pan or strapping. Fill the tank completely before restoring power. Hire a plumber or electrician for size changes, hybrids or any circuit work."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home Improvement",
+    tags: [
+      "best electric water heater",
+      "electric water heater",
+      "electric hot water heater",
+      "best electric hot water heater",
+      "50 gallon electric water heater"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Buyer's Guide
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best Electric <span class="text-[#38BDF8]">Water Heaters</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Seven electric tanks and hybrids, compared on the numbers that decide whether the last shower runs warm: first-hour rating, recovery, efficiency and warranty.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#rheem-performance-platinum-50-electric"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            See the Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Shaheer Ali Khan</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Consumer Product Testing &amp; Materials Performance Specialist</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="9.6k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-picked" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Picked</a>
+          <a href="#first-hour" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. First-Hour Rating</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 7 Picks</a>
+          <a href="#sizing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Sizing by Household</a>
+          <a href="#elements-circuit" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Elements and Circuit</a>
+          <a href="#efficiency" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. UEF and Running Cost</a>
+          <a href="#heat-pump" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Heat Pump Hybrids</a>
+          <a href="#lifespan" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Warranty and Lifespan</a>
+          <a href="#install" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Replacement and Install</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          The best electric water heater for most homes is a 50-gallon tank with a first-hour rating in the low 60s and a warranty long enough to match how long you plan to stay. Tank size matters less than the first-hour rating, standard electric tanks differ more in warranty than in efficiency, and if you have the space, a heat pump hybrid cuts the running cost to a fraction.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-picked" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Picked
+          </h2>
+
+          <p>
+            We did not install these heaters in a lab. We compared the numbers manufacturers and retailers publish for each model: the first-hour rating, the uniform energy factor (UEF), element wattage, warranty terms, and the dimensions that decide whether a tank fits the space your old one left. Where two sources gave different figures for the same model, we say so in the product card rather than picking whichever number looked better.
+          </p>
+
+          <p>
+            We focused on electric tank heaters, the kind most homes without gas already have, and the kind most people searching for an electric water heater are replacing. We included two heat pump hybrids because they are the obvious upgrade when an electric tank fails, and because for larger households they have largely replaced standard 80-gallon electric tanks. Electric tankless heaters are a different decision with different electrical demands, and they have <a href="/best-electric-tankless-water-heater/">their own guide</a>.
+          </p>
+
+          <p>
+            Brand mattered less than you might expect. As our guide to <a href="/water-heater-brands/">water heater brands</a> explains, a few manufacturers sit behind most of the names on the shelf, and the tank inside a six-year model is often very close to the one in a twelve-year model. What changes is the warranty, the elements, the controls and the anode. We weighted warranty heavily for that reason: it is the clearest signal of how long the maker expects the tank to last.
+          </p>
+
+          <p>
+            We also favored models you can actually buy. Several electric tanks that look good on paper are discontinued or sold only in specific regions, and an 80-gallon standard electric model we would once have recommended is now listed as discontinued with a hybrid as its replacement. Every pick here was listed for sale when we checked, but stock and model suffixes change often, so confirm the exact model number before you order.
+          </p>
+        </div>
+
+        <div id="first-hour" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. First-Hour Rating Beats Tank Size
+          </h2>
+
+          <p>
+            The number printed in big type on a water heater box is the tank size, and it is the least useful number on it. Two 50-gallon heaters can deliver noticeably different amounts of usable hot water, because what matters is how much hot water the heater produces in an hour of heavy use starting from a full, hot tank. That is the first-hour rating, and it appears on the yellow EnergyGuide label and on most spec sheets.
+          </p>
+
+          <p>
+            The first-hour rating combines what is stored with what the elements can reheat during that hour. Electric heaters recover slowly compared with gas, because a pair of 4,500-watt elements, which normally run one at a time, puts far less heat into the water than a gas burner does. That is why an electric 50-gallon tank typically lands in the high 50s to low 60s on first-hour gallons, while the same size of gas tank often rates higher. Our picks range from 53 gallons for the 40-gallon Rheem to 63 gallons for the Rheem Performance Platinum, with the hybrids higher still.
+          </p>
+
+          <p>
+            To use the number, estimate your peak hour. A shower typically uses around 10 to 20 gallons depending on the showerhead and its length, a dishwasher a few gallons, and a clothes washer on a warm cycle more again. Add up what happens in your busiest morning hour and buy a heater whose first-hour rating covers it with a little to spare. If two people shower back to back while the dishwasher runs, you are already past 40 gallons.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE RULE</p>
+            <p class="text-xl font-bold text-white mb-3">Match the first-hour rating to your busiest hour, not the tank size to your household.</p>
+            <p class="text-gray-300 leading-relaxed m-0">A heater that covers your peak hour will rarely run cold. Tank size alone does not tell you that, especially with slow-recovering electric elements.</p>
+          </div>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 7 Picks
+          </h2>
+
+          <p>
+            We researched these seven from manufacturer spec sheets, warranty documents and retailer listings; we did not install or lab-test them. Every figure is attributed to its source, and where sources disagree we say so. Model suffixes change often, so confirm the exact model number before you buy.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="sizing" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Sizing by Household
+          </h2>
+
+          <p>
+            As a starting point, one to two people usually do fine with a 30 to 40-gallon electric tank, three to four people with a 50-gallon tank, and five or more with a 65 to 80-gallon tank or a hybrid with a high first-hour rating. Those are rules of thumb that manufacturers and retailers publish in some form, and they assume ordinary habits. A household of two with a large soaking tub can need more hot water than a family of four who take short showers.
+          </p>
+
+          <p>
+            Electric heaters push you toward the upper end of those ranges because of slow recovery. When a gas tank runs low it can be back to usable temperature fairly quickly; an electric tank with a single 4,500-watt element running reheats at roughly 20 to 25 gallons per hour at a 90-degree rise, which is what our picks' spec sheets list. If your house runs out of hot water now, going up a tank size is usually more effective than any other change.
+          </p>
+
+          <p>
+            Check the space before you choose a size. A 50-gallon tank comes in short, medium and tall versions, and the short models such as the A.O. Smith Signature 100 and the Bradford White RE350S6 are about 47 inches tall, while tall versions run well over 60 inches. Measure height, diameter, and the clearance the installation instructions require around the tank and above it for the connections. Larger 80-gallon tanks are heavy when full, so make sure the floor can carry them.
+          </p>
+
+          <p>
+            Finally, think about how long you will be in the house. If you expect to move within a few years, a well-priced six-year tank sized correctly is the sensible buy. If you plan to stay, the extra cost of a longer warranty, a rust-proof Marathon tank or a heat pump hybrid is spread across many more years of use.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Household</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Typical Tank</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">First-Hour Target</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Good Fits Here</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">1 to 2 people</td>
+                    <td class="px-4 py-4 text-gray-700">30 to 40 gal</td>
+                    <td class="px-4 py-4 text-gray-700">45 to 55 gal</td>
+                    <td class="px-4 py-4 text-gray-700">Rheem Performance 40-gal</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">3 to 4 people</td>
+                    <td class="px-4 py-4 text-gray-700">50 gal</td>
+                    <td class="px-4 py-4 text-gray-700">58 to 65 gal</td>
+                    <td class="px-4 py-4 text-gray-700">Rheem Performance Platinum, A.O. Smith Signature 100</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">4 to 5 people</td>
+                    <td class="px-4 py-4 text-gray-700">50 to 65 gal</td>
+                    <td class="px-4 py-4 text-gray-700">65 to 75 gal</td>
+                    <td class="px-4 py-4 text-gray-700">Rheem ProTerra 50-gal hybrid</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">5+ people or big tub</td>
+                    <td class="px-4 py-4 text-gray-700">80 gal</td>
+                    <td class="px-4 py-4 text-gray-700">80+ gal</td>
+                    <td class="px-4 py-4 text-gray-700">A.O. Smith ProLine 80-gal hybrid</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="elements-circuit" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Elements, Wattage and the Circuit
+          </h2>
+
+          <p>
+            Most residential electric tanks have two elements, an upper and a lower, and in typical wiring only one runs at a time. The upper element heats the top of the tank first so you get some hot water quickly, then hands over to the lower element, which does most of the work. Bradford White's listing for the RE350S6, for example, describes non-simultaneous operation, which is the normal arrangement.
+          </p>
+
+          <p>
+            Element wattage decides recovery speed and the circuit you need. The common size is 4,500 watts at 240 volts. Simple arithmetic gives 18.75 amps for one element at 240 volts, and because a storage water heater is treated as a continuous load under the electrical code, installers generally size the circuit at 125 percent of that, which commonly means a 30-amp two-pole breaker and 10-gauge copper wire. Some models use 5,500-watt elements for faster recovery, which can push the required circuit higher.
+          </p>
+
+          <p>
+            The practical rule is to read the heater's nameplate and installation manual, which state the required breaker and minimum wire size, and to match a replacement to your existing circuit where you can. Swapping a 4,500-watt heater for another 4,500-watt heater is the simple case. Moving to higher-wattage elements, or to an electric tankless unit, is where an electrician needs to confirm the panel and wiring can take it. Our <a href="/tankless-water-heater-cost/">tankless cost guide</a> covers how quickly those electrical upgrades add up.
+          </p>
+
+          <p>
+            If you are replacing a heater on a 208-volt supply, common in some apartments and commercial buildings, element output drops: the RE350S6 listing gives 3,500 watts per element at 208 volts against 4,500 at 240. Recovery is slower as a result, so a 208-volt home may want a larger tank to get the same usable hot water.
+          </p>
+        </div>
+
+        <div id="efficiency" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. UEF and Running Cost
+          </h2>
+
+          <p>
+            The uniform energy factor is the efficiency number you will see on every spec sheet. For standard electric tanks it clusters tightly, around 0.91 to 0.93 among our picks, because an electric element turns almost all of its energy into heat in the water; the losses are the heat that escapes through the tank walls and pipes. A higher UEF on a standard tank mostly means better insulation.
+          </p>
+
+          <p>
+            To give a sense of scale, here is a rough estimate with stated assumptions rather than a measured figure. Heating 50 gallons a day by 70 degrees takes about 29,000 BTU, or roughly 8.6 kilowatt-hours of heat. At a 0.93 UEF that is about 9.2 kWh of electricity a day, or around 3,350 kWh a year. At 17 cents per kWh, that comes to roughly $570 a year. Your bill will differ with your water use, inlet temperature, thermostat setting and electricity rate.
+          </p>
+
+          <p>
+            The same arithmetic shows why heat pump hybrids matter. At a 3.88 UEF, like the ProTerra listed here, the same hot water would need roughly a quarter of the electricity, around 800 kWh a year, or about $140 at the same rate. On those assumptions the hybrid saves on the order of $400 a year, which is why it can pay back its higher price within the life of the tank. Real savings depend heavily on where the heater sits and how cold that space is.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">Estimated Annual Electricity (50 gal/day, 70°F rise, 17¢/kWh)</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <p class="text-3xl font-black text-white">~$570</p>
+                <p class="text-gray-400 text-xs mt-1">Standard tank, 0.93 UEF</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">~$140</p>
+                <p class="text-gray-400 text-xs mt-1">Hybrid, 3.88 UEF</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-white">~$430</p>
+                <p class="text-gray-400 text-xs mt-1">Estimated yearly gap</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">8.6 kWh</p>
+                <p class="text-gray-400 text-xs mt-1">Daily heat in the water</p>
+              </div>
+            </div>
+          </div>
+
+          <p>
+            Small habits move the bill too. Setting the thermostat to around 120 degrees rather than higher, insulating the first few feet of hot pipe and fixing dripping hot taps all reduce what the heater has to do. None of those changes depend on which model you buy.
+          </p>
+        </div>
+
+        <div id="heat-pump" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. When a Heat Pump Model Pays
+          </h2>
+
+          <p>
+            A heat pump hybrid is an electric water heater that moves heat out of the surrounding air into the tank, using standard elements only as a backup. That is how the ProTerra reaches a 3.88 UEF and the A.O. Smith hybrid an 84-gallon first-hour rating listed by retailers. If you have the space, it is the most important upgrade to consider when an electric tank fails.
+          </p>
+
+          <p>
+            The space is the catch. A hybrid needs a certain volume of air around it, a condensate drain, and enough room for the taller unit and the fan on top. It cools and dehumidifies the room it is in, which is a bonus in a warm garage or basement and a cost in a heated living space in winter. It also makes some fan noise. Our <a href="/best-heat-pump-water-heater/">heat pump water heater guide</a> covers placement, noise and the 120-volt plug-in models that avoid electrical work.
+          </p>
+
+          <p>
+            Upfront cost is higher, often much higher, than a standard tank. Utility rebates and programs can narrow that gap in some areas, so check what your utility offers before deciding. If the numbers work, the yearly savings can recover the difference within several years on the assumptions in our running-cost section. If they do not, or your only space is a cramped closet, a well-insulated standard tank such as the Rheem Performance Platinum is still a reasonable choice.
+          </p>
+
+          <p>
+            Hybrids also have more parts that can fail, including the compressor, fan and controls, and their warranties sometimes differ between the tank and the heat pump components. Read the terms. A hybrid that saves $400 a year but needs a costly repair in year eight still usually comes out ahead, but you should know what is covered.
+          </p>
+        </div>
+
+        <div id="lifespan" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Warranty, Anode and Lifespan
+          </h2>
+
+          <p>
+            Electric tanks tend to outlast gas ones. Our guide to <a href="/how-long-do-water-heaters-last/">how long water heaters last</a> puts electric tanks at roughly 10 to 15 years, against 8 to 12 for gas, largely because there is no burner heating the bottom of the tank. What usually ends a tank's life is corrosion, and that is where the anode rod comes in.
+          </p>
+
+          <p>
+            Glass-lined steel tanks rely on a sacrificial anode that corrodes instead of the tank. When the anode is used up, the tank starts to corrode. Longer-warranty tanks generally come with heavier anodes or a second anode, which is a big part of what you pay for in a 12-year model over a 6-year one. Checking the anode every few years and replacing it when it is mostly gone is the cheapest way to extend any steel tank's life, especially with hard or softened water.
+          </p>
+
+          <p>
+            The Rheem Marathon takes a different approach: its non-metallic tank cannot rust, so it has no anode and carries a lifetime limited tank warranty per Ferguson. You will still replace elements and thermostats over the years, as you would on any electric heater, but those are inexpensive parts compared with a new tank and an installation.
+          </p>
+
+          <p>
+            Whatever you buy, read the warranty terms before you need them. Many require registration within a set time, professional installation, or proof that the heater was maintained. Labor is often covered for only a year, if at all, so a warranty that replaces a failed tank may still leave you paying for removal and reinstallation. Draining a few gallons from the bottom once or twice a year reduces sediment, which matters more in hard-water areas.
+          </p>
+        </div>
+
+        <div id="install" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Replacing an Electric Heater: Cost and Install
+          </h2>
+
+          <p>
+            Replacing an electric tank with another electric tank of the same size and wattage is one of the simpler plumbing jobs: shut off power at the breaker and water at the supply, drain the old tank, disconnect the water lines and wiring, set the new tank, reconnect, fill completely before turning power on, and check for leaks. Turning the power on before the tank is full burns out the upper element almost immediately, which is the classic first-time mistake.
+          </p>
+
+          <p>
+            Many areas require a permit for water heater replacement, and codes usually require a temperature and pressure relief valve piped to a safe drain, a drain pan in some locations, and seismic strapping in earthquake zones. A plumber will handle those and haul away the old tank. If you are moving to a different size, a hybrid or a higher-wattage model, the job can involve electrical changes, a condensate drain or new piping, which is where professional installation is worth paying for.
+          </p>
+
+          <p>
+            For a broader look at the options, our overview of the <a href="/types-of-water-heaters/">types of water heaters</a> compares tank, tankless, heat pump and solar side by side. If you have gas available, our <a href="/best-gas-water-heater/">gas water heater guide</a> covers tanks that recover faster than electric ones, at the cost of venting and combustion air.
+          </p>
+
+          <p>
+            Whichever route you choose, keep the paperwork: the model and serial number, the installation date and the warranty registration. A warranty claim in year nine goes far more smoothly when you can show the heater was installed correctly and registered on time.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying by tank size alone</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Two 50-gallon tanks can differ by several gallons of usable hot water in the first hour. Compare first-hour ratings, which reflect both storage and recovery, against your busiest hour of use, not the number on the front of the box.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Turning on power before the tank is full</h3>
+              <p class="text-gray-700 text-sm m-0">
+                An element that heats with no water around it burns out within seconds. Fill the tank completely, open a hot tap until water runs steadily with no air, and only then restore power at the breaker.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring the circuit</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A heater with higher-wattage elements can need a larger breaker and heavier wire than the one it replaces. Read the nameplate, match it to your existing circuit, and have an electrician confirm any change before you buy.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Never checking the anode</h3>
+              <p class="text-gray-700 text-sm m-0">
+                The anode is what protects a steel tank from rusting through. Inspect it every few years and replace it when it is mostly eaten away, especially with hard or softened water, or the tank can fail long before its warranty would suggest.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Putting a hybrid in a tight closet</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A heat pump model needs a large volume of air, a condensate drain and room for the fan. Squeezed into a small closet, it runs on its backup elements and loses most of the efficiency you paid extra for.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best electric water heater?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most homes, the Rheem Performance Platinum 50-gallon, which Rheem's spec sheet lists at a 63-gallon first-hour rating and 0.93 UEF, with up to a 12-year warranty across the line. For lower cost, the A.O. Smith Signature 100 50-gallon is listed by Lowe's at a 62-gallon first-hour delivery with a six-year warranty.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long does an electric water heater last?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Electric tanks typically last around 10 to 15 years, longer on average than gas tanks because there is no burner heating the tank bottom. Anode condition, water hardness and sediment shorten or extend that. A non-metallic tank such as the Rheem Marathon is designed not to rust, and carries a lifetime limited tank warranty per Ferguson.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What size breaker does an electric water heater need?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A common 4,500-watt, 240-volt heater draws about 18.75 amps, and installers typically put it on a 30-amp two-pole breaker with 10-gauge copper wire, because water heaters are treated as continuous loads. Higher-wattage elements can need more. Always follow the nameplate and installation manual, and have an electrician confirm.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What size electric water heater do I need?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                As a guide, one to two people suit a 30 to 40-gallon tank, three to four people a 50-gallon tank, and five or more a 65 to 80-gallon tank or a high-output hybrid. Compare first-hour ratings against your busiest hour, because electric tanks recover slowly once they run low.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a heat pump water heater worth it over a standard electric tank?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Often, if you have the space. On our stated assumptions, a 3.88 UEF hybrid uses roughly a quarter of the electricity of a 0.93 UEF tank, which can save several hundred dollars a year. It costs more up front and needs airflow and a condensate drain, so check placement and local rebates first.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How much does it cost to run an electric water heater?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It depends on use and your rate. Heating 50 gallons a day by 70 degrees at a 0.93 UEF works out to roughly 3,350 kWh a year, or about $570 at 17 cents per kWh. Lower thermostat settings, pipe insulation and fixing hot-water leaks all reduce it.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I install an electric water heater myself?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A like-for-like replacement is within reach of a handy homeowner, but many areas require a permit, a properly piped relief valve and sometimes a drain pan or strapping. Fill the tank completely before restoring power. Hire a plumber or electrician for size changes, hybrids or any circuit work.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Water Heater Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-heat-pump-water-heater/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Heat Pump Water Heaters</h3>
+              <p class="text-gray-500 text-sm mt-2">The hybrid upgrade in depth: placement, noise, rebates and payback.</p>
+            </a>
+            <a href="/best-electric-tankless-water-heater/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Electric Tankless Water Heaters</h3>
+              <p class="text-gray-500 text-sm mt-2">Whole-house and point-of-use units sized by amperage and temperature rise.</p>
+            </a>
+            <a href="/how-long-do-water-heaters-last/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">How Long Do Water Heaters Last?</h3>
+              <p class="text-gray-500 text-sm mt-2">Gas and electric lifespans, the anode rod and the warning signs of failure.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The best electric water heater for most homes is the <strong class="text-white">Rheem Performance Platinum 50-gallon</strong>, listed by Rheem at a 63-gallon first-hour rating and 0.93 UEF with up to a 12-year warranty. The <strong class="text-white">A.O. Smith Signature 100</strong> gives nearly the same hot water for less, and the <strong class="text-white">Rheem Marathon</strong> is the one to buy if you never want to replace a tank again.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Size by first-hour rating against your busiest hour, match the elements to your existing circuit, and if you have the space, price a heat pump hybrid before you settle on a standard tank. On the running-cost math, it is the upgrade most likely to pay for itself.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Improvement" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
