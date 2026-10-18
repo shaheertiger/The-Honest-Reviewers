@@ -1,0 +1,880 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Pickleball Paddles",
+    "url": "/best-pickleball-paddle/"
+  },
+  {
+    "title": "Indoor vs Outdoor Pickleball Balls",
+    "url": "/indoor-vs-outdoor-pickleball-balls/"
+  },
+  {
+    "title": "Pickleball Court Dimensions",
+    "url": "/pickleball-court-dimensions/"
+  },
+  {
+    "title": "Best Pickleball Shoes",
+    "url": "/best-pickleball-shoes/"
+  },
+  {
+    "title": "Best Pickleball Paddles for Beginners",
+    "url": "/best-pickleball-paddle-for-beginners/"
+  },
+  {
+    "title": "How to Choose a Pickleball Paddle",
+    "url": "/how-to-choose-a-pickleball-paddle/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-18", modified: "2026-10-18" });
+const title = "6 Best Pickleball Balls for Outdoor and Indoor Play";
+const description =
+  "Outdoor and indoor pickleball balls compared on hole count, weight, hardness and approval status, with picks for tournaments, durability, cold weather and gyms.";
+
+const PRODUCTS = [
+  {
+    "id": "franklin-x-40",
+    "name": "Franklin X-40 Outdoor Pickleball",
+    "badge": "Best Outdoor Overall",
+    "category": "Outdoor, 40 Holes, One-Piece",
+    "amazonUrl": "#",
+    "description": "The Franklin X-40 is the outdoor ball we would hand a club looking for one standard ball, mainly because so many players already know how it plays. Retailers list it at 26 grams and 74 mm with 40 machine-drilled holes and one-piece, seamless construction, and it is listed as approved by USA Pickleball for outdoor tournament play. Franklin markets it as the official ball of the US Open Pickleball Championships, which matters less as a badge than as a practical point: if you play events, this is the ball you are most likely to meet. The one-piece build avoids the seam that splits first on many cheaper balls. Like every hard outdoor ball, it is more prone to cracking when temperatures drop, so keep a few spares in the bag for winter sessions. Three-packs typically list for around ten to thirteen dollars, with larger packs cheaper per ball.",
+    "pros": [
+      "40 machine-drilled holes, 26 g and 74 mm, per retailer listings",
+      "Listed as USA Pickleball approved for outdoor tournament play",
+      "One-piece seamless construction",
+      "Official ball of the US Open, per Franklin"
+    ],
+    "cons": [
+      "Hard outdoor shell is more crack-prone in the cold",
+      "Plays fast, which some recreational players find unforgiving"
+    ],
+    "bottomLine": "The Franklin X-40 is the safe default outdoor ball: approved, widely used at events, and consistent from one ball to the next."
+  },
+  {
+    "id": "dura-fast-40",
+    "name": "Dura Fast 40 Outdoor Pickleball",
+    "badge": "Best Fast Tournament Ball",
+    "category": "Outdoor, 40 Holes in Two Sizes",
+    "amazonUrl": "#",
+    "description": "The Dura Fast 40 has been a fixture of competitive outdoor play for years, and it still has the reputation as the fastest, hardest-playing ball most people will hit. Pickleball Central lists 40 holes in two sizes, 16 larger and 24 smaller, a diameter of 2.9375 inches and a bounce of 32 inches from a 75-inch drop onto concrete. Listed weights vary between sources, from about 0.88 to 0.92 ounces, all within the USA Pickleball limit of 0.78 to 0.935 ounces. The firm shell and fast pace reward players with clean technique and punish mishits, which is why advanced players like it and beginners often do not. It is also the ball most often associated with cracking: a hard shell gives a lively bounce but less tolerance for cold mornings. Check the current approved list before an event, as it changes during the year.",
+    "pros": [
+      "40 holes in two sizes, 16 large and 24 small, per Pickleball Central",
+      "Listed bounce of 32 in from a 75 in drop on concrete",
+      "Fast, firm play favoured in competitive outdoor games",
+      "Long track record at tournaments"
+    ],
+    "cons": [
+      "Listed weights vary between sources",
+      "Hard shell is prone to cracking, especially in cold weather"
+    ],
+    "bottomLine": "Buy the Dura Fast 40 if you want the fast, firm feel of competitive outdoor play and accept that it will crack sooner than softer balls."
+  },
+  {
+    "id": "selkirk-pro-s1",
+    "name": "Selkirk Pro S1 Pickleball",
+    "badge": "Most Durable",
+    "category": "Outdoor and Indoor, 38 Holes, Rotomolded",
+    "amazonUrl": "#",
+    "description": "The Selkirk Pro S1 takes a different approach to the cracking problem. Selkirk says it is rotomolded as one piece, which it credits for a round, balanced ball that holds its shape, and it uses a patented 38-hole pattern with holes of different sizes, which Selkirk says keeps flight consistent regardless of spin and speed. Retailers list it at 0.93 ounces and USA Pickleball approved. The headline feature is the warranty: Selkirk offers a one-year no-crack warranty, provided you register the purchase. That is the clearest signal any manufacturer gives that it expects the ball to last. It costs more per ball than mass-market options, with four-packs listed at around ten dollars at Academy, but if your group goes through balls quickly, the warranty can make it cheaper in practice.",
+    "pros": [
+      "One-year no-crack warranty when registered, per Selkirk",
+      "Rotomolded one-piece construction",
+      "Patented 38-hole pattern with varied hole sizes",
+      "Listed as USA Pickleball approved"
+    ],
+    "cons": [
+      "Costs more per ball than mass-market outdoor balls",
+      "Warranty requires registration, so keep the receipt"
+    ],
+    "bottomLine": "The Selkirk Pro S1 is the ball to buy if cracked balls are your main complaint, and the only pick here with a written no-crack warranty."
+  },
+  {
+    "id": "penn-40",
+    "name": "Penn 40 Outdoor Pickleball",
+    "badge": "Best Softer Outdoor Ball",
+    "category": "Outdoor, 40 Holes",
+    "amazonUrl": "#",
+    "description": "The Penn 40 is the outdoor ball we would choose for recreational groups and for cooler days. Retailers list 40 machine-drilled holes, a 74 mm diameter and USA Pickleball approval, and it is marketed as a softer, bouncier ball than the hardest outdoor options. A softer shell gives a slightly slower, more forgiving game that suits mixed-ability groups, and softer balls are commonly recommended when temperatures drop, because hard balls become more brittle in the cold. Penn sells it in six-packs, three-ball sleeves and bulk packs, and six-packs have listed at around fifteen dollars. The trade-off is the usual one for a softer ball: it can feel less crisp to players used to the Dura Fast 40, and soft balls can go out of round over time rather than cracking.",
+    "pros": [
+      "40 holes, 74 mm, listed as USA Pickleball approved",
+      "Marketed as softer and bouncier than the firmest outdoor balls",
+      "Forgiving pace for mixed-ability and recreational groups",
+      "Widely sold in six-packs and bulk packs"
+    ],
+    "cons": [
+      "Less crisp than the hardest tournament balls",
+      "Softer balls can lose roundness with heavy use"
+    ],
+    "bottomLine": "Pick the Penn 40 for relaxed outdoor play and cold-weather sessions where a softer shell is less likely to crack."
+  },
+  {
+    "id": "franklin-x-26",
+    "name": "Franklin X-26 Indoor Pickleball",
+    "badge": "Best Indoor",
+    "category": "Indoor, 26 Holes",
+    "amazonUrl": "#",
+    "description": "Indoor balls play on smooth gym floors without wind, so they use fewer, larger holes and a softer feel, and the Franklin X-26 is the indoor counterpart to its outdoor ball. Franklin lists 26 holes, retailers give 26 grams and 74 mm, and it is listed as USA Pickleball approved for tournament play. Franklin describes the holes as precise and evenly spaced for consistent rotation and bounce, and some retailers describe them as beveled. Construction descriptions vary between sources, so we do not lean on them. It comes in three-packs, twelve-packs and bulk packs of 100, in several colours, and single balls have listed for around five dollars. If your gym uses a different approved indoor ball, such as the Gamma Photon Indoor, which Pickleball Central lists at about 24 grams with 26 holes, match the ball your group plays.",
+    "pros": [
+      "26 holes, 26 g, 74 mm, per Franklin and retailers",
+      "Listed as USA Pickleball approved for indoor tournament play",
+      "Softer, slower indoor feel suited to gym floors",
+      "Sold in 3, 12 and 100 packs in several colours"
+    ],
+    "cons": [
+      "Too light and slow for outdoor wind",
+      "Retailers disagree on construction details"
+    ],
+    "bottomLine": "The Franklin X-26 is the indoor ball to buy unless your gym has standardised on another approved model."
+  },
+  {
+    "id": "onix-pure-2-outdoor",
+    "name": "Onix Pure 2 Outdoor Pickleball",
+    "badge": "Best Practice Ball for Wind",
+    "category": "Outdoor, 40 Holes, Recreational",
+    "amazonUrl": "#",
+    "description": "The Onix Pure 2 Outdoor is not a tournament ball, and we include it on purpose. Pickleball Central lists it as no longer USA Pickleball approved since January 2018, after standards changed, and it is sold for recreational play. What it offers is weight: listings give 26.3 grams, 40 equal-size holes and a bounce of 33 inches from 75 inches, and Onix describes it as weighted heavier to fly straighter in extreme outdoor conditions. For drilling on a breezy driveway court, or for players who simply prefer a heavier ball, that matters more than approval. It is a two-piece seamed ball, and seams are usually where cracks start, so do not expect the longevity of a one-piece design. Use it for practice and casual games, and switch to an approved ball before any sanctioned event.",
+    "pros": [
+      "Heavier ball that Onix says flies straighter in wind",
+      "40 equal-size holes and a listed 33 in bounce",
+      "Well suited to drilling on windy driveway courts"
+    ],
+    "cons": [
+      "Not USA Pickleball approved since 2018, per Pickleball Central",
+      "Two-piece seamed construction is less durable than one-piece"
+    ],
+    "bottomLine": "Keep a bucket of Onix Pure 2 balls for windy practice sessions, but play sanctioned events with an approved ball."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Pickleball Balls",
+          item: "https://www.thehonestreviewers.com/best-pickleball-balls/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the difference between indoor and outdoor pickleball balls?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Outdoor balls usually have around 40 smaller holes, a harder shell and weigh near the top of the legal range, so they fly straight in wind and survive rough courts. Indoor balls usually have around 26 larger holes and a softer feel, which suits smooth gym floors. Using the wrong type changes pace and control noticeably."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do pickleball balls crack?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Outdoor balls are made from hard plastics that become more brittle as they cool, so cold weather is the most common cause of cracks. Seams are another weak point, which is why one-piece balls tend to last longer. Storing balls in a cold car and hitting them hard straight away makes cracking far more likely."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What pickleball ball do the pros use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tournaments choose one approved ball per event, so the answer changes. The Franklin X-40 is the official ball of the US Open Pickleball Championships, per Franklin, and balls such as the Dura Fast 40 have long been used in competitive play. Check which ball your event uses and practise with it beforehand."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many holes does a pickleball have?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "USA Pickleball allows between 26 and 40 circular holes. Outdoor balls typically have around 40 smaller holes and indoor balls around 26 larger ones. Some balls sit in between, such as the 38-hole Selkirk Pro S1. Hole size and spacing matter as much as the count for a straight, consistent flight."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long do pickleball balls last?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on the ball, the court, the weather and how hard your group hits. Hard outdoor balls can crack within a few sessions in cold weather, while softer and one-piece balls generally last longer. Track the date you open a pack and when balls fail to learn what to expect at your court."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are USA Pickleball approved balls better?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Approval confirms that a ball meets the official size, weight, hole and bounce standards and can be used in sanctioned events. It is not a quality ranking, and approved balls still differ in pace and durability. For casual play an unapproved ball is fine, but approved balls are generally more consistent."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the best pickleball ball for cold weather?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Softer outdoor balls, such as the Penn 40, are generally less prone to cracking in the cold than the hardest balls, and the Selkirk Pro S1 carries a registered no-crack warranty. Whatever you use, keep balls at room temperature before play and warm them in a pocket on chilly mornings."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Outdoor Gear",
+    tags: [
+      "best pickleball balls",
+      "outdoor pickleball balls",
+      "indoor pickleball balls",
+      "pickleball balls",
+      "usa pickleball approved balls"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Pickleball
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best Pickleball Balls <span class="text-[#38BDF8]">for Outdoor and Indoor Play</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          The ball changes the game more than most players realise. Hole count, hardness and the temperature on the day decide how fast it plays, how true it flies and how soon it cracks.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#franklin-x-40"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Hole Count Explained
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="8.4k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-chose" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Chose</a>
+          <a href="#holes-weight" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Hole Count and Weight</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 6 Picks</a>
+          <a href="#hardness" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Hardness and Cold</a>
+          <a href="#bounce" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. The Bounce Spec</a>
+          <a href="#durability" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Durability vs Consistency</a>
+          <a href="#indoor-outdoor" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Indoor vs Outdoor</a>
+          <a href="#approval" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Approval</a>
+          <a href="#packs" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Packs and Cost</a>
+          <a href="#match" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Match a Ball</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">12. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Most players spend weeks choosing a paddle and seconds choosing a ball, then wonder why the game feels different at every court. The ball is half the equation. An outdoor ball with 40 small holes plays fast and cuts through wind; an indoor ball with 26 larger holes plays slower and softer on a gym floor. Hard outdoor balls crack in the cold, soft ones go out of round, and only some of them are approved for sanctioned play. This guide picks six balls that cover the real situations, and explains the specs that separate them.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-chose" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Chose
+          </h2>
+
+          <p>
+            We started from the USA Pickleball equipment standards, because they define what a legal ball is and give a fixed reference for every spec on a packet. A conforming ball must weigh between 0.78 and 0.935 ounces, measure 2.87 to 2.97 inches across, have between 26 and 40 circular holes, and rebound 30 to 34 inches when dropped from 78 inches onto a granite surface. Every approved ball sits inside those limits, so the differences that matter are where in the range each ball lands, and how it is built.
+          </p>
+
+          <p>
+            We then looked at what players actually complain about. The complaints fall into three groups: balls that crack too soon, balls that play too fast or too slow for the group, and balls that behave differently in wind or cold. Each pick here answers one of those problems rather than chasing a single best ball, because there is no single best ball. A gym league, a windy public court and a winter morning game need different things.
+          </p>
+
+          <p>
+            We verified specs against manufacturer pages and major pickleball retailers, and where sources disagree, we say so rather than picking the number that sounds best. Weight is the most common disagreement, because some listings round and others quote a different version of the ball. We did not invent crack rates, durability hours or test results. Where a feature is a manufacturer claim, such as a ball flying straighter in wind, it is labelled as a claim.
+          </p>
+
+          <p>
+            Approval status was the last filter. Five of the six picks are listed as USA Pickleball approved, and the one that is not is included deliberately as a practice ball, with its status stated plainly. The approved list changes several times a year, so if you are buying for a sanctioned event, check the current list on the USA Pickleball site before you order a bulk pack.
+          </p>
+        </div>
+
+        <div id="holes-weight" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Hole Count and Weight
+          </h2>
+
+          <p>
+            Hole count is the quickest way to tell an outdoor ball from an indoor one. Outdoor balls typically have around 40 smaller holes, which reduces drag and keeps the ball flying straighter in wind. Indoor balls typically have around 26 larger holes, which slow the ball down and give a softer, more controllable feel on a smooth gym floor. The rules allow anything from 26 to 40, so some balls sit in between, like the 38-hole Selkirk Pro S1.
+          </p>
+
+          <p>
+            Hole size and pattern matter as well as the count. The Dura Fast 40 uses two sizes of hole, and Selkirk uses a patented pattern of varied sizes, both with the aim of keeping the flight consistent regardless of how the ball is struck. Evenly spaced, cleanly drilled holes are what make a ball fly true. A ball with rough or uneven holes can wobble in the air, which is one reason cheap no-name balls feel unpredictable.
+          </p>
+
+          <p>
+            Weight affects pace and wind resistance. Outdoor balls tend to sit near the top of the legal range, around 26 grams, so they carry through a breeze. Indoor balls are often a little lighter, like the Gamma Photon Indoor listed at about 24 grams, which suits the slower indoor game. A heavier ball also hits harder, which is part of why outdoor play feels faster and why paddle choice matters more outdoors, as our <a href="/best-pickleball-paddle/">pickleball paddle guide</a> explains.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Spec</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">USA Pickleball limit</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Typical outdoor ball</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Typical indoor ball</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Weight</td>
+                    <td class="px-4 py-4 text-gray-700">0.78 to 0.935 oz</td>
+                    <td class="px-4 py-4 text-gray-700">About 0.92 oz (26 g)</td>
+                    <td class="px-4 py-4 text-gray-700">About 0.85 to 0.92 oz</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Diameter</td>
+                    <td class="px-4 py-4 text-gray-700">2.87 to 2.97 in</td>
+                    <td class="px-4 py-4 text-gray-700">About 2.9 in (74 mm)</td>
+                    <td class="px-4 py-4 text-gray-700">About 2.9 in (74 mm)</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Holes</td>
+                    <td class="px-4 py-4 text-gray-700">26 to 40</td>
+                    <td class="px-4 py-4 text-gray-700">About 40, smaller</td>
+                    <td class="px-4 py-4 text-gray-700">About 26, larger</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Bounce</td>
+                    <td class="px-4 py-4 text-gray-700">30 to 34 in from 78 in</td>
+                    <td class="px-4 py-4 text-gray-700">Near the top of the range</td>
+                    <td class="px-4 py-4 text-gray-700">Near the middle of the range</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            None of this means you need a different ball for every session, but it does explain why the same group can feel like it is playing a different game from one court to the next. If your group alternates between indoor and outdoor play, keep one approved ball of each type and stick with them, rather than switching brands every week.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 6 Picks
+          </h2>
+
+          <p>
+            We have not lab-tested these balls. Every figure below comes from the manufacturer, a retailer listing or the USA Pickleball equipment standards, and we say which. The picks cover the situations players actually face: a club outdoor ball, a fast tournament ball, a ball that lasts, a softer outdoor ball for cold days, an indoor gym ball, and a practice ball for wind.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="hardness" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Hardness, Temperature and Cracking
+          </h2>
+
+          <p>
+            Outdoor balls are made from hard plastics so they survive rough court surfaces and fly fast, but hardness comes with brittleness. A hard shell that plays well on a warm afternoon can crack after a few games on a cold morning, because plastics become less flexible as they cool. This is the single most common complaint about outdoor balls, and it is why so many players carry spares from autumn to spring.
+          </p>
+
+          <p>
+            Softer balls, such as the Penn 40, are generally less likely to crack in the cold, though they play a little slower. The trade-off is that softer balls tend to fail differently: rather than splitting, they can go slightly out of round or develop soft spots over time. A ball that has gone out of round bounces unpredictably, which is just as frustrating as a crack, so keep an eye on bounce as well as on the shell.
+          </p>
+
+          <p>
+            Construction matters too. One-piece balls, such as the Franklin X-40 and the rotomolded Selkirk Pro S1, have no seam, and seams are a common point where cracks begin. Two-piece seamed balls are often cheaper and can play perfectly well, but they are more likely to split along the join. If cracking is your biggest problem, a one-piece ball with a warranty is the most direct fix.
+          </p>
+
+          <p>
+            A few habits help regardless of the ball. Keep balls indoors rather than in a cold car between sessions, warm them in a pocket before play on a chilly morning, and rotate in a fresh ball when one starts to sound dull or bounce low. Storing balls in a hot car is not good for them either, so a bag kept at room temperature is the best place for a supply.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE RULE</p>
+            <p class="text-xl font-bold text-white mb-3">Hard balls crack in the cold. Soft balls go out of round.</p>
+            <p class="text-gray-300 leading-relaxed m-0">Pick the shell for the weather you play in, keep balls at room temperature, and replace any ball that cracks or bounces low rather than playing on with it.</p>
+          </div>
+        </div>
+
+        <div id="bounce" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. The Bounce Spec
+          </h2>
+
+          <p>
+            Bounce is the spec players notice most and read least. USA Pickleball requires a conforming ball to rebound between 30 and 34 inches when dropped from 78 inches onto a granite surface, measured to the top of the ball. That four-inch window is wide enough that two approved balls can feel quite different. A ball near the top of the range plays lively and fast, while one near the bottom feels deader and gives defenders more time.
+          </p>
+
+          <p>
+            Retailer bounce figures are not always measured the same way, so compare them carefully. The Dura Fast 40 and Onix Pure 2 are listed with bounces of 32 and 33 inches from a 75-inch drop onto concrete, which is a different test from the official one, and the Gamma Photon Indoor is listed at 33 inches from 78 inches onto concrete. These numbers are useful for comparing balls from the same retailer, but not for checking whether a ball meets the rule.
+          </p>
+
+          <p>
+            Temperature changes bounce as well as cracking risk. Cold balls bounce lower and play slower, and warm balls bounce higher. That is one reason a game can feel different at the end of a winter session than at the start, as the balls warm up in play. Court surface matters too: a gritty outdoor surface and a smooth gym floor give different rebounds from the same ball, which is part of why indoor and outdoor balls are designed differently.
+          </p>
+
+          <p>
+            You can check bounce at home with a tape measure and a hard floor. Drop each ball from the same height and watch for one that bounces noticeably lower than the rest. That ball is either cold, soft or failing, and it is better retired to the practice bucket than left in a match where it will produce odd, dead bounces at the worst moments.
+          </p>
+        </div>
+
+        <div id="durability" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Durability vs Consistency
+          </h2>
+
+          <p>
+            There is a real tension between a ball that lasts and a ball that plays consistently. The hardest, fastest balls give a crisp, predictable game but crack sooner. Softer balls last longer before cracking but can lose roundness, which makes their bounce less predictable as they age. Manufacturers have worked to close the gap with one-piece and rotomolded designs, but no ball has fully solved it.
+          </p>
+
+          <p>
+            For a casual group, durability usually matters more. Losing a ball to a crack every session adds up, and a slightly softer ball that lasts weeks is the better buy. For competitive players, consistency usually matters more, because a ball that plays the same way every point is worth replacing more often. Neither group is wrong; the right ball depends on which problem bothers you.
+          </p>
+
+          <p>
+            Warranty is the clearest durability signal you will get. Selkirk offers a one-year no-crack warranty on the Pro S1 when the purchase is registered, which is a stronger commitment than any marketing phrase. Without a warranty, the best guide is construction, whether one-piece or seamed, and the experience of the players at your court, who will usually tell you which balls crack and which ones last.
+          </p>
+
+          <p>
+            Whatever you buy, track it for a few weeks. Write the date on a new pack, note when the first ball cracks, and compare brands over a season. That small habit will tell you more about durability at your court, in your weather and with your group's hitting, than any listing can.
+          </p>
+        </div>
+
+        <div id="indoor-outdoor" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Indoor vs Outdoor Balls
+          </h2>
+
+          <p>
+            Indoor and outdoor balls are designed for different conditions, and using the wrong one changes the game. An indoor ball outdoors is too light and too open to hold its line in wind, and it wears quickly on a gritty surface. An outdoor ball indoors plays fast and hard on a smooth floor and can skid, which shortens rallies and makes the game feel rushed.
+          </p>
+
+          <p>
+            The differences come down to hole count, weight and hardness. Outdoor balls usually have around 40 smaller holes and a harder shell; indoor balls usually have around 26 larger holes and a softer feel. Our full comparison of <a href="/indoor-vs-outdoor-pickleball-balls/">indoor vs outdoor pickleball balls</a> goes through each difference and covers the situations where swapping is acceptable, such as practice in a sheltered spot.
+          </p>
+
+          <p>
+            Some players use one ball for both to keep things simple, and a mid-range ball like the 38-hole Selkirk Pro S1 is sometimes marketed for both settings. That is a reasonable compromise for practice, but if you play regularly in both places, a dedicated ball for each will feel better. Most clubs and leagues specify a ball, so check what your group uses before buying in bulk.
+          </p>
+
+          <p>
+            Court surface is the other half of the story. Indoor courts on wood or sports flooring suit softer balls, while outdoor acrylic or concrete courts suit harder ones. If you are setting up a court at home, our guide to <a href="/pickleball-court-dimensions/">pickleball court dimensions</a> covers layout, net height and the surfaces that work for each kind of ball.
+          </p>
+        </div>
+
+        <div id="approval" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. What USA Pickleball Approval Means
+          </h2>
+
+          <p>
+            Approval means the ball has been tested against the USA Pickleball equipment standards and added to the official list of balls permitted in sanctioned tournaments. Balls used in sanctioned events must appear on that list, while casual games have no such requirement. If you only play recreationally, an unapproved ball is not against any rule, though approved balls are generally a safer bet for consistent quality.
+          </p>
+
+          <p>
+            The approved list changes during the year as models are added, updated and removed. The Onix Pure 2 Outdoor is a good example: Pickleball Central lists it as no longer approved since January 2018, after standards changed. A ball that was approved when you bought it may not be on the current list, so if you are playing an event, check the list close to the date.
+          </p>
+
+          <p>
+            Approval is not a quality ranking. It confirms that a ball meets the size, weight, hole count and bounce limits and performs within the standard's tolerances, but it does not tell you which approved ball is fastest, most durable or best in wind. That is why five approved balls on this list still behave differently, and why your choice should follow the conditions you play in.
+          </p>
+
+          <p>
+            Tournament directors also choose one approved ball for each event, so even an approved ball might not be the one you play with on the day. If you are preparing for a specific event, find out which ball it uses and practise with it for a few weeks. Players who switch balls on tournament day often find their timing is off for the first games.
+          </p>
+        </div>
+
+        <div id="packs" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Buying in Bulk and Pack Sizes
+          </h2>
+
+          <p>
+            Pickleball balls are sold in three- and four-packs, six-packs, twelve-packs and bulk packs of 100, and the price per ball drops sharply as the pack grows. Small packs make sense for trying a ball or for a single player. Bulk packs suit clubs, coaches and groups that go through balls quickly, especially in cold weather when cracks are common.
+          </p>
+
+          <p>
+            Before buying in bulk, buy a small pack and play with it for a couple of weeks. Make sure your group likes the pace and that the balls last in your conditions. A hundred balls that crack on cold mornings, or that your group finds too fast, are an expensive mistake. Once you have settled on a ball, bulk packs are usually the cheapest way to keep a supply.
+          </p>
+
+          <p>
+            Colour is worth a thought too. Optic yellow is the most common and easy to see on most courts, but some players prefer orange, pink or green for visibility against particular backgrounds or in low light. Many models, including the Franklin X-26, come in several colours. Choose the one that stands out against your court and surroundings.
+          </p>
+
+          <p>
+            Finally, store spares sensibly. Keep balls in a bag at room temperature, away from a cold car or a hot boot, and rotate older balls into a practice bucket rather than throwing them straight away. A slightly tired ball is still fine for drills, which stretches the value of every pack you buy.
+          </p>
+        </div>
+
+        <div id="match" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            10. Match a Ball to Your Game
+          </h2>
+
+          <p>
+            For most outdoor groups, the Franklin X-40 is the simplest choice: approved, widely used and consistent. If your group plays competitively and likes a fast, firm game, the Dura Fast 40 delivers that pace, as long as you accept more cracked balls in cold weather.
+          </p>
+
+          <p>
+            If cracking is the problem, the Selkirk Pro S1 is the direct fix, backed by a registered no-crack warranty. If your group is mixed-ability or plays through cooler months, the softer Penn 40 is more forgiving and less prone to cracking in the cold.
+          </p>
+
+          <p>
+            Indoors, the Franklin X-26 is a reliable approved choice, though matching whatever ball your gym already uses matters more than any brand. For windy practice on a home court, the heavier Onix Pure 2 Outdoor is worth keeping in a bucket, as long as you switch to an approved ball for events.
+          </p>
+
+          <p>
+            A ball only works as well as the paddle hitting it. If you are still choosing a paddle, start with our guide to <a href="/best-pickleball-paddle/">the best pickleball paddles</a>, or read <a href="/how-to-choose-a-pickleball-paddle/">how to choose a pickleball paddle</a> if you want the specs explained first. New players should also see our <a href="/best-pickleball-paddle-for-beginners/">beginner paddle picks</a> and the <a href="/best-pickleball-shoes/">best pickleball shoes</a> for court grip.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using an Indoor Ball on an Outdoor Court</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Indoor balls are lighter with larger holes, so wind pushes them around and gritty surfaces wear them quickly. The game turns slow and unpredictable. Keep at least one approved outdoor ball for outdoor courts, and save indoor balls for gyms and sheltered practice where they belong.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Leaving Balls in a Cold Car</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Hard outdoor balls become more brittle as they cool, so a ball that sat in a freezing car overnight is far more likely to crack in the first game. Store spares indoors at room temperature and warm a ball in your pocket before play on a cold morning.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying a Bulk Pack Without Trying the Ball</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A hundred balls is a big commitment if your group finds them too fast or they crack in your weather. Buy a small pack first, play with it for a couple of weeks, and only then order in bulk once you know the ball suits your court and conditions.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Assuming Every Ball Is Tournament Legal</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Only balls on the current USA Pickleball approved list can be used in sanctioned events, and the list changes during the year. Some popular balls, like the Onix Pure 2 Outdoor, are not approved. Check the current list before practising for or playing in an event.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Playing On With a Dead or Cracked Ball</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A cracked ball or one that has gone out of round produces dead bounces and odd flights that ruin rallies. Drop-test any ball that feels off, retire it to the practice bucket if it bounces low, and throw away any ball with a visible crack.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            12. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the difference between indoor and outdoor pickleball balls?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Outdoor balls usually have around 40 smaller holes, a harder shell and weigh near the top of the legal range, so they fly straight in wind and survive rough courts. Indoor balls usually have around 26 larger holes and a softer feel, which suits smooth gym floors. Using the wrong type changes pace and control noticeably.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Why do pickleball balls crack?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Outdoor balls are made from hard plastics that become more brittle as they cool, so cold weather is the most common cause of cracks. Seams are another weak point, which is why one-piece balls tend to last longer. Storing balls in a cold car and hitting them hard straight away makes cracking far more likely.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What pickleball ball do the pros use?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Tournaments choose one approved ball per event, so the answer changes. The Franklin X-40 is the official ball of the US Open Pickleball Championships, per Franklin, and balls such as the Dura Fast 40 have long been used in competitive play. Check which ball your event uses and practise with it beforehand.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How many holes does a pickleball have?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                USA Pickleball allows between 26 and 40 circular holes. Outdoor balls typically have around 40 smaller holes and indoor balls around 26 larger ones. Some balls sit in between, such as the 38-hole Selkirk Pro S1. Hole size and spacing matter as much as the count for a straight, consistent flight.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long do pickleball balls last?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It depends on the ball, the court, the weather and how hard your group hits. Hard outdoor balls can crack within a few sessions in cold weather, while softer and one-piece balls generally last longer. Track the date you open a pack and when balls fail to learn what to expect at your court.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are USA Pickleball approved balls better?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Approval confirms that a ball meets the official size, weight, hole and bounce standards and can be used in sanctioned events. It is not a quality ranking, and approved balls still differ in pace and durability. For casual play an unapproved ball is fine, but approved balls are generally more consistent.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best pickleball ball for cold weather?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Softer outdoor balls, such as the Penn 40, are generally less prone to cracking in the cold than the hardest balls, and the Selkirk Pro S1 carries a registered no-crack warranty. Whatever you use, keep balls at room temperature before play and warm them in a pocket on chilly mornings.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Pickleball Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-pickleball-paddle/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Pickleball Paddles</h3>
+              <p class="text-gray-500 text-sm mt-2">Our top paddle picks for control, power and spin, matched to how you play.</p>
+            </a>
+            <a href="/indoor-vs-outdoor-pickleball-balls/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Comparison</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Indoor vs Outdoor Pickleball Balls</h3>
+              <p class="text-gray-500 text-sm mt-2">Hole count, weight, hardness and when you can use one for the other.</p>
+            </a>
+            <a href="/best-pickleball-shoes/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Pickleball Shoes</h3>
+              <p class="text-gray-500 text-sm mt-2">Court shoes with the lateral support and grip that running shoes lack.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The best pickleball ball is the one that suits your court, your weather and your group. For most outdoor play, the approved Franklin X-40 is the safe default; for a fast competitive game, the Dura Fast 40; and for groups tired of cracked balls, the Selkirk Pro S1 with its registered no-crack warranty.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Indoors, play the Franklin X-26 or whatever approved ball your gym uses. Keep balls at room temperature, try a small pack before buying in bulk, and check the current approved list before any sanctioned event.
+          </p>
+        </div>
+
+        <MoreInCategory category="Outdoor Gear" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

@@ -1,0 +1,829 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Pickleball Paddles",
+    "url": "/best-pickleball-paddle/"
+  },
+  {
+    "title": "How to Choose a Pickleball Paddle",
+    "url": "/how-to-choose-a-pickleball-paddle/"
+  },
+  {
+    "title": "Pickleball Paddle Weight Guide",
+    "url": "/pickleball-paddle-weight/"
+  },
+  {
+    "title": "Pickleball Paddle Grip Size",
+    "url": "/pickleball-paddle-grip-size/"
+  },
+  {
+    "title": "How Much Does a Pickleball Paddle Cost?",
+    "url": "/how-much-does-a-pickleball-paddle-cost/"
+  },
+  {
+    "title": "Best Pickleball Balls",
+    "url": "/best-pickleball-balls/"
+  },
+  {
+    "title": "Best Pickleball Shoes",
+    "url": "/best-pickleball-shoes/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-18", modified: "2026-10-18" });
+const title = "6 Best Pickleball Paddles for Beginners: Forgiving Picks Under $120";
+const description =
+  "Six beginner pickleball paddles and sets under about $120, chosen for forgiveness, mid weight and a wide sweet spot, with sizing, grip and upgrade advice.";
+
+const PRODUCTS = [
+  {
+    "id": "selkirk-slk-neo-2-set",
+    "name": "Selkirk SLK Neo 2.0 Pickleball Paddle Set",
+    "badge": "Best Overall",
+    "category": "2-Paddle Set, 13mm Core, Graphite/Fiberglass Face",
+    "amazonUrl": "#",
+    "description": "The SLK Neo 2.0 set is where we would point most new players, because it solves the whole first-week shopping list at once and comes from a brand that also makes serious tournament paddles. A Pickleheads review lists the set at $79.99 for two paddles, a bag and four balls, which puts each paddle well under the price of a single mid-range model. The same review gives a weight of 7.5 ounces, a 13mm polymer honeycomb core, a 15.67-inch by 7.8-inch face, a 5.25-inch handle and a 4.25-inch grip circumference. That is a standard-shape, mid-to-light paddle with a thin core, which tends to feel lively rather than dead, and the 4.25-inch grip is the size most adult beginners fall into. The one caution is that listings disagree on details: Pickleheads describes an SX3 core and a graphite and fiberglass blend face, while at least one retailer lists an SX4 core and a graphite face, so check the exact version on the box. Either way, it is a sensible, forgiving starting point for two people.",
+    "pros": [
+      "Two paddles, four balls and a bag for $79.99, per a Pickleheads review",
+      "Listed at 7.5 oz, light enough to stay quick at the kitchen line",
+      "Standard 15.67 x 7.8 in shape with a 4.25 in grip, the most common adult size",
+      "Made by Selkirk, which also builds tournament-level paddles"
+    ],
+    "cons": [
+      "Core and face material differ between listings (SX3 vs SX4, blend vs graphite)",
+      "13mm core gives more pop and less dwell than a 16mm control paddle",
+      "Lighter weight offers less plow-through on drives"
+    ],
+    "bottomLine": "The SLK Neo 2.0 set is the easiest way for two beginners to start: Pickleheads lists two 7.5 oz paddles, a bag and four balls for $79.99."
+  },
+  {
+    "id": "onix-graphite-z5",
+    "name": "Onix Graphite Z5 Pickleball Paddle",
+    "badge": "Best Single Paddle",
+    "category": "Widebody, Nomex Honeycomb Core, Graphite Face",
+    "amazonUrl": "#",
+    "description": "The Graphite Z5 has been on beginner shortlists for years for one reason: it is wide. Retailer listings give a widebody shape of roughly 15.5 by 8.3 inches, which spreads the hitting area sideways where new players most often mishit, and a mid weight of 7.5 to 8.2 ounces depending on the unit. Onix uses a Nomex honeycomb core and a graphite face, and listings give a 4.25-inch grip circumference and a 5-inch handle. Nomex cores are firmer and louder than polymer cores, so the Z5 feels crisp and has a noticeable pop off the face, which helps beginners get the ball deep without a big swing. The trade-off is that it is less soft at the kitchen line than a thick polymer paddle, and the sound may matter if you play in a neighborhood with noise complaints. Retailers list it as approved for USA Pickleball tournament play. If you only want one good paddle and you value a forgiving face over fine touch, this is the one.",
+    "pros": [
+      "Widebody 15.5 x 8.3 in face, per retailers, forgives off-center hits",
+      "Mid weight listed at 7.5 to 8.2 oz",
+      "Graphite face and Nomex core give easy depth on serves and returns",
+      "Listed as USA Pickleball approved for tournament play"
+    ],
+    "cons": [
+      "Nomex core is louder and firmer than a polymer core",
+      "Shorter 5 in handle limits two-handed backhands",
+      "Weight varies across the listed range, so units differ"
+    ],
+    "bottomLine": "The Onix Graphite Z5 is the most forgiving single paddle here, with a widebody face retailers list at about 15.5 x 8.3 inches and a 7.5 to 8.2 oz mid weight."
+  },
+  {
+    "id": "head-radical-elite",
+    "name": "HEAD Radical Elite Pickleball Paddle",
+    "badge": "Softest Feel",
+    "category": "Widebody, 15mm Core, Fiberglass Composite Face",
+    "amazonUrl": "#",
+    "description": "The Radical Elite suits beginners who come from tennis or who simply want a paddle that feels soft and easy. HEAD lists it at 230 grams, about 8.1 ounces, with a 15mm standard core, a fiberglass composite hitting surface and a widebody shape, plus a standard 130mm (5.1-inch) handle. Fiberglass faces tend to feel springy and give easy power with a short swing, and the 15mm core sits between the lively thin cores and the very soft 16mm control paddles, which makes it a balanced first paddle. HEAD describes the widebody shape as giving a larger sweet spot in a shorter, more maneuverable frame. HEAD's regional sites list it at roughly 60 to 70 in local currency, and some regions show it out of stock, so confirm availability and the current US price before you set your heart on it. It is not the cheapest paddle here, but it is the one that will feel the most comfortable for the widest range of new players.",
+    "pros": [
+      "Listed at 230 g (about 8.1 oz), a classic mid weight",
+      "15mm core balances pop and control",
+      "Fiberglass composite face gives easy power, per HEAD",
+      "Widebody shape with a larger sweet spot"
+    ],
+    "cons": [
+      "Several regional HEAD sites list it out of stock",
+      "US price not confirmed on HEAD's pages we found",
+      "Fiberglass grit wears faster than raw carbon"
+    ],
+    "bottomLine": "The HEAD Radical Elite is the soft, balanced choice: HEAD lists 8.1 oz, a 15mm core, a fiberglass composite face and a widebody shape."
+  },
+  {
+    "id": "joola-essentials-set",
+    "name": "JOOLA Essentials Pickleball Paddles and Balls Set",
+    "badge": "Best Brand-Name Set",
+    "category": "2-Paddle Set, 12mm Core, Fiberglass Face",
+    "amazonUrl": "#",
+    "description": "JOOLA makes the paddles many of the pros play, and the Essentials set is its entry point. Retailer listings give a paddle weight of about 8.2 ounces, a 12mm Response honeycomb polymer core, a fiberglass face, a 15.5 by 7.9 inch shape and a ridge grip around 4.75 inches long and about 4 inches in circumference. The set includes two paddles, two Primo balls and a sling bag, and the paddles are listed as USA Pickleball approved. The 8.2-ounce weight is the heaviest of our set picks, which gives a little more stability on blocks, and the fiberglass face adds easy pop. Two things to know: the 4-inch grip is on the small side for larger hands, though an overgrip fixes that cheaply, and listed prices ran from about $59.95 for a single paddle to $129.95 for the full set, which puts the set slightly above our budget at full price. Watch for a sale, or buy two single paddles if that works out cheaper.",
+    "pros": [
+      "Two paddles, two Primo balls and a sling bag in one box",
+      "Listed at about 8.2 oz for stability on blocks and resets",
+      "Fiberglass face and 12mm core give easy power",
+      "Listed as USA Pickleball approved"
+    ],
+    "cons": [
+      "About 4 in grip circumference is small for large hands",
+      "Full set listed at up to $129.95, above our $120 line",
+      "Only two balls in the set"
+    ],
+    "bottomLine": "The JOOLA Essentials set gives two players a name-brand start: two 8.2 oz fiberglass paddles, two balls and a bag, listed between $59.95 per paddle and $129.95 for the set."
+  },
+  {
+    "id": "franklin-signature-16mm",
+    "name": "Franklin Signature Pickleball Paddle (16mm)",
+    "badge": "Best Elongated",
+    "category": "Elongated, 16mm Polypropylene Core, Fiberglass Face",
+    "amazonUrl": "#",
+    "description": "The Franklin Signature is the pick for beginners who already know they want reach, usually tennis or squash players who like a longer frame and a long handle. Retailer listings give the 16mm version a 16.5 by 7.3 inch elongated shape, a 5.6-inch handle, a 16mm polypropylene core, a fiberglass face with Franklin's MaxGrit texture and a weight of 7.9 to 8.3 ounces. The 13mm version is listed at 16.5 by 7.5 inches and 7.5 to 8 ounces. The thick 16mm core is the one to choose as a beginner, because thicker cores generally feel softer and more controlled, which offsets the smaller sweet spot that comes with any elongated shape. Listings describe it as USA Pickleball approved for tournament play, and one retailer listed it at about $99.99. Be honest with yourself before choosing it: an elongated paddle punishes off-center hits more than a widebody, so if you have never played a racquet sport, the Z5 or Radical Elite is the safer start.",
+    "pros": [
+      "Long 5.6 in handle suits two-handed backhands",
+      "16mm polypropylene core leans toward control",
+      "MaxGrit fiberglass face aimed at spin, per Franklin",
+      "Listed as USA Pickleball approved; about $99.99 at one retailer"
+    ],
+    "cons": [
+      "Elongated 7.3 in width shrinks the sweet spot",
+      "Less forgiving for players new to racquet sports",
+      "Listings repeat manufacturer copy, so specs are not independently confirmed"
+    ],
+    "bottomLine": "The Franklin Signature 16mm is the beginner paddle for tennis converts, with a 16.5 x 7.3 in elongated face, a 5.6 in handle and a soft 16mm core."
+  },
+  {
+    "id": "niupipo-fiberglass-set",
+    "name": "Niupipo Fiberglass Pickleball Paddle Set",
+    "badge": "Cheapest Way In",
+    "category": "Set of 2 or 4, Polypropylene Honeycomb Core, Fiberglass Face",
+    "amazonUrl": "#",
+    "description": "If you are not yet sure pickleball will stick, the Niupipo sets are the low-risk way to find out. Listings describe a fiberglass face over a polypropylene honeycomb core, a 4.25-inch grip and USA Pickleball approval, sold in sets of two or four paddles with balls and a carry bag. Listed paddle weights vary between sources, from about 7.6 to 7.8 ounces, which is a comfortable beginner range either way. The honest caveat is that the listings are inconsistent: weight figures differ, and set contents vary between versions, with some listings showing indoor and outdoor balls and others a different mix. Check the exact listing for paddle count, ball type and weight before you buy. What you get is a perfectly playable first paddle for a family or a group trying the game, not a paddle you will keep once your third shot drop starts to matter. When that happens, move up to one of the picks above.",
+    "pros": [
+      "Sold in sets of two or four with balls and a bag",
+      "Fiberglass face over a polypropylene honeycomb core",
+      "4.25 in grip, the common adult size",
+      "Listed as USA Pickleball approved"
+    ],
+    "cons": [
+      "Listed weights and set contents vary between sources",
+      "Generic build with less consistency than name brands",
+      "You will likely outgrow it within a season of regular play"
+    ],
+    "bottomLine": "The Niupipo set is the cheapest sensible way for a family to try pickleball, as long as you confirm the paddle count and ball mix on the listing."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Pickleball Paddles for Beginners",
+          item: "https://www.thehonestreviewers.com/best-pickleball-paddle-for-beginners/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What weight pickleball paddle is best for beginners?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most beginners do best with a mid-weight paddle of roughly 7.6 to 8.2 ounces. It gives enough stability to keep off-center hits on target without tiring your arm. Players with shoulder or elbow issues can go slightly lighter, while strong baseline players can go to the top of the range."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a widebody or elongated paddle better for beginners?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Widebody or standard shapes are better for most beginners because they offer a wider sweet spot, which forgives the side-to-side mishits new players make most often. Elongated paddles add reach but narrow the sweet spot, so they suit players coming from tennis or squash who already make consistent contact."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much should I spend on my first pickleball paddle?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Somewhere between about $50 and $120 is plenty for a first paddle, and two-player sets in that range cover two people. Premium paddles above $150 add features like raw carbon faces and thermoformed construction that mostly matter once your strokes are consistent."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should beginners buy a pickleball paddle set?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A set is a good buy if two people are starting together, because it usually costs less than two separate paddles and includes balls and a bag. If players want different shapes or weights, buy single paddles instead so each person can choose."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do beginner paddles need to be USA Pickleball approved?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For casual play, no. But approval means the paddle meets the rules for sanctioned play, so you can use it in leagues and local tournaments without swapping it. Every paddle in this guide is listed as approved by its maker or retailers."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What core thickness is best for a beginner paddle?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Thicker cores, around 14 to 16mm, tend to feel softer and more controlled, which helps beginners keep the ball low. Thinner 13mm cores feel livelier and add pop. Either is fine for learning; if you want maximum control, lean toward 16mm."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long will a beginner pickleball paddle last?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "With regular play, a beginner paddle typically lasts a season or more before the face texture wears or a dead spot develops. Many players upgrade before the paddle wears out, simply because their game has outgrown it."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Outdoor Gear",
+    tags: [
+      "best pickleball paddle for beginners",
+      "beginner pickleball paddle",
+      "pickleball paddle set",
+      "best pickleball paddle set",
+      "cheap pickleball paddle"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Beginner Picks
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best Pickleball Paddles <span class="text-[#38BDF8]">for Beginners</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Six forgiving paddles and sets under about $120, picked for the things that matter in your first season: a wide sweet spot, a mid weight and a grip that fits.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#selkirk-slk-neo-2-set"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            See the Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="8.4k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-chose" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Chose</a>
+          <a href="#what-beginners-need" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. What Beginners Need</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 6 Picks</a>
+          <a href="#weight" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Weight</a>
+          <a href="#shape" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Shape and Sweet Spot</a>
+          <a href="#core-face" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Core and Face</a>
+          <a href="#sets" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Sets vs Singles</a>
+          <a href="#grip" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Grip Size</a>
+          <a href="#upgrade" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. When to Upgrade</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          A beginner does not need a $250 carbon paddle. You need a forgiving face, a mid weight around 7.6 to 8.2 ounces and a grip that fits your hand, and every paddle below delivers that for well under the price of a premium model.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-chose" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Chose These Paddles
+          </h2>
+
+          <p>
+            We did not lab-test these paddles. This is a researched buying guide: every weight, core thickness, shape and price below comes from the manufacturer or a named retailer or review listing, and where sources disagree we say so. What we did was decide what a beginner actually needs, then filter the market against that list rather than against the marketing on the box.
+          </p>
+
+          <p>
+            The first filter was price. A new player does not need a $250 carbon paddle, and most of the performance those paddles add, such as extra spin from raw carbon faces or the power of foam-injected edges, is invisible until your strokes are consistent. We drew the line at roughly $120 for a paddle or a two-player set, with one pick sitting just over that line at full price because it often sells for less.
+          </p>
+
+          <p>
+            The second filter was forgiveness. A beginner hits the ball off center constantly, so we favored widebody and standard shapes over elongated ones, mid weights over very light or very heavy builds, and cores of 13mm and up. The single elongated paddle on the list is there for players coming from tennis, and we say plainly who should skip it.
+          </p>
+
+          <p>
+            The third filter was legitimacy. Every paddle here is listed as USA Pickleball approved by its maker or its retailers. Approval does not make a paddle good, but it means you can take it to a league night or a local tournament without being told to swap it out, which matters more than most beginners expect.
+          </p>
+
+          <p>
+            If you are already past the beginner stage, or you want to see how these compare with the paddles intermediate players use, our <a href="/best-pickleball-paddle/">full guide to the best pickleball paddles</a> covers the whole market, including carbon fiber and thermoformed builds.
+          </p>
+        </div>
+
+        <div id="what-beginners-need" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. What a Beginner Paddle Should Do
+          </h2>
+
+          <p>
+            A beginner paddle has one job: make the ball go roughly where you meant it to, even when you hit it slightly wrong. That sounds obvious, but it rules out a lot of what gets marketed hardest. Spin ratings, power ratings and pro endorsements describe what a paddle does in skilled hands. For a new player, the sweet spot and the weight matter far more.
+          </p>
+
+          <p>
+            Control comes first. Most points at the beginner and intermediate level are lost on errors, not won on winners, so a paddle that keeps the ball low and in the court is worth more than one that adds a few miles per hour to a drive. Thicker cores, generally 14mm to 16mm, tend to feel softer and give more control, while thinner 11mm to 13mm cores feel livelier and add pop.
+          </p>
+
+          <p>
+            Forgiveness is the second need. A wider face gives you more room for error side to side, which is where most beginner mishits land. Widebody paddles sacrifice a little reach, but reach is a problem you will not notice until you can place the ball deliberately. Our guide on <a href="/how-to-choose-a-pickleball-paddle/">how to choose a pickleball paddle</a> walks through how shape, core and face interact if you want the longer version.
+          </p>
+
+          <p>
+            Comfort is the third. A paddle that is too heavy tires your arm and slows your hands at the kitchen line, and a handle that is too thin or too thick makes you grip harder than you should. Both show up as sore elbows after a few weeks of play, which is the most common reason new players buy a second paddle.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 6 Picks
+          </h2>
+
+          <p>
+            These six cover the main ways people start: a two-player set from a serious brand, the most forgiving single paddle, a soft balanced option, a name-brand set, an elongated paddle for tennis players and the cheapest sensible set. We have not lab-tested them; specs and prices come from the makers and the retailer and review listings named in each card.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="weight" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Weight: Why Mid-Weight Is the Safe Start
+          </h2>
+
+          <p>
+            Paddle weights are usually described in three bands: light paddles under about 7.5 ounces, mid weights from roughly 7.6 to 8.2 ounces, and heavy paddles above that. Most beginner paddles, including most of our picks, sit in or near the middle band, and that is not an accident.
+          </p>
+
+          <p>
+            Light paddles are quick. They are easy to swing at the kitchen line, where volleys happen fast, and they are kind to sore shoulders. The downside is stability: a light paddle twists more on off-center hits and gives less power on drives, so beginners often compensate by swinging harder, which is how elbow problems start.
+          </p>
+
+          <p>
+            Heavy paddles are stable and powerful. They plow through the ball and punish fast drives less, but they are slower at the net and harder on the arm over a long session. For a new player who is still learning to keep the paddle up and ready, the extra weight is usually a liability.
+          </p>
+
+          <p>
+            The middle band gives you most of the stability of a heavier paddle without most of the fatigue. If you are smaller, older or recovering from an arm injury, lean toward the low end; if you are strong and play mostly from the baseline, the top of the band is fine. Our <a href="/pickleball-paddle-weight/">pickleball paddle weight guide</a> covers the trade-offs in more detail, including how to add lead tape later.
+          </p>
+
+          <p>
+            One practical note: listed weights are averages, and individual paddles vary by a few tenths of an ounce. Several of our picks list a range rather than a single figure for exactly that reason. If you buy in person, weigh two or three and pick the one that feels best.
+          </p>
+        </div>
+
+        <div id="shape" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Shape and Sweet Spot: Widebody vs Elongated
+          </h2>
+
+          <p>
+            Paddle shape is a trade between width and length. USA Pickleball rules cap the combined length and width, so a paddle that gains reach must give up width, and a paddle that gains width must give up reach. Every shape is a different answer to the same constraint.
+          </p>
+
+          <p>
+            Widebody paddles, around 8 inches or more across, put the most hitting area where beginners need it. Standard shapes, around 7.8 to 8 inches wide and about 15.5 to 16 inches long, are a sensible middle ground and are what most sets include. Elongated paddles, often 16.5 inches long and 7.5 inches wide or less, add reach and leverage but narrow the sweet spot.
+          </p>
+
+          <p>
+            For most beginners, a widebody or standard shape is the right call. The Onix Z5 and HEAD Radical Elite are the widest options on our list, and the Selkirk and JOOLA sets use standard shapes. The Franklin Signature is the exception, and it suits players whose tennis or squash background has already given them consistent contact.
+          </p>
+
+          <p>
+            Handle length is tied to shape. Widebody paddles often have shorter handles, around 5 inches, which is plenty for one-handed play but cramps a two-handed backhand. Elongated paddles usually have handles of 5.5 inches or more. If you already hit a two-handed backhand, that may decide the shape for you.
+          </p>
+        </div>
+
+        <div id="core-face" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Core Thickness and Face: What to Ignore for Now
+          </h2>
+
+          <p>
+            Paddle marketing spends a lot of words on cores and faces. Most of it describes differences a beginner will not feel for months, but two points are worth understanding before you buy.
+          </p>
+
+          <p>
+            Core thickness affects feel. Thicker cores, typically 16mm, absorb more energy and keep the ball on the face slightly longer, which most players describe as softer and more controllable. Thinner cores, around 13mm, return energy faster and feel poppier. Beginners usually do better on the thicker side, but a 13mm paddle like the SLK Neo is still perfectly easy to learn on.
+          </p>
+
+          <p>
+            Face material affects power and spin. Fiberglass faces tend to feel springy and give easy power, which helps beginners get the ball deep. Graphite faces feel crisper and slightly more controlled. Raw carbon fiber faces add grit for spin and appear mostly on more expensive paddles, which is why none of our beginner picks use them.
+          </p>
+
+          <p>
+            What to ignore for now: thermoformed construction, foam-injected edges, spin ratings and branded core names. These matter to intermediate and advanced players chasing specific performance, and they add cost. Our <a href="/how-much-does-a-pickleball-paddle-cost/">guide to what pickleball paddles cost</a> explains what each price tier actually buys you, and where the money starts to make sense.
+          </p>
+        </div>
+
+        <div id="sets" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Sets vs a Single Paddle
+          </h2>
+
+          <p>
+            Sets make sense more often than serious players admit. If two people in a household are starting together, a two-paddle set with balls and a bag usually costs less than two separate paddles, and every set on our list uses paddles that are perfectly adequate for the first season or two of play.
+          </p>
+
+          <p>
+            The trade-off is choice. A set gives you two identical paddles chosen by the manufacturer, and set paddles are usually entry-level models. If one of you is coming from tennis and wants an elongated paddle while the other wants a soft widebody, buying singles lets each player choose.
+          </p>
+
+          <p>
+            Check what the balls are. Many sets include outdoor balls, which are harder with smaller holes, and some include indoor balls, which are softer with larger holes. Playing indoor balls outside, or outdoor balls in a gym, changes how the game feels. Our <a href="/best-pickleball-balls/">guide to the best pickleball balls</a> covers which balls suit which courts, and most players end up buying a separate pack anyway.
+          </p>
+
+          <p>
+            Finally, read the contents line carefully. Our Niupipo pick is sold in several configurations, and the JOOLA set includes two balls rather than four. A set that looks cheaper may simply include less.
+          </p>
+        </div>
+
+        <div id="grip" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Grip Size and Handle Length
+          </h2>
+
+          <p>
+            Grip size is the circumference of the handle, and most adult paddles fall between about 4 and 4.5 inches. Our picks cluster around 4.25 inches, which suits a wide range of adult hands, with the JOOLA Essentials on the small side at about 4 inches.
+          </p>
+
+          <p>
+            When in doubt, choose the smaller grip. You can build a small grip up with an overgrip for a few dollars, but you cannot make a thick grip thinner. A grip that is too large forces you to squeeze harder, which tires the forearm, while a grip that is slightly small lets the paddle rotate in your hand on off-center hits.
+          </p>
+
+          <p>
+            A simple check is to hold the paddle in a handshake grip and see whether you can fit a finger of the other hand between your fingertips and the base of your palm. Our <a href="/pickleball-paddle-grip-size/">pickleball paddle grip size guide</a> has a measuring method and a size chart if you want to be precise.
+          </p>
+
+          <p>
+            Handle length matters mainly for two-handed backhands. Around 5 inches suits one-handed players, while 5.5 inches and up gives room for a second hand. If you are unsure, start one-handed with a standard handle; most beginners do.
+          </p>
+        </div>
+
+        <div id="upgrade" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. When to Upgrade, and What to Buy Next
+          </h2>
+
+          <p>
+            Most players can play happily on a beginner paddle for a season or more. The signs it is time to upgrade are specific: you consistently hit the sweet spot, you want more spin on serves and third shots than the face allows, or the paddle has developed a dead spot that sounds and feels different from the rest of the face.
+          </p>
+
+          <p>
+            When you upgrade, keep what worked. If a mid-weight widebody felt comfortable, look at mid-weight widebody paddles with carbon faces rather than jumping to an elongated power paddle. The skills you built on a forgiving paddle transfer best to a similar shape.
+          </p>
+
+          <p>
+            Shoes are the other upgrade most beginners leave too late. Running shoes are built for forward motion and give little support for the side-to-side steps pickleball demands, which is a common route to rolled ankles. Our <a href="/best-pickleball-shoes/">guide to the best pickleball shoes</a> covers court shoes that suit the game, and it is worth reading before you play regularly.
+          </p>
+
+          <p>
+            When you are ready for a step up, our <a href="/best-pickleball-paddle/">best pickleball paddles overall</a> ranks the paddles intermediate players move to, from thermoformed carbon builds to control-focused paddles that reward a developing soft game.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying an Advanced Paddle First</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A $200-plus carbon paddle with a raw face and a thin, elongated shape is built to reward precise contact. In a beginner's hands it often feels unforgiving and adds little. Spend the difference on good court shoes and balls, and upgrade once you hit the sweet spot consistently and know what you want more of.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Choosing by Power Rating</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Power and spin ratings describe what a paddle does for a skilled player. For a beginner, most points are lost on errors, so a paddle that adds pace mainly adds unforced errors. Prioritize a wide sweet spot and a mid weight, and let power come from better technique.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring Grip Size</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A grip that is too large makes you squeeze harder and is a common route to a sore forearm or elbow. When unsure, pick the smaller size and build it up with an overgrip, which costs a few dollars and takes minutes.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Going Too Light</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Very light paddles feel fast in the shop but twist on off-center hits, and beginners often swing harder to compensate. Unless you have an arm or shoulder issue, start in the mid-weight band of roughly 7.6 to 8.2 ounces.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Not Checking Set Contents</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Sets vary more than the photos suggest. Some include two balls, some four; some include indoor balls, some outdoor; some include a bag and some do not. Read the contents line, and check that the balls suit the courts you will actually play on.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What weight pickleball paddle is best for beginners?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Most beginners do best with a mid-weight paddle of roughly 7.6 to 8.2 ounces. It gives enough stability to keep off-center hits on target without tiring your arm. Players with shoulder or elbow issues can go slightly lighter, while strong baseline players can go to the top of the range.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a widebody or elongated paddle better for beginners?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Widebody or standard shapes are better for most beginners because they offer a wider sweet spot, which forgives the side-to-side mishits new players make most often. Elongated paddles add reach but narrow the sweet spot, so they suit players coming from tennis or squash who already make consistent contact.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How much should I spend on my first pickleball paddle?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Somewhere between about $50 and $120 is plenty for a first paddle, and two-player sets in that range cover two people. Premium paddles above $150 add features like raw carbon faces and thermoformed construction that mostly matter once your strokes are consistent.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Should beginners buy a pickleball paddle set?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A set is a good buy if two people are starting together, because it usually costs less than two separate paddles and includes balls and a bag. If players want different shapes or weights, buy single paddles instead so each person can choose.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do beginner paddles need to be USA Pickleball approved?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For casual play, no. But approval means the paddle meets the rules for sanctioned play, so you can use it in leagues and local tournaments without swapping it. Every paddle in this guide is listed as approved by its maker or retailers.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What core thickness is best for a beginner paddle?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Thicker cores, around 14 to 16mm, tend to feel softer and more controlled, which helps beginners keep the ball low. Thinner 13mm cores feel livelier and add pop. Either is fine for learning; if you want maximum control, lean toward 16mm.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long will a beginner pickleball paddle last?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                With regular play, a beginner paddle typically lasts a season or more before the face texture wears or a dead spot develops. Many players upgrade before the paddle wears out, simply because their game has outgrown it.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Pickleball Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-pickleball-paddle/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Pickleball Paddles</h3>
+              <p class="text-gray-500 text-sm mt-2">The full market, from beginner sets to thermoformed carbon paddles.</p>
+            </a>
+            <a href="/how-to-choose-a-pickleball-paddle/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">How to Choose a Pickleball Paddle</h3>
+              <p class="text-gray-500 text-sm mt-2">Weight, shape, core, face and grip, and how they work together.</p>
+            </a>
+            <a href="/best-pickleball-shoes/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Pickleball Shoes</h3>
+              <p class="text-gray-500 text-sm mt-2">Court shoes built for the side-to-side movement pickleball demands.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The best pickleball paddle for most beginners is the <strong class="text-white">Selkirk SLK Neo 2.0 set</strong>, which Pickleheads lists at $79.99 for two 7.5-ounce paddles, four balls and a bag. If you only need one paddle, the <strong class="text-white">Onix Graphite Z5</strong> has the most forgiving widebody face here, and the <strong class="text-white">HEAD Radical Elite</strong> is the softest, most balanced feel.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Whatever you choose, stay in the mid-weight band, pick the smaller grip if you are unsure, and spend what you save on court shoes. Upgrade when you hit the sweet spot consistently, not before.
+          </p>
+        </div>
+
+        <MoreInCategory category="Outdoor Gear" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

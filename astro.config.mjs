@@ -622,6 +622,28 @@ const priorityGuides = new Set([
   'ceiling-paint-sheen',
   'ceiling-paint-roller-marks',
   'how-much-paint-for-a-ceiling',
+
+  // October 2026 run: pickleball cluster.
+  'best-pickleball-paddle',
+  'best-pickleball-shoes',
+  'best-pickleball-paddle-for-beginners',
+  'best-pickleball-paddle-for-spin',
+  'best-pickleball-paddle-for-tennis-elbow',
+  'best-pickleball-balls',
+  'how-to-choose-a-pickleball-paddle',
+  'pickleball-paddle-weight',
+  'pickleball-paddle-grip-size',
+  '14mm-vs-16mm-pickleball-paddle',
+  'carbon-fiber-vs-fiberglass-pickleball-paddle',
+  'thermoformed-pickleball-paddle',
+  'elongated-vs-standard-pickleball-paddle',
+  'usa-pickleball-approved-paddles',
+  'how-long-do-pickleball-paddles-last',
+  'how-much-does-a-pickleball-paddle-cost',
+  'indoor-vs-outdoor-pickleball-balls',
+  'pickleball-court-dimensions',
+  'pickleball-shoes-vs-tennis-shoes',
+  'can-you-wear-running-shoes-for-pickleball',
 ]);
 
 export default defineConfig({
