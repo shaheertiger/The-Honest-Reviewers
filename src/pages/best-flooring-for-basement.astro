@@ -1,0 +1,831 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Vinyl Plank Flooring",
+    "url": "/best-vinyl-plank-flooring/"
+  },
+  {
+    "title": "LVP vs Laminate",
+    "url": "/lvp-vs-laminate/"
+  },
+  {
+    "title": "Best Underlayment for Vinyl Plank",
+    "url": "/best-underlayment-for-vinyl-plank-flooring/"
+  },
+  {
+    "title": "Best Basement Floor Paint",
+    "url": "/best-basement-floor-paint/"
+  },
+  {
+    "title": "Best Hydraulic Cement",
+    "url": "/best-hydraulic-cement/"
+  },
+  {
+    "title": "Basement Moisture Control",
+    "url": "/basement-moisture-control/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-19", modified: "2026-10-19" });
+const title = "7 Best Flooring Options for a Basement: Waterproof Picks for Concrete Slabs";
+const description =
+  "The best basement flooring for damp concrete: rigid-core vinyl plank, insulated subfloor panels, epoxy, rubber and carpet tile, chosen on moisture tolerance.";
+
+const PRODUCTS = [
+  {
+    "id": "coretec-plus-premium",
+    "name": "COREtec Plus Premium",
+    "badge": "Best Overall",
+    "category": "Rigid-Core Vinyl Plank with Attached Cork",
+    "description": "COREtec Plus Premium is the plank we would put in most finished basements because it carries everything a below-grade floor needs in one box. Retailer listings describe the planks as 12 mm thick with a 30 mil wear layer and an attached cork underlayment, and list the installation level as above, on or below grade, which is the line you are looking for on any basement floor. The line is sold as 100% waterproof, meaning the plank itself will not swell if it gets wet, and the attached cork is described by sellers as naturally resistant to mold and mildew while adding some warmth and sound damping over bare concrete. At 12 mm it is one of the thicker click planks on the market, which helps it bridge minor slab dips. One listing cites a limited lifetime residential warranty. The weak spot is price: it sits near the top of the vinyl plank range, and the Premium specs come from retailers rather than a COREtec spec sheet we could read, so check the current sheet for the collection you choose. Do not confuse it with Plus XL or Pro Plus, which are thinner lines with different wear layers.",
+    "pros": [
+      "Retailers list it for above, on and below-grade installation",
+      "30 mil wear layer and 12 mm thickness listed for the Premium collection",
+      "Attached cork underlayment, so no separate pad",
+      "Plank is waterproof and will not swell if wet"
+    ],
+    "cons": [
+      "Among the most expensive vinyl planks per square foot",
+      "Premium specs come from retailer listings, not a manufacturer sheet we could read",
+      "Easy to confuse with thinner Plus XL and Pro Plus lines"
+    ],
+    "bottomLine": "The thick, waterproof, cork-backed plank that makes a basement feel like the rest of the house, if the budget allows."
+  },
+  {
+    "id": "lifeproof-rigid-core",
+    "name": "Lifeproof Rigid Core Luxury Vinyl Plank",
+    "badge": "Best Value Plank",
+    "category": "Rigid-Core Vinyl Plank with Attached Pad",
+    "description": "Lifeproof is the rigid-core plank most people find first at Home Depot, and for a basement on a budget it does the important things. Retailer listings for current SKUs describe a 1 mm attached pad, a waterproof plank and wear layers of 22 mil on some collections and 30 mil on others, with overall thickness running from about 6.5 mm to 8 mm depending on the style. That spread is the main thing to watch: the 22 mil SKUs are fine for a family room, while a basement gym or bar area deserves the 30 mil versions. Listings cite a lifetime residential warranty. The thinner build does less to hide slab imperfections than a 12 mm plank, so flatness matters more, and listings disagree on whether particular SKUs are rated below grade, with some marked indoor only and others listing above, on or below grade. Check the installation guide for the exact plank before you order a basement's worth of boxes.",
+    "pros": [
+      "Attached 1 mm pad listed, so no separate underlayment",
+      "Waterproof plank sold in many looks",
+      "30 mil wear layer available on some collections",
+      "Widely stocked, easy to add boxes later"
+    ],
+    "cons": [
+      "Wear layer varies from 22 to 30 mil by SKU",
+      "Thinner planks demand a flatter slab",
+      "Listings disagree on below-grade rating for some SKUs"
+    ],
+    "bottomLine": "A sensible budget plank for a dry basement, provided you buy a 30 mil SKU rated for below-grade use."
+  },
+  {
+    "id": "dricore-subfloor-panel",
+    "name": "DRIcore Subfloor Membrane Panel",
+    "badge": "Best Raised Subfloor",
+    "category": "2 x 2 ft OSB-on-Plastic Subfloor Panel",
+    "description": "DRIcore is not a finished floor; it is the layer that makes a finished floor survive a damp, cold slab. Each panel is 2 ft by 2 ft, an oriented strand board top on a high-density polyethylene base, and Home Depot lists the standard panel at 3/4 inch thick. DRIcore's installation guide describes the polyethylene moisture barrier as raised 1/4 inch on cleats so air and moisture can move beneath the floor rather than being trapped against it. A homeowner review puts the standard panel's R-value at about 1.44, which takes the chill off without being real insulation, and Home Depot lists a load rating of 6,642 lb per square foot. Shims sold for the system level dips of up to 1/4 inch. Sources disagree on thickness, with one woodworking magazine citing 7/8 inch, so measure your door clearances with the actual panel. The catch is cost and height: you are paying for a second floor and raising the room by most of an inch before the finish floor goes on.",
+    "pros": [
+      "Raised plastic base lets air and moisture move under the floor",
+      "OSB top accepts vinyl plank, laminate, carpet or engineered wood",
+      "Leveling shims sold for dips up to 1/4 inch",
+      "Panels click together without glue or fasteners into the slab"
+    ],
+    "cons": [
+      "Adds roughly 3/4 inch to floor height before the finish floor",
+      "Modest R-value on the standard panel",
+      "Sources disagree on panel thickness"
+    ],
+    "bottomLine": "The subfloor to put under any finished floor when the slab is cold or a little damp."
+  },
+  {
+    "id": "barricade-insulated-subfloor",
+    "name": "Barricade Insulated Subfloor Panel",
+    "badge": "Best Insulated Subfloor",
+    "category": "OSB-over-Foam Subfloor Panel",
+    "description": "Barricade's insulated panel is the pick when cold feet, not dampness, is the bigger complaint. RONA lists the panel at 23.25 inches square and 1 inch thick, an OSB top over a foam base, with an R-value of 3.2 and a 25-year warranty, while two other retailers list what appears to be the same panel at R-2.7, a discrepancy we could not resolve. Either way it carries roughly double the insulating value of a standard plastic-base panel, because the foam does the work instead of an air gap. Barricade also sells an uninsulated Air Plus panel listed at about R-1.4. The trade-off is that foam-backed panels do not ventilate the way a dimpled membrane does, so they suit slabs that test dry but cold rather than slabs that are actively damp. Our listings were mostly Canadian, so US availability and specs may differ.",
+    "pros": [
+      "Foam base listed at roughly R-2.7 to R-3.2",
+      "OSB top takes most finished floors",
+      "25-year warranty listed by one retailer",
+      "Noticeably warmer underfoot than bare concrete"
+    ],
+    "cons": [
+      "Retailers disagree on the R-value",
+      "Foam base does not ventilate like a raised membrane",
+      "Mostly Canadian listings; US stock varies"
+    ],
+    "bottomLine": "The panel for a dry but cold slab, where warmth matters more than airflow."
+  },
+  {
+    "id": "rust-oleum-epoxyshield-basement",
+    "name": "Rust-Oleum EpoxyShield Basement Floor Coating",
+    "badge": "Best Coating",
+    "category": "Two-Part Water-Based Epoxy Kit",
+    "description": "If you want a basement floor that can take a flood and be mopped dry, a coating is the honest answer, and Rust-Oleum's EpoxyShield basement kit is the easiest to find. The kit pairs a base of about 104 fluid ounces with a 16-ounce activator. Rust-Oleum's technical data sheet gives practical coverage of 150 to 200 square feet per gallon at the recommended 3.0 to 3.5 mils per coat, while retailers advertise about 250 square feet, so plan on the lower number. The data sheet allows light foot traffic after 8 hours and normal traffic after 24. The limit is printed right on the sheet: it is not intended for floors with a moisture problem, and new concrete needs at least 28 days to cure. That makes it a coating for slabs that pass a moisture test, not a fix for damp ones. It also looks like a coated utility floor rather than a living room, which suits a gym, workshop or laundry better than a family room.",
+    "pros": [
+      "Survives standing water and mops clean",
+      "Data sheet allows normal foot traffic after 24 hours",
+      "Cheapest finished surface per square foot on this list",
+      "Low height, so no door or stair trimming"
+    ],
+    "cons": [
+      "Not intended for slabs with a moisture problem",
+      "Real coverage nearer 150 to 200 sq ft than the advertised 250",
+      "Hard, cold surface underfoot"
+    ],
+    "bottomLine": "The low-cost, flood-proof finish for a dry slab you will use as a gym, shop or laundry space."
+  },
+  {
+    "id": "rubber-cal-armor-lock",
+    "name": "Rubber-Cal Armor-Lock Interlocking Rubber Tiles",
+    "badge": "Best for a Basement Gym",
+    "category": "3/8 in Interlocking Rubber Tile",
+    "description": "Rubber tile is the right floor for a basement gym or kids' play area, and Rubber-Cal's Armor-Lock tiles are a straightforward version. Retailer listings describe the tiles as 3/8 inch (9.53 mm) thick and 20 by 20 inches, with puzzle edges that lock together without glue or tools, and one listing names basements among the intended uses. Packs run from 8 tiles covering about 22 square feet to 16 tiles covering about 44, and the weight is substantial, about 93 pounds for the 16-pack, which keeps them from creeping. Listings cite a limited 3-year warranty. Because the tiles are loose-laid, you can lift them to dry the slab after a leak, which is a real advantage in a basement. The drawbacks are the rubber smell when new, a utilitarian look, and the fact that rubber over concrete can trap moisture against the slab if water gets underneath and stays there.",
+    "pros": [
+      "Loose-laid, so tiles lift out to dry the slab after a leak",
+      "3/8 inch rubber cushions dropped weights and feet",
+      "Interlocking edges need no glue or tools",
+      "Heavy enough to stay put"
+    ],
+    "cons": [
+      "Rubber odor when new",
+      "Utilitarian look for a living space",
+      "Moisture trapped underneath needs the tiles lifted to dry"
+    ],
+    "bottomLine": "The floor for a basement gym or play area, and easy to pull up when the slab needs to dry."
+  },
+  {
+    "id": "flor-carpet-tiles",
+    "name": "FLOR Carpet Tiles",
+    "badge": "Best Carpet Option",
+    "category": "Modular Carpet Tile",
+    "description": "If a basement has to feel soft, carpet tile is the only carpet we would put on a slab, and FLOR is the best-known consumer brand. The appeal is modularity: a stained or wet tile can be lifted and replaced instead of tearing out a wall-to-wall carpet and pad. FLOR's own guidance is candid about the risks. Its FAQ says the tiles are not made from wicking or breathable material, so if they get saturated, water can become trapped underneath, and its care material warns that prolonged moisture can cause discoloration and mildew. FLOR advises sealing concrete with a non-solvent sealer and letting it dry completely before installation, and its commercial guide requires moisture and pH testing of every concrete slab. In other words, carpet tile works in a dry basement and fails in a damp one. Pair it with a dehumidifier and treat any leak as an emergency.",
+    "pros": [
+      "Damaged or wet tiles replace individually",
+      "Soft, warm surface for a family room or kids' space",
+      "No pad to soak up water like broadloom carpet",
+      "Many patterns and colors"
+    ],
+    "cons": [
+      "Can trap water underneath if saturated, per FLOR",
+      "Only suits slabs that test dry",
+      "Higher cost per square foot than broadloom"
+    ],
+    "bottomLine": "The carpet to choose for a dry basement, because one ruined tile is a small problem rather than a whole floor."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Flooring for Basement",
+          item: "https://www.thehonestreviewers.com/best-flooring-for-basement/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best flooring for a basement?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most finished basements, rigid-core vinyl plank with an attached pad is the best balance of moisture tolerance, comfort, looks and cost. The plank is waterproof and floats over the slab. Choose a product rated for below-grade installation, ideally with a 20 to 30 mil wear layer, and follow the maker's vapor barrier instructions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need a subfloor in my basement?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not always. If the slab tests dry and is not especially cold, vinyl plank can go directly over a vapor barrier. A raised dimpled subfloor helps where the slab is slightly damp, and a foam-backed insulated panel helps where it is dry but cold. Both raise the floor, so check door and stair clearances first."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you put laminate flooring in a basement?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can, but we would choose vinyl instead. Most laminate has a wood-fiber core that swells if water reaches it through seams or from below. Some newer laminates carry water-resistance claims, but a basement leak that a vinyl plank shrugs off can ruin a laminate floor."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is porcelain tile good for a basement floor?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, it is the most water-tolerant finished floor you can install, absorbing no more than 0.5 percent water by ANSI definition. The downsides are cost, installation labor and a cold, hard surface. An uncoupling membrane helps prevent cracks, and radiant heat or rugs handle the cold."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is epoxy a good basement floor?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Epoxy is a good, low-cost choice for a dry slab used as a gym, laundry or workshop. It is not suited to slabs with a moisture problem, because vapor from below can lift the coating. Rust-Oleum's data sheet for its basement kit says this explicitly, so test the slab first."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What flooring should I avoid in a basement?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Avoid solid hardwood and wall-to-wall carpet with a pad. Solid wood cups and swells with basement humidity swings, and carpet pad soaks up water and hides leaks. Laminate is a weaker choice than vinyl for the same reason: its core can swell if it gets wet."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I keep a basement floor from getting moldy?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Fix any water entry first, run a dehumidifier to keep humidity around 45 to 50 percent, use inorganic flooring materials, follow the vapor barrier instructions and leave the perimeter expansion gap. Mold needs moisture and something organic to feed on, so remove both."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home Improvement",
+    tags: [
+      "best flooring for basement",
+      "basement flooring",
+      "waterproof basement flooring",
+      "best vinyl plank for basement",
+      "basement subfloor",
+      "flooring for concrete basement"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated October 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The 7 Best <span class="text-[#38BDF8]">Basement Flooring</span> Options
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Below-grade concrete breathes moisture up through the slab. These are the floors that tolerate it, from rigid-core vinyl plank to insulated subfloor panels, epoxy, rubber and carpet tile.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#coretec-plus-premium"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Jump to the Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="9.8k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-picked" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Picked</a>
+          <a href="#moisture-first" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Test the Slab First</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 7 Picks</a>
+          <a href="#vinyl-plank" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Why Rigid-Core Vinyl Wins</a>
+          <a href="#subfloors" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Subfloor Panels</a>
+          <a href="#tile-epoxy" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Tile, Epoxy and Rubber</a>
+          <a href="#carpet-wood" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Carpet and Wood</a>
+          <a href="#installation" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Installation Details</a>
+          <a href="#budget" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. What It Costs</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          For most finished basements, a rigid-core vinyl plank with an attached pad, laid over a dry slab, is the floor to buy. If the slab is cold or a little damp, put a raised subfloor panel underneath it. Everything else on this list solves a narrower problem, and the first thing to settle is not which floor you like but how much water your concrete is giving off.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-picked" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Picked These Floors
+          </h2>
+
+          <p>
+            We did not install seven floors in a test basement and flood it, and we are not going to pretend otherwise. This guide is built from manufacturer data sheets, installation guides and retailer listings, and every number is attributed to where it came from. Where two sources disagree, as they do on the R-value of an insulated subfloor panel or the thickness of a DRIcore panel, we say so rather than picking the more flattering figure.
+          </p>
+
+          <p>
+            The selection criterion that matters most in a basement is not looks or price. It is how a floor behaves when moisture rises through the slab, because below-grade concrete is in contact with soil on the other side and passes water vapor upward all year. A floor that tolerates that vapor, or a system that lets it escape, lasts. A floor that traps it against organic material such as wood, paper-faced backing or carpet pad grows mold and fails.
+          </p>
+
+          <p>
+            So we sorted the options by moisture tolerance first. Inorganic, waterproof surfaces such as vinyl plank, porcelain tile, epoxy and rubber sit at the top. Raised or insulated subfloor panels come next, because they change the conditions under any finished floor. Carpet and wood come last, because they only work when the slab is reliably dry.
+          </p>
+
+          <p>
+            Within each category we chose products that are widely sold, list a below-grade or basement use, and publish enough specification detail to compare. We left out products whose specs we could not confirm, and we flag where a figure comes only from a single retailer. Our <a href="/best-vinyl-plank-flooring/">vinyl plank flooring guide</a> covers the plank category in more depth if that is where you are headed.
+          </p>
+        </div>
+
+        <div id="moisture-first" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Test the Slab Before You Choose a Floor
+          </h2>
+
+          <p>
+            The single most useful thing you can do before buying basement flooring costs almost nothing. Tape a 2 foot square of clear plastic sheeting to the bare slab on all four edges and leave it for 24 to 48 hours. If droplets form under the plastic, moisture is coming up through the concrete. If they form on top, the room air is humid and condensing on a cold slab. Both are problems, but they have different fixes.
+          </p>
+
+          <p>
+            Moisture from below points toward waterproof floors and raised subfloors, and sometimes toward fixing the source first. If water is actually entering at the joint between floor and wall, or through cracks, no floor will save you, and the order of work is to stop the water, then dry the space, then floor it. Our guides to <a href="/water-coming-through-basement-floor/">water coming through a basement floor</a> and <a href="/basement-moisture-control/">basement moisture control</a> walk through those fixes, and active leaks in walls usually call for <a href="/best-hydraulic-cement/">hydraulic cement</a> before anything else.
+          </p>
+
+          <p>
+            Condensation on top of the plastic points toward humidity control. Basements commonly run humid in summer because cool surfaces sit below the dew point of the incoming air. A properly sized dehumidifier, set somewhere around 45 to 50 percent relative humidity, often fixes this entirely, and our <a href="/best-dehumidifier-for-basement/">basement dehumidifier picks</a> cover sizing. Running one before and after the floor goes in is cheap insurance for any floor on this list.
+          </p>
+
+          <p>
+            Manufacturers set their own moisture limits, often using calcium chloride or in-slab relative humidity tests, and a flooring warranty may depend on meeting them. The plastic sheet test tells you whether there is a problem; the manufacturer's test tells you whether you are inside their warranty. If you are spending real money on a finished floor, it is worth running the test the manufacturer names.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 7 Picks
+          </h2>
+
+          <p>
+            Every figure below comes from the manufacturer's data sheet or installation guide, or from a retailer listing repeating it, and we say where sources disagree. We did not lab-test these floors. We picked them on how well each type tolerates moisture from below, how it handles a cold slab, and what it costs to install, and we checked each against current listings. Confirm the exact SKU before you buy, because wear layers, thicknesses and ratings vary inside the same product line.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="vinyl-plank" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Why Rigid-Core Vinyl Plank Wins Most Basements
+          </h2>
+
+          <p>
+            Rigid-core vinyl plank, sold as SPC or WPC, is the default recommendation for finished basements for good reason. The plank is made of PVC with a stone-polymer or foamed-polymer core, none of which absorbs water, so the plank itself does not swell or rot if it gets wet. It clicks together as a floating floor, which means it sits on the slab rather than being glued to it, and it tolerates the slight seasonal movement of a concrete floor.
+          </p>
+
+          <p>
+            Waterproof does not mean the floor stops moisture from coming up, and that distinction catches people out. Water vapor can still rise through the slab and collect under a floating floor, and if there is any organic material in the system, such as a cheap foam pad with a paper face, that is where mold starts. That is why the pad matters. An attached cork or polymer pad, as on COREtec Plus Premium and Lifeproof, avoids a separate layer, and many manufacturers specify a 6 mil polyethylene vapor barrier under the floor on concrete. Our <a href="/best-underlayment-for-vinyl-plank-flooring/">underlayment guide</a> explains when to add one and when an attached pad makes it redundant.
+          </p>
+
+          <p>
+            Wear layer is the number that decides how long the surface lasts. Twelve mil is entry level, 20 mil is a solid residential floor, and 30 mil is what you want for a basement gym or bar area with chairs and equipment dragging across it. Overall thickness helps more with comfort and with bridging small slab dips than with durability, which is why a 12 mm plank feels more solid on concrete than a 6.5 mm one.
+          </p>
+
+          <p>
+            Laminate is sometimes sold as an alternative, and some newer laminates carry water-resistance claims. The core of most laminate is still a wood-fiber board, though, and it swells if water reaches it through the seams or from below. For a basement we would choose vinyl over laminate almost every time, and our <a href="/lvp-vs-laminate/">LVP vs laminate comparison</a> and <a href="/is-laminate-flooring-waterproof/">laminate waterproofing explainer</a> lay out why.
+          </p>
+        </div>
+
+        <div id="subfloors" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Subfloor Panels: When They Are Worth the Height
+          </h2>
+
+          <p>
+            A subfloor panel goes between the concrete and the finished floor. The two common designs are a dimpled plastic base under an OSB top, as with DRIcore, and a foam base under an OSB top, as with Barricade's insulated panel. They solve two different problems, and it helps to know which one you have before choosing.
+          </p>
+
+          <p>
+            Dimpled plastic panels create a small air space over the slab. DRIcore's installation guide describes a 1/4 inch raised membrane on cleats, which lets moisture vapor spread out and escape at the room perimeter instead of condensing in one place. That makes them the better choice where the slab tests slightly damp. The insulating value is modest; the standard DRIcore panel is cited at around R-1.4, enough to take the edge off a cold floor but not to transform it.
+          </p>
+
+          <p>
+            Foam-based panels are the opposite trade. Barricade's insulated panel is listed at R-2.7 to R-3.2 depending on the retailer, roughly double the plastic-base panel, but foam does not ventilate. That makes them right for a dry slab where warmth is the goal, and less suitable where moisture is the concern.
+          </p>
+
+          <p>
+            Both raise the floor, and that is the cost people forget. Three quarters of an inch to an inch of subfloor, plus a finished floor on top, can create a lip at the bottom stair tread, a door that no longer clears, or a step down into a utility room. Measure before you buy, and plan any door trimming and stair nosing work into the budget. On a slab that tests dry and is not especially cold, you can skip the subfloor and lay vinyl plank directly over a vapor barrier.
+          </p>
+        </div>
+
+        <div id="tile-epoxy" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Porcelain Tile, Epoxy and Rubber
+          </h2>
+
+          <p>
+            Porcelain tile is the most moisture-proof finished floor you can install in a basement. By the ANSI definition porcelain absorbs no more than 0.5 percent water by weight, so a wet tile is simply wet, and a flooded tile floor usually survives with nothing more than a cleanup. It is also the hardest, coldest and most labor-intensive option here, and a tile floor bonded to a slab can crack if the slab moves. An uncoupling membrane under the tile reduces that risk, and radiant floor heat under it fixes the cold, at a price.
+          </p>
+
+          <p>
+            Epoxy is the low-cost cousin of tile. A two-part water-based kit such as Rust-Oleum's EpoxyShield basement coating bonds to the concrete and produces a sealed, mop-clean surface. The constraint is in the data sheet: it is not meant for floors with a moisture problem, because vapor pressure from below can lift a film coating off the slab. For slabs that test dry it is a sensible finish for a gym, laundry or workshop. Our <a href="/best-basement-floor-paint/">basement floor paint guide</a> covers the paint and coating options in more detail.
+          </p>
+
+          <p>
+            Rubber tile is the right answer for a home gym, because it cushions dropped weights and feet and protects the slab. Loose-laid interlocking tiles also have a basement-specific advantage: after a leak you can pull them up, dry the slab and lay them back down. Glued rubber rolls do not give you that option.
+          </p>
+
+          <p>
+            All three share a feel problem. They are hard or cool underfoot compared with vinyl over a pad, and a basement family room built on tile or epoxy usually ends up covered in area rugs. That is fine, and often the right compromise, but it is worth deciding up front whether a room is a utility space or a living space.
+          </p>
+        </div>
+
+        <div id="carpet-wood" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Carpet and Wood: Proceed With Care
+          </h2>
+
+          <p>
+            Wall-to-wall carpet over a pad is the riskiest common basement floor. The pad holds water like a sponge, a minor leak goes unnoticed until it smells, and by then the carpet, pad and sometimes the tack strip all need replacing. If you want carpet, carpet tile is the safer route, because you can lift and replace individual tiles, and the backing sits directly on the slab rather than on a sponge.
+          </p>
+
+          <p>
+            Even carpet tile needs a dry slab. FLOR, for example, says its tiles are not breathable and that water can become trapped underneath if they are saturated, and it warns that prolonged moisture can lead to mildew. Pair carpet tile with a dehumidifier and a raised subfloor if the slab runs cool, and treat any leak as urgent.
+          </p>
+
+          <p>
+            Solid hardwood is generally not recommended below grade, because it expands and cups with humidity swings. Engineered wood is more stable and some products are rated for basements over a proper vapor barrier, but it is still a wood product with a wood-based core, so a flood that would be a mop job on vinyl or tile is a replacement job on wood.
+          </p>
+
+          <p>
+            If the look of wood is the goal, a wood-look rigid-core vinyl plank gets you most of the way with none of the moisture risk. That is why it sits at the top of our list for finished living spaces.
+          </p>
+        </div>
+
+        <div id="installation" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Installation Details That Decide Whether It Lasts
+          </h2>
+
+          <p>
+            Fix water first, then flatten, then floor. Any active leak through walls or cracks needs repair before flooring goes down, and our <a href="/basement-crack-repair/">basement crack repair guide</a> covers the options. After that, check flatness: most click floors specify a tolerance along the lines of 3/16 inch over 10 feet, and a thin plank will telegraph and eventually separate over a dip that a thicker plank or subfloor would bridge.
+          </p>
+
+          <p>
+            Follow the manufacturer's vapor barrier instructions exactly. Some planks with attached pads still require a separate 6 mil polyethylene sheet on concrete, and some forbid doubling up. Getting it wrong can void the warranty, and the warranty is often the only thing standing between you and the cost of a replacement floor.
+          </p>
+
+          <p>
+            Leave the expansion gap at the walls. Floating floors need room to move, typically around a quarter inch, hidden under baseboard. In a basement this gap also gives vapor somewhere to go. Do not caulk floating floors to the wall or pin them under heavy built-ins.
+          </p>
+
+          <p>
+            Acclimatize the material in the space for the time the manufacturer specifies, with the dehumidifier running, and do the moisture test again if the season has changed since you first checked. Basements behave differently in July and January, and a floor installed during a dry spell can surprise you in the first humid summer.
+          </p>
+        </div>
+
+        <div id="budget" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. What Basement Flooring Costs
+          </h2>
+
+          <p>
+            Material costs vary widely and change often, so treat these as broad tiers rather than quotes. Epoxy coating kits are the cheapest finished surface per square foot. Budget rigid-core vinyl and rubber tile come next. Premium vinyl plank such as COREtec, carpet tile and porcelain tile are at the top, with tile carrying the highest installed cost because of the labor involved.
+          </p>
+
+          <p>
+            Subfloor panels add a meaningful second layer of cost on top of whatever floor you choose. On a dry slab you can often skip them; on a cold or damp slab they are what makes the finished floor last, and that changes the math.
+          </p>
+
+          <p>
+            Labor is where basement projects often go over budget. Leveling compound for an uneven slab, trimming doors, rebuilding a bottom stair tread and moving the laundry to install under it all add time. Do-it-yourself click plank over a flat slab is among the most achievable flooring projects, while tile and leveling work are where a professional earns their fee.
+          </p>
+
+          <p>
+            The cheapest floor is the one you install once. Spending on a moisture test, a dehumidifier and, where needed, a subfloor almost always costs less than replacing a ruined floor a few years in. That is the real lesson of every flooded basement.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping the Moisture Test</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Tape a square of plastic to the slab for a day or two before buying. Droplets underneath mean vapor is coming through the concrete and the floor choice, the subfloor and the vapor barrier all change. Guessing here is the most expensive mistake on this list.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Treating Waterproof as Vapor-Proof</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A waterproof plank does not stop moisture rising through the slab. Vapor can still collect under a floating floor and feed mold in any organic layer. Follow the manufacturer's vapor barrier instructions even with a waterproof plank.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Flooring Over an Active Leak</h3>
+              <p class="text-gray-700 text-sm m-0">
+                No floor survives water entering through walls or cracks. Stop the water first with crack repair, hydraulic cement or drainage, dry the space, and only then install flooring. Otherwise you are paying to cover the problem rather than solve it.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring the Height Change</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Subfloor panels and thick planks can add an inch or more. That creates lips at stairs and doors that no longer clear. Measure door bottoms and the bottom stair tread before buying, and budget for trimming and nosing work.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using Wall-to-Wall Carpet and Pad</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Carpet pad soaks up water like a sponge and hides small leaks until they smell. If you want carpet below grade, use carpet tile over a dry slab so a wet section can be lifted and replaced instead of the whole room.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best flooring for a basement?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most finished basements, rigid-core vinyl plank with an attached pad is the best balance of moisture tolerance, comfort, looks and cost. The plank is waterproof and floats over the slab. Choose a product rated for below-grade installation, ideally with a 20 to 30 mil wear layer, and follow the maker's vapor barrier instructions.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do I need a subfloor in my basement?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Not always. If the slab tests dry and is not especially cold, vinyl plank can go directly over a vapor barrier. A raised dimpled subfloor helps where the slab is slightly damp, and a foam-backed insulated panel helps where it is dry but cold. Both raise the floor, so check door and stair clearances first.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can you put laminate flooring in a basement?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                You can, but we would choose vinyl instead. Most laminate has a wood-fiber core that swells if water reaches it through seams or from below. Some newer laminates carry water-resistance claims, but a basement leak that a vinyl plank shrugs off can ruin a laminate floor.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is porcelain tile good for a basement floor?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes, it is the most water-tolerant finished floor you can install, absorbing no more than 0.5 percent water by ANSI definition. The downsides are cost, installation labor and a cold, hard surface. An uncoupling membrane helps prevent cracks, and radiant heat or rugs handle the cold.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is epoxy a good basement floor?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Epoxy is a good, low-cost choice for a dry slab used as a gym, laundry or workshop. It is not suited to slabs with a moisture problem, because vapor from below can lift the coating. Rust-Oleum's data sheet for its basement kit says this explicitly, so test the slab first.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What flooring should I avoid in a basement?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Avoid solid hardwood and wall-to-wall carpet with a pad. Solid wood cups and swells with basement humidity swings, and carpet pad soaks up water and hides leaks. Laminate is a weaker choice than vinyl for the same reason: its core can swell if it gets wet.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How do I keep a basement floor from getting moldy?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Fix any water entry first, run a dehumidifier to keep humidity around 45 to 50 percent, use inorganic flooring materials, follow the vapor barrier instructions and leave the perimeter expansion gap. Mold needs moisture and something organic to feed on, so remove both.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Basement Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-vinyl-plank-flooring/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Vinyl Plank Flooring</h3>
+              <p class="text-gray-500 text-sm mt-2">Rigid-core and WPC planks compared on wear layer, core and pad.</p>
+            </a>
+            <a href="/best-hydraulic-cement/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Hydraulic Cement</h3>
+              <p class="text-gray-500 text-sm mt-2">Plug active basement leaks before the new floor goes down.</p>
+            </a>
+            <a href="/best-dehumidifier-for-basement/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Basement Dehumidifiers</h3>
+              <p class="text-gray-500 text-sm mt-2">Keep the space dry enough for any floor to last.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The <strong class="text-white">best flooring for a basement</strong> is a waterproof <strong class="text-white">rigid-core vinyl plank</strong> such as COREtec Plus Premium, or Lifeproof on a tighter budget, laid over a slab that tests dry. Add a DRIcore panel underneath if the slab is slightly damp, or a Barricade insulated panel if it is dry but cold.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Choose epoxy or rubber tile for gyms and utility spaces, and carpet tile only where the slab stays dry. Whatever you pick, test the slab, fix any leaks and run a dehumidifier first. Those three steps decide whether the floor lasts.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Improvement" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

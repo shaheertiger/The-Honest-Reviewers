@@ -1,0 +1,817 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Water Filtration Systems for Home",
+    "url": "/best-water-filtration-system-for-home/"
+  },
+  {
+    "title": "Best Water Filter Pitchers",
+    "url": "/best-water-filter-pitcher/"
+  },
+  {
+    "title": "Best Shower Head Filters",
+    "url": "/best-shower-head-filter/"
+  },
+  {
+    "title": "Best Water Softener Systems",
+    "url": "/best-water-softener-system/"
+  },
+  {
+    "title": "How Often to Change a Brita Filter",
+    "url": "/how-often-to-change-brita-filter/"
+  },
+  {
+    "title": "Why Does My Water Smell Like Rotten Eggs?",
+    "url": "/why-does-my-water-smell-like-rotten-eggs/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-19", modified: "2026-10-19" });
+const title = "6 Best Under Sink Water Filters: Carbon, Reverse Osmosis and Tankless Picks";
+const description =
+  "Under sink water filters and reverse osmosis systems compared on NSF certifications, capacity, flow and install needs, with one pick for each kind of kitchen.";
+
+const PRODUCTS = [
+  {
+    "id": "aquasana-claryum-3-stage",
+    "name": "Aquasana Claryum 3-Stage Under Sink Filter",
+    "badge": "Best Overall",
+    "category": "3-Stage Carbon Filter, Dedicated Faucet",
+    "amazonUrl": "#",
+    "description": "The Claryum 3-Stage is the filter we would put under most kitchen sinks on city water, because its certifications are the broadest we found for a carbon system that keeps your water's minerals. Aquasana says the system is WQA tested and certified to NSF/ANSI 42, 53 (including the P473 protocol for PFOA and PFOS) and 401, which covers chlorine taste and odor, a list of health-related contaminants such as lead, and a set of emerging contaminants. Aquasana rates the standard cartridge set at 600 gallons or six months and includes a 20-micron pre-filter that catches sediment before it reaches the carbon. A separate Max Flow version is rated at 800 gallons with what Aquasana describes as a 44% higher flow rate, and retailer listings sometimes blur the two, so match the model number to the capacity before ordering. It installs with its own faucet, which means drilling a hole if your sink has no spare one, and it does not reduce dissolved minerals or salts, which only reverse osmosis does.",
+    "pros": [
+      "Certified to NSF/ANSI 42, 53 (with P473) and 401 per Aquasana",
+      "Keeps beneficial minerals, no wastewater",
+      "20-micron pre-filter protects the carbon stages",
+      "Max Flow version rated for 800 gallons"
+    ],
+    "cons": [
+      "Needs a dedicated faucet, which may mean drilling",
+      "600-gallon standard rating means six-month changes for most homes",
+      "Does not reduce TDS, nitrates or fluoride the way RO does"
+    ],
+    "bottomLine": "The best under sink filter for most city-water kitchens: Aquasana lists NSF/ANSI 42, 53 and 401 certification, and it keeps minerals without wasting water."
+  },
+  {
+    "id": "waterdrop-g3p800",
+    "name": "Waterdrop G3P800 Tankless Reverse Osmosis System",
+    "badge": "Best Reverse Osmosis",
+    "category": "Tankless RO, 800 GPD, Smart Faucet",
+    "amazonUrl": "#",
+    "description": "If you want reverse osmosis, the G3P800 is the system that removes the two complaints people have about it: the bulky storage tank and the slow trickle from the faucet. Waterdrop rates it at 800 gallons per day with a 3:1 pure-to-drain ratio, and its listing says it is certified by IAPMO R&T to NSF/ANSI 58 for TDS reduction, NSF/ANSI 42 and 53, and NSF/ANSI 372 for lead-free materials. Waterdrop also claims third-party-tested PFAS reduction, which is a separate claim from its NSF 58 certification. The faucet shows real-time TDS and filter status, and Waterdrop lists filter lives of up to 6 months for the combined sediment and carbon cartridge, 12 months for the carbon post-filter and 24 months for the RO membrane. The catch is that it needs electricity: the kit includes a power adapter, so you need an outlet under the sink, and the unit is wider than a simple carbon filter.",
+    "pros": [
+      "Rated 800 gallons per day with a 3:1 pure-to-drain ratio",
+      "No storage tank to fit under the sink",
+      "Listed IAPMO certification to NSF/ANSI 58, 42, 53 and 372",
+      "Faucet display shows TDS and filter life"
+    ],
+    "cons": [
+      "Needs a power outlet under the sink",
+      "Removes minerals along with contaminants",
+      "Costs several times a carbon system up front"
+    ],
+    "bottomLine": "The reverse osmosis system to buy if counter space and patience are short: tankless, rated at 800 gallons per day, and listed as certified to NSF/ANSI 58."
+  },
+  {
+    "id": "ao-smith-ao-us-200",
+    "name": "A.O. Smith AO-US-200 2-Stage Under Sink Filter",
+    "badge": "Best Value",
+    "category": "2-Stage Carbon Filter, Dedicated Faucet",
+    "amazonUrl": "#",
+    "description": "The AO-US-200 is the cheapest way we found to get certification as broad as the Aquasana's. A.O. Smith's performance data sheet lists it as tested to NSF/ANSI 42, 53, 401 and P473, and its Lowe's product page describes WQA certification to 42, 53 and 401, which covers chlorine, lead and a list of emerging contaminants. The trade-off is capacity: the data sheet rates it at 500 gallons, and A.O. Smith's manual says to replace the cartridge every six months or 500 gallons, whichever comes first. The rated flow is 0.5 gallons per minute through its own faucet, which is normal for a dedicated filter faucet but noticeably slower than your main tap. A.O. Smith sells it mainly through Lowe's, and the AO-US-200-R replacement cartridge is easy to find there.",
+    "pros": [
+      "Tested to NSF/ANSI 42, 53, 401 and P473 per its data sheet",
+      "Simple two-stage design with one replacement cartridge",
+      "Replacement cartridges stocked at Lowe's",
+      "Keeps minerals, no wastewater"
+    ],
+    "cons": [
+      "500-gallon rating is the lowest here",
+      "0.5 gpm rated flow through a separate faucet",
+      "Needs a faucet hole"
+    ],
+    "bottomLine": "The value pick: certification to NSF/ANSI 42, 53 and 401 for less money, if you can live with a 500-gallon cartridge."
+  },
+  {
+    "id": "waterdrop-10ua",
+    "name": "Waterdrop 10UA Under Sink Water Filter",
+    "badge": "Best for Taste on a Budget",
+    "category": "Direct-Connect Carbon Filter, Uses Existing Faucet",
+    "amazonUrl": "#",
+    "description": "The 10UA is a different kind of product, and it belongs here because a lot of people only want better-tasting water from the faucet they already have. It connects to the cold supply line and feeds your existing kitchen faucet, so there is no drilling and no second spout. Retailers including Target and Walmart list each cartridge at up to 8,000 gallons or 12 months on municipal water, and describe IAPMO certification to NSF/ANSI 42 and 372. Read that carefully: NSF/ANSI 42 covers aesthetic effects such as chlorine taste and odor, and NSF/ANSI 372 covers lead-free materials, not lead reduction. The 10UA is not listed as certified to NSF/ANSI 53, so it is the wrong choice if lead or other health contaminants are your concern. As a chlorine-taste filter with the lowest cost per gallon here, it is excellent.",
+    "pros": [
+      "Connects to your existing faucet, no drilling",
+      "Rated for 8,000 gallons or 12 months per retailer listings",
+      "Lowest cost per gallon of any pick",
+      "Very compact"
+    ],
+    "cons": [
+      "Listed as certified to NSF/ANSI 42 and 372 only, not 53",
+      "Not a lead-reduction filter",
+      "Cold line only; it is not designed for hot water"
+    ],
+    "bottomLine": "Buy it to make chlorinated city water taste better at the lowest cost per gallon, not to reduce lead."
+  },
+  {
+    "id": "ispring-rcc7ak",
+    "name": "iSpring RCC7AK 6-Stage Reverse Osmosis System",
+    "badge": "Best Tank RO With Remineralization",
+    "category": "Tank RO, 75 GPD, Alkaline Stage",
+    "amazonUrl": "#",
+    "description": "The RCC7AK is the traditional reverse osmosis design done well, with a sixth stage that adds minerals back after the membrane. Retailer listings describe it as a six-stage, 75-gallon-per-day under sink system certified to NSF/ANSI 58, and a certification tracker reports it listed under NSF/ANSI 58 in the certifier directories, though it notes the directory's production figure for the base RCC7 is lower than iSpring's 75 gpd marketing rating. The storage tank holds 3.2 gallons according to iSpring's product page as cited by a review site, which is enough for cooking and drinking but takes time to refill after you drain it. It needs no electricity, which makes it the easier RO to install where there is no outlet, but you will need space for the tank and a drain saddle on the sink drain. iSpring does not state a pure-to-drain ratio we could verify, so expect more wastewater than the tankless Waterdrop.",
+    "pros": [
+      "Alkaline remineralization stage adds minerals back",
+      "No electricity needed",
+      "Listed under NSF/ANSI 58",
+      "Widely available replacement filters"
+    ],
+    "cons": [
+      "3.2-gallon tank takes up cabinet space",
+      "75 gpd rating is iSpring's figure; NSF directory lists less for the base model",
+      "Wastewater ratio not published"
+    ],
+    "bottomLine": "The RO system for a cabinet without an outlet: no pump, a remineralization stage, and an NSF/ANSI 58 listing."
+  },
+  {
+    "id": "frizzlife-sk99-new",
+    "name": "Frizzlife SK99-NEW 3-Stage Under Sink Filter",
+    "badge": "Best High-Flow Direct Connect",
+    "category": "3-Stage Carbon Filter, Uses Existing Faucet",
+    "amazonUrl": "#",
+    "description": "The SK99-NEW is the pick if you want health-contaminant certification without a second faucet. Frizzlife says IAPMO tested it against NSF/ANSI 42 and 53, and it connects to the cold line so your existing kitchen faucet delivers filtered water. Frizzlife says tested flow exceeds 2.0 gallons per minute at 60 psi, which is far faster than the 0.5 gpm dedicated-faucet filters, so filling a pot does not feel like a chore. Frizzlife does not publish a single gallon rating we could find; instead it gives a staged schedule of 3 to 6 months for stage one, 6 to 12 months for stage two and 12 to 18 months for stage three. Some listings confuse it with Frizzlife's MK99, which is a different model, so check the number before ordering replacement filters.",
+    "pros": [
+      "Frizzlife lists IAPMO testing against NSF/ANSI 42 and 53",
+      "Uses your existing faucet",
+      "Over 2.0 gpm at 60 psi per Frizzlife",
+      "Staged filters mean you only replace what wears out"
+    ],
+    "cons": [
+      "No published total gallon rating",
+      "Three cartridges to track instead of one",
+      "Not listed for NSF/ANSI 401 like the Aquasana and A.O. Smith"
+    ],
+    "bottomLine": "The best choice if you want full faucet flow and NSF/ANSI 53-level health claims without drilling a second hole."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Under Sink Water Filters",
+          item: "https://www.thehonestreviewers.com/best-under-sink-water-filter/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best under sink water filter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most city-water kitchens, the Aquasana Claryum 3-Stage is our pick because Aquasana lists WQA certification to NSF/ANSI 42, 53 and 401 and it keeps minerals without wasting water. If you need reverse osmosis, the Waterdrop G3P800 is the tankless pick, rated at 800 gallons per day."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need reverse osmosis or is a carbon filter enough?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For municipal water where taste, chlorine or lead is the concern, a carbon filter certified to NSF/ANSI 53 is usually enough. Choose reverse osmosis when your water report shows high dissolved solids, nitrates, fluoride or other contaminants that carbon systems are not certified to reduce."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does an under sink filter remove lead?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only if it is certified for lead reduction, typically under NSF/ANSI 53 or 58. Check the performance data sheet. A filter certified only to NSF/ANSI 42 and 372, like the Waterdrop 10UA, is not certified to reduce lead even though its materials are lead-free."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often should I change an under sink filter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Follow the maker's rating, whichever comes first of gallons or months. Our picks range from 500 gallons or six months for the A.O. Smith AO-US-200 to 8,000 gallons or 12 months for the Waterdrop 10UA, per the manufacturer and retailer listings."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I install an under sink water filter myself?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most people can install a carbon system in about an hour with basic tools. Reverse osmosis takes longer because it needs a drain connection and either a tank or a power outlet. Drilling a stone countertop for a dedicated faucet is the job most worth handing to a professional."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does reverse osmosis waste water?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. The membrane needs a constant flow to flush away rejected contaminants. Older tank systems are commonly described as wasting several gallons per gallon produced, while newer tankless systems advertise better ratios, such as the 3:1 pure-to-drain ratio Waterdrop lists for the G3P800."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is an under sink filter better than a pitcher?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is more convenient and usually cheaper per gallon, with no refilling and cartridges that last months. A certified pitcher is a fine choice for renters or small households; our pitcher guide covers the models worth buying. The certification matters more than the format."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home Improvement",
+    tags: [
+      "best under sink water filter",
+      "under sink water filter",
+      "under sink reverse osmosis system",
+      "best under sink water filtration system",
+      "tankless reverse osmosis system"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Buyer's Guide
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best Under Sink <span class="text-[#38BDF8]">Water Filters</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Six under sink systems, from a $100-class carbon filter to an 800-gallon-a-day tankless reverse osmosis unit, chosen on the certifications printed on their data sheets rather than the claims on the box.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#aquasana-claryum-3-stage"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            See the Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Shaheer Ali Khan</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Consumer Product Testing &amp; Materials Performance Specialist</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="9.6k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-chose" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Chose</a>
+          <a href="#types" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Carbon, RO or Tankless RO</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 6 Picks</a>
+          <a href="#certifications" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Reading the Certifications</a>
+          <a href="#capacity" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Capacity and Cost per Gallon</a>
+          <a href="#flow" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Flow Rate and Pressure</a>
+          <a href="#install" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Installation</a>
+          <a href="#wastewater" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. RO Wastewater and Minerals</a>
+          <a href="#maintenance" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Maintenance and Whole-House Options</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          An under sink filter is the step up from a pitcher that most kitchens actually need: filtered water on tap, no refilling, and cartridges that last months instead of weeks. The hard part is not finding one, it is reading the certifications well enough to know which of them reduces the contaminant you care about, and whether you need reverse osmosis at all.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-chose" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Chose
+          </h2>
+
+          <p>
+            We did not lab-test these systems. We built the shortlist the way a careful buyer should: by reading the certification each maker lists, the performance data sheet where one exists, and the capacity and flow ratings, then cross-checking them against retailer listings and certification trackers. Where a retailer and the manufacturer disagree, we report both and tell you which to trust.
+          </p>
+
+          <p>
+            Certification was the first filter. A system that claims to remove lead without being certified to NSF/ANSI 53 by an accredited body is asking you to take its word for it, and there are hundreds of those listings. Every pick here lists a certification from NSF, WQA or IAPMO R&T, the three bodies most commonly accredited to certify drinking water treatment units in the United States.
+          </p>
+
+          <p>
+            Capacity and running cost came next. A cheap system with a 300-gallon cartridge can cost more over three years than an expensive one with an 8,000-gallon cartridge, so we compared rated gallons and replacement intervals, not just the sticker price. Flow rate mattered too, because a filter that takes a minute to fill a pot gets bypassed, and a bypassed filter does nothing.
+          </p>
+
+          <p>
+            Finally, we looked at installation honestly. Some systems need a hole drilled in your sink or countertop, some need a power outlet under the sink, and some need a drain connection. None of that is a deal-breaker, but it changes which system is right for a rental, a stone countertop or a cramped cabinet. If you are still deciding whether to filter at the sink or for the whole house, our guide to the <a href="/best-water-filtration-system-for-home/">best whole-house water filtration systems</a> covers the other half of that decision.
+          </p>
+        </div>
+
+        <div id="types" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Carbon, Reverse Osmosis or Tankless RO: The Three Types
+          </h2>
+
+          <p>
+            Carbon block filters are the simplest under sink systems. Water passes through one or more cartridges of compressed activated carbon, often with a sediment pre-filter in front. A good carbon block can reduce chlorine taste and odor, and when it is certified to NSF/ANSI 53 it can also reduce lead, cysts and some volatile organic chemicals. Carbon keeps calcium and magnesium in the water and sends nothing to the drain.
+          </p>
+
+          <p>
+            Reverse osmosis pushes water through a semi-permeable membrane that rejects most dissolved solids, including salts, nitrates, fluoride and the minerals that make water hard. RO systems pair the membrane with carbon pre- and post-filters, so they also cover chlorine and organics. The cost is wastewater, a slower process and the removal of minerals some people want to keep, which is why remineralization stages exist.
+          </p>
+
+          <p>
+            Traditional RO stores filtered water in a pressurized tank under the sink because the membrane produces water slowly. Tankless RO systems use an electric pump to push water through a higher-output membrane fast enough to serve the faucet directly. That frees cabinet space and usually improves the pure-to-drain ratio, but it means plugging the system in.
+          </p>
+
+          <p>
+            A useful rule of thumb: if your water is municipal and your concern is taste, chlorine or lead, a certified carbon system is enough. If you are on well water with high dissolved solids, worried about nitrates or fluoride, or your water report shows contaminants carbon is not certified for, reverse osmosis is the tool. If your issue is a rotten-egg smell, read <a href="/why-does-my-water-smell-like-rotten-eggs/">our guide to sulfur smells in water</a> first, because the fix often belongs at the water heater or the well, not the sink.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 6 Picks
+          </h2>
+
+          <p>
+            We researched these six from manufacturer specifications, performance data sheets and the certifications each maker lists, not from our own lab testing. Every capacity, flow rate and certification below is attributed to the maker or a retailer listing, and where sources disagree we say so. Before you buy, check the exact model number against the NSF, WQA or IAPMO certified-product listings, because certifications are issued per model and lookalike variants are common.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="certifications" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Reading the NSF Certifications
+          </h2>
+
+          <p>
+            Four standards come up again and again on under sink filters, and they mean very different things. NSF/ANSI 42 covers aesthetic effects: chlorine taste and odor and particulates. NSF/ANSI 53 covers health effects, including lead, cysts and certain volatile organic compounds. NSF/ANSI 58 is specific to reverse osmosis systems and covers total dissolved solids reduction along with other claims. NSF/ANSI 401 covers a list of emerging contaminants such as certain pharmaceuticals and pesticides.
+          </p>
+
+          <p>
+            Two more labels cause confusion. P473 is a protocol for PFOA and PFOS reduction that some systems are tested against alongside NSF/ANSI 53. NSF/ANSI 372, by contrast, is not a performance standard at all: it certifies that the product's wetted materials are lead-free. A filter certified to 42 and 372 makes water taste better and is built from lead-free parts, but it is not certified to reduce lead from your water. The Waterdrop 10UA is exactly that kind of product, and it is a good one for what it is.
+          </p>
+
+          <p>
+            The certifier matters less than the fact of certification. NSF, WQA and IAPMO R&T are all accredited to certify to these standards, and a listing from any of them is meaningful. What matters is that the certification covers the specific contaminant you care about and the specific model you are buying. Certifications are issued per model, and a near-identical model with a different suffix may not be covered.
+          </p>
+
+          <p>
+            Finally, certified does not mean it removes everything. Each certification lists the contaminants and reduction levels the system was tested for, usually on a performance data sheet. Read that sheet, then read your utility's annual water quality report, and make sure the two overlap. A filter certified for lead is not automatically certified for nitrates, and no carbon filter on this list is certified to soften water.
+          </p>
+        </div>
+
+        <div id="capacity" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Capacity, Filter Life and Cost per Gallon
+          </h2>
+
+          <p>
+            Every cartridge has a rated capacity in gallons and a time limit, and you replace it at whichever comes first. The ratings on our picks range from 500 gallons for the A.O. Smith AO-US-200 to 8,000 gallons for the Waterdrop 10UA, according to the manufacturer and retailer listings. That is a sixteen-fold difference, and it changes the real cost of ownership more than the purchase price does.
+          </p>
+
+          <p>
+            A typical household drinking and cooking with filtered water might use somewhere around one to three gallons a day. At two gallons a day, a 500-gallon cartridge lasts about eight months by volume, but A.O. Smith's six-month limit arrives first. A 600-gallon Aquasana cartridge lands in the same place. An 8,000-gallon cartridge would last a decade by volume, so its twelve-month time limit is what you actually plan around.
+          </p>
+
+          <p>
+            The time limits exist for a reason. Carbon that sits wet for long periods can support bacterial growth, and the reduction performance a filter was certified for is only promised up to its rated life. Running a cartridge past its rating because the water still tastes fine is a gamble, because lead and many other contaminants have no taste.
+          </p>
+
+          <p>
+            To compare systems fairly, add up the replacement cartridges for three years and divide by the water you expect to filter. Reverse osmosis systems spread their cost across several cartridges with different lives; the Waterdrop G3P800, for example, lists filters at up to 6, 12 and 24 months. Our <a href="/how-often-to-change-brita-filter/">guide to pitcher filter replacement</a> walks through the same arithmetic for pitchers, and the logic is identical: the cheapest filter to buy is often the most expensive to own.
+          </p>
+        </div>
+
+        <div id="flow" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Flow Rate and Water Pressure
+          </h2>
+
+          <p>
+            Dedicated-faucet carbon filters usually run at around half a gallon per minute; A.O. Smith rates the AO-US-200 at 0.5 gpm. That is fine for a glass of water and slow for a stockpot. Direct-connect filters that feed your main faucet need to move much more water, and Frizzlife says the SK99-NEW exceeds 2.0 gpm at 60 psi.
+          </p>
+
+          <p>
+            Reverse osmosis is slower still at the membrane, which is why traditional systems store water in a tank. The tank delivers quickly until it empties, then refills slowly. The iSpring RCC7AK's tank holds 3.2 gallons according to iSpring's page as cited by a review site, which covers most daily use but not filling a large pot twice in a row. Tankless systems like the Waterdrop G3P800 solve that with a pump and a high-output membrane rated at 800 gallons per day.
+          </p>
+
+          <p>
+            Your home's water pressure matters for both types. Most under sink systems are designed around typical municipal pressure, and RO in particular produces less water and more waste when pressure is low. If your pressure is weak, a tankless system with a pump, or a booster pump on a tank system, makes a real difference. If it is very high, a pressure regulator protects the housings.
+          </p>
+
+          <p>
+            Before you buy, check the pressure range in the installation manual and compare it with your home. A simple gauge on an outdoor spigot gives you a reading in a minute, and it can save you from a system that underperforms from the first day.
+          </p>
+        </div>
+
+        <div id="install" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Installation: What Fits Under Your Sink
+          </h2>
+
+          <p>
+            Open the cabinet before you shop. Garbage disposals, dishwasher supply lines and the drain trap eat most of the space under a kitchen sink, and RO systems with tanks need the most room. Measure the clear width, depth and height, and compare them with the system's dimensions, including the space needed to twist off the cartridges.
+          </p>
+
+          <p>
+            Next, count your holes. Dedicated-faucet systems like the Aquasana and A.O. Smith need a hole for their faucet. Many sinks have a spare hole for a sprayer or soap dispenser; if yours does not, you will drill the countertop or the sink deck. Stainless sinks are easy to drill with the right bit, while quartz and granite usually call for a professional. Direct-connect systems such as the Waterdrop 10UA and Frizzlife SK99-NEW avoid this completely.
+          </p>
+
+          <p>
+            Reverse osmosis adds two more connections. The reject water needs a drain saddle clamped to the sink drain pipe, and tankless systems need a power outlet under the sink, which the Waterdrop G3P800 kit uses through its power adapter. If there is no outlet, budget for an electrician or choose a tank system like the iSpring, which runs on water pressure alone.
+          </p>
+
+          <p>
+            Most people can install a carbon system in an hour with an adjustable wrench and a towel. RO takes longer because of the drain and tank connections. Either way, shut off the cold supply, keep a bucket under the valves, and check every push-fit connection for drips after the system is pressurized and again the next morning. A slow drip inside a closed cabinet is how a filter turns into a flooring job.
+          </p>
+        </div>
+
+        <div id="wastewater" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. RO Wastewater and Remineralization
+          </h2>
+
+          <p>
+            Every reverse osmosis system sends some water to the drain, because the membrane needs a constant flow across its surface to flush away what it rejects. Older tank-style systems are commonly described as sending several gallons to the drain for each gallon of filtered water. Newer tankless designs advertise much better ratios; Waterdrop rates the G3P800 at 3:1 pure to drain.
+          </p>
+
+          <p>
+            For a household using a few gallons of RO water a day, the wastewater adds up to a modest amount compared with a shower or a load of laundry. It matters more on a well with limited recovery or on a septic system, and it matters if you pay high water rates. If wastewater is a concern, favor a tankless system with a published ratio, or a carbon system that wastes none.
+          </p>
+
+          <p>
+            RO also removes calcium and magnesium, which leaves water that some people describe as flat. Remineralization stages, like the alkaline filter on the iSpring RCC7AK, add a small amount of minerals back and nudge the pH up. Treat any health claims about alkaline water with skepticism; the practical benefit is taste.
+          </p>
+
+          <p>
+            If hard water is the problem you are trying to solve, RO at the sink is the wrong scale. It will give you soft drinking water but leave scale on every fixture, appliance and water heater in the house. A <a href="/best-water-softener-system/">whole-house water softener</a> handles hardness at the source, and many homes pair one with a carbon or RO system at the kitchen sink.
+          </p>
+        </div>
+
+        <div id="maintenance" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Maintenance and When a Whole-House System Makes More Sense
+          </h2>
+
+          <p>
+            Maintenance is mostly about remembering. Write the installation date on each cartridge with a marker, set a calendar reminder for the earliest replacement date, and order replacements before you need them. Systems with filter-life indicators, like the Waterdrop G3P800's faucet display, make this easier, but the indicator is only an estimate based on time or volume.
+          </p>
+
+          <p>
+            When you change cartridges, flush the new ones as the manual specifies, usually by running water for several minutes. RO membranes and carbon post-filters often need a longer flush and may produce cloudy water at first, which is normal and usually trapped air. If the taste or flow changes noticeably between scheduled changes, replace the cartridge early.
+          </p>
+
+          <p>
+            A point-of-use filter only treats one faucet. That is the right answer when your concern is drinking and cooking water, but not when the problem affects the whole house: sediment clogging fixtures, iron staining laundry, sulfur smells in the shower or hardness scaling the water heater. Those call for treatment at the point of entry, which is covered in our guide to the <a href="/best-water-filtration-system-for-home/">best whole-house filtration systems</a>.
+          </p>
+
+          <p>
+            For renters and anyone not ready to commit to an under sink install, a certified pitcher is a perfectly good start; our <a href="/best-water-filter-pitcher/">best water filter pitcher</a> guide covers the models with real certifications. And if you also want to reduce chlorine in the shower, our guide to the <a href="/best-shower-head-filter/">best shower head filters</a> explains what those can and cannot do.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying on Contaminant Lists Instead of Certifications</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A listing that claims to remove 1,000 contaminants tells you nothing unless an accredited body certified it. Look for NSF/ANSI 53, 58 or 401 from NSF, WQA or IAPMO, and check the performance data sheet for the contaminant you actually care about.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Reading NSF/ANSI 372 as Lead Reduction</h3>
+              <p class="text-gray-700 text-sm m-0">
+                NSF/ANSI 372 certifies that a product is built from lead-free materials. It says nothing about removing lead from your water. For lead reduction, the system needs NSF/ANSI 53 or 58 certification for lead specifically.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring the Time Limit on Cartridges</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A high gallon rating does not mean you can run a cartridge for years. Replace at the time limit even if the gallons are not used up, because certified performance is only promised within the rated life.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Choosing RO for Hard Water Problems</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Reverse osmosis at the sink gives you soft drinking water but leaves scale everywhere else. If scale on fixtures and appliances is the problem, the fix is a whole-house softener, not an under sink system.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Not Checking for an Outlet or Faucet Hole</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Tankless RO needs power under the sink, and dedicated-faucet systems need a hole. Check both before you order, especially with stone countertops, or the install day turns into a call to an electrician or fabricator.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best under sink water filter?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most city-water kitchens, the Aquasana Claryum 3-Stage is our pick because Aquasana lists WQA certification to NSF/ANSI 42, 53 and 401 and it keeps minerals without wasting water. If you need reverse osmosis, the Waterdrop G3P800 is the tankless pick, rated at 800 gallons per day.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do I need reverse osmosis or is a carbon filter enough?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For municipal water where taste, chlorine or lead is the concern, a carbon filter certified to NSF/ANSI 53 is usually enough. Choose reverse osmosis when your water report shows high dissolved solids, nitrates, fluoride or other contaminants that carbon systems are not certified to reduce.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Does an under sink filter remove lead?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Only if it is certified for lead reduction, typically under NSF/ANSI 53 or 58. Check the performance data sheet. A filter certified only to NSF/ANSI 42 and 372, like the Waterdrop 10UA, is not certified to reduce lead even though its materials are lead-free.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How often should I change an under sink filter?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Follow the maker's rating, whichever comes first of gallons or months. Our picks range from 500 gallons or six months for the A.O. Smith AO-US-200 to 8,000 gallons or 12 months for the Waterdrop 10UA, per the manufacturer and retailer listings.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I install an under sink water filter myself?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Most people can install a carbon system in about an hour with basic tools. Reverse osmosis takes longer because it needs a drain connection and either a tank or a power outlet. Drilling a stone countertop for a dedicated faucet is the job most worth handing to a professional.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Does reverse osmosis waste water?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes. The membrane needs a constant flow to flush away rejected contaminants. Older tank systems are commonly described as wasting several gallons per gallon produced, while newer tankless systems advertise better ratios, such as the 3:1 pure-to-drain ratio Waterdrop lists for the G3P800.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is an under sink filter better than a pitcher?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It is more convenient and usually cheaper per gallon, with no refilling and cartridges that last months. A certified pitcher is a fine choice for renters or small households; our pitcher guide covers the models worth buying. The certification matters more than the format.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Water Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-water-filtration-system-for-home/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Whole-House Filtration Systems</h3>
+              <p class="text-gray-500 text-sm mt-2">Point-of-entry systems for sediment, chlorine, iron and well water.</p>
+            </a>
+            <a href="/best-water-filter-pitcher/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Water Filter Pitchers</h3>
+              <p class="text-gray-500 text-sm mt-2">Certified pitchers compared on what they reduce and what they cost per gallon.</p>
+            </a>
+            <a href="/best-shower-head-filter/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Shower Head Filters</h3>
+              <p class="text-gray-500 text-sm mt-2">What shower filters reduce, what they cannot fix, and the picks worth buying.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The best under sink water filter for most kitchens is the <strong class="text-white">Aquasana Claryum 3-Stage</strong>, which Aquasana lists as certified to NSF/ANSI 42, 53 and 401 and which keeps minerals without wasting water. If you need reverse osmosis, the <strong class="text-white">Waterdrop G3P800</strong> is the tankless pick, and the <strong class="text-white">A.O. Smith AO-US-200</strong> gets you similar certifications for less.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Whatever you choose, buy for the certification that matches your water report, check the exact model number against the certifier's listing, and replace cartridges on schedule. A certified filter you maintain beats an uncertified one with a longer list of claims.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Improvement" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

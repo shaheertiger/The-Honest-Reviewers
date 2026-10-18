@@ -1,0 +1,815 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Basement Dehumidifiers",
+    "url": "/best-dehumidifier-for-basement/"
+  },
+  {
+    "title": "Best Whole House Dehumidifiers",
+    "url": "/best-whole-house-dehumidifier/"
+  },
+  {
+    "title": "Best Dehumidifiers With Pump",
+    "url": "/best-dehumidifier-with-pump/"
+  },
+  {
+    "title": "Best Crawl Space Dehumidifiers",
+    "url": "/best-crawl-space-dehumidifier/"
+  },
+  {
+    "title": "Best Garage Heaters",
+    "url": "/best-garage-heater/"
+  },
+  {
+    "title": "Best Hygrometers",
+    "url": "/best-hygrometer/"
+  },
+  {
+    "title": "How Much Electricity Does a Dehumidifier Use?",
+    "url": "/how-much-electricity-does-a-dehumidifier-use/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-19", modified: "2026-10-19" });
+const title = "6 Best Dehumidifiers for Garages: Low-Temperature, Desiccant and Pump Picks";
+const description =
+  "The best dehumidifiers for garages, picked for low-temperature ratings, built-in pumps and rugged builds, with when to choose a desiccant for a freezing garage.";
+
+const PRODUCTS = [
+  {
+    "id": "alorair-sentinel-hdi65s-garage-dehumidifier",
+    "name": "AlorAir Sentinel HDi65S Dehumidifier With Pump",
+    "badge": "Best Overall",
+    "category": "Low-Grain Refrigerant, 55 Pints/Day, Built-In Pump",
+    "description": "For an unheated or lightly heated garage, the AlorAir Sentinel HDi65S is the unit we would buy first, because it is built to keep working when the air gets cold. AlorAir's spec sheet lists 55 pints per day at the AHAM point of 80°F and 60 percent relative humidity, and retailers cite 120 pints at the 90°F and 90 percent saturation condition. More important for a garage, the spec sheet gives a minimum operating temperature of 33.8°F and a functioning range of 33.8 to 104°F, far lower than the roughly 41 to 50°F floor of a typical household portable. Listings give coverage up to 1,300 square feet, 130 CFM of airflow, noise under 52 dBA and a compact 19.2 by 12.2 by 13.3 inch cabinet. The built-in pump can push water up to 19.6 feet, per listings, which matters in a garage with no floor drain. Weight is listed at 44 pounds by one source and 51 pounds shipping by another, and the amp draw appears as 3.6 and 4.1 amps in different places on the spec sheet. The ENERGY STAR record sits under a related HD55S model name with a lower capacity figure, which we would not lean on.",
+    "pros": [
+      "Minimum operating temperature of 33.8°F, per AlorAir's spec sheet",
+      "55 pints/day at AHAM and 120 pints/day at saturation, per listings",
+      "Built-in pump rated to push water up to 19.6 feet",
+      "Compact cabinet and noise under 52 dBA, per listings"
+    ],
+    "cons": [
+      "Spec sheet lists both 3.6 and 4.1 amps",
+      "ENERGY STAR record is filed under a different model name and capacity",
+      "Pricier than a household portable"
+    ],
+    "bottomLine": "For most garages, the HDi65S is the right size, keeps working down to just above freezing and pumps its own water out, which covers the three things a garage dehumidifier actually needs to do."
+  },
+  {
+    "id": "alorair-storm-lgr-extreme-dehumidifier",
+    "name": "AlorAir Storm LGR Extreme Dehumidifier",
+    "badge": "Best for Large or Wet Garages",
+    "category": "Low-Grain Refrigerant, 85 Pints/Day, Built-In Pump",
+    "description": "The Storm LGR Extreme is AlorAir's restoration-grade portable, and it is the one to buy for a three-car garage, a detached shop or a garage that floods with meltwater off the cars every winter. Listings give 85 pints per day at the AHAM point and 180 pints at the 90°F and 90 percent saturation condition. AlorAir's spec sheet lists a functioning range of 33.8 to 104°F, while one retailer rounds the low end to 33°F. It draws 5.62 amps at 115 volts, moves 210 CFM, lists an energy factor of 2.44 liters per kilowatt-hour and has a built-in pump with a drain hose, which is how restoration crews run it. The compact rotomolded body is designed to be carried and stacked; weight is listed at 70.5 pounds on the spec sheet and 64.3 pounds on another listing, so plan on about 65 to 70. It is louder and more industrial than the Sentinel, and it is more machine than a one-car garage needs, but in a big, wet space it removes far more water.",
+    "pros": [
+      "85 pints/day at AHAM and 180 pints/day at saturation, per listings",
+      "Functioning range of 33.8 to 104°F, per AlorAir's spec sheet",
+      "Built-in pump and rugged restoration-style housing",
+      "210 CFM airflow on a 5.62-amp, 115-volt circuit"
+    ],
+    "cons": [
+      "Weight listed at 64.3 to 70.5 lb depending on source",
+      "Industrial look and noise level",
+      "Oversized for a one-car or attached garage"
+    ],
+    "bottomLine": "If your garage is big, wet or used as a workshop, the Storm LGR Extreme moves the most water of any unit here and still runs just above freezing."
+  },
+  {
+    "id": "dri-eaz-revolution-lgr-dehumidifier",
+    "name": "Dri-Eaz Revolution LGR Dehumidifier",
+    "badge": "Most Rugged",
+    "category": "Low-Grain Refrigerant, 80 Pints/Day, Built-In Pump",
+    "description": "Dri-Eaz builds equipment for water-damage restoration companies, and the Revolution is its compact low-grain refrigerant unit. Listings give 80 pints per day at 80°F and 60 percent relative humidity and 139 pints per 24 hours at 90°F and 90 percent, with an efficiency of 4.8 pints per kilowatt-hour at the AHAM point. The listed operating range is 33 to 100°F. It runs on 115 volts at 6.2 amps, weighs about 65 pounds and measures roughly 12.5 by 17.6 by 21.5 inches, and it has a built-in condensate pump with a long drain hose. The humidistat sets from 30 to 90 percent in 5 percent steps, which is a plain but useful control for a garage. Airflow figures vary between listings, from about 121 to 190 CFM, and warranty terms differ by seller, with one listing six years on the coil and compressor. It is built to be dragged around job sites, which is a good trait in a garage, but it is priced like professional equipment.",
+    "pros": [
+      "80 pints/day at AHAM and 139 pints/day at 90°F/90% RH, per listings",
+      "Listed operating range of 33 to 100°F",
+      "Built-in pump and a restoration-grade housing",
+      "Simple humidistat from 30 to 90% RH"
+    ],
+    "cons": [
+      "Priced like professional restoration gear",
+      "Airflow figures vary between listings",
+      "Warranty terms differ by seller"
+    ],
+    "bottomLine": "The Revolution is the pick for buyers who want restoration-grade toughness in a garage that sees mud, salt and the occasional knock from a car door."
+  },
+  {
+    "id": "ebac-dd200-desiccant-dehumidifier",
+    "name": "Ebac DD200 Desiccant Dehumidifier",
+    "badge": "Best for Freezing Garages",
+    "category": "Desiccant, 36-40 Pints/Day, 800 W",
+    "description": "Compressor dehumidifiers, even low-grain ones, stop working near freezing because the coil ices up. A desiccant dehumidifier does not have that problem, and the Ebac DD200 is a stainless-steel desiccant unit built for cold, unheated spaces. Listings give a minimum operating temperature of minus 4°F, with a safety cutout above 104°F. Capacity is listed at 36 pints per day under AHAM conditions on one spec listing and up to 40 pints on others; we would plan on 36, and expect it to hold that capacity better than a refrigerant unit as the air cools. The trade-off is power: it draws about 800 watts at 110 volts and 7.5 amps, because a desiccant unit heats the absorbent wheel to drive off the water it collects. That warmth also nudges the garage temperature up slightly, which is no bad thing in winter. It weighs about 37.5 pounds and measures roughly 13 by 13 by 15 inches, with an hours-run meter and a remote humidistat input.",
+    "pros": [
+      "Listed minimum operating temperature of -4°F",
+      "Desiccant design does not frost up near freezing",
+      "Stainless-steel housing and an hours-run meter",
+      "Compact at about 13 x 13 x 15 inches and 37.5 lb"
+    ],
+    "cons": [
+      "Draws about 800 W, far more than a refrigerant unit",
+      "Capacity listed as 36 or 40 pints depending on source",
+      "Industrial styling and price"
+    ],
+    "bottomLine": "If your garage regularly drops below freezing, a desiccant unit like the DD200 is the only kind on this list that keeps removing water, as long as you accept the higher power draw."
+  },
+  {
+    "id": "ivation-13-pint-desiccant-dehumidifier",
+    "name": "Ivation 13-Pint Small-Area Desiccant Dehumidifier",
+    "badge": "Best for Small Garages",
+    "category": "Desiccant, 13 Pints/Day, Tank",
+    "description": "For a one-car garage, a workshop corner or a storage room off the garage, the Ivation 13-pint desiccant unit is a much smaller and cheaper way to get cold-weather drying. Newegg lists it at 13 pints per day at 68°F and 60 percent relative humidity, and retailer listings give an operating range starting at 33°F. It is rated for spaces up to 270 square feet, collects water in a 3.8-pint removable tank with a level window, and measures about 17.5 inches tall and 14 pounds. Listed prices range from about $230 to $290 depending on the retailer. Ivation's wattage was not listed in the sources we could verify, and desiccant units typically draw several hundred watts, so check the manual before running it on a shared garage circuit. A 3.8-pint tank fills quickly in a damp space, so you will either empty it often or use a continuous-drain hose if your version supports one.",
+    "pros": [
+      "13 pints/day at 68°F/60% RH, per Newegg",
+      "Operating range from 33°F, per retailer listings",
+      "Light and compact, about 14 lb",
+      "Rated for up to 270 sq ft"
+    ],
+    "cons": [
+      "Small 3.8-pint tank needs frequent emptying",
+      "Wattage not listed in the sources we checked",
+      "Too small for a two-car or wet garage"
+    ],
+    "bottomLine": "For a small, cold space where a full-size unit is overkill, the Ivation desiccant keeps drying near freezing in a package you can carry with one hand."
+  },
+  {
+    "id": "midea-cube-50-pint-dehumidifier-with-pump",
+    "name": "Midea Cube 50-Pint Dehumidifier With Pump",
+    "badge": "Best for Heated Garages",
+    "category": "Household Refrigerant, 50 Pints, Built-In Pump",
+    "description": "If your garage is attached and stays above about 50°F most of the year, you do not need restoration gear, and the Midea Cube is a well-designed household unit for that job. Midea's US listings describe the 50-pint Cube as suitable for spaces up to 4,500 square feet, while other Midea marketing copy for the same line says 1,500, so treat the larger figure with caution. The built-in pump version is the one to buy for a garage; Midea's Canadian listing describes a 16-watt pump that can lift water more than 16 vertical feet. The Cube's design lets the bucket sit underneath the unit, so it takes less floor space than most 50-pint portables. The important caveat is temperature: we could not find a minimum operating temperature in Midea's published specs, and household compressor units typically lose capacity well before freezing. That is why it is our pick only for heated or attached garages, not cold ones.",
+    "pros": [
+      "Built-in pump version lifts water more than 16 vertical feet, per Midea",
+      "Compact cube design with the bucket underneath",
+      "Household price and styling",
+      "Smart app control on some versions"
+    ],
+    "cons": [
+      "No published minimum operating temperature in the specs we found",
+      "Midea's coverage figures conflict, 4,500 vs 1,500 sq ft",
+      "Not suitable for unheated garages in cold climates"
+    ],
+    "bottomLine": "In an attached garage that stays reasonably warm, the Midea Cube with pump is a tidy, affordable fix; in a cold garage, buy one of the low-temperature units above instead."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Dehumidifiers for Garages",
+          item: "https://www.thehonestreviewers.com/best-dehumidifier-for-garage/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "Can you use a regular dehumidifier in a garage?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, if the garage stays above roughly 50°F, as many attached garages do. Below that, a household refrigerant unit loses capacity quickly as its coil frosts, and many list a floor around 41°F. For colder garages, choose a low-grain refrigerant unit rated to about 33°F or a desiccant unit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the best dehumidifier for a cold garage?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For a garage that gets cold but rarely freezes, a low-grain refrigerant unit like the AlorAir Sentinel HDi65S, rated down to 33.8°F by AlorAir, is the best balance. For a garage that regularly drops below freezing, a desiccant like the Ebac DD200, listed down to -4°F, is the only type that keeps working."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What size dehumidifier do I need for a two-car garage?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A typical damp two-car garage suits a 50 to 55 pint unit, such as the AlorAir HDi65S. Go larger, 80 to 85 pints, for a three-car garage, a detached shop or a garage that floods with meltwater from cars. Size up in cold climates, because real capacity falls well below the 80°F rating."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do desiccant dehumidifiers work in freezing temperatures?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. A desiccant dehumidifier absorbs moisture into a material and then heats it off, so nothing gets cold enough to freeze. Ebac lists the DD200 down to -4°F. The trade-off is power: a desiccant unit draws far more electricity than a refrigerant unit in mild weather."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where should I put a dehumidifier in my garage?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Put it where air circulates freely, a few inches or more from walls, away from where cars park and off the floor if snowmelt pools there. Place it near a floor drain or where a pump hose can run outside, and keep the garage door closed while it runs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I drain a dehumidifier in a garage?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use a gravity hose to a floor drain if you have one. If not, buy a unit with a built-in pump that can push water to a sink, through a wall or onto the driveway. Keep the line short and sloped, and protect it from freezing in winter."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What humidity should a garage be?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Aim for about 50 percent relative humidity. Above roughly 60 percent, tools rust, mildew grows and stored items start to smell. Going much below 50 percent costs electricity for little benefit. A hygrometer in the garage tells you whether the dehumidifier is keeping up."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Basement Waterproofing",
+    tags: [
+      "best dehumidifier for garage",
+      "garage dehumidifier",
+      "low temperature dehumidifier",
+      "dehumidifier for cold garage",
+      "desiccant dehumidifier for garage"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated October 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The 6 Best <span class="text-[#38BDF8]">Dehumidifiers for Garages</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Low-temperature, desiccant and pump-equipped units that keep drying a cold, dusty garage long after a household dehumidifier has given up.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#alorair-sentinel-hdi65s-garage-dehumidifier"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Jump to the Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Shaheer Ali Khan</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Consumer Product Testing &amp; Materials Performance Specialist</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="8.6k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-picked" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Picked</a>
+          <a href="#why-garages" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Why Garages Are Different</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 6 Picks</a>
+          <a href="#sizing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Sizing for a Garage</a>
+          <a href="#drainage" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Drainage and Freezing Lines</a>
+          <a href="#placement" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Placement and Settings</a>
+          <a href="#running-cost" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Running Cost</a>
+          <a href="#maintenance" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Maintenance</a>
+          <a href="#match" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Match a Pick to Your Garage</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          For most garages that get cold but not freezing, the AlorAir Sentinel HDi65S is the dehumidifier to buy: AlorAir rates it down to 33.8°F and it pumps its own water out. Big or wet garages need an 80-plus-pint LGR unit, and garages that freeze need a desiccant, because refrigerant coils ice up below freezing.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-picked" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Picked
+          </h2>
+
+          <p>
+            We did not run six dehumidifiers through a winter in a test garage, and we will not pretend otherwise. This guide is built from manufacturer specification sheets, ENERGY STAR records and retailer listings that repeat the manufacturer's figures. Every capacity, temperature and electrical number on this page is attributed to its source, and where listings disagree, which they often do with this kind of equipment, we say so and plan around the more conservative figure.
+          </p>
+
+          <p>
+            A garage is a harder job than a basement, and that shaped every pick. Garages are colder, dustier and dirtier, they swing in temperature and humidity every time the door opens, and many have no floor drain. So the first thing we looked for was a published minimum operating temperature, because a household dehumidifier that stops working at 41°F is useless in a garage that sits at 38°F all winter. Units that publish a low-temperature floor ranked above those that do not.
+          </p>
+
+          <p>
+            Second, we looked at drainage. A garage dehumidifier that needs its bucket emptied twice a day will not get emptied twice a day. Built-in pumps or a gravity drain to a floor drain or the driveway are close to essential, and four of our six picks have a pump. Third, we looked for rugged construction, because a garage dehumidifier will get bumped, covered in sawdust and splashed with salt water off the cars.
+          </p>
+
+          <p>
+            If your problem is a basement rather than a garage, our <a href="/best-dehumidifier-for-basement/">basement dehumidifier guide</a> is the better starting point, and if the whole house is humid, our <a href="/best-whole-house-dehumidifier/">whole house dehumidifier guide</a> covers ducted systems.
+          </p>
+        </div>
+
+        <div id="why-garages" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Why Garages Need a Different Dehumidifier
+          </h2>
+
+          <p>
+            Most household dehumidifiers are refrigerant units: a fan pulls air across a cold coil, water condenses on the coil and drips into a bucket. That works well at room temperature. As the air cools, the coil gets colder, and below a certain point the condensate freezes on the coil instead of dripping off. The unit then has to stop and defrost, and it spends more and more of its time defrosting as the temperature falls. Many household units list a floor around 41°F, and below roughly 50°F their real capacity drops sharply.
+          </p>
+
+          <p>
+            Low-grain refrigerant, or LGR, units are refrigerant designs engineered to keep working at lower temperatures and humidity. The AlorAir Sentinel and Storm and the Dri-Eaz Revolution are this kind, and their listings give operating floors around 33 to 34°F. They still use a cold coil, so they still slow down near freezing, but they keep pulling water long after a household unit has given up.
+          </p>
+
+          <p>
+            Desiccant dehumidifiers work differently. They pass air over an absorbent material, usually a rotating wheel, which soaks up moisture, then heat the material to drive the water off into a collection tank. Because nothing gets cold, nothing freezes, and listings for the Ebac DD200 give a minimum of minus 4°F. The price is electricity: a desiccant unit uses a heater, so it draws far more power than a refrigerant unit for the same water removed in warm conditions.
+          </p>
+
+          <p>
+            So the right type depends on how cold your garage gets. Above about 50°F year-round, a household unit is fine. Between freezing and 50°F, an LGR unit is the sweet spot. If the garage regularly drops below freezing, a desiccant unit is the only one that keeps removing water reliably.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 6 Picks
+          </h2>
+
+          <p>
+            Every figure below comes from a manufacturer specification sheet, an ENERGY STAR record or a retailer listing repeating the manufacturer's rating, and we note where sources disagree. We researched these units from published specs; we did not lab-test them.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="sizing" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Sizing for a Garage
+          </h2>
+
+          <p>
+            Garage dehumidifiers are rated the same way as every other dehumidifier, in pints per day at 80°F and 60 percent relative humidity. That test condition is even further from reality in a garage than in a basement. A garage in shoulder season might sit at 45°F and 80 percent humidity, where a refrigerant unit removes a fraction of its rating. So buy more capacity than the square footage alone suggests, and prefer units that publish a saturation figure or a low-temperature figure.
+          </p>
+
+          <p>
+            As a rough guide, a damp one-car garage or workshop corner can be handled by a small desiccant like the Ivation in a cold climate, or a 35 to 50 pint household unit if it stays warm. A typical two-car garage is a good match for a 55-pint LGR like the AlorAir HDi65S. A three-car garage, a detached shop or a garage that floods with meltwater from cars every winter is where the 80 to 85 pint units, the Dri-Eaz Revolution and AlorAir Storm, earn their size.
+          </p>
+
+          <p>
+            Remember what is driving the moisture. Cars bring in snow and slush that melts on the floor, which can add gallons of water on a bad day. An uninsulated slab condenses humid summer air. A dryer vent or a chest freezer in the garage adds heat and moisture of its own. If you can cut the source, for example with a floor squeegee and a drain or by sealing the slab, you can buy a smaller unit and run it less.
+          </p>
+
+          <p>
+            Measure before you buy. A <a href="/best-hygrometer/">hygrometer</a> left in the garage for a couple of weeks tells you how high humidity climbs and how cold it gets, which is exactly the information you need to choose between household, LGR and desiccant. Our <a href="/what-size-dehumidifier-for-basement/">dehumidifier sizing guide</a> explains the general method in more detail.
+          </p>
+        </div>
+
+        <div id="drainage" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Drainage: Pumps, Hoses and Freezing Lines
+          </h2>
+
+          <p>
+            Drainage is the make-or-break detail in a garage. A bucket that fills in a few hours will overflow or shut the unit off, and a full bucket of water in a cold garage can freeze. So plan for continuous drainage from the start. If the garage has a floor drain, a gravity hose is the simplest answer. If not, a unit with a built-in pump can push water to a utility sink, out through the wall or down the driveway.
+          </p>
+
+          <p>
+            Four of our six picks have built-in pumps, and their listed lift heights cover most garages: the AlorAir HDi65S up to 19.6 feet per listings, and the Midea Cube more than 16 vertical feet per Midea. Our guide to <a href="/best-dehumidifier-with-pump/">dehumidifiers with pumps</a> covers how to route a pump hose and what goes wrong with them.
+          </p>
+
+          <p>
+            In a cold garage, protect the drain line. A hose that runs along an outside wall or out onto the driveway can freeze solid on a winter night, which will either trip the unit's float switch or, on some units, back water up into the cabinet. Keep the line short, run it inside the heated envelope where you can, and slope it so water does not sit in low spots. If it must run outside, end it where it can drip freely rather than into a puddle that freezes over the outlet.
+          </p>
+
+          <p>
+            Desiccant units handle water differently. Many collect condensate in a small tank, and some can run a gravity drain hose, but not all can pump. Check what your version supports before you buy, because a desiccant unit with a small tank in a damp garage will need emptying often.
+          </p>
+        </div>
+
+        <div id="placement" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Placement and Running It Well
+          </h2>
+
+          <p>
+            Put the dehumidifier where air can circulate around it, away from where cars park and off the floor if snowmelt pools there. A few inches of clearance on every side is the minimum, and more is better for the intake and exhaust. Units with casters or carry handles are easier to move out of the way when you need the floor.
+          </p>
+
+          <p>
+            Keep the garage door closed while it runs. Every time the door is open, the dehumidifier is trying to dry the neighborhood. If you work in the garage with the door open, switch the unit off and let it catch up afterward. The same logic applies to gaps around the door: a worn bottom seal lets humid air and water in, and fixing it reduces the load on the dehumidifier.
+          </p>
+
+          <p>
+            Set the humidistat to about 50 percent. Below that you are spending electricity for little benefit, and above about 60 percent rust, mildew and that musty garage smell set in. Most of the units here have a built-in humidistat, and the Dri-Eaz Revolution's runs from 30 to 90 percent in five-percent steps, which is plenty of control for a garage.
+          </p>
+
+          <p>
+            Think about heat as well. A small amount of heat in a cold garage helps a refrigerant dehumidifier enormously, because it keeps the coil above freezing. If you are already planning a <a href="/best-garage-heater/">garage heater</a> for a workshop, keeping the space a little warmer can let a household or LGR unit do the job instead of a power-hungry desiccant.
+          </p>
+        </div>
+
+        <div id="running-cost" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Running Cost
+          </h2>
+
+          <p>
+            The running cost of a garage dehumidifier depends mostly on its type. Refrigerant units are efficient in warm conditions: the Dri-Eaz Revolution lists 4.8 pints per kilowatt-hour at the AHAM point, and the AlorAir Storm 2.44 liters, or about 5.2 pints, per kilowatt-hour. The AlorAir Storm draws 5.62 amps at 115 volts, which works out to roughly 650 watts while running.
+          </p>
+
+          <p>
+            Desiccant units use more. The Ebac DD200 is listed at about 800 watts. If it runs eight hours a day for 120 cold days, that is about 768 kilowatt-hours, or roughly $130 a season at 17 cents per kilowatt-hour. The heat it gives off is not entirely wasted, because it warms the garage slightly, but it is still the most expensive type to run in mild weather.
+          </p>
+
+          <p>
+            For your own estimate, multiply the unit's wattage by the hours it actually runs and by your electricity rate. A dehumidifier on a humidistat runs far less once the garage is dry than it does on day one. Our guide to <a href="/how-much-electricity-does-a-dehumidifier-use/">how much electricity a dehumidifier uses</a> walks through the math with worked examples.
+          </p>
+
+          <p>
+            Do not forget filters. Garages are dusty, and a clogged filter cuts airflow and capacity. Check it monthly at first, rinse or replace it as the manual directs, and you will keep the unit close to its rated performance and away from an early repair.
+          </p>
+        </div>
+
+        <div id="maintenance" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Maintenance in a Dirty Space
+          </h2>
+
+          <p>
+            Garage dehumidifiers live a harder life than basement units. Sawdust, road salt and fine dust from the driveway all end up on the filter and, if the filter is torn or missing, on the coil. Clean or replace the filter regularly and inspect the coil each season. A dirty coil cannot transfer heat properly, which lowers capacity and can make the unit run constantly without drying the space.
+          </p>
+
+          <p>
+            Flush the drain line and pump once a season. A pump reservoir that sits with stagnant water grows slime, and slime clogs pumps. A cup of diluted bleach or a manufacturer-approved cleaner through the drain path, followed by clean water, keeps it moving. Check the float switch still trips the unit off if the drain blocks.
+          </p>
+
+          <p>
+            If the unit sits idle over summer, dry it out before storing it. Run it with the fan only for a while if it has that setting, empty the tank or pump, and cover it against dust. A unit stored wet will smell of mildew next season, and a pump left with water in a garage that freezes can crack.
+          </p>
+
+          <p>
+            Finally, keep it off the floor if water pools there, and keep it away from the car's path. Restoration-grade units like the Storm and Revolution shrug off knocks, but a household Midea in a busy garage is safest on a sturdy shelf or a raised platform near a drain.
+          </p>
+        </div>
+
+        <div id="match" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Match a Pick to Your Garage
+          </h2>
+
+          <p>
+            For most garages that are cold but not freezing, the AlorAir Sentinel HDi65S is the one to buy: a 33.8°F floor per AlorAir, a built-in pump and a size that fits a typical two-car garage. If your garage is larger, wetter or doubles as a workshop, step up to the AlorAir Storm LGR Extreme or the Dri-Eaz Revolution, which move more water and are built to take abuse.
+          </p>
+
+          <p>
+            If your garage regularly falls below freezing, buy a desiccant. The Ebac DD200 is listed down to minus 4°F and suits a full garage, while the Ivation 13-pint unit covers a one-car garage or workshop corner for much less money. Both use more electricity than refrigerant units, which is the cost of drying air that cold.
+          </p>
+
+          <p>
+            If your garage is attached and stays reasonably warm year-round, a household unit is enough, and the Midea Cube with a built-in pump is a tidy, affordable choice. Just do not move it into an unheated detached garage in winter and expect it to keep up, because household units are not built for that.
+          </p>
+
+          <p>
+            And if the dampness is coming from the house rather than the garage, look upstream. Our <a href="/best-dehumidifier-for-basement/">basement</a> and <a href="/best-crawl-space-dehumidifier/">crawl space</a> guides cover the two most common sources of whole-house humidity, and our <a href="/whole-house-vs-portable-dehumidifier/">whole house versus portable comparison</a> explains when one big unit beats several small ones.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying a Household Unit for a Cold Garage</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Most household dehumidifiers list a floor around 41°F and lose much of their capacity below 50°F as the coil frosts. In an unheated garage they spend more time defrosting than drying. Check the published minimum operating temperature before you buy, and choose an LGR or desiccant unit for a cold space.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Relying on the Bucket</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A garage dehumidifier that needs emptying twice a day will not get emptied twice a day, and a full bucket can freeze. Plan for continuous drainage from the start, with a gravity hose to a floor drain or a built-in pump that can push water out of the garage.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Letting the Drain Line Freeze</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A hose that runs along a cold wall or out onto the driveway can freeze overnight, tripping the float switch or backing water into the cabinet. Keep the line short and sloped, route it inside where you can, and let it end where it drips freely rather than into a puddle.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Running It With the Door Open</h3>
+              <p class="text-gray-700 text-sm m-0">
+                An open garage door lets the dehumidifier try to dry the whole street. Close the door while it runs, fix a worn bottom seal, and switch the unit off while you work with the door up. It will catch up quickly once the space is closed again.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring the Filter</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Garages are dusty, and a clogged filter starves the coil of air, cutting capacity and making the unit run constantly. Check the filter monthly at first, clean or replace it as the manual says, and inspect the coil each season.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can you use a regular dehumidifier in a garage?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes, if the garage stays above roughly 50°F, as many attached garages do. Below that, a household refrigerant unit loses capacity quickly as its coil frosts, and many list a floor around 41°F. For colder garages, choose a low-grain refrigerant unit rated to about 33°F or a desiccant unit.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best dehumidifier for a cold garage?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For a garage that gets cold but rarely freezes, a low-grain refrigerant unit like the AlorAir Sentinel HDi65S, rated down to 33.8°F by AlorAir, is the best balance. For a garage that regularly drops below freezing, a desiccant like the Ebac DD200, listed down to -4°F, is the only type that keeps working.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What size dehumidifier do I need for a two-car garage?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A typical damp two-car garage suits a 50 to 55 pint unit, such as the AlorAir HDi65S. Go larger, 80 to 85 pints, for a three-car garage, a detached shop or a garage that floods with meltwater from cars. Size up in cold climates, because real capacity falls well below the 80°F rating.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do desiccant dehumidifiers work in freezing temperatures?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes. A desiccant dehumidifier absorbs moisture into a material and then heats it off, so nothing gets cold enough to freeze. Ebac lists the DD200 down to -4°F. The trade-off is power: a desiccant unit draws far more electricity than a refrigerant unit in mild weather.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Where should I put a dehumidifier in my garage?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Put it where air circulates freely, a few inches or more from walls, away from where cars park and off the floor if snowmelt pools there. Place it near a floor drain or where a pump hose can run outside, and keep the garage door closed while it runs.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How do I drain a dehumidifier in a garage?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Use a gravity hose to a floor drain if you have one. If not, buy a unit with a built-in pump that can push water to a sink, through a wall or onto the driveway. Keep the line short and sloped, and protect it from freezing in winter.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What humidity should a garage be?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Aim for about 50 percent relative humidity. Above roughly 60 percent, tools rust, mildew grows and stored items start to smell. Going much below 50 percent costs electricity for little benefit. A hygrometer in the garage tells you whether the dehumidifier is keeping up.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Dehumidifier Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-dehumidifier-for-basement/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Basement Dehumidifiers</h3>
+              <p class="text-gray-500 text-sm mt-2">Portable units for a damp basement, ranked on capacity and drainage.</p>
+            </a>
+            <a href="/best-whole-house-dehumidifier/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Whole House Dehumidifiers</h3>
+              <p class="text-gray-500 text-sm mt-2">Ducted, ventilating and low-temperature systems for homes humid throughout.</p>
+            </a>
+            <a href="/best-dehumidifier-with-pump/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Dehumidifiers With Pump</h3>
+              <p class="text-gray-500 text-sm mt-2">Built-in condensate pumps compared on lift height and reliability.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The best dehumidifier for most garages is the AlorAir Sentinel HDi65S: rated down to 33.8°F by AlorAir, sized for a typical two-car garage and equipped with a pump. Bigger or wetter garages need the AlorAir Storm or Dri-Eaz Revolution, and garages that freeze need a desiccant like the Ebac DD200.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Whichever you choose, plan the drain before you plug it in, keep the door closed while it runs and clean the filter often. A garage dehumidifier that drains itself and breathes freely will keep rust, mildew and that damp-garage smell away all year.
+          </p>
+        </div>
+
+        <MoreInCategory category="Basement Waterproofing" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

@@ -1,0 +1,837 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Caulk for Windows",
+    "url": "/best-caulk-for-windows/"
+  },
+  {
+    "title": "Best Exterior Caulk",
+    "url": "/best-exterior-caulk/"
+  },
+  {
+    "title": "Best Concrete Crack Fillers",
+    "url": "/best-concrete-crack-filler/"
+  },
+  {
+    "title": "Driveway Crack Repair",
+    "url": "/driveway-crack-repair/"
+  },
+  {
+    "title": "Polyurethane vs Silicone Caulk",
+    "url": "/polyurethane-vs-silicone-caulk/"
+  },
+  {
+    "title": "Best Caulk Guns",
+    "url": "/best-caulk-gun/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-19", modified: "2026-10-19" });
+const title = "6 Best Caulks for Concrete: Self-Leveling and Non-Sag Joint Sealants";
+const description =
+  "The best caulk for concrete cracks, driveway expansion joints and walls: self-leveling and non-sag polyurethane, hybrid and acrylic sealants compared by spec.";
+
+const PRODUCTS = [
+  {
+    "id": "sikaflex-self-leveling-sealant",
+    "name": "Sikaflex Self-Leveling Sealant",
+    "badge": "Best Overall",
+    "category": "Self-Leveling Polyurethane, Horizontal Joints",
+    "amazonUrl": "#",
+    "description": "Sikaflex Self-Leveling Sealant is the one we would put in most driveway, sidewalk and patio expansion joints, because it is a polyurethane built specifically to flow flat into horizontal joints and stay flexible. Sika's current product page rates it for plus or minus 25 percent joint movement, and its data sheets list a tack-free time of about one to two hours with a final cure in three to five days. Sika recommends at least seven days of cure before painting or total water immersion. The joint design guidance is clear and worth following: a 2:1 width-to-depth ratio, sealant depth between 1/4 inch and 1/2 inch, and bond breaker tape or closed-cell backer rod under it in every horizontal joint. Sika also lists it as paintable with water-, oil- or rubber-based paints once cured. The limits are equally clear: it is not designed for sloped surfaces, where it will run downhill, and Sika's sister product Sikaflex SL 1 is rated higher at plus or minus 35 percent if you need more movement. Check which version is on the shelf.",
+    "pros": [
+      "Rated for plus or minus 25 percent joint movement, per Sika",
+      "Flows level into horizontal joints with no tooling",
+      "Tack-free in about 1 to 2 hours per Sika's data sheets",
+      "Paintable with water-, oil- or rubber-based paint once cured"
+    ],
+    "cons": [
+      "Will run on any slope, so it is flat-joints only",
+      "Needs about 7 days before painting or immersion",
+      "Joint depth limited to 1/2 inch of sealant"
+    ],
+    "bottomLine": "For flat expansion joints in driveways, patios and sidewalks, Sikaflex Self-Leveling is the default: a polyurethane rated for plus or minus 25 percent movement that levels itself and cures in three to five days."
+  },
+  {
+    "id": "quikrete-advanced-polymer-self-leveling",
+    "name": "Quikrete Advanced Polymer Self-Leveling Sealant",
+    "badge": "Best for Wide Joints",
+    "category": "Self-Leveling Hybrid Polymer",
+    "amazonUrl": "#",
+    "description": "Quikrete's Advanced Polymer Self-Leveling Sealant is a hybrid rather than a straight polyurethane, and its standout spec is width: the data sheet says it is formulated for cracks and joints up to 1 inch wide in interior or exterior areas. That covers the wider expansion joints in older driveways where a 1/2-inch-limited product falls short. It cures on contact with moisture in the air, and Quikrete's sheet lists a Shore A hardness of 20 to 30 and elongation of 400 to 500 percent. The tack-free figure is inconsistent between sources: one version of the data sheet lists 100 minutes at 77 degrees and 50 percent humidity, while Quikrete's product page says 60 minutes, so plan for the longer number. We could not confirm a movement rating for this exact product; Quikrete's sister Advanced Polymer crack and mortar sealants list plus or minus 25 percent. As with every self-leveling sealant, it needs a 2:1 width-to-depth joint and backer rod to keep the sealant between 1/4 and 1/2 inch deep, and it is flat-joints only.",
+    "pros": [
+      "Rated for joints up to 1 inch wide, per Quikrete",
+      "Hybrid polymer with 400 to 500 percent listed elongation",
+      "Sold widely alongside other Quikrete concrete products",
+      "Interior and exterior use"
+    ],
+    "cons": [
+      "Tack-free time differs between Quikrete sources (60 vs 100 minutes)",
+      "No confirmed movement rating for this exact product",
+      "Self-leveling, so useless on walls and slopes"
+    ],
+    "bottomLine": "If your expansion joints are wider than 1/2 inch, Quikrete's Advanced Polymer Self-Leveling is the pick, rated for joints up to 1 inch wide."
+  },
+  {
+    "id": "dap-self-leveling-concrete-sealant",
+    "name": "DAP Self-Leveling Concrete Sealant",
+    "badge": "Fastest Turnaround",
+    "category": "Self-Leveling Sealant, ASTM C920 Class 25",
+    "amazonUrl": "#",
+    "description": "DAP's self-leveling concrete sealant is the pick when weather is the problem. DAP lists it as paint- and rain-ready in about one hour, which is the shortest window among the self-leveling options here and makes a difference when an afternoon storm is in the forecast. It meets ASTM C920 Class 25, the standard that corresponds to plus or minus 25 percent movement. DAP's limits are tighter than Quikrete's: joint width should not exceed 1/2 inch, and foam backer rod goes in any joint deeper than that. DAP also notes that some porous substrates such as concrete may need a primer for best adhesion, though priming is usually unnecessary, and that it is not meant for continuous underwater use, high-temperature surfaces or surface defects. We could not find a tack-free time on DAP's current sheet. For narrow joints and cracks in patios and walkways that need to be done before the weather turns, it is the practical choice.",
+    "pros": [
+      "Rain- and paint-ready in about 1 hour, per DAP",
+      "Meets ASTM C920 Class 25",
+      "Widely sold in standard 10.1 oz cartridges",
+      "Clear backer-rod and joint guidance on the sheet"
+    ],
+    "cons": [
+      "Joint width limited to 1/2 inch",
+      "No tack-free time on DAP's current data sheet",
+      "Porous concrete may occasionally need a primer"
+    ],
+    "bottomLine": "For narrow flat joints that have to be rain-ready fast, DAP's self-leveling concrete sealant is listed at about one hour to rain and paint."
+  },
+  {
+    "id": "sikaflex-plus-construction-sealant",
+    "name": "Sikaflex + Construction Sealant",
+    "badge": "Best High-Movement Non-Sag",
+    "category": "Non-Sag Polyurethane, Gun Grade",
+    "amazonUrl": "#",
+    "description": "For vertical joints, the gap where a slab meets a foundation wall, control joints on steps and anywhere the sealant has to stay put, you need a non-sag sealant, and Sikaflex + Construction Sealant has the highest movement rating we could verify among them. Sika's May 2026 data sheet lists it at plus or minus 35 percent movement, describes it as a moisture-cured, one-component, non-sag polyurethane, and lists it as paintable with water-, oil- and rubber-based paints. Maximum sealant depth is 1/2 inch, so deeper joints need backer rod. Be careful at the shelf: Sika sells several similarly named construction sealants, and older or regional versions of plain Sikaflex Construction list plus or minus 25 percent. Check that the cartridge says '+ Construction Sealant' if the 35 percent figure is the reason you are buying it. It needs tooling, unlike a self-leveler, and polyurethane is sticky to work with, so wear gloves and keep mineral spirits on hand for cleanup.",
+    "pros": [
+      "Rated for plus or minus 35 percent movement on Sika's 2026 sheet",
+      "Non-sag, so it stays in vertical and overhead joints",
+      "Paintable with water-, oil- and rubber-based paints",
+      "Polyurethane adhesion to concrete and masonry"
+    ],
+    "cons": [
+      "Similar Sika names carry lower movement ratings",
+      "Must be tooled, unlike a self-leveler",
+      "Messy cleanup compared with water-based caulks"
+    ],
+    "bottomLine": "For vertical concrete joints that move, Sikaflex + Construction Sealant is the non-sag polyurethane with the highest verified rating here, at plus or minus 35 percent."
+  },
+  {
+    "id": "loctite-pl-concrete-non-sag",
+    "name": "Loctite PL Concrete Non-Sag Polyurethane Sealant",
+    "badge": "Best for Vertical Cracks",
+    "category": "Non-Sag Polyurethane, Textured",
+    "amazonUrl": "#",
+    "description": "Loctite PL Concrete Non-Sag, also sold as PL Concrete Crack and Masonry, is the easy recommendation for cracks in foundation walls, block, brick and steps. Henkel's data sheet describes a one-component, moisture-curing, gun-grade polyurethane with a textured finish that helps it blend into concrete, and rates it for plus or minus 25 percent joint movement. It does not need a primer on concrete, brick, stone or masonry, it is non-shrinking, and it is paintable once fully cured. Henkel's coverage figure is useful for shopping: a 1/4-inch bead runs about 30.9 feet from a 10-ounce cartridge, dropping to about 13.8 feet at 3/8 inch. The limits are the usual polyurethane ones: not for prolonged underwater use, not for temperatures above 180 degrees, and not for joints deeper than 1/2 inch without backer rod. Retail names and item numbers vary, so match the number on the cartridge to Henkel's sheet.",
+    "pros": [
+      "Rated for plus or minus 25 percent movement, per Henkel",
+      "No primer needed on concrete, brick, stone or masonry",
+      "Textured finish blends with concrete",
+      "Henkel lists about 30.9 ft per cartridge at a 1/4-inch bead"
+    ],
+    "cons": [
+      "Paintable only after full cure",
+      "Retail names and item numbers vary",
+      "Not for joints deeper than 1/2 inch without backer rod"
+    ],
+    "bottomLine": "For cracks in walls, steps and block, Loctite PL Concrete Non-Sag is a primer-free polyurethane with a textured finish that blends in, rated for plus or minus 25 percent movement."
+  },
+  {
+    "id": "sashco-slab",
+    "name": "Sashco Slab Concrete Crack Repair",
+    "badge": "Best for Hairline Cracks",
+    "category": "Textured Acrylic Latex, Non-Sag",
+    "amazonUrl": "#",
+    "description": "Sashco Slab is not a polyurethane and does not pretend to be. Sashco describes it as a 100 percent acrylic latex, water-based sealant textured to look like concrete, and says it stretches up to 300 percent of the original crack size. That makes it the friendliest product here for cosmetic cracks in walkways and patios: it cleans up with water, it has no isocyanates or solvents, and the texture hides the repair better than a smooth bead. The label lists a skin in about 30 minutes, tack-free in two to four hours and a full cure in one to two weeks, with foot traffic kept off for at least 24 hours, or 48 hours above 50 percent humidity. It needs Sashco's filler rope in joints deeper than 1/2 inch, and a retailer listing adds backer rod for cracks wider than 1/4 inch. Sashco cites a limited lifetime warranty. It is not the product for a structural expansion joint that sees cars, but for the hairline and small cracks most homeowners actually have, it is the least fussy fix.",
+    "pros": [
+      "Textured to look like concrete, per Sashco",
+      "Water-based with soap-and-water cleanup",
+      "Sashco says it stretches up to 300 percent of crack size",
+      "Limited lifetime warranty cited on the label"
+    ],
+    "cons": [
+      "Full cure takes 1 to 2 weeks",
+      "Acrylic, not a polyurethane, for high-traffic joints",
+      "Needs filler rope or backer rod in bigger cracks"
+    ],
+    "bottomLine": "For hairline and small cosmetic cracks, Sashco Slab is the easiest product here: textured acrylic that cleans up with water and blends into the slab."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Caulk for Concrete",
+          item: "https://www.thehonestreviewers.com/best-caulk-for-concrete/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best caulk for concrete?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For flat driveway and patio joints, a self-leveling polyurethane such as Sikaflex Self-Leveling Sealant is the default, rated for plus or minus 25 percent movement by Sika. For vertical cracks and walls, a non-sag polyurethane such as Loctite PL Concrete or Sikaflex + Construction Sealant is the better choice."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use silicone caulk on concrete?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "General-purpose silicone is a poor choice on concrete. It often bonds weakly to porous masonry, attracts dirt and cannot be painted. Concrete-rated polyurethane or hybrid sealants bond better, hold up to traffic and are designed for the movement concrete joints see."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need backer rod for concrete caulk?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, for any joint deeper than about 1/2 inch. Makers including Sika, DAP and Henkel call for backer rod or bond breaker tape so the sealant stays between roughly 1/4 and 1/2 inch deep and bonds only to the two sides of the joint, not the bottom."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long before I can drive on sealed concrete joints?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on the product and weather. Sika lists a three-to-five-day final cure for its self-leveling sealant, and polyurethane cures slowly in cool, dry conditions. Keep vehicles off for at least a few days and longer for deep beads or cold weather."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between self-leveling and non-sag concrete sealant?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Self-leveling sealant flows flat into horizontal joints without tooling and suits driveways and patios. Non-sag sealant stays put in vertical or sloped joints and must be tooled. Use self-leveling where water would pool and non-sag where it would run off."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you paint concrete caulk?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Many concrete sealants can be painted once cured. Sika lists its self-leveling and + Construction sealants as paintable with water-, oil- or rubber-based paints, while Loctite PL Concrete is paintable only after full cure. Rigid paints can crack over a flexible sealant, so test first."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How wide a crack can concrete caulk fill?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most homeowner sealants are rated for joints up to about 1/2 inch wide. Quikrete's Advanced Polymer Self-Leveling is rated up to 1 inch. Wider gaps need a commercial joint system or professional repair rather than layers of cartridge sealant."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home Improvement",
+    tags: [
+      "best caulk for concrete",
+      "concrete crack sealant",
+      "self leveling concrete caulk",
+      "concrete joint sealant",
+      "driveway expansion joint sealant"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Concrete Joint Picks
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best Caulk <span class="text-[#38BDF8]">for Concrete</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Six concrete sealants chosen by job: self-leveling for flat joints you walk and drive on, non-sag for walls and steps, and one textured acrylic for hairline cracks.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#sikaflex-self-leveling-sealant"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            See the Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Shaheer Ali Khan</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Consumer Product Testing &amp; Materials Performance Specialist</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="9.1k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-chose" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Chose</a>
+          <a href="#self-leveling-vs-non-sag" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Self-Leveling vs Non-Sag</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 6 Picks</a>
+          <a href="#chemistry" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Polyurethane, Hybrid or Acrylic</a>
+          <a href="#joint-design" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Joint Size and Backer Rod</a>
+          <a href="#prep" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Prep That Decides Adhesion</a>
+          <a href="#application" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. How to Apply It</a>
+          <a href="#cure-and-traffic" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Cure, Traffic and Paint</a>
+          <a href="#when-not-to-caulk" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. When Caulk Is the Wrong Fix</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          The best caulk for concrete is the one built for the direction of the joint. Flat driveway and patio joints want a self-leveling polyurethane or hybrid that flows flat and seals itself; walls, steps and foundation cracks want a non-sag gun-grade sealant that stays where you put it. Get that choice right, add backer rod where the joint is deep, and almost any of the six below will outlast the bargain-bin acrylic most people reach for first.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-chose" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Chose
+          </h2>
+
+          <p>
+            We did not lab-test these sealants. This is a researched buying guide, and every figure on the product cards comes from the manufacturer's technical data sheet, label or product page. Where two versions of a sheet disagree, which happens more often than you would expect with sealants, we give both numbers and tell you which one to plan around.
+          </p>
+
+          <p>
+            We started from the job rather than the brand. Concrete caulking jobs split cleanly into flat joints, where the sealant can flow and level itself, and vertical or sloped joints, where it has to stay where you put it. Inside each group we looked at movement rating, joint size limits, cure and traffic time, paintability and how forgiving the product is to apply. A sealant that is excellent but needs a primer, a perfect joint and a week of dry weather is not the right pick for most homeowners.
+          </p>
+
+          <p>
+            We also kept this list distinct from our <a href="/best-exterior-caulk/">best exterior caulk</a> roundup. That page covers siding, trim, windows and general exterior gaps. Concrete is a different problem: the substrate is porous and alkaline, the joints are wider and deeper, and many of them carry foot or vehicle traffic. The products below are built for that.
+          </p>
+
+          <p>
+            Finally, we checked each product against the standards that actually mean something. ASTM C920 is the main specification for elastomeric joint sealants, and its class number roughly corresponds to the percentage of joint movement the sealant is rated to handle. Where a maker lists a class or a movement percentage, we quote it. Where we could not find one, we say so rather than guess.
+          </p>
+        </div>
+
+        <div id="self-leveling-vs-non-sag" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Self-Leveling vs Non-Sag: Pick by the Joint, Not the Brand
+          </h2>
+
+          <p>
+            Self-leveling sealant is thin enough to flow into a horizontal joint and settle flat on its own. You run a bead along the joint, it spreads to the sides, and gravity gives you a smooth, slightly recessed surface without tooling. That is exactly what you want in driveway expansion joints, sidewalk control joints and patio gaps, because a flat, recessed surface sheds water and does not catch shovels, tires or heels.
+          </p>
+
+          <p>
+            The same property makes self-leveling sealant useless anywhere that is not flat. On a slope it runs downhill; on a wall it runs out of the joint entirely. Sika says plainly that its self-leveling sealant is not designed for sloped surfaces, and the same is true of every product in that category. If your driveway joint has a noticeable pitch, dam the low end with backer rod or switch to a non-sag product.
+          </p>
+
+          <p>
+            Non-sag sealant, sometimes called gun grade, is thick enough to stay in a vertical or overhead joint. It goes in like a normal caulk and has to be tooled smooth with a putty knife or a gloved finger. Use it for cracks in foundation walls, the joint where a slab meets a wall, steps, block and brick, and any horizontal joint on a slope steep enough that a self-leveler would migrate.
+          </p>
+
+          <p>
+            A lot of failed concrete repairs come down to using the wrong one. A non-sag sealant in a wide horizontal joint leaves a lumpy, hand-tooled surface that holds water and catches the edge of a shovel. A self-leveler on a step drips onto the next one down. Decide which kind of joint you have before you look at brands, and half the decision is made.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">A quick rule</h3>
+
+          <p>
+            If you could pour water on the joint and it would sit there, use self-leveling. If the water would run off, use non-sag. For a mix of both, which is common on driveways that meet a garage slab, buy one of each rather than forcing one product to do both jobs.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 6 Picks
+          </h2>
+
+          <p>
+            We did not lab-test these sealants. Every movement rating, joint size, cure time and paint window below comes from the maker's technical data sheet or label, and where sheets disagree we say so. The six cover the real jobs: flat expansion joints, fast turnaround, high-movement non-sag work, vertical cracks and hairline repairs.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="chemistry" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Polyurethane, Hybrid or Acrylic: What the Chemistry Changes
+          </h2>
+
+          <p>
+            Polyurethane is the traditional choice for concrete joints. It bonds well to masonry, it is tough enough for vehicle traffic once cured, and it stays elastic through freeze-thaw cycles. Four of our six picks are polyurethane. The downsides are handling and cleanup: it is sticky, it needs mineral spirits rather than water, and it is sensitive to moisture in the joint during application. Our comparison of <a href="/polyurethane-vs-silicone-caulk/">polyurethane vs silicone caulk</a> goes deeper on why silicone is a poor choice on concrete.
+          </p>
+
+          <p>
+            Hybrid polymer sealants, such as Quikrete's Advanced Polymer line, sit between polyurethane and silicone. They cure on contact with moisture in the air, generally tolerate damp surfaces better and tend to be easier to clean up while uncured. Quikrete lists 400 to 500 percent elongation for its self-leveling version. They are a good choice when you want polyurethane-like performance with fewer handling headaches.
+          </p>
+
+          <p>
+            Acrylic latex sealants are water-based, easy to use and cheap, but they have far less movement capability than a good polyurethane or hybrid. Sashco Slab is the exception that earns its place, because it is formulated for concrete, textured to blend in and rated to stretch well beyond a basic acrylic. For a cosmetic crack it is a sensible choice; for an expansion joint that moves every season, it is not.
+          </p>
+
+          <p>
+            Movement rating is the number to compare. A sealant rated for plus or minus 25 percent can handle a joint that opens and closes by a quarter of its width without tearing or losing adhesion. Expansion joints in a long driveway move noticeably between summer and winter, so a higher rating buys you real years of life. Sikaflex + Construction Sealant, at plus or minus 35 percent on Sika's 2026 sheet, has the most headroom of the products we could verify.
+          </p>
+
+          <p>
+            If you are still unsure where caulk ends and sealant begins, our explainer on <a href="/caulk-vs-sealant/">caulk vs sealant</a> sorts out the terms. For concrete, you want something sold as a sealant with a stated movement rating, not a general-purpose painter's caulk.
+          </p>
+        </div>
+
+        <div id="joint-design" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Joint Size, Depth and Backer Rod
+          </h2>
+
+          <p>
+            The most important number on a concrete sealant's data sheet is not the movement rating. It is the joint geometry. Every maker in this guide calls for roughly a 2:1 width-to-depth ratio, with the sealant between about 1/4 inch and 1/2 inch deep. A 1/2-inch-wide joint should get a 1/4-inch-deep bead; a 1-inch-wide joint should get a 1/2-inch-deep bead.
+          </p>
+
+          <p>
+            That shape matters because sealant stretches best when it is wide and shallow. A deep, narrow bead cannot stretch without tearing, and a sealant stuck to the bottom of the joint as well as both sides, known as three-sided adhesion, tears even sooner. That is why the sheets insist on backer rod or bond breaker tape: it sets the depth and stops the sealant bonding to the bottom.
+          </p>
+
+          <p>
+            Backer rod is a round foam cord sold in diameters from about 1/4 inch upward. Buy it about 25 percent wider than the joint so it compresses into place, push it down with a blunt tool to the right depth, and run the sealant over it. Closed-cell rod is the type Sika specifies for horizontal joints; open-cell rod can hold water against the sealant, so check the data sheet for your product.
+          </p>
+
+          <p>
+            Width limits differ between products and are worth checking before you buy. DAP limits its self-leveling sealant to joints no wider than 1/2 inch. Quikrete's Advanced Polymer Self-Leveling is rated for joints up to 1 inch wide. If your old driveway joints are wider than 1 inch, consider a commercial joint sealant or professional repair, because a homeowner cartridge product is outside its design range.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">How much to buy</h3>
+
+          <p>
+            Coverage depends almost entirely on joint size. Henkel's figure for Loctite PL Concrete Non-Sag is a useful benchmark: about 30.9 feet of 1/4-inch bead from a 10-ounce cartridge, dropping to about 13.8 feet at 3/8 inch. Wide driveway joints at 1/2 inch by 1/4 inch deep use sealant quickly, so measure the total joint length and buy a few extra cartridges.
+          </p>
+        </div>
+
+        <div id="prep" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Prep That Decides Whether It Sticks
+          </h2>
+
+          <p>
+            Most concrete caulk failures are adhesion failures, and almost all of them trace back to prep. The joint has to be clean, sound and dry. That means removing every trace of the old sealant, any loose concrete, weeds, dirt and dust. A wire brush, a utility knife and a stiff screwdriver handle most of it; a shop vac finishes the job. Our guide to <a href="/how-to-remove-old-caulk/">removing old caulk</a> covers the tools.
+          </p>
+
+          <p>
+            Pressure washing helps, but it leaves water in the joint. Let the concrete dry fully before you seal, which usually means at least a day of dry weather, longer in cool or humid conditions. Polyurethane in particular reacts badly to moisture during application and can foam or lose adhesion. Hybrid sealants are more tolerant, but none of these makers recommend sealing into standing water.
+          </p>
+
+          <p>
+            Oil and sealer residue are the hidden adhesion killers. If the slab has been treated with a penetrating sealer or has oil staining near the joint, clean the joint faces with a degreaser and rinse thoroughly. A sealant cannot bond to a surface that repels it. DAP notes that porous concrete may occasionally need a primer; if a test bead peels off easily after curing, prime before doing the whole job.
+          </p>
+
+          <p>
+            Finally, mind the temperature. Most concrete sealants should go on when both air and concrete are within the maker's stated range, typically above about 40 degrees and rising. Sika also advises installing self-leveling sealant when the joint is near the middle of its seasonal movement, which in practice means a mild spring or autumn day rather than the hottest or coldest week of the year.
+          </p>
+        </div>
+
+        <div id="application" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. How to Apply Concrete Caulk Properly
+          </h2>
+
+          <p>
+            With the joint clean, dry and fitted with backer rod at the right depth, cut the cartridge nozzle at an angle to a size slightly smaller than the joint width. A good <a href="/best-caulk-gun/">caulk gun</a> with a high thrust ratio makes a real difference with thick polyurethane, especially in cold weather; a cheap gun will have you squeezing until your hand cramps.
+          </p>
+
+          <p>
+            For self-leveling sealant, fill the joint in one continuous pass, aiming the bead at the center so it spreads to both faces. Fill to slightly below the surface, about 1/8 inch, so the cured sealant sits recessed and does not get scraped by tires or shovels. Do not try to tool it; let it level on its own. If a section is pitched, work from the low end up so the sealant does not run into areas you have not finished.
+          </p>
+
+          <p>
+            For non-sag sealant, push the bead into the joint rather than dragging it along the surface, so the sealant is forced against both faces. Tool it within the skin time with a putty knife or a gloved finger dipped in soapy water, pressing it into the joint and leaving a slight concave profile. Tooling is not cosmetic: it drives the sealant into contact with the concrete and is a large part of what makes it stick.
+          </p>
+
+          <p>
+            Clean up as you go. Polyurethane is far easier to remove before it cures than after, and once it skins over it smears instead of wiping off. Keep rags and mineral spirits nearby for polyurethane, and water for acrylic. Mask the edges of decorative or colored concrete with painter's tape if a clean line matters to you.
+          </p>
+
+          <p>
+            If you are tackling a larger driveway repair, our guide to <a href="/driveway-crack-repair/">driveway crack repair</a> covers what to do with cracks too wide or too unstable for sealant alone.
+          </p>
+        </div>
+
+        <div id="cure-and-traffic" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Cure Time, Traffic and Painting
+          </h2>
+
+          <p>
+            Concrete sealants skin over quickly but cure slowly, and the difference matters. Sika lists its self-leveling sealant as tack-free in about one to two hours with a final cure in three to five days, and recommends seven days before painting or immersion. Sashco lists Slab at a skin in 30 minutes, tack-free in two to four hours and a full cure in one to two weeks. DAP's self-leveling sealant is the quickest to tolerate rain, listed at about one hour.
+          </p>
+
+          <p>
+            Foot traffic is usually fine once the surface is tack-free and firm, but give it longer than the minimum when you can. Sashco asks for at least 24 hours before foot traffic, or 48 hours in humid conditions. Vehicle traffic should wait for a meaningful share of the full cure, especially on a self-leveler sitting in a driveway joint. Block the joint off with cones or tape rather than relying on memory.
+          </p>
+
+          <p>
+            Polyurethane cures by reacting with moisture in the air, so cool, dry weather slows it down and warm, humid weather speeds it up. Deep beads cure from the surface inward, and Quikrete lists a cure rate of about 1/8 inch per 24 hours under standard conditions for one of its related products. A 1/2-inch-deep bead in cold weather can stay soft underneath for well over a week.
+          </p>
+
+          <p>
+            If you plan to paint, check the specific product. Sika lists its self-leveling and + Construction sealants as paintable with water-, oil- or rubber-based paints. Loctite PL Concrete is paintable only after full cure, and Henkel warns that rigid paints can crack over a flexible sealant. In practice, most homeowners leave concrete joint sealant unpainted and pick a gray or limestone color that blends in.
+          </p>
+        </div>
+
+        <div id="when-not-to-caulk" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. When Caulk Is the Wrong Fix
+          </h2>
+
+          <p>
+            Sealant fixes joints and cracks that move a little and need to be kept watertight. It does not fix concrete that is breaking up. If a crack is widening year after year, one side is higher than the other, or the slab is heaving or sinking, you have a structural or base problem, and sealant only hides it for a season. Our guide to <a href="/best-concrete-crack-filler/">concrete crack fillers</a> covers rigid patching options for non-moving damage.
+          </p>
+
+          <p>
+            Very wide gaps are another limit. Homeowner cartridge sealants top out around 1 inch of joint width at best, and most are rated for 1/2 inch. Anything wider needs a commercial joint system or a professional assessment. Filling a 2-inch gap with layers of caulk wastes material and fails early.
+          </p>
+
+          <p>
+            Some cracks also need a different material entirely. Active leaks in a basement wall respond better to hydraulic cement or an injection repair than to surface caulk. Spalled, flaking surfaces need resurfacing, not sealant. And cracks in asphalt, as opposed to concrete, need an asphalt-specific filler; concrete sealants are formulated for a rigid, alkaline substrate.
+          </p>
+
+          <p>
+            If you are not sure why a joint keeps failing, our article on <a href="/why-does-exterior-caulk-keep-cracking/">why exterior caulk keeps cracking</a> walks through the usual causes, almost all of which apply to concrete as well. Fix the cause, and the sealant you choose from this list will last for years rather than months.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using self-leveling sealant on a slope</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Self-leveling sealant flows downhill. On a pitched driveway joint or a step it runs out before it skins over. Dam the low end with backer rod for a gentle slope, or switch to a non-sag polyurethane for anything steeper than a gentle pitch.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping backer rod in deep joints</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Every maker here calls for sealant no deeper than about 1/2 inch, with backer rod underneath. Filling a deep joint solid wastes sealant, slows curing and creates three-sided adhesion that tears as the joint moves.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Sealing a damp joint</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Polyurethane reacts with moisture and can foam or lose adhesion if the joint is wet. Let a pressure-washed joint dry fully, often a full day or more, before sealing, and check the forecast for rain before you start.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Overfilling to the surface</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A bead flush with or above the slab gets scraped by tires, shovels and snowplows. Fill to about 1/8 inch below the surface so the cured sealant sits recessed and protected.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Choosing acrylic for expansion joints</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Basic acrylic caulk has nowhere near the movement capability of a rated polyurethane or hybrid. In a driveway expansion joint it splits within a season. Save acrylic for cosmetic cracks and buy a rated sealant for joints that move.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best caulk for concrete?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For flat driveway and patio joints, a self-leveling polyurethane such as Sikaflex Self-Leveling Sealant is the default, rated for plus or minus 25 percent movement by Sika. For vertical cracks and walls, a non-sag polyurethane such as Loctite PL Concrete or Sikaflex + Construction Sealant is the better choice.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I use silicone caulk on concrete?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                General-purpose silicone is a poor choice on concrete. It often bonds weakly to porous masonry, attracts dirt and cannot be painted. Concrete-rated polyurethane or hybrid sealants bond better, hold up to traffic and are designed for the movement concrete joints see.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do I need backer rod for concrete caulk?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes, for any joint deeper than about 1/2 inch. Makers including Sika, DAP and Henkel call for backer rod or bond breaker tape so the sealant stays between roughly 1/4 and 1/2 inch deep and bonds only to the two sides of the joint, not the bottom.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long before I can drive on sealed concrete joints?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It depends on the product and weather. Sika lists a three-to-five-day final cure for its self-leveling sealant, and polyurethane cures slowly in cool, dry conditions. Keep vehicles off for at least a few days and longer for deep beads or cold weather.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the difference between self-leveling and non-sag concrete sealant?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Self-leveling sealant flows flat into horizontal joints without tooling and suits driveways and patios. Non-sag sealant stays put in vertical or sloped joints and must be tooled. Use self-leveling where water would pool and non-sag where it would run off.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can you paint concrete caulk?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Many concrete sealants can be painted once cured. Sika lists its self-leveling and + Construction sealants as paintable with water-, oil- or rubber-based paints, while Loctite PL Concrete is paintable only after full cure. Rigid paints can crack over a flexible sealant, so test first.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How wide a crack can concrete caulk fill?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Most homeowner sealants are rated for joints up to about 1/2 inch wide. Quikrete's Advanced Polymer Self-Leveling is rated up to 1 inch. Wider gaps need a commercial joint system or professional repair rather than layers of cartridge sealant.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Caulk and Concrete Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-caulk-for-windows/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Caulk for Windows</h3>
+              <p class="text-gray-500 text-sm mt-2">Exterior frame-to-siding and interior trim sealants, picked by movement, paint time and cold-weather range.</p>
+            </a>
+            <a href="/best-exterior-caulk/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Exterior Caulk</h3>
+              <p class="text-gray-500 text-sm mt-2">Siding, trim and general exterior gaps, with the sealants that survive sun and movement.</p>
+            </a>
+            <a href="/best-concrete-crack-filler/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Concrete Crack Fillers</h3>
+              <p class="text-gray-500 text-sm mt-2">Rigid fillers and patches for cracks that are not moving.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The best caulk for concrete starts with the joint. Flat joints get a self-leveling polyurethane or hybrid such as Sikaflex Self-Leveling or Quikrete Advanced Polymer; vertical cracks and steps get a non-sag polyurethane such as Loctite PL Concrete or Sikaflex + Construction Sealant; hairline cosmetic cracks get Sashco Slab.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Whatever you buy, the prep and joint shape decide how long it lasts: clean and dry joints, backer rod at the right depth, a recessed bead and patience while it cures.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Improvement" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
