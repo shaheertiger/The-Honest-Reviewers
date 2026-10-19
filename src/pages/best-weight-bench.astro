@@ -1,0 +1,825 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Walking Pads",
+    "url": "/best-walking-pad/"
+  },
+  {
+    "title": "Best Home Gym Equipment on a Budget",
+    "url": "/best-home-gym-equipment-on-a-budget/"
+  },
+  {
+    "title": "Best Garage Floor Tiles",
+    "url": "/best-garage-floor-tiles/"
+  },
+  {
+    "title": "Best Garage Floor Mats",
+    "url": "/best-garage-floor-mat/"
+  },
+  {
+    "title": "Best Garage Heaters",
+    "url": "/best-garage-heater/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-19", modified: "2026-10-19" });
+const title = "6 Best Weight Benches: Adjustable, Flat and Fold-Away Picks for Home Gyms";
+const description =
+  "The best weight benches for home gyms, compared on rated capacity, back and seat positions, pad gap, bench height and storage, from flat benches to fold-away FIDs.";
+
+const PRODUCTS = [
+  {
+    "id": "rep-ab-3000-2",
+    "name": "REP Fitness AB-3000 2.0 FID Adjustable Bench",
+    "badge": "Best Overall",
+    "category": "Flat/incline/decline, 1,000 lb rating",
+    "amazonUrl": "#",
+    "description": "The REP AB-3000 2.0 is the adjustable bench we would buy first for a home gym, because it covers flat, incline and decline work on one frame without feeling flimsy. REP lists eight back pad angles from -12 to 85 degrees and five seat angles from 0 to 20 degrees, adjusted with a numbered ladder, plus built-in leg rollers that lock into multiple positions for decline work. A review lists a 1,000 lb weight rating, an IPF-spec bench height and a bench weight of about 89 lb. The trade-off reviewers point out is the gap between seat and back pad, which they measure at about 2.1 inches, wider than some competitors; it is not a problem for most lifters, but you will notice it in the flat position. The original AB-3000 had fewer seat settings, so make sure you are looking at the 2.0.",
+    "pros": [
+      "REP lists 8 back angles (-12 to 85 degrees) and 5 seat angles",
+      "Built-in decline leg rollers",
+      "1,000 lb rating per reviewers",
+      "Ladder adjustment with numbered positions"
+    ],
+    "cons": [
+      "Reviewers measure a roughly 2.1 in pad gap",
+      "Heavier than budget benches at about 89 lb",
+      "Older AB-3000 listings show different adjustment counts"
+    ],
+    "bottomLine": "The most complete adjustable bench for the money if you want flat, incline and decline in one."
+  },
+  {
+    "id": "rogue-adjustable-bench-3",
+    "name": "Rogue Adjustable Bench 3.0",
+    "badge": "Best Premium Incline",
+    "category": "Flat/incline only, 11-gauge steel",
+    "amazonUrl": "#",
+    "description": "The Rogue Adjustable Bench 3.0 is a heavier, simpler alternative for lifters who never do decline work. Rogue's listing describes ten incline positions from 0 to 85 degrees and three seat positions, for about 30 configurations, built on a 3 by 3 inch 11-gauge steel frame with a product weight of 125 lb and a built-in vertical storage stand. It has no decline setting. Rogue does not publish a weight capacity; reviewers estimate around 1,000 lb based on the frame steel, but that is an estimate, not a rating. One Rogue page lists it at $595, and an older review quoted $585 to $650 depending on options plus shipping, so check the current price. Rogue also offers stainless steel adjustment rails as an upgrade.",
+    "pros": [
+      "10 incline positions and 3 seat positions per Rogue",
+      "3 x 3 in 11-gauge steel frame",
+      "Stands upright for storage",
+      "Heavy, stable 125 lb frame"
+    ],
+    "cons": [
+      "No decline position",
+      "Rogue publishes no capacity rating",
+      "Shipping adds to the price"
+    ],
+    "bottomLine": "For flat and incline pressing on a frame built to last decades, the 3.0 is hard to beat; skip it if you need decline."
+  },
+  {
+    "id": "rep-fb-5000",
+    "name": "REP Fitness FB-5000 Competition Flat Bench",
+    "badge": "Best Flat Bench",
+    "category": "Flat, 1,000 lb, 16.9 in height",
+    "amazonUrl": "#",
+    "description": "A flat bench is the most stable bench you can buy, and the REP FB-5000 is built to competition dimensions. REP's product page lists a 1,000 lb rating, a 16.9 inch bench height, a 4 inch high-density pad that is 48 inches long and 12 inches wide (with a 14 inch wide option), an 11-gauge 3 by 3 inch steel frame and a bench weight of 62 lb (74 lb for the wide version). REP lists a 10-year frame warranty. Because there are no adjustment points, there is no pad gap and nothing to wobble, which is exactly what you want under a heavy bench press. If you already own a rack and want to bench heavy, this is the pick; if you want incline work too, pair it with an adjustable bench or choose the AB-3000 instead.",
+    "pros": [
+      "1,000 lb rating and 11-gauge frame per REP",
+      "16.9 in competition-style height",
+      "4 in pad with a 14 in wide option",
+      "No pad gap or adjustment play"
+    ],
+    "cons": [
+      "Flat only",
+      "Wide pad option adds weight and cost",
+      "No wheels on some configurations"
+    ],
+    "bottomLine": "If your priority is a stable, heavy bench press, a good flat bench beats any adjustable."
+  },
+  {
+    "id": "titan-series-fid",
+    "name": "Titan Fitness TITAN Series Adjustable FID Bench",
+    "badge": "Best Value Decline Bench",
+    "category": "Flat/incline/decline, 600 lb listed",
+    "amazonUrl": "#",
+    "description": "The TITAN Series Adjustable FID Bench is the value pick for people who want decline work without paying REP or Rogue prices. Titan's listing describes a -20 degree decline with foot rollers, ten back positions and seven seat positions, a product weight of 92 lb and a footprint of about 70 by 23.5 inches. Titan's spec table lists a 600 lb capacity, which is lower than the 1,000 lb ratings on the premium benches and well below the 1,500 lb shown for an older Titan FID listing, so plan around the current 600 lb figure. Titan's own pages have shown sale prices around $500. For most home lifters, 600 lb of combined lifter and load is plenty; heavier lifters who bench big numbers should look at the 1,000 lb benches.",
+    "pros": [
+      "-20 degree decline with foot rollers",
+      "10 back and 7 seat positions per Titan",
+      "Usually discounted to around $500",
+      "92 lb frame"
+    ],
+    "cons": [
+      "600 lb capacity on Titan's current spec table",
+      "Older listings show conflicting ratings",
+      "Longer footprint than most at about 70 in"
+    ],
+    "bottomLine": "The most affordable full FID bench here that still uses a heavy steel frame; confirm the capacity fits your lifts."
+  },
+  {
+    "id": "bowflex-5-1s",
+    "name": "BowFlex 5.1S Stowable Bench",
+    "badge": "Best Space Saver",
+    "category": "Adjustable, stows upright",
+    "amazonUrl": "#",
+    "description": "The BowFlex 5.1S is for home gyms that double as living space. BowFlex lists six back angles (a -20 degree decline, flat, 30, 45, 60 and 90 degrees), seat adjustment, transport wheels and a stowed footprint of 23.9 by 28.1 by 52.3 inches, so it stands upright in a corner when you are done. BowFlex lists the product weight at 60 lb. The capacity needs care: BowFlex's spec page lists 600 lb of combined user and load, but the user manual gives a maximum user weight of 300 lb and a maximum lifted weight of 300 lb. Use the manual's figures. Warranty also varies by seller, from a 30-year frame on BowFlex's US page to 3 years from one Canadian retailer, with 1 year on parts and upholstery.",
+    "pros": [
+      "Stows upright in about 24 x 28 in of floor",
+      "6 back angles including decline",
+      "Light at about 60 lb with wheels",
+      "Pairs with BowFlex SelectTech dumbbells"
+    ],
+    "cons": [
+      "Manual limits user and lifted weight to 300 lb each",
+      "Lighter frame than the steel benches above",
+      "Warranty varies by seller"
+    ],
+    "bottomLine": "Best for dumbbell work in a shared room; not the bench for heavy barbell pressing."
+  },
+  {
+    "id": "flybird-owl-foldable",
+    "name": "FLYBIRD Owl Foldable Adjustable Bench",
+    "badge": "Best Budget",
+    "category": "Foldable FID, light frame",
+    "amazonUrl": "#",
+    "description": "FLYBIRD's folding benches are the budget way into incline and decline work, and the Owl is the current version. The brand's FAQ lists an 880 lb (400 kg) maximum capacity, eight back angles from -30 to 90 degrees and three seat positions, and says it arrives about 96 percent assembled. Earlier FLYBIRD models carry ratings from 650 to 800 lb and fold to about 30 inches long and 10 inches tall, according to reviewers. These benches weigh well under 30 lb, which makes them easy to move and store, but also less stable than the heavy steel frames above; reviewers also note that some models sit tall for shorter lifters. Warranties are short, with one review listing a 1-year frame warranty. Treat the high capacity rating as a frame rating, not a promise that it will feel solid under a heavy bench press.",
+    "pros": [
+      "Lowest price on our list",
+      "Folds small for storage",
+      "8 back angles including decline on the Owl",
+      "Arrives nearly fully assembled"
+    ],
+    "cons": [
+      "Much lighter and less stable than steel benches",
+      "Short warranty",
+      "Model names and ratings vary widely"
+    ],
+    "bottomLine": "A good starter bench for dumbbell work in a small space; upgrade when your presses get heavy."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Weight Benches",
+          item: "https://www.thehonestreviewers.com/best-weight-bench/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best weight bench for a home gym?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most home gyms we recommend the REP Fitness AB-3000 2.0, which REP lists with eight back angles from -12 to 85 degrees and five seat angles, plus built-in decline rollers and a 1,000 lb rating per reviewers. If you only press flat and heavy, a competition flat bench like the REP FB-5000 is more stable."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need a decline bench?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not usually. Flat and incline positions cover most pressing, rowing and accessory work. Decline is useful if you like decline presses or core work, but most lifters can skip it and put the money toward a sturdier flat-incline bench."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much weight can a bench hold?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ratings on our picks range from 300 lb each for user and lifted weight in the BowFlex 5.1S manual to 1,000 lb on REP's competition benches. The rating covers you plus the load, so add your body weight to what you lift."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is pad gap on a weight bench?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is the space between the seat and the back pad on an adjustable bench. A large gap can leave a hollow under your lower back when the bench is flat. Reviewers measure about 2.1 inches on the REP AB-3000 2.0."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How tall should a weight bench be?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Competition benches sit around 17 inches high, and REP lists the FB-5000 at 16.9 inches. You should be able to plant your feet flat with your knees bent; shorter lifters may find taller benches awkward."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a folding weight bench worth it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For dumbbell work in a small space, yes. Folding benches are light and easy to store, but they are less stable than heavy steel frames, so they are not the best choice for heavy barbell pressing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does a weight bench last?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A heavy steel bench from an established brand can last decades with basic care. Pads and wheels are the parts that wear out, and most major brands sell replacements."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home & Garage",
+    tags: [
+      "best weight bench",
+      "adjustable weight bench",
+      "flat bench",
+      "home gym bench",
+      "fid bench"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Home Gym Picks
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best <span class="text-[#38BDF8]">Weight Benches</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Six benches for pressing, rowing and accessory work at home, chosen on the specs that decide stability and comfort: rated capacity, pad gap, height and how many angles you actually need.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#rep-ab-3000-2"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            See the Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="8.7k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-chose" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Chose</a>
+          <a href="#flat-vs-adjustable" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Flat, Incline or FID?</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 6 Picks</a>
+          <a href="#capacity" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Capacity and Frame</a>
+          <a href="#pad-gap" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Pad Gap, Width and Height</a>
+          <a href="#positions" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Positions You Will Use</a>
+          <a href="#space" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Space and Storage</a>
+          <a href="#safety" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Safety and Setup</a>
+          <a href="#care" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Care</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          The best weight bench is the one that stays still under a heavy press and puts the pad where your body needs it. Capacity, frame steel and the gap between seat and back pad matter far more than the number of positions printed on the box.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-chose" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Chose
+          </h2>
+
+          <p>
+            We built this list from manufacturer specifications and retailer listings, not from a lab test, and we attribute every figure to the source that published it. Bench specs are less inconsistent than walking pad or vacuum specs, but they still vary: Rogue publishes no capacity at all for its adjustable bench, Titan's current and older listings disagree, and BowFlex's spec page and manual give different limits. Where that happens, we tell you which number to trust.
+          </p>
+
+          <p>
+            We prioritized four things. The first is stability, which comes from frame steel, footprint and weight more than any single number. The second is the pad itself: height, width, thickness and the gap between seat and back pad on adjustable benches. The third is adjustability you will actually use, which for most people means flat, a couple of incline angles and possibly decline. The fourth is how the bench fits a real home: whether it stores upright, rolls on wheels or folds.
+          </p>
+
+          <p>
+            We gave less weight to marketing claims like 30 configurations or very high capacity ratings on light frames. A 1,000 lb rating on an 11-gauge steel bench means something different from an 880 lb rating on a folding bench that weighs 28 lb. Both may be accurate as frame ratings, but they do not feel the same under a heavy press.
+          </p>
+
+          <p>
+            Finally, we stuck to benches that are widely sold and supported. Replacement pads, wheels and adjustment pins are easy to get from the established brands, and that matters for a piece of equipment you may use for a decade.
+          </p>
+        </div>
+
+        <div id="flat-vs-adjustable" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Flat, Incline or FID: Which Bench Do You Need?
+          </h2>
+
+          <p>
+            There are three main types of bench. A flat bench has a single fixed pad and is the most stable option for heavy bench pressing. An incline or flat-incline bench adjusts the back pad from flat up to near-vertical, which covers incline presses, seated shoulder presses and supported rows. An FID bench (flat, incline, decline) adds decline angles, usually with leg rollers to hold you in place.
+          </p>
+
+          <p>
+            For most home gyms, a flat-incline bench covers almost everything. Decline pressing is useful but optional for most lifters, and decline sit-ups can be done other ways. If you know you want decline work, choose a true FID bench like the REP AB-3000 2.0 or the Titan; if you do not, the Rogue 3.0 or a flat bench will be more stable for the money.
+          </p>
+
+          <p>
+            Lifters who press heavy often end up with two benches: a flat competition bench for barbell work in the rack and an adjustable bench for dumbbell and accessory work. If you only have room for one, an adjustable bench with a small pad gap is the best compromise.
+          </p>
+
+          <p>
+            If you are building out a home gym from scratch, our <a href="/best-home-gym-equipment-on-a-budget/">budget home gym guide</a> covers the rack, barbell, plates and flooring that go with the bench, and a <a href="/best-walking-pad/">walking pad</a> is an easy way to add daily cardio in the same space.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 6 Picks
+          </h2>
+
+          <p>
+            These picks are researched from manufacturer specifications and retailer listings, not lab-tested; every figure is attributed to its source, and where sources disagree we give both. They cover a premium adjustable bench, an incline-only bench, a competition flat bench, a value decline bench, a space-saver and a budget folding bench.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="capacity" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Capacity and Frame Steel
+          </h2>
+
+          <p>
+            Bench capacity ratings cover the combined weight of the lifter and the load, and they vary widely: from 300 lb each for user and lifted weight in the BowFlex 5.1S manual, to 600 lb on Titan's current FID spec table, to 1,000 lb on REP's competition benches. A 200 lb lifter pressing 225 lb is putting about 425 lb on the bench before any dynamic force, so ratings in the 600 lb class are fine for most home lifters and the 1,000 lb class gives real headroom.
+          </p>
+
+          <p>
+            Frame construction tells you more than the rating. Benches built from 3 by 3 inch 11-gauge steel, like the REP FB-5000 and Rogue 3.0, weigh 60 to 125 lb and barely move under load. Folding benches with thinner tubing and a wide range of adjustment points weigh under 30 lb and can feel lively even when they are nowhere near their rated limit.
+          </p>
+
+          <p>
+            Treat unusually high ratings on very light benches with caution. The rating may describe the frame's breaking point in a static test, but stability under a moving load depends on footprint, weight and how tight the adjustment points are. If you plan to bench heavy, pick a bench that weighs at least 60 lb or more.
+          </p>
+
+          <p>
+            When a brand publishes no rating at all, as with the Rogue 3.0, look at the frame specification and reviewers' measurements, and do not assume a number the manufacturer has not stated.
+          </p>
+
+          <p>
+            One more practical point: a heavier bench is harder to move, which is a real cost if it has to be cleared away after every session. Wheels and a handle at one end solve most of that, so check for them if your bench will not live in a dedicated space.
+          </p>
+        </div>
+
+        <div id="pad-gap" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Pad Gap, Width and Height
+          </h2>
+
+          <p>
+            On an adjustable bench, the gap between the seat and the back pad is the detail you will notice most. A wide gap leaves a hollow under your lower back when the bench is flat, which can feel uncomfortable on presses and hip thrusts. Reviewers measure about 2.1 inches on the REP AB-3000 2.0, which most lifters find acceptable; some adjustable benches have larger gaps, and flat benches have none.
+          </p>
+
+          <p>
+            Pad width affects stability and shoulder comfort. A 12 inch pad is standard and lets your shoulder blades move freely; a 14 inch pad, like the wide option on the REP FB-5000, gives broader lifters more support on heavy presses. Pad thickness and density matter too: a 4 inch high-density pad holds its shape, while thin, soft pads compress and let you feel the frame.
+          </p>
+
+          <p>
+            Bench height matters for leg drive. Competition benches sit around 17 inches high, and REP lists the FB-5000 at 16.9 inches. If a bench is too tall for your legs, you cannot plant your feet firmly; reviewers note that some folding benches sit around 18 inches, which can be awkward for shorter lifters.
+          </p>
+
+          <p>
+            Grip and cover material affect how well you stay in place. Grippy vinyl keeps your back from sliding on incline presses, while slick covers can let you drift. It is a small detail, but it shows up on every set.
+          </p>
+        </div>
+
+        <div id="positions" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Positions You Will Actually Use
+          </h2>
+
+          <p>
+            Bench marketing often leads with the number of positions, but most lifters use only a few. Flat, a low incline of around 15 to 30 degrees, a steeper incline around 45 degrees and near-vertical for seated presses cover almost every exercise. Decline is useful for some pressing and core work but optional for most people.
+          </p>
+
+          <p>
+            What matters more is how quickly and securely the bench adjusts. Ladder systems like REP's let you change angles in seconds and show you exactly which setting you are using. Pop-pin systems can be just as secure but slower. Whatever the mechanism, it should lock without play; a back pad that shifts under load is distracting at best and unsafe at worst.
+          </p>
+
+          <p>
+            Seat adjustment matters most at steep inclines. Without it, you slide down the bench on seated presses. Look for at least two or three seat angles if you plan to do incline work regularly.
+          </p>
+
+          <p>
+            For decline work, leg rollers or a foot hold are essential. The REP AB-3000 2.0 has built-in rollers, the Titan uses foot rollers, and the BowFlex and FLYBIRD include decline settings with their own leg supports. Benches without rollers cannot be used safely in decline.
+          </p>
+
+          <p>
+            If you share the bench with a partner of a different height, adjustability matters more. Seat angle, pad position relative to the rack and the height of the leg rollers all change how the bench fits each person, and a bench that adjusts quickly makes switching between lifters painless. Try to note the settings each person uses so you are not guessing every session.
+          </p>
+        </div>
+
+        <div id="space" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Space and Storage
+          </h2>
+
+          <p>
+            A weight bench takes up about 4 to 6 feet of length and 2 feet of width, plus the space you need to get on and off and handle weights around it. Measure your room with that working space included, not just the bench footprint.
+          </p>
+
+          <p>
+            If the bench has to share a room, storage features become important. The BowFlex 5.1S stands upright in about 24 by 28 inches of floor, the Rogue 3.0 has a built-in vertical storage stand, and FLYBIRD's folding benches collapse to roughly 30 inches long. Wheels and a front handle make it much easier to move a heavy bench out of the way.
+          </p>
+
+          <p>
+            Flooring matters too. A bench on a hard, level floor with rubber matting underneath is more stable and protects the floor from dropped dumbbells. Our guides to <a href="/best-garage-floor-mat/">garage floor mats</a> and <a href="/best-garage-floor-tiles/">garage floor tiles</a> cover rubber options that suit a garage gym.
+          </p>
+
+          <p>
+            Garage gyms bring their own problems in winter. Vinyl pads can stiffen and crack in cold, and condensation can rust frames. A small <a href="/best-garage-heater/">garage heater</a> makes winter training more comfortable and helps protect equipment.
+          </p>
+        </div>
+
+        <div id="safety" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Safety and Setup
+          </h2>
+
+          <p>
+            Most bench injuries come from setup rather than equipment failure. Place the bench on a level surface, check that every adjustment pin or ladder is fully engaged before loading it, and make sure the bench does not rock. A bench that wobbles empty will wobble more under load.
+          </p>
+
+          <p>
+            Heavy barbell pressing should be done in a rack with safety arms or spotter bars set just below your chest, or with a spotter. Pressing heavy without either is the most common way home lifters get hurt.
+          </p>
+
+          <p>
+            Check your bench periodically. Tighten bolts that loosen over time, look for cracks in welds, and inspect upholstery for tears that can catch skin. Replace worn adjustment pins and wheels rather than improvising.
+          </p>
+
+          <p>
+            Respect the manufacturer's limits. If a manual, like BowFlex's, lists separate limits for user weight and lifted weight, stay within both. Ratings exist for a reason, and exceeding them can void the warranty as well as risk injury.
+          </p>
+        </div>
+
+        <div id="care" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Care and Lifespan
+          </h2>
+
+          <p>
+            A well-made steel bench can last decades with minimal care. Wipe down the pad after each session to remove sweat, which breaks down vinyl over time, and keep it out of direct sun if possible.
+          </p>
+
+          <p>
+            Keep adjustment mechanisms clean and lightly lubricated if the manufacturer recommends it. Ladders and pop pins collect dust and chalk, which can make adjustments stiff.
+          </p>
+
+          <p>
+            Watch the wheels and feet. Rubber feet protect your floor and stop the bench from sliding; replace them if they wear through. Wheels on heavy benches take a lot of abuse and are usually cheap to replace.
+          </p>
+
+          <p>
+            When a pad wears out, most major brands sell replacement pads, which is far cheaper than a new bench. That availability is one of the best reasons to buy from an established brand.
+          </p>
+
+          <p>
+            If you train in a garage, keep an eye on rust. Chalk, sweat and humidity all speed it up, especially on bare steel adjustment parts. A quick wipe with a dry cloth after training, and an occasional light coat of oil on exposed steel, keeps the frame looking and working like new for years.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying on Position Count</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Thirty configurations sounds impressive, but most lifters use four or five angles. Choose on stability, pad gap and how securely the bench locks, not on how many settings it has.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Trusting High Ratings on Light Benches</h3>
+              <p class="text-gray-700 text-sm m-0">
+                An 880 lb rating on a 28 lb folding bench is not the same as a 1,000 lb rating on a 125 lb steel frame. For heavy pressing, choose a heavier bench with thicker steel.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring Bench Height</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A bench that is too tall stops you from planting your feet and using leg drive. Check the height against your leg length, especially if you are shorter.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Pressing Heavy Without Safeties</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Most bench injuries happen when a lifter fails a rep alone. Press heavy in a rack with safety arms set just below your chest, or with a spotter.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping the Manual's Limits</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Some benches list separate user and lifted weight limits. Stay within both, and check whether exceeding them affects the warranty.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best weight bench for a home gym?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most home gyms we recommend the REP Fitness AB-3000 2.0, which REP lists with eight back angles from -12 to 85 degrees and five seat angles, plus built-in decline rollers and a 1,000 lb rating per reviewers. If you only press flat and heavy, a competition flat bench like the REP FB-5000 is more stable.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do I need a decline bench?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Not usually. Flat and incline positions cover most pressing, rowing and accessory work. Decline is useful if you like decline presses or core work, but most lifters can skip it and put the money toward a sturdier flat-incline bench.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How much weight can a bench hold?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Ratings on our picks range from 300 lb each for user and lifted weight in the BowFlex 5.1S manual to 1,000 lb on REP's competition benches. The rating covers you plus the load, so add your body weight to what you lift.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is pad gap on a weight bench?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It is the space between the seat and the back pad on an adjustable bench. A large gap can leave a hollow under your lower back when the bench is flat. Reviewers measure about 2.1 inches on the REP AB-3000 2.0.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How tall should a weight bench be?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Competition benches sit around 17 inches high, and REP lists the FB-5000 at 16.9 inches. You should be able to plant your feet flat with your knees bent; shorter lifters may find taller benches awkward.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a folding weight bench worth it?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For dumbbell work in a small space, yes. Folding benches are light and easy to store, but they are less stable than heavy steel frames, so they are not the best choice for heavy barbell pressing.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long does a weight bench last?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A heavy steel bench from an established brand can last decades with basic care. Pads and wheels are the parts that wear out, and most major brands sell replacements.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Home Fitness Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-walking-pad/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Walking Pads</h3>
+              <p class="text-gray-500 text-sm mt-2">Under-desk treadmills compared on weight rating, belt size and daily run time.</p>
+            </a>
+            <a href="/best-home-gym-equipment-on-a-budget/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Home Gym on a Budget</h3>
+              <p class="text-gray-500 text-sm mt-2">Rack, bar, bench, plates and flooring for a complete garage gym.</p>
+            </a>
+            <a href="/best-garage-floor-tiles/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Garage Floor Tiles</h3>
+              <p class="text-gray-500 text-sm mt-2">Interlocking tiles that protect a garage gym floor.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The best weight bench for most home gyms is the <strong class="text-white">REP Fitness AB-3000 2.0</strong>, which covers flat, incline and decline on a stable frame. If you never decline, the <strong class="text-white">Rogue Adjustable Bench 3.0</strong> is the heavier, simpler choice, and the <strong class="text-white">REP FB-5000</strong> is the bench to beat for heavy flat pressing.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Choose on stability, pad gap and the angles you will actually use, press heavy only with safeties or a spotter, and treat very high ratings on very light benches with healthy skepticism.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home & Garage" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

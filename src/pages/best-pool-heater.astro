@@ -1,0 +1,889 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Hot Tubs",
+    "url": "/best-hot-tub/"
+  },
+  {
+    "title": "Best Pool Vacuums",
+    "url": "/best-pool-vacuum/"
+  },
+  {
+    "title": "Best Robotic Pool Cleaners",
+    "url": "/best-robotic-pool-cleaner/"
+  },
+  {
+    "title": "Best Pool Deck Sealers",
+    "url": "/best-pool-deck-sealer/"
+  },
+  {
+    "title": "Best Heat Pump Water Heaters",
+    "url": "/best-heat-pump-water-heater/"
+  },
+  {
+    "title": "Best Whole House Surge Protectors",
+    "url": "/best-whole-house-surge-protector/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-19", modified: "2026-10-19" });
+const title = "7 Best Pool Heaters: Heat Pump, Gas and Solar Picks Compared";
+const description =
+  "The best pool heaters for in-ground and above-ground pools, compared on BTU, cold-air output, efficiency and install needs, with the real running-cost math.";
+
+const PRODUCTS = [
+  {
+    "id": "hayward-heatpro-hp21124t",
+    "name": "Hayward HeatPro HP21124T Heat Pump",
+    "badge": "Best Overall",
+    "category": "Heat Pump, 110,000 BTU, 230V",
+    "amazonUrl": "#",
+    "description": "The HeatPro HP21124T is the heat pump we would put on most in-ground pools in warm and mild climates, because its numbers are published plainly and sit right where a typical backyard pool needs them. Hayward's HeatPro sell sheet rates it at 110,000 BTU and a COP of 5.7 at 80°F air, 80°F water and 80% humidity, 107,000 BTU and COP 5.4 at 63% humidity, and 75,000 BTU and COP 4.0 when the air drops to 50°F, all under the AHRI 1160 test standard. That last figure is the one to pay attention to: a heat pump's output falls with the air temperature, and the sell sheet is honest that this model stops heating below 50°F. Hayward lists a 5.7 kW input on 230V single phase, a 42-amp minimum circuit and a 60-amp maximum breaker, so plan for a dedicated 240V circuit from your panel. Water flow is listed at 30 to 75 GPM through 2 by 2½ inch unions, and the net weight is 245 lb. Hayward advertises 3+ year parts and labor warranties when the unit is sold by one of its partner dealers, which means the warranty you get depends on where you buy it.",
+    "pros": [
+      "110,000 BTU and COP 5.7 at 80/80/80, per Hayward's AHRI 1160 sell sheet",
+      "Still rated at 75,000 BTU and COP 4.0 with 50°F air",
+      "Standard 230V single-phase supply, 42 A minimum circuit",
+      "2 x 2½ inch unions fit most existing pool plumbing",
+      "3+ year parts and labor coverage through Hayward partner dealers"
+    ],
+    "cons": [
+      "Does not heat below 50°F ambient, per the sell sheet",
+      "Needs a dedicated 240V circuit, often a new run from the panel",
+      "Full warranty only when bought through a Hayward partner"
+    ],
+    "bottomLine": "For a typical in-ground pool in a warm or mild climate, the HeatPro HP21124T is the heat pump to buy: Hayward rates it at 110,000 BTU and COP 5.7, and it publishes the cold-air numbers that most listings leave out."
+  },
+  {
+    "id": "hayward-heatpro-hp31404t",
+    "name": "Hayward HeatPro HP31404T Heat/Cool",
+    "badge": "Best for Cooler Climates",
+    "category": "Heat/Cool Heat Pump, 140,000 BTU, Low-Ambient",
+    "amazonUrl": "#",
+    "description": "If your swimming season starts in cool spring air, the HP31404T is the HeatPro we would choose, because Hayward lists it with low-ambient operation down to 40°F rather than the 50°F cutoff of the standard models. The same sell sheet rates it at 140,000 BTU and COP 5.7 at 80/80/80, 130,000 BTU and COP 5.5 at 63% humidity, and 85,000 BTU and COP 4.0 at 50°F air. It is also a heat and cool unit, so it can pull water temperature down in the hottest weeks of a southern summer, which is a genuine comfort upgrade in places where pools reach the high 80s. Hayward lists a 7.2 kW input, a 42-amp minimum circuit and a 60-amp maximum breaker on 230V single phase, the same 30 to 75 GPM flow range as the rest of the line, and a net weight of 280 lb. It costs more than the heat-only HP21404T with the same 140,000 BTU rating, so pay for the heat/cool version only if you want the extra ten degrees of operating range or the cooling.",
+    "pros": [
+      "Rated to operate down to 40°F ambient, per Hayward",
+      "140,000 BTU and COP 5.7 at 80/80/80 under AHRI 1160",
+      "Heat and cool modes for hot southern summers",
+      "Same 230V single-phase supply as the smaller HeatPro models"
+    ],
+    "cons": [
+      "Costs more than the heat-only 140,000 BTU model",
+      "280 lb net weight needs a solid pad",
+      "Output still drops to 85,000 BTU at 50°F air"
+    ],
+    "bottomLine": "Buy the HP31404T if your season starts or ends in cool air or you want to chill an overheated pool in August; otherwise the heat-only HeatPro models do the same heating for less."
+  },
+  {
+    "id": "pentair-ultratemp-120-hc",
+    "name": "Pentair UltraTemp 120 H/C Heat Pump",
+    "badge": "Best for Pentair Automation",
+    "category": "Heat/Cool Heat Pump, About 125,000 BTU",
+    "amazonUrl": "#",
+    "description": "The UltraTemp is the heat pump to choose if your pad already runs Pentair equipment, because Pentair lists it as compatible with its IntelliTouch and EasyTouch automation systems and the controls will talk to each other without workarounds. Pentair's product page lists the UltraTemp 120 H/C as item 460935 in almond and 460965 in black, with a 100% titanium heat exchanger, R410A refrigerant, automatic defrost, a thermostatic expansion valve and dual pool and spa thermostats. Pentair's own page does not print the BTU figures, so we took them from elsewhere: the Pentair 2025-2026 catalog shows the 120 H/C at 125,000 BTU heating with a COP of 5.5 and 71,000 BTU cooling at COP 4.1, while a Pool360 distributor listing gives 127,000 BTU heating and a 6.6 kW electrical input. Treat it as roughly a 125,000 BTU unit and confirm the exact figure on the data plate. Like every heat pump, its real output falls as the air cools, so the cold-weather numbers matter more than the headline.",
+    "pros": [
+      "Works with Pentair IntelliTouch and EasyTouch automation, per Pentair",
+      "Titanium heat exchanger and automatic defrost",
+      "Heat and cool modes in one unit",
+      "About 125,000 BTU heating at COP 5.5 in Pentair's catalog"
+    ],
+    "cons": [
+      "Pentair's product page does not publish BTU or COP figures",
+      "Catalog and distributor ratings differ slightly (125,000 vs 127,000 BTU)",
+      "Sold mainly through pool dealers"
+    ],
+    "bottomLine": "If your pump, filter and automation are Pentair, the UltraTemp 120 H/C is the heat pump that fits in cleanly, with heat and cool modes and a titanium exchanger."
+  },
+  {
+    "id": "hayward-universal-h-series-h250fdn",
+    "name": "Hayward Universal H-Series H250FDN",
+    "badge": "Best Gas Heater",
+    "category": "Natural Gas, 250,000 BTU, Low NOx",
+    "amazonUrl": "#",
+    "description": "A gas heater is the right call when you want heat fast, heat in cold weather, or heat for a spa on demand, and the H-Series 250,000 BTU is the mainstream model we would start with. Hayward's product page lists it as a natural gas heater with a cupro-nickel heat exchanger and a forced-draft combustion system, and says it meets or exceeds the SCAQMD Rule 1146.2 low NOx standard. Electrically it is easy: Hayward lists 120/240V single phase, 5.5 circuit amps and a 15-amp maximum breaker, which is far less than any heat pump needs. The page gives a 25 to 125 GPM flow range, a 165 lb weight and dimensions of 24 by 25 by 29.5 inches. Hayward does not print a thermal efficiency figure on that page; a Walmart listing for the related W3H250FDN states 84%. Warranty on the Hayward page is three years parts and one year labor, with longer coverage when sold by a Hayward partner. Before you buy, have a plumber confirm your gas meter and line can deliver 250,000 BTU on top of your other appliances.",
+    "pros": [
+      "250,000 BTU on natural gas with low NOx certification, per Hayward",
+      "Cupro-nickel heat exchanger for salt and chemical resistance",
+      "Only 5.5 circuit amps and a 15 A breaker on the electrical side",
+      "Heats regardless of air temperature"
+    ],
+    "cons": [
+      "Running cost per BTU is well above a heat pump's",
+      "May need a larger gas line or meter",
+      "Efficiency figure comes from a retailer, not Hayward's page"
+    ],
+    "bottomLine": "For fast, weather-proof heat, especially with an attached spa, the Universal H-Series 250,000 BTU is the gas heater to buy, provided your gas supply can feed it."
+  },
+  {
+    "id": "pentair-mastertemp-400",
+    "name": "Pentair MasterTemp 400,000 BTU",
+    "badge": "Best High-Output Gas",
+    "category": "Natural Gas, 400,000 BTU, Low NOx",
+    "amazonUrl": "#",
+    "description": "For large pools, pools with a spa that you want hot in under an hour, or cold climates where a heat pump simply runs out of capacity, the MasterTemp 400 is the high-output choice. Retailer listings describe the 400,000 BTU natural gas MasterTemp as low NOx certified, and Pentair sells it under several item numbers, including 460736, 460805 for the heavy-duty cupro-nickel version and 461021 and 460771 for ASME-certified versions. A listing for the 460805 gives 84% efficiency for the standard copper exchanger and 82% for the cupro-nickel one; we could not find those figures on an official Pentair sheet, so treat them as retailer claims. Listings also disagree on the cabinet dimensions, which is a reminder to read the manual for the exact item number before you plan the pad. A 400,000 BTU heater asks a lot of the gas supply, so a plumber's gas-line sizing check is not optional, and on many homes it means a larger meter.",
+    "pros": [
+      "400,000 BTU for large pools and fast spa heating",
+      "Low NOx certification per retailer listings",
+      "Cupro-nickel heavy-duty version for saltwater pools",
+      "Heats in any weather"
+    ],
+    "cons": [
+      "Several item numbers with different specs; buy the exact one you need",
+      "Efficiency and dimensions come from retailers, not an official sheet",
+      "Often needs gas-line or meter upgrades"
+    ],
+    "bottomLine": "Choose the MasterTemp 400 when a 250,000 BTU heater is too small for the pool or too slow for the spa, and budget for the gas supply it needs."
+  },
+  {
+    "id": "fibropool-fh055",
+    "name": "FibroPool FH055 Heat Pump",
+    "badge": "Best for Above-Ground Pools",
+    "category": "Heat Pump, 55,000 BTU, 240V",
+    "amazonUrl": "#",
+    "description": "Most heat pumps are sized for in-ground pools, so above-ground owners end up buying far more heater than they need. The FibroPool FH055 is sized for them. Retailer and review listings describe it as a 55,000 BTU, 240V heat pump with a titanium heat exchanger, rated for pools up to about 10,000 gallons; one review site lists it for above-ground pools up to 21 feet round or 15 by 30 feet oval, at roughly 16 by 40 by 24 inches and 120 lb. We could not find an official FibroPool spec sheet, and several listings call what appears to be the same unit the FH255, so confirm the model number before you order. The same review site lists one year of labor, two years on mechanical parts and ten years on other parts, but that is a third-party summary rather than the warranty document. The appeal is simple: a small heat pump that plugs into a 240V circuit and runs on your existing filter pump can stretch an above-ground season by weeks at a fraction of what propane costs.",
+    "pros": [
+      "Sized for above-ground pools up to about 10,000 gallons, per listings",
+      "Titanium heat exchanger suits salt systems",
+      "Far cheaper to run than propane for the same heat",
+      "Light enough to set on a small pad"
+    ],
+    "cons": [
+      "No official spec sheet found; specs come from retailers and reviews",
+      "Model number confusion between FH055 and FH255",
+      "Still needs a 240V circuit"
+    ],
+    "bottomLine": "For an above-ground pool, the FH055 is the right-sized heat pump, as long as you confirm the model number and warranty with FibroPool or the seller first."
+  },
+  {
+    "id": "sunheater-s120u",
+    "name": "SunHeater S120U Solar Pool Heater",
+    "badge": "Best Budget / Solar",
+    "category": "Solar Panel, 2 x 20 ft (40 sq ft)",
+    "amazonUrl": "#",
+    "description": "Solar is the cheapest heat you can add to a pool, and the SunHeater S120U is the simplest way to try it. Home Depot lists the universal panel at 2 by 20 feet, or 40 square feet, for in-ground or above-ground pools, and retailer listings say it mounts on a roof, rack, the ground or a fence and runs on your existing pool pump, with connection hardware included. Listings give an 18 lb product weight and NSF and ANSI certification, and the maker-style copy says it is designed to raise water temperature 6 to 10°F; a two-panel kit is advertised at up to 15°F. Those are best-case claims that depend on sun, panel area and covering the pool at night. Recent listings priced a single panel around $130 to $146. One panel will not heat a large in-ground pool; the usual guidance is to match panel area to a large share of the pool's surface area, which for most pools means several panels. Drain the panels before freezing weather.",
+    "pros": [
+      "No running cost beyond the pump you already run",
+      "Mounts on a roof, rack, ground or fence, per listings",
+      "Light at 18 lb per panel and cheap to start",
+      "Works for above-ground and in-ground pools"
+    ],
+    "cons": [
+      "Temperature gain claims (6 to 15°F) depend heavily on sun and panel area",
+      "One panel is far too little for most in-ground pools",
+      "Panels must be drained before freezing weather"
+    ],
+    "bottomLine": "For a cheap, zero-fuel way to add a few degrees, especially on an above-ground pool, the SunHeater S120U is the panel to start with; buy enough panels for your pool's surface area and use a cover."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Pool Heaters",
+          item: "https://www.thehonestreviewers.com/best-pool-heater/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best type of pool heater?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most in-ground pools used all season in warm or mild climates, a heat pump is the best value because it delivers several units of heat per unit of electricity. Gas is better for spas, occasional use and cold climates, and solar is the cheapest way to add a few degrees. Many owners combine solar or a heat pump with gas."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What size pool heater do I need?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Department of Energy guidance for gas heaters multiplies pool surface area by the temperature rise you want over the coldest month's average air temperature, then by 12. A 512 square foot pool needing a 20°F rise works out near 123,000 BTU per hour. For heat pumps, check the rating at 50°F air if you swim in spring or fall."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does it cost to run a pool heater?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Using 17 cents per kWh, $1.50 per therm and $2.75 per gallon of propane, delivering 100,000 BTU costs about $1.00 with a heat pump at COP 5, $1.79 with natural gas and $3.58 with propane. Season costs depend mostly on how much heat the pool loses, which a cover reduces sharply."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do pool heat pumps work in cold weather?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They work less well. Most standard models stop heating around 50°F air, and output drops as the air cools. Hayward lists its standard HeatPro models down to 50°F and its low-ambient models down to 40°F. Below that, a gas heater is the reliable option."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I install a pool heater myself?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The plumbing is within reach of a handy owner, but the electrical and gas work generally is not. Heat pumps need a dedicated 240V circuit sized to the nameplate, and gas heaters need a properly sized gas line and venting. Both normally require permits and licensed trades."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does it take to heat a pool?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Raising a 20,000-gallon pool 10°F needs about 1.67 million BTU before losses. A 250,000 BTU gas heater can do it in roughly eight hours in ideal conditions; a 110,000 BTU heat pump takes closer to a day or more. Heat pumps are usually run continuously to hold temperature."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is solar pool heating worth it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For many pools in sunny climates, yes, because there is no fuel cost. Expect a few degrees rather than a hot pool, and plan on panel area equal to a large share of the pool's surface area. Pair solar with a cover, and add a heat pump or gas heater if you need reliable heat on cloudy weeks."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Pool & Spa",
+    tags: [
+      "best pool heater",
+      "pool heat pump",
+      "gas pool heater",
+      "solar pool heater",
+      "above ground pool heater"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Buyer's Guide
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best <span class="text-[#38BDF8]">Pool Heaters</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Heat pumps, gas heaters and solar panels compared on the numbers that decide whether you swim in May: output in cool air, running cost and what your house has to supply.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#hayward-heatpro-hp21124t"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            See the Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="7.4k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-picked" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Picked</a>
+          <a href="#types" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Heat Pump, Gas or Solar</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 7 Picks</a>
+          <a href="#sizing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Sizing</a>
+          <a href="#running-cost" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Running Cost</a>
+          <a href="#install" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Installation</a>
+          <a href="#above-ground" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Above-Ground Pools</a>
+          <a href="#maintenance" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Maintenance</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          The best pool heater for most in-ground pools is a heat pump sized to its 50°F rating, not its 80°F headline. Gas is for speed, spas and cold climates; solar is for cheap extra degrees. Choose the type first, then the model.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-picked" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Picked
+          </h2>
+
+          <p>
+            We did not plumb these heaters into a test pool. We compared the numbers manufacturers publish, chiefly BTU output, coefficient of performance (COP) for heat pumps, thermal efficiency for gas heaters, electrical and gas requirements, flow range and warranty terms, and checked them against distributor and retailer listings. Where two sources disagree, the product card says so rather than picking the more flattering number.
+          </p>
+
+          <p>
+            For heat pumps, we gave the most weight to brands that publish output at more than one air temperature. A heat pump moves heat out of the air, so its output depends on how warm the air is. Ratings at 80°F air look impressive, but if you want to swim in May or October, the 50°F rating is the one that tells you whether the heater can keep up. Hayward's HeatPro sell sheet lists all three standard AHRI 1160 conditions for every model, which is exactly the transparency we wanted.
+          </p>
+
+          <p>
+            For gas heaters, we looked for low NOx certification, a heat exchanger that suits your water (cupro-nickel for salt systems), and realistic electrical and gas requirements. And because not every pool needs a 250,000 BTU heater, we included an above-ground heat pump and a solar panel for owners whose budget or pool size calls for something smaller.
+          </p>
+
+          <p>
+            One more filter: availability through normal channels. Several heaters in this category are sold mainly through pool dealers, and warranty terms often depend on that. We note it where it applies, because a three-year warranty that shrinks to one year when you buy online is a real cost.
+          </p>
+        </div>
+
+        <div id="types" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Heat Pump, Gas or Solar
+          </h2>
+
+          <p>
+            Pool heaters come in three kinds, and choosing the right kind matters more than choosing the right brand. A <strong>heat pump</strong> uses electricity to move heat from the air into the water. It is cheap to run in warm air, slow to raise temperature, and loses capacity as the air cools; most standard models stop heating around 50°F. A <strong>gas heater</strong> burns natural gas or propane. It heats fast in any weather, costs more per degree, and needs an adequate gas supply. A <strong>solar heater</strong> circulates pool water through panels in the sun. It costs nothing to run once installed but only adds a few degrees and only when the sun shines.
+          </p>
+
+          <p>
+            The US Department of Energy's consumer guidance makes the same split: heat pumps are economical where the swimming season is warm, gas heaters suit short bursts of heat and pools used only occasionally, and solar is the lowest-cost option where there is good sun and enough mounting space. Many owners combine them, solar or a heat pump for the base load and gas for a spa or a cold weekend.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Type</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Heats fast?</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Cold-weather heat</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Running cost</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Best for</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Heat pump</td>
+                    <td class="px-4 py-4 text-gray-700">Slow (days to raise)</td>
+                    <td class="px-4 py-4 text-gray-700">Weak below about 50°F</td>
+                    <td class="px-4 py-4 text-gray-700">Lowest per BTU of fuel-fired heat</td>
+                    <td class="px-4 py-4 text-gray-700">Season-long heat in warm and mild climates</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Natural gas</td>
+                    <td class="px-4 py-4 text-gray-700">Fast (hours)</td>
+                    <td class="px-4 py-4 text-gray-700">Strong</td>
+                    <td class="px-4 py-4 text-gray-700">Moderate to high</td>
+                    <td class="px-4 py-4 text-gray-700">Spas, occasional use, cold climates</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Propane</td>
+                    <td class="px-4 py-4 text-gray-700">Fast (hours)</td>
+                    <td class="px-4 py-4 text-gray-700">Strong</td>
+                    <td class="px-4 py-4 text-gray-700">Highest</td>
+                    <td class="px-4 py-4 text-gray-700">Homes with no gas line</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Solar</td>
+                    <td class="px-4 py-4 text-gray-700">Slow, sun-dependent</td>
+                    <td class="px-4 py-4 text-gray-700">Little</td>
+                    <td class="px-4 py-4 text-gray-700">Near zero</td>
+                    <td class="px-4 py-4 text-gray-700">Extending the season on a budget</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            If you swim most days from May to September and live somewhere the nights stay above 50°F, a heat pump almost always wins. If you heat a pool for a few weekends, want the spa hot in 30 minutes, or live where spring air is cold, gas earns its higher fuel bill. If you mainly want the pool a few degrees warmer and the electric bill to stay put, start with solar and a cover.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 7 Picks
+          </h2>
+
+          <p>
+            We researched these seven from manufacturer sell sheets, product pages and distributor and retailer listings; we did not install or lab-test them. Every figure is attributed to its source, and conflicting figures are noted on the card.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="sizing" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. How to Size a Pool Heater
+          </h2>
+
+          <p>
+            Heater sizing starts with the pool's surface area, because most heat leaves through the surface. The Department of Energy's sizing guidance for gas pool heaters uses a simple formula: multiply the pool's surface area in square feet by the temperature rise you want over the average air temperature of the coldest month you swim, then multiply by 12. A 16 by 32 foot pool (512 square feet) that you want 20°F above the air needs about 512 x 20 x 12, or roughly 123,000 BTU per hour. That figure assumes average wind and humidity; wind and an uncovered pool push it up.
+          </p>
+
+          <p>
+            To estimate how long a heater takes to warm a pool, use the water's heat capacity: one BTU raises one pound of water by 1°F, and a gallon of water weighs about 8.34 lb. A 20,000-gallon pool holds about 166,800 lb of water, so raising it 10°F needs about 1.67 million BTU before losses. A 250,000 BTU gas heater at 84% efficiency delivers about 210,000 BTU per hour, so roughly eight hours in ideal conditions. A heat pump delivering 110,000 BTU per hour needs about 15 hours, and longer once the surface loses heat overnight. In practice, heat pumps are run continuously to hold a temperature rather than to raise it quickly.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE RULE</p>
+            <p class="text-xl font-bold text-white mb-3">Size for the coldest month you swim, not the warmest.</p>
+            <p class="text-gray-300 leading-relaxed m-0">A heater that keeps up in July can fall far behind in May. For heat pumps, size against the 50°F rating, not the 80°F headline.</p>
+          </div>
+
+          <p>
+            For heat pumps, pick the size whose rated output at 50°F air still meets your requirement if you want to swim in spring and fall. That is why the HeatPro sell sheet's third row matters: the HP21124T drops from 110,000 BTU at 80°F to 75,000 BTU at 50°F. If your calculated need is 100,000 BTU in May, the 140,000 BTU HP21404T or HP31404T is the safer choice.
+          </p>
+
+          <p>
+            Above-ground pools are smaller and need far less. A 21-foot round pool at about 10,000 gallons is the territory of a 50,000 to 60,000 BTU heat pump such as the FibroPool FH055, or several solar panels. Buying an in-ground-sized heater for an above-ground pool wastes money and can exceed the flow your small pump delivers.
+          </p>
+        </div>
+
+        <div id="running-cost" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Running Cost: The Real Math
+          </h2>
+
+          <p>
+            Running cost is where heat pumps earn their price. To compare fairly, look at the cost of delivering 100,000 BTU of heat into the water. We will use 17 cents per kWh for electricity, $1.50 per therm for natural gas and $2.75 per gallon for propane; swap in your own rates.
+          </p>
+
+          <p>
+            A heat pump at a COP of 5 delivers five units of heat for every unit of electricity. 100,000 BTU divided by 3,412 BTU per kWh is about 29.3 kWh of heat, and at COP 5 that takes about 5.9 kWh of electricity, or about $1.00. At 50°F air and COP 4, the same heat takes about 7.3 kWh, roughly $1.25.
+          </p>
+
+          <p>
+            A natural gas heater at 84% efficiency needs about 119,000 BTU of gas to deliver 100,000 BTU, which is about 1.19 therms, or roughly $1.79. Propane holds about 91,500 BTU per gallon, so the same heat takes about 1.3 gallons, roughly $3.58.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">Cost per 100,000 BTU Delivered (Our Assumptions)</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <p class="text-3xl font-black text-white">$1.00</p>
+                <p class="text-gray-400 text-xs mt-1">Heat pump, COP 5</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">$1.25</p>
+                <p class="text-gray-400 text-xs mt-1">Heat pump, COP 4 (50°F air)</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-white">$1.79</p>
+                <p class="text-gray-400 text-xs mt-1">Natural gas, 84%</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">$3.58</p>
+                <p class="text-gray-400 text-xs mt-1">Propane, 84%</p>
+              </div>
+            </div>
+          </div>
+
+          <p>
+            Scale that to a real job. Raising a 20,000-gallon pool by 10°F needs about 1.67 million BTU before losses: roughly $17 with a heat pump, $30 with natural gas and $60 with propane. Holding temperature across a season costs far more, because the pool loses heat every night, which is why a cover matters more than any heater choice. The Department of Energy notes that pool covers can cut heating costs substantially, because evaporation is the largest source of heat loss.
+          </p>
+
+          <p>
+            These numbers explain the usual recommendation. If you heat all season, a heat pump repays its higher purchase price quickly. If you heat only for occasional weekends, the gas heater's lower purchase price and speed may win despite the fuel cost. Solar has no fuel cost at all, which is why it pairs so well with either.
+          </p>
+        </div>
+
+        <div id="install" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Installation: Electrical, Gas and Plumbing
+          </h2>
+
+          <p>
+            Heat pumps need a dedicated 240V circuit sized to the nameplate. Hayward lists a 42-amp minimum circuit and a 60-amp maximum breaker for the HP21124T, which usually means a new run from your panel, a disconnect within sight of the unit and wire sized for the distance. That work belongs to a licensed electrician and normally needs a permit. If your panel is already near capacity, the heat pump may be the trigger for a panel upgrade, which changes the cost comparison.
+          </p>
+
+          <p>
+            Gas heaters need far less electricity; Hayward lists 5.5 circuit amps for the H-Series. The hard part is gas supply. A 250,000 BTU heater can need a larger gas line than a typical house run, and a 400,000 BTU heater often needs a larger meter, which involves the gas utility. A plumber or gas fitter should size the line for the full load of every gas appliance in the house running at once. Gas heaters also need clearances from walls, windows and vents; Hayward lists 6 inches at the rear and 12 inches at the sides for the H-Series, and local code may require more.
+          </p>
+
+          <p>
+            Plumbing goes after the filter and before any chlorinator, so concentrated chlorine never passes through the heat exchanger. Most heaters use 2-inch connections and list a flow range; the HeatPro line lists 30 to 75 GPM. Too little flow trips the pressure switch; too much can require a bypass valve. A check valve between the heater and a salt cell or chlorinator protects the exchanger when the pump stops.
+          </p>
+
+          <p>
+            Set heat pumps on a level pad with clear airflow around them, because they move a lot of air and need room to breathe. Keep them away from bedroom windows; the fan and compressor are about as loud as a central air conditioner. Gas heaters need the same level pad and enough distance from anything combustible. On either type, a surge protector at the panel, such as those in our <a href="/best-whole-house-surge-protector/">whole-house surge protector guide</a>, protects the control board.
+          </p>
+        </div>
+
+        <div id="above-ground" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Heating an Above-Ground Pool
+          </h2>
+
+          <p>
+            Above-ground pools hold less water and have less surface area, so a modest heater goes a long way. A 55,000 BTU heat pump like the FibroPool FH055 is the usual match for pools up to about 10,000 gallons, and solar panels are often enough on their own in sunny climates. Gas heaters work, but most are sized for in-ground pools and burn fuel faster than an above-ground pool needs.
+          </p>
+
+          <p>
+            Check your pump before buying any heater. Above-ground pumps often move 40 to 60 GPM, which sits within the range most small heat pumps want, but some in-ground heaters list minimum flows above what a small pump can deliver. The heater's flow range should overlap your pump's output at your system's resistance.
+          </p>
+
+          <p>
+            Above-ground walls also lose heat through the sides, which an in-ground pool does not, so a solar cover matters even more. A cover plus one or two solar panels can add several degrees for very little money; add a small heat pump if you want reliable heat on cloudy weeks or into autumn.
+          </p>
+
+          <p>
+            Finally, think about where the heater sits. Above-ground pools often sit on a deck or patio, and a heat pump needs a level, solid base and airflow. Keep it away from the pool wall so it cannot be used as a step into the pool, which is a safety issue as well as a durability one.
+          </p>
+        </div>
+
+        <div id="maintenance" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Maintenance and Lifespan
+          </h2>
+
+          <p>
+            Water chemistry is the biggest factor in heater life. Low pH and high chlorine corrode heat exchangers, especially copper ones, so keep pH and chlorine within the ranges your test kit recommends and never feed chlorine tablets upstream of the heater. Cupro-nickel and titanium exchangers tolerate salt and chemicals better, which is why salt-pool owners should choose them.
+          </p>
+
+          <p>
+            Heat pumps need clear coils and good airflow. Hose the evaporator coil off gently each season, keep plants and debris back, and make sure the condensate drains away from the pad. A heat pump that is starved of air works harder and heats less. Gas heaters need a yearly look at the burner tray, the venting and the pressure switch, and many owners have a technician service them before the season starts.
+          </p>
+
+          <p>
+            Winterizing matters wherever water freezes. Drain the heater following the manual before the first freeze; trapped water expands and cracks heat exchangers and headers. Solar panels need draining too, and some owners blow the lines out with a shop vac. A heater that survives one hard freeze undrained is lucky, not durable.
+          </p>
+
+          <p>
+            With good chemistry and seasonal care, heat pumps and gas heaters commonly last many years, but the heat exchanger is usually the part that decides the end. Keep the warranty paperwork and buy through a channel that honors the full term; the difference between dealer and online warranties is one of the quieter costs in this category.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            9. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Sizing a Heat Pump to the 80°F Rating</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Heat pump output falls as the air cools. The HeatPro HP21124T drops from 110,000 BTU at 80°F to 75,000 BTU at 50°F. If you swim in spring or fall, size to the lower number, or the heater will run all day and still fall short.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping the Pool Cover</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Evaporation is the biggest source of heat loss, so an uncovered pool throws away much of what any heater adds. A cover often saves more than the difference between heater models and should be part of the budget from day one.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring the Gas Supply</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A 250,000 or 400,000 BTU heater can starve other appliances or run poorly if the gas line or meter is too small. Have a gas fitter size the line for every gas appliance running at once before you buy.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Putting the Chlorinator Before the Heater</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Concentrated chlorine from a tablet feeder or salt cell corrodes heat exchangers. Plumb the heater after the filter and before the chlorinator, with a check valve, as the manuals specify.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Forgetting to Drain for Winter</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Water trapped in a heat exchanger or solar panel freezes, expands and cracks it. Drain every heater and panel before the first freeze, following the manual, even if you plan to open the pool early.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best type of pool heater?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most in-ground pools used all season in warm or mild climates, a heat pump is the best value because it delivers several units of heat per unit of electricity. Gas is better for spas, occasional use and cold climates, and solar is the cheapest way to add a few degrees. Many owners combine solar or a heat pump with gas.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What size pool heater do I need?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Department of Energy guidance for gas heaters multiplies pool surface area by the temperature rise you want over the coldest month's average air temperature, then by 12. A 512 square foot pool needing a 20°F rise works out near 123,000 BTU per hour. For heat pumps, check the rating at 50°F air if you swim in spring or fall.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How much does it cost to run a pool heater?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Using 17 cents per kWh, $1.50 per therm and $2.75 per gallon of propane, delivering 100,000 BTU costs about $1.00 with a heat pump at COP 5, $1.79 with natural gas and $3.58 with propane. Season costs depend mostly on how much heat the pool loses, which a cover reduces sharply.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do pool heat pumps work in cold weather?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                They work less well. Most standard models stop heating around 50°F air, and output drops as the air cools. Hayward lists its standard HeatPro models down to 50°F and its low-ambient models down to 40°F. Below that, a gas heater is the reliable option.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I install a pool heater myself?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                The plumbing is within reach of a handy owner, but the electrical and gas work generally is not. Heat pumps need a dedicated 240V circuit sized to the nameplate, and gas heaters need a properly sized gas line and venting. Both normally require permits and licensed trades.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long does it take to heat a pool?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Raising a 20,000-gallon pool 10°F needs about 1.67 million BTU before losses. A 250,000 BTU gas heater can do it in roughly eight hours in ideal conditions; a 110,000 BTU heat pump takes closer to a day or more. Heat pumps are usually run continuously to hold temperature.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is solar pool heating worth it?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For many pools in sunny climates, yes, because there is no fuel cost. Expect a few degrees rather than a hot pool, and plan on panel area equal to a large share of the pool's surface area. Pair solar with a cover, and add a heat pump or gas heater if you need reliable heat on cloudy weeks.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Pool and Spa Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-hot-tub/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Hot Tubs</h3>
+              <p class="text-gray-500 text-sm mt-2">Inflatable, plug-and-play and 240V tubs compared on heat, insulation and running cost.</p>
+            </a>
+            <a href="/best-robotic-pool-cleaner/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Robotic Pool Cleaners</h3>
+              <p class="text-gray-500 text-sm mt-2">Floor, wall and waterline cleaners compared on coverage, filtration and cord length.</p>
+            </a>
+            <a href="/best-pool-deck-sealer/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Pool Deck Sealers</h3>
+              <p class="text-gray-500 text-sm mt-2">Slip-resistant sealers for concrete and paver pool decks.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The best pool heater for most in-ground pools is the <strong class="text-white">Hayward HeatPro HP21124T</strong>, which Hayward rates at 110,000 BTU and COP 5.7 and, unusually, publishes honest numbers for cool air too. Choose the <strong class="text-white">HP31404T</strong> if your season starts in cold spring air, the <strong class="text-white">Universal H-Series</strong> if you want gas speed for a spa, and the <strong class="text-white">FibroPool FH055</strong> or <strong class="text-white">SunHeater</strong> panels for an above-ground pool.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Whatever you buy, size it to the coldest month you swim, budget for the electrical or gas work, and put a cover on the pool. The cover is the cheapest heater you will ever own. Keeping the water clean matters too; our <a href="/best-pool-vacuum/" class="text-[#38BDF8]">pool vacuum guide</a> and <a href="/best-robotic-pool-cleaner/" class="text-[#38BDF8]">robotic pool cleaner guide</a> cover that side, and a <a href="/best-hot-tub/" class="text-[#38BDF8]">hot tub</a> is the next step if you want hot water year-round. Around the pool, a slip-resistant <a href="/best-paver-sealer/" class="text-[#38BDF8]">paver sealer</a> protects the deck, and our <a href="/concrete-patio-cost/" class="text-[#38BDF8]">concrete patio cost guide</a> prices the pad.
+          </p>
+        </div>
+
+        <MoreInCategory category="Pool & Spa" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

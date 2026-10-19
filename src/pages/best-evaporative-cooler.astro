@@ -1,0 +1,798 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Whole-House Fans",
+    "url": "/best-whole-house-fan/"
+  },
+  {
+    "title": "Whole House Fan vs Attic Fan",
+    "url": "/whole-house-fan-vs-attic-fan/"
+  },
+  {
+    "title": "Best Ceiling Fans With Lights",
+    "url": "/best-ceiling-fans-with-lights/"
+  },
+  {
+    "title": "Best Mini-Split Heat Pumps",
+    "url": "/best-mini-split-heat-pump/"
+  },
+  {
+    "title": "Best Dehumidifiers for Garages",
+    "url": "/best-dehumidifier-for-garage/"
+  },
+  {
+    "title": "Best Electric Fireplaces",
+    "url": "/best-electric-fireplace/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-19", modified: "2026-10-19" });
+const title = "5 Best Evaporative Coolers: Swamp Cooler Picks for Dry Climates";
+const description =
+  "The best evaporative coolers for patios, garages and dry-climate homes, compared on airflow, coverage, tank size and pads, with an honest look at humidity limits.";
+
+const PRODUCTS = [
+  {
+    "id": "hessaire-mc37m",
+    "name": "Hessaire MC37M Evaporative Cooler",
+    "badge": "Best Overall",
+    "category": "Portable, Mid-Size",
+    "amazonUrl": "#",
+    "description": "The Hessaire MC37M is the cooler we would point most dry-climate homeowners to for a patio, open-plan room or garage. Retailer listings and review roundups consistently give it 3,100 CFM of airflow for spaces up to about 950 square feet, with a 10.3-gallon reservoir that listings estimate at three to four hours per fill. A float valve and garden-hose adapter let you run it continuously from a hose instead of refilling by hand, which is the feature that makes a cooler this size practical. Listings show three fan speeds, 115-volt power, a 59 dB noise figure and a weight of about 39 pounds, in a footprint of roughly 24 by 16 by 38 inches. We did not find an official Hessaire spec sheet for this exact model, so confirm figures with Hessaire if you are planning a specific installation.",
+    "pros": [
+      "3,100 CFM for up to about 950 sq ft per listings",
+      "10.3-gallon reservoir plus continuous hose fill",
+      "Three speeds on standard 115 V power",
+      "About 39 lb, easy to roll between spaces"
+    ],
+    "cons": [
+      "Figures come from retailers, not a Hessaire spec sheet",
+      "Three to four hours per manual fill",
+      "Less effective once relative humidity rises"
+    ],
+    "bottomLine": "The right size for most dry-climate patios and open rooms, and the hose connection removes the refilling chore."
+  },
+  {
+    "id": "hessaire-mc18m",
+    "name": "Hessaire MC18M Evaporative Cooler",
+    "badge": "Best for Small Spaces",
+    "category": "Portable, Compact",
+    "amazonUrl": "#",
+    "description": "The Hessaire MC18M is the smaller sibling, rated by retailers at 1,300 CFM for spaces up to 500 square feet. Most listings give a 4.8-gallon tank good for three to four hours, though one listing quotes a different runtime, so expect to refill it during a long afternoon. Its big advantage is efficiency: listings put it at 0.7 amps and 85 watts, which makes it very cheap to run. It weighs about 16 pounds and measures roughly 28 by 20 by 10 inches, with two fan speeds and three cooling pads. Hessaire's own material says evaporative coolers are most effective in dry climates with an average relative humidity of 40 percent or less, which is the most useful single sentence a manufacturer can give you about this category.",
+    "pros": [
+      "1,300 CFM for up to 500 sq ft per retailers",
+      "About 85 W, so very low running cost",
+      "16 lb and slim enough for a bedroom or office",
+      "Three cooling pads"
+    ],
+    "cons": [
+      "4.8-gallon tank needs regular refilling",
+      "Only two fan speeds",
+      "Small coverage for open-plan spaces"
+    ],
+    "bottomLine": "A light, frugal cooler for a single room or home office in a genuinely dry climate."
+  },
+  {
+    "id": "honeywell-co30xe",
+    "name": "Honeywell CO30XE Indoor/Outdoor Evaporative Cooler",
+    "badge": "Best for One Room",
+    "category": "Portable, Compact",
+    "amazonUrl": "#",
+    "description": "The Honeywell CO30XE is a compact indoor/outdoor cooler from a familiar brand. Honeywell's spec sheet lists 525 CFM, and listings agree on coverage of about 320 square feet with a 30-liter tank, which is about 7.9 US gallons; a few reviews quote other tank sizes, but the 30-liter figure matches the manufacturer and the model's own naming. O'Reilly lists it at 24 pounds and 120 volts with three speeds, while some sources say four, so check the box. A 30-liter tank on a 525 CFM fan means long runtimes between fills, which suits a bedroom or a small covered patio where you do not want to keep topping it up. Its airflow is modest, so it is a spot cooler rather than a whole-room solution for large spaces.",
+    "pros": [
+      "525 CFM per Honeywell's spec sheet",
+      "30-liter (about 7.9 gal) tank for long runtimes",
+      "Rated for indoor and outdoor use",
+      "24 lb, easy to move"
+    ],
+    "cons": [
+      "Modest airflow; best for about 320 sq ft",
+      "Sources disagree on the number of speeds",
+      "Spot cooling rather than whole-space cooling"
+    ],
+    "bottomLine": "A quiet-running spot cooler for one room or a small patio, with a tank that lasts."
+  },
+  {
+    "id": "big-ass-fans-cool-space-300",
+    "name": "Big Ass Fans Cool-Space 300",
+    "badge": "Best for Garages and Workshops",
+    "category": "Portable, High-Capacity",
+    "amazonUrl": "#",
+    "description": "The Big Ass Fans Cool-Space 300 is the pick for a garage, workshop or home gym in a dry climate. Big Ass Fans markets it for spaces up to 1,200 square feet, and retailers list an 18-inch fan with up to 2,800 CFM, a 16-gallon reservoir, 8-inch-thick cooling media and a direct-drive variable-speed motor. Sylvane lists it at about 100 pounds and 47.5 inches tall. Sylvane's listing showed $1,899 against a $2,499 list price, with other retailers at $1,899 to $1,999, so it is a serious investment. The warranty is listed at five years on the main unit, with one retailer stating three years on other components. Noise figures disagree between sources, from about 63 dBA to 75 dBA, so do not expect a quiet machine.",
+    "pros": [
+      "Up to 2,800 CFM and 1,200 sq ft per Big Ass Fans",
+      "16-gallon reservoir and 8-inch media",
+      "Variable speed, direct-drive motor",
+      "Five-year warranty on the main unit"
+    ],
+    "cons": [
+      "Around $1,900 at listed prices",
+      "About 100 lb",
+      "Loud at higher speeds per published figures"
+    ],
+    "bottomLine": "Built for a big garage or shop in a dry climate, at a price that reflects the build."
+  },
+  {
+    "id": "big-ass-fans-cool-space-200",
+    "name": "Big Ass Fans Cool-Space 200",
+    "badge": "Best Compact Premium",
+    "category": "Portable, Mid-Size",
+    "amazonUrl": "#",
+    "description": "The Cool-Space 200 brings Big Ass Fans' build quality to a smaller footprint. A retailer lists 900 to 1,800 CFM from dual 10-inch fans and an 8-gallon reservoir good for up to three hours on a fill, and Big Ass Fans positions it for spaces up to 800 square feet. Listings describe 4-inch resin-treated cooling media with GreenGuard Gold certification, which is thicker than the media in many budget coolers and helps effectiveness. The warranty is listed at up to five years, varying by region. It costs more than the Hessaire models but is aimed at people who want a cooler that holds up to daily use on a patio or in a small shop.",
+    "pros": [
+      "900 to 1,800 CFM from dual fans per a retailer",
+      "8-gallon tank with a low-water indicator",
+      "4-inch treated cooling media",
+      "Up to five-year warranty, by region"
+    ],
+    "cons": [
+      "Up to three hours per fill",
+      "Costs more than mass-market coolers",
+      "Coverage claim of 800 sq ft is ideal-conditions"
+    ],
+    "bottomLine": "A sturdier mid-size cooler for daily patio or shop use, with thicker media than budget models."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Evaporative Coolers",
+          item: "https://www.thehonestreviewers.com/best-evaporative-cooler/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "Do evaporative coolers work in humid climates?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not well. They cool by evaporating water, which only happens readily in dry air. Hessaire says they are most effective at an average relative humidity of 40 percent or less, and other guidance says effectiveness drops sharply above about 60 percent. In humid regions an air conditioner or dehumidifier is the better choice."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much cooler can an evaporative cooler make the air?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on how dry the air is and how good the cooler's media is. In hot, dry conditions a good unit can lower the air it blows by 15 to 20 degrees or more. The Southwest Energy Efficiency Project notes that thick-media systems can reach about 93 percent effectiveness, while thin-pad designs reach 50 to 80 percent."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much water does an evaporative cooler use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Several gallons an hour on a hot, dry day for a mid-size unit, depending on airflow, temperature and humidity. Listings suggest a 10.3-gallon tank, like the Hessaire MC37M's, lasts about three to four hours. A garden-hose connection with a float valve lets the cooler refill automatically."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use an evaporative cooler indoors?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, in a dry climate, as long as the room is ventilated. Open a window or door on the far side so humid air can escape. Manufacturers such as Portacool advise against using coolers in closed spaces with no ventilation, because humidity builds up and cooling stops working."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is an evaporative cooler cheaper to run than an air conditioner?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, by a wide margin. A cooler runs only a fan and pump; the Hessaire MC18M is listed at about 85 watts, roughly 1.5 cents an hour at 17 cents per kWh. A window or portable air conditioner typically draws several hundred to over a thousand watts."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often should I replace evaporative cooler pads?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When they become stiff with mineral deposits, discolored or musty. That can be once a season or more often with hard water. Thicker rigid media, like the 4-inch and 8-inch media on Big Ass Fans coolers, generally lasts longer than thin fiber pads."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What size evaporative cooler do I need?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Start with airflow. Multiply floor area by ceiling height to get your space's volume, then compare it with the cooler's CFM. Many guides suggest replacing the air every two to three minutes in dry climates. When in doubt, choose the larger cooler and run it on a lower speed."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home Improvement",
+    tags: [
+      "best evaporative cooler",
+      "swamp cooler",
+      "portable evaporative cooler",
+      "evaporative air cooler",
+      "best swamp cooler",
+      "outdoor evaporative cooler"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Home Cooling
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best Evaporative Coolers <span class="text-[#38BDF8]">That Actually Cool in Dry Air</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Five evaporative coolers matched to the space they cool, from a 320-square-foot room to a 1,200-square-foot garage, with the one rule that decides whether any of them will work for you: how dry your air is.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#hessaire-mc37m"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Will One Work Where I Live?
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="6.2k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-chose" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Chose</a>
+          <a href="#humidity" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. The Humidity Rule</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 5 Picks</a>
+          <a href="#sizing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Sizing by CFM</a>
+          <a href="#water" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Water, Tanks and Pads</a>
+          <a href="#indoor-outdoor" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Indoor vs Outdoor Use</a>
+          <a href="#cost" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Running Cost</a>
+          <a href="#maintenance" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Maintenance</a>
+          <a href="#alternatives" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. When to Choose Something Else</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          An evaporative cooler can drop the temperature of the air it blows by 15 to 20 degrees or more in a hot, dry climate, for a fraction of what an air conditioner costs to run. In a humid climate it does very little and adds moisture you do not want. So the best evaporative cooler starts with a check of your local humidity, and only then with airflow, coverage and tank size.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-chose" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Chose
+          </h2>
+
+          <p>
+            Evaporative coolers are one of the most over-promised products in home cooling. Listings routinely show people relaxing indoors in a humid-looking climate, and room-size claims rarely mention humidity at all. So we started with the condition that decides whether any cooler will work: the relative humidity of the air it is cooling. Every recommendation on this page assumes a dry climate, and the humidity section explains how to check yours.
+          </p>
+
+          <p>
+            Within that frame we looked for coolers that publish the numbers that matter: airflow in cubic feet per minute, the area they are designed for, reservoir size and whether they can run from a garden hose. We favored brands with an established presence in the category, Hessaire, Honeywell and Big Ass Fans, and dropped models that the maker lists as discontinued, which removed two popular Portacool units from consideration.
+          </p>
+
+          <p>
+            We did not test these coolers. Every airflow, coverage, tank and weight figure is from a manufacturer page or a retailer listing, and where sources disagree, which happens often in this category, we give both figures. Treat coverage claims as best-case numbers for very dry air, not a guarantee for your space.
+          </p>
+
+          <p>
+            We ended up with five picks rather than a padded list. They cover the realistic range of uses: a single room, a small patio, a larger patio or open room, and a garage or workshop. If none of them fits, the alternatives section explains when a fan or an air conditioner is the better buy.
+          </p>
+        </div>
+
+        <div id="humidity" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. The Humidity Rule
+          </h2>
+
+          <p>
+            An evaporative cooler works by blowing air through wet pads. As the water evaporates it absorbs heat, so the air leaving the cooler is cooler and more humid than the air going in. The drier the incoming air, the more water can evaporate and the bigger the temperature drop. In humid air, very little water evaporates, and the cooler mostly blows damp air around.
+          </p>
+
+          <p>
+            Hessaire's own material puts it plainly: evaporative coolers are most effective in dry climates with an average relative humidity of 40 percent or less. Other industry guidance says effectiveness falls away above roughly 60 percent relative humidity, especially at lower temperatures. A USGS illustration of where evaporative coolers work best shows the dry western United States, with the humid East better served by conventional air conditioning.
+          </p>
+
+          <p>
+            The size of the drop depends on how dry the air is and how good the cooler is. The Southwest Energy Efficiency Project notes that well-designed systems with thick media, 10 to 12 inches or more, can reach about 93 percent effectiveness, while older designs with thin pads may reach only 50 to 80 percent. That is one reason the thicker media on the Big Ass Fans units is worth noting.
+          </p>
+
+          <p>
+            Before you buy, look up the typical afternoon relative humidity for your area in summer, not the morning figure. If it is usually below about 40 percent on hot afternoons, a good evaporative cooler can make a real difference. If it is regularly above 60 percent, put the money toward an air conditioner or a dehumidifier instead, or for winter comfort look at our <a href="/best-electric-fireplace/">best electric fireplace</a> picks, and see our guide to <a href="/ideal-indoor-humidity/">ideal indoor humidity</a> for why adding moisture to already damp air backfires.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 5 Picks
+          </h2>
+
+          <p>
+            These five run from a compact room cooler to a workshop unit with a 16-gallon reservoir. We chose currently sold models with published airflow, coverage and tank figures; two popular Portacool models we considered, the Cyclone 120 and Jetstream 240, are listed as discontinued on Portacool's own site, so they are not here. Figures come from manufacturer pages and retailer listings, and we note where they disagree. We researched these picks from published specs and listings; we did not lab-test them.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="sizing" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Sizing by CFM
+          </h2>
+
+          <p>
+            Airflow, measured in cubic feet per minute, is the number that decides how much space a cooler can handle. Manufacturers translate it into square footage, but those figures assume a particular ceiling height, a set number of air changes and dry air. A larger, taller or leakier space needs more airflow than the label suggests.
+          </p>
+
+          <p>
+            A practical way to check a claim is to work out the volume of your space. Multiply floor area by ceiling height to get cubic feet, and divide the cooler's CFM into it to see how many minutes it takes to move one room's worth of air. In dry climates, many guides suggest replacing the room's air every two to three minutes for a noticeable effect, which is why a 3,100 CFM cooler like the Hessaire MC37M is rated for far more space than a 525 CFM unit like the Honeywell CO30XE.
+          </p>
+
+          <p>
+            Outdoors there is no room to fill, so think in terms of reach instead. A cooler blows a column of cooled air, and you feel it most within that stream. A larger, higher-CFM unit throws cool air further across a patio, which is why garage and workshop coolers like the Cool-Space 300 have big fans and high airflow figures.
+          </p>
+
+          <p>
+            When in doubt, size up. A larger cooler on a lower speed is quieter and still effective, while an undersized cooler on its highest setting will be noisy and still struggle. Just remember that more airflow evaporates more water, so a bigger cooler also empties its tank faster.
+          </p>
+        </div>
+
+        <div id="water" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Water, Tanks and Pads
+          </h2>
+
+          <p>
+            Every evaporative cooler uses water continuously, and the reservoir size decides how often you refill it. Listings suggest the Hessaire MC37M's 10.3-gallon tank lasts three to four hours, the MC18M's 4.8-gallon tank about the same on its lower airflow, and the Cool-Space 200's 8-gallon tank up to three hours. Water use rises with airflow, heat and dryness, so treat these as rough guides.
+          </p>
+
+          <p>
+            For anything bigger than a single-room cooler, a garden-hose connection with a float valve is the feature that makes ownership pleasant. The float valve keeps the reservoir topped up automatically, so the cooler can run all afternoon without attention. Check that the model you choose has one, as the Hessaire MC37M does per its listings.
+          </p>
+
+          <p>
+            Cooling pads, also called media, are where the evaporation happens. Thicker, rigid media generally cools more effectively and lasts longer than thin fiber pads, which is why Big Ass Fans highlights its 4-inch and 8-inch media. Pads gradually collect minerals from the water and lose effectiveness, so they are a consumable you will replace periodically.
+          </p>
+
+          <p>
+            Hard water speeds up mineral build-up on pads and in the reservoir. If your water is hard, expect to clean and replace pads more often, and consider draining the reservoir between uses rather than letting water sit. Our guide to the <a href="/best-water-softener-system/">best water softener system</a> covers the wider effects of hard water around the home.
+          </p>
+        </div>
+
+        <div id="indoor-outdoor" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Indoor vs Outdoor Use
+          </h2>
+
+          <p>
+            Evaporative coolers need a supply of fresh, dry air, and they add moisture to the space they cool. Outdoors that moisture simply disperses. Indoors it builds up unless there is somewhere for it to go, which is why manufacturers recommend opening a window or door on the far side of the room so humid air can escape.
+          </p>
+
+          <p>
+            Portacool, for example, advises against using its coolers inside homes or closed spaces with no ventilation. The same principle applies to every brand: a sealed room with an evaporative cooler running will grow steadily more humid and less comfortable. Cross-ventilation is not optional.
+          </p>
+
+          <p>
+            Garages and workshops are a good fit because they usually have a large door you can open partway, which gives the airflow a path through the space. That is the setting the Cool-Space 300 is designed for. Patios, porches and outdoor kitchens are also natural fits, especially in shade, where the cooler is not fighting direct sun.
+          </p>
+
+          <p>
+            Indoors, small coolers like the Honeywell CO30XE and Hessaire MC18M suit a bedroom or office in a dry climate, as long as a window is open. If you have a whole-house fan, a cooler can work alongside it in the evening, and our guide to the <a href="/best-whole-house-fan/">best whole-house fan</a> explains how those systems move air through a home.
+          </p>
+        </div>
+
+        <div id="cost" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Running Cost
+          </h2>
+
+          <p>
+            Low running cost is the main reason to choose an evaporative cooler over an air conditioner. A cooler only runs a fan and a small water pump, so its power draw is a fraction of a compressor's. The Hessaire MC18M is listed at about 85 watts, which at 17 cents per kilowatt-hour works out to roughly 1.5 cents per hour.
+          </p>
+
+          <p>
+            By comparison, a typical portable or window air conditioner can draw several hundred to over a thousand watts, so it can cost ten times as much or more per hour to run. That gap is why evaporative cooling is so popular in the desert Southwest, where it works well and summers are long.
+          </p>
+
+          <p>
+            Water is the other running cost. A cooler can use several gallons an hour on a hot, dry day, which adds up over a summer but is usually modest compared with the electricity saved. Replacement pads are an occasional cost, more frequent with hard water.
+          </p>
+
+          <p>
+            Larger coolers use more power and water in proportion to their airflow, but they still cost far less to run than air conditioning a comparable space, especially a garage or patio that could never be sealed for an air conditioner in the first place.
+          </p>
+        </div>
+
+        <div id="maintenance" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Maintenance
+          </h2>
+
+          <p>
+            Standing water and damp pads can grow mildew and bacteria, which is the main maintenance concern with any evaporative cooler. Drain the reservoir when the cooler will sit unused for more than a day or two, and let the pads dry out by running the fan with the pump off before you shut it down.
+          </p>
+
+          <p>
+            Clean the reservoir regularly to remove scale and sediment, following the manufacturer's instructions. A mild vinegar solution is a common approach for mineral deposits, but check the manual first, because some manufacturers specify particular cleaners or forbid others.
+          </p>
+
+          <p>
+            Inspect the pads every few weeks during the season. Pads that are stiff with mineral deposits, discolored or giving off a musty smell should be cleaned or replaced, because they cool less effectively and can make the air smell stale.
+          </p>
+
+          <p>
+            At the end of the season, drain the cooler completely, clean the reservoir, dry the pads and store the unit covered in a dry place. Doing this once a year prevents most of the problems people blame on the cooler itself, and it is a lot easier than scrubbing a reservoir that sat full all winter.
+          </p>
+        </div>
+
+        <div id="alternatives" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. When to Choose Something Else
+          </h2>
+
+          <p>
+            If your summer afternoons are humid, an evaporative cooler will disappoint. In that case an air conditioner is the right tool for a room, a mini-split heat pump is the efficient choice for whole rooms you use daily, and a dehumidifier can help a garage or basement feel more comfortable. Our guide to the <a href="/best-mini-split-heat-pump/">best mini-split heat pump</a> covers the efficient end of that spectrum.
+          </p>
+
+          <p>
+            If you mainly want a breeze, a good ceiling fan may be enough and costs even less to run than a cooler. Moving air makes a room feel cooler by helping sweat evaporate from your skin, even though it does not change the temperature. Our guide to the <a href="/best-ceiling-fans-with-lights/">best ceiling fans with lights</a> covers indoor options.
+          </p>
+
+          <p>
+            For a garage in a humid region, consider a dehumidifier instead of a cooler, since lowering humidity makes heat more bearable and protects tools and stored items. Our guide to the <a href="/best-dehumidifier-for-garage/">best dehumidifier for a garage</a> covers models that work in cold and hot garages alike.
+          </p>
+
+          <p>
+            If you live somewhere dry and want to cool a whole house cheaply in the evenings, a whole-house fan pulls cool night air through the home, and our guide to <a href="/whole-house-fan-vs-attic-fan/">whole-house fans versus attic fans</a> explains the difference between the two. An evaporative cooler is then the daytime spot cooler for the room or patio you use most.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying one for a humid climate</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Evaporative coolers depend on dry air. Hessaire says they work best at an average relative humidity of 40 percent or less. In humid regions they add moisture and barely cool. Check typical summer afternoon humidity where you live before buying.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Running it in a closed room</h3>
+              <p class="text-gray-700 text-sm m-0">
+                An evaporative cooler adds moisture to the air. In a sealed room that moisture builds up and comfort drops. Open a window or door on the far side of the space so humid air can escape and fresh, dry air can feed the cooler.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Trusting square-footage claims literally</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Coverage figures assume dry air and an average ceiling height. A tall, open or leaky space needs more airflow. Work out your space's volume and compare it with the cooler's CFM, and size up when unsure.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Leaving water sitting in the reservoir</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Standing water and damp pads grow mildew and bacteria. Drain the reservoir when the cooler will sit unused, run the fan to dry the pads before shutting down, and clean the reservoir regularly through the season.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring the hose connection</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Refilling a large cooler by hand every few hours gets old quickly. For any mid-size or larger unit, choose a model with a garden-hose connection and float valve so it can run all afternoon without attention.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do evaporative coolers work in humid climates?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Not well. They cool by evaporating water, which only happens readily in dry air. Hessaire says they are most effective at an average relative humidity of 40 percent or less, and other guidance says effectiveness drops sharply above about 60 percent. In humid regions an air conditioner or dehumidifier is the better choice.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How much cooler can an evaporative cooler make the air?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It depends on how dry the air is and how good the cooler's media is. In hot, dry conditions a good unit can lower the air it blows by 15 to 20 degrees or more. The Southwest Energy Efficiency Project notes that thick-media systems can reach about 93 percent effectiveness, while thin-pad designs reach 50 to 80 percent.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How much water does an evaporative cooler use?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Several gallons an hour on a hot, dry day for a mid-size unit, depending on airflow, temperature and humidity. Listings suggest a 10.3-gallon tank, like the Hessaire MC37M's, lasts about three to four hours. A garden-hose connection with a float valve lets the cooler refill automatically.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I use an evaporative cooler indoors?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes, in a dry climate, as long as the room is ventilated. Open a window or door on the far side so humid air can escape. Manufacturers such as Portacool advise against using coolers in closed spaces with no ventilation, because humidity builds up and cooling stops working.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is an evaporative cooler cheaper to run than an air conditioner?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes, by a wide margin. A cooler runs only a fan and pump; the Hessaire MC18M is listed at about 85 watts, roughly 1.5 cents an hour at 17 cents per kWh. A window or portable air conditioner typically draws several hundred to over a thousand watts.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How often should I replace evaporative cooler pads?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                When they become stiff with mineral deposits, discolored or musty. That can be once a season or more often with hard water. Thicker rigid media, like the 4-inch and 8-inch media on Big Ass Fans coolers, generally lasts longer than thin fiber pads.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What size evaporative cooler do I need?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Start with airflow. Multiply floor area by ceiling height to get your space's volume, then compare it with the cooler's CFM. Many guides suggest replacing the air every two to three minutes in dry climates. When in doubt, choose the larger cooler and run it on a lower speed.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Home Cooling Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-whole-house-fan/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Whole-House Fans</h3>
+              <p class="text-gray-500 text-sm mt-2">Pull cool evening air through the whole home for a fraction of air conditioning costs.</p>
+            </a>
+            <a href="/best-mini-split-heat-pump/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Mini-Split Heat Pumps</h3>
+              <p class="text-gray-500 text-sm mt-2">The efficient answer to cooling rooms in humid climates where evaporative coolers fail.</p>
+            </a>
+            <a href="/ideal-indoor-humidity/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Ideal Indoor Humidity</h3>
+              <p class="text-gray-500 text-sm mt-2">Why adding moisture to already damp air backfires, and the range to aim for.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The best evaporative cooler for most dry-climate homes is the <strong class="text-white">Hessaire MC37M</strong>: 3,100 CFM, a 10.3-gallon tank and a hose connection that lets it run all afternoon. Choose the <strong class="text-white">Hessaire MC18M</strong> or <strong class="text-white">Honeywell CO30XE</strong> for a single room, and the <strong class="text-white">Big Ass Fans Cool-Space 300</strong> for a garage or workshop.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Before any of that, check your summer afternoon humidity. If it is usually below about 40 percent, a cooler is one of the cheapest ways to beat the heat. If it is regularly above 60 percent, spend the money on air conditioning instead.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Improvement" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
