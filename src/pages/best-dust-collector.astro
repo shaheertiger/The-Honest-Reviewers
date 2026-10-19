@@ -1,0 +1,881 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Table Saws",
+    "url": "/best-table-saw/"
+  },
+  {
+    "title": "Best Benchtop Planers",
+    "url": "/best-benchtop-planer/"
+  },
+  {
+    "title": "Best Miter Saws",
+    "url": "/best-miter-saw/"
+  },
+  {
+    "title": "Best Band Saws",
+    "url": "/best-band-saw/"
+  },
+  {
+    "title": "Best Shop Vacs",
+    "url": "/best-shop-vac/"
+  },
+  {
+    "title": "Shop Vac vs Dust Extractor",
+    "url": "/shop-vac-vs-dust-extractor/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-19", modified: "2026-10-19" });
+const title = "6 Best Dust Collectors: Bag, Canister and Cyclone Picks for Every Shop";
+const description =
+  "The best dust collectors for garage and basement woodshops, from portable 1 HP units to 3 HP cyclones and HEPA systems, compared on real CFM, filtration and ducting.";
+
+const PRODUCTS = [
+  {
+    "id": "jet-dc-1100vx-5m",
+    "name": "Jet DC-1100VX-5M (708658K)",
+    "badge": "Best Overall",
+    "category": "1.5 HP Single-Stage Bag Collector, Vortex Cone",
+    "amazonUrl": "#",
+    "description": "The Jet DC-1100VX-5M is the collector we would put in most one-car garage shops running a table saw, planer and jointer one at a time. Retailers list a 1.5 HP single-phase motor that runs on 115 or 230 volts, a rated airflow of 1,100 CFM and static pressure of 10.5 inches of water column, which is a useful number because it describes how well the fan keeps pulling against hose and duct resistance. Its 5-micron bag filter is marketed as capturing up to 98 percent of particles at that size, and the collection bag holds about 5.3 cubic feet. Jet's Vortex Cone sits between the impeller and the bag to drop chips out before they reach the filter, which keeps the filter cleaner and airflow steadier as the bag fills. Retailers list sound at 70 to 80 dB. Listed weights differ, 103 pounds net at one retailer and 143 gross at another. The main limitation is the 5-micron bag: for the finest dust, budget for a 1-micron or canister upgrade. Prices across retailers ran from about $690 to $760 when we checked.",
+    "pros": [
+      "1,100 CFM and 10.5 in. static pressure on retailer listings",
+      "Runs on 115V or 230V",
+      "Vortex Cone drops chips before the filter",
+      "5.3 cu ft collection bag"
+    ],
+    "cons": [
+      "5-micron bag is not fine-dust filtration",
+      "Single-stage design means chips pass through the impeller",
+      "Listed weight varies between 103 and 143 lb"
+    ],
+    "bottomLine": "For a one- or two-car garage shop running one big tool at a time, the Jet DC-1100VX-5M is the balanced buy."
+  },
+  {
+    "id": "grizzly-g0441",
+    "name": "Grizzly G0441 3 HP Cyclone",
+    "badge": "Best for Large Shops",
+    "category": "3 HP Two-Stage Cyclone, Cartridge Filter",
+    "amazonUrl": "#",
+    "description": "The Grizzly G0441 is the step up for a dedicated shop with a ducted system feeding several machines. Grizzly lists 1,654 CFM at 2.0 inches of static pressure and a maximum of 14.2 inches at zero flow, which is the honest way to publish a fan curve and lets you estimate what you will get once ductwork is attached. A dealer listing gives a 3 HP, 220V single-phase, 22-amp motor; plan for a dedicated circuit. It uses a 15.5-inch impeller and an 8-inch main inlet sized for real ductwork. The cyclone separates chips into a 55-gallon steel drum before air reaches the cartridge filter, which Grizzly rates for 0.2 to 2 microns with 113 square feet of surface area, so the filter stays cleaner far longer than a bag on a single-stage unit. Listed noise is 83 to 85 dB, and shipping weight is about 400 pounds. Grizzly also sells the G0441HEP with a dual HEPA filtration system rated 99.97 percent at 0.3 microns and a quieter 79 to 80 dB listing. This is a permanent installation, not a garage tool you roll aside.",
+    "pros": [
+      "1,654 CFM at 2.0 in. SP with a published fan curve",
+      "Cyclone separation into a 55-gallon drum",
+      "0.2-2 micron cartridge with 113 sq ft of filter",
+      "HEPA variant available (G0441HEP)"
+    ],
+    "cons": [
+      "Needs 220V and a 22-amp dedicated circuit",
+      "About 400 lb shipping weight; a permanent install",
+      "83-85 dB listed noise on the standard model"
+    ],
+    "bottomLine": "For a ducted shop running several machines, the G0441 is the serious cyclone at a price below most premium competitors."
+  },
+  {
+    "id": "shop-fox-w1727",
+    "name": "Shop Fox W1727 1 HP",
+    "badge": "Best Small-Shop Collector",
+    "category": "1 HP Single-Stage Bag Collector",
+    "amazonUrl": "#",
+    "description": "The Shop Fox W1727 is the compact collector for a small shop or a single tool at a time. Retailers list a 1 HP motor prewired for 110V and capable of 220V, 800 CFM, a 9-inch impeller and a 2.5-micron filter bag, which is finer than the 5-micron bags on many budget units. Toolnut lists static pressure at 5.67 inches and shipping weight around 59 pounds, so it is light enough to roll between a planer and a table saw. It has one 4-inch intake and a 2.1 cubic foot bag, which fills quickly behind a planer, so empty it often. Noise is listed at 79 to 81 dB by Toolnut and under 85 dB by Grizzly. Warranty listings conflict, with most citing one year and one retailer citing two years on parts, so confirm before you buy. Prices ran from about $430 to $500. It is not a whole-shop system, but for moving one 4-inch hose between tools it is a big step up from a shop vacuum.",
+    "pros": [
+      "800 CFM rated with a 2.5-micron bag",
+      "Prewired 110V, convertible to 220V",
+      "Light enough to roll between machines",
+      "9-inch impeller"
+    ],
+    "cons": [
+      "Small 2.1 cu ft bag fills quickly",
+      "5.67 in. static pressure limits long hose runs",
+      "Warranty terms vary by seller"
+    ],
+    "bottomLine": "The right first collector for a small shop moving one hose from tool to tool."
+  },
+  {
+    "id": "wen-dc3401",
+    "name": "WEN DC3401 660 CFM",
+    "badge": "Best Budget",
+    "category": "Portable Bag Collector, 5.7 A",
+    "amazonUrl": "#",
+    "description": "The WEN DC3401 is the least expensive way to get a real dust collector rather than a shop vacuum on a planer or table saw. Home Depot lists it as a 5.7-amp, 660 CFM rolling collector with a 12-gallon bag and a single 4-inch port, and it can roll on the floor or hang on the wall, which helps in a cramped garage. Review roundups list the bag at 5 microns; we did not find a WEN spec confirming a finer rating, so assume 5 microns. One reviewer reported the motor bogging when running two tools through a Y-fitting, which matches what you would expect from a unit this size: treat it as a one-tool collector. Home Depot listed it at about $126 when we checked. It is a sensible starter for chip capture at a single machine, but it does little for the fine dust that hangs in the air, so pair it with an air filtration unit or a respirator for sanding.",
+    "pros": [
+      "660 CFM rated at a low price",
+      "Floor or wall mounting",
+      "12-gallon bag and 4-inch port",
+      "Light enough for a cramped garage"
+    ],
+    "cons": [
+      "5-micron bag per review listings",
+      "One tool at a time; bogs on a Y-fitting per a reviewer",
+      "Little help with fine airborne dust"
+    ],
+    "bottomLine": "The budget starter for chip capture at one machine, not a fine-dust solution."
+  },
+  {
+    "id": "central-machinery-2hp",
+    "name": "Central Machinery 2 HP 70-Gallon (Harbor Freight 97869)",
+    "badge": "Best Value High-Capacity",
+    "category": "2 HP Single-Stage Bag Collector",
+    "amazonUrl": "#",
+    "description": "Harbor Freight's Central Machinery 2 HP collector is the woodworking forums' favorite budget workhorse, and also a lesson in skeptical spec reading. Harbor Freight markets it as a 70-gallon, 2 HP unit with 1,550 CFM and an upper bag that filters to 5 microns. Forum users argue that the CFM rating is overstated and that the impeller is smaller than comparable 1.5 to 2 HP units from Jet, Delta and Penn State, which is opinion rather than a test, but it is a consistent theme. Owners report older versions shipped with 30-micron bags and later ones with 5-micron bags on a 20-amp circuit. The common upgrade is a 1-micron bag or canister filter, and many owners add a separate cyclone or separator. Promotional prices have historically run from about $180 to $250 with coupons; check the current price. If you are comfortable upgrading the filter and want a lot of collector for little money, it is excellent value; if you want a finished solution out of the box, look at the Jet.",
+    "pros": [
+      "Large 2 HP motor and 70-gallon capacity at a low price",
+      "Frequent coupon pricing",
+      "Popular platform with well-documented upgrades"
+    ],
+    "cons": [
+      "Forum users dispute the 1,550 CFM rating",
+      "5-micron upper bag; owners recommend upgrading to 1 micron",
+      "Older versions shipped with 30-micron bags"
+    ],
+    "bottomLine": "Outstanding value for owners willing to upgrade the filter, but treat the 1,550 CFM figure with caution."
+  },
+  {
+    "id": "oneida-supercell",
+    "name": "Oneida Supercell",
+    "badge": "Best for Fine Dust and Small Ports",
+    "category": "High-Pressure Cyclone, HEPA-Grade Filter",
+    "amazonUrl": "#",
+    "description": "The Oneida Supercell is a different kind of collector, built for the small ports on sanders, track saws, routers and CNC machines that a conventional dust collector cannot pull through. Oneida rates the Supercell family at 97.8 inches of static pressure, about ten times a conventional collector, and the Supercell Turbo at up to 536 CFM, which it says is 30 percent more than the original. Oneida rates it for ports from 1 to 5 inches and runs of up to 100 feet of hose and duct. The cyclone separates debris into a drum before the filter, and an internal pulse cleaner knocks dust off the filter to reduce maintenance. Listings describe the filter as both HEPA-grade and HEPA-certified, so confirm the certification with Oneida if you need it for a specific requirement. The 230V Turbo needs a 30-amp circuit. Listed prices run from about $2,800 for a 55-gallon unit at Woodcraft to $3,099 for a 30-gallon freestanding unit at Oneida. It does not replace a big-CFM collector on a planer, but for fine dust at small ports nothing else on this list competes.",
+    "pros": [
+      "97.8 in. static pressure for small ports and long runs",
+      "Up to 536 CFM on the Turbo",
+      "Cyclone with pulse-cleaned HEPA-grade filter",
+      "Works with 1 to 5 inch ports"
+    ],
+    "cons": [
+      "Around $2,800 to $3,100",
+      "Low CFM for chip-heavy machines like planers",
+      "Turbo needs a 230V 30-amp circuit"
+    ],
+    "bottomLine": "The premium choice for fine dust from sanders, routers and CNCs, not a replacement for a high-CFM collector on a planer."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Dust Collectors",
+          item: "https://www.thehonestreviewers.com/best-dust-collector/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What size dust collector do I need?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For one machine at a time with a short hose, a 1 HP collector rated around 650 to 800 CFM is the practical minimum. A 1.5 to 2 HP unit suits a garage shop with short ducting, and a 3 HP cyclone suits a ducted shop with several machines."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a dust collector better than a shop vac?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For different jobs. A dust collector moves high volume at low pressure, ideal for planers and table saws with 4-inch ports. A shop vacuum moves low volume at high pressure, ideal for small ports on sanders and handheld tools. Most shops benefit from both."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What micron filter should a dust collector have?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Finer is better for health. Many budget bags are 5 microns, which lets fine dust escape. A 1-micron bag or canister is a common upgrade, and HEPA filters like Grizzly's G0441HEP stage are rated 99.97 percent at 0.3 microns."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a cyclone dust collector worth it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If you run several chip-heavy machines or want minimal filter maintenance, yes. A cyclone drops chips into a drum before they reach the filter, keeping airflow consistent. For one tool at a time in a small shop, a single-stage unit is usually enough."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can a dust collector run on 110V?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Many smaller units can. The Shop Fox W1727 is prewired for 110V and the Jet DC-1100VX runs on 115V or 230V. Larger collectors like the Grizzly G0441 need 220V and a dedicated circuit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the Harbor Freight dust collector any good?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is popular value for money, but forum users dispute its 1,550 CFM rating and recommend upgrading its 5-micron bag to a 1-micron filter. Owners who accept those upgrades often consider it excellent value for the price."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How far can a dust collector pull through ducting?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on static pressure and duct design. Higher-pressure units like the Jet at 10.5 inches handle longer runs than lower-pressure units. Oneida rates the Supercell for runs up to 100 feet. Keep flex hose short and use rigid duct for main lines."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Tools & Equipment",
+    tags: [
+      "best dust collector",
+      "woodworking dust collector",
+      "shop dust collector",
+      "cyclone dust collector",
+      "dust collector for small shop"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated October 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best Dust Collectors <span class="text-[#38BDF8]">for Every Shop</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Six dust collectors from portable 1 HP bag units to a 3 HP cyclone and a high-pressure HEPA system, sorted by shop size and judged on the airflow you get at the tool, not on the box.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#jet-dc-1100vx-5m"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Jump to the Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="8.7k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-picked" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Picked</a>
+          <a href="#collector-vs-vacuum" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Collector, Extractor or Vacuum</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 6 Picks</a>
+          <a href="#cfm-and-static-pressure" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. CFM and Static Pressure</a>
+          <a href="#filtration" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Filtration and Fine Dust</a>
+          <a href="#single-vs-two-stage" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Single-Stage or Cyclone</a>
+          <a href="#ducting" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Hoses and Ducting</a>
+          <a href="#power-and-placement" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Power and Placement</a>
+          <a href="#who-should-buy" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Which to Buy</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          A dust collector is the tool that makes every other tool in the shop healthier to use. A table saw, planer or jointer throws out far more chips than a shop vacuum can keep up with, and the fine dust that hangs in the air afterward is the part that ends up in your lungs. The difficulty is that dust collector CFM ratings are measured with nothing attached, so the number on the box rarely matches what you get at the end of a duct run. This guide sorts collectors by shop size and tells you which specs actually predict performance.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-picked" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Picked
+          </h2>
+
+          <p>
+            We judged dust collectors on the specs that predict performance at the tool: rated airflow, static pressure or a published fan curve, filtration rating, separation design and electrical needs. Where a maker publishes airflow at a stated static pressure, as Grizzly does for the G0441, we gave that more weight than an open-air CFM claim.
+          </p>
+
+          <p>
+            Every figure comes from manufacturer pages or retailer listings, credited in each write-up. We also read woodworking forum and review reports for patterns, such as disputed CFM claims or bags that fill too quickly, and we say clearly when a point is owner opinion rather than a published spec.
+          </p>
+
+          <p>
+            We covered the range of shops people actually have. A one-tool garage needs a different collector from a ducted basement shop with a table saw, planer, jointer and bandsaw. That is why the list runs from a portable WEN to a 3 HP cyclone and a high-pressure HEPA system for small ports.
+          </p>
+
+          <p>
+            Our picks are also consistent with the dust advice in our <a href="/best-table-saw/">table saw guide</a>, <a href="/best-benchtop-planer/">planer guide</a> and <a href="/best-miter-saw/">miter saw guide</a>, which all assume you have a collector or a capable vacuum on the tool.
+          </p>
+        </div>
+
+        <div id="collector-vs-vacuum" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Dust Collector, Extractor or Shop Vac
+          </h2>
+
+          <p>
+            The three tools solve different problems. A dust collector moves a large volume of air at low pressure, which is what chip-heavy machines need: planers, jointers, table saws and bandsaws with 4-inch ports. A shop vacuum moves a small volume at high pressure, which suits the small ports on handheld tools. A dust extractor is a refined vacuum with fine filtration and tool-triggered switching.
+          </p>
+
+          <p>
+            That is why a shop vacuum chokes on a planer and a dust collector does little on a random orbit sander. Our <a href="/shop-vac-vs-dust-extractor/">shop vac vs dust extractor comparison</a> covers the small-port side in depth, and our <a href="/best-shop-vac/">shop vac guide</a> lists vacuums that pair well with handheld tools.
+          </p>
+
+          <p>
+            Most serious shops end up with both: a collector for the stationary machines and a vacuum or extractor for sanders and track saws. The Oneida Supercell on our list is the exception that tries to do the small-port job with collector-level capacity, at a premium price.
+          </p>
+
+          <p>
+            If you only have one stationary tool and a modest budget, start with a portable collector on that tool and keep using your vacuum for everything else. You can grow into ducting later.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 6 Picks
+          </h2>
+
+          <p>
+            We did not lab-test these collectors. The picks are researched from manufacturer specifications, retailer listings and woodworking forum and review reports, credited in each write-up. Rated CFM is the maker's open-air figure; expect less at the tool once hose, ducting and filters are in the path.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="cfm-and-static-pressure" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. CFM and Static Pressure: The Numbers That Matter
+          </h2>
+
+          <p>
+            CFM is the volume of air a collector moves, and it is what carries chips away from the cutter. Most woodworking guidance suggests a 4-inch port on a table saw or planer needs several hundred CFM at the tool to capture well, which is why 1 HP collectors rated around 650 to 800 CFM are the practical minimum for one machine.
+          </p>
+
+          <p>
+            The catch is that rated CFM is measured with nothing attached. Every foot of hose, every elbow and every filter adds resistance, called static pressure, and airflow drops as resistance climbs. A collector that publishes airflow at a stated static pressure, like Grizzly's 1,654 CFM at 2.0 inches for the G0441, tells you far more than a single open-air number.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Model</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Rated CFM</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Static Pressure</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Filtration</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Jet DC-1100VX-5M</td>
+                    <td class="px-4 py-4 text-gray-700">1,100</td>
+                    <td class="px-4 py-4 text-gray-700">10.5 in. (max)</td>
+                    <td class="px-4 py-4 text-gray-700">5 micron bag</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Grizzly G0441</td>
+                    <td class="px-4 py-4 text-gray-700">1,654 at 2.0 in. SP</td>
+                    <td class="px-4 py-4 text-gray-700">14.2 in. (max)</td>
+                    <td class="px-4 py-4 text-gray-700">0.2-2 micron cartridge</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Shop Fox W1727</td>
+                    <td class="px-4 py-4 text-gray-700">800</td>
+                    <td class="px-4 py-4 text-gray-700">5.67 in.</td>
+                    <td class="px-4 py-4 text-gray-700">2.5 micron bag</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">WEN DC3401</td>
+                    <td class="px-4 py-4 text-gray-700">660</td>
+                    <td class="px-4 py-4 text-gray-700">Not published in our sources</td>
+                    <td class="px-4 py-4 text-gray-700">5 micron per reviews</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Central Machinery 2 HP</td>
+                    <td class="px-4 py-4 text-gray-700">1,550 (disputed)</td>
+                    <td class="px-4 py-4 text-gray-700">Not published in our sources</td>
+                    <td class="px-4 py-4 text-gray-700">5 micron upper bag</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Oneida Supercell Turbo</td>
+                    <td class="px-4 py-4 text-gray-700">Up to 536</td>
+                    <td class="px-4 py-4 text-gray-700">97.8 in.</td>
+                    <td class="px-4 py-4 text-gray-700">HEPA-grade</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            Use static pressure to compare collectors you plan to duct. A higher maximum static pressure means the fan holds its airflow better against long runs. The Jet's 10.5 inches and the Grizzly's 14.2 inches handle ducting well; the Shop Fox's 5.67 inches is fine for a short hose but will fade on a long run.
+          </p>
+
+          <p>
+            Be skeptical of outliers. Forum users dispute the Central Machinery's 1,550 CFM rating, and the general rule holds: a collector with a small impeller and a modest motor does not outflow larger machines just because its box says so.
+          </p>
+        </div>
+
+        <div id="filtration" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Filtration and Fine Dust
+          </h2>
+
+          <p>
+            Chips are a mess; fine dust is the health problem. The particles small enough to stay airborne after you stop cutting are the ones that reach deep into the lungs, and a 5-micron bag lets a large share of them straight back into the room. This is the single most common weakness of budget collectors.
+          </p>
+
+          <p>
+            Filter ratings tell you what you are buying. The Jet and WEN use 5-micron bags, the Shop Fox a 2.5-micron bag, and the Grizzly G0441 a cartridge rated 0.2 to 2 microns. Grizzly's G0441HEP adds a HEPA stage rated 99.97 percent at 0.3 microns, and Oneida describes the Supercell's filter as HEPA-grade.
+          </p>
+
+          <p>
+            Upgrading is common and worthwhile. Owners of the Central Machinery unit routinely swap the 5-micron bag for a 1-micron bag or a pleated canister, and the same upgrade is available for most single-stage collectors. A canister also has far more surface area than a bag, which keeps airflow higher between cleanings.
+          </p>
+
+          <p>
+            Even a good collector does not catch everything. Run an ambient air filter during and after sanding, and wear a respirator for the dustiest work. Collection, air filtration and a mask together are what keep a shop genuinely clean.
+          </p>
+
+          <p>
+            Filter maintenance is part of the filtration story. A bag or cartridge loaded with fine dust restricts airflow as surely as a long duct run, so the collector that performed well on day one can feel weak a few months later. Shake out bags, use the paddle or pulse cleaner on canisters where fitted, and empty the collection bag or drum before it is full, because a packed bag also blocks airflow. Follow the maker's guidance on cleaning method, since some filter media should not be blown out with compressed air.
+          </p>
+        </div>
+
+        <div id="single-vs-two-stage" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Single-Stage or Cyclone
+          </h2>
+
+          <p>
+            A single-stage collector pulls chips through the impeller and blows them into a bag, with the filter bag on top. It is simple, compact and affordable, which is why the Jet, Shop Fox, WEN and Central Machinery units use it. The downsides are that every chip passes through the fan and fine dust loads the filter quickly.
+          </p>
+
+          <p>
+            A two-stage collector, usually a cyclone, spins the air so heavy chips fall into a drum before the air reaches the fan or filter. The Grizzly G0441 and Oneida Supercell work this way. Filters stay cleaner far longer, airflow stays more consistent, and an accidental chunk of wood hits the drum rather than the impeller.
+          </p>
+
+          <p>
+            Jet's Vortex Cone on the DC-1100VX is a middle ground: a cone inside the single-stage unit that helps drop chips out before the filter. Many owners also add a separate cyclone separator in front of a single-stage collector, which gets much of the two-stage benefit for a fraction of the cost.
+          </p>
+
+          <p>
+            Choose a cyclone if you run several chip-heavy machines, mill a lot of rough lumber or want minimal filter maintenance. Choose single-stage if you run one machine at a time in a small shop and value floor space and price.
+          </p>
+
+          <p>
+            Space is the practical tiebreaker. A single-stage unit like the Shop Fox W1727 rolls into a corner, while a cyclone such as the G0441 stands tall with a drum underneath and is usually bolted to a wall or stand. Measure your ceiling height and the path to empty the drum before you commit to a cyclone, especially in a basement shop.
+          </p>
+        </div>
+
+        <div id="ducting" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Hoses, Ducting and Blast Gates
+          </h2>
+
+          <p>
+            How you connect the collector matters as much as which collector you buy. Flexible hose has far more resistance per foot than smooth rigid duct, so keep flex runs short and use rigid duct for the main line in a fixed installation. Wide sweeping elbows lose far less airflow than tight 90-degree bends.
+          </p>
+
+          <p>
+            Size the main line to the collector. The Grizzly G0441's 8-inch inlet is designed for a large main that branches down to tools; choking it with a 4-inch main throws away much of its capacity. Smaller collectors with 4-inch inlets are best used with a single hose moved from tool to tool.
+          </p>
+
+          <p>
+            Install blast gates at each machine and open only the one you are using. A collector pulling through every open drop at once delivers little to any of them. Many owners add remote or automatic switches so the collector starts with the tool.
+          </p>
+
+          <p>
+            Ground or bond your ducting as the manufacturer recommends and keep the system clean. Fine dust accumulating in ducts and filters is both a performance and a housekeeping problem, and the manual for your collector will cover its specific requirements.
+          </p>
+
+          <p>
+            Plan the layout on paper before you buy fittings. Sketch where each machine sits, run the shortest practical main line past them, and count the elbows and transitions you will need. Each fitting you can remove is airflow you keep, and planning the run first usually shows whether a portable collector on a single hose would serve you better than a fixed system.
+          </p>
+        </div>
+
+        <div id="power-and-placement" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Power, Placement and Noise
+          </h2>
+
+          <p>
+            Check the electrical needs before you buy. The Shop Fox W1727 runs on standard 110V and the Jet DC-1100VX runs on 115V or 230V, but the Grizzly G0441 needs 220V and a 22-amp dedicated circuit, and the Oneida Supercell Turbo needs a 230V 30-amp circuit. Adding a circuit can be a significant part of the cost.
+          </p>
+
+          <p>
+            Placement affects both airflow and noise. Put the collector close to the machines that make the most chips, usually the planer and table saw, to keep the longest runs short. Some owners place a large collector in a closet or adjacent space to cut noise, which works as long as the air returns to the shop.
+          </p>
+
+          <p>
+            Noise listings run from about 70 dB on the Jet to 83 to 85 dB on the standard Grizzly G0441, with the HEPA version listed at 79 to 80 dB. Wear hearing protection when running any collector alongside a planer or saw.
+          </p>
+
+          <p>
+            Leave room to empty the bag or drum. A 55-gallon drum full of chips is heavy, and a bag hung against a wall is awkward to change. Plan the location around the chore you will do most often.
+          </p>
+        </div>
+
+        <div id="who-should-buy" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Which Dust Collector to Buy
+          </h2>
+
+          <p>
+            For a typical garage shop running one big tool at a time, the Jet DC-1100VX-5M is the pick. It has the airflow and static pressure to handle a short duct run, runs on standard power, and leaves room to upgrade the filter later.
+          </p>
+
+          <p>
+            For a small shop or a tight budget, the Shop Fox W1727 is a solid first collector with a finer 2.5-micron bag, and the WEN DC3401 is the cheapest real step up from a shop vacuum for chip capture at one machine. If you are comfortable upgrading filters, the Central Machinery 2 HP gives you a lot of collector for very little money.
+          </p>
+
+          <p>
+            For a dedicated, ducted shop with several machines, the Grizzly G0441 or its HEPA version is the serious system. For fine dust from sanders, routers and CNC machines, the Oneida Supercell is the premium specialist. If you are kitting out a shop from scratch, our <a href="/best-band-saw/">band saw guide</a> and <a href="/best-table-saw/">table saw guide</a> cover the machines these collectors serve.
+          </p>
+
+          <p>
+            The same lesson applies outdoors: rated airflow and real airflow differ. Our <a href="/best-backpack-leaf-blower/">backpack leaf blower guide</a> covers the housing-versus-nozzle CFM trap that catches buyers of high-airflow yard tools too.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Trusting open-air CFM</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Rated CFM is measured with nothing attached. Hose, elbows and filters cut it substantially. Compare collectors on airflow at a stated static pressure where the maker publishes it, and expect less at the tool than on the box.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using a shop vac on a planer</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Shop vacuums move too little air for chip-heavy machines with 4-inch ports. A planer or jointer needs a dust collector; save the vacuum for sanders and other small-port tools.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Leaving the 5-micron bag on</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A 5-micron bag returns much of the finest dust to the room. Upgrade to a 1-micron bag or canister where available, and run an air filter and wear a respirator for sanding.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Running all blast gates open</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A collector pulling through every open drop delivers little airflow anywhere. Fit blast gates and open only the machine you are using.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring the electrical requirement</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Large collectors need 220V and a dedicated circuit; the Grizzly G0441 is listed at 22 amps and the Oneida Turbo needs 30 amps. Price the circuit before you buy the collector.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What size dust collector do I need?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For one machine at a time with a short hose, a 1 HP collector rated around 650 to 800 CFM is the practical minimum. A 1.5 to 2 HP unit suits a garage shop with short ducting, and a 3 HP cyclone suits a ducted shop with several machines.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a dust collector better than a shop vac?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For different jobs. A dust collector moves high volume at low pressure, ideal for planers and table saws with 4-inch ports. A shop vacuum moves low volume at high pressure, ideal for small ports on sanders and handheld tools. Most shops benefit from both.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What micron filter should a dust collector have?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Finer is better for health. Many budget bags are 5 microns, which lets fine dust escape. A 1-micron bag or canister is a common upgrade, and HEPA filters like Grizzly's G0441HEP stage are rated 99.97 percent at 0.3 microns.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a cyclone dust collector worth it?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                If you run several chip-heavy machines or want minimal filter maintenance, yes. A cyclone drops chips into a drum before they reach the filter, keeping airflow consistent. For one tool at a time in a small shop, a single-stage unit is usually enough.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can a dust collector run on 110V?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Many smaller units can. The Shop Fox W1727 is prewired for 110V and the Jet DC-1100VX runs on 115V or 230V. Larger collectors like the Grizzly G0441 need 220V and a dedicated circuit.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is the Harbor Freight dust collector any good?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It is popular value for money, but forum users dispute its 1,550 CFM rating and recommend upgrading its 5-micron bag to a 1-micron filter. Owners who accept those upgrades often consider it excellent value for the price.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How far can a dust collector pull through ducting?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It depends on static pressure and duct design. Higher-pressure units like the Jet at 10.5 inches handle longer runs than lower-pressure units. Oneida rates the Supercell for runs up to 100 feet. Keep flex hose short and use rigid duct for main lines.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Workshop Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-table-saw/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Table Saws</h3>
+              <p class="text-gray-500 text-sm mt-2">The machine that most needs a dust collector in a home shop.</p>
+            </a>
+            <a href="/best-shop-vac/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Shop Vacs</h3>
+              <p class="text-gray-500 text-sm mt-2">For sanders, track saws and other small-port tools.</p>
+            </a>
+            <a href="/shop-vac-vs-dust-extractor/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Comparison</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Shop Vac vs Dust Extractor</h3>
+              <p class="text-gray-500 text-sm mt-2">When a high-pressure vacuum is the right tool for the job.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The best dust collector for most garage shops is the Jet DC-1100VX-5M, which pairs 1,100 CFM with enough static pressure for a short duct run on standard household power. Small shops should start with the Shop Fox W1727 or the budget WEN DC3401, and big ducted shops should look at the Grizzly G0441 cyclone.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Whichever you choose, judge it on airflow at the tool rather than the box, upgrade 5-micron bags to finer filtration, and add an air filter and respirator for sanding. Collection, filtration and protection together are what keep a shop healthy.
+          </p>
+        </div>
+
+        <MoreInCategory category="Tools & Equipment" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

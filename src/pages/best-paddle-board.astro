@@ -1,0 +1,830 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Fishing Kayaks",
+    "url": "/best-fishing-kayak/"
+  },
+  {
+    "title": "Best Canoes for River Paddling",
+    "url": "/best-canoes-for-river-paddling/"
+  },
+  {
+    "title": "Best Portable Power Stations",
+    "url": "/best-portable-power-station/"
+  },
+  {
+    "title": "Best Garden Hoses",
+    "url": "/best-garden-hose/"
+  },
+  {
+    "title": "Best Garden Hose Nozzles",
+    "url": "/best-garden-hose-nozzle/"
+  },
+  {
+    "title": "Best Ski Gloves",
+    "url": "/best-ski-gloves/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-19", modified: "2026-10-19" });
+const title = "7 Best Paddle Boards: Inflatable Picks for Beginners and Bigger Riders";
+const description =
+  "The best inflatable paddle boards for beginners, heavier riders and all-round flatwater use, compared on width, capacity, board weight, PSI and what comes in the kit.";
+
+const PRODUCTS = [
+  {
+    "id": "isle-pioneer-3",
+    "name": "Isle Pioneer 3",
+    "badge": "Best Overall",
+    "category": "Inflatable, All-Around, 10 ft 6 in",
+    "description": "The Pioneer 3 is the inflatable board we would hand most first-time and returning paddlers, because it combines a stable shape with a complete, good-quality kit. Reviews and spec listings agree on a length of 10 ft 6 in, a thickness of 6 in and a rider capacity of 285 lb, with width given as 34 in by most sources and 33.5 in by one. Board weight is measured at about 19 lb by OutdoorGearLab and listed at 19.6 lb on the manufacturer's spec sheet as reported by Front Desk Review, which keeps it easy to carry to the water. It comes as a complete package with a carbon paddle, hand pump, fin, leash and a wheeled bag, and the carbon paddle is a meaningful upgrade over the aluminium paddles bundled with many budget boards. List price is given as $695, Isle's own comparison page shows $620, and reviews have spotted sale prices around $495, so it pays to watch for a deal. The 285 lb capacity suits most solo adults but not two adults together.",
+    "pros": [
+      "34 in wide 10 ft 6 in shape for stability",
+      "Around 19 lb, easy to carry",
+      "Carbon paddle and wheeled bag included",
+      "Reviewers agree on its core specs"
+    ],
+    "cons": [
+      "285 lb capacity is too low for two adults",
+      "Width listed as 33.5 or 34 in depending on source",
+      "Not built for speed or touring"
+    ],
+    "bottomLine": "A stable, light, complete kit that suits most solo paddlers."
+  },
+  {
+    "id": "irocker-all-around-11-ultra",
+    "name": "iRocker All-Around 11' Ultra 2.0",
+    "badge": "Best Longer All-Rounder",
+    "category": "Inflatable, All-Around, 11 ft",
+    "description": "The All-Around 11 Ultra is the board to choose if you want a little more length for gliding and tracking without moving to a narrow touring shape. iRocker's listings give it an 11 ft length and a 32 in width, with a listed capacity of 290 lb, which suits solo riders or two smaller riders best. Paddling Magazine's buyer's guide lists a suggested retail price of $799. We did not find a board weight for the current 2.0 version in the listings we checked, so check the box before buying if weight matters to you. Note that capacity figures for this board vary by model year: an older 2020 spec table lists a much higher 435 lb maximum, which appears to be a different version, so do not mix the numbers. The longer, slightly narrower shape trades a little stability for better tracking and glide, which makes it a good step up for paddlers who already have their balance and want to cover more distance.",
+    "pros": [
+      "11 ft length glides and tracks better than 10 ft boards",
+      "32 in width is still stable for most riders",
+      "290 lb listed capacity",
+      "Established brand with wide accessory support"
+    ],
+    "cons": [
+      "Current board weight not listed in sources we found",
+      "Capacity figures differ between model years",
+      "Higher list price than budget kits"
+    ],
+    "bottomLine": "An 11 ft all-rounder for paddlers who want more glide without a touring board."
+  },
+  {
+    "id": "atoll-11",
+    "name": "Atoll 11'",
+    "badge": "Best Value",
+    "category": "Inflatable, All-Around, 11 ft",
+    "description": "The Atoll 11 is the value pick: an 11 ft board with a capacity high enough for larger riders, at a lower price than the premium kits. Reviewers measured it at 11 ft long, 32 in wide and 6 in thick, with a board weight of 21 lb and a full kit weight of 38 lb including accessories. Reviewers list a maximum capacity of 315 lb; one retailer claims 400 lb, which conflicts with the reviewers' figure, so plan around 315 lb. One reviewer noted that the 15 PSI maximum rating is not quite enough to keep the board fully stiff when sprinting, which is a fair trade at this price for casual paddling but worth knowing if you want a very rigid board. The kit includes a pump, a three-piece paddle and a travel backpack, and one spec table lists a two-year warranty. Weight figures vary between 19 and 21 lb across model years, so check the current listing.",
+    "pros": [
+      "315 lb capacity per reviewers, higher than most kits",
+      "11 ft length for better glide",
+      "Complete kit with backpack and paddle",
+      "Lower price than premium brands"
+    ],
+    "cons": [
+      "15 PSI maximum, slightly less stiff when pushed",
+      "Capacity claims conflict between sources",
+      "Basic paddle compared with carbon kits"
+    ],
+    "bottomLine": "An 11 ft board with a higher capacity than most at a value price."
+  },
+  {
+    "id": "bote-breeze-aero-10-8",
+    "name": "BOTE Breeze Aero 10'8\"",
+    "badge": "Best for Beginners",
+    "category": "Inflatable, All-Around, 10 ft 8 in",
+    "description": "The Breeze Aero is a friendly, well-made board for beginners and lighter paddlers who value easy handling. Retailer and review sources agree on a length of 10 ft 8 in, a width of 33 in, a thickness of 6 in, a capacity of 250 lb and a board weight of about 20 lb. BOTE lists an optimal inflation of 10 to 15 PSI, and the travel bag packs down to about 38 by 18 by 12 in with a loaded weight of 26 lb. Retailers list a removable 10 in center fin, a repair kit, a hand pump and a travel bag in the box, and one adds a three-piece adjustable paddle. BOTE's own sizing advice is useful: if your weight is within 50 lb of a board's listed capacity, BOTE recommends moving up to a larger board, which for this model means riders above about 200 lb should look at the 11 ft 6 in version, listed at 315 lb. Some listings mix up a 10 ft 6 in variant, so check the exact length before you buy.",
+    "pros": [
+      "33 in width and 6 in thickness for stability",
+      "About 20 lb board weight",
+      "Compact 26 lb packed kit",
+      "Clear sizing guidance from BOTE"
+    ],
+    "cons": [
+      "250 lb capacity, lower than most here",
+      "Some listings confuse 10 ft 6 in and 10 ft 8 in versions",
+      "Paddle not included in every listing"
+    ],
+    "bottomLine": "An easy, well-made board for beginners and lighter riders."
+  },
+  {
+    "id": "gili-meno-10-6",
+    "name": "Gili Meno 10'6\"",
+    "badge": "Best for Heavier Riders",
+    "category": "Inflatable, All-Around, 10 ft 6 in",
+    "description": "The Gili Meno is the pick for larger paddlers, a paddler with a dog or two lighter riders, because its listed capacity is far above the other 10 ft 6 in boards here. Inflatable Boarder lists the Meno 10 ft 6 in with a maximum capacity of 450 lb and a board weight of 23 lb, a couple of pounds heavier than the lightest boards in exchange for that extra load. Gili makes several boards with similar names, and the specs differ sharply: Inflatable Boarder lists the 10 ft 6 in Air at 280 lb and 19 lb, and the Komodo at 21 lb with capacity figures of 340 lb or 385 lb depending on the source. Make sure the listing you are reading is for the Meno. Gili sells its boards as kits with a pump, backpack and paddle, and we suggest checking the current kit contents and warranty on the listing before buying. If capacity is your first filter, the Meno is the board to look at first.",
+    "pros": [
+      "450 lb capacity per Inflatable Boarder",
+      "Suits larger riders, a dog or two light riders",
+      "Sold as a complete kit",
+      "23 lb is still manageable to carry"
+    ],
+    "cons": [
+      "Heavier than the lightest boards here",
+      "Easily confused with Gili's other models",
+      "We could not confirm width from the sources we checked"
+    ],
+    "bottomLine": "The high-capacity choice for bigger riders and shared paddling."
+  },
+  {
+    "id": "red-paddle-co-ride-10-6",
+    "name": "Red Paddle Co Ride 10'6\"",
+    "badge": "Best Premium",
+    "category": "Inflatable, All-Around, 10 ft 6 in",
+    "description": "The Ride 10 ft 6 in is the premium all-rounder for paddlers who want a board that feels stiff and well finished and lasts for many seasons. Paddling Magazine's buyer's guide lists it at 10 ft 6 in long, 32 in wide, 245 L in volume and 21.9 lb, and retailers give its thickness as about 4.7 in, which is thinner than the 6 in boards here and puts you closer to the water. Volume is listed at 245 L by most sources, while one listing for an older 2021 version gives 240 L. Maximum rider weight is where sources disagree: one retailer recommends up to 110 kg, another lists 100 kg, and an older listing suggests it is best for riders between about 110 and 190 lb, so treat it as a board for light to medium-weight adults. It costs more than the other kits here, and the money goes into construction and finish rather than into a bigger capacity, so heavier paddlers will be better served by the Gili Meno or the Atoll.",
+    "pros": [
+      "Well-regarded build quality and finish",
+      "245 L volume in a 32 in width",
+      "Thinner 4.7 in profile feels closer to the water",
+      "21.9 lb per Paddling Magazine"
+    ],
+    "cons": [
+      "Rider weight limit around 100 to 110 kg",
+      "Premium price",
+      "Thinner profile is less buoyant for heavy riders"
+    ],
+    "bottomLine": "The premium board for light and medium-weight paddlers who want a refined ride."
+  },
+  {
+    "id": "bluefin-cruise-10-8",
+    "name": "Bluefin Cruise 10'8\"",
+    "badge": "Best Kit Value",
+    "category": "Inflatable, All-Around, 10 ft 8 in",
+    "description": "The Bluefin Cruise is a popular all-in-one kit with a sensible all-round shape. Reviews list the 10 ft 8 in model at about 128 by 33 by 6 in, with board weights reported between about 20 and 25 lb, and up to 33 lb in one older listing, depending on model year. The rider limit is where sources disagree most: some list 130 kg, or about 287 lb, while others list 150 kg, or about 330 lb, apparently for newer versions, so check the specific model year you are buying. Trail and Kale reports Bluefin's recommended inflation pressure of 15 to 18 PSI and Bluefin's advice that the 10 ft 8 in size suits paddlers under about 6 ft tall and 85 kg in weight. A separate Cruise Carbon version is sold with different specs, and one retailer's 418 lb maximum for that version conflicts with other figures, so treat it with caution. It is a solid kit for beginners who want everything in one box.",
+    "pros": [
+      "33 in width and 6 in thickness for stability",
+      "Complete kit in one box",
+      "15 to 18 PSI recommended for a stiffer board",
+      "Bluefin gives clear size guidance"
+    ],
+    "cons": [
+      "Rider limit listed as 287 or 330 lb depending on year",
+      "Board weight varies widely between model years",
+      "Carbon version specs conflict between sources"
+    ],
+    "bottomLine": "A complete, stable kit for beginners, once you confirm the model year's rider limit."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Paddle Boards",
+          item: "https://www.thehonestreviewers.com/best-paddle-board/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best paddle board for beginners?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A wide, stable inflatable all-rounder around 10 ft 6 in to 11 ft long and 33 to 34 in wide is the best start. The Isle Pioneer 3 and BOTE Breeze Aero are both stable, light and sold as complete kits. Make sure the board's capacity is comfortably above your weight."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What size paddle board do I need for my weight?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use the board's listed capacity as the first filter and stay well inside it. BOTE suggests choosing a larger board if you are within 50 lb of the listed capacity. Lighter adults can use boards rated around 250 to 290 lb, while heavier riders should look at boards rated 315 lb or more, such as the Atoll 11 or Gili Meno."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are inflatable paddle boards good?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, for most recreational paddlers. A well-made inflatable at the correct pressure feels firm, packs into a bag and resists dings far better than a hard board. Hard boards still glide better and suit surfing and racing, but inflatables are easier to store, transport and live with."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What PSI should I inflate my paddle board to?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Follow the manufacturer's recommended range, which for the boards here runs from about 10 to 18 PSI. BOTE lists 10 to 15 PSI for the Breeze Aero, and Bluefin recommends 15 to 18 PSI for the Cruise. Inflate toward the top of the range for heavier riders and never exceed the maximum."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need a life jacket on a paddle board?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The US Coast Guard classifies paddle boards used outside swimming, surfing and bathing areas as vessels, so adults must carry a Coast Guard-approved life jacket and a whistle, and many states require children to wear one. Wearing a PFD is the safest choice, especially in cold water."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How heavy is an inflatable paddle board?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The boards here are listed at roughly 19 to 25 lb, with full kits including paddle, pump and bag weighing about 26 to 38 lb. Board weight varies between model years, so check the listing for the version you are buying, and choose a wheeled bag if you walk far to the water."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can two people use one paddle board?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only if the board's capacity covers both riders plus anything they carry, and most all-round boards are sized for one adult. A high-capacity board such as the Gili Meno, listed at 450 lb, can carry a paddler with a child or a dog, or two lighter riders, on calm water."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Outdoor Gear",
+    tags: [
+      "best paddle board",
+      "inflatable paddle board",
+      "best inflatable sup",
+      "paddle board for beginners",
+      "best stand up paddle board"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated October 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The 7 Best <span class="text-[#38BDF8]">Paddle Boards</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Stable inflatable all-rounders for first-timers, a high-capacity board for bigger riders, an 11 ft glider and a premium pick, with sizing and PSI explained.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#isle-pioneer-3"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Jump to the Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="8.4k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-picked" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Picked</a>
+          <a href="#inflatable-vs-hard" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Inflatable vs Hard Boards</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 7 Picks</a>
+          <a href="#sizing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Sizing and Capacity</a>
+          <a href="#inflation" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Inflation and Pumps</a>
+          <a href="#kit" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. What Comes in the Kit</a>
+          <a href="#safety" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Safety on the Water</a>
+          <a href="#care" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Care and Storage</a>
+          <a href="#budget" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. How Much to Spend</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          For most paddlers, the Isle Pioneer 3 is the paddle board to buy: a 34 in wide, 10 ft 6 in inflatable at around 19 lb, sold with a carbon paddle and a wheeled bag. Heavier riders should start with the Gili Meno and its listed 450 lb capacity, and value hunters should look at the Atoll 11. Size the board to your weight first; everything else comes second.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-picked" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Picked
+          </h2>
+
+          <p>
+            A good paddle board for most people is stable enough to stand on without a fight, light enough to carry to the water, sized for the rider's weight and sold with a kit that does not need upgrading on day one. Speed and touring performance matter far less for most buyers than whether they feel confident standing up on the first outing.
+          </p>
+
+          <p>
+            We built this list from manufacturer specifications, retailer listings and published reviews, and on each pick we note where sources disagree. We did not lab-test these boards. Board weight, capacity and width are the figures most often misreported between model years, so we flag the conflicts rather than pick one number at random.
+          </p>
+
+          <p>
+            Every pick is an inflatable all-round board. That reflects what most people buy and why: inflatables store in a closet, travel in a car boot and survive knocks against rocks and docks far better than a hard board. All-round shapes, roughly 10 to 11 ft long and 32 to 34 in wide, are the most forgiving and versatile.
+          </p>
+
+          <p>
+            We weighted stability, capacity, weight and kit quality above everything else. If you already paddle a <a href="/best-canoes-for-river-paddling/">canoe</a> or kayak, a board is a different experience, closer to walking on water than sitting in a boat, and a forgiving all-round shape is the right place to start.
+          </p>
+        </div>
+
+        <div id="inflatable-vs-hard" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Inflatable vs Hard Boards
+          </h2>
+
+          <p>
+            Hard boards, made from epoxy over a foam core, are stiffer, glide better and respond more precisely to each stroke. They are the choice for surfing and serious racing, and some paddlers simply prefer the feel. They are also heavy, awkward to transport and store, and easy to ding against rocks or a concrete dock.
+          </p>
+
+          <p>
+            Inflatable boards use drop-stitch construction, in which thousands of threads hold the top and bottom layers a fixed distance apart, so the board becomes rigid when inflated to its rated pressure. A well-made inflatable at the right pressure feels surprisingly firm, packs into a backpack and shrugs off impacts that would crack a hard board.
+          </p>
+
+          <p>
+            For most recreational paddlers on lakes, calm bays and slow rivers, an inflatable is the better buy. It is easier to store, easier to carry to the water, easier to take on holiday and more forgiving of the bumps that come with learning. The small loss in glide matters little at recreational speeds.
+          </p>
+
+          <p>
+            Choose a hard board if you have storage space and a roof rack, plan to surf or race, or paddle often enough that a little extra performance is worth the inconvenience. Otherwise, an inflatable all-rounder will be the board you actually use.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 7 Picks
+          </h2>
+
+          <p>
+            We researched these from manufacturer specifications, retailer listings and published reviews, and we note where sources disagree, which is common for board weight and rider capacity between model years. We did not lab-test them.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="sizing" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Sizing: Length, Width, Thickness and Capacity
+          </h2>
+
+          <p>
+            Capacity is the first filter. Each board has a listed maximum rider weight, and staying well inside it keeps the board riding high and stable. BOTE's advice is a useful rule of thumb: if your weight is within 50 lb of a board's listed capacity, choose a larger board. A 200 lb paddler, for example, should look at boards rated around 250 lb or more, and higher still if carrying a dog or a cooler.
+          </p>
+
+          <p>
+            Width governs stability. Boards around 32 in wide suit most adults with some balance; 33 to 34 in boards feel noticeably steadier for beginners, heavier riders and anyone planning to fish or do yoga. Wider boards are slower, but at recreational speeds most people will not notice.
+          </p>
+
+          <p>
+            Length governs glide and tracking. Boards around 10 ft 6 in turn easily and suit beginners and short outings. Boards around 11 ft glide further per stroke and hold a straighter line, which makes them better for longer paddles. Touring boards of 12 ft 6 in and more are faster still but narrower and less forgiving.
+          </p>
+
+          <p>
+            Thickness matters for inflatables. Most all-round inflatables are 6 in thick, which adds buoyancy and stiffness and suits heavier riders. Some premium boards, such as the Red Paddle Co Ride at about 4.7 in, are thinner, which puts you closer to the water and can feel more stable for lighter riders but offers less buoyancy for heavier ones.
+          </p>
+        </div>
+
+        <div id="inflation" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Inflation, PSI and Pumps
+          </h2>
+
+          <p>
+            An inflatable board is only as stiff as its pressure. Manufacturers list a recommended range, such as 10 to 15 PSI for the BOTE Breeze Aero and 15 to 18 PSI for the Bluefin Cruise, and a board run below that range flexes in the middle, which makes it slower and less stable. Inflate to at least the bottom of the recommended range, and closer to the top for heavier riders.
+          </p>
+
+          <p>
+            Hand pumps are included with every board here, and a dual-action pump that pushes air on both strokes makes the job far quicker. Expect the last few PSI to take real effort, since the pump gets harder to push as pressure rises. Many paddlers find it easiest to pump in two stages, resting between.
+          </p>
+
+          <p>
+            Electric pumps that plug into a car's 12 V socket take the work out of inflation and can be set to stop automatically at a chosen pressure. If you paddle away from the car or want to run one at a campsite, a <a href="/best-portable-power-station/">portable power station</a> with a 12 V outlet can run most SUP pumps.
+          </p>
+
+          <p>
+            Check pressure before each outing and after the board has sat in hot sun, since heat raises pressure and cold lowers it. Never exceed the board's maximum rated pressure, and release a little air if the board will sit in direct sun for a long time.
+          </p>
+        </div>
+
+        <div id="kit" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. What Comes in the Kit
+          </h2>
+
+          <p>
+            Most inflatable boards are sold as kits that include a paddle, pump, leash, fin and bag, and the quality of those parts varies far more than the boards themselves. The paddle is the item most worth checking: a lighter carbon or fibreglass paddle, such as the carbon paddle in the Isle Pioneer kit, is far less tiring than a heavy aluminium shaft over an hour of paddling.
+          </p>
+
+          <p>
+            The bag matters if you walk any distance to the water. Wheeled bags, such as Isle's, are far easier than backpacks for long walks from the car park. Packed kit weights here run from about 26 lb for the BOTE to about 38 lb for the Atoll, so a wheeled bag can make a real difference.
+          </p>
+
+          <p>
+            Fins come in two main layouts: a single large removable center fin, which tracks well, and a 2+1 setup with two small side fins as well. Removable center fins are easy to swap or remove for shallow water. Always fit the fin before launching; paddling without one makes the board spin with every stroke.
+          </p>
+
+          <p>
+            Leashes connect you to the board so it does not drift away if you fall in. A coiled leash suits flatwater because it does not drag, while a quick-release waist leash is the safer choice on moving water, where a leash snagged on an underwater obstacle can be dangerous.
+          </p>
+        </div>
+
+        <div id="safety" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Safety on the Water
+          </h2>
+
+          <p>
+            The US Coast Guard classifies paddle boards used outside swimming, surfing and bathing areas as vessels, which means adults must carry a Coast Guard-approved life jacket and a sound-producing device such as a whistle, and children must wear a life jacket under many state rules. Belt-pack inflatable PFDs are popular with paddlers because they are unobtrusive, but they must be inflated after you enter the water, so many beginners prefer a wearable vest.
+          </p>
+
+          <p>
+            Wear a leash in almost all conditions. Inflatable boards are light and catch the wind easily, and a board blown away from you can drift faster than you can swim. On rivers and in current, use a quick-release leash worn at the waist rather than the ankle, so you can release it if it snags.
+          </p>
+
+          <p>
+            Respect the wind. Paddle boards are high-sided targets, and an offshore wind can make the return trip much harder than the outbound one. Start out into the wind so the trip home is downwind, check the forecast and stay close to shore until you know how the board handles in a breeze.
+          </p>
+
+          <p>
+            Cold water is a serious hazard even on sunny days. Dress for the water temperature rather than the air, and practise climbing back onto the board from the water near shore. Kneeling is a perfectly good way to paddle in chop or wind, and dropping to your knees is often the safest response when conditions change.
+          </p>
+        </div>
+
+        <div id="care" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Care and Storage
+          </h2>
+
+          <p>
+            After each outing, rinse the board, fin and leash with fresh water, especially after saltwater or muddy lakes, and let everything dry before packing. A <a href="/best-garden-hose/">garden hose</a> with a gentle <a href="/best-garden-hose-nozzle/">spray nozzle</a> does the job quickly; avoid high-pressure jets on seams and valves.
+          </p>
+
+          <p>
+            Dry the board completely before rolling it, since trapped moisture can cause mildew in the bag. Roll it from the nose toward the valve end so air escapes, and avoid tight folds along the same lines every time. Store it in a cool, dry place out of direct sun, and keep it away from sharp objects.
+          </p>
+
+          <p>
+            UV exposure is the main long-term enemy of inflatable boards. Leaving a board on a hot dock or beach for hours can weaken the PVC and seams. Shade it between sessions, and consider a UV-protectant spray designed for inflatables if it spends long days outside.
+          </p>
+
+          <p>
+            If you keep the board inflated through the season, store it slightly below full pressure and out of the sun. Check the valve and seams at the start of each season, keep the repair kit in your bag, and fix small leaks promptly before they spread.
+          </p>
+        </div>
+
+        <div id="budget" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. How Much to Spend
+          </h2>
+
+          <p>
+            Inflatable boards run from budget kits under a few hundred dollars to premium boards that cost several times as much. The cheapest boards often save money on the paddle, pump and drop-stitch construction, and the result is a board that flexes and a paddle that tires you out. A mid-range kit is usually the better buy for anyone planning to paddle regularly.
+          </p>
+
+          <p>
+            Mid-range kits, such as the Atoll 11 and the Bluefin Cruise, give you a stable board and a complete kit at a moderate price. Premium boards, such as the Red Paddle Co Ride, cost more for stiffer construction, better finish and longer life rather than for more capacity.
+          </p>
+
+          <p>
+            Whatever you spend, prioritise capacity and width for your weight over brand name. A premium board that is too small for you will feel worse than a mid-range board sized correctly. If you are heavier or plan to paddle with a dog or a child, put capacity first and choose a high-capacity board such as the Gili Meno.
+          </p>
+
+          <p>
+            If you later want to fish from the water, a dedicated <a href="/best-fishing-kayak/">fishing kayak</a> offers far more stability, storage and rigging space than any paddle board. Many paddlers end up owning both: a board for exercise and casual outings and a kayak for fishing trips.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying a board too small for your weight</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Riding close to a board's listed capacity makes it sit low, flex and feel unstable. BOTE's rule of thumb is to size up if you are within 50 lb of the capacity. Add the weight of anything you carry, such as a dog, a cooler or a child, before choosing.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Under-inflating the board</h3>
+              <p class="text-gray-700 text-sm m-0">
+                An inflatable below its recommended pressure flexes in the middle, which makes it slower and wobblier. Inflate to at least the bottom of the listed range, closer to the top for heavier riders, and check pressure again if the board has sat in the sun or cold.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping the leash</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Inflatable boards are light and catch the wind, and a board blown away from you can drift faster than you can swim. Wear a coiled leash on flatwater, and a quick-release waist leash on rivers, where an ankle leash snagged on an obstacle can be dangerous.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Paddling out with the wind behind you</h3>
+              <p class="text-gray-700 text-sm m-0">
+                An offshore or following wind makes the outbound trip easy and the return a struggle. Start into the wind so the ride home is downwind, check the forecast and stay close to shore until you know how the board handles in a breeze. Kneel if conditions get rough.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Storing it wet or in the sun</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Rolling a wet board can trap moisture and cause mildew, and long UV exposure weakens PVC and seams. Rinse with fresh water, dry the board completely before packing, and store it in a cool, shaded place. Shade it between sessions on hot days.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best paddle board for beginners?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A wide, stable inflatable all-rounder around 10 ft 6 in to 11 ft long and 33 to 34 in wide is the best start. The Isle Pioneer 3 and BOTE Breeze Aero are both stable, light and sold as complete kits. Make sure the board's capacity is comfortably above your weight.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What size paddle board do I need for my weight?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Use the board's listed capacity as the first filter and stay well inside it. BOTE suggests choosing a larger board if you are within 50 lb of the listed capacity. Lighter adults can use boards rated around 250 to 290 lb, while heavier riders should look at boards rated 315 lb or more, such as the Atoll 11 or Gili Meno.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are inflatable paddle boards good?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes, for most recreational paddlers. A well-made inflatable at the correct pressure feels firm, packs into a bag and resists dings far better than a hard board. Hard boards still glide better and suit surfing and racing, but inflatables are easier to store, transport and live with.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What PSI should I inflate my paddle board to?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Follow the manufacturer's recommended range, which for the boards here runs from about 10 to 18 PSI. BOTE lists 10 to 15 PSI for the Breeze Aero, and Bluefin recommends 15 to 18 PSI for the Cruise. Inflate toward the top of the range for heavier riders and never exceed the maximum.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do I need a life jacket on a paddle board?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                The US Coast Guard classifies paddle boards used outside swimming, surfing and bathing areas as vessels, so adults must carry a Coast Guard-approved life jacket and a whistle, and many states require children to wear one. Wearing a PFD is the safest choice, especially in cold water.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How heavy is an inflatable paddle board?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                The boards here are listed at roughly 19 to 25 lb, with full kits including paddle, pump and bag weighing about 26 to 38 lb. Board weight varies between model years, so check the listing for the version you are buying, and choose a wheeled bag if you walk far to the water.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can two people use one paddle board?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Only if the board's capacity covers both riders plus anything they carry, and most all-round boards are sized for one adult. A high-capacity board such as the Gili Meno, listed at 450 lb, can carry a paddler with a child or a dog, or two lighter riders, on calm water.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Outdoor Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-fishing-kayak/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Fishing Kayaks</h3>
+              <p class="text-gray-500 text-sm mt-2">Pedal, paddle and stand-up fishing kayaks compared on stability, capacity and weight.</p>
+            </a>
+            <a href="/best-canoes-for-river-paddling/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Canoes for River Paddling</h3>
+              <p class="text-gray-500 text-sm mt-2">Rocker, hull shape and materials that survive rock, compared for river trips.</p>
+            </a>
+            <a href="/best-portable-power-station/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Portable Power Stations</h3>
+              <p class="text-gray-500 text-sm mt-2">Run a 12 V SUP pump and charge phones away from the car.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            For most paddlers, the <strong class="text-white">Isle Pioneer 3</strong> is the board to buy: stable, light and sold with a carbon paddle and a wheeled bag. Heavier riders should start with the <strong class="text-white">Gili Meno</strong>, and the <strong class="text-white">Atoll 11</strong> is the value pick with a higher capacity than most.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Size the board to your weight, inflate it to the recommended pressure, wear a leash and a life jacket, and start out into the wind. Those four habits matter more than which brand you choose.
+          </p>
+        </div>
+
+        <MoreInCategory category="Outdoor Gear" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
