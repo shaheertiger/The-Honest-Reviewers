@@ -6,6 +6,26 @@ import sitemap from '@astrojs/sitemap';
 // Buyer's guides that target high-volume search terms. They get a higher
 // sitemap priority than the 0.5 default so crawlers reach them sooner.
 const priorityGuides = new Set([
+  // October 2026: Semrush keyword-gap batch (water heaters, dehumidifiers, humidifiers, shop vacs).
+  'water-heater-replacement-cost',
+  'how-to-drain-a-water-heater',
+  'water-heater-anode-rod-replacement',
+  'water-heater-expansion-tank',
+  'water-heater-leaking',
+  'how-to-tell-the-age-of-a-water-heater',
+  'water-heater-pressure-relief-valve',
+  'water-heater-element',
+  'best-propane-tankless-water-heater',
+  'how-to-choose-a-dehumidifier',
+  'does-a-dehumidifier-get-rid-of-silverfish',
+  'does-a-dehumidifier-get-rid-of-centipedes',
+  'best-bathroom-dehumidifier',
+  'best-dehumidifier-for-bedroom',
+  'does-a-humidifier-help-with-congestion',
+  'humidifier-for-nosebleeds',
+  'best-ultrasonic-humidifier',
+  'best-evaporative-humidifier',
+  'ridgid-shop-vac-review',
   'best-christmas-gifts-for-men',
   'christmas-gifts-for-men-under-50',
   'christmas-gifts-for-men-who-have-everything',
