@@ -1,0 +1,685 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import TopPick from "../components/TopPick.astro";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Barn Doors",
+    "url": "/best-barn-doors/"
+  },
+  {
+    "title": "Barn Door vs French Door",
+    "url": "/barn-door-vs-french-door/"
+  },
+  {
+    "title": "French Barn Doors",
+    "url": "/french-barn-doors/"
+  },
+  {
+    "title": "Pocket Door vs Barn Door",
+    "url": "/pocket-door-vs-barn-door/"
+  },
+  {
+    "title": "Best Stud Finder",
+    "url": "/best-stud-finder/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-20", modified: "2026-10-20" });
+const title = "How Much Are Barn Doors? Slab, Hardware and Install Costs Broken Down";
+const description =
+  "How much barn doors cost, line by line: the slab, the hardware kit, the header board, finishing, pro installation vs DIY, and double doors, from published cost guides.";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Guides",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Barn Door Cost",
+          item: "https://www.thehonestreviewers.com/barn-door-cost/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "How much does a barn door cost installed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Cost guides disagree but cluster in the same region. HomeAdvisor gives an average of about $1,800 with a normal range of $1,350 to $5,000; Fixr gives a national average of $1,658; HomeGuide puts installed doors at $400 to $3,400 or more. Where you land depends on the slab material, the hardware, any wall work and who installs it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much is barn door hardware?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Fixr lists standard kits with a track at $42 to $447, HomeAdvisor gives $50 to $500 for basic sets, and HomeGuide puts track kits at $100 to $300 or more. Custom or automated hardware costs considerably more: Fixr gives $600 to $1,200 or more, and HomeAdvisor says it can add up to $1,500."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does barn door installation labour cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "HomeGuide quotes $100 to $1,000, Fixr $308 to $984, and HomeAdvisor and Angi $300 to $2,000. HomeAdvisor describes labour as roughly 30 to 50 percent of the total. Heavier doors, header boards, removing an old door and electrical work in the door's path all push labour towards the top."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is it cheaper to install a barn door yourself?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, substantially. Fixr's budget tier of $150 to $500 assumes a big-box kit hung by the homeowner. You need to find studs, fit a level header board and lift the door onto the track with a helper. Fixr notes doors can weigh 44 to 150 pounds, so heavy slabs are best left to two people or a pro."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much do double barn doors cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "HomeAdvisor puts an installed double barn door at $500 to $3,400, compared with $200 to $1,600 for a single. HomeGuide gives $800 to $2,800 for a pair, and Angi says doubles can occasionally exceed $6,000. Pairs need twice the hardware, a long level track and clear wall on both sides."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need a header board for a barn door?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Usually. The track carries a heavy moving load that must reach the framing, and studs rarely line up with the track's holes. A header board fixed across several studs solves that. HomeGuide lists one at $200 to $500 when a contractor fits it; doing it yourself costs mainly the lumber and screws."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are barn doors cheaper than regular doors?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not automatically. A barn door needs a slab larger than the opening, a separate hardware kit and often a header board, none of which a hinged door requires, so the total adds up faster than the door price suggests. Its real saving is space: no swing clearance and no wall to open up, which matters most in tight rooms."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      description: description,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home Improvement",
+    tags: [
+      "how much are barn doors",
+      "barn door cost",
+      "barn door installation cost",
+      "sliding barn door cost",
+      "barn door hardware cost",
+      "double barn door cost"
+    ],
+  }}
+  jsonLd={schema}
+  stickyCta={{
+    text: "See Our Top Barn Door Picks",
+    link: "/best-barn-doors/",
+  }}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Cost Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Research Based
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          How Much Are <span class="text-[#38BDF8]">Barn Doors?</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          A barn door is four or five separate costs that get quoted as one number. Split them apart and it becomes obvious where the money goes, and where a quote is quietly leaving something out.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#short-answer"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See the Cost Breakdown
+          </a>
+          <a
+            href="#faq"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Jump to the FAQ
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="12.8k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#short-answer" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. The Short Answer</a>
+          <a href="#slab" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. The Door Slab</a>
+          <a href="#hardware" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Hardware Cost</a>
+          <a href="#header" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Header and Wall Work</a>
+          <a href="#finishing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Finishing</a>
+          <a href="#install" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Pro Install vs DIY</a>
+          <a href="#double" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Double Barn Doors</a>
+          <a href="#budgets" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Three Sample Budgets</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Published cost guides put a professionally installed barn door anywhere from a few hundred dollars to several thousand, with national averages clustering in the high hundreds to the high teens. The spread is not noise. It is the slab, the hardware, the wall work, the finishing and the labour, each of which can be cheap or expensive on its own.
+        </p>
+
+        <TopPick />
+
+        <div id="short-answer" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. The Short Answer: What Cost Guides Say a Barn Door Costs
+          </h2>
+
+          <p>
+            There is no single price for a barn door, but there is a fairly consistent middle. HomeAdvisor, in a page updated in June 2026, puts the average installed cost at about $1,800, with a normal range of $1,350 to $5,000 and an outer range of $200 to $6,250. Fixr, last updated in January 2024, gives a national average of $1,658 and a typical range of $1,194 to $2,222. HomeGuide's 2026 figures run lower, at roughly $400 to $3,400 or more with installation, or $200 to $2,000 or more for the door alone.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">What the Cost Guides Say</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <p class="text-3xl font-black text-white">$1,800</p>
+                <p class="text-gray-400 text-xs mt-1">HomeAdvisor average, installed</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">$1,658</p>
+                <p class="text-gray-400 text-xs mt-1">Fixr national average</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-white">$400-$3,400+</p>
+                <p class="text-gray-400 text-xs mt-1">HomeGuide installed range</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">$300-$2,000</p>
+                <p class="text-gray-400 text-xs mt-1">Labour, per HomeAdvisor and Angi</p>
+              </div>
+            </div>
+          </div>
+
+          <p>
+            Those numbers disagree for understandable reasons. They were gathered at different times, they draw on different pools of contractor quotes, and they do not all include the same things. Some ranges include the door; some cover only installation. Some assume a pre-finished slab and a basic track; others fold in custom hardwood and hand-forged hardware. Reading any one of them as the price of a barn door is how people end up with a quote that looks wildly high or suspiciously low.
+          </p>
+
+          <p>
+            The more useful way to think about it is as a stack of separate costs: the slab, the hardware kit, the header board or blocking that the track mounts to, the stain or paint, and the labour. Each one has its own range, and the total is wherever your choices land in each. The rest of this guide takes them one at a time, with every figure attributed to the cost guide or retailer listing it comes from, so you can build your own estimate rather than trusting a national average.
+          </p>
+
+          <p>
+            One thing every guide agrees on is that the cheapest barn door is a kit you hang yourself, and the most expensive is a custom slab on custom hardware with a contractor doing the wall work. Most real projects land somewhere between, and the biggest single lever is usually not the door but who installs it and what the wall needs first.
+          </p>
+        </div>
+
+        <div id="slab" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. The Door Slab: Material and Size Drive the Price
+          </h2>
+
+          <p>
+            The slab is the part people shop for, and it is where the range is widest. HomeAdvisor's material-only figures by size start at around $200 for every common width and climb to between $1,500 and $3,300 at the top end, with larger doors costing more at both ends. Fixr's material ranges are similar in shape: roughly $114 to $2,398 for wood, $159 to $842 for vinyl, $179 to $1,948 for MDF and $246 to $2,470 for glass.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Door size</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Material-only range (HomeAdvisor)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">24 x 80 in</td>
+                    <td class="px-4 py-4 text-gray-700">$200 to $2,000</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">30 x 80 in</td>
+                    <td class="px-4 py-4 text-gray-700">$200 to $2,300</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">36 x 80 in</td>
+                    <td class="px-4 py-4 text-gray-700">$200 to $2,500</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">36 x 84 in</td>
+                    <td class="px-4 py-4 text-gray-700">$300 to $3,000</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">42 x 84 in</td>
+                    <td class="px-4 py-4 text-gray-700">$300 to $3,300</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            Size matters more for a barn door than for a hinged one, because the slab has to be wider and taller than the opening it covers. Our <a href="/best-barn-doors/">barn door buyer's guide</a> recommends an overlap of two to three inches on each side and above, which means a standard 32 inch doorway usually needs a 36 to 38 inch slab. In practice that pushes many buyers into the next size bracket up, and the jump from an 80 inch to an 84 inch height is where several of the ranges above step up.
+          </p>
+
+          <p>
+            Material is the other lever. At the budget end are knotty pine plank doors and MDF slabs, both widely sold as kits. In the middle are solid softwood and engineered doors with a factory finish. At the top are solid hardwoods such as alder or oak, reclaimed timber and steel-framed glass. HomeAdvisor's installed-cost averages by material illustrate the spread: about $825 for vinyl, $1,025 for MDF, $1,650 for metal and $1,850 for wood, with wood running all the way from $1,000 to $5,000 installed.
+          </p>
+
+          <p>
+            Weight is the hidden cost of an expensive slab. A heavy solid-wood or glass door needs hardware rated well above its own weight, a more robust mounting, and very often two installers rather than one. HomeGuide notes that labour rises for larger, heavier doors that need more robust hardware, which is why a premium slab tends to drag the hardware and labour lines up with it rather than costing more on its own.
+          </p>
+
+          <p>
+            If you need a non-standard size or a particular design, custom work is a different market. Fixr puts a custom-made barn door at $500 to $10,000, a range so wide it only tells you that quotes depend almost entirely on the maker, the wood and the detailing.
+          </p>
+        </div>
+
+        <div id="hardware" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Barn Door Hardware Cost: Kits, Upgrades and Small Parts
+          </h2>
+
+          <p>
+            The hardware kit is the track, the two roller hangers, the end stops, the wall spacers and usually a floor guide. Cost guides put a standard kit at a modest figure compared with the door: Fixr lists $42 to $447 for a standard kit with track, HomeAdvisor gives $50 to $500 for basic sets, and HomeGuide puts a track kit at $100 to $300 or more. Kits on major retailers sit comfortably inside those ranges; Home Depot listings we checked while writing this guide included a 6 foot stainless steel set from CALHOME at $114.35 and a 72 inch exterior box-rail kit from the same brand at $139.95. Retail prices move often, so treat those as examples rather than quotes.
+          </p>
+
+          <p>
+            Above the standard kit, the cost curve steepens. Fixr puts custom track and hardware at $600 to $1,200 or more, and HomeAdvisor notes that custom or automated hardware can add up to $1,500 on top of the base cost. That is the territory of hand-forged strap hangers, long single-piece tracks for wide openings, integrated soft-close mechanisms and motorised systems.
+          </p>
+
+          <p>
+            Small parts add up too, and they are easy to leave off an estimate. HomeGuide lists floor guides at $10 to $60 and privacy locks at $10 to $50. Neither is optional in practice: the floor guide is what stops the bottom of the door swinging out from the wall, and some form of latch is what makes a barn door usable on a bathroom or bedroom at all.
+          </p>
+
+          <p>
+            Where should the money go? Our <a href="/best-barn-doors/">barn door buyer's guide</a> makes the case that the hardware matters more than the slab, because it is the part you operate several times a day. Sealed-bearing rollers, a solid rather than folded-steel track, anti-jump discs and a weight rating comfortably above your door are all worth paying for. Spending an extra hundred dollars on hardware usually buys more day-to-day satisfaction than spending it on a fancier door.
+          </p>
+
+          <p>
+            A useful sanity check on any quote is to ask which hardware kit is included, by brand and model. A quote that lists a generic track and a premium slab is often where a low total is coming from, and it is the hardware that announces itself as noisy or juddery within the first year.
+          </p>
+        </div>
+
+        <div id="header" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Header Board, Blocking and the Wall Work Nobody Quotes
+          </h2>
+
+          <p>
+            A barn door track carries a heavy, moving load, and that load has to reach the framing. Drywall anchors are not adequate. That means either lining the track's mounting holes up with studs or, more commonly, fixing a horizontal header board across several studs above the opening and mounting the track to that. HomeGuide lists a header board at $200 to $500 when a contractor supplies and fits it, describing it as the level surface above the doorway that holds the track hardware.
+          </p>
+
+          <p>
+            Done yourself, a header board is mostly a length of 1x6 or 1x8 lumber, structural screws long enough to reach well into the studs, and finishing to match the door or the wall. The material cost depends on the species and your local lumber prices, but it is a small fraction of the installed figure; what you are paying a contractor for is the time to locate the framing accurately, cut and level the board and finish it. A reliable <a href="/best-stud-finder/">stud finder</a> earns its price on this job, and if you do not own one our guide to <a href="/how-to-find-a-stud-without-a-stud-finder/">finding studs without one</a> covers the low-tech methods.
+          </p>
+
+          <p>
+            Then there is the wall itself. A barn door needs a clear run of wall at least as wide as the door on the side it opens towards. HomeAdvisor flags that obstructions such as outlets or light switches in that path may require an electrician to move, and that is a separate trade with its own call-out charges. Thermostats, return-air grilles and adjacent door casings can raise the same problem.
+          </p>
+
+          <p>
+            Converting an existing doorway adds another line. Angi lists removing an old door at $70 to $200, and after that the hinge mortises, latch hole and often the casing need filling, sanding and painting before the opening looks intentional. On very wide openings, HomeGuide notes that double barn doors may need additional structural reinforcement of the wall, which is the point at which a simple install becomes a small carpentry job.
+          </p>
+
+          <p>
+            None of this is visible in a door's price tag, and it is the most common reason two quotes for the same door differ by several hundred dollars. Ask every installer to itemise the header, any blocking, removal of the old door and any patching, so you are comparing like with like.
+          </p>
+        </div>
+
+        <div id="finishing" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Finishing: The Cost Line Most Quotes Leave Out
+          </h2>
+
+          <p>
+            A large share of budget barn doors arrive as bare wood. Fixr's description of its budget tier assumes an unfinished pine door, and notes that budget doors must be stained or painted. Several of the cheapest kits on major retailers are sold the same way, and their listings say so. None of the cost guides we consulted gives a separate finishing figure, which is exactly why it is so often missing from estimates.
+          </p>
+
+          <p>
+            Finishing costs depend on whether you do it and what you use, so the honest approach is to price it yourself. Start with the area. A 36 by 84 inch slab is 21 square feet per face, so both faces come to 42 square feet, and the four edges add roughly another two to three. Compare that to the coverage printed on the can of stain or paint you want, remembering you will want at least two coats of a topcoat as well, and you have your material budget for one door.
+          </p>
+
+          <p>
+            Do not skip the edges. Our barn door guide recommends sealing all six sides of a solid wood slab before hanging it, top and bottom edges included, because uneven moisture absorption is what makes plank doors cup. It is also much easier to do flat on trestles than on a door already hanging on its track. If you are using a clear topcoat, our guide to <a href="/how-to-apply-polyurethane-without-brush-marks/">applying polyurethane without brush marks</a> covers technique, and our <a href="/best-paint-brushes/">paint brush guide</a> covers the tools.
+          </p>
+
+          <p>
+            If you would rather not finish it at all, the alternative is a pre-finished or primed door, which shifts the cost into the slab price. Paying a painter to finish a door is also an option; it is quoted by the job rather than listed in the cost guides, so get it priced alongside the installation.
+          </p>
+
+          <p>
+            Whichever way you go, budget time as well as money. Stain, sealer and two topcoats with proper drying between them is typically a weekend before the door can be hung, and rushing that drying time is how hardware ends up bolted through a finish that has not yet cured.
+          </p>
+        </div>
+
+        <div id="install" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Barn Door Installation Cost: Hiring a Pro vs Doing It Yourself
+          </h2>
+
+          <p>
+            Labour is where the cost guides disagree most. HomeGuide puts barn door installation labour at $100 to $1,000. Fixr gives $308 to $984 for installing a new barn door with its hardware, depending on track size and location. HomeAdvisor and Angi both quote $300 to $2,000, with HomeAdvisor describing labour as roughly 30 to 50 percent of the total door cost depending on complexity and door weight.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Source</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Labour range</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">What drives the high end</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">HomeGuide</td>
+                    <td class="px-4 py-4 text-gray-700">$100 to $1,000</td>
+                    <td class="px-4 py-4 text-gray-700">Larger, heavier doors needing robust hardware</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Fixr</td>
+                    <td class="px-4 py-4 text-gray-700">$308 to $984</td>
+                    <td class="px-4 py-4 text-gray-700">Track size and location</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">HomeAdvisor</td>
+                    <td class="px-4 py-4 text-gray-700">$300 to $2,000</td>
+                    <td class="px-4 py-4 text-gray-700">Complexity and door weight; 30 to 50 percent of total</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Angi</td>
+                    <td class="px-4 py-4 text-gray-700">$300 to $2,000</td>
+                    <td class="px-4 py-4 text-gray-700">Hardware, removal and wall repairs budgeted separately</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            A straightforward install on an empty, framed wall with a pre-finished door and a standard kit sits at the low end of those ranges. A heavy door, a new header board, an old door to remove, casing to patch and an outlet to relocate push it towards the top. Double doors, which need twice the hardware and a long, perfectly level track, also land higher.
+          </p>
+
+          <p>
+            Doing it yourself is genuinely achievable for a single door. Fixr's budget tier of $150 to $500 assumes exactly that: a big-box kit hung by the homeowner. The skills involved are finding the studs, fixing a header board level, drilling the slab for the hangers and fine-tuning the rollers. Tools are a drill, a long level or a <a href="/best-laser-level/">laser level</a>, a stud finder and a helper. Fixr notes that a DIY install means being able to lift a door weighing anywhere from 44 to 150 pounds, with help, and that is not a figure to take lightly when the door has to go up above head height and onto a track.
+          </p>
+
+          <p>
+            Hire a professional when the wall needs anything beyond a header board, when the door is heavy solid wood or glass, when there is electrical work in the door's path, or when you are fitting a pair. The money saved by doing it yourself is real, but so is the cost of a track that is slightly out of level, which makes the door drift open on its own, or fixings that loosen because they missed the framing.
+          </p>
+        </div>
+
+        <div id="double" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Double Barn Door Cost: Pairs and Wide Openings
+          </h2>
+
+          <p>
+            For openings wider than about four feet, two doors meeting in the middle are usually the better design: each slab is lighter, and each needs only half the wall space to slide into. They are not half the price, though. HomeAdvisor puts an installed single barn door at $200 to $1,600 and a double at $500 to $3,400. HomeGuide's double-door range is $800 to $2,800, and Angi notes that while most doubles fall between $500 and $3,400, the price can, in rare cases, exceed $6,000.
+          </p>
+
+          <p>
+            The reasons are straightforward. You are buying two slabs and either two kits or a double-length kit, and the track has to be long and perfectly level so both doors hang at the same height and meet cleanly. You also need clear wall on both sides of the opening, which doubles the chance of a switch, outlet or vent being in the way. HomeGuide notes that double setups require twice the hardware and labour and that very wide pairs may need structural reinforcement.
+          </p>
+
+          <p>
+            Glass-panel pairs are the most expensive version and the most popular for living rooms and home offices, because they keep light moving between rooms. Our guide to <a href="/french-barn-doors/">French barn doors</a> covers that style in detail, including the weight and hardware implications of glass. If a pair is mainly a way to close off a wide opening without losing floor space, compare it with a pocket door before committing; our <a href="/pocket-door-vs-barn-door/">pocket door vs barn door comparison</a> sets out where each one makes sense.
+          </p>
+
+          <p>
+            Bypass systems, where two doors run on parallel tracks and pass each other, are a third option for closets with no wall to slide onto. The cost guides we consulted do not price them separately, so get a specific quote; expect a bypass kit to cost more than a single-track kit of the same width, since it carries twice the rollers and a doubled track.
+          </p>
+        </div>
+
+        <div id="budgets" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Three Sample Budgets, Built From Published Figures
+          </h2>
+
+          <p>
+            These are not quotes. They are illustrations of how the published ranges combine, using only figures from the cost guides and retailer listings cited above, so you can see how quickly the total moves when one choice changes.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Budget: DIY pine kit</h3>
+
+          <p>
+            A Home Depot listing we checked while writing this guide offered a 36 by 84 inch unfinished K-frame pine slab packaged with barn door hardware at $218. Add your own stain and topcoat, a header board from your local lumberyard and a weekend of your time. That sits squarely inside Fixr's budget tier of $150 to $500 for a self-installed big-box kit. The trade-off is that the hardware in the cheapest bundles is basic, and you are doing all the finishing and the heavy lifting.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Mid-range: better kit, professionally hung</h3>
+
+          <p>
+            Step up to a mid-priced unfinished kit; Home Depot listings we checked ranged from $428 for a CALHOME knotty pine Z-bar door with hardware to $654.40 for a hardwood door with a hardware kit. Add professional labour of $308 to $984 on Fixr's figures, and possibly a contractor-fitted header board at HomeGuide's $200 to $500. Simple addition puts that somewhere between about $736 and $2,138 before finishing, which brackets the national averages quoted by Fixr and HomeAdvisor.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">High-end: custom slab and hardware</h3>
+
+          <p>
+            A custom door, priced by Fixr at $500 to $10,000, on custom hardware at $600 to $1,200 or more, with HomeAdvisor's labour range of $300 to $2,000, can reach well into the thousands before any wall work. HomeAdvisor's top-of-range figure of $5,000 for a wood barn door installed, and Fixr's luxury tier of $1,200 to $5,000 per door, reflect where these projects tend to land.
+          </p>
+
+          <p>
+            Whichever tier you are in, the best value move is usually the same: spend on hardware and mounting, keep the slab sensible, and get every quote itemised. If you are still deciding whether a barn door is the right door at all, our <a href="/barn-door-vs-french-door/">barn door vs French door comparison</a> weighs space, privacy and sound alongside cost.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            9. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Comparing quotes that include different things</h3>
+              <p class="text-gray-700 text-sm m-0">
+                One installer's figure may include the header board, old door removal and patching; another's may be labour only on a pre-finished door. Ask every quote to itemise slab, hardware, header, removal, finishing and labour before comparing totals.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Budgeting for the slab and forgetting the wall</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Header boards, relocated switches or outlets and patched casings are separate costs. HomeGuide lists a fitted header board at $200 to $500 on its own, and electrical work is another trade's bill entirely.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying a cheap kit for a heavy door</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A solid-wood or glass slab on a budget track is the classic false economy. Weight ratings are static, and a moving door loads the rollers harder. Choose hardware rated comfortably above the door's weight, even if it costs more.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Forgetting the door arrives unfinished</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Many budget barn doors are raw wood. Stain, sealer and two topcoats on all six sides add material cost and a weekend of drying time, and none of the cost guides break that out as a separate line.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ordering a door the size of the opening</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A barn door must overlap the opening by two to three inches on each side and above. Ordering to the opening size means reordering, and slabs often cannot be returned once cut or finished.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How much does a barn door cost installed?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Cost guides disagree but cluster in the same region. HomeAdvisor gives an average of about $1,800 with a normal range of $1,350 to $5,000; Fixr gives a national average of $1,658; HomeGuide puts installed doors at $400 to $3,400 or more. Where you land depends on the slab material, the hardware, any wall work and who installs it.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How much is barn door hardware?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Fixr lists standard kits with a track at $42 to $447, HomeAdvisor gives $50 to $500 for basic sets, and HomeGuide puts track kits at $100 to $300 or more. Custom or automated hardware costs considerably more: Fixr gives $600 to $1,200 or more, and HomeAdvisor says it can add up to $1,500.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What does barn door installation labour cost?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                HomeGuide quotes $100 to $1,000, Fixr $308 to $984, and HomeAdvisor and Angi $300 to $2,000. HomeAdvisor describes labour as roughly 30 to 50 percent of the total. Heavier doors, header boards, removing an old door and electrical work in the door's path all push labour towards the top.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is it cheaper to install a barn door yourself?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes, substantially. Fixr's budget tier of $150 to $500 assumes a big-box kit hung by the homeowner. You need to find studs, fit a level header board and lift the door onto the track with a helper. Fixr notes doors can weigh 44 to 150 pounds, so heavy slabs are best left to two people or a pro.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How much do double barn doors cost?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                HomeAdvisor puts an installed double barn door at $500 to $3,400, compared with $200 to $1,600 for a single. HomeGuide gives $800 to $2,800 for a pair, and Angi says doubles can occasionally exceed $6,000. Pairs need twice the hardware, a long level track and clear wall on both sides.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do I need a header board for a barn door?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Usually. The track carries a heavy moving load that must reach the framing, and studs rarely line up with the track's holes. A header board fixed across several studs solves that. HomeGuide lists one at $200 to $500 when a contractor fits it; doing it yourself costs mainly the lumber and screws.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are barn doors cheaper than regular doors?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Not automatically. A barn door needs a slab larger than the opening, a separate hardware kit and often a header board, none of which a hinged door requires, so the total adds up faster than the door price suggests. Its real saving is space: no swing clearance and no wall to open up, which matters most in tight rooms.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Barn Door Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-barn-doors/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Barn Doors</h3>
+              <p class="text-gray-500 text-sm mt-2">Why the hardware matters more than the slab, sizing rules, and the mounting problem.</p>
+            </a>
+            <a href="/french-barn-doors/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Style Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">French Barn Doors</h3>
+              <p class="text-gray-500 text-sm mt-2">Glass-panel sliding doors: weight, hardware and where they suit best.</p>
+            </a>
+            <a href="/pocket-door-vs-barn-door/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Comparison</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Pocket Door vs Barn Door</h3>
+              <p class="text-gray-500 text-sm mt-2">Wall space, sound, privacy and installation compared for the two space-saving options.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            A barn door's cost is a stack: the slab, the hardware, the header and wall work, the finishing and the labour. Published guides put the installed total anywhere from a few hundred dollars for a self-hung pine kit to several thousand for custom hardwood on custom hardware, with national averages in the region of $1,600 to $1,800.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The best value is almost always in good hardware and a solid mounting rather than an expensive slab. Price each line separately, insist on itemised quotes, and leave room in the budget for the wall work and finishing that headline prices so often leave out.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Improvement" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

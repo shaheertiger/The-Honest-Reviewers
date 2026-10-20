@@ -1,0 +1,649 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import TopPick from "../components/TopPick.astro";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Redwood Sealers",
+    "url": "/best-redwood-sealer/"
+  },
+  {
+    "title": "How to Stain a Redwood Deck",
+    "url": "/how-to-stain-a-redwood-deck/"
+  },
+  {
+    "title": "Best Fence Stain",
+    "url": "/best-fence-stain/"
+  },
+  {
+    "title": "Solid vs Semi-Transparent Stain",
+    "url": "/solid-vs-semi-transparent-deck-stain/"
+  },
+  {
+    "title": "Best Exterior Wood Sealer",
+    "url": "/best-exterior-wood-sealer/"
+  },
+  {
+    "title": "Deck Brightener vs Deck Cleaner",
+    "url": "/deck-brightener-vs-deck-cleaner/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-20", modified: "2026-10-20" });
+const title = "Redwood Fence Stain: What to Use and How to Make It Last";
+const description =
+  "Clear, semi-transparent or solid: which redwood fence stain suits new or weathered boards, how to stop tannin bleed, and how often a fence really needs it.";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Guides",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Redwood Fence Stain",
+          item: "https://www.thehonestreviewers.com/redwood-fence-stain/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best stain for a redwood fence?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most redwood fences, an oil-based semi-transparent stain in a redwood tone is the best fit. The California Redwood Association recommends oil-based products in this category and gives a three-to-five-year refinish interval. Ready Seal Redwood, Penofin for Redwood and TWP 1500 in Redwood are all penetrating options. Our redwood sealer guide ranks them in detail."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I use a sealer or a stain on a redwood fence?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A clear redwood fence sealer keeps water out but does little against UV, so redwood still greys in sun and needs recoating roughly yearly. A semi-transparent stain adds pigment that slows greying and evens out colour between boards. On a shaded fence a sealer is fine; on a sunny one, a pigmented stain lasts noticeably longer."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the best clear sealer for a redwood fence?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Look for a clear water repellent that contains a mildewcide and is labelled for exterior wood. Expect it to stabilise redwood's colour at a light tan rather than the fresh red, and to need reapplying every 12 to 18 months in humid or harsh climates according to the CRA. Anything marketed as clear but with a light tint will last a little longer."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the best preservative for a redwood fence?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If preservation rather than colour is the goal, look for a product registered as a wood preservative. TWP 1500 Series is sold as an EPA-registered wood preservative for above-ground exterior wood and comes in a Redwood shade. For posts and anything in ground contact, start with heartwood grades such as Construction Heart; a surface finish cannot substitute for the right lumber."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long should I wait to stain a new redwood fence?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on the surface. New rough-sawn redwood can usually be stained once it is dry, because it has no mill glaze. Smooth boards should be cleaned or left to weather briefly so the finish can penetrate. The CRA suggests a month of air-drying for unseasoned wood, and Ready Seal asks for 12 percent moisture or less."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often do you need to stain a redwood fence?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Far less often than a deck. Ready Seal rates its stain for three to five years on vertical surfaces and recommends a recoat every three to four years, and the CRA gives three to five years for semi-transparent and solid stains. Sunny south- and west-facing runs fade first, so recoat those sections on their own schedule rather than the whole fence."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the same stain good for redwood siding?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Generally yes. Siding is vertical like a fence, and the CRA's guidance for semi-transparent and solid stains covers siding, fascia and trim as well as fences. The differences are that siding needs a careful, drip-free brush finish near windows, and painted redwood siding needs a stain-blocking primer to stop extractive bleed. Caulk joints before staining, not after."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      description: description,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home Improvement",
+    tags: [
+      "redwood fence stain",
+      "best stain for redwood fence",
+      "redwood fence sealer",
+      "best sealer for redwood fence",
+      "best redwood fence preservative",
+      "best clear sealer for redwood fence",
+      "best stain for redwood siding"
+    ],
+  }}
+  jsonLd={schema}
+  stickyCta={{
+    text: "See Our Redwood Sealer Picks",
+    link: "/best-redwood-sealer/",
+  }}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Fence Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Research Based
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Redwood Fence Stain: <span class="text-[#38BDF8]">What Actually Works</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          A fence is not a deck turned on its side. It sheds water, it lasts longer between coats, and it fails at the end grain and the ground line first. Pick the finish for that, not for the deck.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#fence-vs-deck"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            Start With the Finish Choice
+          </a>
+          <a
+            href="#faq"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Jump to the FAQ
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="9.8k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#fence-vs-deck" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Why a Fence Is Different</a>
+          <a href="#finish-types" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Clear vs Semi vs Solid</a>
+          <a href="#new-or-weathered" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. New, Weathered or Stained</a>
+          <a href="#tannin-bleed" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Tannin Bleed and Nail Streaks</a>
+          <a href="#products" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Products Worth a Look</a>
+          <a href="#application" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. How to Apply It</a>
+          <a href="#maintenance" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Recoat Cycle</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Most redwood fences do not fail because someone bought the wrong brand. They fail because the stain went onto wet boards, skipped the cut ends and the back side, or was a clear sealer asked to do a pigmented stain's job. Get those three right and almost any decent penetrating oil will give you years between coats.
+        </p>
+
+        <TopPick />
+
+        <div id="fence-vs-deck" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. Why a Redwood Fence Is Not Just a Vertical Deck
+          </h2>
+
+          <p>
+            Every rule of thumb you read about deck stain was written for a horizontal surface that holds standing water, takes direct overhead sun for most of the day and gets ground down by shoes, chair legs and dog claws. A fence board gets none of that foot traffic, sheds rain almost as fast as it lands and only takes full sun on one face at a time. That changes how long a finish lasts, which in turn changes which finish makes sense.
+          </p>
+
+          <p>
+            The makers say so themselves. Ready Seal publishes a life expectancy of one to three years on horizontal surfaces and three to five years on vertical surfaces, and recommends a light clean and recoat every two years on a deck but every three to four years on a fence or siding. The dealer that runs the TWP help site makes the same point from the other side: when it explains its wet-on-wet method it notes that verticals generally last about twice as long as the floor. Treat those as the makers' ratings, not guarantees, but the direction is consistent across every maker's guidance we read.
+          </p>
+
+          <p>
+            What a fence does have is weak points a deck mostly hides. The cut tops of pickets and the tops of posts are end grain, which drinks water like a bundle of straws and is where checking and rot start. The bottom inch of every board sits in the splash zone, often in contact with mulch or soil. Rails trap water on their top edge. And the back side, which you probably cannot see from the house, faces your neighbour and gets exactly the same weather as the side you care about.
+          </p>
+
+          <p>
+            Redwood itself helps. The heartwood, the red-brown part of the tree, carries the extractives that give it natural decay and insect resistance, and the California Redwood Association recommends heartwood grades such as Construction Heart or Deck Heart for posts and anything on or near the ground. Sapwood-containing grades like Construction Common, which show cream-coloured streaks, are rated for above-ground uses such as fence boards and rails. Knowing which grade you have tells you how much the finish is protecting appearance and how much it is protecting the wood.
+          </p>
+
+          <p>
+            So the question for a redwood fence is less about which can is strongest and more about which finish matches how much colour you want to keep, how often you are willing to recoat, and whether you can reach both sides. The rest of this guide answers those in order, and our <a href="/best-redwood-sealer/" class="text-[#1E90FF] font-semibold hover:underline">redwood sealer rankings</a> cover the individual products in detail.
+          </p>
+        </div>
+
+        <div id="finish-types" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Clear, Semi-Transparent or Solid: Choosing the Opacity
+          </h2>
+
+          <p>
+            Opacity is the decision that matters most, because it sets both the look and the recoat interval. The California Redwood Association's exterior finishes guide groups the options into clear water repellents, bleaching or weathering stains, semi-transparent stains, solid-body stains and paint, and its maintenance guidance for each is a useful baseline because it is not trying to sell you a can.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Clear water repellents and clear sealers</h3>
+
+          <p>
+            A clear sealer with a mildewcide keeps water out and, in the CRA's words, stabilises redwood at a buckskin tan, but it does not stop sunlight from breaking down the surface. The CRA notes that areas exposed to direct sun and rain may eventually bleach to grey, and that in humid or harsher climates reapplication may be needed every 12 to 18 months. Ready Seal's own FAQ makes the same point more bluntly: clear finishes let UV pass straight through to the wood. If someone is looking for the best clear sealer for a redwood fence, the honest answer is that clear buys water protection and a short-lived natural colour, and it means a recoat roughly every year or so on any sunny face.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Semi-transparent stains</h3>
+
+          <p>
+            This is where most redwood fences belong. A semi-transparent penetrating stain carries enough pigment to block a meaningful share of UV while letting the grain and the natural variation of the boards show through. The CRA recommends oil-based products in this category and gives a refinishing interval of three to five years, with one refinish coat usually enough. A redwood-toned semi-transparent also evens out the colour difference between heartwood and sapwood boards, which on a Construction Common fence is often the main reason people stain at all.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Solid-colour stains and paint</h3>
+
+          <p>
+            Solid stain hides the grain but keeps the texture, and the CRA again recommends oil-based versions with a three-to-five-year refinish cycle. Paint gets the longest interval in the CRA chart, seven to ten years, but it needs a stain-blocking primer, it is the hardest finish to remove later, and once it starts to peel a fence becomes a scraping job. Film-forming finishes are also less forgiving of redwood's water-soluble extractives, which we cover below. Our <a href="/solid-vs-semi-transparent-deck-stain/" class="text-[#1E90FF] font-semibold hover:underline">solid vs semi-transparent comparison</a> goes deeper into the trade-off.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Finish</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Look on redwood</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Typical refinish interval*</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Best for</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Clear water repellent</td>
+                    <td class="px-4 py-4 text-gray-700">Natural tan, greys in full sun</td>
+                    <td class="px-4 py-4 text-gray-700">12-18 months in humid or harsh climates</td>
+                    <td class="px-4 py-4 text-gray-700">Shaded fences, owners who will recoat yearly</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Bleaching / weathering stain</td>
+                    <td class="px-4 py-4 text-gray-700">Even silver-grey</td>
+                    <td class="px-4 py-4 text-gray-700">Reapply only if colour turns uneven</td>
+                    <td class="px-4 py-4 text-gray-700">People who want the grey look without blotching</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Semi-transparent oil</td>
+                    <td class="px-4 py-4 text-gray-700">Redwood tone, grain visible</td>
+                    <td class="px-4 py-4 text-gray-700">3-5 years</td>
+                    <td class="px-4 py-4 text-gray-700">Most fences, mixed heart and sapwood boards</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Solid-colour stain</td>
+                    <td class="px-4 py-4 text-gray-700">Opaque colour, texture visible</td>
+                    <td class="px-4 py-4 text-gray-700">3-5 years</td>
+                    <td class="px-4 py-4 text-gray-700">Old, mismatched or repaired fences</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Paint</td>
+                    <td class="px-4 py-4 text-gray-700">Opaque, smooth</td>
+                    <td class="px-4 py-4 text-gray-700">7-10 years</td>
+                    <td class="px-4 py-4 text-gray-700">Smooth boards, painted-house schemes</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            *Intervals are the California Redwood Association's published guidance for exterior redwood. Real life depends on sun exposure, climate and how well the first coat went on.
+          </p>
+        </div>
+
+        <div id="new-or-weathered" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. New, Weathered or Previously Stained Redwood
+          </h2>
+
+          <p>
+            The condition of the boards decides your prep, and prep decides whether the stain soaks in or sits on top. There are three starting points, and each one needs a different first move.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">New redwood</h3>
+
+          <p>
+            New redwood fence boards are usually one of two surfaces. Rough-sawn boards have a fuzzy, open texture that soaks up finish readily, and the CRA notes that saw-textured redwood holds stains and water repellents up to twice as long as smooth-surfaced wood. Smooth, planed boards can carry mill glaze, a burnished layer left when the planer heats the surface, and finish will bead on it rather than penetrate. The TWP dealer help site says new rough-sawn fencing can be stained as soon as it is dry, because it lacks mill glaze, while new smooth wood should weather or be cleaned first.
+          </p>
+
+          <p>
+            Moisture is the other gate. Ready Seal asks for 12 percent moisture content or less before application, and the CRA says new structures built with unseasoned wood should air-dry for a month before finishing. Kiln-dried redwood, which the CRA says gives the best finish retention, is often close to ready when it arrives. A pin moisture meter costs little and settles the argument; the sprinkle test (water soaking in within a minute or two rather than beading) is the free version.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Weathered grey redwood</h3>
+
+          <p>
+            A fence that has been left bare for a few seasons has a grey surface layer of UV-damaged fibres. Stain applied over that layer bonds to fibres that are already loose, so it fades and flakes early. Clean it first with a wood cleaner, then follow with an oxalic acid brightener, which the CRA and Ready Seal both recommend for restoring colour and removing extractive staining. Redwood often comes back startlingly red after a brightener. Our guide to <a href="/deck-brightener-vs-deck-cleaner/" class="text-[#1E90FF] font-semibold hover:underline">cleaner versus brightener</a> explains why you usually need both.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Previously stained redwood</h3>
+
+          <p>
+            If the old finish is the same penetrating product you plan to use, a clean and recoat is normally enough; Ready Seal, for example, says it can go over existing Ready Seal without complications. If it is a different brand, a film-forming stain or paint, compatibility becomes the issue. Ready Seal advises against applying over other stains or paints at all and says the wood needs to be bare, which in practice means stripping, neutralising with a brightener and drying again. The CRA's general guidance agrees: finish failures often come from mixing incompatible products or applying one over another.
+          </p>
+        </div>
+
+        <div id="tannin-bleed" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Tannin Bleed, Extractive Stains and Nail Streaks
+          </h2>
+
+          <p>
+            Redwood's decay resistance comes from water-soluble extractives, often loosely called tannins. They are the reason redwood lasts, and they are also the reason a new redwood fence can grow dark streaks under rails, brown runs below nail heads and tea-coloured patches where sprinklers hit it. The CRA explains that discolouration occurs when extractives dissolve in water and leach from the wood, and that it can also come from moisture migrating to the surface of unseasoned lumber.
+          </p>
+
+          <p>
+            On a natural or semi-transparent finish, the fix is chemical rather than mechanical. The CRA's published recipe is to scrub with a solution of one cup of trisodium phosphate and one cup of household bleach in a gallon of water, then apply four ounces of oxalic acid crystals dissolved in a gallon of warm water, let the wood dry and rinse thoroughly. Many people prefer an oxygen-based (sodium percarbonate) wood cleaner to chlorine bleach, and a commercial two-part cleaner and brightener follows the same clean-then-acid sequence with less mixing. The important half is the oxalic acid, which is what lifts extractive and iron staining. Wear gloves and eye protection; the CRA flags oxalic acid as poisonous if handled carelessly.
+          </p>
+
+          <p>
+            Nail stains are a related problem. When ordinary steel fasteners meet redwood's extractives and water, you get black streaks that no stain will hide. The CRA's advice is to use stainless steel, aluminium or top-quality hot-dipped galvanised nails, and if you sand, to countersink galvanised heads first so the sander does not strip the coating. If you are building new, buy the right fasteners and this section never applies to you.
+          </p>
+
+          <p>
+            Opaque finishes need a different approach. Because a solid stain or paint film sits on the surface, extractives can bleed up through it as yellow-brown blotches. The CRA recommends an oil or alkyd stain-blocking primer under paint and, for air-seasoned or unseasoned siding, a stain-blocking latex primer formulated for redwood. If you want a solid colour on a redwood fence, check whether your chosen stain maker calls for a primer on redwood and cedar, and follow it.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE RULE</p>
+            <p class="text-xl font-bold text-white mb-3">Brighten before you stain, every time.</p>
+            <p class="text-gray-300 leading-relaxed m-0">Whether the fence is new, grey or streaked, an oxalic acid brightener after cleaning is what restores redwood's colour and removes extractive and rust marks. Skipping it locks the discolouration under the new finish.</p>
+          </div>
+        </div>
+
+        <div id="products" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Redwood Fence Stains and Sealers Worth Considering
+          </h2>
+
+          <p>
+            This is not a ranking; our <a href="/best-redwood-sealer/" class="text-[#1E90FF] font-semibold hover:underline">full redwood sealer guide</a> does that. These are the product types that suit a fence, with the facts the makers publish. Where a claim comes from a retailer or dealer rather than the maker, we say so.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Ready Seal in Redwood</h3>
+
+          <p>
+            Ready Seal is an oil-based, semi-transparent stain and sealer in one, made in Texas since 1992. The maker's headline claim is no laps, no runs and no streaks, which matters on a fence because you are working boards top to bottom and cannot always keep a wet edge. It is sold in a Redwood shade, among others. The maker rates it for three to five years on vertical surfaces, asks for wood at 12 percent moisture or less and says it can be applied in any temperature once the wood is dry. It is a sensible default for most redwood fences.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Penofin for Redwood</h3>
+
+          <p>
+            Penofin makes a dedicated redwood product, described on its site as a penetrating oil finish that gives a rich, dark, mahogany-red colour, and offered in 550, 250 and 100 VOC versions according to its safety data sheets. Its general-purpose Blue Label line is built on Brazilian rosewood oil with transoxide pigments, which the maker credits with 90 percent UV protection. Choose the redwood-specific product if you want the deepest red; check which VOC version is legal in your state.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">TWP 1500 Series in Redwood</h3>
+
+          <p>
+            TWP stands for Total Wood Protectant and is made by Gemini Industries in Oklahoma. Retailers list the 1500 Series as an EPA-registered wood preservative for above-ground exterior wood, which is why it is often the answer when people search for the best redwood fence preservative. It is a semi-transparent oil with a flat finish and comes in a Redwood colour. The dealer that runs the TWP help site recommends a single coat on new smooth wood and back-wiping any excess that has not soaked in after 30 minutes.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Clear water repellents</h3>
+
+          <p>
+            Clear products such as Thompson's WaterSeal sit at the other end of the scale. They are cheap and easy, and on a shaded fence they can be a reasonable choice, but they do little to stop greying in sun. Our look at <a href="/does-thompsons-water-seal-work/" class="text-[#1E90FF] font-semibold hover:underline">whether Thompson's Water Seal works</a> covers what to expect. For a broader shortlist that includes non-redwood fences, see our <a href="/best-fence-stain/" class="text-[#1E90FF] font-semibold hover:underline">best fence stain guide</a>.
+          </p>
+        </div>
+
+        <div id="application" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. How to Apply Stain to a Redwood Fence
+          </h2>
+
+          <p>
+            Good fence staining is mostly logistics. Check the forecast for a dry window long enough to let the wood dry after cleaning and the stain soak in afterwards. The CRA suggests applying finishes on windless days between 50 and 70 degrees Fahrenheit; most oil stains allow a wider range on the label, so follow your product. Wind matters more than temperature on a fence, because overspray drifts onto cars, siding and the neighbour's plants.
+          </p>
+
+          <p>
+            Cover everything you do not want stained. Oil-based penetrating stains will soak into concrete, stone and pavers as readily as into wood, and Ready Seal specifically warns about porous stone and concrete. Lay plastic over planting beds along the fence line and slide cardboard under the bottom of the boards where they meet a patio or path.
+          </p>
+
+          <p>
+            For application, a pump sprayer followed by a brush or stain pad is the fastest method that still gets the finish into the wood. Spray two or three boards at a time from the top down, then brush or pad the stain in before it dries, catching drips at the bottom edge. The CRA recommends a brush for best results with semi-transparent and solid stains, and a roller as the next best option. Our comparison of <a href="/brush-vs-roller-vs-sprayer-deck-stain/" class="text-[#1E90FF] font-semibold hover:underline">brush, roller and sprayer</a> applies to fences just as well.
+          </p>
+
+          <p>
+            Pay deliberate attention to end grain. Load the brush and work stain into the cut tops of pickets and posts, the bottom edges of boards and any exposed ends on rails, because those are where water gets in. If you are building new, the CRA recommends coating sawn ends, backs and edges before the boards go up, and it recommends back-priming for all exterior finishes. Pre-finishing a stack of boards on sawhorses is far easier than reaching behind them later.
+          </p>
+
+          <p>
+            Coats depend on the product and the wood. The CRA says two coats are usually required for semi-transparent stains on new wood, while TWP's dealer site recommends one coat on new smooth wood and two wet-on-wet coats only on wood that has weathered for a year or more. The common thread is that a penetrating stain should be absorbed, not left as a glossy layer. Wipe off anything still sitting wet on the surface after half an hour or so, or it can stay tacky and attract dirt.
+          </p>
+
+          <p>
+            Finally, do the back. If you share the fence with a neighbour, ask before you stain their side, and agree on colour. A fence finished on one face only takes on moisture through the bare side, and the difference in movement between the two faces can encourage cupping.
+          </p>
+        </div>
+
+        <div id="maintenance" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. The Recoat Cycle: How Often a Redwood Fence Needs Stain
+          </h2>
+
+          <p>
+            The best predictor of your recoat interval is which way each run of fence faces. South- and west-facing sections in full sun fade first; north-facing and shaded runs can look nearly new when the sunny side is ready for another coat. You do not have to recoat the whole fence on the same schedule, and with a penetrating stain you do not need to strip it first.
+          </p>
+
+          <p>
+            Use the water test once a year. Splash water onto several boards on the sunniest stretch. If it beads, the finish is still working. If it darkens the wood and soaks straight in, that section is due. Then look at colour: a semi-transparent stain loses pigment gradually, and the CRA notes that light brushing with a bristle brush helps remove loose old finish in places before a single refinish coat.
+          </p>
+
+          <p>
+            A maintenance coat is far easier than the first. Rinse the fence, scrub any mildew or dirt with a mild detergent or a dedicated wood cleaner, brighten if the colour looks dull, let it dry for a couple of days, and apply one light coat of the same product. If you change products, you are back to the compatibility question covered above.
+          </p>
+
+          <p>
+            Watch the sprinkler line. Irrigation spray that hits a fence every day leaves white or dark halos as minerals and extractives build up, and it shortens finish life dramatically. Ready Seal recommends adjusting the heads first and then giving the sprinkler-marked areas an extra coat. Keep soil and mulch an inch or two below the bottom of the boards so they can dry between rains.
+          </p>
+
+          <p>
+            If you would rather never stain again, a bleaching or weathering stain is the honest alternative. The CRA describes these as giving redwood a uniform grey without the patchy look of untreated weathering, and says one refinish coat should be enough. It is not the warm red most people want, but it is the lowest-maintenance finish redwood will take. For decks, where the same wood behaves very differently, see our guide on <a href="/how-to-stain-a-redwood-deck/" class="text-[#1E90FF] font-semibold hover:underline">how to stain a redwood deck</a>.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            8. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Staining boards that are still wet</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Penetrating stain cannot get into wood that is full of water, so it cures on the surface and weathers off within months. Ready Seal asks for 12 percent moisture or less. Check with a moisture meter or a sprinkle test, and allow at least a couple of dry days after cleaning or rain before you open a can.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using a clear sealer on a sunny fence</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Clear water repellents keep water out but let UV through, so a south-facing redwood fence will still turn grey. The CRA says clear finishes may need reapplying every 12 to 18 months in harsh climates. If you want the red to last, use a semi-transparent redwood tone instead.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping the end grain and the back side</h3>
+              <p class="text-gray-700 text-sm m-0">
+                The cut tops of pickets, the tops of posts and the bottom edges of boards are where water enters and checking starts. Finishing only the visible face leaves the fence absorbing moisture from behind. Work stain into every end, and pre-finish backs and edges on new boards before installation.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Putting steel fasteners into redwood</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Ordinary steel nails and screws react with redwood's extractives and leave black streaks that bleed through any semi-transparent finish. The CRA recommends stainless steel, aluminium or top-quality hot-dipped galvanised fasteners. Replacing a few rusty screws during a repair is cheaper than trying to bleach out the streaks every year.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Mixing incompatible products</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Putting a penetrating oil over a film-forming stain, or one brand's oil over another's, is a common cause of blotching and early failure. Ready Seal, for one, says it needs bare wood or its own previous coats. If you do not know what is on the fence now, test a hidden board or strip it first.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            9. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best stain for a redwood fence?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most redwood fences, an oil-based semi-transparent stain in a redwood tone is the best fit. The California Redwood Association recommends oil-based products in this category and gives a three-to-five-year refinish interval. Ready Seal Redwood, Penofin for Redwood and TWP 1500 in Redwood are all penetrating options. Our redwood sealer guide ranks them in detail.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Should I use a sealer or a stain on a redwood fence?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A clear redwood fence sealer keeps water out but does little against UV, so redwood still greys in sun and needs recoating roughly yearly. A semi-transparent stain adds pigment that slows greying and evens out colour between boards. On a shaded fence a sealer is fine; on a sunny one, a pigmented stain lasts noticeably longer.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best clear sealer for a redwood fence?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Look for a clear water repellent that contains a mildewcide and is labelled for exterior wood. Expect it to stabilise redwood's colour at a light tan rather than the fresh red, and to need reapplying every 12 to 18 months in humid or harsh climates according to the CRA. Anything marketed as clear but with a light tint will last a little longer.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best preservative for a redwood fence?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                If preservation rather than colour is the goal, look for a product registered as a wood preservative. TWP 1500 Series is sold as an EPA-registered wood preservative for above-ground exterior wood and comes in a Redwood shade. For posts and anything in ground contact, start with heartwood grades such as Construction Heart; a surface finish cannot substitute for the right lumber.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long should I wait to stain a new redwood fence?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It depends on the surface. New rough-sawn redwood can usually be stained once it is dry, because it has no mill glaze. Smooth boards should be cleaned or left to weather briefly so the finish can penetrate. The CRA suggests a month of air-drying for unseasoned wood, and Ready Seal asks for 12 percent moisture or less.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How often do you need to stain a redwood fence?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Far less often than a deck. Ready Seal rates its stain for three to five years on vertical surfaces and recommends a recoat every three to four years, and the CRA gives three to five years for semi-transparent and solid stains. Sunny south- and west-facing runs fade first, so recoat those sections on their own schedule rather than the whole fence.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is the same stain good for redwood siding?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Generally yes. Siding is vertical like a fence, and the CRA's guidance for semi-transparent and solid stains covers siding, fascia and trim as well as fences. The differences are that siding needs a careful, drip-free brush finish near windows, and painted redwood siding needs a stain-blocking primer to stop extractive bleed. Caulk joints before staining, not after.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Redwood and Fence Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-redwood-sealer/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Redwood Sealers</h3>
+              <p class="text-gray-500 text-sm mt-2">The redwood stains, oils and sealers we rank for decks, fences and furniture.</p>
+            </a>
+            <a href="/how-to-stain-a-redwood-deck/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">How-To</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">How to Stain a Redwood Deck</h3>
+              <p class="text-gray-500 text-sm mt-2">Prep, opacity and application for horizontal redwood, where finishes wear twice as fast.</p>
+            </a>
+            <a href="/best-fence-stain/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Fence Stains</h3>
+              <p class="text-gray-500 text-sm mt-2">Our wider fence stain shortlist for cedar, pine and pressure-treated fences.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            A redwood fence is one of the easiest exterior wood projects to keep looking good, because gravity and vertical drainage are on your side. Dry wood, a clean and brightened surface, a penetrating semi-transparent stain worked into every end and both faces, and the right fasteners will carry most fences three years or more between coats.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Choose clear only if the fence is shaded or you are happy to recoat every year, and choose solid only if the boards are too mismatched to show. For the individual products, our redwood sealer rankings are the next stop.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Improvement" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

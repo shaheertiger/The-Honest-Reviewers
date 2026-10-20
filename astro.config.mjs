@@ -6,6 +6,30 @@ import sitemap from '@astrojs/sitemap';
 // Buyer's guides that target high-volume search terms. They get a higher
 // sitemap priority than the 0.5 default so crawlers reach them sooner.
 const priorityGuides = new Set([
+  // October 2026: legacy-domain keywords with no page (sealers, sand, doors, Tekton).
+  'armor-ar350-vs-ar500',
+  'should-you-seal-concrete',
+  'how-to-stain-a-concrete-patio',
+  'french-barn-doors',
+  'pocket-door-vs-barn-door',
+  'tekton-vs-stanley',
+  'black-concrete-driveway',
+  'how-to-keep-sand-between-pavers',
+  'redwood-fence-stain',
+  'how-to-stain-a-redwood-deck',
+  'semco-teak-sealer-review',
+  'tuff-duck-concrete-countertop-sealer-review',
+  'stonetech-bulletproof-sealer-review',
+  'how-to-seal-marble-floor-tile',
+  'how-to-apply-teak-oil',
+  'barn-door-cost',
+  'how-to-apply-polyurethane-without-brush-marks',
+  'how-to-seal-fireplace-brick',
+  'silica-sand-for-pavers',
+  'alliance-gator-polymeric-sand-review',
+  'henry-driveway-sealer-review',
+  'tekton-sockets-review',
+  'masonry-defender-review',
   // October 2026: Semrush keyword-gap batch (water heaters, dehumidifiers, humidifiers, shop vacs).
   'water-heater-replacement-cost',
   'how-to-drain-a-water-heater',
