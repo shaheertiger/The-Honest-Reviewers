@@ -1,0 +1,919 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Tankless Water Heaters",
+    "url": "/best-tankless-water-heater/"
+  },
+  {
+    "title": "Tankless Water Heater Cost",
+    "url": "/tankless-water-heater-cost/"
+  },
+  {
+    "title": "Best Electric Tankless Water Heaters",
+    "url": "/best-electric-tankless-water-heater/"
+  },
+  {
+    "title": "How to Flush a Tankless Water Heater",
+    "url": "/how-to-flush-a-tankless-water-heater/"
+  },
+  {
+    "title": "Water Heater Replacement Cost",
+    "url": "/water-heater-replacement-cost/"
+  },
+  {
+    "title": "Best Gas Water Heaters",
+    "url": "/best-gas-water-heater/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-20", modified: "2026-10-20" });
+const title = "Best Propane Tankless Water Heaters: Whole-House and Portable";
+const description =
+  "Propane tankless water heaters for whole homes and camps, compared on BTU, GPM at your groundwater temperature, venting, tank size and LP conversion kits.";
+
+const PRODUCTS = [
+  {
+    "id": "rinnai-rsc199ip",
+    "name": "Rinnai Sensei SE+ RSC199iP",
+    "badge": "Best Overall",
+    "category": "Whole-House, Condensing, Indoor, Propane",
+    "amazonUrl": "#",
+    "description": "The RSC199iP is a propane-specific Rinnai, so there is no conversion step to get wrong. Rinnai's product page lists a 15,000 to 199,000 BTU input range, an 11 GPM maximum hot water flow and a 0.95 UEF, with ENERGY STAR certification, Wi-Fi capability, recirculation capability and Ultra Low NOx approval. Retailer listings describe the SE+ series as including Rinnai's ThermaCirc360 recirculation. The wide 15,000 BTU minimum lets it modulate down for a single low-flow tap. It is a big unit at 68 pounds and 31.3 by 18.5 by 11.4 inches, uses three-quarter-inch gas and water connections, and needs a condensate drain. Rinnai publishes PVC, CPVC and polypropylene venting instructions for it. Remember that 11 GPM is a low-rise headline figure; in a cold-groundwater region expect roughly half that.",
+    "pros": [
+      "Dedicated propane model, no field conversion",
+      "0.95 UEF and 199,000 BTU maximum per Rinnai",
+      "Recirculation capable, ThermaCirc360 per retailer listings",
+      "Large Rinnai dealer and service network"
+    ],
+    "cons": [
+      "68 lb and over 31 inches tall",
+      "Three-quarter-inch gas connection may mean a line upgrade",
+      "Premium price class"
+    ],
+    "bottomLine": "The propane tankless we would put in a two to three bathroom house with a properly sized tank, especially where recirculation matters."
+  },
+  {
+    "id": "noritz-ez111dv",
+    "name": "Noritz EZ111DV",
+    "badge": "Best for Tank Replacement",
+    "category": "Whole-House, Condensing, Indoor/Outdoor",
+    "amazonUrl": "#",
+    "description": "Noritz built the EZ series to replace a tank heater with as little replumbing as possible, which matters on a propane retrofit where the installer is already reworking the gas side. Noritz's page lists 0.4 to 11.1 GPM, 12,800 to 199,900 BTU and a 0.98 UEF, the highest efficiency figure in this list, with indoor and outdoor installation and a 25-year warranty. An NG to LP field conversion is included; Noritz says switching means swapping the provided orifice and selecting LP in its app. Hot and cold connections sit on top of the unit so a tank heater's flexible lines can be reconnected, and Noritz's EZTR tank-replacement bundles add a two-inch flex vent kit. Verify the propane configuration with your installer before ordering, since Noritz lists the natural gas model numbers.",
+    "pros": [
+      "0.98 UEF per Noritz, highest here",
+      "LP conversion kit included",
+      "Top-mounted water connections suit tank swaps",
+      "25-year warranty per Noritz"
+    ],
+    "cons": [
+      "Ships for natural gas, so conversion must be done",
+      "Fewer service techs than Rinnai in some areas",
+      "Warranty terms depend on registration and install details"
+    ],
+    "bottomLine": "The easiest whole-house propane upgrade from a tank heater, provided a qualified installer does the LP conversion."
+  },
+  {
+    "id": "navien-npe-210a2",
+    "name": "Navien NPE-210A2",
+    "badge": "Best Built-In Recirculation",
+    "category": "Whole-House, Condensing, Indoor",
+    "amazonUrl": "#",
+    "description": "The A2 version of Navien's NPE-2 adds a built-in buffer tank and recirculation pump, which is the cheapest way to cut the wait for hot water at a far bathroom and to smooth out the cold water sandwich. Navien's QuickFacts sheet lists 12,000 to 180,000 BTU on either natural gas or propane, a 0.95 UEF, and a rise table that gives 10.1 GPM at a 35 degree rise, 7.1 GPM at 50 degrees and 4.7 GPM at 75 degrees. Navien says all NPE-2 models are field convertible from natural gas to LP, and its propane conversion guide says the kit is supplied with the heater. Venting runs on two-inch pipe up to 75 feet. Navien's residential warranty listed on the same sheet is 15 years on the heat exchanger, 5 years on parts and 1 year on labor for standard or controlled recirculation.",
+    "pros": [
+      "Built-in buffer tank and recirculation pump",
+      "Honest rise table published by Navien",
+      "Two-inch venting up to 75 ft",
+      "LP kit supplied, field convertible"
+    ],
+    "cons": [
+      "180,000 BTU maximum, below the 199,000 BTU class",
+      "Uncontrolled recirculation shortens the warranty",
+      "Conversion required for propane"
+    ],
+    "bottomLine": "Buy it when the long wait for hot water bothers you more than peak flow, and the house is a two-bathroom size."
+  },
+  {
+    "id": "rheem-rtgh-90dvlp-3",
+    "name": "Rheem RTGH-90DVLP-3",
+    "badge": "Best Value Condensing",
+    "category": "Whole-House, Condensing, Indoor, Propane",
+    "amazonUrl": "#",
+    "description": "Rheem's RTGH-90DVLP-3 is the mid-size propane version of its super high efficiency condensing line. Rheem's product page lists up to a 0.93 UEF, Hot-Start Programming, an available outdoor conversion kit, and a 15-year heat exchanger, 5-year parts and 1-year labor warranty, and Ferguson lists a 0.4 to 9 GPM flow range. Rheem's RTGH-3 spec sheet rates the 90 size at 180,000 BTU maximum and 9.0 GPM at a 35 degree rise; that sheet is written for the natural gas sibling, so confirm the LP input with your installer. Venting is flexible, with Rheem quoting two-inch PVC up to 60 feet and three-inch up to 150 feet, and it measures about 23 by 18 by 9 inches. Availability varies; SupplyHouse showed it on backorder when we checked.",
+    "pros": [
+      "Dedicated propane SKU",
+      "Up to 0.93 UEF per Rheem",
+      "Two-inch PVC to 60 ft, three-inch to 150 ft",
+      "Compact for a condensing unit"
+    ],
+    "cons": [
+      "9 GPM headline drops sharply at high rise",
+      "No built-in recirculation pump",
+      "Stock has been patchy at some retailers"
+    ],
+    "bottomLine": "A sensible condensing LP heater for a one to two bathroom home where budget matters more than peak flow."
+  },
+  {
+    "id": "rinnai-re180ep",
+    "name": "Rinnai RE180eP",
+    "badge": "Best Outdoor Mount",
+    "category": "Whole-House, Non-Condensing, Outdoor, Propane",
+    "amazonUrl": "#",
+    "description": "Mounting outdoors removes the vent pipe and condensate drain entirely, which is often the cheapest installed whole-house propane option in a mild climate. Rinnai's page lists the RE180eP as an outdoor propane model with a 10,400 to 180,000 BTU input range, a 0.82 UEF, recirculation and Wi-Fi capability and a weight of 42.1 pounds. Rinnai does not show a maximum flow on that page; retailers list it at 8 to 8.5 GPM, so treat it as a two-bathroom unit in warm-groundwater areas. It is non-condensing, so it burns more propane per gallon heated than the condensing picks here. In freezing climates an outdoor unit depends on electric freeze protection, so a long power outage in a hard freeze is a real risk unless the unit is drained.",
+    "pros": [
+      "No vent pipe or condensate line needed",
+      "Recirculation and Wi-Fi capable per Rinnai",
+      "42.1 lb, easy to mount",
+      "Rinnai service network"
+    ],
+    "cons": [
+      "0.82 UEF burns more propane than condensing units",
+      "Maximum flow comes from retailers, not Rinnai's page",
+      "Freeze risk during power outages in cold climates"
+    ],
+    "bottomLine": "The right call in warm regions where an outside wall is near the tank and venting an indoor unit would be expensive."
+  },
+  {
+    "id": "eccotemp-l5",
+    "name": "Eccotemp L5 Portable",
+    "badge": "Best Portable",
+    "category": "Portable, Outdoor Only, 20 lb Cylinder",
+    "amazonUrl": "#",
+    "description": "The L5 is the portable propane water heater most people picture: a wall- or post-hung box that runs off a 20-pound grill cylinder and a garden hose. Eccotemp rates it at 1.5 GPM and 37,500 BTU, with outgoing temperature adjustable from 80 to 120 degrees, and says it needs at least half a gallon per minute of flow to ignite and run. Ignition runs on two D-cell batteries, and Eccotemp includes a CSA regulator. Eccotemp describes it as an outdoor-only unit. At 1.5 GPM it is one outdoor shower or a camp sink, not a house water heater. Some L5 variant listings, such as the L5-P and L5-PS, are marked discontinued at retailers, so check that the version you buy has current parts support.",
+    "pros": [
+      "1.5 GPM and 37,500 BTU per Eccotemp",
+      "Runs on a standard 20 lb cylinder",
+      "Battery ignition, no outlet needed",
+      "Regulator included"
+    ],
+    "cons": [
+      "Outdoor only, never inside a cabin or RV",
+      "Some variants discontinued at retailers",
+      "Needs at least 0.5 GPM of flow to stay lit"
+    ],
+    "bottomLine": "The portable to buy for camp showers and outdoor cleanup, as long as it stays outside."
+  },
+  {
+    "id": "camplux-ay132",
+    "name": "Camplux AY132 Portable",
+    "badge": "Budget Portable",
+    "category": "Portable, Outdoor Only, 20 lb Cylinder",
+    "amazonUrl": "#",
+    "description": "Camplux's AY132 is the smaller, cheaper alternative to the Eccotemp. Camplux's product pages list it as a 5-liter, 1.32 GPM unit with a 34,000 BTU burner, and listings say it starts at a low water pressure of about 3.0 psi, which helps on a gravity or RV pump supply. The base model has no built-in pump and needs a pressurized water supply; Camplux sells pump kit versions, such as the AY132BP43 listed at Wayfair, if you are drawing from a bucket or tank. Weight listings disagree, at 10 or 14 pounds. Like every portable here it is for outdoor use only. Treat it as a camp sink and quick-rinse heater rather than a full shower solution, because 1.32 GPM at a big temperature rise is a thin stream.",
+    "pros": [
+      "34,000 BTU, 1.32 GPM per Camplux",
+      "Starts at about 3 psi water pressure",
+      "Pump kit versions available",
+      "Light and compact"
+    ],
+    "cons": [
+      "Lowest flow in this list",
+      "Spec listings disagree on weight",
+      "Outdoor only"
+    ],
+    "bottomLine": "Fine for a camp kitchen or dog wash on a budget; buy the Eccotemp if showers are the main job."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Propane Tankless Water Heaters",
+          item: "https://www.thehonestreviewers.com/best-propane-tankless-water-heater/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What size propane tankless water heater do I need?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Work from your winter groundwater temperature and the fixtures that run at once. At a 75-degree rise, a 180,000 to 199,000 BTU condensing unit typically delivers about 4.5 to 5 GPM, enough for two showers. In warm-water regions the same unit covers three. Check the maker's rise table, not the headline GPM, and consider two cascaded units for big homes."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How big a propane tank do I need for a tankless water heater?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on climate and what else runs on the tank. Vaporization charts show tank output dropping sharply in cold weather, and one guide lists a 250-gallon tank at about 169,200 BTU per hour at zero degrees. Many suppliers put whole-house tankless systems on a 250 or 500 gallon tank. Ask your supplier to size it with the heater's maximum input."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I convert a natural gas tankless to propane?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Often, yes. Navien says all NPE-2 models are field convertible and supplies the kit, and Noritz includes an LP conversion with the EZ111DV. Rinnai and Rheem sell many dedicated propane models instead. Either way, a qualified gas technician should do the conversion and check combustion afterward. Never run an unconverted natural gas unit on propane."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a propane tankless cheaper to run than a propane tank heater?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Usually, because a tankless does not keep 40 or 50 gallons hot around the clock, and condensing units reach 0.93 to 0.98 UEF per their makers. The savings are larger on propane than on natural gas because the fuel costs more. Navien estimates about 196 gallons a year for its NPE-210A2 under the DOE test procedure; your use will differ."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can a portable propane water heater be used indoors?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Portable units like the Eccotemp L5 and Camplux AY132 are labelled for outdoor use only because they have no vent. Using one in a bathroom, cabin, camper or garage risks carbon monoxide poisoning. For indoor hot water you need a vented, permitted whole-house heater, or an electric point-of-use unit for a single sink."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do propane tankless water heaters need special venting?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Condensing units vent through PVC, CPVC or polypropylene, often with a concentric kit through one wall or roof hole, and need a condensate drain. Indoor non-condensing units usually need the maker's approved stainless or special vent system. Outdoor models such as the Rinnai RE180eP need no vent pipe. Clearances to windows, doors and the propane tank are set by the manual and code."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long do propane tankless water heaters last?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The makers here back heat exchangers for 15 years or more, and Noritz lists a 25-year warranty on the EZ111DV. Real life depends mostly on water hardness and maintenance. Descale annually in hard water, clean the inlet screen and keep the condensate drain clear. Skipping descaling is the most common way an expensive unit fails early."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home Improvement",
+    tags: [
+      "propane tankless water heater",
+      "lp tankless water heater",
+      "propane on demand water heater",
+      "portable propane water heater",
+      "outdoor propane tankless water heater",
+      "propane tank size for tankless"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Propane Water Heating
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best Propane Tankless <span class="text-[#38BDF8]">Water Heaters</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Five whole-house LP units and two portable camp heaters, kept strictly apart, with the sizing, tank, regulator and venting math that decides whether any of them works at your house.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#rinnai-rsc199ip"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Jump to the Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Shaheer Ali Khan</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Consumer Product Testing &amp; Materials Performance Specialist</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="8.4k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-chose" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Chose</a>
+          <a href="#whole-house-vs-portable" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Whole-House vs Portable</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 7 Picks</a>
+          <a href="#sizing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Sizing by BTU and GPM</a>
+          <a href="#tank-size" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Propane Tank Size</a>
+          <a href="#gas-line" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Regulators and Gas Lines</a>
+          <a href="#venting" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Venting</a>
+          <a href="#conversion" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. LP Conversion Kits</a>
+          <a href="#running-cost" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Running Cost</a>
+          <a href="#safety" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Safety and Maintenance</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">12. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          A propane tankless water heater is two very different products sold under one search term. One is a 199,000 BTU wall-hung appliance that heats a whole house and needs a properly sized tank, regulator and vent. The other is a 35,000 BTU box you hang on a post for a camp shower. Buy the wrong category and nothing else on this page matters.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-chose" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Chose These Propane Units
+          </h2>
+
+          <p>
+            We started from the propane-specific or propane-convertible models that the major tankless makers currently list, then checked each against the maker's own product page or spec sheet. A surprising number of LP units that still appear in older roundups are gone. Takagi's T-H3-DV-P, for example, is marked discontinued at SupplyHouse, and Rinnai's V65eP is marked discontinued at Build.com even though Rinnai still has a page for it. We left both off rather than send you hunting for old stock.
+          </p>
+
+          <p>
+            We also deliberately avoided repeating our main <a href="/best-tankless-water-heater/">best tankless water heater</a> list. That guide is written around natural gas and covers models like the Rinnai RX199iN and Navien NPE-240A2. Several of those run on propane too, and if one of them suits you it is still a good choice, but this page focuses on the propane-specific SKUs and the smaller sizes that fit a typical LP household.
+          </p>
+
+          <p>
+            The criteria were simple. A whole-house pick had to publish its BTU range, maximum flow, efficiency and propane compatibility, and it had to be something a local installer can actually buy and service. A portable pick had to publish its BTU input and flow and be clearly labelled for outdoor use. We did not test any of these units; where we quote a figure we say whose figure it is, and where sources disagree we tell you.
+          </p>
+        </div>
+
+        <div id="whole-house-vs-portable" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Whole-House vs Portable: Two Different Products
+          </h2>
+
+          <p>
+            A whole-house propane tankless heater burns up to roughly 180,000 to 200,000 BTU per hour, mounts on a wall, connects to your plumbing and gas system, and vents combustion gases outside through a dedicated pipe or by being mounted outdoors. It is installed under a plumbing and gas permit in most places, and it is meant to run for 15 to 20 years. The five whole-house picks below are in this class.
+          </p>
+
+          <p>
+            A portable propane water heater is a small burner, usually 30,000 to 40,000 BTU, that screws onto a 20-pound grill cylinder and a garden hose. Eccotemp rates its L5 at 1.5 gallons per minute and Camplux rates its AY132 at 1.32 GPM. That is enough for one modest outdoor shower, washing dishes at camp or rinsing a dog, but it is less than a single standard shower head flows in a house. These units have no vent, which is exactly why both makers say outdoors only.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE RULE</p>
+            <p class="text-xl font-bold text-white mb-3">Never take a portable propane heater indoors.</p>
+            <p class="text-gray-300 leading-relaxed m-0">Portable units burn propane in open air with no flue. Used in a bathroom, cabin, RV, tent or garage they can produce deadly carbon monoxide. The CPSC warns that carbon monoxide is invisible and odorless. If you need hot water inside, you need a vented whole-house unit installed by a professional.</p>
+          </div>
+
+          <p>
+            There is a middle case worth naming: an off-grid cabin or tiny house. People are tempted to hang a portable unit inside to save money. Do not. Either mount a portable unit outside with the plumbing run through the wall, or buy a small vented whole-house unit such as an outdoor-mount model. If the cabin is all-electric, a <a href="/point-of-use-water-heater/">point-of-use water heater</a> may be simpler than propane at all.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 7 Picks
+          </h2>
+
+          <p>
+            The first five are whole-house heaters that a licensed installer mounts, vents and connects to a propane system. The last two are portable outdoor units for camps, cabins without plumbing and outdoor showers; they are not a substitute for a house water heater and must never be used indoors. Every figure comes from the maker's product page or spec sheet, or from a named retailer listing where the maker does not publish it. We researched these from published specifications; we did not lab-test them.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="sizing" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Sizing: BTU, GPM and Your Groundwater Temperature
+          </h2>
+
+          <p>
+            Every tankless heater is limited by how many degrees it can raise a given flow of water. The physics is a single line: gallons per minute equals BTU output divided by 500 times the temperature rise. The 500 comes from a gallon of water weighing about 8.33 pounds, times 60 minutes. Output is input times efficiency, so a 199,000 BTU condensing unit at about 95 percent delivers roughly 189,000 BTU of heat into the water.
+          </p>
+
+          <p>
+            Temperature rise is the number that changes everything. If you want 120 degree water and your incoming water is 45 degrees, as it often is in northern winters, you need a 75 degree rise. In the Gulf states incoming water can sit near 65 to 70 degrees, which needs only a 50 to 55 degree rise. The same heater can deliver almost half again as much hot water in Florida as it does in Minnesota.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Temperature rise</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Navien NPE-210A2</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Navien NPE-240A2</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">35°F</td>
+                    <td class="px-4 py-4 text-gray-700">10.1 GPM</td>
+                    <td class="px-4 py-4 text-gray-700">11.2 GPM</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">50°F</td>
+                    <td class="px-4 py-4 text-gray-700">7.1 GPM</td>
+                    <td class="px-4 py-4 text-gray-700">7.8 GPM</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">60°F</td>
+                    <td class="px-4 py-4 text-gray-700">5.9 GPM</td>
+                    <td class="px-4 py-4 text-gray-700">6.5 GPM</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">75°F</td>
+                    <td class="px-4 py-4 text-gray-700">4.7 GPM</td>
+                    <td class="px-4 py-4 text-gray-700">5.2 GPM</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            That table comes straight from Navien's QuickFacts sheet, and it is the honest way to read any maximum GPM figure. The headline numbers on the box, 10 or 11 GPM, are quoted at a 35 degree rise, which almost nobody has in winter. At a 75 degree rise the NPE-210A2 delivers 4.7 GPM. That is two showers running at about 2 GPM each, which is about right for many houses.
+          </p>
+
+          <p>
+            To size yours, add up the fixtures that genuinely run together on a cold morning, use your winter inlet temperature, and check the maker's rise table rather than the headline GPM. Our guide on <a href="/what-size-tankless-water-heater-do-i-need/">what size tankless water heater you need</a> walks through the fixture count in more detail. If the numbers say you need more than one unit can deliver, most makers allow two units to be cascaded.
+          </p>
+        </div>
+
+        <div id="tank-size" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Propane Tank Size and Why Cylinders Are Not Enough
+          </h2>
+
+          <p>
+            Propane leaves a tank as vapor, and the tank can only boil off liquid so fast. That vaporization rate falls as the weather gets colder and as the tank empties, and it is the most common reason a propane tankless heater that works fine in July sputters in January. A whole-house unit asking for 199,000 BTU per hour needs a tank that can actually supply it on the coldest morning, alongside any furnace, range or dryer on the same tank.
+          </p>
+
+          <p>
+            Published charts vary, but they all point the same way. One tank-sizing guide from Elliott Electric lists a 120-gallon tank at about 246,000 BTU per hour at 40 degrees, while a 250-gallon tank drops from about 507,600 BTU per hour at 40 degrees to about 169,200 at zero. That zero-degree figure is below a single 199,000 BTU heater running flat out, before the furnace is counted.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">Propane Numbers That Matter</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <p class="text-3xl font-black text-white">~91,500</p>
+                <p class="text-gray-400 text-xs mt-1">BTU in a gallon of propane</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">~2.2 gal/hr</p>
+                <p class="text-gray-400 text-xs mt-1">Burn at 199,000 BTU full fire</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-white">~4.7 gal</p>
+                <p class="text-gray-400 text-xs mt-1">Propane in a full 20 lb cylinder</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">11 in. WC</p>
+                <p class="text-gray-400 text-xs mt-1">Typical house-side LP pressure</p>
+              </div>
+            </div>
+          </div>
+
+          <p>
+            In practice that is why propane suppliers usually put a whole-house tankless on a 250 or 500 gallon tank, and why a pair of 100-pound cylinders is a poor fit in cold climates. Tankless heaters only burn at full fire while hot water is running, so total gallons used per month are modest, but the instantaneous draw is large. Tell your supplier the heater's maximum BTU input and every other appliance on the tank, and ask them to size the tank and regulator for your coldest month.
+          </p>
+
+          <p>
+            Portable units are the opposite case. At 37,500 BTU the Eccotemp L5 uses about four tenths of a gallon per hour at full fire, so a full 20-pound cylinder, which holds about 4.7 gallons, covers roughly ten hours of burner time. Bring a spare cylinder for a week of camp showers, and expect small cylinders to lose pressure in near-freezing weather.
+          </p>
+        </div>
+
+        <div id="gas-line" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Regulators, Gas Pressure and Line Sizing
+          </h2>
+
+          <p>
+            A residential propane system normally uses two-stage regulation: a first-stage regulator at the tank drops tank pressure to roughly 10 psi for the run to the house, and a second-stage regulator near the house drops it to about 11 inches of water column for the appliances. Every tankless manual prints a minimum and maximum inlet pressure, and a heater asked to run on undersized supply pressure will throw ignition or flame codes at high demand.
+          </p>
+
+          <p>
+            The regulator has a capacity rating, too. If your existing second-stage regulator was sized for a furnace and a 40,000 BTU tank water heater, adding a 199,000 BTU tankless can exceed it. The same goes for the pipe. Propane carries roughly two and a half times the energy of natural gas per cubic foot, so LP lines can be smaller than natural gas lines for the same BTU, but a long half-inch run feeding a whole-house tankless and a furnace can still starve the heater.
+          </p>
+
+          <p>
+            Some makers advertise easier gas sizing. Navien's QuickFacts sheet promotes half-inch gas pipe compatibility over runs of up to about 24 feet on the NPE-2 series, while the RSC199iP and Noritz EZ111DV use three-quarter-inch gas connections. None of this replaces a load calculation. The installer should total every appliance on the system, measure the run, size pipe from the code tables in your jurisdiction and, ideally, check pressure at the heater with everything firing.
+          </p>
+
+          <p>
+            This is not DIY work. A gas line, regulator and appliance connection need a licensed gas fitter or plumber, a leak test and in most places a permit and inspection. If you are pricing the job, our <a href="/tankless-water-heater-cost/">tankless water heater cost</a> guide covers what installers typically charge for gas line upgrades, and the <a href="/water-heater-replacement-cost/">water heater replacement cost</a> guide compares that against simply swapping a tank.
+          </p>
+        </div>
+
+        <div id="venting" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Venting: Concentric PVC, Stainless or Outdoors
+          </h2>
+
+          <p>
+            Condensing propane units pull so much heat out of the exhaust that it leaves cool enough for plastic pipe. Rinnai's product pages list PVC, CPVC and polypropylene venting instructions, and Rheem's RTGH literature quotes two-inch PVC runs of up to 60 feet and three-inch runs of up to 150 feet. Navien quotes two-inch venting up to 75 feet. Many installs use a concentric kit, a pipe within a pipe that brings combustion air in around the exhaust through a single wall or roof penetration.
+          </p>
+
+          <p>
+            Condensing units also make condensate, an acidic water that has to drain somewhere. Plan a drain route and, where local code or the manual requires it, a neutralizer cartridge. Our explainer on <a href="/condensing-vs-non-condensing-tankless-water-heater/">condensing vs non-condensing tankless</a> heaters covers the trade-offs in more depth, but for propane the answer is usually condensing because it burns less of an expensive fuel.
+          </p>
+
+          <p>
+            Indoor non-condensing units, such as Rinnai's RE199iP, vent hotter exhaust and usually need the maker's approved stainless or special venting system rather than PVC, which often wipes out their lower sticker price. The cleaner way to use a non-condensing unit is outdoors. An outdoor model like the RE180eP mounts on an exterior wall with no vent pipe and no condensate line at all, which is often the cheapest installed option in mild climates.
+          </p>
+
+          <p>
+            Do not reuse an old tank heater's metal flue for any tankless unit unless the manual specifically allows it, and never vent into a chimney shared with another appliance. Clearances to windows, doors, soffits and the propane tank itself are spelled out in the manual and in fuel gas code, and they are a frequent inspection failure.
+          </p>
+        </div>
+
+        <div id="conversion" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. LP Conversion Kits: Convert or Buy the LP Model?
+          </h2>
+
+          <p>
+            Makers handle propane in two ways. Rinnai and Rheem sell many models as separate propane SKUs, identifiable by a P in the model number, such as the RSC199iP or RTGH-90DVLP-3. Navien and Noritz ship most models ready for natural gas with a propane conversion kit in the box. Navien's QuickFacts sheet says all NPE-2 models are field convertible from natural gas to LP, and Noritz lists an NG to LP field gas conversion as included with the EZ111DV.
+          </p>
+
+          <p>
+            A conversion kit typically swaps the gas orifice or nozzle and changes a setting, a DIP switch or an app parameter, so the controls know the fuel. Navien's guide specifically warns installers not to confuse its propane kit with its high-altitude kit, which is for natural gas only. The work also usually requires a combustion check with an analyzer afterward, and a conversion label on the unit.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">WARRANTY AND SAFETY</p>
+            <p class="text-xl font-bold text-white mb-3">A wrong or skipped conversion is dangerous.</p>
+            <p class="text-gray-300 leading-relaxed m-0">Running a natural gas configured heater on propane over-fires it, which can produce soot, carbon monoxide and a damaged heat exchanger. Navien's spec sheet says conversion requires a qualified gas servicer. Treat that as the rule for every brand.</p>
+          </div>
+
+          <p>
+            For a buyer, the practical difference is small. A dedicated LP model removes one step and one opportunity for error. A convertible model is handy if your street may get natural gas later or if your local supplier only stocks the NG version. Either way, tell the installer you are on propane before the unit is ordered, so the right kit or SKU arrives.
+          </p>
+        </div>
+
+        <div id="running-cost" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Running Cost: Propane vs Natural Gas vs Electric
+          </h2>
+
+          <p>
+            Propane is usually the expensive fuel. Navien's own QuickFacts sheet estimates the NPE-210A2 at 179 therms a year on natural gas, about $195 at $1.09 a therm, versus 196 gallons a year on propane, about $472 at $2.41 a gallon. Your local prices will differ, but the ratio is typical: the same hot water costs roughly twice as much on LP as on natural gas.
+          </p>
+
+          <p>
+            That is the single best argument for a condensing unit on propane. A 0.95 UEF condensing heater turns more of each expensive gallon into hot water than a 0.82 UEF non-condensing model. On a fuel that costs more than double natural gas per unit of heat, the efficiency gap pays back faster than it does in our natural gas comparisons, especially in a household with heavy hot water use.
+          </p>
+
+          <p>
+            Electric is the other option. A heat pump water heater can beat propane on running cost in many regions, and an electric tankless can work in warm climates if the panel can handle it. Our <a href="/best-electric-tankless-water-heater/">electric tankless water heater</a> guide covers the panel math. If you already have propane for heating and a 200-amp panel without spare capacity, propane tankless is often the realistic choice.
+          </p>
+
+          <p>
+            One cost that propane buyers forget is the tank. If you lease a tank from your supplier, ask whether adding a large tankless changes the tank size, regulator or delivery schedule. Owning versus leasing the tank also affects which supplier can fill it, which affects your per-gallon price for years.
+          </p>
+        </div>
+
+        <div id="safety" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            10. Safety, Code and Maintenance
+          </h2>
+
+          <p>
+            Before any work on a gas water heater, shut off the gas at the appliance valve, switch off and unplug the electrical supply, and close the water isolation valves. Tankless units can deliver scalding water immediately, so keep the set point at 120 degrees unless you have a specific reason and a mixing valve. Let the heat exchanger cool before opening anything.
+          </p>
+
+          <p>
+            Most tankless installation manuals still call for a pressure relief valve on the hot outlet, and isolation valve kits commonly include one. Like the T and P valve on a tank heater, it must never be plugged, capped or removed, and its discharge line must run to a safe location. Our <a href="/water-heater-pressure-relief-valve/">water heater pressure relief valve</a> guide covers testing and replacement.
+          </p>
+
+          <p>
+            Install a carbon monoxide alarm on every level of a home with gas appliances, and a propane leak detector if the heater is in a basement, since propane is heavier than air and pools low. If you smell gas, leave the house and call your propane supplier or 911 from outside. Do not try to find the leak yourself.
+          </p>
+
+          <p>
+            Maintenance is mostly descaling. In hard water, flush the heat exchanger with a pump and vinegar or the maker's descaler once a year using the isolation valves; our <a href="/how-to-flush-a-tankless-water-heater/">how to flush a tankless water heater</a> guide has the steps. Clean the inlet water screen, check the condensate drain and neutralizer, and have the gas pressure and combustion checked by a technician every few years.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying a Portable for Indoor Use</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Portable propane heaters have no flue. Hanging one in a cabin bathroom, RV or garage risks carbon monoxide poisoning. Eccotemp and Camplux label their units for outdoor use, and that is not a formality. If you need hot water indoors, budget for a vented whole-house unit installed by a licensed pro.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Sizing From the 35-Degree GPM Number</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Headline flow ratings are quoted at a small temperature rise. In a cold-water region a heater sold as 10 GPM may deliver under 5 GPM in winter. Use your winter inlet temperature and the maker's rise table, such as Navien's, before deciding how many showers one unit can run.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring Tank Vaporization</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A 199,000 BTU heater can outrun a small tank or a pair of 100-pound cylinders on a cold morning, especially with a furnace on the same supply. Give your propane supplier the heater's maximum input and every other appliance, and let them size the tank and regulators for your coldest month.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Reusing the Old Regulator and Gas Line</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A regulator and half-inch line sized for a tank heater and furnace may not carry a whole-house tankless. Under-supplied heaters throw ignition codes when demand peaks. Have the installer do a full load calculation, size pipe from code tables and check pressure at the heater under load.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">DIY Propane Conversion</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Conversion kits look simple, an orifice and a setting, but a mistake can over-fire the burner, produce soot and carbon monoxide and ruin the heat exchanger. Navien says conversion requires a qualified gas servicer. Pay for the conversion and a combustion analysis; it is a small part of the installed cost.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            12. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What size propane tankless water heater do I need?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Work from your winter groundwater temperature and the fixtures that run at once. At a 75-degree rise, a 180,000 to 199,000 BTU condensing unit typically delivers about 4.5 to 5 GPM, enough for two showers. In warm-water regions the same unit covers three. Check the maker's rise table, not the headline GPM, and consider two cascaded units for big homes.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How big a propane tank do I need for a tankless water heater?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It depends on climate and what else runs on the tank. Vaporization charts show tank output dropping sharply in cold weather, and one guide lists a 250-gallon tank at about 169,200 BTU per hour at zero degrees. Many suppliers put whole-house tankless systems on a 250 or 500 gallon tank. Ask your supplier to size it with the heater's maximum input.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I convert a natural gas tankless to propane?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Often, yes. Navien says all NPE-2 models are field convertible and supplies the kit, and Noritz includes an LP conversion with the EZ111DV. Rinnai and Rheem sell many dedicated propane models instead. Either way, a qualified gas technician should do the conversion and check combustion afterward. Never run an unconverted natural gas unit on propane.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a propane tankless cheaper to run than a propane tank heater?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Usually, because a tankless does not keep 40 or 50 gallons hot around the clock, and condensing units reach 0.93 to 0.98 UEF per their makers. The savings are larger on propane than on natural gas because the fuel costs more. Navien estimates about 196 gallons a year for its NPE-210A2 under the DOE test procedure; your use will differ.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can a portable propane water heater be used indoors?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                No. Portable units like the Eccotemp L5 and Camplux AY132 are labelled for outdoor use only because they have no vent. Using one in a bathroom, cabin, camper or garage risks carbon monoxide poisoning. For indoor hot water you need a vented, permitted whole-house heater, or an electric point-of-use unit for a single sink.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do propane tankless water heaters need special venting?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Condensing units vent through PVC, CPVC or polypropylene, often with a concentric kit through one wall or roof hole, and need a condensate drain. Indoor non-condensing units usually need the maker's approved stainless or special vent system. Outdoor models such as the Rinnai RE180eP need no vent pipe. Clearances to windows, doors and the propane tank are set by the manual and code.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long do propane tankless water heaters last?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                The makers here back heat exchangers for 15 years or more, and Noritz lists a 25-year warranty on the EZ111DV. Real life depends mostly on water hardness and maintenance. Descale annually in hard water, clean the inlet screen and keep the condensate drain clear. Skipping descaling is the most common way an expensive unit fails early.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Tankless Water Heater Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-tankless-water-heater/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Tankless Water Heaters</h3>
+              <p class="text-gray-500 text-sm mt-2">Our main tankless picks, written around natural gas homes.</p>
+            </a>
+            <a href="/what-size-tankless-water-heater-do-i-need/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">What Size Tankless Do I Need?</h3>
+              <p class="text-gray-500 text-sm mt-2">The two-number method for flow and temperature rise.</p>
+            </a>
+            <a href="/condensing-vs-non-condensing-tankless-water-heater/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Comparison</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Condensing vs Non-Condensing</h3>
+              <p class="text-gray-500 text-sm mt-2">Efficiency, venting and the real installed cost.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            For most propane homes the <strong class="text-white">Rinnai RSC199iP</strong> is the one to buy: a dedicated LP model, condensing, recirculation capable and backed by the biggest service network. The <strong class="text-white">Noritz EZ111DV</strong> is the easiest swap from a tank, and the <strong class="text-white">Navien NPE-210A2</strong> is the pick when the wait for hot water is the real complaint.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Before you buy any of them, settle the three things that decide whether it works: your winter temperature rise, whether your tank and regulator can supply the full BTU input, and where the vent goes. For camp showers, the <strong class="text-white">Eccotemp L5</strong> does the job, outdoors only.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Improvement" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
