@@ -1,0 +1,954 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Humidifiers",
+    "url": "/best-humidifier/"
+  },
+  {
+    "title": "Evaporative vs Ultrasonic Humidifier",
+    "url": "/evaporative-vs-ultrasonic-humidifier/"
+  },
+  {
+    "title": "Best Humidifier for Large Room",
+    "url": "/best-humidifier-for-large-room/"
+  },
+  {
+    "title": "Best Whole House Humidifiers",
+    "url": "/best-whole-house-humidifier/"
+  },
+  {
+    "title": "How to Clean a Humidifier",
+    "url": "/how-to-clean-a-humidifier/"
+  },
+  {
+    "title": "Humidifier for Nosebleeds",
+    "url": "/humidifier-for-nosebleeds/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-20", modified: "2026-10-20" });
+const title = "6 Best Evaporative Humidifiers: No White Dust, Real Wick Costs";
+const description =
+  "The best evaporative humidifiers for bedrooms, living areas and open floors, compared on coverage, tank size, noise and what replacement wicks cost per season.";
+
+const PRODUCTS = [
+  {
+    "id": "vornado-evap40",
+    "name": "Vornado Evap40 Evaporative Humidifier",
+    "badge": "Best Overall",
+    "category": "Portable, Whole-Room",
+    "amazonUrl": "#",
+    "description": "The Vornado Evap40 is the evaporative humidifier we would point most people to for a large bedroom, living room or open area. Vornado rates it for spaces up to 1,000 square feet with a 4-gallon capacity split across two removable tanks, which Vornado says gives roughly 24 hours of run time. A built-in humidistat provides automatic humidity control and shuts the unit off at the level you choose, and there are three fan speeds. Air passes through two wicks and Vornado's Vortex airflow circulates the moisture around the room. The wicks are Vornado's MD1-0034, which also fit several other Vornado models, sold as a two-pack at $14.99 on Vornado's site, with replacement every four to eight weeks depending on use. Vornado lists the unit at $149.99. Vornado does not publish a decibel figure in the listings we checked.",
+    "pros": [
+      "Rated for up to 1,000 sq ft per Vornado",
+      "4 gallons across two tanks, about 24 hours",
+      "Built-in humidistat with automatic shutoff",
+      "Wicks easy to find, shared with other Vornado models"
+    ],
+    "cons": [
+      "Uses two wicks, so replacement cost doubles",
+      "No published noise figure",
+      "Target lists coverage as 800-1,000 sq ft"
+    ],
+    "bottomLine": "The right size and the right controls for most rooms, with wicks you can always find."
+  },
+  {
+    "id": "levoit-superior-6000s",
+    "name": "Levoit Superior 6000S Smart Evaporative Humidifier",
+    "badge": "Best for Large Spaces",
+    "category": "Large Tower, Smart",
+    "amazonUrl": "#",
+    "description": "The Levoit Superior 6000S is the pick for large open-plan spaces. Levoit lists a 6-gallon tank, a maximum output of 1,500 mL per hour and up to 72 hours of runtime on low, with an effective range of 3,000 square feet, a figure Levoit says was tested by a third party in a lab setting and that will vary in real homes. It is a smart model controlled through Levoit's VeSync app. Levoit gives a noise level of 28 to 45 decibels. Levoit's blog says the wick should generally be replaced every three to six months under normal use, which is a longer interval than most of this list, and Levoit's store has listed a four-pack of replacement filters at $12. The size is the trade-off: a 6-gallon tank is heavy to carry when full, so check how it fills before buying.",
+    "pros": [
+      "6-gallon tank, up to 72 hours on low per Levoit",
+      "Rated up to 3,000 sq ft (third-party lab figure)",
+      "App control through VeSync",
+      "Levoit's wick interval is 3-6 months"
+    ],
+    "cons": [
+      "Coverage figure is a lab best case",
+      "Large and heavy when full",
+      "Overkill for a single bedroom"
+    ],
+    "bottomLine": "Enough capacity for an open floor, with a longer wick interval than most rivals."
+  },
+  {
+    "id": "aircare-ma0800",
+    "name": "AIRCARE MA0800 Mini-Console Evaporative Humidifier",
+    "badge": "Best Console for Open Floors",
+    "category": "Console, Multi-Room",
+    "amazonUrl": "#",
+    "description": "The AIRCARE MA0800 is a compact console humidifier for an open floor or a small, tightly built home. AIRCARE's manual-based listing rates it for up to 2,600 square feet in tight construction and 1,700 square feet in average construction; the second figure is the one most homeowners should plan around. A 2.5-gallon bottle and tank runs up to 36 hours per fill according to retailer listings, with three fan speeds and a digital humidistat that adjusts from 25 to 65 percent relative humidity in 5 percent steps. Retailers list the MAF2 as its replacement wick, and AIRCARE retailers say to change the wick at least once a season, more often with hard water. Check the part number in your manual before ordering, because AIRCARE makes several similar consoles that take different wicks.",
+    "pros": [
+      "1,700-2,600 sq ft rating per AIRCARE",
+      "Digital humidistat, 25-65% in 5% steps",
+      "Up to 36 hours per fill per listings",
+      "Single wick, changed about once a season"
+    ],
+    "cons": [
+      "Tight-construction rating flatters it",
+      "Wick part numbers vary across AIRCARE models",
+      "No published noise figure"
+    ],
+    "bottomLine": "A lot of coverage in a small console, as long as you plan around the average-construction rating."
+  },
+  {
+    "id": "levoit-superior-studio-smart",
+    "name": "Levoit Superior Studio Smart Evaporative Humidifier",
+    "badge": "Best for Bedrooms",
+    "category": "Compact, Smart",
+    "amazonUrl": "#",
+    "description": "The Levoit Superior Studio Smart is the quietest wick humidifier here by the maker's numbers and the one with the lowest ongoing wick cost. Levoit lists a 4.5-liter tank, 600 square feet of coverage, a maximum output of 400 mL per hour and up to 40 hours on low. Levoit gives a noise range of 19 to 45 decibels measured 1.5 meters away. The wick is washable, including in a washing machine, and Levoit says it lasts up to two years based on one wash a week, with replacements at $24.99. An automatic dry mode dries the wick when the unit runs out of water or is switched off, and a descaling mode is available, both controlled in the VeSync app. Levoit launched the Smart model in June 2026 at $139.99; a non-Smart version is also sold at $129.99, though Levoit's store showed it sold out when we checked.",
+    "pros": [
+      "19-45 dB per Levoit, quietest listed here",
+      "Washable wick rated for up to 2 years",
+      "Automatic wick drying and descaling mode",
+      "Sized for a bedroom or nursery at 600 sq ft"
+    ],
+    "cons": [
+      "Washing the wick weekly is a real chore",
+      "Smaller output than the big towers",
+      "Non-Smart version may be out of stock"
+    ],
+    "bottomLine": "The bedroom pick: quiet on low, and a wick you wash instead of buying every month."
+  },
+  {
+    "id": "honeywell-hev320",
+    "name": "Honeywell HEV320 Quiet Comfort Cool Moisture Humidifier",
+    "badge": "Best Budget Small-Room Pick",
+    "category": "Compact, Single Room",
+    "amazonUrl": "#",
+    "description": "The Honeywell HEV320, sold as the HEV320B and HEV320WC among other codes, is a simple evaporative humidifier for one small or medium room. Honeywell lists a 0.8-gallon tank that runs up to 18 hours on the low setting, with two output settings and a compact footprint of about 8.5 by 13.2 inches and 10.2 inches tall. It takes Honeywell's HC-888 Filter C wick, and Honeywell recommends changing it every 30 to 60 days depending on water quality and use, sooner with hard water or when the wick turns hard and crusty, smells or output drops. There is no humidistat, so the HEV320 relies on the natural slowing of evaporative output as a room gets humid, plus a hygrometer and your judgment. Honeywell describes it only as suitable for a medium room and does not give a square-footage rating.",
+    "pros": [
+      "Small footprint for a nightstand or dresser",
+      "Up to 18 hours on low per Honeywell",
+      "Widely available Filter C wick",
+      "Runs cool, no white dust from tap water"
+    ],
+    "cons": [
+      "No humidistat",
+      "0.8-gallon tank needs daily filling",
+      "No official square-footage rating"
+    ],
+    "bottomLine": "A basic, inexpensive way to humidify one bedroom, if you pair it with a hygrometer."
+  },
+  {
+    "id": "venta-ah530",
+    "name": "Venta AH530 Original Connect Humidifier",
+    "badge": "Best Filter-Free Splurge",
+    "category": "Disc Evaporator, Smart",
+    "amazonUrl": "#",
+    "description": "The Venta AH530 Original Connect is the pick for people who never want to buy a wick. Instead of a filter, it turns a stack of plastic discs through the water and blows air across them, a mist-free evaporative design that retailer Abt describes as using only water and no filters. Abt lists a 1.8-gallon tank, coverage up to 485 square feet including adjoining open spaces, three speeds, an Auto mode that adjusts to current humidity, a Sleep mode, Wi-Fi control through the Smart Life app and noise figures of 24, 34 and 44 decibels. Maintenance is a rinse of the disc stack about every 10 to 14 days, and Venta recommends its Water Treatment Additive. The catch is price: Abt listed it at $449.99, several times the cost of a wick humidifier with more coverage.",
+    "pros": [
+      "No wicks or filters to buy",
+      "Published 24/34/44 dB speeds per Abt",
+      "Auto and Sleep modes with Wi-Fi",
+      "Tap water safe per the retailer listing"
+    ],
+    "cons": [
+      "Listed at $449.99 at Abt",
+      "Only 485 sq ft of coverage",
+      "Venta recommends its own water additive"
+    ],
+    "bottomLine": "Expensive, but the one evaporative design here with no consumable wick at all."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Evaporative Humidifiers",
+          item: "https://www.thehonestreviewers.com/best-evaporative-humidifier/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best evaporative humidifier?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most rooms we would choose the Vornado Evap40, which Vornado rates for up to 1,000 square feet with a 4-gallon capacity, a built-in humidistat and easy-to-find wicks. For large open spaces the Levoit Superior 6000S has more capacity, and for a quiet bedroom the Levoit Superior Studio Smart has the lowest published noise figures."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do evaporative humidifiers cause white dust?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. White dust comes from minerals in the water being thrown into the air as droplets, which the EPA associates with ultrasonic and impeller humidifiers. An evaporative unit releases only water vapor, and the minerals stay in the wick. The cost is that the wick scales up and needs replacing, sooner with hard water."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often do you replace the wick in an evaporative humidifier?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on the model and your water. Vornado says every four to eight weeks, Honeywell says 30 to 60 days for its Filter C, and Levoit says three to six months for the Superior 6000S. Replace sooner if the wick feels hard and crusty, smells or the unit's output drops."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you use tap water in an evaporative humidifier?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, which is one of their main advantages. The wick catches the minerals, so there is no white dust. Hard water makes the wick scale up faster, so expect to replace it more often. Distilled water is not required, but it extends wick life and reduces scale in the tank."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are evaporative humidifiers loud?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They make fan noise, because a fan has to move air across the wick. On low it is usually a gentle hum. Levoit lists its Superior Studio at 19 to 45 decibels and the Superior 6000S at 28 to 45 decibels. Light sleepers who need silence are often better served by an ultrasonic model."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can an evaporative humidifier over-humidify a room?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is much harder than with an ultrasonic unit, because water evaporates more slowly into air that is already humid, so output tapers as the room gets damp. It is not impossible in a small, closed room, so a humidistat or a separate hygrometer is still worth having to hold 30 to 50 percent."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are evaporative humidifiers better than ultrasonic?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They are better if you have hard water, want to use tap water without white dust, or want a unit that is hard to over-run. Ultrasonic models are quieter and have no wick to buy, but need distilled water to avoid dust. Our evaporative vs ultrasonic comparison covers the trade-off in full."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home & Indoor Air Quality",
+    tags: [
+      "best evaporative humidifier",
+      "evaporative humidifier",
+      "wick humidifier",
+      "humidifier no white dust",
+      "best wick humidifier"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Humidifiers
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best Evaporative Humidifiers <span class="text-[#38BDF8]">Without the White Dust</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Six wick and disc humidifiers matched to the space they serve, from a 0.8-gallon bedroom unit to a 6-gallon tower rated for 3,000 square feet, with the running cost most roundups skip: replacement wicks.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#vornado-evap40"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            See All 6 Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="14.6k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-chose" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Chose</a>
+          <a href="#why-evaporative" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Why Evaporative</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our 6 Picks</a>
+          <a href="#sizing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Sizing by Room and Output</a>
+          <a href="#wick-costs" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Wick Replacement Costs</a>
+          <a href="#noise" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Noise</a>
+          <a href="#water" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Tap Water and Hard Water</a>
+          <a href="#cleaning" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Cleaning and Mold</a>
+          <a href="#placement" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Placement and Humidistats</a>
+          <a href="#alternatives" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. When to Buy Something Else</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">12. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          An evaporative humidifier blows air through a wet wick. It puts out invisible water vapor, leaves tap-water minerals in the wick instead of on your furniture, and slows itself down as the room gets humid. The price of that is fan noise and a wick you will replace every one to two months on most models. The best evaporative humidifier is the one sized to your space whose wicks you can actually find and afford.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-chose" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Chose
+          </h2>
+
+          <p>
+            Evaporative humidifiers are the plain, sensible end of the humidifier aisle, which is exactly why they get less attention than ultrasonic models with mist plumes and app screens. We wanted a list built around the things that decide whether an evaporative unit is worth owning: how much space it is rated to cover, how long a tank lasts, whether it can regulate itself, how loud the maker says it is, and what the wicks cost to keep it running.
+          </p>
+
+          <p>
+            We did not test these humidifiers. Every coverage, tank, output and noise figure on this page comes from a manufacturer page or a retailer listing, and where sources disagree, which happens often with humidifier coverage ratings, we give both figures or say which one we trust. Treat square-footage claims as best-case numbers for a reasonably tight room, not a promise for a drafty one.
+          </p>
+
+          <p>
+            We limited the list to true evaporative designs, meaning a fan pushes air across a wet wick, filter or disc stack and no mist is produced. That rules out ultrasonic units and the many hybrids that pair an ultrasonic transducer with a filter. We also favored brands with replacement wicks that are easy to buy, because a humidifier whose wick you cannot find in February is a humidifier that stops working.
+          </p>
+
+          <p>
+            Six picks cover the realistic range: a small bedroom, a larger bedroom or nursery, a living area, an open floor, a large open-plan home, and a premium filter-free option for people who never want to buy a wick. If you are still deciding between this design and an ultrasonic one, our <a href="/evaporative-vs-ultrasonic-humidifier/">evaporative vs ultrasonic comparison</a> covers the full trade-off, and our main <a href="/best-humidifier/">best humidifier</a> roundup covers every type.
+          </p>
+        </div>
+
+        <div id="why-evaporative" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Why Evaporative: No White Dust, Self-Limiting Output
+          </h2>
+
+          <p>
+            The case for an evaporative humidifier rests on what it does with your water. An ultrasonic unit shatters water into droplets and throws all of it into the room, including whatever is dissolved in it. The EPA notes that ultrasonic and impeller humidifiers can disperse minerals and microorganisms from the water, which is the fine white dust that settles on furniture in hard-water homes. An evaporative unit only releases water vapor; the minerals stay behind in the wick.
+          </p>
+
+          <p>
+            That means you can run an evaporative humidifier on ordinary tap water without white dust and without buying distilled water by the case. The trade is that the wick slowly fills with scale and has to be replaced, sooner with hard water. For most households, a wick every month or two is cheaper and easier than several gallons of distilled water a week, which is the main reason we recommend evaporative units for hard-water areas.
+          </p>
+
+          <p>
+            The second advantage is physics. Water evaporates more slowly into air that is already humid, so an evaporative humidifier's output naturally drops as the room approaches a comfortable level. It is much harder to over-humidify a room with one than with an ultrasonic unit, which keeps producing mist at the same rate regardless. That self-limiting behavior is not a substitute for a humidistat, but it makes a basic model far more forgiving.
+          </p>
+
+          <p>
+            The downsides are real. Every evaporative unit has a fan, and a fan makes noise, typically a steady hum or whoosh that some people like as white noise and others cannot sleep through. Wicks are an ongoing cost. And there is no visible mist, so it is less obvious when the unit is working; a hygrometer in the room is the only reliable way to know.
+          </p>
+
+          <p>
+            For health-driven buyers, the guidance is the same whichever type you choose. Mayo Clinic and the EPA recommend 30 to 50 percent indoor humidity and regular cleaning. If you are buying for a cold or a winter nosebleed problem, our guides to <a href="/does-a-humidifier-help-with-congestion/">whether a humidifier helps with congestion</a> and to using a <a href="/humidifier-for-nosebleeds/">humidifier for nosebleeds</a> cover what the medical sources support.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 6 Picks
+          </h2>
+
+          <p>
+            Six evaporative humidifiers, ordered by how many people we think each one suits. Every figure is from the manufacturer or a retailer listing, and where sources disagree we say so. Check the model number on the box or listing before ordering wicks, because several of these are sold under slightly different codes.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="sizing" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Sizing by Room and Output
+          </h2>
+
+          <p>
+            Coverage ratings are the least consistent number in the category. Vornado rates the Evap40 for up to 1,000 square feet, while Target lists it at 800 to 1,000. AIRCARE rates the MA0800 at 2,600 square feet for tight construction but only 1,700 for average construction, which is the more honest figure for most homes. Levoit's 3,000-square-foot rating for the Superior 6000S comes, by Levoit's own note, from a third-party lab test, and real results vary.
+          </p>
+
+          <p>
+            A more useful way to compare is tank size and daily output. A 0.8-gallon tank like the Honeywell HEV320's is a single-room, single-night machine. Four gallons, like the Evap40, can carry a large room through a day. Six gallons, like the Superior 6000S, are for open-plan spaces where moisture leaks away into hallways and stairwells. If you are humidifying an open floor, buy more capacity than the rating suggests.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Model</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Tank</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Rated coverage</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Maker or retailer runtime</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Honeywell HEV320</td>
+                    <td class="px-4 py-4 text-gray-700">0.8 gal</td>
+                    <td class="px-4 py-4 text-gray-700">Medium room (no sq ft given)</td>
+                    <td class="px-4 py-4 text-gray-700">Up to 18 hr on low</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Levoit Superior Studio Smart</td>
+                    <td class="px-4 py-4 text-gray-700">4.5 L (about 1.2 gal)</td>
+                    <td class="px-4 py-4 text-gray-700">600 sq ft</td>
+                    <td class="px-4 py-4 text-gray-700">Up to 40 hr on low</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Venta AH530</td>
+                    <td class="px-4 py-4 text-gray-700">1.8 gal</td>
+                    <td class="px-4 py-4 text-gray-700">485 sq ft</td>
+                    <td class="px-4 py-4 text-gray-700">Not stated</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Vornado Evap40</td>
+                    <td class="px-4 py-4 text-gray-700">4 gal</td>
+                    <td class="px-4 py-4 text-gray-700">Up to 1,000 sq ft</td>
+                    <td class="px-4 py-4 text-gray-700">About 24 hr</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">AIRCARE MA0800</td>
+                    <td class="px-4 py-4 text-gray-700">2.5 gal</td>
+                    <td class="px-4 py-4 text-gray-700">1,700-2,600 sq ft</td>
+                    <td class="px-4 py-4 text-gray-700">Up to 36 hr</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Levoit Superior 6000S</td>
+                    <td class="px-4 py-4 text-gray-700">6 gal</td>
+                    <td class="px-4 py-4 text-gray-700">Up to 3,000 sq ft</td>
+                    <td class="px-4 py-4 text-gray-700">Up to 72 hr on low</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            Room conditions matter as much as the machine. A drafty older house, high ceilings, an open staircase or a forced-air system that keeps moving air between rooms all raise the amount of moisture a humidifier has to supply. A bedroom with the door closed is the easiest case. Our guide to <a href="/what-size-humidifier-do-i-need/">what size humidifier you need</a> explains how to adjust for each.
+          </p>
+
+          <p>
+            When in doubt, size up. An oversized evaporative unit simply runs on a lower fan speed and refills less often, and because its output tapers as the room gets humid, it is unlikely to over-humidify the space. An undersized one runs flat out, never reaches the target and goes through wicks faster. If you need a whole floor or more, a portable unit may be the wrong tool altogether, which the last section covers.
+          </p>
+        </div>
+
+        <div id="wick-costs" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Wick Replacement: The Real Running Cost
+          </h2>
+
+          <p>
+            The purchase price of an evaporative humidifier is only part of what it costs. Over a few winters, the wicks can add up to more than the machine. Manufacturers give a replacement interval, and you should take it seriously, because a scaled, crusty wick evaporates less water and can start to smell. Here is what the makers say for each pick.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Model</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Wick</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Maker's replacement guidance</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Listed price</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Vornado Evap40</td>
+                    <td class="px-4 py-4 text-gray-700">MD1-0034 (uses two)</td>
+                    <td class="px-4 py-4 text-gray-700">Every 4-8 weeks</td>
+                    <td class="px-4 py-4 text-gray-700">$14.99 per 2-pack at Vornado</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Honeywell HEV320</td>
+                    <td class="px-4 py-4 text-gray-700">HC-888 Filter C</td>
+                    <td class="px-4 py-4 text-gray-700">Every 30-60 days</td>
+                    <td class="px-4 py-4 text-gray-700">Check current listings</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">AIRCARE MA0800</td>
+                    <td class="px-4 py-4 text-gray-700">MAF2 per retailers</td>
+                    <td class="px-4 py-4 text-gray-700">At least once per season</td>
+                    <td class="px-4 py-4 text-gray-700">Check current listings</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Levoit Superior 6000S</td>
+                    <td class="px-4 py-4 text-gray-700">Levoit 6000S filter</td>
+                    <td class="px-4 py-4 text-gray-700">Every 3-6 months (Levoit blog)</td>
+                    <td class="px-4 py-4 text-gray-700">4-pack listed at $12 at Levoit</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Levoit Superior Studio Smart</td>
+                    <td class="px-4 py-4 text-gray-700">Washable wick</td>
+                    <td class="px-4 py-4 text-gray-700">Up to 2 years with weekly washing</td>
+                    <td class="px-4 py-4 text-gray-700">$24.99 replacement at Levoit</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Venta AH530</td>
+                    <td class="px-4 py-4 text-gray-700">None (disc stack)</td>
+                    <td class="px-4 py-4 text-gray-700">Rinse discs every 10-14 days</td>
+                    <td class="px-4 py-4 text-gray-700">Venta water additive recommended</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            The Vornado math is a useful example. The Evap40 runs two wicks, Vornado sells them as a two-pack at $14.99, and it says to replace them every four to eight weeks depending on use. Over a five-month heating season that is roughly three to five sets, or about $45 to $75 a season at list price. Third-party wicks cost less, but fit and quality vary, so check reviews and dimensions before you switch.
+          </p>
+
+          <p>
+            Honeywell's Filter C guidance for the HEV320 is 30 to 60 days, with the warning that hard water may mean changing it sooner. Honeywell also lists the signs it is time: the wick feels hard and crusty, it gives off an odor, or moisture output drops. Those signs apply to every wick on this list and are a better trigger than the calendar if your water is very soft or very hard.
+          </p>
+
+          <p>
+            Two of our picks change the equation. Levoit's Superior Studio Smart uses a washable wick that Levoit says lasts up to two years if you wash it weekly, which turns a monthly purchase into a weekly chore. The Venta AH530 has no wick at all; it uses a stack of plastic discs you rinse every 10 to 14 days. Its running cost is the Venta water treatment additive the maker recommends, plus a much higher purchase price.
+          </p>
+
+          <p>
+            Whatever you buy, order wicks before the season starts. Replacement wicks for popular models sell out in the first cold snap, and a humidifier running on a wick that should have been changed a month ago is doing a fraction of its job. Buying a season's worth in October is the simplest way to keep the running cost predictable.
+          </p>
+        </div>
+
+        <div id="noise" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Noise: You Are Hearing a Fan
+          </h2>
+
+          <p>
+            Every evaporative humidifier makes noise for the same reason: a fan has to move air across the wick. Unlike an ultrasonic unit, which is close to silent apart from a faint gurgle, an evaporative model sounds like a small fan, because that is what it is. On low it is usually a gentle hum; on high it can be distracting in a quiet bedroom.
+          </p>
+
+          <p>
+            Only some makers publish noise figures, and they are measured in different ways, so compare them with care. Levoit lists the Superior Studio at 19 to 45 decibels measured 1.5 meters away and the Superior 6000S at 28 to 45 decibels. Abt's listing for the Venta AH530 gives 24, 34 and 44 decibels across its three speeds. Vornado, Honeywell and AIRCARE do not give decibel figures in the listings we checked.
+          </p>
+
+          <p>
+            In practice the useful question is whether the unit has a quiet low or sleep setting that still holds the room in range. A large unit running on low is often quieter than a small one running on high, which is another argument for sizing up. Vornado notes that the Evap40's low speed is meant for quieter running in small rooms and high for faster humidification in large ones.
+          </p>
+
+          <p>
+            Some people find a steady fan sound helps them sleep and some do not. If you are a light sleeper who needs silence, an evaporative humidifier may never suit you, and an ultrasonic model on distilled water is the better choice. Our picks for the <a href="/best-humidifier-for-bedroom/">best humidifier for a bedroom</a> weigh noise above everything else.
+          </p>
+        </div>
+
+        <div id="water" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Tap Water, Hard Water and What the Wick Catches
+          </h2>
+
+          <p>
+            One of the main reasons to buy an evaporative humidifier is that you can use tap water. The minerals stay in the wick, so there is no white dust, and you do not need to buy distilled water. Venta's retailer listing for the AH530 says tap water is safe to use, and Levoit says the Superior Studio's wick removes impurities from tap water.
+          </p>
+
+          <p>
+            Hard water still has a cost; it just shows up in the wick rather than on your furniture. The harder your water, the faster scale builds in the wick and the sooner it stops wicking properly. If your wicks are crusty and stiff after three weeks, your water is hard and you are better off budgeting for more wicks than trying to stretch them.
+          </p>
+
+          <p>
+            Distilled water is not required, but it extends wick life and reduces scale in the tank and base. Some owners in very hard-water areas use a mix, filling with filtered or distilled water part of the time. Whatever you use, empty and refill with fresh water rather than topping up a tank that has been sitting for days.
+          </p>
+
+          <p>
+            Do not add anything to the water unless the maker says to. Essential oils, vapor rubs and household chemicals can damage wicks and plastics, and Venta's own additive is designed specifically for its disc system. If you want a scent, use a model with a built-in aroma feature, such as the aromatherapy options Abt lists for the Venta AH530, rather than pouring oil into the tank.
+          </p>
+        </div>
+
+        <div id="cleaning" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Cleaning and Mold
+          </h2>
+
+          <p>
+            Evaporative humidifiers are less likely than ultrasonic ones to put bacteria into the air as droplets, but the tank, base and wick are still damp, warm and full of organic matter, which is exactly where mold and bacteria grow. Mayo Clinic warns that humidifiers that are not maintained can make you sick. The EPA advises emptying and refilling tanks daily and cleaning the unit every third day, following the maker's instructions.
+          </p>
+
+          <p>
+            Wicks complicate cleaning. Most cannot be washed with vinegar or bleach without damaging them, and the makers generally say to replace rather than clean. Clean the tank and base with the method in the manual, rinse thoroughly, and swap the wick on schedule. Our guide to <a href="/how-to-clean-a-humidifier/">cleaning a humidifier</a> walks through vinegar descaling and safe disinfecting.
+          </p>
+
+          <p>
+            Some newer models build in help. Levoit's Superior Studio has an automatic dry mode that dries the wick when the unit runs out of water, is switched off or finishes descaling, plus a descaling mode, both switchable in the VeSync app. That does not replace cleaning, but drying the wick between uses is one of the most effective ways to slow mold growth.
+          </p>
+
+          <p>
+            At the end of the season, throw away the old wick, clean and dry every part, and store the unit dry and open. A humidifier put away damp in March is a moldy humidifier in November. Start each winter with a fresh wick.
+          </p>
+        </div>
+
+        <div id="placement" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Placement and Humidistats
+          </h2>
+
+          <p>
+            An evaporative humidifier needs airflow to work. Put it where the fan can draw air freely and push moist air into the room: a few feet from walls and furniture, on a level floor or stand, and out of the path of heating vents that would pull the moisture straight into the return. Keep it away from wood furniture, books and electronics, even though it produces no visible mist.
+          </p>
+
+          <p>
+            A built-in humidistat turns the unit into something you can set and leave. Vornado says the Evap40's humidistat provides automatic humidity control and shuts the unit off at the chosen level. AIRCARE's MA0800 humidistat adjusts from 25 to 65 percent in 5 percent steps. The Honeywell HEV320 has no humidistat, only two speed settings, so it relies on the natural taper of evaporative output and on you.
+          </p>
+
+          <p>
+            Built-in sensors sit close to the machine and tend to read high. Put an inexpensive hygrometer across the room and set the humidistat by that reading. Mayo Clinic and the EPA recommend 30 to 50 percent indoors; in very cold weather, lower the target if windows fog, as our <a href="/ideal-indoor-humidity/">ideal indoor humidity</a> guide explains.
+          </p>
+
+          <p>
+            In a child's room, put the unit out of reach and route the cord where it cannot be pulled. An evaporative unit is a good choice for nurseries because it runs cool, so there is no burn risk, and produces no white dust. Keep it off the floor if a toddler can tip the tank.
+          </p>
+        </div>
+
+        <div id="alternatives" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            10. When an Evaporative Humidifier Is the Wrong Buy
+          </h2>
+
+          <p>
+            If you need near-silence, buy an ultrasonic model and run it on distilled water. The fan noise of an evaporative unit is the one thing you cannot engineer away, and light sleepers often regret buying one for the bedroom. Our <a href="/best-ultrasonic-humidifier/">best ultrasonic humidifiers</a> guide covers the quiet options.
+          </p>
+
+          <p>
+            If you want to humidify the whole house, a portable unit may be the wrong tool. A furnace-mounted bypass, fan-powered or steam humidifier uses the duct system to distribute moisture and never needs a tank filled. Our guide to the <a href="/best-whole-house-humidifier/">best whole house humidifiers</a> covers the installed options, which cost more up front but replace several portable units.
+          </p>
+
+          <p>
+            If your home is already above 50 percent in winter, you do not need a humidifier at all, and adding one can encourage mold and dust mites. Check with a hygrometer before buying. And if you are buying for a child with a cold, any cool-mist type works; the evaporative advantage is about white dust and maintenance, not medical benefit.
+          </p>
+
+          <p>
+            For everyone else, especially hard-water households who want to use tap water without dust, an evaporative unit sized generously for the room is the most forgiving humidifier you can buy. Order the wicks, set a hygrometer and leave it alone.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring the wick schedule</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A scaled, crusty wick evaporates far less water and can start to smell. Makers such as Vornado and Honeywell say to replace wicks every four to eight weeks or 30 to 60 days. Watch for stiffness, odor or falling output, and replace sooner in hard-water areas.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying on the square-footage rating alone</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Coverage ratings are best-case figures. AIRCARE's own MA0800 rating drops from 2,600 to 1,700 square feet for average construction. Compare tank size and output too, and size up for open plans, high ceilings or drafty rooms.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Not owning a hygrometer</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Evaporative units produce no visible mist, so you cannot see whether they are working. A separate hygrometer across the room tells you whether you are in the 30 to 50 percent range Mayo Clinic and the EPA recommend.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Topping up old water</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Standing water grows bacteria and mold in the tank and base even when the unit releases no droplets. The EPA advises emptying and refilling daily and cleaning every third day. Topping up a tank that has sat for days feeds whatever is already growing.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Storing it damp</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Put away wet in spring, a humidifier is a mold farm by autumn. At the end of the season, discard the wick, clean and dry every part, and store the unit open and dry. Start each winter with a fresh wick.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            12. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best evaporative humidifier?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most rooms we would choose the Vornado Evap40, which Vornado rates for up to 1,000 square feet with a 4-gallon capacity, a built-in humidistat and easy-to-find wicks. For large open spaces the Levoit Superior 6000S has more capacity, and for a quiet bedroom the Levoit Superior Studio Smart has the lowest published noise figures.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do evaporative humidifiers cause white dust?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                No. White dust comes from minerals in the water being thrown into the air as droplets, which the EPA associates with ultrasonic and impeller humidifiers. An evaporative unit releases only water vapor, and the minerals stay in the wick. The cost is that the wick scales up and needs replacing, sooner with hard water.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How often do you replace the wick in an evaporative humidifier?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It depends on the model and your water. Vornado says every four to eight weeks, Honeywell says 30 to 60 days for its Filter C, and Levoit says three to six months for the Superior 6000S. Replace sooner if the wick feels hard and crusty, smells or the unit's output drops.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can you use tap water in an evaporative humidifier?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes, which is one of their main advantages. The wick catches the minerals, so there is no white dust. Hard water makes the wick scale up faster, so expect to replace it more often. Distilled water is not required, but it extends wick life and reduces scale in the tank.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are evaporative humidifiers loud?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                They make fan noise, because a fan has to move air across the wick. On low it is usually a gentle hum. Levoit lists its Superior Studio at 19 to 45 decibels and the Superior 6000S at 28 to 45 decibels. Light sleepers who need silence are often better served by an ultrasonic model.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can an evaporative humidifier over-humidify a room?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It is much harder than with an ultrasonic unit, because water evaporates more slowly into air that is already humid, so output tapers as the room gets damp. It is not impossible in a small, closed room, so a humidistat or a separate hygrometer is still worth having to hold 30 to 50 percent.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are evaporative humidifiers better than ultrasonic?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                They are better if you have hard water, want to use tap water without white dust, or want a unit that is hard to over-run. Ultrasonic models are quieter and have no wick to buy, but need distilled water to avoid dust. Our evaporative vs ultrasonic comparison covers the trade-off in full.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Humidifier Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-humidifier/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Humidifiers</h3>
+              <p class="text-gray-500 text-sm mt-2">Our picks across evaporative, ultrasonic and warm mist, matched to room size and upkeep.</p>
+            </a>
+            <a href="/evaporative-vs-ultrasonic-humidifier/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Comparison</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Evaporative vs Ultrasonic</h3>
+              <p class="text-gray-500 text-sm mt-2">White dust, wicks, noise and upkeep: which design suits your water and your room.</p>
+            </a>
+            <a href="/best-ultrasonic-humidifier/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Ultrasonic Humidifiers</h3>
+              <p class="text-gray-500 text-sm mt-2">The quiet, wick-free alternative, and how to run one without white dust.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            An evaporative humidifier is the most forgiving way to add moisture to a room: no white dust from tap water, output that tapers as the room gets humid, and nothing to boil. You pay for that in fan noise and wicks, so the right pick is the one sized generously for your space with wicks you can buy every month or two.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            For most rooms that is the Vornado Evap40. Go to the Levoit Superior 6000S for an open floor, the Superior Studio Smart for a quiet bedroom, the Honeywell HEV320 on a budget, and the Venta AH530 only if never buying a wick is worth several hundred dollars to you.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home & Indoor Air Quality" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
