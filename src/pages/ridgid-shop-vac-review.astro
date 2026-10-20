@@ -1,0 +1,925 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Shop Vacs",
+    "url": "/best-shop-vac/"
+  },
+  {
+    "title": "Shop Vac CFM vs Horsepower",
+    "url": "/shop-vac-cfm-vs-horsepower/"
+  },
+  {
+    "title": "Shop Vac Filters Explained",
+    "url": "/shop-vac-filters-explained/"
+  },
+  {
+    "title": "What Size Shop Vac Do I Need?",
+    "url": "/what-size-shop-vac-do-i-need/"
+  },
+  {
+    "title": "Shop Vac Losing Suction",
+    "url": "/shop-vac-losing-suction/"
+  },
+  {
+    "title": "Best Cordless Shop Vacs",
+    "url": "/best-cordless-shop-vac/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-20", modified: "2026-10-20" });
+const title = "Ridgid Shop Vac Review: Which Ridgid Wet/Dry Vac to Buy";
+const description =
+  "Every current Ridgid shop vac worth buying, from the 4-gallon WD4070 to the 16-gallon HD1800 and 18V cordless, with warranty fine print and the right filter.";
+
+const PRODUCTS = [
+  {
+    "id": "ridgid-hd1400",
+    "name": "Ridgid HD1400 14 Gallon 6.0 Peak HP NXT",
+    "badge": "Best Overall",
+    "category": "14 Gallon, Corded, 2-1/2 in. Hose",
+    "amazonUrl": "#",
+    "description": "The HD1400 is the Ridgid most households should buy, and it is also the overall pick in our main shop vac guide. HomeFixated's spec list gives it 165 CFM at 75 dB, a 10.5-amp average draw, a 20-foot cord and an empty weight of 26.6 pounds. It ships with a 2-1/2 inch by 7 foot locking Dual-Flex hose, two extension wands, utility, car and wet nozzles and a VF5000 fine dust filter, which is a better default than the general debris filter on cheaper Ridgids. Home Depot lists it with Ridgid's full lifetime warranty. The 14 gallon drum is the sweet spot: large enough for a garage cleanout or a modest flood, small enough to carry. HomeFixated notes it is labelled HD1400 on the box and HD14000 on the unit, so do not be alarmed by the mismatch.",
+    "pros": [
+      "165 CFM per HomeFixated's spec list",
+      "2-1/2 inch locking hose resists clogs",
+      "Ships with the VF5000 fine dust filter",
+      "Full lifetime warranty per Home Depot"
+    ],
+    "cons": [
+      "No dust brush included, per HomeFixated",
+      "Ridgid does not publish a water lift figure",
+      "7 ft hose is short for cars"
+    ],
+    "bottomLine": "The best balance of size, airflow and filter in Ridgid's range, and the one to buy if you are unsure."
+  },
+  {
+    "id": "ridgid-hd1800",
+    "name": "Ridgid HD1800 16 Gallon 6.5 Peak HP NXT with Cart",
+    "badge": "Best for Big Cleanups",
+    "category": "16 Gallon, Corded, Cart, 2-1/2 in. Hose",
+    "amazonUrl": "#",
+    "description": "The HD1800 is the top of Ridgid's mainstream corded range: a 16 gallon drum on a rear-wheel cart with a 6.5 peak HP, 12-amp motor. Retail listings include a 2-1/2 inch by 7 foot Tug-A-Long Dual-Flex locking hose, two extension wands, an NXT Max floor tool with wet shoe, car and crevice tools, a muffler or diffuser depending on the kit, and the VF5000 fine dust filter, with a 20-foot cord. Walmart lists a net weight of 28.2 pounds. The cart is the real reason to buy it: a full 16 gallon drum of water is too heavy to drag on casters across a lawn or up a ramp. We could not find a Ridgid-published CFM figure for this exact model; some listings quote around 172 CFM, which matches an older 6.5 peak HP Ridgid rather than a confirmed HD1800 spec.",
+    "pros": [
+      "16 gallon drum on a rear-wheel cart",
+      "VF5000 fine dust filter included",
+      "Full accessory kit with floor tool and wet shoe",
+      "2-1/2 inch locking hose"
+    ],
+    "cons": [
+      "No confirmed Ridgid CFM figure for this model",
+      "Bulky to store",
+      "Several kit variants confuse pricing"
+    ],
+    "bottomLine": "Worth it for regular water removal or big debris jobs where the cart earns its keep; overkill for a typical garage."
+  },
+  {
+    "id": "ridgid-hd1200",
+    "name": "Ridgid HD1200 12 Gallon 5.0 Peak HP NXT",
+    "badge": "Best Value",
+    "category": "12 Gallon, Corded, 2-1/2 in. Hose",
+    "amazonUrl": "#",
+    "description": "The HD1200 gives you most of the HD1400 for less. Ridgid's page and Home Depot list a 12 gallon polypropylene drum, a 5.0 peak HP motor, a 2-1/2 inch by 7 foot locking hose, an NXT Max floor tool with wet shoe, an NXT Max car nozzle, two extension wands and a general debris filter. Pro Tool Reviews lists it at 144 CFM and 55 inches of water lift, the only published lift figure we found for a current Ridgid. Sources disagree on the cord: Pro Tool Reviews says 15 feet and a Walmart listing says 20. The included general debris filter is fine for sawdust, but budget for a VF5000 if you clean up drywall or ash. For most people choosing between this and the HD1400, the HD1400's better filter decides it.",
+    "pros": [
+      "144 CFM and 55 in. water lift per Pro Tool Reviews",
+      "Same 2-1/2 inch locking hose as larger models",
+      "Floor tool with wet shoe included",
+      "Lighter and easier to store than 14 or 16 gallon"
+    ],
+    "cons": [
+      "General debris filter only",
+      "Cord length disputed between sources",
+      "Smaller drum for water jobs"
+    ],
+    "bottomLine": "The value pick for a garage or shop; add a VF5000 filter and it covers nearly everything the HD1400 does."
+  },
+  {
+    "id": "ridgid-hd1640",
+    "name": "Ridgid HD1640 16 Gallon 5.0 Peak HP NXT",
+    "badge": "Biggest Drum for Less",
+    "category": "16 Gallon, Corded, 2-1/2 in. Accessories",
+    "amazonUrl": "#",
+    "description": "The HD1640 is the budget way into a 16 gallon Ridgid. Ridgid lists it with a 5.0 peak HP motor, a 7 foot Tug-A-Long Dual-Flex locking hose, 2-1/2 inch locking accessories, an NXT Max utility nozzle, two extension wands and a VF4000 general debris filter. It skips the cart, floor tool and fine dust filter that the HD1800 includes, which is where most of the price difference goes. Airflow is unclear: Ridgid's page for the discontinued WD1640 predecessor lists 115 CFM and one retailer quotes 132 CFM for the HD1640, but Ridgid does not publish a figure for this model that we could find. Buy it when drum volume matters more than refinement, for example for occasional basement water or bulky yard debris.",
+    "pros": [
+      "16 gallon capacity at a lower price",
+      "2-1/2 inch locking accessories",
+      "Takes every VF4000 to VF8000 filter",
+      "Full lifetime warranty like other corded Ridgids"
+    ],
+    "cons": [
+      "No cart, floor tool or fine dust filter",
+      "No confirmed CFM for this exact model",
+      "Heavy to move when full of water"
+    ],
+    "bottomLine": "A big drum for occasional big messes; buy the HD1400 instead if you use a vac every week."
+  },
+  {
+    "id": "ridgid-wd5500",
+    "name": "Ridgid WD5500 5 Gallon Wall-Mount",
+    "badge": "Best Wall-Mount",
+    "category": "5 Gallon, Corded, Wall-Mount",
+    "amazonUrl": "#",
+    "description": "The WD5500 hangs on a garage wall and stays out of the way, which is exactly why people who own one use it more. Ridgid's spec sheet lists 97 CFM from a 5.0 peak HP motor drawing about 9 amps, a 20-foot cord, a 19-pound net weight and a VF4000 cartridge filter. It comes with a 7 foot expandable hose and a 14 foot Tug-A-Long hose that join for 21 feet of total reach, with 1-7/8 inch accessories and built-in accessory storage. That reach makes it the best Ridgid for cleaning a car without moving the vac. The 5 gallon drum and 97 CFM are modest, so it is a car and garage-floor vac rather than a flood or demolition tool. It has no drain or casters, per the spec sheet.",
+    "pros": [
+      "21 ft of combined hose reach",
+      "Wall-mounts to save floor space",
+      "VF4000 filter, takes VF5000 to VF8000",
+      "Built-in accessory storage"
+    ],
+    "cons": [
+      "97 CFM, the lowest corded figure here",
+      "5 gallon drum, no drain",
+      "1-7/8 inch accessories clog on bulky debris"
+    ],
+    "bottomLine": "The Ridgid for car detailing and quick garage cleanups, mounted where you will actually reach for it."
+  },
+  {
+    "id": "ridgid-wd4070",
+    "name": "Ridgid WD4070 4 Gallon 5.0 Peak HP Portable",
+    "badge": "Best Portable",
+    "category": "4 Gallon, Corded, Portable",
+    "amazonUrl": "#",
+    "description": "The WD4070 is Ridgid's compact carry vac. Ridgid's page lists 5.0 peak HP, 110 CFM and 176 air watts, with a 20-foot cord, a 1-7/8 inch by 7 foot Tug-A-Long hose and a VF3500 fine dust filter included. Weight is listed at about 17 to 18 pounds depending on the source. The 110 CFM figure is higher than the wall-mount WD5500's, which shows again that peak HP labels do not separate vacs. It is the right size for stairs, vehicles, a small apartment or a trunk-mounted job site cleanup kit. The trade-offs are the small drum, which fills quickly on any real water job, and the compact VF3500 filter, which does not interchange with the larger VF4000 to VF8000 cartridges.",
+    "pros": [
+      "110 CFM and 176 air watts per Ridgid",
+      "Fine dust VF3500 filter included",
+      "Light enough to carry one-handed",
+      "20 ft cord"
+    ],
+    "cons": [
+      "4 gallon drum fills fast with water",
+      "Uses the compact VF3500 filter only",
+      "1-7/8 inch hose for small debris"
+    ],
+    "bottomLine": "The Ridgid to keep in a closet or truck for small, frequent cleanups."
+  },
+  {
+    "id": "ridgid-hd0919",
+    "name": "Ridgid 18V 9 Gallon Cordless NXT (HD0919)",
+    "badge": "Best Cordless",
+    "category": "9 Gallon, 18V Cordless, Tool Only",
+    "amazonUrl": "#",
+    "description": "Ridgid's 18V 9 gallon NXT is the biggest drum on a mainstream battery vac. Ridgid lists it as tool only, running on one Ridgid 18V battery and accepting a second for longer runtime, with a locking Dual-Flex hose, three extension wands, wet, utility and car nozzles and a VF4000 general debris filter on a Qwik Lock mount. Home Depot lists the airflow at 82 CFM. A listing for the closely related HD0918 claims up to 29 minutes on a single 9.0Ah battery and roughly double with two. Home Depot's US listing uses the HD0918 number for a similar vac while Ridgid uses HD0919, so check the box. Register it for Ridgid's Lifetime Service Agreement within 90 days, since 18V coverage depends on registration.",
+    "pros": [
+      "9 gallon drum, largest in its class",
+      "Two battery bays for longer runtime",
+      "Works with any Ridgid 18V battery",
+      "Takes the standard VF4000 to VF8000 filters"
+    ],
+    "cons": [
+      "82 CFM per Home Depot, well below corded models",
+      "Batteries sold separately",
+      "Model number differs by retailer"
+    ],
+    "bottomLine": "Buy it if you already own Ridgid 18V batteries and want a cordless vac with a real drum."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Ridgid Shop Vac Review",
+          item: "https://www.thehonestreviewers.com/ridgid-shop-vac-review/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "Which Ridgid shop vac is best?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most homeowners the HD1400 14 gallon NXT is the best Ridgid. HomeFixated lists it at 165 CFM, and it ships with a 2-1/2 inch locking hose and the VF5000 fine dust filter. The HD1200 is the value pick, the HD1800 suits frequent water removal, and the 18V HD0919 suits Ridgid battery owners."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the Ridgid shop vac warranty really lifetime?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For corded wet/dry vacs Ridgid offers a full lifetime warranty against defects, but its warranty page says the vacs are designed for 500 to 700 hours of run life and coverage ends at the shorter of that or when the vac becomes unusable for other reasons. Within 90 days, Home Depot can replace it with the receipt."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need to register my Ridgid shop vac?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For Ridgid's 18V cordless vacs, yes. Ridgid's Lifetime Service Agreement for 18V tools requires registration within 90 days of purchase. For corded vacs, Ridgid's warranty page does not describe a registration requirement, but registering and keeping the receipt costs nothing and makes any later claim easier."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What filter does a Ridgid shop vac use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ridgid vacs of 5 gallons and larger take the VF4000 through VF8000 cartridges: VF4000 general debris, VF5000 fine dust, VF6000 HEPA-material, VF7000 foam for wet pickup and VF8000 pleated HEPA. Compact 3 to 4.5 gallon vacs such as the WD4070 use the VF3500. Check your model number before ordering."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many CFM does a Ridgid shop vac have?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on the model and who measured it. Ridgid lists the WD4070 at 110 CFM and the WD5500 at 97, Pro Tool Reviews lists the HD1200 at 144 CFM, HomeFixated lists the HD1400 at 165 CFM and Home Depot lists the 18V 9 gallon at 82. Ridgid does not publish CFM for every model."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Ridgid better than Shop-Vac or Craftsman?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In the 12 to 16 gallon class, Ridgid usually wins on warranty and hose size. Craftsman CMXEVBE listings show a 3-year limited warranty versus Ridgid's lifetime coverage, and Ridgid's NXT models use a 2-1/2 inch hose. Shop-Vac warranties vary by model, and its small vacs are often cheaper than Ridgid's compact units."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can a Ridgid shop vac pick up water?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, all Ridgid wet/dry vacs handle water. Remove the paper cartridge and fit the VF7000 foam sleeve, or use a VF8000 that works wet or dry, and empty the drum before it fills, since the float shutoff stops suction when it is full. Use the drain port where the model has one, and dry the drum afterward."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Tools & Equipment",
+    tags: [
+      "ridgid shop vac",
+      "ridgid wet dry vac",
+      "ridgid nxt shop vac",
+      "ridgid shop vac filter",
+      "ridgid shop vac warranty",
+      "ridgid 16 gallon shop vac"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Wet/Dry Vacs
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Ridgid Shop Vac Review: <span class="text-[#38BDF8]">Which One to Buy</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Seven current Ridgid wet/dry vacs sorted by job, with the airflow figures Ridgid and reviewers actually publish, what the lifetime warranty really covers, and which filter goes in which drum.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#ridgid-hd1400"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Jump to the Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Shaheer Ali Khan</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Consumer Product Testing &amp; Materials Performance Specialist</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="11.6k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-chose" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Chose</a>
+          <a href="#lineup" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. How the Lineup Works</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. The 7 Picks</a>
+          <a href="#peak-hp" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Peak HP vs Real Airflow</a>
+          <a href="#warranty" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. The Lifetime Warranty</a>
+          <a href="#filters" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Which Filter Fits</a>
+          <a href="#vs-others" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Ridgid vs Other Brands</a>
+          <a href="#which-size" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Which Size for Which Job</a>
+          <a href="#care" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Keeping It Running</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Ridgid makes the shop vac most people end up with, mostly because Home Depot sells it and the warranty sounds unbeatable. The good news is that the 12 and 14 gallon NXT models deserve the reputation. The less good news is that peak horsepower on the box tells you almost nothing, and the lifetime warranty has a run-life clause most buyers never read.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-chose" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Chose These Ridgid Vacs
+          </h2>
+
+          <p>
+            Ridgid's catalog is large and churns often. Model numbers change when a kit gains a filter or a car nozzle, older WD-series vacs are replaced by HD-series NXT versions, and Ridgid's own site keeps pages for obsolete models with a note pointing to the replacement. We started from the models Ridgid and Home Depot currently list, then removed duplicates that differ only by bundled accessories.
+          </p>
+
+          <p>
+            For each model we looked for three things a buyer can actually compare: drum size, hose diameter and a published airflow or water lift figure. Ridgid publishes CFM for some vacs and not others, so where the number comes from a reviewer or a retailer we say so. Where nobody publishes it, we say that too rather than estimate. We did not run our own tests on these units for this page.
+          </p>
+
+          <p>
+            If you want a broader comparison across every brand, our <a href="/best-shop-vac/">best shop vac</a> guide puts the Ridgid HD1400 against Milwaukee, Vacmaster, DeWalt, Craftsman and Shop-Vac. This page is for people who have already decided on Ridgid, or who are standing in the aisle at Home Depot looking at six orange vacs and wondering which one to put in the cart.
+          </p>
+        </div>
+
+        <div id="lineup" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. How Ridgid's Lineup Is Organized
+          </h2>
+
+          <p>
+            The NXT label marks Ridgid's current mainstream generation. NXT models use Ridgid's Qwik Lock filter mount, a redesigned scroll that Ridgid says improves power, suction and lift, and locking accessories. Model numbers mostly follow the drum: HD1200 is 12 gallons, HD1400 is 14, HD1640 and HD1800 are both 16. The WD prefix still appears on compact and wall-mount models such as the WD4070 and WD5500.
+          </p>
+
+          <p>
+            Hose diameter is the most useful way to split the range. The 12, 14 and 16 gallon NXT models ship with a 2-1/2 inch hose, which swallows wood chips, leaves and drywall scraps without bridging. The 4 gallon, 5 gallon wall-mount and 18V cordless models use 1-7/8 inch accessories, which concentrate suction and fit more power tool ports but clog sooner on bulky debris.
+          </p>
+
+          <p>
+            Ridgid also sells the same vac in several kits. The HD1800, for example, appears at Home Depot as the HD1800, an HD1800A with an OSHA-compatible filter kit and an HD1800E with two extra fine dust filters. The motor and drum are the same; you are choosing accessories. Buy the base kit unless the extras are things you would have bought anyway.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The 7 Ridgid Vacs Worth Buying
+          </h2>
+
+          <p>
+            These are current Ridgid models listed by Ridgid or Home Depot, ordered by how many buyers they suit. Airflow, filter and hose figures come from Ridgid's pages, Home Depot and retailer listings, or named reviews, and we flag every place a figure is missing or disputed. We researched these from published specifications and reviews; we did not run our own tests on these units for this page.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="peak-hp" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Peak HP vs Real Airflow
+          </h2>
+
+          <p>
+            Every Ridgid box leads with peak horsepower: 5.0, 6.0 or 6.5. That figure is not what the motor delivers while you vacuum. A 12-amp vac on a 120-volt outlet draws about 1,440 watts, and at 746 watts per horsepower that is under 2 horsepower of electrical input before any losses. A 6.5 peak HP rating describes a momentary laboratory peak, not continuous work.
+          </p>
+
+          <p>
+            The numbers that predict cleaning are airflow in cubic feet per minute and sealed suction, usually quoted as water lift in inches. Airflow moves light debris and dust; water lift pulls heavy material and water up the hose. Our guide to <a href="/shop-vac-cfm-vs-horsepower/">shop vac CFM vs horsepower</a> explains how the two interact, and why a vac with high CFM but weak lift struggles with wet sludge.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Model</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Peak HP</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Airflow</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Source</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">WD5500 (5 gal)</td>
+                    <td class="px-4 py-4 text-gray-700">5.0</td>
+                    <td class="px-4 py-4 text-gray-700">97 CFM</td>
+                    <td class="px-4 py-4 text-gray-700">Ridgid spec sheet</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">WD4070 (4 gal)</td>
+                    <td class="px-4 py-4 text-gray-700">5.0</td>
+                    <td class="px-4 py-4 text-gray-700">110 CFM</td>
+                    <td class="px-4 py-4 text-gray-700">Ridgid page</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">HD1200 (12 gal)</td>
+                    <td class="px-4 py-4 text-gray-700">5.0</td>
+                    <td class="px-4 py-4 text-gray-700">144 CFM, 55 in. lift</td>
+                    <td class="px-4 py-4 text-gray-700">Pro Tool Reviews</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">HD1400 (14 gal)</td>
+                    <td class="px-4 py-4 text-gray-700">6.0</td>
+                    <td class="px-4 py-4 text-gray-700">165 CFM</td>
+                    <td class="px-4 py-4 text-gray-700">HomeFixated</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">HD0919 (18V, 9 gal)</td>
+                    <td class="px-4 py-4 text-gray-700">n/a</td>
+                    <td class="px-4 py-4 text-gray-700">82 CFM</td>
+                    <td class="px-4 py-4 text-gray-700">Home Depot</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            Read that table with care, because the figures come from different sources measured in different ways. Still, the pattern is clear. The 5.0 peak HP rating appears on vacs from 97 to 144 CFM, so peak HP does not separate them. Drum size and the motor and scroll design inside it do. For the HD1640 and HD1800 we could not find a Ridgid-published CFM figure for those exact models, so they are not in the table.
+          </p>
+
+          <p>
+            The practical takeaway is to ignore the horsepower race. If two Ridgid vacs are close in price, choose by drum size, hose diameter and the filter included, and look for a published CFM figure where one exists. The 6.5 peak HP HD1800 is a better vac than the 5.0 peak HP HD1640 mostly because of its cart, fine dust filter and accessories, not because of 1.5 extra marketing horsepower.
+          </p>
+        </div>
+
+        <div id="warranty" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Ridgid's Lifetime Warranty, Read Carefully
+          </h2>
+
+          <p>
+            Ridgid's corded wet/dry vacs carry what Ridgid calls a full lifetime warranty against defects in material and workmanship. The fine print on Ridgid's warranty page adds a clause most people miss: Ridgid says its vacs are designed for a run life of 500 to 700 hours, and coverage ends at the shorter of that run life or when the vac becomes unusable for reasons other than a defect.
+          </p>
+
+          <p>
+            Five hundred hours is a lot for a homeowner. Run a vac for an hour every weekend and it takes about ten years to get there. A contractor running one all day on job sites can reach it in a year. So the warranty is genuinely lifetime for most garages and much less so for heavy professional use, which is worth knowing before you choose a Ridgid over a commercial vac.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">HOW A CLAIM WORKS</p>
+            <p class="text-xl font-bold text-white mb-3">Keep the receipt; the first 90 days are the easy part.</p>
+            <p class="text-gray-300 leading-relaxed m-0">Ridgid's warranty page says that within 90 days you can return the vac to Home Depot with the receipt for a replacement. After that, claims go to the manufacturer, which inspects the vac and may replace the defective part or the whole unit. Expect to pay for wear items such as filters yourself.</p>
+          </div>
+
+          <p>
+            The 18V cordless vacs are a different story. Ridgid's 18V power tools are covered by the Lifetime Service Agreement, which requires registering the tool within 90 days of purchase for free parts and service. Retail listings for Ridgid's 18V vacs mention both lifetime coverage and LSA registration, and the terms vary by product, so register a cordless vac within 90 days regardless.
+          </p>
+
+          <p>
+            The reason for the split is ownership. Ridgid's wet/dry vacs come from Emerson, which owns the Ridgid brand, while Ridgid-branded 18V power tools are made under license by a different company. That is why the vac warranty and the 18V LSA read differently. If you are unsure which applies to your vac, Ridgid's warranty line or the paperwork in the box will tell you.
+          </p>
+        </div>
+
+        <div id="filters" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Ridgid Filters: Which One Goes Where
+          </h2>
+
+          <p>
+            Ridgid's filter part numbers are worth learning, because the wrong filter is the most common reason a good vac performs badly. For 5 gallon and larger Ridgid vacs, the VF4000 through VF8000 cartridges share one fit, so you can change filtration level without changing vacs. The compact 3 to 4.5 gallon vacs use the smaller VF3500 instead.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Filter</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Type</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Use it for</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">VF4000</td>
+                    <td class="px-4 py-4 text-gray-700">General debris pleated paper</td>
+                    <td class="px-4 py-4 text-gray-700">Sawdust, dirt, everyday dry pickup</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">VF5000</td>
+                    <td class="px-4 py-4 text-gray-700">3-layer fine dust</td>
+                    <td class="px-4 py-4 text-gray-700">Drywall dust, cold ash, fine powders</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">VF6000</td>
+                    <td class="px-4 py-4 text-gray-700">5-layer HEPA-material media</td>
+                    <td class="px-4 py-4 text-gray-700">Allergens; Ridgid says not certified HEPA</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">VF7000</td>
+                    <td class="px-4 py-4 text-gray-700">Foam sleeve</td>
+                    <td class="px-4 py-4 text-gray-700">Wet pickup and water-borne debris</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">VF8000</td>
+                    <td class="px-4 py-4 text-gray-700">Pleated HEPA, wet or dry</td>
+                    <td class="px-4 py-4 text-gray-700">Fine dust and spills, 99.97% at 0.3 micron dry</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">VF3500</td>
+                    <td class="px-4 py-4 text-gray-700">3-layer fine dust, compact</td>
+                    <td class="px-4 py-4 text-gray-700">3 to 4.5 gallon portable vacs</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            Two details matter. First, Ridgid says the VF6000 is made with HEPA-rated material but does not meet EPA or RRP guidelines for certified HEPA filtration, so do not use it for lead paint work. The VF8000 is Ridgid's true HEPA option, rated 99.97 percent at 0.3 micron for dry particles. Second, Ridgid lists the VF4000 general debris filter for dry pickup only.
+          </p>
+
+          <p>
+            For water, pull the paper cartridge and fit the VF7000 foam sleeve, or use the VF8000 if you switch between wet and dry and do not want to swap filters. For fine dust, add a collection bag in front of the cartridge so it does not clog in minutes. Our guide to <a href="/shop-vac-filters-explained/">shop vac filters</a> covers bags, cleaning and replacement intervals across brands.
+          </p>
+        </div>
+
+        <div id="vs-others" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Ridgid vs Shop-Vac, Craftsman and Milwaukee
+          </h2>
+
+          <p>
+            Craftsman is the closest like-for-like rival. Its CMXEVBE corded vacs cover the same 5 to 16 gallon range, including a 16 gallon 6.5 peak HP model, and listings for several of them show a 3-year limited warranty. That is much shorter than Ridgid's lifetime coverage. If the two cost the same, the Ridgid warranty and its 2-1/2 inch hose on the 12 to 16 gallon models usually tip it.
+          </p>
+
+          <p>
+            Shop-Vac, the brand that became the generic name, sells a huge range from tiny 1 gallon units to large contractor models, and its warranty terms vary by model. It competes best at the small end, where a compact Shop-Vac is often cheaper than Ridgid's portables. In the 12 to 16 gallon range, compare hose diameter and warranty before price; that is where Ridgid tends to win.
+          </p>
+
+          <p>
+            Milwaukee is a different decision. Its M18 FUEL cordless vacs are excellent if you already own the batteries, and our <a href="/best-cordless-shop-vac/">best cordless shop vac</a> guide lists the 6 gallon model at 87 CFM per Milwaukee, slightly above Ridgid's 18V 9 gallon at 82 CFM per Home Depot. Neither competes with a corded 14 gallon for sustained wet pickup, and Milwaukee costs more.
+          </p>
+
+          <p>
+            Where Ridgid does not compete is fine dust extraction for sanding and cutting. A shop vac with a HEPA filter is not the same as a dust extractor with automatic filter cleaning and a power tool outlet. If dust control is the main job, read our comparison of <a href="/shop-vac-vs-dust-extractor/">shop vac vs dust extractor</a> before buying any Ridgid.
+          </p>
+        </div>
+
+        <div id="which-size" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Which Ridgid Size for Which Job
+          </h2>
+
+          <p>
+            For a typical garage and workshop, the 12 or 14 gallon NXT is the right size. It is big enough that you are not emptying it every few minutes on a sawdust job, light enough to carry upstairs and it takes the 2-1/2 inch hose. The 16 gallon models make sense only if you regularly pull water or haul large volumes of debris, because a full 16 gallon drum of water weighs well over 100 pounds.
+          </p>
+
+          <p>
+            Water cleanup is where the drum matters most. A failed water heater can dump 40 or 50 gallons on a floor; our guide to a <a href="/water-heater-leaking/">leaking water heater</a> covers how to stop the flow first, and our guide to <a href="/how-to-vacuum-water-with-a-shop-vac/">vacuuming water with a shop vac</a> covers the technique. Once the floor is clear, a dehumidifier finishes the job; see <a href="/how-to-choose-a-dehumidifier/">how to choose a dehumidifier</a> for sizing.
+          </p>
+
+          <p>
+            For cars, stairs and small apartments, the 4 gallon WD4070 or the wall-mounted WD5500 makes more sense than a big drum. The wall-mount saves floor space and its 21 feet of combined hose reaches both ends of a car. The 18V 9 gallon is for anyone already on Ridgid batteries who wants a vac they can grab without a cord, and it accepts two packs for longer runtime.
+          </p>
+
+          <p>
+            If you are torn between sizes, go one smaller than you think. Most people overestimate how often they will fill a 16 gallon drum and underestimate how annoying a big vac is to store and move. Our guide on <a href="/what-size-shop-vac-do-i-need/">what size shop vac you need</a> walks through the trade-offs by job.
+          </p>
+        </div>
+
+        <div id="care" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Keeping a Ridgid Running
+          </h2>
+
+          <p>
+            Most complaints about a Ridgid losing power trace back to the filter, not the motor. A fine dust job can blind a pleated cartridge in minutes. Tap it out over a trash can after every dusty job, rinse washable filters and let them dry fully before refitting, and keep a spare so you are not running wet paper. Our <a href="/shop-vac-losing-suction/">shop vac losing suction</a> guide covers the full diagnostic.
+          </p>
+
+          <p>
+            After wet pickup, empty the drum, rinse it and leave the lid off to dry. Standing water breeds mildew and the smell goes straight into the next dry job. On models with a drain port, use it rather than tipping a full drum, which is how plastic latches and caster mounts get cracked.
+          </p>
+
+          <p>
+            Check the hose for splits near the cuffs, where most hoses fail, and replace it rather than taping it, since a leak there costs suction at the nozzle. Ridgid's locking accessories only lock with matching Ridgid parts, so buy replacement hoses that match your vac's diameter and locking style.
+          </p>
+
+          <p>
+            Finally, log roughly how much you use the vac if you work it hard. Ridgid's warranty is tied to a 500 to 700 hour designed run life, so a contractor who knows the hours has a clearer idea of when warranty coverage ends and when to budget for a replacement.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying by Peak Horsepower</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A 6.5 peak HP label sounds stronger than 5.0, but the published airflow of Ridgid's 5.0 peak HP vacs ranges from 97 to 144 CFM. Choose by drum, hose diameter and included filter, and look for a CFM or water lift figure from Ridgid or a named review before paying more for horsepower.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Not Keeping the Receipt</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Ridgid's warranty page says that within 90 days you can return a defective vac to Home Depot with the receipt for a replacement. After that, claims go through the manufacturer's inspection. Photograph the receipt and keep it with the manual. For 18V vacs, also register within 90 days.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Vacuuming Water With a Paper Filter</h3>
+              <p class="text-gray-700 text-sm m-0">
+                The VF4000 general debris filter is for dry pickup. Wet pickup soaks and tears paper cartridges and can push mist into the motor. Fit the VF7000 foam sleeve for water, or use the wet or dry VF8000. Empty and dry the drum afterward to stop mildew.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using the VF6000 for Lead Paint</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Ridgid says the VF6000 uses HEPA-rated material but does not meet EPA or RRP guidelines for certified HEPA filtration. For lead-safe work, use a certified HEPA vacuum, and for general fine dust use the VF8000, which Ridgid rates at 99.97 percent at 0.3 micron dry.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying 16 Gallons by Default</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Bigger is not better if you never fill it. A 16 gallon drum full of water weighs over 100 pounds and the vac takes more storage space. Unless you remove water often, a 12 or 14 gallon NXT is easier to live with and has the same 2-1/2 inch hose.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Which Ridgid shop vac is best?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most homeowners the HD1400 14 gallon NXT is the best Ridgid. HomeFixated lists it at 165 CFM, and it ships with a 2-1/2 inch locking hose and the VF5000 fine dust filter. The HD1200 is the value pick, the HD1800 suits frequent water removal, and the 18V HD0919 suits Ridgid battery owners.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is the Ridgid shop vac warranty really lifetime?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For corded wet/dry vacs Ridgid offers a full lifetime warranty against defects, but its warranty page says the vacs are designed for 500 to 700 hours of run life and coverage ends at the shorter of that or when the vac becomes unusable for other reasons. Within 90 days, Home Depot can replace it with the receipt.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do I need to register my Ridgid shop vac?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For Ridgid's 18V cordless vacs, yes. Ridgid's Lifetime Service Agreement for 18V tools requires registration within 90 days of purchase. For corded vacs, Ridgid's warranty page does not describe a registration requirement, but registering and keeping the receipt costs nothing and makes any later claim easier.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What filter does a Ridgid shop vac use?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Ridgid vacs of 5 gallons and larger take the VF4000 through VF8000 cartridges: VF4000 general debris, VF5000 fine dust, VF6000 HEPA-material, VF7000 foam for wet pickup and VF8000 pleated HEPA. Compact 3 to 4.5 gallon vacs such as the WD4070 use the VF3500. Check your model number before ordering.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How many CFM does a Ridgid shop vac have?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It depends on the model and who measured it. Ridgid lists the WD4070 at 110 CFM and the WD5500 at 97, Pro Tool Reviews lists the HD1200 at 144 CFM, HomeFixated lists the HD1400 at 165 CFM and Home Depot lists the 18V 9 gallon at 82. Ridgid does not publish CFM for every model.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is Ridgid better than Shop-Vac or Craftsman?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                In the 12 to 16 gallon class, Ridgid usually wins on warranty and hose size. Craftsman CMXEVBE listings show a 3-year limited warranty versus Ridgid's lifetime coverage, and Ridgid's NXT models use a 2-1/2 inch hose. Shop-Vac warranties vary by model, and its small vacs are often cheaper than Ridgid's compact units.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can a Ridgid shop vac pick up water?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes, all Ridgid wet/dry vacs handle water. Remove the paper cartridge and fit the VF7000 foam sleeve, or use a VF8000 that works wet or dry, and empty the drum before it fills, since the float shutoff stops suction when it is full. Use the drain port where the model has one, and dry the drum afterward.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Shop Vac Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-shop-vac/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Shop Vacs</h3>
+              <p class="text-gray-500 text-sm mt-2">Ridgid against Milwaukee, Vacmaster, Craftsman and more.</p>
+            </a>
+            <a href="/shop-vac-cfm-vs-horsepower/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Shop Vac CFM vs Horsepower</h3>
+              <p class="text-gray-500 text-sm mt-2">Which numbers on the box actually predict cleaning power.</p>
+            </a>
+            <a href="/best-cordless-shop-vac/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Cordless Shop Vacs</h3>
+              <p class="text-gray-500 text-sm mt-2">Battery wet/dry vacs for every major platform.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The <strong class="text-white">Ridgid HD1400</strong> is the Ridgid shop vac to buy for most garages and workshops: a 14 gallon drum, a clog-resistant 2-1/2 inch hose and the VF5000 fine dust filter in the box. The <strong class="text-white">HD1200</strong> does nearly the same job for less, and the <strong class="text-white">HD1800</strong> earns its cart only if you move water or heavy debris often.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Ignore the peak horsepower race, match the filter to the job, and keep the receipt. Ridgid's lifetime warranty is real, but it is tied to a 500 to 700 hour run life and the 18V models need registering within 90 days.
+          </p>
+        </div>
+
+        <MoreInCategory category="Tools & Equipment" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
