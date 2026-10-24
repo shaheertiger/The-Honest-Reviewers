@@ -128,6 +128,14 @@ An unlinked page is an orphan and the gate will fail it. For every article:
 4. **Index.** Add a row to the matching category in `src/pages/best-of.astro`.
 5. **Sitemap priority.** Add each slug to `priorityGuides` in `astro.config.mjs`.
 
+The "More in …" block at the foot of every page is generated at build time by
+`scripts/build-interlinks.mjs`: guide first, then the closest pages by topic, and on a
+guide a list of every spoke it does not already link to. New pages join it
+automatically, so a spec's `moreInCategory` is a preference, not the final list. Run
+`npm run interlinks` to see what it decided. If it pairs two unrelated pages on a
+shared word (deck cleaner and carpet cleaner), add the pair both ways to
+`scripts/link-blocklist.json` rather than editing the generated file.
+
 ## 5. Run every gate
 
 ```bash
