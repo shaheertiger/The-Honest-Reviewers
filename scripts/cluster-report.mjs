@@ -6,7 +6,7 @@
 //   node scripts/cluster-report.mjs            # ranked table, weakest first
 //   node scripts/cluster-report.mjs --json     # machine-readable, for the daily job
 //   node scripts/cluster-report.mjs --top 5    # just the five thinnest clusters
-import { readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const PAGES_DIR = join(import.meta.dirname, '..', 'src', 'pages');
@@ -28,12 +28,18 @@ export function loadPages() {
 // A pillar is a buyer's guide: the page a cluster is built to support.
 export const isPillar = (slug) => slug.startsWith('best-');
 
+// The topical assignment from scripts/build-interlinks.mjs, when it has been built.
+const PLAN_FILE = join(import.meta.dirname, '..', 'src', 'data', 'interlinks.json');
+const PLANNED = existsSync(PLAN_FILE) ? JSON.parse(readFileSync(PLAN_FILE, 'utf8')).pillarOf : {};
+
 // Which pillar does this supporting article belong to? In order of confidence:
 //   1. the sticky CTA, which is an explicit "this page exists to feed that one"
-//   2. the pillar it links to most often in the body
-function assignPillar(source, pillars) {
+//   2. the guide build-interlinks matched it to by topic
+//   3. the pillar it links to most often in the body
+function assignPillar(source, pillars, slug) {
   const cta = source.match(/stickyCta=\{\{[\s\S]*?link:\s*"\/([a-z0-9-]+)\/"/);
   if (cta && pillars.has(cta[1])) return cta[1];
+  if (pillars.has(PLANNED[slug])) return PLANNED[slug];
 
   const counts = new Map();
   for (const m of source.matchAll(/href="\/([a-z0-9-]+)\/"/g)) {
@@ -52,7 +58,7 @@ export function buildClusters() {
 
   for (const { slug, source } of pages) {
     if (isPillar(slug)) continue;
-    const pillar = assignPillar(source, pillars);
+    const pillar = assignPillar(source, pillars, slug);
     if (pillar) clusters.get(pillar).push(slug);
     else orphans.push(slug);
   }
