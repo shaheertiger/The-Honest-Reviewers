@@ -21,6 +21,8 @@ interface Props {
   };
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
   noindex?: boolean;
+  /** 1-2 factual sentences for AI agents (meta ai-summary); defaults to the description. */
+  aiSummary?: string;
 }
 
 const {
@@ -32,13 +34,16 @@ const {
   article,
   jsonLd,
   noindex,
+  aiSummary,
 } = Astro.props;
 
 // Markdown copy of this page, written by scripts/build-markdown.mjs after the build.
 // Noindex and error pages get no copy, so they get no link.
 const markdownPath = Astro.url.pathname.replace(/\/+$/, "");
 const markdownHref =
-  noindex || /^\/(404|500)$/.test(markdownPath) ? undefined : `${markdownPath || "/index"}.md`;
+  noindex || /^\/(404|500)$/.test(markdownPath)
+    ? undefined
+    : new URL(`${markdownPath || "/index"}.md`, Astro.site).toString();
 
 // On a supporting article, the mobile sticky bar offers its guide's #1 pick
 // directly instead of only linking to the guide (see scripts/build-top-picks.mjs).
@@ -72,6 +77,7 @@ const spokePick = pickPillar
     />
     <link rel="sitemap" href="/sitemap-index.xml" />
     {markdownHref && <link rel="alternate" type="text/markdown" href={markdownHref} />}
+    {!noindex && <meta name="ai-summary" content={aiSummary ?? description} />}
     <meta name="google-adsense-account" content="ca-pub-2128579868272786">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2128579868272786"
      crossorigin="anonymous"></script>

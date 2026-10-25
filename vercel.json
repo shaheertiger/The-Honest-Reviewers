@@ -55,6 +55,19 @@
   ],
   "headers": [
     {
+      "source": "/((?!api/)(?!.*\\.md$).*)",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "</llms.txt>; rel=\"describedby\"; type=\"text/plain\", </llms-full.txt>; rel=\"describedby\"; type=\"text/plain\", </ai.txt>; rel=\"describedby\"; type=\"text/plain\""
+        },
+        {
+          "key": "Vary",
+          "value": "Accept"
+        }
+      ]
+    },
+    {
       "source": "/(.*)\\.md",
       "headers": [
         {
@@ -64,15 +77,27 @@
         {
           "key": "X-Robots-Tag",
           "value": "noindex, follow"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
         }
       ]
     },
     {
-      "source": "/llms.txt",
+      "source": "/(llms|llms-full|ai)\\.txt",
       "headers": [
         {
           "key": "Content-Type",
           "value": "text/plain; charset=utf-8"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, s-maxage=86400, stale-while-revalidate=604800"
         }
       ]
     }

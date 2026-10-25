@@ -1,19 +1,27 @@
 #!/usr/bin/env node
 /**
- * Writes a Markdown copy of every built page, plus /llms.txt, so AI assistants
- * and answer engines can read the site without parsing HTML.
+ * Makes the built site readable by AI agents. Runs after `astro build` and writes
+ * into dist/:
  *
- * It runs after the build and reads the rendered HTML, so the Markdown always
- * matches what the page shows. For each page:
- *   /some-page/  ->  /some-page.md      (the home page becomes /index.md)
+ *   <page>.md        a Markdown copy of every indexable page (/foo/ -> /foo.md,
+ *                    the home page -> /index.md)
+ *   md-catalog.json  every Markdown route, served at /api/md/_catalog by middleware.js
+ *   llms.txt         site index for agents (llmstxt.org)
+ *   llms-full.txt    the most important pages' Markdown joined into one file
+ *   ai.txt           how AI systems may use the content
+ *   robots.txt       crawler rules, including the AI crawlers
  *
- * Pages are skipped when they are noindex, when their canonical URL points
- * somewhere else, or when they are error pages. Only the page's <main> content
- * is kept; ads, navigation, scripts and buttons are removed.
+ * The pages here are hand-built .astro files with their content inline, so there is
+ * no data layer to render from: the Markdown is converted from each page's rendered
+ * <main>, which keeps it identical to what readers see. Site identity (name, URL,
+ * description, contact) is read from the home page's Organization JSON-LD, so
+ * llms.txt, ai.txt and the structured data cannot disagree.
  *
- * Usage: node scripts/build-markdown.mjs [--html <dir>] [--out <dir>] [--site <origin>]
+ * Fails the build if a URL in the sitemap ends up without a Markdown copy.
+ *
+ * Usage: node scripts/build-markdown.mjs [--html dist] [--site https://www.example.com]
  */
-import { readdirSync, readFileSync, writeFileSync, mkdirSync, statSync } from 'node:fs';
+import { readdirSync, readFileSync, writeFileSync, mkdirSync, statSync, existsSync } from 'node:fs';
 import { join, dirname, relative, sep } from 'node:path';
 import domino from '@mixmark-io/domino';
 import TurndownService from 'turndown';
@@ -24,19 +32,27 @@ const arg = (name, fallback) => {
   const i = args.indexOf(`--${name}`);
   return i === -1 ? fallback : args[i + 1];
 };
-const HTML_DIR = arg('html', 'dist');
-const OUT_DIR = arg('out', HTML_DIR);
+const DIST = arg('html', 'dist');
 // Used for pages that have no <link rel="canonical">.
 const SITE = arg('site', 'https://placeholder.invalid');
 
-// Elements that carry no reading content.
-const STRIP = [
-  'script', 'style', 'noscript', 'template', 'svg', 'canvas', 'iframe', 'video', 'audio',
-  'form', 'button', 'input', 'select', 'textarea', 'dialog', 'nav', 'ins',
-  '[aria-hidden="true"]', '[hidden]', '.adsbygoogle', '[data-md-skip]',
-].join(',');
+// llms-full.txt stays under this many characters; the rest is listed in llms.txt.
+const FULL_LIMIT = 500_000;
+// Links per section in llms.txt before pointing to the full catalog.
+const LLMS_SECTION_CAP = 50;
 
-const SKIP_FILES = /(^|\/)(404|500|_not-found|_global-error|_error)(\/index)?\.html$|\[/; // error pages, dynamic-route shells
+// ---------------------------------------------------------------- crawler policy
+// Keep in sync: robots.txt, llms.txt and ai.txt are all written from these lists.
+
+// AI search and user-initiated fetchers. They decide whether answer engines can
+// cite the site, so they are always allowed.
+const AI_SEARCH_BOTS = ['OAI-SearchBot', 'ChatGPT-User', 'Claude-SearchBot', 'Claude-User', 'PerplexityBot', 'Perplexity-User'];
+// Model-training crawlers. Blocking one does not stop citations by the search bots above.
+const TRAINING_ALLOWED = ['GPTBot', 'ClaudeBot', 'Google-Extended', 'Applebot-Extended'];
+const TRAINING_BLOCKED = ['CCBot', 'Bytespider'];
+// Paths that are not content, for every crawler.
+const PRIVATE_PATHS = ['/api/'];
+const PUBLIC_EXCEPTIONS = ['/api/md/'];
 
 // ---------------------------------------------------------------- helpers
 
@@ -50,8 +66,10 @@ function walk(dir) {
   return out;
 }
 
+const SKIP_FILES = /(^|\/)(404|500)(\/index)?\.html$/;
 const clean = (s) => (s ?? '').replace(/\s+/g, ' ').trim();
-const yaml = (s) => JSON.stringify(String(s)); // a JSON string is a valid YAML scalar
+const day = (d) => (/^\d{4}-\d{2}-\d{2}/.test(d ?? '') ? d.slice(0, 10) : '');
+const today = new Date().toISOString().slice(0, 10);
 
 /** /foo/ or /foo -> /foo.md ; / -> /index.md */
 export function markdownPath(pathname) {
@@ -59,28 +77,22 @@ export function markdownPath(pathname) {
   return p === '' ? '/index.md' : `${p}.md`;
 }
 
-function meta(doc, selector) {
-  return clean(doc.querySelector(selector)?.getAttribute('content'));
-}
+const meta = (doc, selector) => clean(doc.querySelector(selector)?.getAttribute('content'));
 
-/** dateModified / datePublished from JSON-LD, searching nested graphs. */
-function jsonLdDates(doc) {
-  const dates = {};
+function jsonLdNodes(doc) {
+  const nodes = [];
   const visit = (node) => {
     if (!node || typeof node !== 'object') return;
     if (Array.isArray(node)) return node.forEach(visit);
-    for (const key of ['dateModified', 'datePublished']) {
-      if (!dates[key] && typeof node[key] === 'string') dates[key] = node[key];
-    }
-    Object.values(node).forEach(visit);
+    nodes.push(node);
+    if (node['@graph']) visit(node['@graph']);
   };
   for (const s of Array.from(doc.querySelectorAll('script[type="application/ld+json"]'))) {
     try { visit(JSON.parse(s.textContent)); } catch { /* ignore malformed blocks */ }
   }
-  return dates;
+  return nodes;
 }
-
-const day = (d) => (d ? String(d).slice(0, 10) : '');
+const typeIs = (node, type) => [].concat(node['@type']).includes(type);
 
 // ---------------------------------------------------------------- converter
 
@@ -93,7 +105,7 @@ const turndown = new TurndownService({
 });
 turndown.use(gfm);
 
-// Keep in-page "#anchor" links as plain text: they point nowhere in a .md file.
+// In-page "#anchor" links point nowhere in a .md file: keep their text only.
 turndown.addRule('anchorLinks', {
   filter: (node) => node.nodeName === 'A' && (node.getAttribute('href') || '').startsWith('#'),
   replacement: (content) => content,
@@ -108,6 +120,13 @@ turndown.addRule('tableCellNewlines', {
     return (index === 0 ? '| ' : ' ') + text + ' |';
   },
 });
+
+// Elements that carry no reading content.
+const STRIP = [
+  'script', 'style', 'noscript', 'template', 'svg', 'canvas', 'iframe', 'video', 'audio',
+  'form', 'button', 'input', 'select', 'textarea', 'dialog', 'nav', 'ins',
+  '[aria-hidden="true"]', '[hidden]', '.adsbygoogle', '[data-md-skip]',
+].join(',');
 
 const isBlank = (el) => !clean(el.textContent) && !el.querySelector('img');
 const hasOwnText = (el) => Array.from(el.childNodes).some((n) => n.nodeType === 3 && clean(n.nodeValue));
@@ -143,16 +162,17 @@ function tidy(root) {
       a.parentNode.replaceChild(p, a);
     }
   }
-  // Jump buttons ("#section" links laid out as blocks, not inside a sentence).
+  // Jump-button groups: a block holding nothing but "#section" links.
   for (const a of Array.from(root.querySelectorAll('a[href^="#"]'))) {
     const parent = a.parentNode;
-    if (parent && parent.nodeName === 'DIV' && !hasOwnText(parent)) a.remove();
+    if (parent && parent.nodeName === 'DIV' && !hasOwnText(parent) &&
+        Array.from(parent.children).every((c) => c.nodeName === 'A' && (c.getAttribute('href') || '').startsWith('#'))) a.remove();
   }
   // Badges and labels set side by side ("Model Review", "Updated 2026"): separate them.
   for (const el of Array.from(root.querySelectorAll('div > span, div > a'))) {
     const next = el.nextSibling;
     if (next && next.nodeType === 1 && /^(SPAN|A)$/.test(next.nodeName) && !hasOwnText(el.parentNode)) {
-      el.parentNode.insertBefore(el.ownerDocument.createTextNode(' · '), next);
+      el.parentNode.insertBefore(doc.createTextNode(' · '), next);
     }
   }
   // Containers left empty by stripping, then headings that no longer head anything
@@ -166,6 +186,19 @@ function tidy(root) {
   }
 }
 
+/** Drop the hero labels above the H1 ("Independent Buying Guide", badges). */
+function dropBeforeH1(root, h1) {
+  const before = [];
+  const walker = root.ownerDocument.createTreeWalker(root, 4 /* SHOW_TEXT */);
+  let text = 0;
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+    if (h1.contains(n)) break;
+    text += clean(n.nodeValue).length;
+    before.push(n);
+  }
+  if (text > 0 && text < 200) before.forEach((n) => n.remove());
+}
+
 function toAbsolute(root, base) {
   for (const el of Array.from(root.querySelectorAll('a[href]'))) {
     const href = el.getAttribute('href');
@@ -176,8 +209,8 @@ function toAbsolute(root, base) {
   for (const el of Array.from(root.querySelectorAll('img'))) {
     const src = el.getAttribute('src') || el.getAttribute('data-src');
     const w = Number(el.getAttribute('width'));
-    // Drop avatars, icons and images without a description.
-    if (!src || !clean(el.getAttribute('alt')) || (w && w <= 96) || src.startsWith('data:')) {
+    // Drop avatars, icons, placeholders and images without a description.
+    if (!src || !clean(el.getAttribute('alt')) || (w && w <= 96) || src.startsWith('data:') || /picsum\.photos|placehold\.co/.test(src)) {
       el.remove();
       continue;
     }
@@ -200,120 +233,324 @@ export function convert(html, fileUrl) {
 
   const main = doc.querySelector('main') || doc.querySelector('article') || doc.body;
   if (!main) return null;
+
+  const nodes = jsonLdNodes(doc);
+  const siteName = meta(doc, 'meta[property="og:site_name"]') || clean(nodes.find((n) => typeIs(n, 'Organization'))?.name);
+  const rawTitle = meta(doc, 'meta[property="og:title"]') || clean(doc.querySelector('title')?.textContent);
+  const escaped = siteName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // "Page title | Site Name" -> "Page title"
+  const title = siteName ? rawTitle.replace(new RegExp(`\\s+[|\\u2013\\u2014-]\\s+${escaped}$`), '') : rawTitle;
+  const description = meta(doc, 'meta[name="description"]') || meta(doc, 'meta[property="og:description"]');
+  const aiSummary = meta(doc, 'meta[name="ai-summary"]') || description;
+  const modified = day(meta(doc, 'meta[property="article:modified_time"]')) ||
+    day(nodes.map((n) => n.dateModified).find(Boolean)) ||
+    day(meta(doc, 'meta[property="article:published_time"]')) ||
+    day(nodes.map((n) => n.datePublished).find(Boolean));
+  const breadcrumbs = (nodes.find((n) => typeIs(n, 'BreadcrumbList'))?.itemListElement ?? [])
+    .map((item) => ({ name: clean(item.name ?? item.item?.name), href: item.item?.['@id'] ?? item.item?.url ?? item.item }))
+    .filter((c) => c.name && typeof c.href === 'string');
+
   for (const el of Array.from(main.querySelectorAll(STRIP))) el.remove();
   tidy(main);
   toAbsolute(main, url);
 
-  const title = meta(doc, 'meta[property="og:title"]') || clean(doc.querySelector('title')?.textContent);
-  const description = meta(doc, 'meta[name="description"]') || meta(doc, 'meta[property="og:description"]');
-  const dates = jsonLdDates(doc);
-  const modified = day(meta(doc, 'meta[property="article:modified_time"]') || dates.dateModified);
-  const published = day(meta(doc, 'meta[property="article:published_time"]') || dates.datePublished);
-  const siteName = meta(doc, 'meta[property="og:site_name"]');
-  // "Page title | Site Name" -> "Page title"
-  const pageTitle = siteName ? title.replace(new RegExp(`\\s+[|\u2013\u2014-]\\s+${siteName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`), '') : title;
+  // The page heading becomes the Markdown title; the hero labels above it go.
+  const h1 = main.querySelector('h1');
+  const heading = clean(h1?.textContent) || title;
+  if (h1) {
+    dropBeforeH1(main, h1);
+    h1.remove();
+  }
 
-  let body = turndown.turndown(main.innerHTML)
+  const body = turndown.turndown(main.innerHTML)
     .replace(/^(#+ \d+)\\\./gm, '$1.') // "## 1\. Title" -> "## 1. Title"
     .replace(/\n{3,}/g, '\n\n')
     .replace(/[ \t]+$/gm, '')
     .trim();
-  if (!/^# /m.test(body) && title) body = `# ${title}\n\n${body}`;
   if (body.length < 50) return null;
 
-  const front = [
-    '---',
-    `title: ${yaml(pageTitle)}`,
-    description && `description: ${yaml(description)}`,
-    `url: ${yaml(url.toString())}`,
-    published && `date_published: ${published}`,
-    modified && `date_modified: ${modified}`,
-    siteName && `site: ${yaml(siteName)}`,
-    '---',
-  ].filter(Boolean).join('\n');
+  // Related: the page's place in the site, from its breadcrumb trail.
+  const related = breadcrumbs
+    .map((c) => ({ ...c, href: new URL(c.href, url).toString() }))
+    .filter((c) => c.href !== url.toString());
 
-  const md = `${front}\n\n${body}\n\n---\n\nSource: ${url}\n`;
-  return { url, title: pageTitle, description, siteName, md, mdPath: markdownPath(url.pathname) };
+  const md = [
+    `# ${heading}`,
+    description && `> ${description}`,
+    [`Canonical: ${url}`, modified && `Last updated: ${modified}`].filter(Boolean).join('\n'),
+    body,
+    related.length && `## Related\n\n${related.map((c) => `- [${c.name.replace(/[[\]]/g, '')}](${c.href})`).join('\n')}`,
+  ].filter(Boolean).join('\n\n') + '\n';
+
+  return { url, title, description, aiSummary, siteName, modified, md, mdPath: markdownPath(url.pathname), nodes };
 }
 
-// ---------------------------------------------------------------- llms.txt
+// ---------------------------------------------------------------- sections
 
-function section(pathname, sectionHubs) {
+const linkTitle = (p) => (p.url.pathname === '/' ? 'Home' : p.title.replace(/[[\]]/g, ''));
+
+const SECTION_ORDER = ['Core pages', 'Topic hubs', 'Buying guides', 'Reviews', 'Comparisons', 'Answers and how-tos', 'Guides', 'Optional'];
+
+function sectionOf(pathname, hubs) {
   const slug = pathname.replace(/^\/|\/$/g, '');
-  if (slug === '') return 'Start here';
-  if (sectionHubs.has(slug)) return 'Topic hubs';
+  if (slug === '') return 'Core pages';
   const last = slug.split('/').pop();
-  if (/^(about|contact|privacy|terms|disclaimer|editorial|affiliate|how-we|methodology|authors?)(\b|-|$)/.test(last)) return 'About this site';
+  if (/^(privacy|terms|cookie|disclaimer|affiliate-disclosure)/.test(last)) return 'Optional';
+  if (/^(about|contact|editorial|how-we|methodology|authors?$)/.test(last) || slug.startsWith('authors/')) return 'Core pages';
+  if (hubs.has(slug) || /^best-of$/.test(slug)) return 'Topic hubs';
   if (/(^|-)vs(-|$)/.test(last)) return 'Comparisons';
   if (/^best-|-best-|^top-/.test(last)) return 'Buying guides';
-  if (/(^|-)(review|reviews)(-|$)/.test(last) || slug.startsWith('reviews/')) return 'Reviews';
+  if (/(^|-)reviews?(-|$)/.test(last)) return 'Reviews';
   if (/^(how|what|why|when|where|which|who|can|do|does|did|is|are|should|will|could|would)-/.test(last)) return 'Answers and how-tos';
   return 'Guides';
 }
 
-const ORDER = ['Start here', 'Topic hubs', 'Buying guides', 'Reviews', 'Comparisons', 'Answers and how-tos', 'Guides', 'About this site'];
-
-function llmsTxt(pages, origin) {
-  const home = pages.find((p) => p.url.pathname.replace(/\/+$/, '') === '');
-  const name = home?.siteName || home?.title || origin;
-  const intro = home?.description || '';
-  // A top-level path that other pages sit under counts as a hub.
-  const parents = new Set(pages.map((p) => p.url.pathname.split('/').filter(Boolean)).filter((s) => s.length > 1).map((s) => s[0]));
-
-  const groups = new Map();
-  for (const p of pages) {
-    const g = section(p.url.pathname, parents);
-    if (!groups.has(g)) groups.set(g, []);
-    groups.get(g).push(p);
+/** Sitemap priority and lastmod per URL, used to rank pages for llms-full.txt. */
+function sitemapInfo() {
+  const info = new Map();
+  for (const file of readdirSync(DIST).filter((f) => /^sitemap-\d+\.xml$/.test(f))) {
+    const xml = readFileSync(join(DIST, file), 'utf8');
+    for (const m of xml.matchAll(/<url>(.*?)<\/url>/gs)) {
+      const loc = m[1].match(/<loc>(.*?)<\/loc>/)?.[1];
+      if (!loc) continue;
+      info.set(new URL(loc).pathname, {
+        priority: Number(m[1].match(/<priority>(.*?)<\/priority>/)?.[1] ?? 0.5),
+      });
+    }
   }
+  return info;
+}
 
-  const lines = [`# ${name}`, ''];
-  if (intro) lines.push(`> ${intro}`, '');
+// ---------------------------------------------------------------- site files
+
+function identity(home) {
+  const org = home.nodes.find((n) => typeIs(n, 'Organization')) ?? {};
+  const contact = [].concat(org.contactPoint ?? [])[0] ?? {};
+  return {
+    name: clean(org.name) || home.siteName,
+    url: clean(org.url) || home.url.toString(),
+    description: clean(org.description) || home.description,
+    email: clean(org.email || contact.email),
+    contactUrl: clean(contact.url),
+    founded: clean(org.foundingDate),
+    logo: clean(typeof org.logo === 'string' ? org.logo : org.logo?.url),
+  };
+}
+
+function llmsTxt(groups, site, origin, total) {
+  const contact = site.email || site.contactUrl || `${origin}/`;
+  const facts = [
+    site.founded && `Founded in ${site.founded}.`,
+    'Free to read, with no account or paywall; the site earns affiliate commissions on qualifying purchases, which do not change its verdicts.',
+    `${total} pages, each available as Markdown.`,
+    `Contact: ${contact}.`,
+  ].filter(Boolean).join(' ');
+
+  const lines = [
+    `# ${site.name}`,
+    '',
+    `> ${site.description} Every page is available as plain Markdown by adding \`.md\` to its URL (the home page is \`/index.md\`) or by requesting it with \`Accept: text/markdown\`.`,
+    '',
+    facts,
+    '',
+    '<!-- Keep in sync with /robots.txt and /ai.txt (all three are generated by scripts/build-markdown.mjs). -->',
+    '',
+  ];
+  for (const name of SECTION_ORDER.filter((s) => s !== 'Optional')) {
+    const list = groups.get(name);
+    if (!list?.length) continue;
+    lines.push(`## ${name}`, '');
+    for (const p of list.slice(0, LLMS_SECTION_CAP)) lines.push(`- [${linkTitle(p)}](${origin}${p.mdPath})${p.description ? `: ${p.description}` : ''}`);
+    if (list.length > LLMS_SECTION_CAP) {
+      lines.push(`- [All ${list.length} ${name.toLowerCase()}](${origin}/api/md/_catalog): the full list, ${list.length - LLMS_SECTION_CAP} more than shown here`);
+    }
+    lines.push('');
+  }
   lines.push(
-    `Every page on ${origin.replace(/^https?:\/\//, '')} has a plain Markdown copy: add \`.md\` to the page URL (the home page is \`/index.md\`). Each copy starts with the page's title, description, canonical URL and last-updated date. The list below links to the Markdown copies.`,
+    '## Machine-readable',
+    '',
+    `- [Full content](${origin}/llms-full.txt): the most important pages' Markdown in one file`,
+    `- [Markdown catalog](${origin}/api/md/_catalog): JSON list of every Markdown page with its title, section and last-updated date`,
+    `- [Sitemap](${origin}/sitemap-index.xml)`,
+    `- [AI usage policy](${origin}/ai.txt)`,
     '',
   );
-  for (const g of ORDER) {
-    const list = groups.get(g);
-    if (!list) continue;
-    list.sort((a, b) => a.url.pathname.localeCompare(b.url.pathname));
-    lines.push(`## ${g}`, '');
-    for (const p of list) {
-      const desc = p.description ? `: ${p.description}` : '';
-      lines.push(`- [${p.title.replace(/[[\]]/g, '')}](${origin}${p.mdPath})${desc}`);
-    }
+  const optional = groups.get('Optional');
+  if (optional?.length) {
+    lines.push('## Optional', '');
+    for (const p of optional) lines.push(`- [${linkTitle(p)}](${origin}${p.mdPath})${p.description ? `: ${p.description}` : ''}`);
     lines.push('');
   }
   return lines.join('\n');
 }
 
+function llmsFull(groups, site, origin) {
+  const header = `# ${site.name} - full content\n> ${site.description}\nGenerated: ${today}\n`;
+  const parts = [];
+  let size = header.length;
+  let included = 0;
+  let total = 0;
+  const footer = (left) =>
+    `\n---\n\nThis file holds ${included} of ${total} pages and is capped at about ${FULL_LIMIT.toLocaleString('en-US')} characters` +
+    (left ? `; the other ${left} are listed in ${origin}/llms.txt and ${origin}/api/md/_catalog, and each one is available as Markdown at its URL plus .md.\n` : '.\n');
+  // Topic hubs are link lists that llms.txt already covers; full articles use the space better.
+  const ordered = SECTION_ORDER.filter((name) => name !== 'Topic hubs').flatMap((name) => groups.get(name) ?? []);
+  total = ordered.length;
+  for (const p of ordered) {
+    const chunk = `\n---\n<!-- source: ${p.url} -->\n${p.md}`;
+    if (size + chunk.length > FULL_LIMIT - 400) continue;
+    parts.push(chunk);
+    size += chunk.length;
+    included++;
+  }
+  const out = header + parts.join('') + footer(total - included);
+  if (out.length > FULL_LIMIT) console.warn(`build-markdown: llms-full.txt is ${out.length} characters, over the ${FULL_LIMIT} target.`);
+  return out;
+}
+
+function aiTxt(site, origin) {
+  const contact = site.email || site.contactUrl || `${origin}/`;
+  return [
+    '# ai.txt — how AI systems may use this site (ai-txt spec v1.1.1)',
+    '# Keep in sync with /robots.txt and /llms.txt (all three are generated by scripts/build-markdown.mjs).',
+    '',
+    '[identity]',
+    `name: ${site.name}`,
+    `url: ${site.url}`,
+    `description: ${site.description}`,
+    `contact: ${contact}`,
+    '',
+    '[permissions]',
+    'summarise: allowed',
+    'quote: allowed with attribution',
+    'cite: allowed',
+    'index-for-search: allowed',
+    'index-for-answers: allowed',
+    '',
+    '[restrictions]',
+    'fabricated-quotes: not allowed — quote only text that appears on the page',
+    'fake-reviews-or-ratings: not allowed — do not invent scores, ratings, test results or prices, or attribute them to us',
+    'present-as-own: not allowed — do not present our content as the model\'s own work',
+    'stale-facts: prices and specifications change; give the page date and link to the page',
+    `training: ${TRAINING_ALLOWED.join(', ')} may use public pages for training; ${TRAINING_BLOCKED.join(', ')} may not (see /robots.txt)`,
+    '',
+    '[attribution]',
+    `format: ${site.name} — <canonical page URL>`,
+    'link: cite the canonical HTML page (the "Canonical:" line in each Markdown copy), not the .md URL',
+    '',
+    '[scope]',
+    'include: /',
+    `include: ${PUBLIC_EXCEPTIONS.join(', ')} (Markdown copies of public pages)`,
+    `exclude: ${PRIVATE_PATHS.join(', ')}`,
+    'exclude: pages marked noindex',
+    '',
+    '[contact]',
+    `contact: ${contact}`,
+    '',
+    `Last updated: ${today}`,
+    '',
+  ].join('\n');
+}
+
+function robotsTxt(origin) {
+  const rules = (agents, lines) => [...agents.map((a) => `User-agent: ${a}`), ...lines, ''];
+  const publicRules = [...PUBLIC_EXCEPTIONS.map((p) => `Allow: ${p}`), ...PRIVATE_PATHS.map((p) => `Disallow: ${p}`), 'Allow: /'];
+  return [
+    `# robots.txt for ${origin.replace(/^https?:\/\//, '')}`,
+    '# Keep in sync with /llms.txt and /ai.txt (all three are generated by scripts/build-markdown.mjs).',
+    `# Site guide for AI agents: ${origin}/llms.txt`,
+    `# AI usage policy: ${origin}/ai.txt`,
+    '',
+    '# AI search and user-requested fetches: these let answer engines cite the site.',
+    ...rules(AI_SEARCH_BOTS, publicRules),
+    '# AI training crawlers allowed on public pages.',
+    ...rules(TRAINING_ALLOWED, publicRules),
+    '# AI training crawlers not allowed. This does not affect citations by the search bots above.',
+    ...rules(TRAINING_BLOCKED, ['Disallow: /']),
+    ...rules(['*'], publicRules),
+    `Sitemap: ${origin}/sitemap-index.xml`,
+    '',
+  ].join('\n');
+}
+
 // ---------------------------------------------------------------- main
 
 function main() {
-  try { statSync(HTML_DIR); } catch {
-    console.error(`build-markdown: ${HTML_DIR} not found. Run the site build first.`);
+  try { statSync(DIST); } catch {
+    console.error(`build-markdown: ${DIST} not found. Run the site build first.`);
     process.exit(1);
   }
   const pages = [];
-  let skipped = 0;
-  for (const file of walk(HTML_DIR)) {
-    const rel = relative(HTML_DIR, file).split(sep).join('/');
+  for (const file of walk(DIST)) {
+    const rel = relative(DIST, file).split(sep).join('/');
     if (SKIP_FILES.test(rel)) continue;
     const route = '/' + rel.replace(/\.html$/, '').replace(/(^|\/)index$/, '');
     const page = convert(readFileSync(file, 'utf8'), new URL(route, SITE).toString());
-    if (!page) { skipped++; continue; }
-    const target = join(OUT_DIR, page.mdPath);
+    if (!page) continue;
+    const target = join(DIST, page.mdPath);
     mkdirSync(dirname(target), { recursive: true });
     writeFileSync(target, page.md);
     pages.push(page);
   }
-  if (!pages.length) {
-    console.error('build-markdown: no pages converted.');
+  const home = pages.find((p) => p.url.pathname === '/');
+  if (!home) {
+    console.error('build-markdown: no home page found.');
     process.exit(1);
   }
-  const origin = pages[0].url.origin;
-  writeFileSync(join(OUT_DIR, 'llms.txt'), llmsTxt(pages, origin));
-  console.log(`build-markdown: wrote ${pages.length} Markdown pages and llms.txt to ${OUT_DIR} (${skipped} skipped: noindex, duplicate or empty).`);
+  const origin = home.url.origin;
+  const site = identity(home);
+
+  // Every URL in the sitemap must have a Markdown copy.
+  const sitemap = sitemapInfo();
+  const covered = new Set(pages.map((p) => p.url.pathname));
+  const missing = [...sitemap.keys()].filter((p) => !covered.has(p));
+  if (missing.length) {
+    console.error(`build-markdown: ${missing.length} sitemap URL(s) have no Markdown copy:\n  ${missing.slice(0, 20).join('\n  ')}`);
+    process.exit(1);
+  }
+
+  // Hubs: the section index pages, one per subdirectory of src/pages.
+  const PAGES_DIR = join('src', 'pages');
+  const hubs = new Set(
+    existsSync(PAGES_DIR)
+      ? readdirSync(PAGES_DIR, { withFileTypes: true })
+          .filter((e) => e.isDirectory() && existsSync(join(PAGES_DIR, e.name, 'index.astro')))
+          .map((e) => e.name)
+      : [],
+  );
+  const groups = new Map();
+  for (const p of pages) {
+    p.section = sectionOf(p.url.pathname, hubs);
+    if (!groups.has(p.section)) groups.set(p.section, []);
+    groups.get(p.section).push(p);
+  }
+  const byPath = (a, b) => a.url.pathname.localeCompare(b.url.pathname);
+  for (const list of groups.values()) list.sort(byPath);
+  // Most important first: sitemap priority, then most recently updated.
+  const rank = (a, b) =>
+    (sitemap.get(b.url.pathname)?.priority ?? 0.5) - (sitemap.get(a.url.pathname)?.priority ?? 0.5) ||
+    (b.modified || '').localeCompare(a.modified || '') ||
+    byPath(a, b);
+  for (const name of ['Core pages', 'Topic hubs']) groups.get(name)?.sort((a, b) => (a.url.pathname === '/' ? -1 : b.url.pathname === '/' ? 1 : byPath(a, b)));
+  for (const name of ['Buying guides', 'Reviews', 'Comparisons', 'Answers and how-tos', 'Guides']) groups.get(name)?.sort(rank);
+
+  const catalog = SECTION_ORDER.flatMap((name) => groups.get(name) ?? []).map((p) => ({
+    url: p.url.toString(),
+    markdown: `${origin}${p.mdPath}`,
+    title: p.title,
+    description: p.description,
+    section: p.section,
+    lastUpdated: p.modified || null,
+    tokens: Math.ceil(p.md.length / 4),
+  }));
+  writeFileSync(join(DIST, 'md-catalog.json'), JSON.stringify({ site: site.name, generated: today, count: catalog.length, pages: catalog }, null, 2));
+  writeFileSync(join(DIST, 'llms.txt'), llmsTxt(groups, site, origin, pages.length));
+  const full = llmsFull(groups, site, origin);
+  writeFileSync(join(DIST, 'llms-full.txt'), full);
+  writeFileSync(join(DIST, 'ai.txt'), aiTxt(site, origin));
+  writeFileSync(join(DIST, 'robots.txt'), robotsTxt(origin));
+
+  console.log(`build-markdown: ${pages.length} Markdown pages, llms.txt, llms-full.txt (${full.length.toLocaleString('en-US')} chars), ai.txt, robots.txt and md-catalog.json written to ${DIST}.`);
 }
 
 main();
