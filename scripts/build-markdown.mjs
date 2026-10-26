@@ -7,7 +7,9 @@
  *                    the home page -> /index.md)
  *   md-catalog.json  every Markdown route, served at /api/md/_catalog by middleware.js
  *   llms.txt         site index for agents (llmstxt.org)
- *   llms-full.txt    the most important pages' Markdown joined into one file
+ *   llms-full.txt    the guide for AI assistants: the hand-written intro from
+ *                    src/data/llms-full-intro.md, a generated index of every sitemap
+ *                    URL, then the most important pages' Markdown, all within FULL_LIMIT
  *   ai.txt           how AI systems may use the content
  *   robots.txt       crawler rules, including the AI crawlers
  *
@@ -17,7 +19,8 @@
  * description, contact) is read from the home page's Organization JSON-LD, so
  * llms.txt, ai.txt and the structured data cannot disagree.
  *
- * Fails the build if a URL in the sitemap ends up without a Markdown copy.
+ * Fails the build if a URL in the sitemap ends up without a Markdown copy, or if a
+ * site URL in llms-full-intro.md is not in the sitemap (so curated links cannot rot).
  *
  * Usage: node scripts/build-markdown.mjs [--html dist] [--site https://www.example.com]
  */
@@ -36,8 +39,11 @@ const DIST = arg('html', 'dist');
 // Used for pages that have no <link rel="canonical">.
 const SITE = arg('site', 'https://placeholder.invalid');
 
-// llms-full.txt stays under this many characters; the rest is listed in llms.txt.
+// llms-full.txt stays under this many characters. The intro and the URL index always go
+// in whole; page content fills the rest of the budget, and the URL index lists every page.
 const FULL_LIMIT = 500_000;
+// Hand-written top of llms-full.txt (Markdown, edited by hand, no code needed).
+const INTRO_FILE = join('src', 'data', 'llms-full-intro.md');
 // Links per section in llms.txt before pointing to the full catalog.
 const LLMS_SECTION_CAP = 50;
 
@@ -369,7 +375,7 @@ function llmsTxt(groups, site, origin, total) {
   lines.push(
     '## Machine-readable',
     '',
-    `- [Full content](${origin}/llms-full.txt): the most important pages' Markdown in one file`,
+    `- [Full content](${origin}/llms-full.txt): a guide for AI assistants (which page answers which question, how to cite and the accuracy rules), an index of every URL, then the most important pages' Markdown, in one file`,
     `- [Markdown catalog](${origin}/api/md/_catalog): JSON list of every Markdown page with its title, section and last-updated date`,
     `- [Sitemap](${origin}/sitemap-index.xml)`,
     `- [AI usage policy](${origin}/ai.txt)`,
@@ -384,26 +390,95 @@ function llmsTxt(groups, site, origin, total) {
   return lines.join('\n');
 }
 
-function llmsFull(groups, site, origin) {
-  const header = `# ${site.name} - full content\n> ${site.description}\nGenerated: ${today}\n`;
+/** Section names as shown in the llms-full.txt URL index. */
+const INDEX_LABEL = { 'Topic hubs': 'Hubs', 'Answers and how-tos': 'Answers & how-tos', Optional: 'Policies' };
+
+/**
+ * The generated "Complete URL Index": every sitemap URL exactly once, grouped by the
+ * llms.txt sections and sorted by title within each group.
+ */
+function urlIndex(sitemap, pageByPath, origin) {
+  const groups = new Map(SECTION_ORDER.map((name) => [name, []]));
+  for (const pathname of sitemap.keys()) {
+    const p = pageByPath.get(pathname);
+    const url = p ? p.url.toString() : new URL(pathname, origin).toString();
+    groups.get(p?.section ?? 'Guides').push({ title: p ? linkTitle(p) : '', url });
+  }
+  const host = new URL(origin).host;
+  const lines = [
+    '<!-- GENERATED:URL-INDEX — do not edit by hand, see scripts/build-markdown.mjs -->',
+    '',
+    '## Complete URL Index',
+    '',
+    `Every indexable page on ${host} (${sitemap.size} URLs), generated from the sitemap.`,
+    '',
+  ];
+  for (const [name, list] of groups) {
+    if (!list.length) continue;
+    list.sort((a, b) => (a.title || a.url).localeCompare(b.title || b.url, 'en', { sensitivity: 'base' }) || a.url.localeCompare(b.url));
+    lines.push(`### ${INDEX_LABEL[name] ?? name} (${list.length})`, '');
+    for (const e of list) lines.push(e.title ? `- [${e.title}](${e.url})` : `- ${e.url}`);
+    lines.push('');
+  }
+  lines.push('<!-- /GENERATED:URL-INDEX -->');
+  return lines.join('\n');
+}
+
+/**
+ * Checks every site URL in the hand-written intro: page links must be canonical sitemap
+ * URLs; the machine-readable files this script writes (and each page's .md twin) are
+ * allowed too. Returns the offending URLs with the reason.
+ */
+function introProblems(intro, sitemap, origin) {
+  const { host, protocol } = new URL(origin);
+  const bare = host.replace(/^www\./, '').replace(/[.]/g, '\\.');
+  const files = new Set(['/llms.txt', '/llms-full.txt', '/ai.txt', '/robots.txt', '/sitemap-index.xml', '/api/md/_catalog']);
+  const mdTwins = new Set([...sitemap.keys()].map(markdownPath));
+  const problems = [];
+  if (!intro.includes(origin)) problems.push(`no link to ${origin} at all (is this the right site's intro?)`);
+  for (const [raw] of intro.matchAll(new RegExp(`https?://(?:www\\.)?${bare}[^\\s\`)>\\]|"']*`, 'g'))) {
+    const href = raw.replace(/[.,;:]+$/, '');
+    if (href.includes('{')) continue; // a URL pattern such as /{slug}.md, not a link
+    const u = new URL(href);
+    if (u.protocol !== protocol || u.host !== host) problems.push(`${href} (use ${origin})`);
+    else if (u.search) problems.push(`${href} (the site has no query-string features; link the plain page)`);
+    else if (!sitemap.has(u.pathname) && !files.has(u.pathname) && !mdTwins.has(u.pathname)) {
+      const alt = u.pathname.endsWith('/') ? u.pathname.replace(/\/+$/, '') : `${u.pathname}/`;
+      problems.push(sitemap.has(alt) ? `${href} (the canonical URL is ${origin}${alt})` : `${href} (not in the sitemap)`);
+    }
+  }
+  return [...new Set(problems)];
+}
+
+function llmsFull(groups, site, origin, intro, index, indexCount) {
+  const guide = `${intro.trim()}\n\n---\n\n${index}\n`;
+  const header =
+    `\n---\n\n## Full Page Content\n\n` +
+    `The full Markdown of the site's most important pages follows, ranked by sitemap priority and then by most recently updated, ` +
+    `each starting with its title, summary, canonical URL and last-updated date. Cite the canonical URL, not this file. Generated: ${today}.\n`;
   const parts = [];
-  let size = header.length;
+  let size = guide.length + header.length;
   let included = 0;
-  let total = 0;
-  const footer = (left) =>
-    `\n---\n\nThis file holds ${included} of ${total} pages and is capped at about ${FULL_LIMIT.toLocaleString('en-US')} characters` +
-    (left ? `; the other ${left} are listed in ${origin}/llms.txt and ${origin}/api/md/_catalog, and each one is available as Markdown at its URL plus .md.\n` : '.\n');
-  // Topic hubs are link lists that llms.txt already covers; full articles use the space better.
+  // Topic hubs are link lists that the URL index already covers; full articles use the space better.
   const ordered = SECTION_ORDER.filter((name) => name !== 'Topic hubs').flatMap((name) => groups.get(name) ?? []);
-  total = ordered.length;
+  const total = ordered.length;
+  const footer = (left) =>
+    `\n---\n\nThis file holds the guide above, an index of all ${indexCount} URLs and the full content of ${included} of ${total} pages, ` +
+    `and is capped at about ${FULL_LIMIT.toLocaleString('en-US')} characters` +
+    (left ? `. The other ${left} pages are in the index above and in ${origin}/api/md/_catalog; each one is available as Markdown at its URL plus .md.\n` : '.\n');
+  const reserve = footer(total).length + 50;
+  if (size + reserve > FULL_LIMIT) {
+    console.error(`build-markdown: the llms-full.txt intro and URL index alone are ${size.toLocaleString('en-US')} characters, over the ${FULL_LIMIT.toLocaleString('en-US')} limit. Shorten ${INTRO_FILE} or raise FULL_LIMIT.`);
+    process.exit(1);
+  }
   for (const p of ordered) {
     const chunk = `\n---\n<!-- source: ${p.url} -->\n${p.md}`;
-    if (size + chunk.length > FULL_LIMIT - 400) continue;
+    if (size + chunk.length > FULL_LIMIT - reserve) continue;
     parts.push(chunk);
     size += chunk.length;
     included++;
   }
-  const out = header + parts.join('') + footer(total - included);
+  const out = guide + header + parts.join('') + footer(total - included);
   if (out.length > FULL_LIMIT) console.warn(`build-markdown: llms-full.txt is ${out.length} characters, over the ${FULL_LIMIT} target.`);
   return out;
 }
@@ -545,7 +620,20 @@ function main() {
   }));
   writeFileSync(join(DIST, 'md-catalog.json'), JSON.stringify({ site: site.name, generated: today, count: catalog.length, pages: catalog }, null, 2));
   writeFileSync(join(DIST, 'llms.txt'), llmsTxt(groups, site, origin, pages.length));
-  const full = llmsFull(groups, site, origin);
+
+  // llms-full.txt: hand-written intro, generated URL index, then page content.
+  if (!existsSync(INTRO_FILE)) {
+    console.error(`build-markdown: ${INTRO_FILE} not found (the hand-written top of llms-full.txt).`);
+    process.exit(1);
+  }
+  const intro = readFileSync(INTRO_FILE, 'utf8');
+  const bad = introProblems(intro, sitemap, origin);
+  if (bad.length) {
+    console.error(`build-markdown: ${bad.length} link(s) in ${INTRO_FILE} do not match a page in the sitemap:\n  ${bad.join('\n  ')}`);
+    process.exit(1);
+  }
+  const pageByPath = new Map(pages.map((p) => [p.url.pathname, p]));
+  const full = llmsFull(groups, site, origin, intro, urlIndex(sitemap, pageByPath, origin), sitemap.size);
   writeFileSync(join(DIST, 'llms-full.txt'), full);
   writeFileSync(join(DIST, 'ai.txt'), aiTxt(site, origin));
   writeFileSync(join(DIST, 'robots.txt'), robotsTxt(origin));
