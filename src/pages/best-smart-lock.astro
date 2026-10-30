@@ -1,0 +1,844 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Video Doorbells",
+    "url": "/best-video-doorbell/"
+  },
+  {
+    "title": "Best Home Security Cameras",
+    "url": "/best-home-security-cameras/"
+  },
+  {
+    "title": "Best Garage Door Openers",
+    "url": "/best-garage-door-opener/"
+  },
+  {
+    "title": "Home Improvement Ideas",
+    "url": "/home-improvement-ideas/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-30", modified: "2026-10-30" });
+const title = "7 Best Smart Locks in 2026: Ranked for Real Homes";
+const description =
+  "Seven smart locks ranked for real front doors: keypad, retrofit, Wi-Fi, fingerprint and Apple Home Key, with an honest guide to choosing and installing one.";
+
+const PRODUCTS = [
+  {
+    "id": "yale-assure-lock-2",
+    "name": "Yale Assure Lock 2",
+    "category": "Keypad Deadbolt, Wi-Fi or Bluetooth Modules",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "pros": [
+      "Full deadbolt replacement with a touchscreen keypad, so guests and family can come and go without a phone",
+      "Sold in several configurations, including Bluetooth, Wi-Fi and Apple Home Key versions, so you can buy only the connectivity you need",
+      "Keypad-first design means the lock still works normally when the phone, app or Wi-Fi is not",
+      "Yale publishes a long list of supported platforms, which keeps the lock useful if you change smart home ecosystems later",
+      "Finish options are broad enough to match most front-door hardware"
+    ],
+    "cons": [
+      "Wi-Fi and Home Key versions are different SKUs, and buying the wrong one is the most common regret",
+      "A full replacement lock needs a correctly prepped door; it is not a hide-it-inside retrofit"
+    ],
+    "bottomLine": "The safest default for most front doors: a conventional keypad deadbolt that happens to be smart, in whichever connectivity version your home actually needs.",
+    "description": "The Assure Lock 2 is the lock we would point most households toward because it treats the keypad as the main event and the app as the extra. It replaces your existing deadbolt, adds a touchscreen keypad on the outside, and keeps a physical key override on versions that include one. Yale sells it as a family of models rather than a single product, so the first decision is connectivity: a Bluetooth model for direct phone control, a Wi-Fi model for remote lock and unlock without a hub, or a Home Key model for tap-to-unlock with an iPhone or Apple Watch. The manufacturer specifies battery power from four AA cells and an emergency battery contact on the exterior, which is the feature you will be glad of the one time the cells run flat. For a typical home with kids, a dog walker and the occasional contractor, the keypad codes alone justify the purchase."
+  },
+  {
+    "id": "schlage-encode-plus",
+    "name": "Schlage Encode Plus Smart WiFi Deadbolt",
+    "category": "Wi-Fi Deadbolt, Apple Home Key",
+    "badge": "Best for Apple Households",
+    "amazonUrl": "#",
+    "pros": [
+      "Wi-Fi is built in, so no separate hub or bridge is required for remote control",
+      "Supports Apple Home Key, letting an iPhone or Apple Watch unlock the door by tapping near the lock",
+      "Schlage is one of the oldest names in residential locks, and the Encode line is marketed with a high ANSI/BHMA grade; confirm the grade on the listing you buy",
+      "Keypad with programmable access codes for family, guests and service visits",
+      "Alarm and activity alerts through the Schlage Home app"
+    ],
+    "cons": [
+      "Premium pricing compared with simpler Bluetooth keypad locks",
+      "Cheaper than a full smart home hub, but Wi-Fi radios drain batteries faster than Bluetooth-only models"
+    ],
+    "bottomLine": "If your household runs on iPhones and you want tap-to-unlock plus remote access with no hub, this is the cleanest single-box answer.",
+    "description": "Schlage built the Encode Plus around two things people actually ask for: Wi-Fi without a hub and Apple Home Key. The deadbolt replaces your existing one, adds a keypad, and connects directly to your home network, so the app can lock the door from the office or send an alert when a code is used. Home Key support means an iPhone or Apple Watch can unlock the door with a tap, with no app to open, which owners commonly describe as the point where a smart lock starts to feel like a normal door. The lock is sold in different finishes and with different trim styles, and Schlage publishes compatibility notes for the Home Key and Wi-Fi features, so check that your phone and home network meet them. Expect to give up some battery life in exchange for the built-in radio."
+  },
+  {
+    "id": "august-wifi-smart-lock",
+    "name": "August Wi-Fi Smart Lock",
+    "category": "Retrofit, Keeps Your Existing Key",
+    "badge": "Best Retrofit (Keep Your Keyway)",
+    "amazonUrl": "#",
+    "pros": [
+      "Mounts over the interior thumb-turn of your existing deadbolt, so the outside of the door looks unchanged",
+      "Your current keys keep working, which makes it a good fit for renters and for historic-look doors",
+      "Wi-Fi is built in, so remote control and activity history do not depend on a separate bridge",
+      "Auto-lock and auto-unlock features can be set up from the app",
+      "Easy to remove and reinstall at a new address"
+    ],
+    "cons": [
+      "No exterior keypad in the base package, so a phone, key or add-on accessory is your way in",
+      "The interior unit is visible and bulkier than the thumb-turn it covers"
+    ],
+    "bottomLine": "The best way to make a door smart without changing what it looks like from the street or breaking a lease.",
+    "description": "August takes the opposite approach from the replacement locks: it leaves your deadbolt in place and motorizes the thumb-turn on the inside. That means the outside of the door, the keyway and your existing keys are untouched, which is exactly what renters, landlords and anyone with a nice period door want. Installation is a matter of swapping in a mounting plate and attaching the unit, which a homeowner with a screwdriver can finish in well under an hour according to the manufacturer. The Wi-Fi version connects straight to your network for remote control and shared access. The trade-off is that the bulk lives on the inside of the door and the outside has no keypad unless you add an accessory. Check the listing for your deadbolt brand and thumb-turn shape before buying."
+  },
+  {
+    "id": "level-bolt",
+    "name": "Level Bolt",
+    "category": "Hidden Retrofit Deadbolt",
+    "badge": "Best Invisible Upgrade",
+    "amazonUrl": "#",
+    "pros": [
+      "Replaces the guts of your deadbolt while leaving the exterior and interior trim looking like a normal lock",
+      "Keeps your existing key and keyway, so no new keys to cut or hand out",
+      "Supports Apple Home Key, with tap-to-unlock on an iPhone or Apple Watch",
+      "Small footprint with no keypad or extra hardware on the door",
+      "Compact internal mechanism with no bulky housing on either side of the door"
+    ],
+    "cons": [
+      "No keypad, so a guest without a phone needs a physical key",
+      "Compatibility with your existing deadbolt must be confirmed before you order"
+    ],
+    "bottomLine": "The most discreet smart lock available: nobody will know it is there until the door unlocks itself.",
+    "description": "Level Bolt is designed for people who dislike the look of most smart locks. Rather than adding a keypad or a bulky housing, it swaps out the internal mechanism of your deadbolt and keeps the existing exterior and interior hardware, so the door looks the way it did before. Your current key still works. Level states that it supports Apple Home Key for tap-to-unlock and also works with its own app, with remote features depending on the connectivity accessory you choose. That makes it a fine pick for design-conscious homeowners, but it has a clear limit: with no keypad, guests need a phone or a key. Before ordering, check Level's compatibility notes for your deadbolt brand, door thickness and backset, since fit is the one thing that can go wrong."
+  },
+  {
+    "id": "kwikset-halo-touchscreen",
+    "name": "Kwikset Halo Touchscreen Wi-Fi Smart Lock",
+    "category": "Wi-Fi Keypad Deadbolt",
+    "badge": "Best Value Wi-Fi Keypad",
+    "amazonUrl": "#",
+    "pros": [
+      "Wi-Fi is built in, so there is no hub to buy or place",
+      "Touchscreen keypad with programmable codes",
+      "Kwikset is a familiar name with broad availability, so replacement parts and local help are easy to find",
+      "SmartKey re-keying feature lets you change which key works without replacing the lock",
+      "Works with the major voice assistants according to the manufacturer"
+    ],
+    "cons": [
+      "Wi-Fi radios are battery-hungry, so plan on checking the cells more often than on a Bluetooth-only lock",
+      "App and ecosystem polish trail the best premium options in owner reports"
+    ],
+    "bottomLine": "A straightforward, widely available Wi-Fi keypad lock for people who want remote access without a hub or a big price.",
+    "description": "Kwikset's Halo line is the budget-friendly way into a Wi-Fi deadbolt. It replaces your existing lock, adds a touchscreen keypad and connects straight to your router, so you can lock and unlock from the app, share codes and see activity history. Kwikset also builds in its SmartKey re-keying feature, which lets you reset the lock to a new key in seconds without calling a locksmith, a real convenience after a move or a lost key. The brand has strong retail presence, so you can usually find one on a shelf as well as online. The cost of a built-in Wi-Fi radio is battery life, and owners commonly report changing the cells more often than on a simpler Bluetooth lock. If you rarely need remote access, a keypad-only model will outlast it."
+  },
+  {
+    "id": "ultraloq-u-bolt-pro",
+    "name": "Ultraloq U-Bolt Pro",
+    "category": "Fingerprint and Keypad, Optional Wi-Fi Bridge",
+    "badge": "Best Fingerprint Lock",
+    "amazonUrl": "#",
+    "pros": [
+      "Fingerprint reader gives a keyless way in for people who struggle with codes or phones",
+      "Keypad, app, fingerprint and physical key all in one unit",
+      "Wi-Fi remote control is available through a separate bridge accessory",
+      "Multiple access methods suit households with children or older adults",
+      "Priced below several of the big-brand Wi-Fi locks"
+    ],
+    "cons": [
+      "Remote access depends on buying and setting up the bridge accessory",
+      "Fingerprint readers can be fussy with wet, dirty or worn fingertips"
+    ],
+    "bottomLine": "The pick for households that want to unlock the door with a finger, as long as you accept the extra bridge for remote access.",
+    "description": "The U-Bolt Pro is for anyone who has stood on a porch with full hands and no keys. It combines a fingerprint reader, a keypad, Bluetooth app control and a physical key override in one deadbolt, so there is almost always a way in. For remote lock control and alerts, Ultraloq offers a separate Wi-Fi bridge accessory rather than building the radio in, which keeps the lock's own battery use lower but adds a purchase and a plug-in device. Fingerprint capacity and enrollment are straightforward, and the manufacturer lists support for common voice assistants. The main caveat is the usual one for biometrics: owners commonly mention that wet or dirty fingers can fail to read, so keep the keypad code as a backup. It is a sensible choice when ease of entry matters more than a polished ecosystem."
+  },
+  {
+    "id": "aqara-u100",
+    "name": "Aqara Smart Lock U100",
+    "category": "Fingerprint Deadbolt, Apple Home Key",
+    "badge": "Best for Smart Home Tinkerers",
+    "amazonUrl": "#",
+    "pros": [
+      "Apple Home Key support for tap-to-unlock",
+      "Fingerprint reader and Bluetooth, plus compatibility with the Aqara ecosystem",
+      "Aqara lists support for Apple Home, and for other platforms through its own hub; check the listing for current details",
+      "Looks more like a design object than most smart locks",
+      "Useful if you already run Aqara sensors and want door state to trigger scenes"
+    ],
+    "cons": [
+      "Best experience requires an Aqara hub, and platform support varies by region and firmware",
+      "Smaller US service and support footprint than Yale, Schlage or Kwikset"
+    ],
+    "bottomLine": "A good fit if you already live in the Aqara or Apple Home world and want the lock to be one more node in your automations.",
+    "description": "Aqara's U100 sits at the more enthusiast end of the category. It brings a fingerprint reader and Apple Home Key support to a deadbolt that integrates naturally with Aqara's sensors, so unlocking the door can trigger a scene such as turning on lights and disarming a camera. The manufacturer lists compatibility with Apple Home and with other platforms through its own hub, which matters because the more advanced features lean on that hub being present. This is not the lock to pick if you want the simplest possible setup or the largest support network; Yale, Schlage and Kwikset have deeper retail and service reach. But for someone who already has an Aqara hub, a handful of sensors and a taste for automations, it is the most natural lock to add."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Smart Locks",
+          item: "https://www.thehonestreviewers.com/best-smart-lock/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best smart lock overall?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most front doors, a keypad deadbolt from an established brand such as Yale or Schlage is the safest choice, because the keypad works for everyone and the lock keeps working when the app does not. Pick the connectivity version that matches how you will use it, and confirm the exact model number before you buy."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are smart locks safe from hackers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Reputable smart locks use encrypted communication, and real-world incidents tend to come from shared codes, weak passwords or unlocked phones rather than attacks on the lock. Use a unique password, turn on two-factor authentication, install firmware updates and delete unused codes. A physical key override is a sensible backup."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens to a smart lock when the power or internet goes out?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A keypad lock runs on its own batteries and checks codes internally, so it keeps working through power and internet outages. Remote features and cloud schedules pause until the connection returns. Keep a physical key or emergency battery contact available so an outage never leaves you stranded."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I install a smart lock myself?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Usually yes. Manufacturers generally describe replacement deadbolts as a screwdriver job on a standard prepped door, and retrofit models are often simpler. Measure the backset, door thickness and bore hole first, and check the listing for compatibility. Mortise locks and unusual doors may need a locksmith or a conversion kit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need Wi-Fi for a smart lock?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not necessarily. A Bluetooth keypad lock works with codes and with your phone when you are nearby. Wi-Fi, either built in or through a bridge accessory, adds remote lock and unlock and alerts when you are away. Wi-Fi also drains batteries faster, so buy it only if you will use remote access."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long do smart lock batteries last?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Manufacturers commonly quote months to a year or more on four AA batteries, with Bluetooth-only models lasting longer than Wi-Fi models. Cold weather, frequent use and weak signal shorten that. Plan to check the cells twice a year, and treat the first low-battery warning as a deadline rather than a suggestion."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can renters use a smart lock?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Often yes, if you choose a retrofit model that mounts over the interior thumb-turn and leaves the exterior hardware alone, such as the August Wi-Fi Smart Lock. Check your lease first, since some landlords require approval. Retrofit locks are easy to remove, so you can take the lock with you when you move."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home Security",
+    tags: [
+      "best smart lock",
+      "smart lock",
+      "keyless entry",
+      "smart deadbolt",
+      "wifi smart lock",
+      "apple home key lock"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated October 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best <span class="text-[#38BDF8]">Smart Locks</span> for Your Front Door
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Seven smart locks ranked by who they suit, from keypad deadbolts to invisible retrofits, plus the door prep and battery details that decide whether you will love one.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#yale-assure-lock-2"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            How to Choose
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="18.4k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#what-a-smart-lock-does" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. What a Smart Lock Does</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Our 7 Top Picks</a>
+          <a href="#how-to-choose" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. How to Choose</a>
+          <a href="#security-grades" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Security & BHMA Grades</a>
+          <a href="#installation" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Installation Guide</a>
+          <a href="#power-and-failure" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Batteries & Failure Modes</a>
+          <a href="#smart-home-integration" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Smart Home Integration</a>
+          <a href="#cost-and-deals" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Cost & Deals</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          A smart lock is only worth owning if it still works on the worst day: dead batteries, a router outage, a guest with no app. The best smart lock is the one that fits your door, matches the way your household actually enters the house, and fails gracefully. Here are the seven we would consider for a real front door, and exactly who each one is for.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="what-a-smart-lock-does" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. What a Smart Lock Actually Does (and What It Does Not)
+          </h2>
+
+          <p>
+            A smart lock is a deadbolt with a motor, a radio and a battery pack. It does the same mechanical job as the lock it replaces: a bolt slides into your door frame. The difference is how it decides to move. Instead of a key turning a cylinder, a code on a keypad, a fingerprint, a tap from a phone or a command from an app tells a small motor to throw the bolt. That sounds modest, and it is, but the practical effect on daily life is large. You stop carrying a key, you stop hiding a spare under a planter, and you stop wondering whether you locked the door after you left.
+          </p>
+
+          <p>
+            The honest way to think about the category is as convenience first, security second. A good smart lock is not meaningfully harder to break through than the quality deadbolt it replaces, because the strength of a door comes from the bolt, the strike plate, the frame and the screws holding them together. What a smart lock adds is control: you can give a dog walker a code that works only on weekday afternoons, delete it when the arrangement ends, and see who came and went. For anyone who has ever had to rekey a house after a lost key, that alone pays for the lock.
+          </p>
+
+          <p>
+            It is worth being clear about what the category does not do. A smart lock does not make a weak door strong, and it does not replace a camera or an alarm. If your front door is a hollow slab with a short strike plate screwed into a thin frame, the lock is not the weak point. Pair a lock with a <a href="/best-home-security-cameras/" class="text-[#1E90FF] font-bold hover:underline">good security camera</a> or a <a href="/best-video-doorbell/" class="text-[#1E90FF] font-bold hover:underline">video doorbell</a> and you get the other half of the picture, the footage that shows who was at the door when the log says it opened.
+          </p>
+
+          <p>
+            This guide follows the format of our other buyer's guides, and we want to be plain about its basis. We have not run bench tests on these locks, so you will not find invented measurements below. What you will find is the manufacturer's published specifications, what owners commonly report, and our reasoning about which lock suits which house. Where a detail varies by model or region, we say so and tell you what to check on the listing before you buy. For the bigger picture of how a lock fits into a sensible upgrade budget, see our <a href="/home-improvement-ideas/" class="text-[#1E90FF] font-bold hover:underline">home improvement ideas</a> guide.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. The 7 Best Smart Locks in 2026, Ranked
+          </h2>
+
+          <p>
+            We ranked these seven on how well they suit a real front door: how they are installed, how you get in without a phone, and what happens when the batteries run low. We have not bench tested them, so the notes below draw on manufacturer specifications and what owners commonly report. The Check Price buttons are affiliate links, so we earn a commission if you buy through them, at no extra cost to you.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="how-to-choose" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. How to Choose: Replacement Deadbolt, Retrofit or Latch
+          </h2>
+
+          <p>
+            The first decision is physical, not digital. There are three shapes of smart lock. A replacement deadbolt takes out your existing lock and puts in a new one with a keypad on the outside; Yale, Schlage, Kwikset and Ultraloq make these. A retrofit lock leaves your exterior hardware and your keys alone and motorizes the lock from the inside or swaps the internal mechanism; August and Level are the examples here. A latch or lever set replaces a door handle and latch rather than a deadbolt, and suits interior doors or a door with no deadbolt. For a front door, almost everyone should pick between the first two.
+          </p>
+
+          <p>
+            Choose a replacement deadbolt if you want a keypad. A keypad is the single feature that most improves life with a smart lock, because it works for everyone in the house, including people who do not want an app, children who do not have a phone and guests who need temporary access. Choose a retrofit if you rent, if you love the look of your existing hardware, or if you need your existing keys to keep working. The trade-off is that a retrofit usually means the phone or a key is your way in, unless you add an accessory.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Lock Shape</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Best For</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Watch Out For</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Replacement deadbolt</td>
+                    <td class="px-4 py-4 text-gray-700">Front doors where you want a keypad</td>
+                    <td class="px-4 py-4 text-gray-700">Door must be prepped for a standard deadbolt</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Retrofit (inside mount)</td>
+                    <td class="px-4 py-4 text-gray-700">Renters and period doors</td>
+                    <td class="px-4 py-4 text-gray-700">Phone or key is your way in without an accessory</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Hidden retrofit</td>
+                    <td class="px-4 py-4 text-gray-700">Keeping the original look</td>
+                    <td class="px-4 py-4 text-gray-700">Must match your deadbolt brand and backset</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Wi-Fi, Bluetooth, Thread, Z-Wave and Home Key</h3>
+
+          <p>
+            Connectivity is where most buyers get confused, so here is the short version. Bluetooth connects the lock to your phone when you are nearby and is the most battery-friendly option. Wi-Fi connects the lock to your router so you can control it from anywhere without a hub, at the cost of faster battery drain. Z-Wave and Zigbee are low-power mesh protocols that need a compatible hub, and suit people who already run a hub-based smart home. Thread is a newer low-power mesh network that Matter-compatible devices use, and it needs a Thread border router, which many recent smart speakers and displays provide. Apple Home Key is a feature that lets an iPhone or Apple Watch unlock a compatible lock by tapping it, using the same wallet technology as contactless payments.
+          </p>
+
+          <p>
+            Match the connectivity to the way you will actually use the lock. If you only want the keypad and occasional phone control when home, Bluetooth is plenty and the batteries last longest. If you want to check the door from work or let in a visitor remotely, you need Wi-Fi built in or a bridge. If you already have a hub, a Z-Wave or Thread version integrates more cleanly and uses less power. And if every phone in the house is an iPhone, Home Key is the feature that will make the lock feel effortless.
+          </p>
+
+          <p>
+            One practical caution applies to every brand: many models are sold as families, and the Wi-Fi, Bluetooth and Home Key versions look nearly identical on the shelf. Read the exact model number on the listing before you click buy, since the remote-access feature you expected may require a different SKU or an add-on bridge.
+          </p>
+        </div>
+
+        <div id="security-grades" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Security: ANSI/BHMA Grades, Codes and Realistic Risks
+          </h2>
+
+          <p>
+            Door lock quality in North America is rated by ANSI/BHMA standards, which grade residential locks on how well they resist forced entry and cycling. Grade 1 is the highest tier and is usually described as commercial-grade or best-in-class for residential use. Grade 2 is a solid mid-tier, and Grade 3 is the baseline that still meets the standard. When a manufacturer states a grade, treat it as a useful starting point and check the exact listing, because grades can differ between models in the same family.
+          </p>
+
+          <p>
+            What the grade measures is mostly the mechanical lock: how much force the bolt and strike can take and how many cycles the mechanism survives. It does not measure the app, the radio or the code system. That is why it is sensible to evaluate a smart lock on two layers, the deadbolt and the electronics, and to buy the deadbolt grade you would have wanted anyway.
+          </p>
+
+          <p>
+            On the electronics side, the realistic risks are far more mundane than the headlines suggest. The most common failure is a human one: a code shared too widely, a phone left unlocked, or a password reused across accounts. Turn on two-factor authentication for the manufacturer's app, use a unique password, and delete codes you no longer need. Set an auto-lock so a door left ajar does not stay unlocked all afternoon, and keep a physical key somewhere you can reach it. Firmware updates matter too; the better manufacturers push security fixes through their apps, so install them rather than ignoring the notification.
+          </p>
+
+          <p>
+            The strongest advice is to treat the lock as one layer. A reinforced strike plate with three-inch screws into the stud does more against a kick-in than any electronics, and it costs a few dollars. If you are tightening up the door while you are at it, a <a href="/best-stud-finder/" class="text-[#1E90FF] font-bold hover:underline">stud finder</a> helps you find solid framing for those screws, and a <a href="/best-cordless-drills/" class="text-[#1E90FF] font-bold hover:underline">cordless drill</a> makes quick work of the pilot holes.
+          </p>
+        </div>
+
+        <div id="installation" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Installation: Door Prep, Backset and Handing
+          </h2>
+
+          <p>
+            Most smart locks are a one-evening DIY job with a screwdriver, and manufacturers generally say the replacement models install in well under an hour on a standard door. The reason people struggle is not the lock, it is the door. Before you order, measure three things: the backset, the door thickness and the bore hole. Backset is the distance from the edge of the door to the center of the lock hole, and it is almost always 2-3/8 inches or 2-3/4 inches. Most smart locks include an adjustable latch that handles both, but confirm it on the listing.
+          </p>
+
+          <p>
+            Door thickness matters because the lock spans it. Standard residential doors are about 1-3/4 inches thick, and most locks are built for that, with optional kits for thicker or thinner doors. The bore hole is the large hole through the face of the door, normally 2-1/8 inches, with a smaller hole through the edge for the latch. A standard prepped door will already have both. If your door has an older or unusual lock, such as a mortise lock, check carefully, because most consumer smart locks will not fit it without a conversion.
+          </p>
+
+          <p>
+            Handing is the direction the door swings, and it matters for lever-style locks and for some retrofit mounts. Stand outside the door facing it: if the hinges are on your left, it is a left-hand door. Many smart deadbolts are not handed, but some interior parts and some levers are, so look for the setting or the instruction step during installation.
+          </p>
+
+          <p>
+            When you install, work in a calm order. Remove the old lock and keep the screws. Fit the new latch and make sure it sits flush. Install the exterior assembly, run the cable through, then attach the interior mounting plate and the battery cover. Check that the bolt extends and retracts freely with the door open before you test it with the door closed, since a bolt that rubs against a misaligned strike will wear out the motor. If the bolt drags, the fix is almost always to adjust or relocate the strike plate rather than to fight the lock. A <a href="/best-laser-level/" class="text-[#1E90FF] font-bold hover:underline">laser level</a> can help you check that the door and frame are square if you suspect the door has sagged over the years.
+          </p>
+        </div>
+
+        <div id="power-and-failure" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Batteries, Power Failures and What Happens When Things Go Wrong
+          </h2>
+
+          <p>
+            Most smart locks run on four AA batteries, and manufacturers commonly quote battery life in months to a year or more depending on the model and how often the lock is used. Bluetooth-only models tend to sit at the longer end, and Wi-Fi models at the shorter end, because the Wi-Fi radio draws more power. Treat any quoted battery life as an estimate: cold weather, frequent use, a weak signal and rechargeable cells all shorten it. Use quality alkaline batteries unless the manufacturer says otherwise, since cheap cells can leak and rechargeables often drop voltage faster than the lock expects.
+          </p>
+
+          <p>
+            Every reputable smart lock warns you before the batteries die. You will get a low-battery alert in the app, a beep or a light on the keypad, and often several weeks of runtime after the first warning. The most common way to get locked out is ignoring that alert, so put a reminder in your calendar the day you install the lock and change the cells twice a year regardless.
+          </p>
+
+          <p>
+            If the batteries do die, you still have options, and this is where the design of the lock matters. Many models have an exterior contact that lets you touch a nine-volt battery to the terminals to power the keypad just long enough to enter your code. Many also keep a traditional keyway as a physical override. Retrofit locks such as August and Level keep your existing key working, so a dead battery is an annoyance rather than an emergency. Models with no key override and no emergency power contact are the ones to avoid unless you have a reliable backup entry.
+          </p>
+
+          <p>
+            Power outages and internet outages are a separate matter. A keypad lock keeps working with the router down, because the code check happens inside the lock. Remote features and cloud-based schedules will pause until the connection returns. If you rely on remote access for a rental, a short outage can strand a guest, so give them a keypad code and a phone number rather than counting on the app. The best habit is to keep one non-electronic way in, a key in a lockbox or with a neighbor, and to test it once a year.
+          </p>
+        </div>
+
+        <div id="smart-home-integration" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Smart Home Integration: Alexa, Google, Apple and Matter
+          </h2>
+
+          <p>
+            A smart lock becomes more useful when it talks to the rest of your home, but integration is also where claims drift furthest from reality. Voice control is the simplest example. Most major locks work with Alexa, Google Assistant and Apple Home in some form, and the manufacturer's compatibility page is the place to check which features you get. Be careful with one point: many voice assistants will lock a door by voice but require a PIN to unlock it, which is a sensible safety choice rather than a flaw.
+          </p>
+
+          <p>
+            Matter is a smart home standard designed to let devices from different brands work together, and some newer locks support it directly or through a hub. In practice it is still maturing, and lock support is among the more limited categories. If Matter matters to you, look for explicit support on the specific model you are buying rather than assuming the brand has it everywhere. The same goes for Thread and Z-Wave: both are good low-power options when you already have a hub or border router that supports them, and a poor reason to buy a lock if you do not.
+          </p>
+
+          <p>
+            The automations that tend to pay off are simple. Auto-lock after a set time, so the door is never accidentally left open. A notification when a specific code is used, so you know the kids are home. A scene that turns on the hallway light when the door unlocks after dark. A good rule is to start with one or two automations and live with them for a month before adding more, since a lock that does too many clever things is a lock that surprises you.
+          </p>
+
+          <p>
+            Finally, think about the ecosystem you are choosing, not just the lock. A lock that depends on one manufacturer's cloud is only as durable as that company's commitment to the product. Locks that support open standards, or that keep working locally with the keypad when the cloud is down, age better. If you are building out a connected front door, our <a href="/best-video-doorbell/" class="text-[#1E90FF] font-bold hover:underline">video doorbell guide</a> and <a href="/best-garage-door-opener/" class="text-[#1E90FF] font-bold hover:underline">garage door opener guide</a> cover the neighboring pieces.
+          </p>
+        </div>
+
+        <div id="cost-and-deals" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. What Smart Locks Cost and When to Buy
+          </h2>
+
+          <p>
+            Smart lock prices span a wide range, from budget Bluetooth models to premium Wi-Fi and Home Key units, and the spread usually follows connectivity. A keypad-only Bluetooth lock sits at the low end, a Wi-Fi keypad lock in the middle, and a Home Key or multi-protocol lock at the top. Because prices move constantly and vary by retailer, we are not going to print a number that will be wrong by the time you read it. Check the live price on the listing, and compare the same exact model number across sellers.
+          </p>
+
+          <p>
+            The timing of deals follows a predictable pattern. Smart home devices are among the most heavily discounted categories during the big sales events, notably the Amazon Prime Big Deal Days in the fall, Black Friday and Cyber Monday in late November, and Prime Day in the summer. Manufacturers also run their own promotions, and older generations drop in price when a successor is announced. If you are not in a hurry, waiting for one of these windows is the single best way to save, and if you are in a hurry, it is still worth checking whether a coupon box is available on the listing.
+          </p>
+
+          <p>
+            Count the full cost, not just the sticker. A Wi-Fi bridge accessory, a spare set of batteries, a reinforced strike plate and a door prep kit add up. If you rent, factor in whether you can legally modify the lock, which is why retrofit models are so popular there. And consider whether any subscription is attached: most core lock functions are free, but some manufacturers charge for extended history or cloud features, so read the fine print before you commit.
+          </p>
+
+          <p>
+            A note on our links: the product links on this page are affiliate links, which means we earn a commission if you buy through them, at no extra cost to you. It does not change which locks we recommend or the order we put them in. If a lock is not right for your door, we say so.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            9. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying the Wrong Version of the Same Lock</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Many smart locks come as a family of near-identical models. The Wi-Fi, Bluetooth and Home Key versions can look the same on the shelf but behave very differently. Read the exact model number and confirm that the connectivity you want is included, not an add-on.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping the Door Measurements</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Backset, door thickness and bore hole decide whether a lock fits. Measure before you order, and check the listing for compatibility with your door. A lock that almost fits is a lock that jams, and a jammed bolt wears out the motor and drains the batteries.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring the Low-Battery Warning</h3>
+              <p class="text-gray-700 text-sm m-0">
+                The most common smart lock emergency is a door that will not open because the batteries died after weeks of warnings. Put a calendar reminder in on installation day, replace the cells twice a year, and keep a nine-volt battery or a spare key where you can reach it.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Treating the Lock as the Whole Security Plan</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A smart lock does not make a weak door strong. A short strike plate screwed into thin framing will fail long before the electronics do. Reinforce the strike with long screws into the stud and treat the lock as one layer alongside cameras and good habits.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Handing Out Permanent Codes</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A shared code that never expires is a key you cannot get back. Give each person their own code, use scheduled access for contractors and guests, and delete codes when the arrangement ends. The activity log is only useful if each person has a separate credential.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best smart lock overall?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most front doors, a keypad deadbolt from an established brand such as Yale or Schlage is the safest choice, because the keypad works for everyone and the lock keeps working when the app does not. Pick the connectivity version that matches how you will use it, and confirm the exact model number before you buy.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are smart locks safe from hackers?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Reputable smart locks use encrypted communication, and real-world incidents tend to come from shared codes, weak passwords or unlocked phones rather than attacks on the lock. Use a unique password, turn on two-factor authentication, install firmware updates and delete unused codes. A physical key override is a sensible backup.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What happens to a smart lock when the power or internet goes out?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A keypad lock runs on its own batteries and checks codes internally, so it keeps working through power and internet outages. Remote features and cloud schedules pause until the connection returns. Keep a physical key or emergency battery contact available so an outage never leaves you stranded.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I install a smart lock myself?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Usually yes. Manufacturers generally describe replacement deadbolts as a screwdriver job on a standard prepped door, and retrofit models are often simpler. Measure the backset, door thickness and bore hole first, and check the listing for compatibility. Mortise locks and unusual doors may need a locksmith or a conversion kit.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do I need Wi-Fi for a smart lock?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Not necessarily. A Bluetooth keypad lock works with codes and with your phone when you are nearby. Wi-Fi, either built in or through a bridge accessory, adds remote lock and unlock and alerts when you are away. Wi-Fi also drains batteries faster, so buy it only if you will use remote access.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long do smart lock batteries last?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Manufacturers commonly quote months to a year or more on four AA batteries, with Bluetooth-only models lasting longer than Wi-Fi models. Cold weather, frequent use and weak signal shorten that. Plan to check the cells twice a year, and treat the first low-battery warning as a deadline rather than a suggestion.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can renters use a smart lock?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Often yes, if you choose a retrofit model that mounts over the interior thumb-turn and leaves the exterior hardware alone, such as the August Wi-Fi Smart Lock. Check your lease first, since some landlords require approval. Retrofit locks are easy to remove, so you can take the lock with you when you move.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Home Security & Upgrade Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-video-doorbell/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Video Doorbells</h3>
+              <p class="text-gray-500 text-sm mt-2">The camera that shows who was at the door when the lock opened.</p>
+            </a>
+            <a href="/best-home-security-cameras/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Home Security Cameras</h3>
+              <p class="text-gray-500 text-sm mt-2">Indoor and outdoor cameras compared for the rest of the property.</p>
+            </a>
+            <a href="/home-improvement-ideas/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Ideas</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Home Improvement Ideas</h3>
+              <p class="text-gray-500 text-sm mt-2">Seven upgrades worth the money, and where a smart lock fits.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The best smart lock is the one that fits your door, suits the people who use it and still opens when things go wrong. For most households that means a keypad deadbolt from Yale or Schlage; for renters and design-minded homeowners it means a retrofit from August or Level; and for people with iPhones or fingerprints in mind, the Home Key and fingerprint models make the door feel effortless.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Measure your door, pick the exact connectivity version you need, keep a physical backup and change the batteries on a schedule. Do those four things and a smart lock is one of the few home upgrades that you will notice every single day.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Security" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

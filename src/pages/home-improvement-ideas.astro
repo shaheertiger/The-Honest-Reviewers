@@ -1,0 +1,900 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Cordless Drills",
+    "url": "/best-cordless-drills/"
+  },
+  {
+    "title": "Best Caulk Gun",
+    "url": "/best-caulk-gun/"
+  },
+  {
+    "title": "Best Laser Level",
+    "url": "/best-laser-level/"
+  },
+  {
+    "title": "Best Stud Finder",
+    "url": "/best-stud-finder/"
+  },
+  {
+    "title": "Best Primer",
+    "url": "/best-primer/"
+  },
+  {
+    "title": "Best Pressure Washer",
+    "url": "/best-pressure-washer/"
+  },
+  {
+    "title": "Best Smart Locks",
+    "url": "/best-smart-lock/"
+  },
+  {
+    "title": "Best Video Doorbells",
+    "url": "/best-video-doorbell/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-30", modified: "2026-10-30" });
+const title = "Home Improvement Ideas: 7 Upgrades Worth Doing First, and the Gear to Do Them";
+const description =
+  "Home improvement ideas ranked by payoff, from caulk and air sealing to smart locks and lighting, with the gear we'd buy for each and how to sequence them.";
+
+const PRODUCTS = [
+  {
+    "id": "dewalt-dcd771c2-drill-kit",
+    "name": "DEWALT 20V MAX Cordless Drill/Driver Kit (DCD771C2)",
+    "category": "Every Project: Drilling and Driving",
+    "badge": "Best Starter Tool",
+    "amazonUrl": "#",
+    "pros": [
+      "Compact, lightweight body is easy to handle in tight spots like cabinets and closets",
+      "Two batteries and a charger come in the kit, so one can charge while you work",
+      "Two-speed gearbox covers both drilling and driving screws",
+      "Part of the broad 20V MAX battery platform, so you can add tools later",
+      "A 1/2-inch chuck accepts the common range of drill bits and drivers"
+    ],
+    "cons": [
+      "Brushed motor and modest battery size are not built for all-day heavy use",
+      "Newer brushless models offer more power and runtime for more money"
+    ],
+    "bottomLine": "A sensible first drill for a homeowner who wants a trusted platform without paying for pro-level power.",
+    "description": "Nearly every upgrade in this guide, from hanging shelves to installing a smart lock, starts with a drill, and the DEWALT DCD771C2 kit is a long-running, widely owned entry point. The kit pairs a compact 20V MAX drill/driver with two batteries and a charger, which solves the most common beginner frustration: running out of power halfway through a job. The manufacturer specifies a 1/2-inch chuck and a two-speed gearbox, and owners commonly report that it handles household drilling and screwdriving comfortably. It is not the most powerful drill DEWALT sells, and heavy users will eventually want brushless, but for shelves, curtain rods, light fixtures and furniture it is more than enough. The real value is the platform: the same batteries power DEWALT's other 20V MAX tools, so the kit works as the foundation of a growing collection."
+  },
+  {
+    "id": "google-nest-learning-thermostat",
+    "name": "Google Nest Learning Thermostat",
+    "category": "Energy Upgrade: Smart Thermostat",
+    "badge": "Best Smart Thermostat Upgrade",
+    "amazonUrl": "#",
+    "pros": [
+      "Learns your schedule and adjusts heating and cooling automatically",
+      "Remote control and scheduling through a phone app",
+      "ENERGY STAR certified model line, so utility rebates may be available in some areas",
+      "Clean, readable display that looks good on most walls",
+      "Compatibility checker on the manufacturer's site reduces installation surprises"
+    ],
+    "cons": [
+      "Some heating and cooling systems need extra wiring or a power accessory",
+      "Costs more than basic programmable thermostats"
+    ],
+    "bottomLine": "A strong pick if your routine varies week to week and you want the thermostat to figure it out for you.",
+    "description": "A thermostat is the control center of your heating and cooling, and the Nest Learning Thermostat is one of the best-known ways to upgrade it. Instead of making you program a schedule, it watches how you adjust the temperature and builds a schedule from that, then uses presence sensing and your phone to avoid conditioning an empty house. The manufacturer promotes energy savings, and utility programs have studied smart thermostats generally, but your results depend on your climate, equipment and habits. Installation is within reach of a careful DIYer: shut off power, photograph the existing wiring, label the wires, and follow the app's guided steps. The most important step happens before you buy, which is running the compatibility checker for your system. If it flags an unusual setup, such as line-voltage heat, hire an HVAC technician."
+  },
+  {
+    "id": "yale-assure-lock-2",
+    "name": "Yale Assure Lock 2",
+    "category": "Security Upgrade: Smart Lock",
+    "badge": "Best Smart Lock Upgrade",
+    "amazonUrl": "#",
+    "pros": [
+      "Keypad or touchscreen options mean no key needed for daily use",
+      "Lets you create separate codes for family, guests and service visits",
+      "Available in several connectivity versions, including Wi-Fi and Bluetooth modules",
+      "Replaces only the deadbolt hardware on your existing door in most cases",
+      "Many models keep a traditional key cylinder as a backup"
+    ],
+    "cons": [
+      "Connected features depend on the module and may add cost",
+      "Battery-powered, so you need to change batteries on schedule"
+    ],
+    "bottomLine": "A practical door upgrade that ends key fumbling and makes guest access simple.",
+    "description": "A smart lock solves a problem you hit every day: getting in the door with your hands full, or letting someone in when you are not home. The Yale Assure Lock 2 is a popular choice because it comes in several styles, including keypad and touchscreen versions, and several connectivity options, so you can match it to the smart home setup you already have. The manufacturer designs it to replace the deadbolt on a standard prepared door, and many homeowners install one in under an hour with a screwdriver. The practical benefit is code management: you can issue and revoke codes without rekeying. Check that your door's bore and backset match the lock, choose the connectivity version carefully, and keep a mechanical key option or backup battery method in mind. Our smart lock guide compares alternatives."
+  },
+  {
+    "id": "bosch-gll-55",
+    "name": "Bosch GLL 55 Self-Leveling Cross-Line Laser",
+    "category": "Layout Upgrade: Shelves, Tile, Art",
+    "badge": "Best Layout Tool",
+    "amazonUrl": "#",
+    "pros": [
+      "Projects level horizontal and vertical lines so shelves and tile rows come out straight",
+      "Self-leveling design corrects small tilts automatically",
+      "Compact and light enough to carry from room to room",
+      "A pendulum lock protects the mechanism during transport",
+      "Saves time compared with measuring and chasing a bubble level"
+    ],
+    "cons": [
+      "Red lasers can be hard to see in bright light or outdoors",
+      "Accuracy depends on setup, so you still verify against a known reference"
+    ],
+    "bottomLine": "The cheapest way to make every shelf, picture row and tile line look professional.",
+    "description": "Straight lines are the difference between a DIY job that looks professional and one that does not, and a self-leveling cross-line laser is the easiest way to get them. The Bosch GLL 55 projects horizontal and vertical lines that you can follow with a pencil, and the manufacturer lists a working range suitable for room-sized projects. Owners commonly use it for hanging gallery walls, aligning cabinets, setting tile courses and laying out chair rails. Place it on a stable surface or tripod, wait for it to self-level, mark your points, and you are done. In a bright room or outdoors the line fades, which is when a detector or a different model helps. Pair it with a stud finder to locate framing, and check our laser level guide for other options."
+  },
+  {
+    "id": "dap-alex-plus-caulk",
+    "name": "DAP Alex Plus Acrylic Latex Caulk Plus Silicone",
+    "category": "Seal and Paint: Caulking",
+    "badge": "Best Everyday Caulk",
+    "amazonUrl": "#",
+    "pros": [
+      "Paintable, so it works around trim, baseboards and window casings",
+      "Water cleanup makes it forgiving for beginners",
+      "Flexible enough for small expansion and contraction of trim joints",
+      "Widely available and inexpensive compared with the cost of a bad finish",
+      "Comes in common tube sizes that fit a standard caulk gun"
+    ],
+    "cons": [
+      "Not the right choice for constantly wet areas such as shower seams",
+      "Needs a clean, dry joint to bond well"
+    ],
+    "bottomLine": "The one tube to keep in the house for trim, casings and small gaps before painting.",
+    "description": "Caulk is the cheapest upgrade in this guide, and DAP Alex Plus is a long-standing favorite for interior trim and paintable joints. It is an acrylic latex caulk with silicone added for flexibility, and the label specifies it as paintable and cleanable with water, which makes it a beginner-friendly choice. Use it where trim meets wall, around window and door casings, and in small gaps you plan to paint over. Do not use it as a shower or tub sealant, where a mildew-resistant silicone is the right chemistry. Prep matters more than product: scrape out failed caulk, vacuum the joint, cut the nozzle small, run a continuous bead and smooth it with a damp finger. Read our guides to exterior caulk and bathroom caulk for wetter locations."
+  },
+  {
+    "id": "sun-joe-spx3000",
+    "name": "Sun Joe SPX3000 Electric Pressure Washer",
+    "category": "Curb Appeal: Driveway, Deck, Siding",
+    "badge": "Best Curb Appeal Cleanup",
+    "amazonUrl": "#",
+    "pros": [
+      "Plug-in electric design is quieter and needs no fuel or tune-ups",
+      "Rated by the manufacturer at roughly 2,000 PSI, enough for patios, siding and vehicles",
+      "Multiple spray tips let you match pressure to the surface",
+      "Built-in detergent tank for soap application",
+      "Easier to store than gas models"
+    ],
+    "cons": [
+      "Less powerful than gas units for heavily stained concrete",
+      "Limited by cord length and a nearby outlet"
+    ],
+    "bottomLine": "A manageable, low-maintenance way to restore the look of hard surfaces before painting or sealing.",
+    "description": "Dirt and mildew age a house faster than most people realize, and cleaning is often the highest-impact curb appeal upgrade for the least money. The Sun Joe SPX3000 is a widely owned electric pressure washer, and the manufacturer rates it around 2,000 PSI, which is suited to patios, walkways, fences, siding and outdoor furniture. Owners commonly like that it needs no fuel, starts reliably and stores easily. Use the wider tips on delicate surfaces like wood and siding, keep a consistent distance, and never aim at windows, electrical outlets or people. If you plan to seal or repaint, wash first and let surfaces dry completely. For tougher jobs or larger driveways, compare gas models in our pressure washer guide."
+  },
+  {
+    "id": "lutron-caseta-dimmer-kit",
+    "name": "Lutron Caseta Smart Dimmer Switch Starter Kit",
+    "category": "Lighting Upgrade: Smart Dimmers",
+    "badge": "Best Lighting Upgrade",
+    "amazonUrl": "#",
+    "pros": [
+      "In-wall dimmers replace existing switches, so lights still work by hand",
+      "Works without a neutral wire in many installations, per the manufacturer",
+      "Hub-based design keeps lighting control separate from your Wi-Fi traffic",
+      "Includes a hub and remote in starter kit versions",
+      "Compatible with several popular voice assistants and smart home platforms"
+    ],
+    "cons": [
+      "Starter kits cover only a few switches, so a whole house adds up",
+      "You need to match the dimmer to your bulb type and load"
+    ],
+    "bottomLine": "A reliable, family-friendly way to add dimming and scheduling without relying on an app.",
+    "description": "Lighting changes how a room feels more than almost any other upgrade, and dimmers are the easiest way to take control of it. Lutron Caseta dimmers replace the wall switch you already have, so family members and guests do not need to learn an app, and the lights still work if your Wi-Fi goes down. The manufacturer says many Caseta dimmers do not require a neutral wire, which matters in older homes. A starter kit includes a hub, which connects the dimmers to your phone and voice assistant for scheduling and remote control. Installation means turning off the breaker, confirming the power is off, and swapping wires one for one, a job a careful DIYer can handle. Check that the dimmer's rating matches your bulbs, particularly LEDs, and hire an electrician if the wiring looks confusing."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Home Improvement Ideas",
+          item: "https://www.thehonestreviewers.com/home-improvement-ideas/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What home improvement ideas add the most value?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Annual cost-versus-value surveys consistently show that exterior and maintenance projects, such as replacing an entry door or garage door, tend to recover a larger share of their cost than big interior remodels. Smaller upgrades like fresh paint, sealed gaps and updated lighting also improve how a home shows."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What should I fix first in an older house?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Start with water and air: leaks, failed caulk, missing weatherstripping and poor drainage. These protect the structure and reduce energy waste. Then address safety items such as smoke and carbon monoxide detectors, electrical hazards and lead paint before cosmetic work."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do smart thermostats really save money?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They can, but results vary. Savings depend on your climate, your equipment, how well the house is sealed and whether you actually use the scheduling features. A smart thermostat reliably prevents conditioning an empty house, and some utilities offer rebates, so check local programs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I install a smart lock myself?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In most cases yes. Many smart locks replace the deadbolt on a standard prepared door with a screwdriver in under an hour. Measure your door's bore and backset first, choose the right connectivity version, and keep a backup entry method in case batteries run out."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What basic tools does every homeowner need?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A cordless drill/driver, tape measure, level, stud finder, caulk gun, utility knife, screwdriver set and pliers cover most household projects. Buy fewer, better tools on one battery platform rather than many cheap tools you rarely use."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When is the best time to buy tools and home upgrades?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Prices commonly soften around major holidays, at the end of a season and when a new product generation arrives. Watch the price of specific items for a few weeks so you recognize a real discount. Avoid buying simply because a sale is ending."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which home improvements need a permit?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Requirements vary by location, but electrical, plumbing, gas, structural and some roofing, deck and fence projects commonly need permits. Cosmetic work like painting and caulking generally does not. Call your local building department before starting; it is usually a free, quick answer."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home Improvement",
+    tags: [
+      "home improvement ideas",
+      "home upgrades",
+      "diy home improvement",
+      "home renovation ideas",
+      "best home upgrades",
+      "home improvement tools"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Ranked by Payoff
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Home Improvement <span class="text-[#38BDF8]">Ideas Worth Doing First</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Seven upgrades ranked by what they actually do for comfort, security and bills, each paired with the one piece of gear we'd start with.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#dewalt-dcd771c2-drill-kit"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            See How to Sequence Your Projects
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="11.4k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#ranked-by-payoff" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Home Improvement Ideas, Ranked by Payoff</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. The 7 Upgrades and the Gear to Do Them</a>
+          <a href="#budget-tiers" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Budget Tiers: What to Do at Each Price Level</a>
+          <a href="#comfort-and-bills" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Comfort and Energy Upgrades</a>
+          <a href="#smart-and-security" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Smart Home and Security Upgrades</a>
+          <a href="#diy-vs-hire" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. DIY or Hire a Pro?</a>
+          <a href="#starter-kit" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. The Starter Tool Kit Logic</a>
+          <a href="#safety-timing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Safety, Permits and Timing Your Purchases</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Most home improvement lists are a catalog of things that look good in a photo. The upgrades that pay you back are quieter: a sealed gap, a thermostat that stops heating an empty house, a lock you never have to think about, a coat of paint on a wall you have stared at for years. This guide ranks seven ideas by what they change in daily life, then names the gear to do each one properly.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="ranked-by-payoff" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. Home Improvement Ideas, Ranked by Payoff
+          </h2>
+
+          <p>
+            The honest way to rank home improvement ideas is by how much each one changes your daily experience per hour and dollar spent, not by how impressive it looks on a listing. By that measure the winners are rarely glamorous. Sealing air leaks and caulking gaps stops conditioned air from escaping and keeps water out of walls. A programmable or learning thermostat trims heating and cooling when nobody is home. Fresh paint resets a room for the price of a weekend. These projects share a trait: they fix something you notice every day.
+          </p>
+
+          <p>
+            Annual remodeling cost-versus-value surveys consistently show that smaller, exterior-facing and maintenance-driven projects recover a larger share of their cost at resale than big interior remodels do. Replacing an entry door or garage door tends to return more of its price than a custom kitchen. We will not quote percentages here because they shift every year and vary by region, but the pattern is stable enough to plan around: spend big where it protects the house, spend small where it improves how you live.
+          </p>
+
+          <p>
+            Our ranking puts <strong>sealing and caulking</strong> first because it is the cheapest upgrade with the widest benefit, followed by <strong>lighting and paint</strong> for visible change, then <strong>smart thermostat and lock</strong> upgrades for comfort and security, then <strong>outdoor cleanup</strong> for curb appeal. The tools that make all of them possible, a decent drill and a level, sit underneath the list because every other project leans on them. If you can only do one thing this month, grab a caulk gun and a tube of good caulk and walk the house.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Upgrade idea</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">What it changes</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Difficulty</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Gear we'd start with</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Seal and caulk</td>
+                    <td class="px-4 py-4 text-gray-700">Drafts, moisture, bugs</td>
+                    <td class="px-4 py-4 text-gray-700">Easy</td>
+                    <td class="px-4 py-4 text-gray-700">DAP Alex Plus caulk</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Smart thermostat</td>
+                    <td class="px-4 py-4 text-gray-700">Heating and cooling schedule</td>
+                    <td class="px-4 py-4 text-gray-700">Easy to moderate</td>
+                    <td class="px-4 py-4 text-gray-700">Google Nest Learning Thermostat</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Smart lock</td>
+                    <td class="px-4 py-4 text-gray-700">Keys, access, security</td>
+                    <td class="px-4 py-4 text-gray-700">Easy</td>
+                    <td class="px-4 py-4 text-gray-700">Yale Assure Lock 2</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Smart lighting</td>
+                    <td class="px-4 py-4 text-gray-700">Dimming, scheduling, mood</td>
+                    <td class="px-4 py-4 text-gray-700">Moderate</td>
+                    <td class="px-4 py-4 text-gray-700">Lutron Caseta dimmer kit</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Hang and align</td>
+                    <td class="px-4 py-4 text-gray-700">Shelves, art, tile lines</td>
+                    <td class="px-4 py-4 text-gray-700">Easy</td>
+                    <td class="px-4 py-4 text-gray-700">Bosch GLL 55 laser level</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Curb appeal cleanup</td>
+                    <td class="px-4 py-4 text-gray-700">Driveway, deck, siding</td>
+                    <td class="px-4 py-4 text-gray-700">Easy, but tiring</td>
+                    <td class="px-4 py-4 text-gray-700">Sun Joe SPX3000</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Every other project</td>
+                    <td class="px-4 py-4 text-gray-700">Drilling and driving</td>
+                    <td class="px-4 py-4 text-gray-700">Easy</td>
+                    <td class="px-4 py-4 text-gray-700">DEWALT DCD771C2 kit</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            Notice what is missing: nothing on the list needs a permit, a contractor or a loan. You can do the whole set across a handful of weekends. That is deliberate. A list you will actually finish beats an ambitious one that stalls at demolition, and each of these upgrades makes the next one easier because the house gets tighter, brighter and more organized as you go.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. The 7 Upgrades and the Gear to Do Them
+          </h2>
+
+          <p>
+            Each pick below is the product we would start with for one upgrade idea. We are describing what the manufacturer specifies and what owners commonly report, not claiming lab results. Product links on this page are affiliate links: if you buy through them we earn a commission at no extra cost to you, and that never changes which products make the list.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="budget-tiers" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Budget Tiers: What to Do at Each Price Level
+          </h2>
+
+          <p>
+            Think in three tiers rather than a single total. The <strong>under-a-few-hundred-dollars tier</strong> is where air sealing, caulk, paint, a laser level and a decent drill live. These are tool-and-materials projects with almost no downside, and they are where beginners should start. The <strong>mid tier</strong> is smart devices, new light fixtures, a pressure washer and small outdoor work: money for equipment that you will use for years. The <strong>major tier</strong> covers windows, doors, roofing, additions and kitchen or bath remodels, where planning and professionals matter more than gear.
+          </p>
+
+          <p>
+            Sequence matters as much as budget. Fix water and air problems before cosmetics, because a fresh coat of paint over a damp wall fails in a season. Do outdoor jobs before indoor ones if the weather window is closing, and do dusty or messy jobs before the ones that leave a clean finished surface. Pressure washing the siding before you paint the trim, for example, saves you from rinsing grit across wet paint later.
+          </p>
+
+          <p>
+            A reliable rule is to spend the first third of any budget on the things that protect the structure, the next third on what you use daily, and the last third on appearance. People reverse that order constantly, and it is the main reason renovation money gets wasted. A beautiful backsplash does nothing for you if the window above the sink leaks into the wall.
+          </p>
+
+          <p>
+            Finally, keep a small contingency. Home projects reveal surprises: a stud that is not where the finder said it was, a rotted board behind the siding, a wire that is not on the circuit you expected. Setting aside a modest buffer, many experienced remodelers suggest a tenth or more of the project budget, turns a nasty surprise into a normal Tuesday.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE SEQUENCING RULE</p>
+            <p class="text-xl font-bold text-white mb-3">Protect it, then use it, then pretty it up.</p>
+            <p class="text-gray-300 leading-relaxed m-0">Water and air problems first, daily-use upgrades second, cosmetics last. Reversing the order is the most common way renovation money is wasted.</p>
+          </div>
+        </div>
+
+        <div id="comfort-and-bills" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Comfort and Energy Upgrades: Seal, Insulate, Control
+          </h2>
+
+          <p>
+            Air leaks are the unglamorous center of a comfortable house. Gaps around windows, door frames, baseboards, plumbing penetrations and the attic hatch let conditioned air out and unconditioned air in. Caulk handles the stationary joints, weatherstripping handles the moving ones, and foam handles larger gaps. Our guides to <a href='/best-exterior-caulk/' class='text-[#1E90FF] font-bold hover:underline'>exterior caulk</a> and <a href='/best-bathroom-caulk/' class='text-[#1E90FF] font-bold hover:underline'>bathroom caulk</a> explain which chemistry fits which joint, because the wrong caulk in a wet area fails fast.
+          </p>
+
+          <p>
+            A good caulk job is mostly preparation. Remove the old bead completely, clean the joint, let it dry, and cut the nozzle smaller than you think you need. A quality <a href='/best-caulk-gun/' class='text-[#1E90FF] font-bold hover:underline'>caulk gun</a> with a smooth drip-free trigger makes the bead consistent, and a damp fingertip or tooling tool finishes it. Painters caulk before they paint for a reason: the bead hides imperfections and gives the paint a clean line.
+          </p>
+
+          <p>
+            Insulation is the next layer. Garage doors, attics and rim joists are common weak spots, and a <a href='/best-garage-door-insulation-kit/' class='text-[#1E90FF] font-bold hover:underline'>garage door insulation kit</a> or an attic ventilation upgrade, such as one of the <a href='/best-attic-fan/' class='text-[#1E90FF] font-bold hover:underline'>attic fans</a> we compare, can change how hot upstairs rooms feel in summer. Check attic insulation depth first, because adding fans to an under-insulated attic treats a symptom.
+          </p>
+
+          <p>
+            Control is the last piece. A thermostat that follows your schedule, or learns it, avoids heating and cooling an empty house. Utility programs and manufacturer materials commonly claim modest percentage savings on heating and cooling bills, but results depend on climate, equipment and habits, so treat any savings figure as a range of outcomes, not a promise. The comfort benefit, rooms ready when you walk in, is real regardless.
+          </p>
+
+          <p>
+            Before buying a smart thermostat, confirm compatibility with your system. Many heat pump, multi-stage and line-voltage systems need specific wiring, and most manufacturers publish an online compatibility checker. Take a photo of your existing wiring before disconnecting anything, and shut off power at the breaker. If your system is unusual, hiring an HVAC technician for the swap is cheap insurance.
+          </p>
+        </div>
+
+        <div id="smart-and-security" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Smart Home and Security Upgrades Worth Having
+          </h2>
+
+          <p>
+            Smart home devices are easy to over-buy. The ones that earn permanent spots tend to solve a real, repeated annoyance: forgetting to lock a door, fumbling for keys with full arms, lights left on in an empty room. A smart lock removes the first two, and dimmer or scheduling switches handle the third. Everything else, from smart plugs to voice assistants, is optional and should wait until the basics work.
+          </p>
+
+          <p>
+            Door security is the most practical place to start. Our <a href='/best-smart-lock/' class='text-[#1E90FF] font-bold hover:underline'>smart lock guide</a> covers keypad, touchscreen and deadbolt-replacement styles, and the <a href='/best-video-doorbell/' class='text-[#1E90FF] font-bold hover:underline'>video doorbell guide</a> compares the options for seeing who is at the door. Pair a lock that you can code guests into with a doorbell that records motion, and you cover most of what people want from home security without a monitoring contract.
+          </p>
+
+          <p>
+            If you want wider coverage, our <a href='/best-home-security-cameras/' class='text-[#1E90FF] font-bold hover:underline'>home security camera roundup</a> explains the trade-offs between wired, battery and subscription-based models. Read the cloud storage terms before buying: some cameras become far less useful without a monthly plan, and that recurring cost belongs in your budget.
+          </p>
+
+          <p>
+            Smart lighting rewards patience. Dimmer switches that replace the existing wall switch keep the house usable if the Wi-Fi fails, because the switch still works by hand. That design is worth prioritizing over bulbs that depend on an app. Lutron's Caseta line, for example, is built around in-wall dimmers and a hub, which means guests and family can use the lights without learning anything new.
+          </p>
+
+          <p>
+            Finally, think about failure modes. A smart lock should have a physical key or backup power option, a thermostat should keep working if your network drops, and a doorbell should fall back to a chime. Reliability beats novelty, and the best smart home upgrades are the ones your family stops noticing.
+          </p>
+        </div>
+
+        <div id="diy-vs-hire" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. DIY or Hire a Pro? A Practical Decision Framework
+          </h2>
+
+          <p>
+            The DIY question comes down to consequence, not difficulty. Painting a bedroom is slow, but a mistake costs you a Saturday. Rewiring a panel is quick for an electrician, but a mistake can cost a house. Sort each project by what happens if you get it wrong: cosmetic failure, functional failure, or safety failure. Do the first yourself, think carefully about the second, and hire out the third.
+          </p>
+
+          <p>
+            Work that involves the gas line, main electrical panel, structural framing, roof penetrations or major plumbing belongs with licensed professionals in most jurisdictions, and often requires permits. Even confident DIYers often hire for these because the tools, code knowledge and insurance implications outweigh the labor savings. A permitted, inspected job also protects you when you sell the house.
+          </p>
+
+          <p>
+            Most of the upgrades in this guide fall in the middle. Swapping a thermostat or a deadbolt, installing dimmer switches with the power off, and hanging shelves are routine for a careful beginner who follows the manufacturer's instructions. If a project asks you to open a wall, move a wire you cannot trace, or work at height without proper equipment, stop and get a quote.
+          </p>
+
+          <p>
+            Time is also a cost. If a job takes you three weekends and a pro does it in a day for a fair price, the pro may be the better deal. Get two or three written quotes for larger work, ask for proof of license and insurance, and avoid contractors who pressure you to decide immediately or demand a large upfront payment.
+          </p>
+        </div>
+
+        <div id="starter-kit" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. The Starter Tool Kit Logic: Buy Few, Buy Well
+          </h2>
+
+          <p>
+            A homeowner's tool kit should be small and good. Start with a cordless drill/driver, a tape measure, a level, a stud finder, a caulk gun, a utility knife, a set of screwdrivers and a pair of pliers. Our guides to the <a href='/best-cordless-drills/' class='text-[#1E90FF] font-bold hover:underline'>best cordless drills</a> and the <a href='/best-cordless-drill-for-home-use/' class='text-[#1E90FF] font-bold hover:underline'>best cordless drill for home use</a> go deeper, but the principle is that one reliable drill replaces a dozen occasional-use tools.
+          </p>
+
+          <p>
+            Pick one battery platform and stay with it. Cordless tools from a single brand share batteries and chargers, so each new tool costs less than the first. Choosing a platform matters more than choosing a single tool, so look at the breadth of the brand's line, from drill to leaf blower to wet-dry vac, before you commit.
+          </p>
+
+          <p>
+            Layout tools save more time than their cost suggests. A <a href='/best-laser-level/' class='text-[#1E90FF] font-bold hover:underline'>laser level</a> makes shelves, tile courses and picture rows straight in minutes, and a <a href='/best-stud-finder/' class='text-[#1E90FF] font-bold hover:underline'>stud finder</a> keeps you from guessing where to anchor heavy items. Neither replaces judgment, so confirm a stud with a small test hole or a second reading before hanging anything heavy.
+          </p>
+
+          <p>
+            Buy consumables with the same care as tools. A cheap paint roller or brush shows every flaw, and the right primer keeps you from painting twice. Our guides to <a href='/best-primer/' class='text-[#1E90FF] font-bold hover:underline'>primer</a> and <a href='/best-interior-paint/' class='text-[#1E90FF] font-bold hover:underline'>interior paint</a> cover when each is worth the money. Spend on the part of the job that touches the surface, and be thrifty with the rest.
+          </p>
+        </div>
+
+        <div id="safety-timing" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Safety, Permits and Timing Your Purchases
+          </h2>
+
+          <p>
+            Safety is cheap when you plan for it. Shut off power at the breaker and confirm it is dead with a tester before touching any wiring. Wear eye and hearing protection around power tools, a dust mask when sanding, and gloves when handling caulk or cleaners. Pressure washers can cut skin and strip paint, so keep the wand away from people, pets and windows, and read the manual before starting.
+          </p>
+
+          <p>
+            Check permit rules before you begin. Cosmetic work generally needs none, but electrical, plumbing, structural and some exterior projects often do, and requirements vary by city and county. A quick call or visit to your local building department answers the question for free. Unpermitted work can complicate insurance claims and resale, which is rarely worth the saved fee.
+          </p>
+
+          <p>
+            Older homes deserve extra caution. Houses built before the late 1970s may contain lead-based paint, and some older materials contain asbestos. If you plan to sand, scrape or demolish in a home of that age, test first and follow EPA lead-safe work practices or hire a certified professional. Dust from these materials is a real health risk.
+          </p>
+
+          <p>
+            Timing your purchases is mostly about patterns, not specific dates. Tool and outdoor equipment prices commonly soften around major holidays and at the end of a season, when retailers clear stock. Smart-home devices often see discounts during large annual shopping events, and new product generations push earlier models down. Watch prices for a few weeks before buying, and do not let a countdown timer pressure you into a product you have not researched.
+          </p>
+
+          <p>
+            Weather timing matters too. Caulk and exterior paint have temperature and dryness requirements printed on the label, and pressure washing in freezing weather risks ice on walkways. Plan outdoor jobs for mild, dry stretches and indoor jobs for the rest. Done in the right order and the right season, these upgrades add up to a house that is warmer, safer and easier to live in.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            9. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Starting with cosmetics instead of leaks</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Painting over damp walls, caulking over a leak you have not fixed, or installing new floors before solving moisture problems wastes money. Find the source of water and air problems first, repair them, and only then spend on appearance.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying tools one at a time from different brands</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A mix of batteries and chargers gets expensive and clutters storage. Pick one cordless platform with a broad lineup, buy a kit with batteries included, and add bare tools later at a lower cost per tool.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping the compatibility check on smart devices</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Thermostats, locks and dimmers each have requirements for wiring, door preparation and bulbs. Reading the compatibility checker and measuring your door before ordering prevents returns and a half-finished weekend.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring permits and old-house hazards</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Electrical, plumbing and structural work often needs permits, and homes built before the late 1970s may contain lead paint. Check local rules and test before sanding or demolishing, because these mistakes are expensive and affect your health.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Chasing sales instead of needs</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A discount on something you do not need is not a deal. Make a list of projects in priority order, watch prices on the items you actually plan to buy, and wait for seasonal clearance patterns rather than urgent-looking countdown timers.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What home improvement ideas add the most value?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Annual cost-versus-value surveys consistently show that exterior and maintenance projects, such as replacing an entry door or garage door, tend to recover a larger share of their cost than big interior remodels. Smaller upgrades like fresh paint, sealed gaps and updated lighting also improve how a home shows.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What should I fix first in an older house?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Start with water and air: leaks, failed caulk, missing weatherstripping and poor drainage. These protect the structure and reduce energy waste. Then address safety items such as smoke and carbon monoxide detectors, electrical hazards and lead paint before cosmetic work.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do smart thermostats really save money?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                They can, but results vary. Savings depend on your climate, your equipment, how well the house is sealed and whether you actually use the scheduling features. A smart thermostat reliably prevents conditioning an empty house, and some utilities offer rebates, so check local programs.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I install a smart lock myself?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                In most cases yes. Many smart locks replace the deadbolt on a standard prepared door with a screwdriver in under an hour. Measure your door's bore and backset first, choose the right connectivity version, and keep a backup entry method in case batteries run out.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What basic tools does every homeowner need?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A cordless drill/driver, tape measure, level, stud finder, caulk gun, utility knife, screwdriver set and pliers cover most household projects. Buy fewer, better tools on one battery platform rather than many cheap tools you rarely use.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">When is the best time to buy tools and home upgrades?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Prices commonly soften around major holidays, at the end of a season and when a new product generation arrives. Watch the price of specific items for a few weeks so you recognize a real discount. Avoid buying simply because a sale is ending.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Which home improvements need a permit?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Requirements vary by location, but electrical, plumbing, gas, structural and some roofing, deck and fence projects commonly need permits. Cosmetic work like painting and caulking generally does not. Call your local building department before starting; it is usually a free, quick answer.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Home Improvement Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-cordless-drills/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Cordless Drills</h3>
+              <p class="text-gray-500 text-sm mt-2">Compare drill/drivers by power, battery platform and value before you build your tool kit.</p>
+            </a>
+            <a href="/best-smart-lock/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#38BDF8] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Smart Locks</h3>
+              <p class="text-gray-500 text-sm mt-2">Keypad, touchscreen and deadbolt-replacement locks compared for everyday use.</p>
+            </a>
+            <a href="/best-exterior-caulk/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Exterior Caulk</h3>
+              <p class="text-gray-500 text-sm mt-2">Which caulk chemistry fits siding, trim and window joints, and how to apply it.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The best home improvement ideas are the ones you finish. Start with the cheap, protective jobs, sealing, caulking and tightening, then move to the upgrades you will notice every day: a smarter thermostat, a lock that opens with a code, lighting you can dim. Buy a drill and a level once, buy them well, and let every project after that get easier.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Work in order, check compatibility before you buy, respect permits and safety, and treat sales as a way to save on what you already planned to purchase. Do that, and a handful of weekends can leave you with a house that is warmer, safer and better looking than it was, without a contractor or a loan.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Improvement" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

@@ -1,0 +1,843 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Garden Hose Nozzles",
+    "url": "/best-garden-hose-nozzle/"
+  },
+  {
+    "title": "Best Hose Reels",
+    "url": "/best-hose-reel/"
+  },
+  {
+    "title": "Best Polymeric Sand for Pavers",
+    "url": "/best-polymeric-sand-for-pavers/"
+  },
+  {
+    "title": "Best Paver Sealers",
+    "url": "/best-paver-sealer/"
+  },
+  {
+    "title": "Best String Trimmers",
+    "url": "/best-string-trimmer/"
+  },
+  {
+    "title": "Best Grass Seed",
+    "url": "/best-grass-seed/"
+  },
+  {
+    "title": "Best Crabgrass Preventer",
+    "url": "/best-crabgrass-preventer/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-30", modified: "2026-10-30" });
+const title = "DIY Garden Landscaping Ideas: 7 Projects Ranked by Payoff, and the Gear for Each";
+const description =
+  "Seven DIY garden landscaping ideas ranked by payoff and effort, from edging and paver paths to raised beds, with the gear each project actually needs.";
+
+const PRODUCTS = [
+  {
+    "id": "dimex-easyflex-aluminum-edging",
+    "name": "Dimex EasyFlex Aluminum Landscape Edging",
+    "category": "Edging, Metal",
+    "badge": "Best for Clean Borders",
+    "amazonUrl": "#",
+    "pros": [
+      "Thin metal profile gives a crisp line between lawn and bed",
+      "Flexible enough to follow gentle curves without kinking",
+      "Metal edging avoids the heaving plastic can show in freeze-thaw winters",
+      "Stakes install by hand or with a mallet, no digging of a deep trench required",
+      "Low-profile top lets a mower wheel ride close to the edge"
+    ],
+    "cons": [
+      "Cut edges can be sharp, so gloves are a must during installation",
+      "Costs more per foot than basic plastic edging"
+    ],
+    "bottomLine": "The easiest route to a designer-looking border: a thin, flexible metal edge that disappears into the bed and keeps grass out.",
+    "description": "Edging is the cheapest way to make a yard look intentional, and a thin metal edge gives the cleanest result. Dimex sells its EasyFlex line as a flexible landscape edging designed to bend around curves and hold a defined line between lawn and bed. Metal is favoured by many landscapers because it shows very little above grade, unlike chunky plastic that can look like a garden fence for ants. Installation is a matter of cutting a shallow edge with a spade, setting the strip at the depth the instructions suggest, and driving in the stakes. Owners commonly report that the main learning curve is getting smooth curves by bending gradually as you go, and that gloves are wise because cut ends can be sharp. It suits beds, vegetable plots, and paths where you want something sturdier than plastic without the mortar and labour of stone."
+  },
+  {
+    "id": "alliance-gator-maxx-polymeric-sand",
+    "name": "Alliance Gator Maxx Polymeric Sand",
+    "category": "Paver Joint Sand",
+    "badge": "Best for Paver Paths",
+    "amazonUrl": "#",
+    "pros": [
+      "Locks paver joints together after misting, reducing sand loss",
+      "Helps resist weed seeds and ants working their way into joints",
+      "Sold in bags sized for DIY paths and small patios",
+      "Alliance Gator is a widely used brand in the polymeric sand category",
+      "Works with the base-and-sand method described by paver manufacturers"
+    ],
+    "cons": [
+      "Must be swept off the paver surface before wetting or it can leave a haze",
+      "Needs a dry weather window for application and cure, so timing matters"
+    ],
+    "bottomLine": "Joint sand does a lot of quiet work on a path, and this is a well-known option that finishes the job when applied to the label's directions.",
+    "description": "A paver path is only as durable as its joints. Polymeric sand is a blend of fine sand and binders that hardens when misted, locking the pavers together so weeds, ants and heavy rain have a harder time disturbing them. Alliance Gator Maxx is a well-known product in this category and is available in bags sized for a small walkway. The label calls for a dry surface, careful sweeping to fill the joints completely, a thorough blow-off of excess dust, and then a light mist according to the directions. Skipping the blow-off is the mistake owners most commonly cite, because leftover polymer dust on the surface bonds into a hazy film. It will not rescue a path built without a proper base, so treat it as the finishing step to a compacted foundation, not a shortcut around one."
+  },
+  {
+    "id": "dewitt-pro-5-weed-barrier",
+    "name": "DeWitt Pro-5 Weed Barrier Landscape Fabric",
+    "category": "Landscape Fabric",
+    "badge": "Best Weed Barrier Under Gravel",
+    "amazonUrl": "#",
+    "pros": [
+      "Woven fabric lets water and air through while blocking light",
+      "Suited to the base of gravel paths, around shrubs and beneath stone",
+      "Sold in rolls wide enough to cover a bed without many seams",
+      "Resists tearing better than thin non-woven alternatives",
+      "Pairs with landscape staples for a secure hold"
+    ],
+    "cons": [
+      "Poor choice in beds you replant often, since roots and soil work through it",
+      "Exposed fabric degrades in sunlight and looks messy if mulch thins"
+    ],
+    "bottomLine": "A good fabric for permanent beds and gravel areas, as long as you cover it fully and avoid using it in beds you rework each season.",
+    "description": "Landscape fabric is controversial, and the honest answer is that it works well in some places and badly in others. DeWitt's Pro-5 weed barrier is a woven fabric designed to let water pass while blocking light from weed seeds, which makes it a sensible base beneath gravel paths, around established shrubs, and under stone mulch in a dry bed. It is much less useful in vegetable plots or annual flower beds, where roots and soil mixing eventually clog it. Owners commonly report that the biggest installation tip is to overlap seams and pin them often so wind does not lift edges, then to cover the whole sheet with several inches of mulch or stone so sunlight never reaches it. Treat it as a permanent structure rather than a seasonal convenience."
+  },
+  {
+    "id": "vego-garden-modular-raised-bed",
+    "name": "Vego Garden Modular Metal Raised Bed Kit",
+    "category": "Raised Garden Bed",
+    "badge": "Best Raised Bed Kit",
+    "amazonUrl": "#",
+    "pros": [
+      "Modular metal panels let you choose size and depth",
+      "Powder-coated steel is designed to resist rot, unlike untreated wood",
+      "Assembles with bolts and no special tools",
+      "Deeper configurations leave room for root vegetables",
+      "Can be reconfigured or expanded as the garden grows"
+    ],
+    "cons": [
+      "Metal sides can warm in strong sun, which may stress plants in hot climates",
+      "Costs more up front than a simple wooden frame you build yourself"
+    ],
+    "bottomLine": "A durable kit for people who want a raised bed up in an hour and still standing in ten years, provided your climate suits metal walls.",
+    "description": "A raised bed is easier to start than most people expect, and a modular kit removes the carpentry. Vego Garden sells steel raised beds that connect with bolts and come in a variety of heights and footprints, so you can build to the depth your crops need. The panels are powder-coated to resist rust, and the manufacturer describes the beds as designed to last many seasons. Owners commonly note that the hardest part is not the assembly but the filling: a bed this size takes a surprising volume of soil mix, so order in bulk if you can. In very hot climates, gardeners sometimes shade the sides or mulch the surface to keep roots cooler. For a first vegetable garden, it is a tidy, long-lasting way to turn a patch of poor soil into a productive space."
+  },
+  {
+    "id": "urpower-solar-path-lights",
+    "name": "URPOWER Solar Path Lights",
+    "category": "Solar Landscape Lighting",
+    "badge": "Best No-Wiring Lighting",
+    "amazonUrl": "#",
+    "pros": [
+      "No wiring or electrician needed, just push the stakes into the ground",
+      "Automatic dusk-to-dawn operation with a built-in light sensor",
+      "Sold in multi-packs, enough to line a walkway or border",
+      "Low-profile design suits garden paths and stepping-stone routes",
+      "Cheap enough to experiment with placement before committing"
+    ],
+    "cons": [
+      "Output falls in winter or in shade because solar charging is limited",
+      "Plastic housings and batteries generally last fewer seasons than wired fixtures"
+    ],
+    "bottomLine": "An easy, low-risk way to light a path this weekend. Place them in full sun and treat them as seasonal rather than permanent.",
+    "description": "Lighting is the layer that makes a finished garden usable after dark, and solar path lights are the simplest way to start. URPOWER sells multi-packs of stake-in-the-ground solar lights with built-in sensors that switch on at dusk. They require no wiring, which makes them a sensible choice for renters, beginners, and anyone testing a layout before committing to a low-voltage system. The tradeoff is that solar output depends on sunlight, so owners commonly report dimmer, shorter runs in winter or when the panel sits in shade. Place them where the panels get several hours of direct sun, wipe the panels occasionally, and replace weak batteries before replacing the whole fixture. For permanent, bright lighting along steps and entries, a wired system is the better long-term answer."
+  },
+  {
+    "id": "rain-bird-drip-irrigation-kit",
+    "name": "Rain Bird Drip Irrigation Kit",
+    "category": "Drip Irrigation",
+    "badge": "Best for Watering Beds Efficiently",
+    "amazonUrl": "#",
+    "pros": [
+      "Delivers water to plant roots, wasting less than overhead spraying",
+      "Connects to a standard hose bib, often with an inexpensive timer",
+      "Expandable with extra tubing, emitters and connectors",
+      "Helps keep foliage dry, which reduces some leaf disease",
+      "Rain Bird is a long-established irrigation brand with parts widely stocked"
+    ],
+    "cons": [
+      "Layout takes planning, and emitters can clog without a filter",
+      "Surface tubing needs covering with mulch or pinning to stay neat"
+    ],
+    "bottomLine": "The upgrade that turns watering from a daily chore into a timer, and one of the most cost-effective ways to keep new plantings alive.",
+    "description": "Most new plantings die from inconsistent watering rather than from bad plant choices. A drip irrigation kit solves that by delivering a slow, steady supply directly at the root zone through tubing and emitters. Rain Bird's drip kits are built around standard half-inch tubing and a hose-bib connector, so they can run from an ordinary outdoor tap, and adding a hose-end timer automates the schedule. Owners commonly report that the key to success is planning the layout on paper first, installing the filter and pressure regulator the instructions call for, and flushing the lines before closing the ends. Cover the tubing with mulch to hide it and protect it from sunlight. It is not a lawn solution, but for beds, shrubs, raised beds and containers it saves water and a lot of time."
+  },
+  {
+    "id": "felco-f2-hand-pruner",
+    "name": "Felco F-2 Classic Manual Hand Pruner",
+    "category": "Pruning Shears",
+    "badge": "Best Tool Worth Paying More For",
+    "amazonUrl": "#",
+    "pros": [
+      "Bypass design cuts cleanly through live stems without crushing them",
+      "Replaceable parts mean the pruner can be repaired rather than discarded",
+      "Hardened steel blade is designed to hold an edge and can be sharpened",
+      "Sized for regular use on stems up to roughly the width of a thumb",
+      "Long-standing reputation among gardeners and professionals"
+    ],
+    "cons": [
+      "Costs much more than basic pruners, though it is meant to last",
+      "Sized for medium hands, so very small or large hands may prefer another model"
+    ],
+    "bottomLine": "The one hand tool to buy once and keep for decades, as long as you clean and oil it after use.",
+    "description": "Every landscaping project ends in pruning, and a sharp, well-made pair of shears is a tool you use constantly. Felco's F-2 is a bypass hand pruner that has been a staple among gardeners for decades, and the manufacturer designs it so blades, springs and other parts can be replaced instead of throwing the whole tool away. Bypass blades pass each other like scissors, which makes a clean cut that heals faster than the crushed stem an anvil pruner can leave on living wood. Owners commonly say the main routine is to wipe the blades after use, oil them occasionally, and sharpen them when they start to drag. It is not a loppers replacement for thick branches, so pair it with a saw or long-handled loppers for heavier work."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "DIY Garden Landscaping Ideas",
+          item: "https://www.thehonestreviewers.com/diy-garden-landscaping-ideas/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the easiest DIY landscaping project for beginners?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Defining bed edges is the easiest high-impact project. It needs a spade, a hose to lay out curves, and optional edging, and it can be finished in an afternoon. A crisp line between lawn and bed makes the whole yard look more deliberate, and it is simple to adjust if you change your mind."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does DIY landscaping cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on the scale. Edging, mulch and a few plants can be done on a modest budget, while pavers, retaining walls and irrigation cost more. Prices vary by region and supplier, so get quotes for bulk materials and price each project separately before committing to a full plan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I use landscape fabric under mulch?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use it under gravel paths and around permanent shrubs, where it limits weeds for years. In beds you replant, thick mulch or overlapping cardboard usually works better, because roots and soil work through fabric over time and it becomes a nuisance."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How deep should mulch be?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Extension services commonly recommend about two to three inches. Thicker layers can smother roots and hold too much moisture, and thinner ones let weeds through. Keep mulch back from tree trunks and stems so the bark stays dry and healthy."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When is the best time to do landscaping?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Spring and early autumn are the most forgiving seasons for planting, since roots establish before extreme heat or cold. Hardscape such as paths and edging can be done whenever the ground is workable, but pavers and sealers need dry weather and suitable temperatures."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need a permit for landscaping projects?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Simple planting and mulching rarely do, but walls above a certain height, major grading, drainage changes and some fences often need approval. Check with your local building department and any homeowners association before starting, and call your utility locating service before digging."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What landscaping ideas add the most curb appeal?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Clean edges, fresh mulch, a defined path to the door, lighting and a few well-chosen plants near the entrance usually make the biggest visible difference. Most of these are inexpensive and can be done over a weekend, which makes them a better first step than large, costly projects."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Lawn & Yard Care",
+    tags: [
+      "diy garden landscaping ideas",
+      "landscaping ideas",
+      "diy landscaping ideas",
+      "garden edging",
+      "raised bed garden",
+      "landscape lighting",
+      "mulch beds"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Ranked by Payoff
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          DIY Garden <span class="text-[#38BDF8]">Landscaping Ideas</span> Worth Your Weekend
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Seven projects you can do yourself, ordered by how much they change a yard per hour and dollar spent, with the specific gear each one needs.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#dimex-easyflex-aluminum-edging"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            See the Ideas by Effort
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="8.4k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#choose" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Choosing Projects That Pay Off</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Our 7 Picks of Gear Reviewed</a>
+          <a href="#edging-borders" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Edging and Clean Borders</a>
+          <a href="#paver-paths" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Paver Paths and Walkways</a>
+          <a href="#mulch-beds" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Mulch Beds and Weed Control</a>
+          <a href="#planting" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Native Planting and Lawn Alternatives</a>
+          <a href="#water-lighting" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Water, Drainage and Lighting</a>
+          <a href="#raised-beds" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Raised Beds and Food Gardens</a>
+          <a href="#budget-sequence" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Budget and Sequencing</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Most landscaping advice starts with a dream yard and works backward to a bill. This guide goes the other way: it starts with what a single weekend, a small budget and a pair of gloves can actually change, then ranks the projects by how much they improve a yard for the effort. The gear we recommend is the gear each job needs, nothing more.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="choose" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How to Choose a Landscaping Project That Actually Pays Off
+          </h2>
+
+          <p>
+            Landscaping ideas fall into two groups: the ones that change how a yard looks within a weekend, and the ones that change it over several seasons. Beginners tend to start with the second group because plants are what everyone imagines, then get discouraged when a bed of seedlings looks bare for a year. The better order is to fix the structure first, meaning edges, paths and bed outlines, and let the plants arrive into a frame that already looks intentional.
+          </p>
+
+          <p>
+            A useful way to rank projects is to ask how visible the result is, how long it takes, and how hard it is to undo. A crisp lawn edge is visible from the street, takes an afternoon, and is cheap to redo. A paver patio is also visible but takes days and is expensive to redo, so it deserves more planning. Drainage work is almost invisible when it succeeds, yet it protects everything else you build, so it sits near the top for any yard that holds water.
+          </p>
+
+          <p>
+            Before you buy anything, walk the yard at three times of day and note where the sun sits, where water pools after rain, and where foot traffic already wears a path in the grass. Those desire lines are free design advice: a stepping-stone path laid where people already walk will actually get used, while one laid where it looks tidy on paper will be ignored. Photograph the yard from the street and from the main window too, because those are the two views you will judge the work by.
+          </p>
+
+          <p>
+            Finally, set a ceiling and a timeline. A common approach is to split a modest budget into three parts: structure first, then ground cover and plants, then finishing touches like lighting. If you are planning anything that involves digging, call your local utility locating service first, which is free in most areas, and check whether your municipality or homeowners association needs sign-off for walls, drainage changes or fences.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. The 7 Pieces of Gear That Make DIY Landscaping Easier
+          </h2>
+
+          <p>
+            These are the products we would put in a basket for the projects covered below. Specifications come from the manufacturers and from what owners commonly report, not from lab measurements. The links are affiliate links: if you buy through them we earn a commission at no extra cost to you, and that never changes what we recommend.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} owner reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="edging-borders" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Edging and Clean Borders: The Highest-Payoff Weekend Project
+          </h2>
+
+          <p>
+            If you only do one thing, define your bed edges. A sharp line between lawn and bed makes an ordinary yard read as designed, and it stops grass creeping into mulch, which is the chore that makes people give up on garden beds. The project needs little more than a flat spade or half-moon edger, a hose to lay out curves, and a roll of edging if you want a physical barrier.
+          </p>
+
+          <p>
+            Curves look better than straight lines in most yards, and they are easier to correct. Lay the garden hose on the lawn, step back, and nudge it until the sweep looks natural from the street, then spray-paint or cut along it. Keep curves gentle, because tight scallops are hard to mow around and hard to keep neat. A radius your mower can follow in one pass saves you from trimming the line by hand every week.
+          </p>
+
+          <p>
+            Physical edging comes in three broad families. Plastic edging is cheapest and bends easily, but it can heave in freeze-thaw winters and shows its ridges. Steel and aluminium edging gives the thinnest, cleanest line and is favoured by designers. Stone, brick or concrete pavers set in a trench make a mowing strip your wheels can ride along, which removes the need for string trimming entirely. Whichever you pick, bury the barrier deep enough that only a small lip shows above the soil.
+          </p>
+
+          <p>
+            Maintenance matters as much as installation. Even good edging needs a trim where the lawn meets it, and a dedicated <a href="/best-lawn-edger/" class="text-[#1E90FF] font-bold hover:underline">lawn edger</a> or a <a href="/best-string-trimmer/" class="text-[#1E90FF] font-bold hover:underline">string trimmer</a> turned on its side makes the job quick. Re-cut the line a couple of times a season and the border keeps looking like the day you installed it.
+          </p>
+        </div>
+
+        <div id="paver-paths" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Paver Paths and Walkways Without a Contractor
+          </h2>
+
+          <p>
+            A paver path is the DIY project that most changes how a yard feels to walk through, and it is more achievable than it looks. The structure matters more than the stones: manufacturers and installers consistently describe a compacted gravel base, a thin layer of leveling sand, the pavers, then joint sand swept into the gaps. Skipping or thinning the base is the reason most homemade paths sink, so budget time and gravel for it.
+          </p>
+
+          <p>
+            Start by marking the path with stakes and string and excavating to the combined depth of base, sand and paver thickness, with a slight slope away from the house so water drains. Compact the gravel in thin layers with a rented plate compactor rather than all at once. Then screed the sand using two pipes and a straight board, lay the pavers tightly from one corner, and cut edge pieces with a masonry saw or a rented splitter.
+          </p>
+
+          <p>
+            The finishing step decides how the path ages. Sweeping <a href="/best-polymeric-sand-for-pavers/" class="text-[#1E90FF] font-bold hover:underline">polymeric sand for pavers</a> into the joints locks the stones together, resists weed seeds and washes out less than plain sand, but it has to be swept off the surface and misted according to the label or it leaves a hazy film. Our guide to the <a href="/alliance-gator-polymeric-sand-review/" class="text-[#1E90FF] font-bold hover:underline">Alliance Gator polymeric sand</a> covers that application in more detail.
+          </p>
+
+          <p>
+            Sealing is optional but worth considering for high-traffic or stain-prone areas. Learn <a href="/how-to-seal-pavers/" class="text-[#1E90FF] font-bold hover:underline">how to seal pavers</a> properly and choose a <a href="/best-paver-sealer/" class="text-[#1E90FF] font-bold hover:underline">paver sealer</a> that matches the finish you want, because sealer applied at the wrong time or temperature is a common source of cloudy results. A stepping-stone path with gaps filled by gravel or creeping thyme is a lighter alternative that skips most of the compaction work.
+          </p>
+        </div>
+
+        <div id="mulch-beds" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Mulch Beds and Weed Control That Lasts More Than One Season
+          </h2>
+
+          <p>
+            Mulch is the cheapest way to make a bed look finished, and it does real work: a layer a few inches deep slows evaporation, moderates soil temperature and blocks light from weed seeds. Extension services commonly recommend roughly two to three inches, kept a few inches back from tree trunks and plant stems so the bark stays dry. Piling mulch against a trunk, the so-called volcano, invites rot and pests and is one of the most common landscaping mistakes.
+          </p>
+
+          <p>
+            Under the mulch, you have a choice. Woven landscape fabric lets water through and blocks most weeds for a while, which makes it useful under gravel paths and around shrubs you will not disturb. In beds you plant densely or replant every year, fabric gets in the way, so many gardeners use overlapping cardboard or a thick mulch layer instead. Either way, pin fabric firmly and cover it completely, because exposed fabric degrades in sunlight and looks untidy.
+          </p>
+
+          <p>
+            Pick the mulch for the job. Shredded hardwood or bark knits together and stays put on slopes. Wood chips from tree services are often free and fine for informal areas. Pine straw suits acidic-soil plants, and gravel or stone suits dry, sunny beds but heats the soil and is difficult to clean of fallen leaves. Dye-coloured mulch fades, so refresh the top inch rather than adding a full new layer each year.
+          </p>
+
+          <p>
+            Weeds will still arrive, so put a quick routine in place: pull them when the soil is damp, before they set seed, and spot-treat cracks and edges rather than spraying whole beds. A wheelbarrow or dump cart makes moving mulch far less punishing, and ordering bulk from a landscape supplier by the cubic yard is usually cheaper per bag than buying bagged mulch if you have the driveway space for a pile.
+          </p>
+        </div>
+
+        <div id="planting" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Native Planting and Lawn Alternatives for Less Work
+          </h2>
+
+          <p>
+            Plants chosen for your climate need less water, fertiliser and fuss than plants chosen for a catalogue photo. Native perennials and shrubs have adapted to local rainfall, soil and pests, and many support pollinators and birds. Your state extension office or native plant society usually publishes lists by region, and a local nursery can tell you which ones thrive in your exact conditions. That advice is worth more than any generic planting plan.
+          </p>
+
+          <p>
+            Group plants by their needs, not by colour alone. Put thirsty plants together near a tap, drought-tolerant ones in the hot, sunny corners, and shade-lovers beneath trees. Plant in drifts of three or five rather than singly, which reads as design rather than a collection of samples, and leave space for mature size. Overcrowded young plants look fuller in year one but compete hard by year three, so resist the urge to squeeze in extras.
+          </p>
+
+          <p>
+            Replacing part of a lawn is one of the largest long-term savings in landscaping. Low-growing groundcovers, clover mixes, or a planted bed that expands a border each year all cut mowing time. If you keep turf, put effort where it shows: overseed thin patches with a seed matched to your light and region, which our <a href="/best-grass-seed/" class="text-[#1E90FF] font-bold hover:underline">grass seed guide</a> explains, and prevent summer weeds with a <a href="/best-crabgrass-preventer/" class="text-[#1E90FF] font-bold hover:underline">crabgrass preventer</a> applied on time.
+          </p>
+
+          <p>
+            Planting technique matters more than plant price. Dig the hole wide and no deeper than the root ball, loosen circling roots with your fingers, and water deeply after planting and through the first season. Shears keep growth tidy afterward, and a good bypass pruner pays for itself quickly. Spring and early autumn are usually the most forgiving planting seasons, because roots establish before extremes of heat or cold.
+          </p>
+        </div>
+
+        <div id="water-lighting" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Water, Drainage and Lighting: The Quiet Upgrades
+          </h2>
+
+          <p>
+            Water is the problem most DIY landscapes fail to plan for. If rain pools near the foundation or in low spots, fix that before planting, because standing water kills plants and damages structures. The first checks are simple: make sure the ground slopes away from the house, gutters discharge several feet from the foundation, and downspouts do not dump onto a bed that cannot absorb them.
+          </p>
+
+          <p>
+            Where water collects, a shallow swale, a dry creek bed lined with stone, or a rain garden planted with moisture-tolerant natives can capture runoff and let it soak in. Rain gardens are generally sited away from the foundation and designed to drain within a day or two so they do not breed mosquitoes. For serious grading or French drains, consult a professional, since mistakes here can cost more than the project.
+          </p>
+
+          <p>
+            Watering efficiently keeps beds healthy and bills low. Drip irrigation delivers water at the roots, wastes less to evaporation than overhead sprinklers, and can be added to existing beds with a starter kit and a hose-end timer. For hand watering and cleanup, a decent <a href="/best-garden-hose/" class="text-[#1E90FF] font-bold hover:underline">garden hose</a>, a good <a href="/best-garden-hose-nozzle/" class="text-[#1E90FF] font-bold hover:underline">hose nozzle</a> and a <a href="/best-hose-reel/" class="text-[#1E90FF] font-bold hover:underline">hose reel</a> that keeps the hose off the lawn make daily chores much easier.
+          </p>
+
+          <p>
+            Lighting is the final layer, and it changes how you use the yard after dark. Solar path lights need no wiring, so they suit beginners, but they depend on sunny placement and their brightness drops in winter. Low-voltage wired systems are brighter and more consistent, and well suited to steps, trees and entries. In either case, aim for soft pools of light rather than a runway, and keep fixtures low so they illuminate the ground, not the neighbours.
+          </p>
+        </div>
+
+        <div id="raised-beds" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Raised Beds and Food Gardens for Small Spaces
+          </h2>
+
+          <p>
+            A raised bed solves several problems at once. It lets you control soil quality where the ground is clay, rocky or compacted, it warms earlier in spring, and it keeps the work at a comfortable height. For vegetables, extension guidance commonly suggests beds around ten to twelve inches deep and narrow enough, often about four feet, to reach the middle from either side without stepping on the soil.
+          </p>
+
+          <p>
+            Materials split into wood, metal and composite kits. Untreated cedar resists rot naturally but costs more; pine is cheaper and shorter-lived. Galvanised or powder-coated steel lasts for years and assembles quickly from modular panels. Whichever you choose, place the bed where it gets six to eight hours of sun for most vegetables, and keep it near water, since a bed that is a chore to reach is a bed that goes unplanted.
+          </p>
+
+          <p>
+            Fill matters more than the frame. A blend of quality topsoil and compost, often sold as raised bed mix, drains well and feeds crops, while cheap fill with poor structure can compact or dry out. Line the base with cardboard to suppress weeds, then top up each year as the soil settles. Drip lines and a layer of mulch on top cut watering to a few minutes a week.
+          </p>
+
+          <p>
+            Start small. One or two beds with a handful of reliable crops, such as lettuce, herbs, tomatoes and beans, teach you your light, your soil and your appetite before you invest in a larger layout. Keep a simple note of what thrived and what failed, because a second season informed by those notes beats any generic planting calendar.
+          </p>
+        </div>
+
+        <div id="budget-sequence" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Budget and Sequencing: What to Do First, Second and Last
+          </h2>
+
+          <p>
+            Order matters as much as budget. Do the dirty, structural work first: grading, drainage, paths and edges, because everything afterward sits on top of them. Then add bed soil and mulch, then plants, then irrigation and lighting. Reversing that order means trampling new plants during construction and re-digging beds to bury a pipe or a cable that should have gone in earlier.
+          </p>
+
+          <p>
+            A sensible split for a first-year budget is to spend roughly half on structure, a third on plants and soil, and the remainder on lighting and finishing touches. Those proportions are a rule of thumb, not a formula, and a yard with drainage trouble will need to flip them. If money is tight, do the project that most changes daily life first, and leave decorative extras for next year.
+          </p>
+
+          <p>
+            Buying smart means timing. Garden centres commonly clear plants and tools late in the season, which is also a good time to plant many perennials and shrubs, while bulk mulch and stone are cheapest from landscape suppliers in volume. Seasonal sales on tools and lighting recur around major holidays, but check the actual price against its recent history rather than trusting a headline discount, and skip purchases you have no project for.
+          </p>
+
+          <p>
+            Finally, maintain what you build. A simple monthly checklist of edging, mulch top-ups, pruning and watering checks keeps a modest yard looking sharp, whereas neglect makes even a lavish one look tired. Landscaping is cumulative: each small project you finish makes the next one easier to plan, and a yard that improves every season beats one that peaks in a single expensive weekend.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping the base under pavers</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A path laid directly on soil or a thin layer of sand sinks and shifts within a season or two. Install a properly compacted gravel base, a bedding sand layer and edge restraints, and give the path a slight slope for drainage so water runs off instead of undermining the stones.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Piling mulch against trunks and stems</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Heaping mulch in a volcano around trees keeps bark constantly damp and invites rot, pests and disease. Spread two to three inches across the bed and pull it back from stems and trunks, leaving a clear ring of bare soil or a thin layer at the base.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Planting before fixing drainage</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Putting expensive plants into a spot where water collects drowns roots and wastes money. Watch the yard after heavy rain, correct the grade and downspouts, and add a swale or rain garden if needed before you plant anything there.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Choosing plants for photos, not conditions</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A plant that thrives in a catalogue may struggle in your sun, soil and climate. Match each plant to its light and water needs, favour natives or well-adapted species, and group plants with similar requirements together.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using landscape fabric everywhere</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Fabric works under gravel and around permanent shrubs but clogs in beds you replant often. In annual beds, use thick mulch or cardboard instead, and always cover fabric fully so sunlight does not break it down and leave it showing.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the easiest DIY landscaping project for beginners?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Defining bed edges is the easiest high-impact project. It needs a spade, a hose to lay out curves, and optional edging, and it can be finished in an afternoon. A crisp line between lawn and bed makes the whole yard look more deliberate, and it is simple to adjust if you change your mind.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How much does DIY landscaping cost?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It depends on the scale. Edging, mulch and a few plants can be done on a modest budget, while pavers, retaining walls and irrigation cost more. Prices vary by region and supplier, so get quotes for bulk materials and price each project separately before committing to a full plan.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Should I use landscape fabric under mulch?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Use it under gravel paths and around permanent shrubs, where it limits weeds for years. In beds you replant, thick mulch or overlapping cardboard usually works better, because roots and soil work through fabric over time and it becomes a nuisance.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How deep should mulch be?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Extension services commonly recommend about two to three inches. Thicker layers can smother roots and hold too much moisture, and thinner ones let weeds through. Keep mulch back from tree trunks and stems so the bark stays dry and healthy.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">When is the best time to do landscaping?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Spring and early autumn are the most forgiving seasons for planting, since roots establish before extreme heat or cold. Hardscape such as paths and edging can be done whenever the ground is workable, but pavers and sealers need dry weather and suitable temperatures.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do I need a permit for landscaping projects?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Simple planting and mulching rarely do, but walls above a certain height, major grading, drainage changes and some fences often need approval. Check with your local building department and any homeowners association before starting, and call your utility locating service before digging.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What landscaping ideas add the most curb appeal?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Clean edges, fresh mulch, a defined path to the door, lighting and a few well-chosen plants near the entrance usually make the biggest visible difference. Most of these are inexpensive and can be done over a weekend, which makes them a better first step than large, costly projects.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Yard and Garden Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-garden-hose/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Garden Hoses</h3>
+              <p class="text-gray-500 text-sm mt-2">Hose types, materials and fittings that stop kinks and leaks.</p>
+            </a>
+            <a href="/best-lawn-edger/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#38BDF8] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Lawn Edgers</h3>
+              <p class="text-gray-500 text-sm mt-2">Keep the bed lines you just cut looking sharp.</p>
+            </a>
+            <a href="/how-to-seal-pavers/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">How-To</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">How to Seal Pavers</h3>
+              <p class="text-gray-500 text-sm mt-2">Finish a paver path so it resists stains and weathering.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The best landscaping plan is the one you finish. Start with edges and a path, add mulch and a few well-chosen plants, then layer in water and light as budget and energy allow. Each stage makes the yard look better on its own, so you are never waiting for a final reveal to enjoy it.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            If you buy gear through the links above, we earn a small commission at no cost to you, and we only list products we would be comfortable recommending to a friend. Match each tool to a real project, skip the rest, and spend the savings on plants.
+          </p>
+        </div>
+
+        <MoreInCategory category="Lawn & Yard Care" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

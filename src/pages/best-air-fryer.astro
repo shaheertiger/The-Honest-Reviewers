@@ -1,0 +1,912 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Electric Kettles",
+    "url": "/best-electric-kettle/"
+  },
+  {
+    "title": "Best Rice Cookers",
+    "url": "/best-rice-cooker/"
+  },
+  {
+    "title": "Best Induction Cookware",
+    "url": "/best-induction-cookware/"
+  },
+  {
+    "title": "Best Dishwashers",
+    "url": "/best-dishwasher/"
+  },
+  {
+    "title": "Best Food Dehydrators",
+    "url": "/best-food-dehydrator/"
+  },
+  {
+    "title": "Best Electric Smokers",
+    "url": "/best-electric-smoker/"
+  },
+  {
+    "title": "Best Countertop Ice Makers",
+    "url": "/best-countertop-ice-maker/"
+  },
+  {
+    "title": "Best Espresso Machines",
+    "url": "/best-espresso-machine/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-30", modified: "2026-10-30" });
+const title = "7 Best Air Fryers in 2026: Basket, Dual-Zone and Oven-Style";
+const description =
+  "The best air fryers for every kitchen: basket, dual-zone and oven-style models compared by capacity, wattage, cleanup and what actually crisps.";
+
+const PRODUCTS = [
+  {
+    "id": "ninja-foodi-dualzone-dz201",
+    "name": "Ninja Foodi 8-Quart 2-Basket Air Fryer (DZ201)",
+    "category": "Dual-Zone Basket",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "pros": [
+      "Two independent baskets with separate temperatures and timers, so a main and a side cook at the same time",
+      "Match and finish-together functions are designed to bring both baskets to done at the same moment",
+      "Roughly 8 quarts of combined capacity per the manufacturer, enough for a family of four in one pass",
+      "Nonstick baskets and crisper plates are listed by the manufacturer as dishwasher safe",
+      "Covers air fry, roast, reheat and dehydrate modes in one footprint"
+    ],
+    "cons": [
+      "Large counter footprint, and two baskets to wash after every dinner",
+      "Each basket is smaller than a single-basket 8-quart model, so one big batch has to be split"
+    ],
+    "bottomLine": "The best air fryer for most households of three or more, because cooking two foods at once is the single biggest time saver a design can offer.",
+    "description": "The Ninja Foodi DZ201 is the model most other dual-zone air fryers are measured against. Instead of one deep drawer it gives you two side-by-side baskets, each with its own temperature and timer, which means chicken thighs at 400°F and roasted vegetables at 375°F can both be running without one waiting for the other. The matching and sync functions are the clever part: tell it you want both foods to finish together and it staggers the start times for you. The manufacturer lists roughly 8 quarts of combined capacity, which is the right ballpark for four people, and owners commonly report that it handles a weeknight dinner in one go. The compromise is size and cleanup: it needs real counter space, and you are washing two baskets and two crisper plates. For a household that cooks mains and sides together, that trade is easy to justify."
+  },
+  {
+    "id": "cosori-pro-le-5qt",
+    "name": "COSORI Pro LE 5-Quart Air Fryer",
+    "category": "Compact Single Basket",
+    "badge": "Best for 1-3 People",
+    "amazonUrl": "#",
+    "pros": [
+      "A 5-quart basket is a sensible size for one to three people without dominating the counter",
+      "Digital touch controls with one-touch cooking presets for common foods",
+      "Marketed by the manufacturer as a quieter-running design than many rivals",
+      "Removable nonstick basket and a straightforward shake-reminder workflow",
+      "Compact for its capacity, so it fits under most wall cabinets"
+    ],
+    "cons": [
+      "A single basket means sides and mains cook in sequence, not together",
+      "Presets are a convenience; most cooks will end up setting time and temperature manually anyway"
+    ],
+    "bottomLine": "The pick for couples, small families and anyone short on counter space who wants a reliable basket fryer without the extras.",
+    "description": "Five quarts is the size where a basket air fryer stops being a gadget and becomes an everyday appliance, and the COSORI Pro LE sits right there. For one to three people it handles a serving of wings, a tray of roasted potatoes or a couple of chicken breasts in a single load. The controls are digital and fairly plain, with presets for the usual suspects such as fries, chicken and vegetables, and the manufacturer positions the fan as quieter than most competitors. Quiet matters more than it sounds if your kitchen is open to a living room. The limitation is the one every single-basket machine shares: two foods means two rounds. If you regularly cook for four or more, step up to a dual-zone model; otherwise this is a well-sized, no-drama choice."
+  },
+  {
+    "id": "instant-vortex-plus-6qt-clearcook",
+    "name": "Instant Vortex Plus 6-Quart with ClearCook Window",
+    "category": "Window Basket",
+    "badge": "Best for Watching Food Brown",
+    "amazonUrl": "#",
+    "pros": [
+      "A viewing window and interior light let you check browning without pulling the drawer and losing heat",
+      "Six quarts suits two to four people, a useful middle size",
+      "Multiple cooking modes, including roast, bake, broil, reheat and dehydrate per the manufacturer listing",
+      "A built-in odor filter is advertised to cut cooking smells",
+      "Dishwasher-safe basket and tray per the manufacturer"
+    ],
+    "cons": [
+      "The glass window collects grease and needs wiping to stay useful",
+      "Still a single basket, so no cooking two foods at different settings"
+    ],
+    "bottomLine": "A strong pick if you tend to overcook things because you cannot see them; the window removes the guesswork.",
+    "description": "The defining feature of the Instant Vortex Plus ClearCook is a glass window in the drawer and a light inside, so you can watch wings blister and fries colour without opening anything. That sounds like a gimmick until you notice how much of air frying is judging doneness by eye: every time you pull a basket to check, heat escapes and the cook time stretches. Six quarts is a flexible size, big enough for a family side dish or a pound or two of chicken, and the manufacturer lists a spread of modes beyond air fry, including roast, bake, broil, reheat and dehydrate. The practical cost of the window is cleanup, because grease spatters onto glass and it needs a wipe if you want it transparent next time. For people who like to watch rather than guess, it earns its place."
+  },
+  {
+    "id": "ninja-af101-4qt",
+    "name": "Ninja AF101 4-Quart Air Fryer",
+    "category": "Budget Compact Basket",
+    "badge": "Best Budget Pick",
+    "amazonUrl": "#",
+    "pros": [
+      "Simple controls that anyone can operate without reading a manual",
+      "A 4-quart basket covers one or two people comfortably",
+      "Small footprint suits dorms, apartments and secondary kitchens",
+      "Air fry, roast, reheat and dehydrate modes per the manufacturer",
+      "Basket and crisper plate are listed as dishwasher safe"
+    ],
+    "cons": [
+      "Four quarts is tight for three or more people and often forces batch cooking",
+      "Foods usually need a mid-cook shake to brown evenly"
+    ],
+    "bottomLine": "The cheapest sensible way into air frying, as long as you are cooking for one or two.",
+    "description": "If you are not sure an air fryer will earn its counter space, the Ninja AF101 is the low-risk way to find out. It is a four-quart basket machine with straightforward controls, a small footprint and the cooking modes most people actually use: air fry, roast, reheat and dehydrate. The manufacturer lists the basket and crisper plate as dishwasher safe, which removes the biggest friction in daily use. Owners commonly describe it as ideal for singles, couples and dorm rooms, and the honest limit is capacity: a four-quart basket needs to be loaded lightly to crisp properly, so cooking for a family means several rounds, and by round three you have lost the time advantage. Buy it for what it is, a compact everyday fryer, and it delivers."
+  },
+  {
+    "id": "breville-smart-oven-air-fryer-pro-bov900",
+    "name": "Breville Smart Oven Air Fryer Pro (BOV900)",
+    "category": "Oven-Style Countertop",
+    "badge": "Best Oven-Style",
+    "amazonUrl": "#",
+    "pros": [
+      "Replaces a toaster oven and an air fryer with one countertop appliance",
+      "Breville's Element iQ system shifts power between heating elements depending on the function, per the manufacturer",
+      "Many functions beyond air fry, including bake, roast, broil and toast",
+      "Interior light and a roomy cavity for pans, trays and larger cuts",
+      "Automatic rack-position guidance helps you set it up correctly"
+    ],
+    "cons": [
+      "Takes up a lot of counter and is among the heaviest options here",
+      "A premium price, and it preheats slower than a basket model"
+    ],
+    "bottomLine": "The best choice if you want to retire your toaster oven and are happy to give up counter space for versatility.",
+    "description": "The Breville Smart Oven Air Fryer Pro is the opposite design philosophy to a basket machine: a full countertop oven with an air-fry mode, where the fan and elements work across racks instead of a single drawer. It is the one to buy if you want a single appliance to toast, bake, roast and air fry, since the manufacturer describes a system that varies the power to each element depending on what you are cooking. The cavity takes trays and pans a basket never could, and the interior light helps you judge browning without opening the door. The trade-offs are real: it is large, it is heavy, it costs more than any basket in this guide, and the airflow is gentler than a drawer, so crisping is a little slower. For people who cook toast-oven-sized meals often, it is worth it."
+  },
+  {
+    "id": "philips-premium-airfryer-xxl-hd9650",
+    "name": "Philips Premium Airfryer XXL (HD9650)",
+    "category": "Large Single Basket",
+    "badge": "Best Large Single Basket",
+    "amazonUrl": "#",
+    "pros": [
+      "A large single basket suits family-size batches of fries, wings or roasted vegetables",
+      "Philips' own twin-airflow and fat-removal design is the company's signature approach to crisping",
+      "Digital display with presets and a clear control layout",
+      "Premium build feel compared with most budget basket machines",
+      "Good fit for bigger batches without moving to a dual-zone footprint"
+    ],
+    "cons": [
+      "Premium pricing for a basket machine, and a larger footprint than 5-quart rivals",
+      "Single zone only, so no cooking two foods at different temperatures"
+    ],
+    "bottomLine": "For cooks who want one big, well-built basket and would rather not manage two drawers.",
+    "description": "Philips effectively started the category, and the Premium Airfryer XXL is the company's flagship take on the large single basket. Where a dual-zone model splits the capacity into two drawers, the XXL gives you one large basket, which is the better choice if you most often cook a single large batch rather than two different things. Philips describes a twin-airflow design that spins hot air through the chamber and a fat-removal feature that catches excess grease, and owners commonly report even browning across a full basket. It carries a premium price and a sizeable footprint, so it is not a bargain pick, and because it is a single zone you will need two rounds if you want to cook different foods at different temperatures. For a household of four or more that prefers simplicity, it is a quality option."
+  },
+  {
+    "id": "cuisinart-toa-60",
+    "name": "Cuisinart Air Fryer Toaster Oven (TOA-60)",
+    "category": "Oven-Style, Value",
+    "badge": "Best Value Oven-Style",
+    "amazonUrl": "#",
+    "pros": [
+      "Toaster oven and air fryer in one, at a lower entry price than premium oven-style rivals",
+      "A 1,800-watt heating system is listed by the manufacturer",
+      "Includes an air-fry basket and the usual bake, broil and toast settings",
+      "Familiar toaster-oven door and rack layout that is easy to use",
+      "Wide enough for many pans and small-pizza jobs"
+    ],
+    "cons": [
+      "Crumb tray and interior need regular cleaning to prevent smoke",
+      "Bulkier than a basket model and slower to preheat"
+    ],
+    "bottomLine": "The sensible oven-style pick for people who want the toaster-oven-plus-air-fryer idea without paying Breville money.",
+    "description": "The Cuisinart TOA-60 takes the toaster oven most kitchens already have and adds a proper convection fan and an air-fry setting. It is the value route into oven-style cooking: you get toast, bake, broil and air fry in one box, with an air-fry basket included and a heating system the manufacturer lists at 1,800 watts. The familiar door-and-rack layout means no learning curve, and it handles trays of wings, small pizzas and reheated leftovers well. The usual oven-style caveats apply. It is bulkier than a drawer-style fryer, it preheats more slowly, and grease and crumbs collect inside, so a wipe-down after use keeps the smoke away. If you want one appliance to replace both a toaster oven and a basic air fryer, and you do not need premium refinements, it is hard to beat for the money."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Air Fryer",
+          item: "https://www.thehonestreviewers.com/best-air-fryer/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "Is an air fryer healthier than deep frying?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Usually, because food cooks with a teaspoon or two of oil instead of being submerged in it, so it takes on far less fat. It does not make fried food a health food, and the results still depend on what you cook. Vegetables and lean proteins done this way are a clear improvement over deep-fried versions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need to preheat an air fryer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Many manufacturers recommend a short preheat of a few minutes, and it helps food crisp from the start. Some models have a dedicated preheat function. For small or quick-cooking items it makes little difference, but for frozen foods and anything that should brown quickly, preheating gives noticeably more consistent results."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use aluminum foil in an air fryer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Often yes, but check your manual. Foil must never block the airflow, cover the entire basket, or touch the heating element, and it needs to be weighed down by food so the fan cannot lift it. For tidier cleanup, perforated parchment liners made specifically for air fryers are generally the safer choice."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are nonstick air fryer baskets safe?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Used as the manufacturer directs, they are widely considered safe for ordinary cooking. Avoid overheating an empty basket, avoid metal utensils that scratch the coating, and stop using a basket that flakes. Fumes from overheated nonstick can harm pet birds, so keep birds well away. Some brands offer ceramic or stainless alternatives."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does an air fryer last?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "There is no single figure, and it depends on how often you cook and how you clean it. Owners commonly report several years of use, with the nonstick coating as the usual limiting factor rather than the fan or heater. Hand-washing, avoiding aerosols and checking that replacement parts exist all extend the life."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which is better for crisping, basket or oven-style?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A basket model generally crisps more aggressively because the air is concentrated in a small chamber. Oven-style units trade some of that intensity for racks, capacity and the ability to bake and toast. If crispness is your top priority, buy a basket; if flexibility matters more, an oven-style unit is the better fit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do air fryers use a lot of electricity?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not much for typical use. A 1,700-watt unit draws 1.7 kilowatts while heating, so a 20-minute cook is roughly half a kilowatt-hour, which costs pennies at average rates. For small batches it uses less energy than heating a full-size oven, and your own electricity rate determines the exact cost."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home Appliances",
+    tags: [
+      "best air fryer",
+      "air fryer",
+      "dual zone air fryer",
+      "air fryer toaster oven",
+      "best air fryer 2026"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best <span class="text-[#38BDF8]">Air Fryers</span> in 2026
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Seven air fryers across basket, dual-zone and oven-style designs, with the capacity, wattage and cleanup advice that decides which one you should actually buy.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#ninja-foodi-dualzone-dz201"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Compare the Types
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="21.4k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-they-work" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How Air Fryers Work</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Our 7 Top Picks Reviewed</a>
+          <a href="#types" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Basket vs Oven vs Dual-Zone</a>
+          <a href="#capacity" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Capacity by Household Size</a>
+          <a href="#wattage" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Wattage and Circuits</a>
+          <a href="#what-crisps" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. What Actually Crisps</a>
+          <a href="#cleaning-care" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Cleaning and Coatings</a>
+          <a href="#running-cost" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. What It Costs to Run</a>
+          <a href="#deals" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. When to Buy</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Most air fryers are the same machine in different plastic: a heater, a fan and a basket. What separates a good one from a drawer-filler is shape, capacity and how easily it cleans. We narrowed the field to seven models that cover small kitchens, big families and anyone who wants to retire the toaster oven.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-they-work" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. What an Air Fryer Actually Does (It Isn't Frying)
+          </h2>
+
+          <p>
+            An air fryer is a small convection oven with a very strong fan. A heating element sits above the food, and the fan drives hot air down and around it at high speed, so surface moisture leaves quickly and the outside browns. There is no oil bath involved, which is why the name oversells it. What you get is roasting, accelerated, inside a chamber small enough to preheat in a couple of minutes.
+          </p>
+
+          <p>
+            That explains both what air fryers do well and where they struggle. Frozen fries, wings, breaded cutlets, roasted vegetables and reheated pizza all have dry, exposed surfaces that respond to fast airflow. Wet batter does not, because it drips off before it sets, and anything light enough to blow around, like a loose handful of herbs, can end up pressed against the element.
+          </p>
+
+          <p>
+            The size and shape of the chamber matter more than the marketing. A basket model concentrates heat and airflow in a tight space, which usually means faster cooking and crisper edges but a smaller usable area. An oven-style unit spreads the same idea across racks, giving you capacity and versatility at the cost of gentler, slower airflow. Neither is better in the abstract; they suit different kitchens and different habits.
+          </p>
+
+          <p>
+            Two other points shape any honest purchase. First, an air fryer rarely replaces a full-size oven. It replaces the oven for small jobs, which is a genuine saving in time and kitchen heat, but a roast for eight still wants the big cavity. Second, because the element sits close to the food, how thick the food is and how crowded the basket is will decide results far more than the number on the display.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. The 7 Best Air Fryers in 2026
+          </h2>
+
+          <p>
+            These seven picks are drawn from manufacturer specifications, long-running owner feedback and how each design suits a particular kitchen; we have not bench-tested them for this guide. Links on this page are affiliate links, so if you buy through them we may earn a commission at no extra cost to you, and that never changes where a model ranks. Prices change daily, so click through for the current figure.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} owner ratings)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="types" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Basket vs Oven-Style vs Dual-Zone: Which Shape Fits Your Kitchen
+          </h2>
+
+          <p>
+            The classic basket air fryer is a single drawer with a perforated basket inside. It is compact, preheats fast, stores easily and delivers the strongest airflow per square inch of food. The downside is that it cooks one thing at a time. A main and a side means either two rounds or stacking different foods together, and neither is ideal when dinner has to be ready at once.
+          </p>
+
+          <p>
+            A dual-zone model solves that by putting two independent baskets in one body, each with its own temperature and timer. Many include a function that staggers the start times so both finish together, which is the feature that makes them feel like a different category. The price is footprint and cleanup: they are wide, and you are washing two baskets and two crisper plates every time you use both.
+          </p>
+
+          <p>
+            Oven-style units, sometimes sold as air fryer toaster ovens, look like a toaster oven with a fan and an air-fry setting. Racks and trays give you real capacity, and most also toast, bake and broil, so they can replace a toaster oven rather than sit next to one. They are bulkier, preheat more slowly, and the crisping is a little less aggressive than a drawer fryer. Check the interior dimensions against the pans you own.
+          </p>
+
+          <p>
+            The decision rule is simple. If you cook for one to three people and counter space is tight, buy a basket model. If you cook for four or more and want mains and sides together, buy a dual-zone model. If you want to retire a toaster oven and can spare roughly a foot and a half of counter, buy an oven-style unit. Do not choose oven-style just because it does more; if you mostly make fries and wings, a basket does them better.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Type</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Best for</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Watch out for</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Single basket</td>
+                    <td class="px-4 py-4 text-gray-700">One to three people, small counters</td>
+                    <td class="px-4 py-4 text-gray-700">Mains and sides cook in sequence</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Dual-zone</td>
+                    <td class="px-4 py-4 text-gray-700">Families of four or more</td>
+                    <td class="px-4 py-4 text-gray-700">Wide footprint, two baskets to wash</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Oven-style</td>
+                    <td class="px-4 py-4 text-gray-700">Replacing a toaster oven, trays and pans</td>
+                    <td class="px-4 py-4 text-gray-700">Bulky, slower to preheat</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="capacity" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Capacity by Household Size: How Many Quarts You Need
+          </h2>
+
+          <p>
+            Quarts describe the volume of the basket, not how much food will crisp. Air fryers need space around the food for air to move, so a basket works best when it is no more than about two-thirds full. That is why a 5-quart machine handles two portions of wings well but struggles to crisp a full family dinner in a single pass.
+          </p>
+
+          <p>
+            The table below is a set of rules of thumb, not manufacturer guidance. Match your household to the row, then add a size up if you often cook for guests or like leftovers. Buying slightly too big is a nuisance; buying too small is a daily frustration, because the batches add up.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Household</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Rule-of-thumb capacity</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Shape to consider</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">1-2 people</td>
+                    <td class="px-4 py-4 text-gray-700">2 to 4 quarts</td>
+                    <td class="px-4 py-4 text-gray-700">Compact single basket</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">2-3 people</td>
+                    <td class="px-4 py-4 text-gray-700">4 to 6 quarts</td>
+                    <td class="px-4 py-4 text-gray-700">Single basket, 5 to 6 quarts</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">4+ people</td>
+                    <td class="px-4 py-4 text-gray-700">6 to 8 quarts, or about 8 to 10 combined</td>
+                    <td class="px-4 py-4 text-gray-700">Large basket or dual-zone</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Batch cooking</td>
+                    <td class="px-4 py-4 text-gray-700">Rack-based capacity</td>
+                    <td class="px-4 py-4 text-gray-700">Oven-style</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            Basket shape matters as much as the quart rating. A wide, shallow basket lets you spread food in a single layer, which crisps better than a deep, narrow one that forces stacking. When you compare two models of the same capacity, look at the basket dimensions and favour the wider footprint if you cook things like wings, tots and cutlets.
+          </p>
+
+          <p>
+            Under-buying is the more common mistake. Owners of two-quart machines commonly report cooking in two or three batches, at which point the time advantage disappears. Over-buying costs counter space and a slightly longer preheat, and a half-empty large basket is still a perfectly good fryer. When in doubt, size up.
+          </p>
+        </div>
+
+        <div id="wattage" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Wattage, Circuits and What Power Means for Crispness
+          </h2>
+
+          <p>
+            Most full-size basket air fryers are rated at roughly 1,500 to 1,800 watts, and that cluster is not a coincidence. A standard 120-volt household circuit on a 15-amp breaker can supply at most 1,800 watts, so manufacturers push right up to the ceiling. More power means faster preheating and quicker recovery when you open the drawer and add cold food.
+          </p>
+
+          <p>
+            Higher wattage is not a quality guarantee. It buys speed and recovery, but airflow design and basket geometry decide how evenly food browns. Compare wattage only between machines of a similar size, and treat it as a tiebreaker rather than a reason to pay more. A well-designed 1,500-watt model can easily outperform a clumsy 1,800-watt one.
+          </p>
+
+          <p>
+            Circuits are the part nobody mentions. Kitchen countertop outlets are typically on 20-amp small-appliance circuits, which can carry one high-wattage appliance with some room to spare. Run an air fryer at the same time as a microwave or an <a href="/best-electric-kettle/" class="text-[#1E90FF] font-bold hover:underline">electric kettle</a> on the same circuit, and you are asking for a tripped breaker. If that keeps happening, move one appliance to a different outlet.
+          </p>
+
+          <p>
+            On temperature, look for a maximum of at least 400°F, which covers the large majority of recipes. Some models go higher, and a higher ceiling is useful for searing or finishing, but remember it is a limit, not a typical setting. Most air frying happens between about 350°F and 400°F, and good food comes from time and spacing, not from running the dial to the top.
+          </p>
+        </div>
+
+        <div id="what-crisps" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. What Actually Crisps in an Air Fryer (and What Never Will)
+          </h2>
+
+          <p>
+            Foods with a little surface starch or fat and low moisture do best. Frozen fries and tots, chicken wings and thighs with dry skin, breaded cutlets, roasted potatoes, Brussels sprouts, cauliflower and reheated pizza all crisp convincingly. Leftover fried food, which turns limp in a microwave, is where owners most often say an air fryer pays for itself.
+          </p>
+
+          <p>
+            Technique counts for more than settings. Pat food dry, toss it with a teaspoon or two of oil instead of pouring it on, spread it in a single layer and shake or flip it halfway. Season vegetables right before cooking. Crowding is the single biggest cause of limp results, because food that touches steams its neighbours instead of letting air reach every surface.
+          </p>
+
+          <p>
+            Some foods will disappoint no matter which model you buy. Wet batter runs off before it sets, thin lean chicken breast dries out quickly, loose cheese melts and blows around, and leafy greens can scorch. Baking cakes and breads works in an oven-style unit, but results in a basket model vary and are rarely worth the effort. Know the limits and you will stop blaming the machine.
+          </p>
+
+          <p>
+            Compared with a conventional oven, owners often report that an air fryer matches or beats the oven on small batches of crisp-skinned food, mostly because the smaller chamber and stronger fan do the work faster. For a dedicated jerky habit, a <a href="/best-food-dehydrator/" class="text-[#1E90FF] font-bold hover:underline">dedicated food dehydrator</a> is more consistent, and for real smoke flavour nothing here substitutes for an <a href="/best-electric-smoker/" class="text-[#1E90FF] font-bold hover:underline">electric smoker</a>.
+          </p>
+        </div>
+
+        <div id="cleaning-care" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Nonstick Coatings, Cleaning and Making Yours Last
+          </h2>
+
+          <p>
+            Nearly every basket and tray carries a nonstick coating, and how long that coating lasts decides whether the fryer lasts two years or six. The main enemies are metal utensils, abrasive pads and aerosol cooking sprays. Many manufacturers advise against aerosols because the propellants and additives can leave a sticky residue that gradually degrades the coating. A refillable oil mister is the safer option.
+          </p>
+
+          <p>
+            The routine is short. Let the basket cool, wash it by hand with warm soapy water and a soft sponge, and soak anything stuck on instead of scrubbing. Many baskets are labelled dishwasher safe, and a <a href="/best-dishwasher/" class="text-[#1E90FF] font-bold hover:underline">good dishwasher</a> will handle them, but owners commonly report that hand-washing extends coating life. Dry the basket fully before putting it back.
+          </p>
+
+          <p>
+            Do not forget the chamber and heating element. Grease splatter bakes onto the element, then burns on the next cook and produces smoke. Once the unit is cool and unplugged, wipe the element and the housing with a damp cloth every few uses. White smoke usually means fat burning off, while dark smoke means something is charring and needs attention.
+          </p>
+
+          <p>
+            When the coating starts to flake, stop using the basket. Many manufacturers sell replacement baskets and trays, so check that spare parts exist before you buy. Parchment liners made for air fryers are fine, but weigh them down with food, because loose paper can fly up into the element. Also note that fumes from overheated nonstick can harm pet birds, so keep birds out of the kitchen.
+          </p>
+        </div>
+
+        <div id="running-cost" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. What an Air Fryer Costs to Run
+          </h2>
+
+          <p>
+            Running cost is simple arithmetic: kilowatts times hours times your electricity rate. A 1,700-watt fryer is 1.7 kilowatts, so a 20-minute cook is about 0.57 kilowatt-hours at full draw. At an illustrative rate of 16 cents per kilowatt-hour, that works out to roughly 9 cents. Your own rate and your cycle times will differ, so check your bill.
+          </p>
+
+          <p>
+            The honest comparison is with a full-size electric oven, which must heat a far bigger cavity for longer. That is why small-batch cooking is where an air fryer saves energy, and why the saving disappears if you use it for jobs the oven does better. In summer there is a comfort benefit too, since a small appliance puts much less heat into the kitchen.
+          </p>
+
+          <p>
+            Standby draw is small. Digital models keep a display and controls alive, which uses a tiny trickle, and you can unplug the machine if that bothers you. The larger running cost in practice is not electricity at all but the replacement basket if you wear out a coating through careless cleaning, which is why the cleaning advice above matters.
+          </p>
+
+          <p>
+            Purchase price is the other half of the cost story. Prices range widely from basic baskets to premium oven-style units, and the cheapest is not always the cheapest to own. A budget model with a basket that wears out in a year costs more than a better one that lasts four. Counter space is a cost too, so if you already own a <a href="/best-rice-cooker/" class="text-[#1E90FF] font-bold hover:underline">rice cooker</a> and a kettle, plan where the fryer will live.
+          </p>
+        </div>
+
+        <div id="deals" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. When to Buy: How Air Fryer Deals Work
+          </h2>
+
+          <p>
+            Air fryers are among the most heavily discounted small appliances, and the discounts follow a pattern. Amazon's summer Prime Day, its autumn Prime Big Deal Days, Black Friday and Cyber Monday are the windows where popular models commonly see price cuts. If you can wait for one, it is usually worth it, but do not delay a purchase you need now on the hope of a sale.
+          </p>
+
+          <p>
+            Judge a deal by the price history, not the crossed-out list price. List prices on small appliances are often inflated, so a 40 percent discount from a number nobody pays is not a bargain. Watch a model for a few weeks, note its usual price, and treat a real deal as one that beats that. We deliberately leave prices off this page because they move daily; click Check Price for the current figure.
+          </p>
+
+          <p>
+            Beware of model-number traps. The same brand sells several similar machines with near-identical names, and a discounted listing may be an older or smaller variant. Before buying, confirm the quart size, the wattage and the key features match what you read here. A model number in the product title is the quickest way to verify you are getting the one you meant.
+          </p>
+
+          <p>
+            Finally, check the return window and warranty. Quiet fans, faulty controls and defective coatings tend to show up in the first few weeks of use, so buy from the manufacturer or a seller whose returns cover at least that period. As always, links on this page are affiliate links: buying through them costs you nothing extra and does not change how we rank anything.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying by Quarts Alone</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A bigger quart number does not mean more crisp food. Air needs room to circulate, so a basket works best about two-thirds full. A wide, shallow basket often outperforms a deeper one of the same volume, so compare basket dimensions and your real household size, not just the headline capacity.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Overcrowding the Basket</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Piling food in is the number one reason air-fried food comes out limp. Touching pieces trap steam and block airflow, so the surface never dries. Cook in a single layer, shake or flip halfway, and accept two smaller batches. Done properly, two quick rounds beat one soggy load every time.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Spraying Aerosol Oil on Nonstick</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Many manufacturers warn that aerosol cooking sprays can leave a sticky residue that degrades nonstick baskets over time. Use a refillable oil mister, or toss food with a teaspoon or two of oil in a bowl before it goes in. The coating is the part you will most want to protect.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using Loose Parchment or Foil</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Lightweight liners can lift in the fan and touch the heating element, which is a fire and smoke risk. Use perforated liners made for air fryers, always weigh them down with food, and never preheat with an empty liner inside. Check your manual for what the manufacturer allows in your model.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Choosing Oven-Style Because It Does More</h3>
+              <p class="text-gray-700 text-sm m-0">
+                An air fryer toaster oven is great if you will use the toast, bake and broil settings, but it is bulkier and slower than a basket. If you mostly make fries, wings and reheated leftovers, a basket model crisps better and takes up less counter. Buy the shape that matches your habits.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is an air fryer healthier than deep frying?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Usually, because food cooks with a teaspoon or two of oil instead of being submerged in it, so it takes on far less fat. It does not make fried food a health food, and the results still depend on what you cook. Vegetables and lean proteins done this way are a clear improvement over deep-fried versions.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do I need to preheat an air fryer?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Many manufacturers recommend a short preheat of a few minutes, and it helps food crisp from the start. Some models have a dedicated preheat function. For small or quick-cooking items it makes little difference, but for frozen foods and anything that should brown quickly, preheating gives noticeably more consistent results.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I use aluminum foil in an air fryer?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Often yes, but check your manual. Foil must never block the airflow, cover the entire basket, or touch the heating element, and it needs to be weighed down by food so the fan cannot lift it. For tidier cleanup, perforated parchment liners made specifically for air fryers are generally the safer choice.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are nonstick air fryer baskets safe?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Used as the manufacturer directs, they are widely considered safe for ordinary cooking. Avoid overheating an empty basket, avoid metal utensils that scratch the coating, and stop using a basket that flakes. Fumes from overheated nonstick can harm pet birds, so keep birds well away. Some brands offer ceramic or stainless alternatives.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long does an air fryer last?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                There is no single figure, and it depends on how often you cook and how you clean it. Owners commonly report several years of use, with the nonstick coating as the usual limiting factor rather than the fan or heater. Hand-washing, avoiding aerosols and checking that replacement parts exist all extend the life.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Which is better for crisping, basket or oven-style?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A basket model generally crisps more aggressively because the air is concentrated in a small chamber. Oven-style units trade some of that intensity for racks, capacity and the ability to bake and toast. If crispness is your top priority, buy a basket; if flexibility matters more, an oven-style unit is the better fit.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do air fryers use a lot of electricity?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Not much for typical use. A 1,700-watt unit draws 1.7 kilowatts while heating, so a 20-minute cook is roughly half a kilowatt-hour, which costs pennies at average rates. For small batches it uses less energy than heating a full-size oven, and your own electricity rate determines the exact cost.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Kitchen Appliance Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-food-dehydrator/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Food Dehydrators</h3>
+              <p class="text-gray-500 text-sm mt-2">Shelf and stacking dehydrators compared on airflow, temperature range and trays.</p>
+            </a>
+            <a href="/best-electric-smoker/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Electric Smokers</h3>
+              <p class="text-gray-500 text-sm mt-2">For real smoke flavour, which no air fryer can replicate.</p>
+            </a>
+            <a href="/best-rice-cooker/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#38BDF8] font-black text-xs uppercase tracking-widest mb-2">Top Pick</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Rice Cookers</h3>
+              <p class="text-gray-500 text-sm mt-2">The other countertop appliance worth giving shelf space to.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The right air fryer is the one that matches how you cook. A single basket is the sensible default for one to three people, a dual-zone model is the time saver for families who cook mains and sides together, and an oven-style unit is the answer if you want to replace a toaster oven. Pick the shape first, then the size, then the brand.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Whichever you choose, the habits matter more than the model: cook in a single layer, avoid aerosol sprays, hand-wash the basket and check that spare parts exist. Do that and any of the seven machines above will earn its counter space for years.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Appliances" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
