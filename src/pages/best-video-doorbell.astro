@@ -1,0 +1,887 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Home Security Cameras",
+    "url": "/best-home-security-cameras/"
+  },
+  {
+    "title": "Best Smart Locks",
+    "url": "/best-smart-lock/"
+  },
+  {
+    "title": "Home Improvement Ideas",
+    "url": "/home-improvement-ideas/"
+  },
+  {
+    "title": "Best Garage Door Openers",
+    "url": "/best-garage-door-opener/"
+  },
+  {
+    "title": "Best Circuit Breaker Finders",
+    "url": "/best-circuit-breaker-finder/"
+  },
+  {
+    "title": "Best Stud Finders",
+    "url": "/best-stud-finder/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-30", modified: "2026-10-30" });
+const title = "7 Best Video Doorbells in 2026: Ranked by Who Should Buy Which";
+const description =
+  "Seven video doorbells ranked by who should buy which: Ring, Nest, Eufy, Arlo, Wyze and Aqara compared on power, storage fees, privacy and smart-home fit.";
+
+const PRODUCTS = [
+  {
+    "id": "ring-battery-video-doorbell-plus",
+    "name": "Ring Battery Video Doorbell Plus",
+    "category": "Battery or Wired, Head-to-Toe View",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "pros": [
+      "Head-to-toe video, which the manufacturer specifies as a taller view that keeps packages on the step in frame",
+      "Runs on a rechargeable battery or on existing doorbell wiring, so one model suits most doors",
+      "Enormous owner base means abundant mounting accessories, chimes and third-party integrations",
+      "Works with Alexa for announcements on Echo speakers and live video on Echo Show displays",
+      "Simple setup through the Ring app that most first-time buyers find approachable"
+    ],
+    "cons": [
+      "Saved video history and several smart alerts depend on a Ring Protect plan, so check the current plan terms",
+      "Battery life varies with how busy your front door is, and winter weather tends to shorten it"
+    ],
+    "bottomLine": "The safest default for most households: flexible power, a view that covers the step, and the widest ecosystem of any doorbell on this list.",
+    "description": "If you want one doorbell that fits most front doors without much thought, the Ring Battery Video Doorbell Plus is the place to start. It can run on its rechargeable battery for a no-wiring install or be connected to existing doorbell wiring to keep the battery topped up, which means the same model works for a renter and for an owner with a working bell. Ring specifies a head-to-toe view that shows a visitor and anything left at their feet, which addresses the most common complaint about older doorbells. The real attraction is the ecosystem: Alexa integration, a large pool of accessories and a mature app. The cost of that convenience is the subscription, since saved clips and some features sit behind a Ring Protect plan whose terms change, so verify them before you buy."
+  },
+  {
+    "id": "ring-wired-doorbell-plus",
+    "name": "Ring Wired Doorbell Plus",
+    "category": "Hardwired, Head-to-Toe View",
+    "badge": "Best Wired Pick",
+    "amazonUrl": "#",
+    "pros": [
+      "Runs continuously on existing doorbell wiring, so there is never a battery to recharge",
+      "Taller head-to-toe view as specified by Ring, suited to catching package drops",
+      "Compact body that fits narrow door frames better than many larger doorbells",
+      "Same Ring app and Alexa integration as the battery model"
+    ],
+    "cons": [
+      "Requires working doorbell wiring and a compatible transformer, so it is not for renters without wiring",
+      "Saved video and some alerts sit behind a Ring Protect plan, so check the current plan terms"
+    ],
+    "bottomLine": "The right choice if you own your home, have a working bell and never want to think about charging a doorbell again.",
+    "description": "The Ring Wired Doorbell Plus is the straightforward answer for homeowners who already have a doorbell button and chime. Because it draws power from the existing low-voltage circuit, you skip the battery cycle entirely, which removes the most common reason a doorbell fails to record. Ring specifies the same taller head-to-toe view as its battery sibling and the same app, so you get the identical day-to-day experience with less upkeep. The compact housing is a quiet advantage on slim trim or narrow door frames. The main requirement is compatible wiring and transformer, and the manufacturer lists the supported range, so check your transformer label first. As with other Ring products, saved clips depend on a plan whose terms you should confirm."
+  },
+  {
+    "id": "google-nest-doorbell-2nd-gen",
+    "name": "Google Nest Doorbell (2nd Gen)",
+    "category": "Battery or Wired, Google Home",
+    "badge": "Best for Google Home",
+    "amazonUrl": "#",
+    "pros": [
+      "Tall portrait-style frame is designed to show a visitor and a package in the same view",
+      "Can be wired or run on its battery, depending on how your door is set up",
+      "Deep integration with Google Home, with announcements on Nest speakers and video on Nest displays",
+      "Clean app with straightforward event history and activity zones"
+    ],
+    "cons": [
+      "Smarter features such as familiar-face alerts and longer history require a Nest Aware plan, so check the current terms",
+      "Less useful outside the Google ecosystem than Ring is within Alexa homes"
+    ],
+    "bottomLine": "If your house runs on Google Home, this is the doorbell that feels native, with a tall view and tidy app to match.",
+    "description": "For households that live in the Google Home ecosystem, the Nest Doorbell is the one that behaves as though it belongs. Google designs the image in a taller portrait frame so a visitor and the parcel at their feet both appear, and the doorbell can run from existing wiring or its battery. Integration is the draw: announcements arrive on Nest speakers, video appears on Nest displays and the activity zones let you tell the camera which parts of the porch to watch. The caveat is that the most intelligent features, such as recognizing familiar faces and extending the video history, are tied to a Nest Aware subscription, and Google changes what is included over time. Verify what comes with the doorbell on the current listing."
+  },
+  {
+    "id": "eufy-video-doorbell-e340",
+    "name": "Eufy Video Doorbell E340 (Dual Camera)",
+    "category": "Local Storage, Dual Camera",
+    "badge": "Best No-Subscription Pick",
+    "amazonUrl": "#",
+    "pros": [
+      "Eufy markets local storage so clips stay on hardware you own, with no required monthly fee",
+      "Dual-camera design adds a dedicated lower view aimed at the doorstep for packages",
+      "Can be wired to doorbell wiring or run on battery, according to the manufacturer",
+      "Works with Alexa and Google Assistant for basic voice and display integration"
+    ],
+    "cons": [
+      "Larger body than slimmer rivals, which can look bulky on narrow trim",
+      "Local storage does not protect footage if the device itself is stolen, and cloud backup is a separate decision"
+    ],
+    "bottomLine": "The pick for anyone who wants to avoid recurring fees and is happy to keep video on their own hardware.",
+    "description": "The Eufy Video Doorbell E340 is the clearest answer to the question of what to buy if you hate subscriptions. Eufy markets local storage so footage stays on a device you control, which removes the recurring cost that inflates the lifetime price of most doorbells. The dual-camera design adds a second lens pointed at the ground, which is aimed squarely at package visibility. It is a larger unit than the slimmest competitors and the app experience differs from the Ring or Nest polish, so read the owner reports with your own priorities in mind. Confirm on the listing what storage and hub are included, and consider whether a cloud backup matters if theft of the doorbell is your main concern."
+  },
+  {
+    "id": "arlo-essential-video-doorbell-2k",
+    "name": "Arlo Essential Video Doorbell 2K (Wired)",
+    "category": "Wired, 2K Wide View",
+    "badge": "Best Wide Field of View",
+    "amazonUrl": "#",
+    "pros": [
+      "Wide field of view, which Arlo specifies at 180 degrees, helps catch a visitor approaching from the side",
+      "2K resolution with HDR processing aimed at doors that face bright sun",
+      "Square-ish aspect ratio as specified by the manufacturer keeps more of the doorstep in frame",
+      "Works with Alexa, Google Assistant and Apple HomeKit according to Arlo"
+    ],
+    "cons": [
+      "Cloud recording depends on an Arlo Secure plan, so check the current plan terms before buying",
+      "Needs existing doorbell wiring, so it is a poor fit for renters without a wired bell"
+    ],
+    "bottomLine": "A strong wired choice for wide porches and sunny doors, provided you accept an Arlo subscription for saved video.",
+    "description": "Arlo takes a different approach from the portrait-view crowd, pairing a very wide lens with 2K resolution. The manufacturer specifies a 180-degree field of view and a squarer image, which suits doors on wide porches where visitors approach from an angle. HDR handling is aimed at the classic doorbell problem of a bright backdrop washing out a visitor's face. Arlo lists compatibility with Alexa, Google Assistant and HomeKit, which gives it more cross-ecosystem reach than some rivals. The trade-off is the usual one: recording to the cloud relies on an Arlo Secure plan and the terms change, so confirm them. This version is wired, so it needs a compatible transformer."
+  },
+  {
+    "id": "wyze-video-doorbell-pro",
+    "name": "Wyze Video Doorbell Pro",
+    "category": "Budget, Battery with Chime",
+    "badge": "Best Budget Pick",
+    "amazonUrl": "#",
+    "pros": [
+      "Priced below most name-brand rivals, which makes it the easiest doorbell to justify on a tight budget",
+      "Battery-powered for wire-free installs, with a wired option available according to Wyze",
+      "Ships with a plug-in chime so you hear the ring without touching your house wiring",
+      "Optional Cam Plus plan adds smarter detection, but the basics work without one"
+    ],
+    "cons": [
+      "Some advanced detection features depend on a paid plan, so check the current terms",
+      "Smaller accessory ecosystem and less polished integrations than Ring or Nest"
+    ],
+    "bottomLine": "The pick for a first doorbell on a budget, or for a rental where you cannot touch the wiring.",
+    "description": "Wyze built its reputation on cheap, capable cameras, and the Video Doorbell Pro carries that approach to the front door. It is battery-powered so you can install it without wiring, a real advantage for renters, and it comes with a plug-in chime so you do not need to modify your existing bell. A wired option is available according to Wyze if you want to avoid recharging. Basic alerts and live view work out of the box, while smarter detection sits behind the optional Cam Plus plan, which you should price before deciding. Expect a smaller accessory ecosystem and less depth in smart-home integrations than the biggest brands. For many buyers that is a fair trade for the lower cost."
+  },
+  {
+    "id": "aqara-video-doorbell-g4",
+    "name": "Aqara Video Doorbell G4",
+    "category": "HomeKit Secure Video, Wired or Battery",
+    "badge": "Best for Apple Home",
+    "amazonUrl": "#",
+    "pros": [
+      "Supports Apple HomeKit Secure Video, so recordings can live in iCloud rather than a vendor cloud",
+      "Also lists Alexa and Google Assistant compatibility, according to Aqara",
+      "Comes with a chime in the box, so you can hear the ring without relying on a wired bell",
+      "Fits into the wider Aqara sensor and hub ecosystem for automations"
+    ],
+    "cons": [
+      "HomeKit Secure Video recording needs a qualifying iCloud plan and a home hub such as an Apple TV or HomePod",
+      "Smaller user base than Ring, with fewer mounting accessories and community guides"
+    ],
+    "bottomLine": "The best fit for Apple households that want video to stay inside their own iCloud account.",
+    "description": "Few video doorbells support Apple's HomeKit Secure Video, and the Aqara G4 is the one most often recommended to iPhone households that care where their footage lives. With that feature enabled, clips are analyzed on your home hub and stored in your iCloud account, which keeps the data inside Apple's privacy model instead of a separate vendor cloud. Aqara also lists Alexa and Google Assistant support, and the doorbell ships with its own chime. The requirements are worth reading carefully: HomeKit Secure Video needs an iCloud plan of a qualifying tier and a home hub at home. If you already own an Apple TV or HomePod, the G4 is an easy way to add a doorbell without adding another subscription."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Video Doorbell",
+          item: "https://www.thehonestreviewers.com/best-video-doorbell/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best video doorbell overall?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most households the Ring Battery Video Doorbell Plus is the safest default because it runs on battery or wiring, offers a taller head-to-toe view and has the biggest accessory ecosystem. If you live in Google Home, the Nest Doorbell is the more natural fit, and if you want to avoid fees, the Eufy E340 deserves a close look."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do video doorbells require a subscription?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not to work at a basic level. Most still send alerts and allow live view without a plan, but saving clips, longer history and smarter detection are often tied to a monthly or annual plan. Plan terms change, so check the current details on the manufacturer's page, or choose a model with local storage to avoid recurring fees."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a wired or battery doorbell better?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If you have a working doorbell circuit, wired is better because it never needs charging. Battery models suit renters and homes without wiring, at the cost of periodic recharges. Hybrid models such as the Ring Battery Plus and the Nest Doorbell let you use house power with the battery as backup."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I install a video doorbell myself?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Usually yes. Battery models need only a few screws, and wired models need basic low-voltage work after you switch off the breaker. Check your transformer rating and chime compatibility first. If you are uncomfortable working near the transformer or panel, hire a licensed electrician for that part."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will a video doorbell work with my existing chime?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Often, but not always. Mechanical chimes usually need a small power kit or adapter, and digital chimes can need a bypass. Most manufacturers publish a compatibility checker, and several include the kit in the box. Check the support page for your doorbell and your chime type before you order."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is it legal to record audio with a doorbell camera?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on where you live. Some states require every party to a conversation to consent, and a recording of people on your step can be treated differently from a live two-way talk feature. Many apps let you turn audio recording off. This is general information, so check your state's rules or ask a local attorney."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When is the best time to buy a video doorbell?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Doorbells are frequently discounted during October shopping events and around Black Friday and Cyber Monday, with smaller dips in spring. Pick your model first and then watch the price, rather than letting a sale choose the doorbell for you. Always check the return window in case the wiring or chime turns out to be incompatible."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home Security",
+    tags: [
+      "best video doorbell",
+      "video doorbell",
+      "wired vs battery doorbell",
+      "doorbell camera",
+      "no subscription doorbell"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best Video <span class="text-[#38BDF8]">Doorbells</span> in 2026
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Seven doorbell cameras, ranked by who should buy which. The right pick depends on your wiring, your tolerance for monthly fees and the smart-home ecosystem you already live in.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#ring-battery-video-doorbell-plus"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Compare All 7 Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="12.4k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-we-ranked" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How We Ranked These Doorbells</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Our 7 Top Picks Reviewed</a>
+          <a href="#wired-vs-battery" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Wired vs Battery Doorbells</a>
+          <a href="#video-quality" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Video Quality, Field of View &amp; Night Vision</a>
+          <a href="#subscriptions" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Subscriptions &amp; Local Storage</a>
+          <a href="#installation" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Installation, Transformers &amp; Chimes</a>
+          <a href="#privacy" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Privacy, Audio &amp; the Law</a>
+          <a href="#smart-home" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Smart-Home Compatibility</a>
+          <a href="#deals" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. When to Buy: Deals Timing</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          A video doorbell is the cheapest security upgrade most homes will ever make, and also the one most often bought for the wrong reasons. People pick on brand recognition, then discover the doorbell they chose wants a transformer they do not have, a subscription they did not budget for, or a field of view that crops the package at their feet. This guide ranks seven doorbells by the buyer each one actually suits, and it is plain about what we can and cannot tell you.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-we-ranked" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How We Ranked These Doorbells (and What We Did Not Test)
+          </h2>
+
+          <p>
+            We want to be straight about the method. This is a buyer's guide built from manufacturer specifications, published support documentation and the patterns that show up in owner reports, not a bench review with our own stopwatch and light meter. Where a spec is quoted, it is attributed to the manufacturer. Where we describe real-world behavior, it is framed as what owners commonly report. We have not invented test results, and you should be suspicious of any doorbell roundup that quotes suspiciously precise latency or battery numbers without showing its method.
+          </p>
+
+          <p>
+            The ranking weighs five things. First, power: whether the doorbell can run from your existing wiring, a rechargeable battery or both, because that decides whether installation is a ten-minute job or a weekend of fishing wire. Second, ongoing cost: whether useful features sit behind a monthly plan and whether local storage is an option. Third, picture: field of view, resolution and whether the camera can see a package on the step. Fourth, ecosystem: how well the doorbell plays with Alexa, Google Home or Apple Home. Fifth, the track record of the app, because a doorbell is only as good as the notification that reaches your phone.
+          </p>
+
+          <p>
+            Price is deliberately a secondary factor in the order of the list, because the cheapest doorbell is rarely the cheapest to own. A model that looks like a bargain on the shelf can cost more over three years once a subscription is added, while a pricier model with free local storage can come out ahead. We do not quote exact prices here because they move weekly; check the listing for today's number.
+          </p>
+
+          <p>
+            Finally, a framing point. A doorbell camera is one piece of a home security setup, not the whole thing. If your concern is the back yard or the garage, a doorbell will not help, and our <a href="/best-home-security-cameras/" class="text-[#1E90FF] font-bold hover:underline">guide to home security cameras</a> covers the rest of the property. The doorbell's real job is narrower: tell you who is at the front door, record what happened there, and let you talk to them without opening it.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. The 7 Best Video Doorbells in 2026, Ranked
+          </h2>
+
+          <p>
+            Each pick below is ranked by the buyer it suits best. Specifications come from the manufacturers and from what owners commonly report, not from our own bench measurements, and subscription terms change often, so confirm the current plan details on the listing before you buy. The Check Price buttons are affiliate links: if you buy through them we earn a commission at no extra cost to you, and it never changes where a product lands in the ranking.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="wired-vs-battery" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Wired vs Battery Doorbells: Which Power Source Fits Your Door
+          </h2>
+
+          <p>
+            The first decision is power, and it narrows the field faster than any spec. A wired doorbell taps the low-voltage circuit that already rings your chime. It never needs charging, it can usually run higher frame rates and respond faster, and it is the better choice if you already have a working doorbell button. The trade-off is that installation depends on your existing wiring being in decent shape and your transformer delivering enough voltage, which the manufacturer lists on the box and support page.
+          </p>
+
+          <p>
+            A battery doorbell trades that dependence for a recharge schedule. Mount it with two screws and no wiring, or put it on a rental door where you are not allowed to modify the wall. Manufacturers quote battery life in months, but those figures assume modest event counts. Owners commonly report that a busy front door, cold winters and frequent live-view sessions all shorten the interval between charges, so treat the quoted number as a best case rather than a promise.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Factor</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Wired</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Battery</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Charging</td>
+                    <td class="px-4 py-4 text-gray-700">None, powered continuously</td>
+                    <td class="px-4 py-4 text-gray-700">Periodic recharge or battery swap</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Installation</td>
+                    <td class="px-4 py-4 text-gray-700">Needs existing doorbell wiring</td>
+                    <td class="px-4 py-4 text-gray-700">Screws only, no wiring</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Best for</td>
+                    <td class="px-4 py-4 text-gray-700">Owned homes with a working bell</td>
+                    <td class="px-4 py-4 text-gray-700">Renters, brick, no wiring</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Main risk</td>
+                    <td class="px-4 py-4 text-gray-700">Weak transformer or old wiring</td>
+                    <td class="px-4 py-4 text-gray-700">Dead battery at the wrong moment</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            Several doorbells on this list are hybrids. The Ring Battery Video Doorbell Plus and the Google Nest Doorbell can be wired to existing doorbell wiring and keep the battery as a backup, which is often the best of both worlds. When a doorbell is hybrid, wire it if you can: the battery then works as insurance rather than as the primary power source, and you stop thinking about charging.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE RULE</p>
+            <p class="text-xl font-bold text-white mb-3">Wire it if you can; go battery if you must.</p>
+            <p class="text-gray-300 leading-relaxed m-0">A wired or hybrid doorbell running on house power removes the single most common failure mode, a dead battery. Reach for battery-only when wiring is impossible, not because it looks easier on the box.</p>
+          </div>
+
+          <p>
+            A practical test before you buy: press your existing doorbell button and listen. If the chime rings, you have a working low-voltage circuit and can almost certainly go wired. If you have no button at all, or the wiring was removed during a renovation, battery is the sensible path. And if you are standing in a doorway wondering where the wires even go, that is the cue to read the installation section below before ordering anything.
+          </p>
+        </div>
+
+        <div id="video-quality" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Video Quality, Field of View and Night Vision Explained
+          </h2>
+
+          <p>
+            Resolution numbers on doorbell boxes are less useful than they look. A 2K sensor with a narrow lens can show less of your porch than a 1080p sensor with a wide one. What decides whether the footage is useful is a combination of field of view, aspect ratio and how the camera handles bright backlight when someone stands in front of a sunny doorway. Dynamic range processing, often marketed as HDR, helps with exactly that situation, and it is worth looking for on any door that faces the sun.
+          </p>
+
+          <p>
+            Aspect ratio matters more than most buyers realize. A conventional 16:9 doorbell shows a wide strip of porch but often cuts off the ground, so a parcel left directly under the camera falls out of frame. Doorbells with a squarer or portrait-oriented image, a design several of the picks below use, are built to show a visitor from head to toe along with the step. If package theft is your main worry, favor that taller view over raw megapixels.
+          </p>
+
+          <p>
+            Field of view is quoted in degrees, usually measured diagonally, and the numbers are not always comparable across brands. Treat them as a rough guide: wider is better for catching someone approaching from the side, but very wide lenses add edge distortion. Where manufacturers state a figure on the product page we mention it, and otherwise we leave it out rather than guess.
+          </p>
+
+          <p>
+            Night vision is the other half. Most doorbells use infrared LEDs to produce a black-and-white image after dark, and a few offer color night vision that relies on a built-in light or ambient light from your porch. Color is helpful for describing a car or clothing, but it depends on available light, so a dim porch gets a muddy picture whatever the spec sheet says. Owners commonly report that the cheapest fix for poor night footage is a brighter porch bulb rather than a better doorbell.
+          </p>
+
+          <p>
+            Last, consider where the camera sits. Mounted at the standard height next to a door, a doorbell sees faces well but can be blocked by a storm door, a wreath or a pillar. A mounting wedge, which several manufacturers sell, angles the camera toward the approach path when your door sits at the end of a long porch. If your layout is awkward, factor that small accessory into the budget.
+          </p>
+        </div>
+
+        <div id="subscriptions" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Subscriptions and Local Storage: The Real Cost of a Doorbell
+          </h2>
+
+          <p>
+            The sticker price of a video doorbell is the down payment. Most brands sell their best features, such as saved video history, package alerts and person detection, through a monthly or annual plan, and the plan is what you pay for as long as you own the device. Plan names, tiers and prices change regularly, so we do not reproduce them here; check the current plan terms on the manufacturer's own page before you decide a doorbell is cheap.
+          </p>
+
+          <p>
+            The distinction that matters is what the doorbell does without a plan. Some cameras still alert you and let you watch live video with no subscription, but will not save clips. Others keep a short window of event video free. A few brands, Eufy most prominently among the picks here, market local storage so clips stay on a device you own with no required monthly fee. Local storage is not free of trade-offs: a thief who takes the hub or the doorbell can take the footage, and the quality of the app experience varies.
+          </p>
+
+          <p>
+            Run the three-year arithmetic. Multiply any plan's monthly cost by thirty-six, add it to the doorbell price, and compare against a no-plan model with local storage. For a single doorbell on a cloud plan the lifetime cost is frequently double the hardware price. If you already pay for a home plan that covers multiple cameras, the math changes in the cloud option's favor, which is why existing ecosystem matters.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">DO THE MATH</p>
+            <p class="text-xl font-bold text-white mb-3">Cost of ownership beats price tag.</p>
+            <p class="text-gray-300 leading-relaxed m-0">Add thirty-six months of any plan to the hardware price before comparing doorbells. A cheap doorbell with a required plan can cost more over three years than a pricier one with local storage.</p>
+          </div>
+
+          <p>
+            One more caution. Features locked behind a plan can change after purchase, and a doorbell that offered a given feature free at launch can later move it behind a paywall. Local storage and standard integrations such as Apple Home are the most future-proof ways to keep a doorbell useful if a company changes its terms. That does not make cloud plans bad, since offsite storage survives theft of the device, but it is a reason to read the terms before you commit.
+          </p>
+        </div>
+
+        <div id="installation" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Installation, Transformers and Chime Compatibility
+          </h2>
+
+          <p>
+            Wired video doorbells run on the low-voltage AC circuit that powers a traditional doorbell. Manufacturers specify a supported voltage range on the box, typically somewhere in the teens to low twenties of volts AC, and a minimum transformer rating. Your transformer is a small box often found near the electrical panel, in a garage, or near the furnace, with its rating printed on the label. If the label sits below the manufacturer's minimum, the doorbell may reboot or fail to charge, and the fix is a replacement transformer.
+          </p>
+
+          <p>
+            Turn off the breaker for the doorbell circuit before touching a wire, and confirm with a tester that the circuit is dead. A circuit tester takes the guesswork out of that step, and our <a href="/best-circuit-breaker-finder/" class="text-[#1E90FF] font-bold hover:underline">circuit breaker finder guide</a> shows which tools identify the right breaker without a trip to the panel for every flip. Low-voltage wiring is far less hazardous than household current, but the transformer's input side connects to mains voltage, so treat it with proper respect or hire an electrician.
+          </p>
+
+          <p>
+            Chimes are the quiet source of most installation frustration. Mechanical chimes, the ones with plungers that strike metal bars, generally need a small power kit or adapter wired in so the doorbell can draw continuous power while still triggering the chime. Digital chimes sometimes need a bypass in the other direction. Several brands include the right kit in the box, and some sell it separately; check the compatibility checker on each manufacturer's support page, because the answer depends on your particular chime.
+          </p>
+
+          <p>
+            Mounting is straightforward once the electrical side is settled. Most doorbells include a bracket, screws and a drill bit, and on brick or stucco you will want masonry bits and anchors that the kit may not provide. A basic <a href="/best-cordless-drills/" class="text-[#1E90FF] font-bold hover:underline">cordless drill</a> handles pilot holes, and a <a href="/best-stud-finder/" class="text-[#1E90FF] font-bold hover:underline">stud finder</a> helps if your trim is thin and you want the bracket biting into solid wood rather than a hollow casing. Keep the camera level, because a tilted image looks sloppy and can throw off the motion zones.
+          </p>
+
+          <p>
+            Finally, think about Wi-Fi before you drill. A doorbell is often the farthest camera from your router, and a weak signal produces slow notifications, choppy live view and dropped clips that no spec can fix. Test your signal at the door with a phone before you buy. If the reading is weak, a mesh node or extender near the entry is a better investment than upgrading to a fancier doorbell.
+          </p>
+        </div>
+
+        <div id="privacy" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Privacy, Audio and the Law Around Doorbell Cameras
+          </h2>
+
+          <p>
+            This is general information, not legal advice, but it is worth taking seriously because doorbell cameras sit at the edge of private and public space. Recording video of your own porch and walkway is broadly accepted. Pointing a camera at a neighbor's window, or capturing a long stretch of the street, invites complaints and in some places legal trouble. Use the motion zone and privacy mask tools that most doorbells offer to trim the frame to your property.
+          </p>
+
+          <p>
+            Audio is the sharper issue. Laws on recording conversations differ by state, and some states require every party to consent. A doorbell that records audio from people standing on your step may be treated differently from one that only streams live two-way talk. Many apps let you switch off audio recording while leaving two-way talk available, and doing so is the cautious default if you are unsure of your local rules. Look up your state's rules or ask a local attorney.
+          </p>
+
+          <p>
+            Landlords, homeowner associations and condominium rules add another layer. Some leases forbid drilling into the door frame, which is where a battery doorbell with an adhesive or no-drill mount earns its keep. Some associations restrict visible cameras or require approval. Read the rules before you install, and keep the approval in writing, since a removal request after the fact costs you both the device and the time.
+          </p>
+
+          <p>
+            There is also a data-security side. A doorbell is an internet-connected camera, so use a unique password, turn on two-factor authentication in the app and keep the firmware updated. Be deliberate about sharing: many apps let you share clips with neighbors or with police, and the defaults vary. Review those settings once, at setup, rather than discovering later that video was shared more widely than you expected.
+          </p>
+        </div>
+
+        <div id="smart-home" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Smart-Home Compatibility: Alexa, Google Home and Apple Home
+          </h2>
+
+          <p>
+            A video doorbell lives or dies by the ecosystem around it. If your house already runs on Alexa, a Ring or other Alexa-compatible doorbell will announce visitors on Echo speakers and show live video on Echo Show displays. If you are in Google Home, a Nest doorbell is the natural fit, with announcements on Nest speakers and video on Nest displays. Apple households are better served by a doorbell that supports HomeKit Secure Video, which Aqara's G4 does, so video lives in iCloud and stays inside Apple's privacy model.
+          </p>
+
+          <p>
+            Cross-ecosystem support is patchier than the marketing suggests. Many doorbells advertise compatibility with all three major assistants, but the depth varies. One may announce a visitor on Alexa yet not stream video to a Google display, or support live view but not saved history in a rival app. Before you buy, read the compatibility section of the manufacturer's page for the specific assistant you use, and look at what exactly it lets you do rather than relying on a logo.
+          </p>
+
+          <p>
+            Automations are where a doorbell becomes useful beyond ringing. A press can turn on the porch light, a motion event at night can brighten the entry hall, and a package alert can trigger a notification on your watch. Those routines rely on a hub or assistant that the doorbell integrates with, and a few ecosystems expose far more triggers than others. If you want a deeper setup, check what events the doorbell exposes before you commit.
+          </p>
+
+          <p>
+            A doorbell also pairs naturally with the other entry-point upgrades. If you are already planning to improve your front door, our <a href="/home-improvement-ideas/" class="text-[#1E90FF] font-bold hover:underline">home improvement ideas guide</a> covers which small upgrades repay the effort, and our <a href="/best-smart-lock/" class="text-[#1E90FF] font-bold hover:underline">smart lock guide</a> shows how to let a trusted visitor in after you see them on camera. Buying both inside one ecosystem keeps the app count down and the automations simple.
+          </p>
+        </div>
+
+        <div id="deals" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. When to Buy: Deals Timing for Video Doorbells
+          </h2>
+
+          <p>
+            Video doorbells are among the most reliably discounted smart-home products, and the discounts follow a pattern. Major shopping events in the fall, particularly Prime Big Deal Days in October and the Black Friday and Cyber Monday stretch in late November, tend to bring the deepest cuts from the big brands. Early spring and the weeks around Amazon's own sales add smaller dips. We do not promise a given discount, since promotions vary by year and by model.
+          </p>
+
+          <p>
+            The smart way to shop a deal is to pick the doorbell first and then wait for a price, rather than letting a discount choose the doorbell. A sale on a model with the wrong power source or a plan you do not want is not a deal. Use the criteria in this guide to settle on a short list of two models, then watch both. A price-history tracker on the listing page helps you tell a real discount from an inflated list price.
+          </p>
+
+          <p>
+            Bundles are worth a look. Doorbells are often sold with a matching chime, a hub or a second camera at a lower combined price, and for a household that wants a chime kit anyway the bundle can beat buying separately. Be cautious about bundles that add accessories you will not use, though, and always compare the bundle total against the sum of the items bought individually.
+          </p>
+
+          <p>
+            Finally, check the return window. A doorbell is one of the products where fit problems, such as a transformer that is too weak or a chime that will not cooperate, show up only after you open the box. Buying from a retailer with an easy return policy turns a mismatch into a minor annoyance rather than a stuck purchase. If you use the Check Price links on this page, you will land on the current listing, where the live price, shipping date and return terms are shown.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying Before Checking Your Transformer</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A wired doorbell that does not get enough voltage will reboot, fail to charge or refuse to wake. Read the label on your transformer, compare it with the minimum on the manufacturer's support page, and replace the transformer first if it falls short. It is a small part and an inexpensive fix compared with returning the doorbell.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring the Subscription</h3>
+              <p class="text-gray-700 text-sm m-0">
+                The price on the box is not the price of ownership. If saved video, package alerts or person detection sit behind a monthly plan, add thirty-six months of that fee to the hardware cost before comparing models. A pricier doorbell with local storage can be the cheaper purchase over three years.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Choosing Resolution Over Field of View</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A 2K camera that cannot see the step still misses the package. Look at the aspect ratio and field of view first: a taller or wider frame that includes the ground will tell you more than extra megapixels on a narrow lens. Check the manufacturer's stated view before you order.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping Wi-Fi at the Door</h3>
+              <p class="text-gray-700 text-sm m-0">
+                The front door is often the farthest point from your router, and a weak signal produces delayed alerts and choppy video. Check the signal at the door with your phone before buying, and add a mesh node near the entry if the reading is poor.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Overlooking Privacy Rules</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Audio recording laws vary by state, and a camera aimed at a neighbor's window can create real problems. Trim the view with privacy zones, consider switching off audio recording, and read your lease or association rules before drilling. This is general guidance, so check your local rules.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best video doorbell overall?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most households the Ring Battery Video Doorbell Plus is the safest default because it runs on battery or wiring, offers a taller head-to-toe view and has the biggest accessory ecosystem. If you live in Google Home, the Nest Doorbell is the more natural fit, and if you want to avoid fees, the Eufy E340 deserves a close look.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do video doorbells require a subscription?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Not to work at a basic level. Most still send alerts and allow live view without a plan, but saving clips, longer history and smarter detection are often tied to a monthly or annual plan. Plan terms change, so check the current details on the manufacturer's page, or choose a model with local storage to avoid recurring fees.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a wired or battery doorbell better?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                If you have a working doorbell circuit, wired is better because it never needs charging. Battery models suit renters and homes without wiring, at the cost of periodic recharges. Hybrid models such as the Ring Battery Plus and the Nest Doorbell let you use house power with the battery as backup.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I install a video doorbell myself?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Usually yes. Battery models need only a few screws, and wired models need basic low-voltage work after you switch off the breaker. Check your transformer rating and chime compatibility first. If you are uncomfortable working near the transformer or panel, hire a licensed electrician for that part.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Will a video doorbell work with my existing chime?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Often, but not always. Mechanical chimes usually need a small power kit or adapter, and digital chimes can need a bypass. Most manufacturers publish a compatibility checker, and several include the kit in the box. Check the support page for your doorbell and your chime type before you order.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is it legal to record audio with a doorbell camera?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It depends on where you live. Some states require every party to a conversation to consent, and a recording of people on your step can be treated differently from a live two-way talk feature. Many apps let you turn audio recording off. This is general information, so check your state's rules or ask a local attorney.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">When is the best time to buy a video doorbell?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Doorbells are frequently discounted during October shopping events and around Black Friday and Cyber Monday, with smaller dips in spring. Pick your model first and then watch the price, rather than letting a sale choose the doorbell for you. Always check the return window in case the wiring or chime turns out to be incompatible.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Home Security &amp; Upgrade Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-home-security-cameras/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Home Security Cameras</h3>
+              <p class="text-gray-500 text-sm mt-2">Cover the rest of the property beyond the front door.</p>
+            </a>
+            <a href="/best-smart-lock/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Smart Locks</h3>
+              <p class="text-gray-500 text-sm mt-2">Let trusted visitors in after you see them on camera.</p>
+            </a>
+            <a href="/home-improvement-ideas/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#38BDF8] font-black text-xs uppercase tracking-widest mb-2">Ideas</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Home Improvement Ideas</h3>
+              <p class="text-gray-500 text-sm mt-2">Small upgrades that repay the effort at your front door and beyond.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The best video doorbell is the one that matches your wiring, your wallet and your ecosystem. Ring Battery Plus is the safe all-rounder, the Wired Plus is the low-maintenance owner's pick, the Nest Doorbell belongs in Google homes, Eufy keeps the monthly fee at zero, Arlo covers wide porches, Wyze keeps the budget low and Aqara serves Apple homes.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Whichever you choose, check the transformer, price the subscription over three years and test your Wi-Fi at the door before you buy. If you buy through our links we earn a commission at no extra cost to you, but the ranking would read the same either way.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Security" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

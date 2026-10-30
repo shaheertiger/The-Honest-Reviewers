@@ -1,0 +1,837 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Robot Vacuums",
+    "url": "/best-robot-vacuum/"
+  },
+  {
+    "title": "Are Robot Vacuums Worth It?",
+    "url": "/are-robot-vacuums-worth-it/"
+  },
+  {
+    "title": "Robot Vacuum vs Regular Vacuum",
+    "url": "/robot-vacuum-vs-regular-vacuum/"
+  },
+  {
+    "title": "Best Cordless Shop Vacs",
+    "url": "/best-cordless-shop-vac/"
+  },
+  {
+    "title": "Do Robot Vacuums Work on Pet Hair?",
+    "url": "/do-robot-vacuums-work-on-pet-hair/"
+  },
+  {
+    "title": "Best Air Purifier for Home",
+    "url": "/best-air-purifier-for-home/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-10-30", modified: "2026-10-30" });
+const title = "7 Best Cordless Vacuums in 2026: Ranked by Who Should Buy Which";
+const description =
+  "Seven cordless stick and handheld vacuums compared on runtime, battery replacement, filtration and pet hair, so you can pick the right one for your floors.";
+
+const PRODUCTS = [
+  {
+    "id": "dyson-v15-detect",
+    "name": "Dyson V15 Detect",
+    "category": "Premium Stick, Sensing",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "pros": [
+      "Laser illumination on the cleaner head makes fine dust on hard floors visible as you work",
+      "Piezo sensor counts and sizes particles and shows the result on an LCD screen",
+      "Sealed whole-machine filtration that Dyson describes as HEPA-grade",
+      "Click-in battery that can be replaced when it wears out",
+      "Wide attachment range, including a hair-removal option for pet-heavy homes"
+    ],
+    "cons": [
+      "Among the most expensive sticks you can buy",
+      "Quoted runtime applies to the lowest power mode; the highest mode drains the battery in a fraction of that time"
+    ],
+    "bottomLine": "The most complete cordless vacuum for a mixed home of hard floors, rugs and pets, if the price does not put you off.",
+    "description": "Dyson built the V15 Detect around the idea that you should be able to see what you are cleaning. The laser light on the head angles across a hard floor and picks out dust that overhead room lighting hides, and the piezo sensor on the dust path counts particles and adapts suction accordingly when you leave it in automatic mode. Dyson specifies a runtime of up to about an hour in its lowest setting, so treat the real-world figure in the higher modes as much shorter. The battery clicks in and out, which matters for long-term ownership. It is a premium machine with a premium price, and the sensing features will mean less to you if you mostly vacuum carpet. Confirm the exact head and tool bundle on the listing, since Dyson sells several variants."
+  },
+  {
+    "id": "shark-vertex",
+    "name": "Shark Vertex Cordless Vacuum",
+    "category": "Mid-Price Stick, Pet Hair",
+    "badge": "Best Value for Pet Hair",
+    "amazonUrl": "#",
+    "pros": [
+      "Self-cleaning brushroll designed to shed wrapped hair rather than collect it",
+      "DuoClean PowerFins head built to work on both carpet and hard floors",
+      "Lightweight stick format that Shark markets for whole-house cleaning",
+      "Typically priced well below the premium sticks",
+      "Wide availability of replacement filters and brushrolls"
+    ],
+    "cons": [
+      "Filtration and build feel are a step below the Dyson and Samsung options",
+      "Battery replacement varies by variant, so check before assuming it is swappable"
+    ],
+    "bottomLine": "The pick for pet owners who want hair handled automatically without paying flagship money.",
+    "description": "Shark has built its cordless range around the brushroll, because tangled hair is the complaint owners raise most often. The Vertex line pairs the DuoClean PowerFins head with a self-cleaning brushroll intended to strip hair off the roller as it spins, which means fewer sessions with scissors. It is a light stick that works well as a one-machine solution for a typical apartment or mid-size house, and Shark parts are easy to find. Shark sells many near-identical Vertex variants with different batteries, tool kits and bins, so compare the model number on the listing rather than assuming one review covers them all. Expect good everyday performance rather than premium finish or laboratory-grade filtration."
+  },
+  {
+    "id": "samsung-bespoke-jet",
+    "name": "Samsung Bespoke Jet Cordless Stick Vacuum with Clean Station",
+    "category": "Premium Stick, Self-Emptying",
+    "badge": "Best Self-Emptying",
+    "amazonUrl": "#",
+    "pros": [
+      "Clean Station dock that Samsung designed to empty the bin automatically",
+      "Removable battery that can be swapped or replaced",
+      "Multi-layer filtration marketed for fine-dust capture",
+      "Digital display showing mode and battery status",
+      "Fewer trips to the bin, which helps owners with allergies"
+    ],
+    "cons": [
+      "The dock takes extra floor or wall space compared with a simple wall mount",
+      "Dock bags or collection bins are an ongoing consumable to account for"
+    ],
+    "bottomLine": "The best choice if emptying the bin is the part of vacuuming you dislike most.",
+    "description": "The Bespoke Jet is Samsung’s answer to the dust cloud that rises every time you empty a stick vacuum. Its Clean Station is intended to pull the contents of the bin into a sealed bag or compartment automatically when you dock the machine, so you handle far less loose dust. The battery is removable, and Samsung pitches the filtration as multi-stage. The trade-off is a dock that needs room and an upfront cost above basic sticks. For allergy sufferers who struggle with bin emptying, or anyone who simply wants less mess, it is a strong case. Models differ by region and year, so check the exact variant and what is included in the box."
+  },
+  {
+    "id": "tineco-pure-one-s11",
+    "name": "Tineco Pure ONE S11",
+    "category": "Smart-Sensor Stick",
+    "badge": "Best Smart Sensing Under Premium",
+    "amazonUrl": "#",
+    "pros": [
+      "iLoop sensor that adjusts suction automatically to the dirt it detects",
+      "Clear display showing battery and cleaning status",
+      "Removable battery for easier long-term ownership",
+      "Brushroll built for carpet and hard floor use",
+      "Often priced below the Dyson while offering a similar sensing idea"
+    ],
+    "cons": [
+      "The automatic mode can run at higher power than needed, which shortens runtime",
+      "Bin is relatively small, so large rooms mean more emptying"
+    ],
+    "bottomLine": "A good compromise for shoppers who want sensing features without paying flagship prices.",
+    "description": "Tineco’s Pure ONE S11 brings an automatic mode to a lower price tier than Dyson’s sensing sticks. The iLoop sensor watches how much dirt is passing through and nudges suction up or down so you can leave it on auto and clean. A display shows what the machine is doing, and the battery is removable. Owners commonly report that auto mode spends a good deal of time on higher settings, so budget runtime accordingly or use a fixed mode for light jobs. It works across carpet and hard floors, and it is a reasonable first step into the smart-stick category. Tineco sells several Pure ONE models, so confirm the model you are buying."
+  },
+  {
+    "id": "eufy-homevac-s11-go",
+    "name": "Eufy HomeVac S11 Go",
+    "category": "Budget-Friendly Stick",
+    "badge": "Best Budget Pick",
+    "amazonUrl": "#",
+    "pros": [
+      "A low entry price for a full-size cordless stick",
+      "Detachable design that converts to a handheld",
+      "LED display for mode and battery information",
+      "Removable battery for easier replacement",
+      "Comfortable weight for a quick daily clean"
+    ],
+    "cons": [
+      "Filtration is not at the level of the premium sticks",
+      "Not suited to deep-cleaning thick carpet in a large home"
+    ],
+    "bottomLine": "The right cordless for a small home, a second floor or a first purchase where cost matters most.",
+    "description": "Eufy, known for its robot vacuums, sells the HomeVac S11 Go as a no-nonsense, affordable cordless stick. It converts to a handheld for stairs, upholstery and cars, shows its mode on a small display, and uses a removable battery. It will not match a flagship on carpet depth or filtration, and owners with big houses or heavy pet shedding will likely outgrow it. But for hard floors, light carpet and routine daily pickups, it covers the essentials at a sensible cost. As with every brand here, check the specific listing for current runtime and accessory details."
+  },
+  {
+    "id": "roborock-dyad-pro",
+    "name": "Roborock Dyad Pro Wet-Dry Vacuum",
+    "category": "Cordless Wet-Dry",
+    "badge": "Best for Hard Floors and Spills",
+    "amazonUrl": "#",
+    "pros": [
+      "Vacuums and mops in one pass on sealed hard floors",
+      "Self-cleaning dock and separate clean and dirty water tanks",
+      "Handles wet messes that a dry stick would smear",
+      "Self-propelled design reduces pushing effort",
+      "Good fit for homes that are mostly tile, vinyl or laminate"
+    ],
+    "cons": [
+      "A hard-floor tool: it is not meant to replace a vacuum on carpet or rugs",
+      "Larger and heavier than a conventional stick, with water to fill and empty"
+    ],
+    "bottomLine": "Choose it as the hard-floor machine in a home that already has a lightweight stick or robot for carpet.",
+    "description": "The Dyad Pro is a different animal from the other sticks here. It is a cordless wet-dry cleaner that picks up dry debris and wet spills while mopping the floor in the same pass, then cleans its own roller at the dock. For tile, vinyl, sealed wood and laminate homes, especially those with kids and pets, it changes the routine of vacuum-then-mop into a single trip. It is not a carpet machine, and it asks you to manage clean and dirty water tanks. Roborock sells related Dyad variants, so verify the model and what it is rated for on your flooring."
+  },
+  {
+    "id": "bissell-pet-hair-eraser-hand-vac",
+    "name": "Bissell Pet Hair Eraser Cordless Hand Vacuum",
+    "category": "Handheld, Pet Hair",
+    "badge": "Best Handheld for Pets",
+    "amazonUrl": "#",
+    "pros": [
+      "Compact handheld that suits couches, stairs, car seats and pet beds",
+      "Motorized tool designed to lift pet hair from upholstery",
+      "Lightweight enough to hang on a hook and grab for quick messes",
+      "Costs far less than a full stick",
+      "Washable filter that cuts running costs"
+    ],
+    "cons": [
+      "A supplement to a main vacuum, not a replacement for one",
+      "Small dust bin and short runtime compared with a full stick"
+    ],
+    "bottomLine": "A low-cost add-on for pet owners whose main frustration is hair on furniture and in the car.",
+    "description": "Not everyone needs a full stick vacuum, and plenty of households just want something light for the sofa, the stairs and the back seat. Bissell’s Pet Hair Eraser hand vacuum is built for that job, with a motorized upholstery tool aimed at pet hair and a washable filter that saves on replacements. It is a supplement rather than a main vacuum, because the bin is small and the runtime short, but for sofa and car duty it is difficult to beat on cost. Bissell sells several similarly named versions, so check the exact model and what tools come with it."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Cordless Vacuums",
+          item: "https://www.thehonestreviewers.com/best-cordless-vacuum/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "How long do cordless vacuums last?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The motor usually outlasts the battery. Owners commonly report that lithium-ion packs lose noticeable capacity after a few years of regular use. With a removable battery and cleaned filters, a good cordless can run for many years, whereas a built-in battery often sets the machine's practical lifespan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a cordless vacuum as powerful as a corded one?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On paper, corded uprights often deliver more sustained suction for the price because they are not limited by a battery. Modern cordless sticks come close for everyday cleaning, especially in boost mode, but they cannot match unlimited runtime. For small and medium homes, the convenience usually outweighs the difference."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often should I replace the filter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Follow the manufacturer's guidance, which for most washable filters means rinsing roughly once a month and replacing every year or so, depending on use. If suction drops or the machine smells musty, check the filter first, and always let it dry completely before refitting."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which cordless vacuum is best for pet hair?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Look for an anti-tangle brushroll, a sealed filter and a bin large enough for your home. The Shark Vertex and Dyson V15 Detect are strong candidates, and a small handheld such as the Bissell is useful for furniture. Confirm each model's current specifications before you buy."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can a cordless vacuum replace a robot vacuum?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They do different jobs. A robot maintains floors day to day while you are out, but it struggles with stairs, edges and deep carpet. A cordless stick handles those jobs. Many homes use both, and our comparison of the two explains how to divide the cleaning between them."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are expensive cordless vacuums worth it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on your home. Premium sticks add sensing, better filtration, longer-lasting batteries and better build quality, which matter for allergies, pets and heavy use. For a small apartment with mostly hard floors, a mid-range or budget stick often does the job just as well at a lower cost."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use a cordless vacuum on wet spills?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most cordless stick vacuums are dry-only, and water can damage the motor and battery. If you regularly deal with spills, choose a machine designed for wet and dry use, such as the Roborock Dyad Pro, or use a wet-capable shop vacuum. Check the manual for what your model supports."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home Appliances",
+    tags: [
+      "best cordless vacuum",
+      "cordless vacuum",
+      "cordless stick vacuum",
+      "best cordless vacuum for pet hair",
+      "cordless vacuum cleaner"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Buyer's Guide 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best Cordless <span class="text-[#38BDF8]">Vacuums</span> for Every Home
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Seven cordless vacuums worth shortlisting, with a plain-English guide to runtime, batteries, filtration and pet hair.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#dyson-v15-detect"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Jump to the Buying Guide
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Shaheer Ali Khan</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Consumer Product Testing &amp; Materials Performance Specialist</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="19.4k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#buying-guide" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Cordless Vacuum Buying Guide</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Our 7 Top Picks Reviewed</a>
+          <a href="#runtime-power" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Runtime vs Power</a>
+          <a href="#batteries" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Batteries</a>
+          <a href="#suction-filtration" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Suction & Filtration</a>
+          <a href="#pet-hair-floors" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Pet Hair & Floors</a>
+          <a href="#weight-bin-attachments" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Weight, Bin & Attachments</a>
+          <a href="#cordless-vs-others" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Cordless vs Other Vacuums</a>
+          <a href="#cost-ownership" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Cost of Ownership</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          A cordless vacuum is the cleaning tool most households reach for every day, which makes the wrong one an expensive daily irritation. The right pick depends less on the biggest suction number and more on the runtime you get in the mode you will use, a battery you can replace, filtration that suits your home, and a weight your wrist tolerates. Here are seven we would shortlist, and how to choose between them.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="buying-guide" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. Cordless Vacuum Buying Guide: What Actually Matters
+          </h2>
+
+          <p>
+            Most people shop for a cordless vacuum by comparing suction numbers, and that is the least useful place to start. Suction ratings are measured under conditions that rarely match your living room, they are quoted in different units by different brands, and they say nothing about whether the machine will still be running when you reach the back bedroom. A better shortlist begins with four questions: what floors you have, whether you have pets, how large the space is, and who will be pushing the machine.
+          </p>
+
+          <p>
+            Floor type decides the head you want. A soft roller suits hard floors and picks up fine dust without scattering it, while a bristle brushroll agitates carpet fibres to release embedded dirt. Dual-purpose heads try to do both, and the best of them manage reasonably well on a mixed home. If you have mostly hard floors, a lighter machine with a soft roller is likely to serve you better than a heavy carpet-focused one.
+          </p>
+
+          <p>
+            Home size and clutter shape the battery question. A small flat or a single floor can be done on one charge in a mid power mode, while a two-storey house with several rugs may push a battery past its limits. Consider whether you will clean in one session or in short bursts, because a vacuum on a wall dock that you grab for two minutes at a time has very different requirements from one you use once a week.
+          </p>
+
+          <p>
+            Finally, think about the people. Weight, trigger style and balance matter more over a year of use than any spec on the box. A machine that is slightly less powerful but that you actually enjoy picking up will clean more often and get your floors cleaner than a powerful one that lives in the closet. Keep those four questions in mind as you read the picks below, and use the later sections to dig into each trade-off.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. The 7 Best Cordless Vacuums in 2026, Ranked by Who They Suit
+          </h2>
+
+          <p>
+            These are the seven cordless vacuums we would shortlist, chosen from manufacturer specifications and the pattern of what owners commonly report, not from bench tests of our own. Specs change between model years, so confirm the details on the current listing before you buy. The Check Price buttons are affiliate links: if you purchase through them we earn a commission at no extra cost to you, and it never changes which products make the list.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="runtime-power" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Runtime vs Power: Why the Headline Minutes Mislead
+          </h2>
+
+          <p>
+            Every cordless vacuum lists a runtime, and every one of those numbers needs a footnote. Manufacturers generally quote the longest figure, which applies to the lowest power setting with a non-motorized tool attached. The moment you switch to the highest mode, or fit the motorized floor head, the battery drains far faster, often in a fraction of the headline number. The honest way to read a spec sheet is to look for the runtime listed for each mode separately.
+          </p>
+
+          <p>
+            That is why the mode you will really use matters more than the maximum. Most households clean on a mid setting for routine floors and boost the power only for carpet, stairs and sticky spots. If a vacuum offers a decent runtime in its mid mode with the motorized head fitted, it will behave much more like the marketing suggests than one that only looks good on the lowest setting.
+          </p>
+
+          <p>
+            Automatic modes complicate the picture. Machines with sensors raise or lower power based on the dirt they detect, which is convenient, but owners commonly report that auto mode leans toward higher power than you would pick yourself. If you notice the battery draining quickly, try a fixed mode for light jobs and keep auto for the occasional heavy session.
+          </p>
+
+          <p>
+            Charge time is the other half of the equation. A machine that takes several hours to refill is fine overnight but frustrating if you want to finish a second room an hour later. Look for a model whose battery is removable, so that a spare can be charged while you work, which is the only truly reliable way to extend the time you can clean in one go.
+          </p>
+        </div>
+
+        <div id="batteries" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Batteries: Replaceable, Swappable or Throwaway
+          </h2>
+
+          <p>
+            The battery is the part of a cordless vacuum that wears out first, and how a manufacturer handles it tells you a lot about the product's real lifespan. Lithium-ion packs lose capacity over hundreds of charge cycles, and after a few years the runtime that impressed you in the shop can fall noticeably. The question is not whether the battery will degrade but whether you can replace it cheaply when it does.
+          </p>
+
+          <p>
+            A removable battery changes the ownership equation. You can buy a replacement for a fraction of the cost of a new vacuum, swap in a spare to extend a session, and keep a still-working motor out of the landfill. Several machines on our list, including the Dyson, Samsung and Tineco models, are designed so the battery can be removed by the owner, though you should confirm that for the exact variant you buy.
+          </p>
+
+          <p>
+            Some cheaper cordless vacuums build the battery in. That keeps the price and weight down, but when the pack dies the whole machine may be at the end of its useful life, or you may be looking at a repair that costs more than it saves. If you are tempted by a built-in battery, treat the purchase as a few years of use and not a decade.
+          </p>
+
+          <p>
+            Take care with third-party replacement packs. Some are fine, but the quality varies widely, and a poorly made pack can have worse runtime or safety characteristics than the original. Where possible, buy replacements from the brand or a reputable seller, store the vacuum at room temperature, and avoid leaving a fully drained battery sitting for months, since that wears it out faster.
+          </p>
+        </div>
+
+        <div id="suction-filtration" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Suction, Filtration and Allergies
+          </h2>
+
+          <p>
+            Suction gets the headlines, but filtration decides what happens to the dust once it is inside. A vacuum that picks up fine particles and then blows them back out of the exhaust is no better than a broom for someone with allergies. The key is a sealed system, which means air can only leave the machine through the filter, not through gaps in the casing.
+          </p>
+
+          <p>
+            The term HEPA is used loosely in marketing. A true HEPA filter is defined by capturing at least 99.97 percent of particles at 0.3 microns under standardised conditions, while phrases like HEPA-type or HEPA-style do not carry the same guarantee. If allergies drive your purchase, look for a sealed whole-machine design and a filter that the manufacturer describes with specific language, and read the fine print about which parts are covered.
+          </p>
+
+          <p>
+            Filters need care. Most are washable or replaceable, and a clogged one makes the vacuum sound strained, lose suction and sometimes cut out as the motor overheats. A monthly rinse, following the maker's instructions and making sure the filter is fully dry before you refit it, is among the cheapest ways to keep a cordless performing as it did when new.
+          </p>
+
+          <p>
+            Emptying the bin is where many people re-release the dust they just collected. Machines with a bottom-opening bin and a trigger that dumps the contents in one go reduce the cloud, and a self-emptying dock like Samsung's takes the problem away almost entirely. If you also run an air cleaner, our guide to the <a href="/best-air-purifier-for-home/" class="text-[#1E90FF] font-bold hover:underline">best air purifiers for home</a> covers the other half of keeping indoor dust down.
+          </p>
+        </div>
+
+        <div id="pet-hair-floors" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Pet Hair, Carpet and Hard Floors
+          </h2>
+
+          <p>
+            Pet hair is the single hardest test for a cordless vacuum, because it wraps around brushrolls, clogs small bins and clings to fabric. Machines designed for it use anti-tangle approaches: combs that cut hair away from the roller, soft rollers that do not grab it, or self-cleaning brushrolls that strip it off as they spin. If you share a home with a long-haired dog or a shedding cat, prioritise one of these designs above any raw suction figure.
+          </p>
+
+          <p>
+            Carpet and rugs need agitation. A brushroll with stiff bristles lifts dirt out of the pile, and the suction then carries it away. Thick carpet pushes a battery hard, so expect shorter runtime and use a higher mode only where necessary. A machine that is excellent on hard floors can feel underpowered on deep pile, and the reverse is true of heavy carpet-first designs.
+          </p>
+
+          <p>
+            Hard floors have their own risks. A stiff brush can scatter fine dust or scratch delicate finishes, whereas a soft roller makes contact all across the head and picks up fine particles and larger crumbs together. Lighting helps too. The laser head on the Dyson V15 Detect is built for exactly this, because it throws a beam of light across the floor that makes dust you would otherwise miss show up.
+          </p>
+
+          <p>
+            For homes with mostly hard floors and young children, a wet-dry machine like the Roborock Dyad Pro folds the mopping step into the routine. For a house full of pets, a stick with strong anti-tangle design plus a small handheld such as the Bissell for sofas and car seats is a practical pairing. Our guide on whether <a href="/do-robot-vacuums-work-on-pet-hair/" class="text-[#1E90FF] font-bold hover:underline">robot vacuums work on pet hair</a> is worth a read if you are weighing a robot for the daily maintenance.
+          </p>
+        </div>
+
+        <div id="weight-bin-attachments" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Weight, Bin Size, Attachments and Storage
+          </h2>
+
+          <p>
+            Most stick vacuums fall somewhere between about five and eight pounds in their full configuration, but where the weight sits matters as much as the total. A motor mounted in the handle puts the load in your wrist, while a design with the motor closer to the head can feel lighter in use even if it weighs the same on the scale. If possible, pick one up in a shop and hold it at arm's length for a few seconds before you decide.
+          </p>
+
+          <p>
+            Bin size is a trade-off between weight and convenience. A small bin keeps the machine light and balanced but needs emptying several times in a large house, while a bigger one reduces trips at the cost of bulk. Pet owners and anyone with a big home will usually prefer the larger bin, whereas apartment dwellers can happily live with a small one.
+          </p>
+
+          <p>
+            Attachments are where a stick becomes more than a floor cleaner. A crevice tool reaches the edges of rooms and car seats, a dusting brush clears shelves and vents, and a motorized mini head handles stairs and upholstery. Look at what is in the box, because some brands include everything while others sell the useful tools separately, which can erase an apparent price advantage.
+          </p>
+
+          <p>
+            Storage is the part people forget. A wall dock keeps the machine charged and ready, which makes you far more likely to use it for quick cleans. Check that the dock mounts where you actually want it, whether it needs a stud or a free-standing base, and whether there is room for the attachments. A vacuum you have to dig out of a cupboard tends to get used less.
+          </p>
+        </div>
+
+        <div id="cordless-vs-others" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Cordless vs Robot, Corded and Shop Vacuums
+          </h2>
+
+          <p>
+            A cordless stick is a convenience tool, not always the strongest cleaner for every job. Corded uprights still deliver unlimited runtime and often more raw suction for the money, which is why they remain popular in large, carpeted homes. If you clean a big house in one go and prefer never to think about a battery, it is worth comparing a good corded model before you commit.
+          </p>
+
+          <p>
+            Robot vacuums solve a different problem: the daily upkeep. They run while you are out and keep floors from building up dirt, but they are not a substitute for a human with a stick vacuum when it comes to stairs, corners, furniture and deep carpet. Many households end up with both, and our comparison of a <a href="/robot-vacuum-vs-regular-vacuum/" class="text-[#1E90FF] font-bold hover:underline">robot vacuum versus a regular vacuum</a> explains how to split the work between them, while <a href="/best-robot-vacuum/" class="text-[#1E90FF] font-bold hover:underline">our robot vacuum guide</a> covers the models worth considering.
+          </p>
+
+          <p>
+            Then there is the shop vacuum, which is built for workshops, garages and wet or messy jobs rather than living rooms. If your needs lean towards sawdust, construction debris or spills, the <a href="/best-cordless-shop-vac/" class="text-[#1E90FF] font-bold hover:underline">best cordless shop vacs</a> are far better tools than a household stick, and our explainer on <a href="/shop-vac-vs-regular-vacuum/" class="text-[#1E90FF] font-bold hover:underline">shop vac versus regular vacuum</a> shows where the line falls.
+          </p>
+
+          <p>
+            The honest conclusion is that cordless sticks win on speed and convenience. They are the machine you will use most because they are always ready, light enough for stairs, and quick enough that you will reach for them after every spill instead of waiting for the weekend. That habit, more than any specification, is why people who switch rarely go back.
+          </p>
+        </div>
+
+        <div id="cost-ownership" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Cost of Ownership and When to Buy
+          </h2>
+
+          <p>
+            The purchase price is only part of what a cordless vacuum costs. Filters, brushrolls and bags or dock bins need replacing periodically, and a battery will probably need replacing once during the machine's life. A cheaper model with an expensive proprietary battery or hard-to-find parts can end up costing more than a pricier one with cheap, widely available consumables.
+          </p>
+
+          <p>
+            Warranty and parts availability deserve a look. Brands that sell spare batteries, filters and tools directly, and that publish a clear warranty, are easier to live with than ones where you have to chase third-party sellers. Check what the warranty covers for the battery in particular, since that is the component most likely to fail first.
+          </p>
+
+          <p>
+            Timing helps. Cordless vacuums are among the products that retailers discount heavily during major sale events and around the end of a model year, when a newer variant arrives and the older one is cleared. Because brands release many near-identical versions, a discounted older model can be an excellent buy, provided it still has the features you need. Compare model numbers rather than names.
+          </p>
+
+          <p>
+            Finally, resist paying for features you will not use. A flagship with sensors, a display and a docking station is wonderful for the right household, but a simple, light stick with a good brushroll and replaceable battery will serve many homes just as well. Match the machine to your floors, your pets and your patience for maintenance, and the right price follows.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying on suction numbers alone</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Suction ratings use different units and conditions across brands, and they say nothing about runtime, filtration or hair handling. Compare runtime per mode, the head design and the filter instead, and treat the biggest number on the box as marketing rather than a buying guide.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Trusting the maximum runtime figure</h3>
+              <p class="text-gray-700 text-sm m-0">
+                The longest quoted runtime usually applies to the lowest power setting without a motorized head. Look for the figure in the mode you will actually use, and expect much less on the highest setting or with the floor head fitted on thick carpet.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring battery replacement</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A built-in battery can turn a working vacuum into scrap in a few years. Confirm whether the pack is removable and whether a replacement is sold at a sensible price, and treat a non-removable battery as a shorter-lifespan purchase.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping filter and brushroll maintenance</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Clogged filters and wrapped brushrolls are the usual reason a vacuum seems to have lost power. Rinse washable filters on a schedule, let them dry fully, and clear the brushroll regularly, which costs nothing and often restores performance.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Expecting one machine to do every job</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A stick is great for daily floors and stairs but less so for large carpeted homes, wet spills or workshop debris. Pair it with a handheld, a robot or a wet-dry machine where needed, and do not force a single tool to cover everything.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long do cordless vacuums last?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                The motor usually outlasts the battery. Owners commonly report that lithium-ion packs lose noticeable capacity after a few years of regular use. With a removable battery and cleaned filters, a good cordless can run for many years, whereas a built-in battery often sets the machine's practical lifespan.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a cordless vacuum as powerful as a corded one?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                On paper, corded uprights often deliver more sustained suction for the price because they are not limited by a battery. Modern cordless sticks come close for everyday cleaning, especially in boost mode, but they cannot match unlimited runtime. For small and medium homes, the convenience usually outweighs the difference.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How often should I replace the filter?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Follow the manufacturer's guidance, which for most washable filters means rinsing roughly once a month and replacing every year or so, depending on use. If suction drops or the machine smells musty, check the filter first, and always let it dry completely before refitting.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Which cordless vacuum is best for pet hair?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Look for an anti-tangle brushroll, a sealed filter and a bin large enough for your home. The Shark Vertex and Dyson V15 Detect are strong candidates, and a small handheld such as the Bissell is useful for furniture. Confirm each model's current specifications before you buy.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can a cordless vacuum replace a robot vacuum?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                They do different jobs. A robot maintains floors day to day while you are out, but it struggles with stairs, edges and deep carpet. A cordless stick handles those jobs. Many homes use both, and our comparison of the two explains how to divide the cleaning between them.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are expensive cordless vacuums worth it?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It depends on your home. Premium sticks add sensing, better filtration, longer-lasting batteries and better build quality, which matter for allergies, pets and heavy use. For a small apartment with mostly hard floors, a mid-range or budget stick often does the job just as well at a lower cost.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I use a cordless vacuum on wet spills?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Most cordless stick vacuums are dry-only, and water can damage the motor and battery. If you regularly deal with spills, choose a machine designed for wet and dry use, such as the Roborock Dyad Pro, or use a wet-capable shop vacuum. Check the manual for what your model supports.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Vacuum Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-robot-vacuum/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Robot Vacuums</h3>
+              <p class="text-gray-500 text-sm mt-2">Hands-off daily floor care for hard floors and light carpet.</p>
+            </a>
+            <a href="/are-robot-vacuums-worth-it/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Are Robot Vacuums Worth It?</h3>
+              <p class="text-gray-500 text-sm mt-2">What a robot does well, what it cannot do, and who should skip one.</p>
+            </a>
+            <a href="/best-cordless-shop-vac/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Cordless Shop Vacs</h3>
+              <p class="text-gray-500 text-sm mt-2">Battery-powered wet-dry vacuums for the garage and workshop.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The best cordless vacuum is the one that fits your floors, your pets and your habits. Choose the Dyson V15 Detect if you want the most complete machine, the Shark Vertex for pet hair on a budget, the Samsung Bespoke Jet if emptying the bin is what you hate, and the Eufy or Bissell where cost matters most.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Whatever you buy, check that the battery is replaceable, read the runtime for the mode you will actually use, and keep the filter clean. Those three habits matter more to long-term satisfaction than any suction rating on the box.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Appliances" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
