@@ -6,6 +6,17 @@ import sitemap from '@astrojs/sitemap';
 // Buyer's guides that target high-volume search terms. They get a higher
 // sitemap priority than the 0.5 default so crawlers reach them sooner.
 const priorityGuides = new Set([
+  // November 2026: AI-topic opportunity queries with no page.
+  'best-steam-cleaner',
+  'best-crimping-tool',
+  'best-concrete-mixer',
+  'best-garden-tools',
+  'best-watering-can',
+  'best-spin-mop',
+  'best-adhesive-remover',
+  'best-paint-thinner',
+  'best-clothes-iron',
+  'best-dish-soap',
   // October 2026: legacy-domain keywords with no page (sealers, sand, doors, Tekton).
   'armor-ar350-vs-ar500',
   'should-you-seal-concrete',

@@ -1,0 +1,932 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Watering Cans",
+    "url": "/best-watering-can/"
+  },
+  {
+    "title": "Best Garden Hose Nozzles",
+    "url": "/best-garden-hose-nozzle/"
+  },
+  {
+    "title": "Best Hose Reels",
+    "url": "/best-hose-reel/"
+  },
+  {
+    "title": "Best Lawn Edgers",
+    "url": "/best-lawn-edger/"
+  },
+  {
+    "title": "Best Weed Eaters",
+    "url": "/best-weed-eater/"
+  },
+  {
+    "title": "Best Lawn Aerators",
+    "url": "/best-lawn-aerator/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-11-02", modified: "2026-11-02" });
+const title = "7 Best Garden Tools in 2026: The Starter Kit Worth Buying";
+const description =
+  "The seven gardening tools worth buying individually, from the Felco 2 pruner to a forged trowel, plus why sets disappoint, forged vs stamped, and bypass vs anvil";
+
+const PRODUCTS = [
+  {
+    "id": "felco-2",
+    "name": "Felco 2 Classic Bypass Pruner",
+    "category": "Bypass Hand Pruner, Forged Aluminum Handles",
+    "badge": "Best Overall Pruner",
+    "amazonUrl": "#",
+    "pros": [
+      "Swiss-made with forged aluminum handles and a hardened steel blade, per Felco",
+      "Rated to cut branches up to 1 inch (25 mm) in diameter",
+      "Every part, from blade to spring to shock absorber, can be replaced",
+      "Rubber cushion and shock absorber soften the end of each cut",
+      "Lifetime warranty on the forged aluminum handles"
+    ],
+    "cons": [
+      "Right-handed and sized for larger hands; Felco makes other models for small or left hands",
+      "Blades, springs and grips are not covered by the lifetime warranty"
+    ],
+    "bottomLine": "The pruner to buy once: precise, repairable and backed by decades of owner history, as long as it fits your hand.",
+    "description": "The Felco 2 has been the reference bypass pruner for professional growers and serious gardeners for generations, and the reasons are easy to check. Felco specifies forged aluminum handles and a hardened steel blade, a 1-inch cutting capacity, and an overall length of about 8.5 inches, and the maker lists a net weight of roughly 250 grams. What sets it apart from cheaper pruners is serviceability: the blade, counter-blade, spring, bolt and shock absorber are all sold as spare parts, so a Felco 2 that is worn out after years of use can be rebuilt rather than replaced. A rubber cushion and shock absorber soften the snap at the end of each cut, which owners commonly say makes long pruning sessions easier on the wrist. Felco's lifetime warranty covers the forged handles, while blades, springs and grips are treated as consumables. The main caveat is fit. This is a right-handed tool sized for medium to large hands, and if the open handles feel like a stretch, a smaller Felco model will serve you better than forcing this one."
+  },
+  {
+    "id": "corona-bp-3180",
+    "name": "Corona ClassicCUT BP 3180 Bypass Pruner",
+    "category": "Bypass Hand Pruner, Forged Steel",
+    "badge": "Best Budget Pruner",
+    "amazonUrl": "#",
+    "pros": [
+      "Forged steel body at a fraction of the price of premium Swiss pruners",
+      "Rated for a 1-inch cutting capacity",
+      "Replaceable, resharpenable bypass blade",
+      "Limited lifetime warranty from Corona",
+      "Sold widely in hardware and garden stores"
+    ],
+    "cons": [
+      "Sized for medium to large hands",
+      "Easy to confuse with the smaller 3/4-inch BP 3160; check the model number"
+    ],
+    "bottomLine": "The best way to get a forged, serviceable bypass pruner without paying Felco prices.",
+    "description": "The Corona ClassicCUT BP 3180 is the budget pick because it keeps the features that matter and drops only the refinements. The body is forged steel, it is rated for branches up to 1 inch in diameter, and the bypass blade is both resharpenable and replaceable, so you are not throwing the tool away when the edge wears. Corona backs it with a limited lifetime warranty. Compared with the Felco 2, it is heavier and less refined in its spring and latch, and it lacks the shock absorber, but on the core job of making clean cuts in live wood it holds up well, which is why it shows up so often in landscapers' belt holsters. Corona describes it as suited to medium to large hands. One buying note: the BP 3160 looks almost identical but is rated for only 3/4 inch, and owners sometimes report receiving the wrong model, so confirm the number on the listing. Buy from an authorized seller, as counterfeit listings have been reported."
+  },
+  {
+    "id": "barebones-hori-hori",
+    "name": "Barebones Hori Hori Classic",
+    "category": "Japanese-Style Garden Knife, Stainless Steel",
+    "badge": "Best Multi-Tool",
+    "amazonUrl": "#",
+    "pros": [
+      "About 6.75-inch double-edged blade: one straight edge, one serrated",
+      "4Cr13 stainless steel resists rust and sheds clay",
+      "Full tang construction with a walnut handle",
+      "Depth markings on the blade for planting bulbs",
+      "Twine cutter built into the blade"
+    ],
+    "cons": [
+      "Stainless edge dulls faster than carbon steel",
+      "Sheath inclusion varies by listing, so check before buying"
+    ],
+    "bottomLine": "The one hand tool most gardeners end up using more than the trowel: it digs, cuts, saws roots and weeds.",
+    "description": "A hori-hori is a Japanese digging knife with a concave, pointed blade, and once gardeners own one, many find it replaces half of their hand tools. Barebones' Classic version uses a stainless steel blade, listed at about 6.75 inches, made of 4Cr13, with one straight edge and one serrated edge, full tang construction and a walnut handle. In practice that means one tool for digging planting holes, slicing open bags and root balls, sawing through roots, cutting twine and levering out tap-rooted weeds like dandelions. The blade carries depth markings, handy when a bulb packet says to plant at 6 inches. Stainless is a sensible choice for a tool that will be left in damp soil, since it resists rust better than carbon steel, but it is softer, so plan on touching up the edge with a file or stone. Barebones sells several variants, including the Ultimate with a black finish, and specs and included accessories vary by model, so check the model number and whether a sheath is included."
+  },
+  {
+    "id": "dewit-forged-trowel",
+    "name": "DeWit Forged Hand Trowel",
+    "category": "Hand Trowel, Forged Boron Steel",
+    "badge": "Best Trowel",
+    "amazonUrl": "#",
+    "pros": [
+      "Hand-forged from heat-treated boron steel, per DeWit's retailers",
+      "FSC-certified European ash handle",
+      "Thin edge and thick neck, the forged profile that resists bending",
+      "Head about 6 inches long and 3 inches wide, roughly 12 inches overall",
+      "Holds a sharp edge that can be filed back"
+    ],
+    "cons": [
+      "Carbon-based steel needs drying and an occasional oil to prevent rust",
+      "Costs several times more than a stamped trowel"
+    ],
+    "bottomLine": "A trowel that will not fold at the neck, from a Dutch maker that has forged hand tools for generations.",
+    "description": "The trowel is the tool cheap sets get most wrong, and the DeWit Forged Hand Trowel is the clearest illustration of the alternative. DeWit forges the head from boron steel, a hardenable carbon steel alloy, and heat-treats it, so the blade can be thin and sharp at the edge while staying thick at the neck where stamped trowels bend. Retailers list the head at roughly 6.3 by 3 inches with an overall length of about 12 inches and a weight around half a pound, on a handle of FSC-certified European ash. The result slices through compacted soil and fibrous roots instead of skating over them, and it scoops enough soil to make potting and filling containers quick. DeWit also makes a smaller trowel and a narrower transplanting trowel if you work mostly in tight beds or containers. Because boron steel is not stainless, wipe the blade and let it dry after use, and rub a little oil into the steel and ash a couple of times a season."
+  },
+  {
+    "id": "radius-root-slayer",
+    "name": "Radius Garden Root Slayer Shovel",
+    "category": "Digging Shovel, Serrated Carbon Steel",
+    "badge": "Best Digging Shovel",
+    "amazonUrl": "#",
+    "pros": [
+      "Serrated carbon steel edges saw through roots",
+      "Patented O-handle grip works with either hand and at different angles",
+      "About 44.5 inches overall, with a 31.5-inch handle",
+      "Lifetime warranty for residential use, per Radius",
+      "XL version available with a longer shaft"
+    ],
+    "cons": [
+      "Shorter than a traditional long-handled shovel, which can mean more bending for tall users",
+      "Warranty excludes commercial use and abuse"
+    ],
+    "bottomLine": "The shovel to buy if your digging means roots, sod and compacted soil rather than scooping mulch.",
+    "description": "Digging in an established yard is mostly a fight with roots, and the Radius Root Slayer is designed for exactly that fight. Its carbon steel blade has saw-tooth serrations along the edges, so when you hit a root you can work the shovel back and forth to cut through it rather than hunting for a way around. Radius pairs the blade with its patented O-handle, a large loop grip that offers more gripping surface than a standard D-handle and lets you hold the tool at different angles. Retail listings for the standard model give an overall length of about 44.5 inches, with a handle around 31.5 inches and a blade about 10.5 inches wide. Radius covers it with a lifetime warranty for residential use by the original purchaser, while commercial use and abuse are excluded. Taller gardeners should look at the XL version, which has a longer shaft for more leverage. Radius also sells a Root Slayer Nomad with an inverted V tip and a smaller perennial shovel for tight beds."
+  },
+  {
+    "id": "fiskars-powergear2-lopper",
+    "name": "Fiskars PowerGear2 32-Inch Bypass Lopper",
+    "category": "Bypass Lopper, Geared Action",
+    "badge": "Best Loppers",
+    "amazonUrl": "#",
+    "pros": [
+      "Rated for branches up to 2 inches in diameter",
+      "Geared mechanism multiplies cutting force, per Fiskars",
+      "32-inch length gives reach into shrubs and low tree limbs",
+      "Bypass blades for clean cuts on live wood",
+      "Widely available, with several handle and blade variants"
+    ],
+    "cons": [
+      "Several similar model numbers exist; check the exact version",
+      "Heavier and longer than a compact lopper for small shrubs"
+    ],
+    "bottomLine": "The lopper that bridges the gap between a hand pruner and a saw, with gearing that makes 2-inch cuts manageable.",
+    "description": "Hand pruners top out around an inch, and anything thicker needs loppers. The Fiskars PowerGear2 32-inch bypass lopper is rated for branches up to 2 inches in diameter, and its geared mechanism is the reason that rating is realistic for an average user: Fiskars designs the gear to multiply leverage so the cut takes less effort than a simple pivot lopper of the same length. The bypass blades slice rather than crush, which is what you want on live shrubs and fruit trees. At 32 inches long, it reaches into the middle of a hedge or up to a low limb without a ladder, while still being manageable to carry. Fiskars sells several close variants, including models with steel handles and the UltraBlade coating, under different part numbers, so match the listing to the version you want. As with any lopper, do not twist the blades to finish a cut that is too thick; switch to a pruning saw for anything beyond 2 inches."
+  },
+  {
+    "id": "showa-atlas-370",
+    "name": "Showa Atlas 370 Nitrile Garden Gloves",
+    "category": "Nitrile-Coated Knit Gloves",
+    "badge": "Best Gloves",
+    "amazonUrl": "#",
+    "pros": [
+      "Thin seamless knit liner with a smooth nitrile palm coating for grip",
+      "Dexterous enough to handle seeds, ties and small transplants",
+      "Breathable back keeps hands cooler than leather",
+      "Machine washable, per retail listings",
+      "Sold in sizes XS through XXL and in multipacks"
+    ],
+    "cons": [
+      "No protection against rose thorns or heavy brambles",
+      "Not for chemical handling beyond light exposure"
+    ],
+    "bottomLine": "The everyday glove that you will actually keep on, which makes it the most protective glove in practice.",
+    "description": "The best garden glove is the one you do not take off to do something fiddly, and the Showa Atlas 370 has a following among gardeners for exactly that reason. It is a thin seamless knit glove with a smooth nitrile coating on the palm and fingers, which gives a firm grip on wet tool handles and pots while leaving enough feel to handle seeds, plant ties and small seedlings. The uncoated back breathes, so hands stay cooler than in leather or fully coated gloves on a warm day. Retail listings describe it as water resistant on the palm, machine washable and rated under EN 388 for abrasion, and it comes in sizes from XS to XXL, often in multipacks of assorted colors. Its limits are clear: it will not stop rose thorns or blackberry canes, and it is not a chemical glove, so keep a pair of leather gauntlets for thorny pruning. Counterfeits of the garden multipacks have been reported, so buy from a reputable seller."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Garden Tools",
+          item: "https://www.thehonestreviewers.com/best-garden-tools/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What garden tools does a beginner actually need?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Seven covers almost everything: a bypass hand pruner, a hori-hori knife, a hand trowel, a spade or digging shovel, bypass loppers, a hoe and a pair of gloves. Start with the pruner, trowel and gloves for planting and tidying, then add the shovel and hoe when you dig beds, and loppers when shrubs need shaping."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are garden tool sets worth buying?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Usually not for anyone with real beds or shrubs. Budget sets save money by using thin stamped steel and weak handle joints, so key tools bend or break quickly, and they pad the count with near duplicates while leaving out spades and loppers. Buying a few quality tools individually costs more up front but lasts far longer."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is forged steel really better than stamped steel?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For hand tools that you lever and pry, yes. Forging lets the maker make a thin cutting edge with a thick, strong neck, and it supports harder steels such as boron steel that hold an edge. Stamped tools are uniform sheet metal that tends to bend at the neck. Heavy-gauge stamped shovels can still be durable."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I buy a bypass or anvil pruner?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Bypass, for nearly everyone. Bypass blades slide past each other and make a clean cut that live plants heal quickly. Anvil blades close onto a flat plate and crush soft stems. Anvil pruners have a niche on dead, dry wood, so some gardeners keep a cheap one for cleanup, but your main pruner should be bypass."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the Felco 2 worth the price?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If it fits your hand and you prune regularly, most owners say yes. It cuts up to 1 inch, its handles are forged aluminum with a lifetime warranty, and every wearing part can be replaced, so it can last decades. If you prune occasionally, the Corona BP 3180 gives you a forged, resharpenable bypass pruner for much less."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a hori-hori used for?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A hori-hori is a Japanese garden knife with a pointed, concave blade, usually with one straight and one serrated edge. Gardeners use it to dig planting holes, plant bulbs to a measured depth, cut through root balls and roots, slice twine and bags, and lever out tap-rooted weeds. It often takes over many of a trowel's jobs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I keep garden tools from rusting?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Clean off soil after each use, dry the metal, and wipe on a thin coat of oil, such as boiled linseed oil or a general tool oil, which also protects wooden handles. Store tools hanging or off the floor in a dry place. Before winter, do a full clean, sharpen and oil so carbon steel heads come through storage rust-free."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Lawn & Yard Care",
+    tags: [
+      "best garden tools",
+      "gardening tools",
+      "garden tools",
+      "pruners",
+      "hori hori",
+      "garden trowel",
+      "loppers"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            7 Tools Compared
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The 7 Best <span class="text-[#38BDF8]">Garden Tools</span> for a Starter Kit
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          One good tool per job, from bypass pruners to a forged trowel, chosen on steel, construction, replaceable parts and warranty instead of piece count.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#felco-2"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            How We Picked
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="8.4k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#short-answer" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. The Short Answer</a>
+          <a href="#how-we-picked" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. How We Picked</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our Top Picks</a>
+          <a href="#why-sets-disappoint" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Why Cheap Garden Tool Sets Disappoint</a>
+          <a href="#forged-vs-stamped" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Forged vs Stamped Steel</a>
+          <a href="#bypass-vs-anvil" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Bypass vs Anvil Pruners</a>
+          <a href="#starter-kit" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. What a Starter Kit Actually Needs</a>
+          <a href="#digging" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Spades, Shovels and Digging Forks</a>
+          <a href="#hoes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Hoes and Weeding Without Chemicals</a>
+          <a href="#care" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Keeping Tools Sharp and Rust-Free</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">12. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Skip the 40-piece set. A bypass pruner such as the Felco 2, a hori-hori, a forged trowel, a serrated digging shovel, geared loppers, a sharp hoe and thin nitrile gloves cover nearly every job in a home garden, and bought one at a time they will outlast several boxed kits.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="short-answer" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. The Short Answer: Seven Tools, Not Forty
+          </h2>
+
+          <p>
+            Almost every garden job a homeowner does in a season comes down to seven tools: a bypass hand pruner, a hori-hori knife, a hand trowel, a spade or digging shovel, a pair of loppers, a hoe, and gloves that you will actually keep wearing. Buy those seven individually, choosing one good example of each, and you will own a kit that handles planting, dividing, edging, weeding, pruning and cleanup for a decade or more. Buy a boxed 40-piece set and you will own two or three tools that work and a drawer of things that bend, rust or never leave the bag.
+          </p>
+
+          <p>
+            The picks below follow that list. The <strong>Felco 2</strong> is the pruner professionals have used for decades, and every part on it can be replaced. The <strong>Corona ClassicCUT BP 3180</strong> is the budget pruner that still uses a forged steel body and a resharpenable blade. The <strong>Barebones Hori Hori</strong> digs, cuts, saws roots and measures planting depth. The <strong>DeWit Forged Hand Trowel</strong> is boron steel on an ash handle, forged rather than stamped. The <strong>Radius Root Slayer</strong> handles the digging, the <strong>Fiskars PowerGear2</strong> lopper takes branches up to 2 inches, and the <strong>Showa Atlas 370</strong> is the thin nitrile-palm glove that gardeners buy by the multipack.
+          </p>
+
+          <p>
+            None of this needs to be expensive all at once. A sensible order is pruner, gloves and trowel first, since those cover container planting and light tidying, then a spade and hoe once you start beds, then loppers when shrubs and young trees need shaping. If you are still planning the layout, our guide to <a href="/diy-garden-landscaping-ideas/" class="text-[#1E90FF] font-bold hover:underline">DIY garden landscaping ideas</a> will tell you which jobs you will face before you spend money on tools for them.
+          </p>
+        </div>
+
+        <div id="how-we-picked" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. How We Picked
+          </h2>
+
+          <p>
+            We did not run these tools through a season of hands-on testing, and we are not going to pretend we did. These picks are built from manufacturer specifications, published cutting capacities, materials and warranty terms, replacement parts lists, and the long-running owner reports that exist for tools that have been on the market for years. Several of these designs, the Felco 2 in particular, have been sold in essentially the same form for decades, which means there is an unusually deep record of how they hold up and what wears out first.
+          </p>
+
+          <p>
+            We weighted four things most heavily. Construction came first: whether the working head is forged or stamped, what steel it uses, and how the head joins the handle, since that joint is where cheap tools fail. Serviceability came second: whether blades, springs and handles can be replaced, and whether the edge can be resharpened at home with a file or stone. Third was the warranty, and specifically what it covers, because a lifetime warranty on a handle is not the same as a lifetime warranty on a blade. Fourth was fit, including hand size and handedness.
+          </p>
+
+          <p>
+            We excluded tools whose claims we could not check against a maker page, spec sheet or a consistent run of retailer listings. Where sources disagree, as they do on the exact weight of the Felco 2 and the blade length of some hori-hori models, we give the figure the maker publishes or say that listings vary. We also avoided quoting prices beyond rough bands, because garden tool prices swing widely with season and seller, and a recommendation that hinges on a specific sale price is not much of a recommendation.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 7 Top Picks
+          </h2>
+
+          <p>
+            Each pick below fills one slot in a starter kit, and each was chosen from maker specifications, materials, parts availability, warranty terms and long-running owner reports rather than hands-on testing. Where two options make sense, as with pruners, we give a premium and a budget choice. The hoe is covered in its own section below, because the right design matters more than the brand.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} Amazon ratings)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="why-sets-disappoint" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Why Cheap Garden Tool Sets Disappoint
+          </h2>
+
+          <p>
+            The boxed garden tool set is one of the most reliable disappointments in home improvement. The pitch is value: a trowel, a transplanter, a cultivator, a weeder, a pruner, gloves and a tote for less than one quality pruner. The trouble is that the price has to come from somewhere, and it comes from the metal. Most budget sets use thin stamped steel or cast aluminum heads, often joined to the handle with a short tang pressed into a plastic or soft wood grip. That joint is exactly where the force goes when you pry a rock or lever a root.
+          </p>
+
+          <p>
+            The predictable failures follow. Trowels fold at the neck the first time they meet clay or a buried stone. Cultivator tines splay outward. Painted finishes chip within weeks, and bare steel underneath starts to rust because it was never meant to hold an edge or be oiled. The pruners in these kits are usually anvil designs with soft blades that cannot be sharpened or replaced, so once they start crushing stems rather than cutting them, the only fix is the trash can. Owner reports for these sets tend to describe the same pattern: fine for a few weekends of potting, then one breakage after another.
+          </p>
+
+          <p>
+            There are exceptions. Some brands sell small sets of genuinely good tools, and a kit for a child or for a balcony of containers does not need forged steel. But for anyone with beds, shrubs or a vegetable patch, the better approach is to buy fewer, better tools one at a time. The seven tools in this guide, bought individually, will cost more than a boxed set, but they replace the set and the second set you would have bought next spring.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">Rule of thumb</p>
+            <p class="text-xl font-bold text-white mb-3">If the head and neck are one piece of thick steel, it will probably outlast you.</p>
+            <p class="text-gray-300 leading-relaxed m-0">Look at where the blade meets the handle. A forged tool has a solid, continuous neck that thickens toward the socket or tang. A cheap stamped tool has a thin flat neck, often with a visible crimp or weld. That one detail predicts most failures.</p>
+          </div>
+        </div>
+
+        <div id="forged-vs-stamped" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Forged vs Stamped Steel
+          </h2>
+
+          <p>
+            Forged tools are shaped by heating a thick piece of steel and hammering or pressing it into form. The process compresses the metal and lets the maker vary thickness, so a trowel can be thin at the cutting edge and thick at the neck where the stress concentrates. Stamped tools are cut from flat sheet steel, like a cookie cutter, then bent into shape. A stamped head has the same thickness everywhere, which means it is either too thick to slice soil well or too thin to survive prying. Most budget tools choose thin.
+          </p>
+
+          <p>
+            Forging is also what lets a maker use harder steels. DeWit, the Dutch toolmaker, forges its hand tools from boron steel, a carbon steel alloy that hardens well under heat treatment and holds an edge in abrasive soil. Corona forges the body of its ClassicCUT pruners. Felco forges the aluminum handles of the Felco 2, which is why they are covered by a lifetime warranty. In each case, forging is a marker of a tool designed to be used hard and repaired, not replaced.
+          </p>
+
+          <p>
+            Stamped is not always bad. Many good long-handled shovels use stamped heads of thick heat-treated steel, and a well-made stamped spade with a solid socket can last for years. The issue is thin stamped steel combined with a weak joint, which describes most bargain hand tools. When you shop, flex the tool if you can, look at the thickness at the neck, and check whether the maker names the steel. A maker that says only "steel" is usually using the cheapest kind.
+          </p>
+
+          <p>
+            Stainless steel deserves its own note. Stainless resists rust and sheds sticky clay easily, which is why the Barebones hori-hori and many British digging forks use it. The trade-off is that common stainless grades are softer than tool-grade carbon steel, so edges dull faster and need touching up more often. Carbon steel holds an edge longer but rusts if put away wet. Neither is wrong. Pick stainless if you know you will not oil your tools, and carbon steel if you will.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Feature</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Forged</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Stamped</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">How it is made</td>
+                    <td class="px-4 py-4 text-gray-700">Heated steel pressed or hammered into shape</td>
+                    <td class="px-4 py-4 text-gray-700">Cut from flat sheet, then bent</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Thickness</td>
+                    <td class="px-4 py-4 text-gray-700">Varies: thin edge, thick neck</td>
+                    <td class="px-4 py-4 text-gray-700">Uniform throughout</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Typical failure</td>
+                    <td class="px-4 py-4 text-gray-700">Edge dulls with use; resharpen</td>
+                    <td class="px-4 py-4 text-gray-700">Bends or snaps at the neck</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Resharpening</td>
+                    <td class="px-4 py-4 text-gray-700">Holds a filed edge well</td>
+                    <td class="px-4 py-4 text-gray-700">Often too soft or thin to bother</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Where it matters most</td>
+                    <td class="px-4 py-4 text-gray-700">Trowels, hand forks, hori-hori, pruner bodies</td>
+                    <td class="px-4 py-4 text-gray-700">Acceptable on heavy-gauge shovels</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="bypass-vs-anvil" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Bypass vs Anvil Pruners
+          </h2>
+
+          <p>
+            A bypass pruner works like scissors: a sharp upper blade slides past a thicker lower hook, and the stem is sliced between them. An anvil pruner works like a knife on a cutting board: a single blade closes onto a flat metal or plastic anvil. Both cut, but they leave very different wounds. Bypass blades make a clean cut that the plant can seal quickly. Anvil blades compress the stem on the anvil side, and on soft green growth that crushing damages the tissue just below the cut.
+          </p>
+
+          <p>
+            For live wood, roses, perennials, fruit trees and shrubs, bypass is the right choice, and every pruner and lopper in this guide is a bypass design. Anvil pruners have one legitimate niche: dead, dry, hard wood, where crushing does no harm and the anvil's leverage makes the cut easier. Some gardeners keep an inexpensive anvil pruner for cutting down dead canes and woody debris. If you own only one pruner, it should be bypass.
+          </p>
+
+          <p>
+            The other detail to check is cutting capacity, the largest branch diameter the tool is rated for. Both the Felco 2 and the Corona BP 3180 are rated for 1 inch. In practice, most gardeners find that hand pruners are pleasant up to roughly half to three-quarters of their rated capacity, and that forcing them to the limit, or twisting to finish a cut, is how blades get sprung. Anything thicker belongs to the loppers, and the Fiskars PowerGear2 lopper is rated for 2-inch branches. Beyond that, use a pruning saw.
+          </p>
+        </div>
+
+        <div id="starter-kit" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. What a Starter Kit Actually Needs
+          </h2>
+
+          <p>
+            A starter kit should be built around jobs, not tool categories. The jobs most yards present are planting and transplanting, digging new beds and dividing perennials, weeding, pruning shrubs and small trees, and cleanup. Each of the seven tools covers one of those jobs better than anything else, and several overlap usefully, so you are never stuck without something that works. The table below maps the job to the tool.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Job</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Tool</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Our pick</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Deadheading, roses, shrubs to 1 inch</td>
+                    <td class="px-4 py-4 text-gray-700">Bypass hand pruner</td>
+                    <td class="px-4 py-4 text-gray-700">Felco 2 or Corona BP 3180</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Planting bulbs, weeding taproots, cutting twine</td>
+                    <td class="px-4 py-4 text-gray-700">Hori-hori knife</td>
+                    <td class="px-4 py-4 text-gray-700">Barebones Hori Hori Classic</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Potting, annuals, small transplants</td>
+                    <td class="px-4 py-4 text-gray-700">Hand trowel</td>
+                    <td class="px-4 py-4 text-gray-700">DeWit Forged Hand Trowel</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">New beds, dividing, root-bound soil</td>
+                    <td class="px-4 py-4 text-gray-700">Spade or digging shovel</td>
+                    <td class="px-4 py-4 text-gray-700">Radius Root Slayer</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Branches from 1 to 2 inches</td>
+                    <td class="px-4 py-4 text-gray-700">Bypass loppers</td>
+                    <td class="px-4 py-4 text-gray-700">Fiskars PowerGear2 32 in</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Weeding paths and vegetable rows</td>
+                    <td class="px-4 py-4 text-gray-700">Hoe</td>
+                    <td class="px-4 py-4 text-gray-700">Stirrup or Dutch hoe</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Everything</td>
+                    <td class="px-4 py-4 text-gray-700">Gloves</td>
+                    <td class="px-4 py-4 text-gray-700">Showa Atlas 370</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            If you have to choose a smaller first purchase, the three most useful tools are the pruner, the hori-hori and gloves. The hori-hori in particular does a surprising share of the trowel's job, because its pointed, concave blade digs planting holes, slices through root balls and pries out dandelions. Many gardeners who buy one find that their trowel sees less use. That said, a proper trowel moves more soil per scoop and is better for filling containers, so it still earns its place.
+          </p>
+
+          <p>
+            Watering is its own category and not really part of the hand-tool kit, but you will need it the day you plant. A long-lasting <a href="/best-garden-hose/" class="text-[#1E90FF] font-bold hover:underline">garden hose</a> with a decent <a href="/best-garden-hose-nozzle/" class="text-[#1E90FF] font-bold hover:underline">hose nozzle</a> handles beds and lawns, and a <a href="/best-watering-can/" class="text-[#1E90FF] font-bold hover:underline">good watering can</a> is the gentler option for seedlings, containers and anything near the house where dragging a hose is a chore.
+          </p>
+        </div>
+
+        <div id="digging" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Spades, Shovels and Digging Forks
+          </h2>
+
+          <p>
+            The terms get used loosely, so here is the practical split. A spade has a flatter, more squared blade and is meant for cutting into soil, edging and slicing out sod. A shovel has a curved, pointed bowl designed for scooping and moving loose material. A digging fork has four thick tines and is for loosening compacted soil, lifting root crops and dividing perennials without slicing roots. For a first long-handled tool, a pointed digging shovel with sharp edges does the most jobs, which is why our pick is the Radius Root Slayer.
+          </p>
+
+          <p>
+            The Root Slayer's distinguishing feature is its serrated edges, which saw through roots rather than bouncing off them. Radius's warranty sheet describes carbon steel blades with saw-tooth edges and its patented O-handle, a large loop grip that you can hold with either hand, gloved or not, at different angles. Retail listings for the standard model give an overall length of about 44.5 inches with a blade around 10.5 inches wide. Radius also sells an XL version with a longer shaft for taller users and more leverage.
+          </p>
+
+          <p>
+            A digging fork is the tool most worth adding second. In heavy clay or compacted soil, a fork penetrates where a spade struggles, and it loosens without inverting soil layers. Spear & Jackson, the British maker, has sold stainless steel digging forks for generations, and its Neverbend line is aimed at heavy digging. Whatever you choose, look for tines that are square or diamond in cross-section rather than flat, since flat tines bend. If you rarely dig new beds, you can skip the fork and use the shovel.
+          </p>
+        </div>
+
+        <div id="hoes" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Hoes and Weeding Without Chemicals
+          </h2>
+
+          <p>
+            A sharp hoe is the most underrated tool in the garden. Used regularly on young weeds, it does most of the work that people otherwise hand to herbicides. The key is choosing a design that slices just below the soil surface rather than chopping into it. Traditional draw hoes, the flat-bladed kind you lift and chop with, are good for breaking ground and moving soil, but they are tiring for weeding and they bring buried weed seeds to the surface.
+          </p>
+
+          <p>
+            Two designs do better for weeding. The stirrup or oscillating hoe has a hinged loop of sharpened steel that cuts on both the push and the pull, so you can work it back and forth like a vacuum. The Dutch hoe has a flat blade angled forward, which you push just under the soil while walking backward, so you never step on the soil you have just weeded. DeWit makes forged versions of both, with carbon steel heads on ash handles. Either beats a draw hoe for weeding.
+          </p>
+
+          <p>
+            Timing matters more than the tool. A hoe works best on seedling weeds, ideally on a dry, sunny day when severed weeds wilt quickly. Once weeds are established, with deep taproots like dandelion or dock, you need the hori-hori to lever out the whole root, or the plant regrows from what is left. For hard-to-reach spots such as gravel and paving, our guide on <a href="/how-to-kill-weeds-in-driveway-cracks/" class="text-[#1E90FF] font-bold hover:underline">killing weeds in driveway cracks</a> covers the options that a hoe cannot reach.
+          </p>
+
+          <p>
+            Some situations still call for chemistry, such as a lawn overrun with broadleaf weeds or a fence line choked with poison ivy. If you go that route, read our guide to the <a href="/best-weed-killer/" class="text-[#1E90FF] font-bold hover:underline">best weed killers</a> for the differences between selective, non-selective and pre-emergent products, so you do not wipe out the lawn along with the weeds. For beds and vegetable rows, though, a sharp hoe used weekly is cheaper, faster and kinder to the soil.
+          </p>
+        </div>
+
+        <div id="care" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            10. Keeping Tools Sharp and Rust-Free
+          </h2>
+
+          <p>
+            Good tools reward a few minutes of care, and the care is simple. At the end of each session, knock off soil and wipe the blade. Sap from pruning builds up quickly on pruner blades and makes them stick, so wipe it off with a rag and a little rubbing alcohol. Carbon steel tools, including the DeWit trowel and the Root Slayer, should be dried before storage. A light film of oil, such as boiled linseed oil or a general purpose tool oil, keeps rust off the steel and the ash handles from drying out.
+          </p>
+
+          <p>
+            Sharpening is where quality tools pay you back. A pruner with a resharpenable blade can be touched up with a small diamond file or sharpening stone, holding the stone at the original bevel angle and working only the beveled side. Shovels, hoes and trowels benefit from a few strokes with a mill file on the working edge each season; a sharp spade cuts soil and roots with noticeably less effort. Cheap tools rarely have enough steel to make this worthwhile.
+          </p>
+
+          <p>
+            Replaceable parts are the other half of the story. Felco sells spare blades, springs and anvil blades for the Felco 2, and the company's own guidance is to change the blade when the blade and counter-blade no longer cross cleanly or the edge is badly damaged. Note what the warranty covers: Felco's lifetime warranty applies to the forged aluminum handles, while blades, springs, grips and shock absorbers are classed as consumable parts you replace as they wear. Corona sells replacement blades for the BP 3180 as well.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying a boxed set first</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Most budget sets use thin stamped heads joined to soft handles, and the trowel and cultivator tend to bend at the neck within a season. Buy a good pruner, trowel and gloves individually, then add tools as jobs appear. You will spend more per tool, but less overall.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using an anvil pruner on live plants</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Anvil pruners crush the stem against a flat plate, which damages living tissue below the cut. They are fine for dead, dry wood. For roses, shrubs, perennials and fruit trees, use a bypass pruner, whose blades slide past each other like scissors for a clean cut.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Forcing pruners past their capacity</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Twisting a 1-inch pruner through a branch that is too thick springs the blades and ruins the cut. If it does not close comfortably, step up to loppers, which handle up to about 2 inches, and use a pruning saw beyond that. Keep pruners for smaller stems.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Putting carbon steel tools away wet</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Forged carbon and boron steel heads hold an edge well but rust if left damp in a shed. Knock off soil, dry the blade, and wipe on a thin film of oil after use. Stainless tools tolerate neglect better but need sharpening more often.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying the wrong size or hand</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A pruner sized for large hands forces a wide grip that tires smaller hands quickly, and right-handed pruners are awkward for left-handers. Check the maker's hand-size guidance; Felco and others sell compact and left-handed models. Fit matters as much as steel quality.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            12. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What garden tools does a beginner actually need?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Seven covers almost everything: a bypass hand pruner, a hori-hori knife, a hand trowel, a spade or digging shovel, bypass loppers, a hoe and a pair of gloves. Start with the pruner, trowel and gloves for planting and tidying, then add the shovel and hoe when you dig beds, and loppers when shrubs need shaping.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are garden tool sets worth buying?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Usually not for anyone with real beds or shrubs. Budget sets save money by using thin stamped steel and weak handle joints, so key tools bend or break quickly, and they pad the count with near duplicates while leaving out spades and loppers. Buying a few quality tools individually costs more up front but lasts far longer.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is forged steel really better than stamped steel?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For hand tools that you lever and pry, yes. Forging lets the maker make a thin cutting edge with a thick, strong neck, and it supports harder steels such as boron steel that hold an edge. Stamped tools are uniform sheet metal that tends to bend at the neck. Heavy-gauge stamped shovels can still be durable.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Should I buy a bypass or anvil pruner?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Bypass, for nearly everyone. Bypass blades slide past each other and make a clean cut that live plants heal quickly. Anvil blades close onto a flat plate and crush soft stems. Anvil pruners have a niche on dead, dry wood, so some gardeners keep a cheap one for cleanup, but your main pruner should be bypass.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is the Felco 2 worth the price?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                If it fits your hand and you prune regularly, most owners say yes. It cuts up to 1 inch, its handles are forged aluminum with a lifetime warranty, and every wearing part can be replaced, so it can last decades. If you prune occasionally, the Corona BP 3180 gives you a forged, resharpenable bypass pruner for much less.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is a hori-hori used for?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A hori-hori is a Japanese garden knife with a pointed, concave blade, usually with one straight and one serrated edge. Gardeners use it to dig planting holes, plant bulbs to a measured depth, cut through root balls and roots, slice twine and bags, and lever out tap-rooted weeds. It often takes over many of a trowel's jobs.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How do I keep garden tools from rusting?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Clean off soil after each use, dry the metal, and wipe on a thin coat of oil, such as boiled linseed oil or a general tool oil, which also protects wooden handles. Store tools hanging or off the floor in a dry place. Before winter, do a full clean, sharpen and oil so carbon steel heads come through storage rust-free.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Yard & Garden Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/diy-garden-landscaping-ideas/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Planning</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">DIY Garden Landscaping Ideas</h3>
+              <p class="text-gray-500 text-sm mt-2">Plan beds, borders and paths before you buy tools for them.</p>
+            </a>
+            <a href="/best-garden-hose/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Watering</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Garden Hoses</h3>
+              <p class="text-gray-500 text-sm mt-2">Kink-resistant hoses compared on material, fittings and burst rating.</p>
+            </a>
+            <a href="/best-weed-killer/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#38BDF8] font-black text-xs uppercase tracking-widest mb-2">Weeds</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Weed Killers</h3>
+              <p class="text-gray-500 text-sm mt-2">Selective, non-selective and pre-emergent options for when a hoe is not enough.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            A good garden tool kit is small. Seven tools, chosen for forged heads, bypass blades, replaceable parts and a fit that suits your hands, will do more work than a boxed set several times the size, and most of them can be sharpened, rebuilt or repaired instead of replaced.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            If you are starting from nothing, buy the pruner, the gloves and either the hori-hori or the trowel this season, add the shovel and hoe when you dig your first bed, and pick up loppers when the shrubs need them. Take a few minutes to clean and oil them after use, and they will still be in the shed when the plants they put in the ground are fully grown.
+          </p>
+        </div>
+
+        <MoreInCategory category="Lawn & Yard Care" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

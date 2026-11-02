@@ -1,0 +1,952 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Garden Hoses",
+    "url": "/best-garden-hose/"
+  },
+  {
+    "title": "Best Garden Hose Nozzles",
+    "url": "/best-garden-hose-nozzle/"
+  },
+  {
+    "title": "Best Expandable Garden Hoses",
+    "url": "/best-expandable-garden-hose/"
+  },
+  {
+    "title": "Best Hose Reels",
+    "url": "/best-hose-reel/"
+  },
+  {
+    "title": "Best Garden Tools",
+    "url": "/best-garden-tools/"
+  },
+  {
+    "title": "DIY Garden Landscaping Ideas",
+    "url": "/diy-garden-landscaping-ideas/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-11-02", modified: "2026-11-02" });
+const title = "7 Best Watering Cans in 2026: Indoor, Outdoor and Galvanized";
+const description =
+  "The best watering cans for indoor plants, seedlings and beds, compared on capacity vs full weight, brass vs plastic roses, spout length and galvanized steel";
+
+const PRODUCTS = [
+  {
+    "id": "haws-cradley-deluxe",
+    "name": "Haws Cradley Deluxe 1.5 Gallon (7 L)",
+    "category": "Plastic outdoor can, brass rose",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "pros": [
+      "7 L capacity is a manageable full weight",
+      "Detachable oval brass rose for a fine, non-drip spray",
+      "Brass ferrule accepts the full Haws all-brass rose range",
+      "Long reach spout for even, controlled flow",
+      "Recyclable plastic body cannot rust"
+    ],
+    "cons": [
+      "Expensive for a plastic can",
+      "Long overall length (about 64 cm) needs storage space"
+    ],
+    "bottomLine": "The best balance of weight, spray quality and reach for most gardens.",
+    "description": "The Cradley Deluxe is the can we would point most gardeners to first. Haws rates it at one and a half gallons, or 7 litres, which is about 15 pounds of water when full. That is a real working capacity for a patio, a run of containers or a small vegetable bed, but still light enough to carry level. The key upgrade over cheaper plastic cans is the fittings. Haws equips it with a detachable, high-flow oval brass rose and a brass ferrule, which means you can fit the rose face up for seedlings and swap it for any head in the Haws all-brass range later. The long reach spout, listed at 64 cm overall, keeps flow steady and lets you water the back of a bed without leaning in. The body is recyclable plastic, so there is nothing to rust and nothing to chip. It costs much more than a big-box plastic can, but the rose alone is the difference between a gentle shower and a splashy stream. Note the cheaper Cradley Cascader uses a plastic ferrule and a brass-faced rose, so check which one you are buying."
+  },
+  {
+    "id": "bloem-classic-2-gallon",
+    "name": "Bloem Classic Watering Can 2 Gallon",
+    "category": "Plastic outdoor can",
+    "badge": "Best Budget",
+    "amazonUrl": "#",
+    "pros": [
+      "256 fl oz (2 gallon) capacity",
+      "Removable nozzle for a direct stream or shower",
+      "Very light empty, so you only carry the water",
+      "Widely stocked at hardware and garden stores",
+      "Usually among the cheapest full-size cans"
+    ],
+    "cons": [
+      "Plastic rose gives a coarser spray than brass",
+      "17 pounds of water full is heavy for some users"
+    ],
+    "bottomLine": "The cheapest full-size can worth owning for beds and borders.",
+    "description": "If you want capacity without spending much, the Bloem Classic is the straightforward answer. Retailers list it at 256 fluid ounces, a true 2 gallons, with a removable nozzle so you can pour a direct stream into a large pot or put the rose back on for a shower over a bed. Because it is plastic, the empty can weighs very little, but remember that 2 gallons of water is close to 17 pounds, so this is a can for adults watering beds and borders rather than a can to carry up and down stairs. The plastic rose is functional rather than fine; it produces a heavier spray than a brass rose and is not the right tool for flats of tiny seedlings. Bloem sells it in a wide range of colours and it turns up at most hardware and garden stores, often at a lower price than anything else here. It is the sensible choice for a fertilizer can too, so you can keep a better metal can for plain water. Do not leave it full in hard frost."
+  },
+  {
+    "id": "behrens-210",
+    "name": "Behrens 210 2.5 Gallon Hot-Dipped Steel Watering Can",
+    "category": "Galvanized steel can",
+    "badge": "Best Galvanized",
+    "amazonUrl": "#",
+    "pros": [
+      "Hot-dipped galvanized steel resists rust for decades",
+      "2.5 gallon (10 quart) capacity",
+      "Two handles: steel top handle and painted wood rear grip",
+      "Made in the USA",
+      "Simple, nearly indestructible construction"
+    ],
+    "cons": [
+      "Non-removable rose, so no face-up seedling watering",
+      "About 21 pounds of water when full"
+    ],
+    "bottomLine": "A classic farm-store can that will outlive you, if you can carry it.",
+    "description": "The Behrens 210 is the traditional galvanized sprinkling can, made in the USA and sold at farm, hardware and restaurant supply stores. It holds 2.5 gallons, or 10 quarts, and is hot-dipped in zinc after forming, which coats the seams as well as the flat panels. That is why these cans survive years outdoors and in greenhouses. Retailer specs list it at roughly 19 by 10 by 14 inches with a flat steel top handle and a red painted wooden rear grip, so you can carry from the top and pour from the back. The trade-off is weight and control. Full, it carries close to 21 pounds of water, and the rose is fixed, so you cannot fit it face up for seedlings or remove it for a direct pour. Its spray is fine for established beds and greenhouse benches but too heavy for seed trays. Buy it if you want a durable, honest, all-metal can for outdoor watering and you are comfortable with the weight. Keep fertilizer out of it to protect the zinc."
+  },
+  {
+    "id": "haws-warley-fall",
+    "name": "Haws The Warley Fall Two Gallon (8.8 L)",
+    "category": "Galvanized steel can, brass rose",
+    "badge": "Best Heirloom Can",
+    "amazonUrl": "#",
+    "pros": [
+      "8.8 L capacity with fewer refill trips",
+      "Brass rose on a brass ferrule, compatible with Haws brass roses",
+      "Galvanized steel body, with a hot-dip HDG version",
+      "Balanced two-handle design and long reach",
+      "Also sold in a lighter one gallon (4.5 L) size"
+    ],
+    "cons": [
+      "Priced like an heirloom, far above any other pick",
+      "Makers advise against storing with water over winter or using plant food"
+    ],
+    "bottomLine": "The buy-it-once can for serious gardeners who want brass and steel.",
+    "description": "The Warley Fall is Haws's flagship outdoor can, and it is the one you buy if you want a single can for decades. Haws describes the two gallon version as holding 8.8 litres, which is about 19 pounds of water, so it is a can for strong users with a short walk to the beds. It comes with a brass rose, and its brass ferrule makes it compatible with the full range of Haws brass roses, so you can switch between fine seedling roses and coarser heads. The standard version is galvanized steel finished in colours such as green and graphite, and Haws also sells an HDG version that is hot-dip galvanized for maximum rust resistance. Retailers caution against leaving it outside over winter with water inside and against using plant food in it. That is good advice for any metal can, but especially one this expensive. The price is the obvious barrier: Haws lists it well over 100 pounds sterling in the UK. If that is too much, the one gallon version is lighter and cheaper, and the Cradley Deluxe gives you the same brass rose quality in plastic."
+  },
+  {
+    "id": "bloem-aqua-rite-144",
+    "name": "Bloem Aqua Rite Watering Can 144 oz",
+    "category": "Plastic container can",
+    "badge": "Best for Containers and Baskets",
+    "amazonUrl": "#",
+    "pros": [
+      "144 fl oz (about 1.1 gallons) is easy to lift overhead",
+      "Long stem spout reaches into hanging baskets",
+      "One-piece plastic construction",
+      "Light enough for daily container rounds",
+      "Also made in a 56 oz size"
+    ],
+    "cons": [
+      "No fine rose for seedlings",
+      "Too small for watering beds"
+    ],
+    "bottomLine": "The right shape for hanging baskets, pots on stands and deck containers.",
+    "description": "Hanging baskets and pots on stands need reach and control more than volume, which is exactly what the Aqua Rite is built for. Bloem rates this size at 144 fluid ounces, about 1.1 gallons or 9 pounds of water full, light enough to lift to shoulder height without spilling. Retailers describe the long stem spout as controlling flow, and listings give it at around 8 inches, so you can tip water directly into a basket without soaking yourself or the deck. The one-piece plastic body has no seams to leak and nothing to rust. What it does not have is a fine rose, so it is the wrong tool for seed trays, and at this size it would take many trips to water a vegetable bed. Think of it as the daily container can: deck pots, window boxes, baskets and large houseplants that sit on the floor. Bloem also makes a 56 ounce Aqua Rite with a thin, long spout, which can double as an indoor can if you want one brand for both jobs."
+  },
+  {
+    "id": "haws-bartley-burbler",
+    "name": "Haws The Bartley Burbler Two Pint (1 L)",
+    "category": "Plastic indoor can",
+    "badge": "Best Indoor Can",
+    "amazonUrl": "#",
+    "pros": [
+      "1 litre capacity, about 2.2 pounds full",
+      "Removable brass-faced rose for gentle seedling spray",
+      "Long spout for under-leaf watering",
+      "Light plastic body that cannot rust",
+      "Traditional Haws can shape in several colours"
+    ],
+    "cons": [
+      "Plastic body feels less premium than metal indoor cans",
+      "Published dimensions vary slightly between sellers"
+    ],
+    "bottomLine": "The most versatile small can: houseplants with the rose off, seedlings with it on.",
+    "description": "The Bartley Burbler is Haws's small plastic indoor can, and it is the most useful indoor can here because of one feature: a removable brass-faced rose. Take the rose off and the long spout gives you a narrow, precise stream to water houseplants at soil level, under the leaves. Put it back on and you have a gentle shower for seedlings and windowsill trays, something most decorative indoor cans cannot do. Haws lists it at two pints, or 1 litre, which is about 2.2 pounds of water, light enough for anyone. The maker gives its size as roughly 27 cm long, 11 cm wide and 22 cm tall, though retailer dimensions differ slightly. Because the body is plastic, there are no seams to rust if you leave a little water in it, and it is cheaper than the Haws metal and copper indoor cans while sharing their traditional shape. The trade-off is feel: it does not have the heft or look of a metal can on a shelf. If your plant care includes starting seeds, this is the small can to buy."
+  },
+  {
+    "id": "burgon-ball-indoor",
+    "name": "Burgon &amp; Ball Indoor Watering Can 0.7 L",
+    "category": "Powder-coated steel indoor can",
+    "badge": "Best for Houseplant Shelves",
+    "amazonUrl": "#",
+    "pros": [
+      "Compact 0.7 litre size for shelves and windowsills",
+      "Long, thin spout for precise watering",
+      "Powder-coated steel body with FSC-certified wooden handle",
+      "Attractive enough to leave out on display",
+      "Many colour options"
+    ],
+    "cons": [
+      "No rose, so not for seedlings",
+      "Joints can rust over time, according to at least one retailer"
+    ],
+    "bottomLine": "A small, good-looking can for crowded shelves of houseplants.",
+    "description": "Burgon &amp; Ball's indoor can is the one to buy if your watering happens on bookshelves, windowsills and plant stands where a bigger can will not fit. It holds 0.7 litres, about a pound and a half of water, so it is easy to use at arm's length or on a high shelf. The long, thin spout puts water exactly where you aim it, at the soil surface rather than across leaves or onto furniture. The body is powder-coated steel with an FSC-certified wooden handle, and it comes in a range of muted colours that look fine left out in a living room, which matters because a can you keep in view is a can you actually use. There is no rose, so it is not a tool for seed trays, and the small capacity means several refills for a large collection. One retailer notes that the joints, such as where the spout meets the body, may rust over time, so empty it between uses and do not use it outside. For a dozen houseplants on shelves, it is exactly the right size."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Watering Cans",
+          item: "https://www.thehonestreviewers.com/best-watering-can/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best watering can?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most gardens, the Haws Cradley Deluxe is the best all-round can: 7 litres is a manageable full weight, and its brass rose and brass ferrule give a fine spray and long-term rose compatibility. On a budget, the Bloem Classic 2 gallon is the best value. Indoors, the Haws Bartley Burbler is the most versatile small can."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What size watering can should I get?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Around 1 litre for houseplants, about 1 to 1.5 gallons for containers and patios, and 2 to 2.5 gallons only for beds and borders close to a tap. Remember each gallon adds about 8.3 pounds. If in doubt, go smaller: two light trips are easier than one heavy one."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are metal or plastic watering cans better?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Plastic is lighter, cheaper and cannot rust, which makes it the better default. Hot-dip galvanized steel lasts longer and resists UV, but it is heavier and should never hold fertilizer. Powder-coated steel suits small indoor cans. The rose matters more than the body material for how well a can waters."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do gardeners turn the watering can rose upward?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Fitting a removable rose face up sends water up in a gentle arc so it falls softly, like light rain. That stops seed being washed out of trays and keeps young seedlings upright. Facing the rose forward gives a heavier shower for established plants. It only works on cans with a removable rose."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How heavy is a full 2 gallon watering can?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The water alone weighs about 16.7 pounds, since a US gallon of water is about 8.3 pounds. Add the can itself and a full 2 gallon can is typically around 18 to 20 pounds. A 2.5 gallon can carries close to 21 pounds of water before you count the steel."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What watering can is best for indoor plants?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A small can of 0.7 to 1 litre with a long, thin spout, so you can water the soil under the leaves. The Burgon &amp; Ball Indoor can suits crowded shelves, and the Haws Bartley Burbler adds a removable rose for seedlings. Avoid large outdoor cans indoors, which drip and splash."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you leave a watering can outside?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Plastic and galvanized cans can live outside in the growing season, but empty them after use so algae and scale do not build up. Bring them in before freezing nights, since ice splits seams. Powder-coated indoor cans are not made for outdoor storage and may rust at the joints."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Lawn & Yard Care",
+    tags: [
+      "best watering can",
+      "watering can",
+      "galvanized watering can",
+      "indoor watering can",
+      "Haws watering can"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            7 Products Compared
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The Best <span class="text-[#38BDF8]">Watering Cans</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          A gallon of water weighs about 8.3 pounds, so the right can is the one you can carry full. We compared capacity, rose quality, spout reach and material to pick seven cans for houseplants, seedlings, containers and beds.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#haws-cradley-deluxe"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            How We Picked
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="6.1k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#capacity-vs-weight" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Capacity vs Weight</a>
+          <a href="#how-we-picked" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. How We Picked</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our Top Picks</a>
+          <a href="#rose" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Brass vs Plastic Roses</a>
+          <a href="#spout-length" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Spout Length</a>
+          <a href="#materials" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Galvanized vs Plastic vs Steel</a>
+          <a href="#balance" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Balance and Handles</a>
+          <a href="#sizing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. What Size You Need</a>
+          <a href="#care" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Making a Can Last</a>
+          <a href="#what-not-to-buy" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. What Not to Buy</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">12. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          The short answer: the Haws Cradley Deluxe is the best watering can for most gardens, because 7 litres is a weight you can actually carry and its brass rose waters gently enough for seedlings. The Bloem Classic is the budget pick, the Behrens 210 is the galvanized workhorse, and indoor plants want a small long-spout can like the Haws Bartley Burbler or Burgon &amp; Ball Indoor, not an outdoor can.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="capacity-vs-weight" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. Capacity vs Weight: The 8.3-Pound Rule
+          </h2>
+
+          <p>
+            Every watering can decision starts with one number: a US gallon of water weighs about 8.3 pounds. A 1-gallon can is roughly 8 to 9 pounds full once you add the can itself. A 2-gallon can is 17 pounds of water before the steel or plastic. A 2.5-gallon can like the Behrens 210 carries close to 21 pounds of water. That is the difference between an easy lap of the patio pots and a strained wrist by the third refill.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">What a full can actually weighs (water only)</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <p class="text-3xl font-black text-white">2.2 lb</p>
+                <p class="text-gray-400 text-xs mt-1">1 litre indoor can</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">8.3 lb</p>
+                <p class="text-gray-400 text-xs mt-1">1 gallon</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-white">16.7 lb</p>
+                <p class="text-gray-400 text-xs mt-1">2 gallons</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">20.9 lb</p>
+                <p class="text-gray-400 text-xs mt-1">2.5 gallons</p>
+              </div>
+            </div>
+          </div>
+
+          <p>
+            Bigger is not automatically better. A can is only efficient if you fill it to the top, and most people stop filling a 2.5-gallon can at the point where it gets too heavy to carry level. If you routinely fill a big can halfway, you bought the wrong can. Buy the size you will actually fill, carry and pour without the spout swinging around.
+          </p>
+
+          <p>
+            The other half of the weight question is distance. Carrying 17 pounds ten feet from a spigot to a raised bed is fine for most adults. Carrying it 80 feet to the back fence, six times, is a job for a hose. Cans earn their place for seedlings, containers, liquid feed and the corners of the yard where a hose kinks or drags across plants.
+          </p>
+
+          <p>
+            As a rough guide: 1 to 2 litres for houseplants, 1 to 1.5 gallons for a balcony or patio of containers, and 2 to 2.5 gallons only if you are strong, the walk is short and you water beds rather than pots. Most households with a mix of indoor and outdoor plants end up best served by two cans, not one huge one.
+          </p>
+        </div>
+
+        <div id="how-we-picked" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. How We Picked
+          </h2>
+
+          <p>
+            We did not run a watering can lab, and we are not going to pretend we did. These picks are built from maker specifications, retailer spec sheets, published dimensions and capacities, rose and ferrule compatibility notes from the manufacturers, and recurring patterns in owner reports. Where sources disagree, as they do on several Haws and Burgon &amp; Ball dimensions, we say so or leave the number out.
+          </p>
+
+          <p>
+            We filtered on five things. Capacity had to be stated by the maker, not guessed. The rose had to be described clearly: removable or fixed, brass or plastic. Material had to be specific enough to predict rust behaviour, since galvanized, powder-coated and plain painted steel age very differently. The can had to be a current model you can still buy. And each pick had to do a distinct job, so you are not choosing between six versions of the same green plastic can.
+          </p>
+
+          <p>
+            We left out decorative cans whose spout or rose design does not deliver usable flow, and novelty shapes with no published capacity. We also avoided ranking anything on star ratings, which we cannot verify and which mostly measure shipping and colour accuracy rather than pouring.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 7 Top Picks
+          </h2>
+
+          <p>
+            Each pick does a different job. Capacities are the maker's or retailer's stated figures, and full weights are calculated from the water at about 8.3 pounds per gallon. We note where a can has a fixed rose, no rose or a brass rose, since that decides whether it can water seedlings, and we flag the cans that need to be emptied and brought in before frost.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} Amazon ratings)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="rose" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. The Rose: Brass vs Plastic, Face Up vs Face Down
+          </h2>
+
+          <p>
+            The rose is the perforated head on the end of the spout, and it is the part that separates a good can from a bad one. A good rose breaks the stream into many fine jets so water lands softly and soaks in rather than blasting soil off the roots. A poor rose dribbles from the face, sprays sideways from a loose fit or clogs after one season of hard water.
+          </p>
+
+          <p>
+            Brass roses are the premium choice for a reason. Brass holds a crisp, consistent hole size, resists cracking in frost and can be cleaned with a pin without deforming. Haws fits an oval brass rose to the Cradley Deluxe and the Warley Fall, and its brass ferrule (the collar the rose slides onto) accepts the full Haws all-brass rose range. Plastic roses work, and the Bloem cans use them, but the holes are larger, the spray coarser and the fit looser over time.
+          </p>
+
+          <p>
+            Brass-faced roses sit between the two: a brass plate with the holes, on a plastic body. Haws uses this on cheaper cans such as the Cradley Cascader and the Bartley Burbler. You get most of the spray quality for less money, though not the full-brass durability.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Why gardeners turn the rose upward</h3>
+
+          <p>
+            On a traditional can with a removable rose, you can fit it with the face pointing up rather than forward. Water then rises in a gentle arc and falls back down like light rain, which is the standard way to water seedlings and freshly sown trays without washing seed out of the compost. Face forward gives a heavier, more directional shower for established plants and beds. A can with a fixed rose, like the Behrens 210, cannot do this, which is the main reason we do not recommend it for seed trays.
+          </p>
+        </div>
+
+        <div id="spout-length" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Spout Length: Indoor vs Outdoor
+          </h2>
+
+          <p>
+            Spout length decides where water goes, and it matters more indoors than out. Houseplants want a long, narrow spout and no rose at all, so you can reach under leaves and deliver water to the soil surface without wetting foliage or splashing the windowsill. Small indoor cans in the 0.7 to 1 litre range, like the Burgon &amp; Ball and the Bartley Burbler, are built around that reach.
+          </p>
+
+          <p>
+            Outdoor cans need a long spout for a different reason: leverage and flow control. A long-reach spout lets you water the back of a border or a raised bed without leaning over it, and it keeps the outlet below the waterline of the can so you get a steady stream instead of glugging. The Haws Cradley Deluxe is listed at 64 cm long overall, much of it spout, which is why it pours so evenly.
+          </p>
+
+          <p>
+            Short, stubby spouts on cheap cans are the most common flaw. They pour fast and splash, and they force you to tilt the whole can steeply, which shifts the weight forward onto your wrist. If you water hanging baskets or tall containers, a long stem spout like the Bloem Aqua Rite's is worth far more than extra capacity.
+          </p>
+
+          <p>
+            The rule of thumb: no rose and a thin spout for houseplants; long spout plus removable rose for seedlings and beds; long stem spout with a small outlet for hanging baskets and pots on stands.
+          </p>
+        </div>
+
+        <div id="materials" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Galvanized vs Plastic vs Powder-Coated Steel
+          </h2>
+
+          <p>
+            Plastic cans are light, cheap, quiet and do not rust. The Bloem Classic weighs very little empty, so almost all the weight you carry is water. The downsides are UV brittleness over years in full sun, coarser plastic roses, and a tendency for thin handles to flex when the can is full. Good plastic cans, like the Haws Cradley range, use thicker walls and better ferrules, and they are the sensible default for most people.
+          </p>
+
+          <p>
+            Hot-dip galvanized steel, as on the Behrens 210 and the Warley Fall HDG, is dipped in molten zinc after it is formed, so seams and edges get coated too. That is the most rust-resistant way to make a steel can and the reason these cans last decades. Pre-galvanized steel, made from sheet that is zinc-coated before forming, is still durable but leaves cut edges less protected. Galvanized cans are heavier empty and ring loudly when you fill them, which some people love and some people hate.
+          </p>
+
+          <p>
+            Powder-coated steel is what most small indoor metal cans use, including the Burgon &amp; Ball. It looks good and resists rust well, but the coating can chip, and at least one retailer warns that joints such as where the spout meets the body may still rust over time. Treat a powder-coated indoor can as a houseplant tool, not something to leave in the garden over winter.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Material</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Weight empty</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Rust risk</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Best for</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Plastic</td>
+                    <td class="px-4 py-4 text-gray-700">Lightest</td>
+                    <td class="px-4 py-4 text-gray-700">None</td>
+                    <td class="px-4 py-4 text-gray-700">Most gardens, people who want light carrying</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Hot-dip galvanized</td>
+                    <td class="px-4 py-4 text-gray-700">Heaviest</td>
+                    <td class="px-4 py-4 text-gray-700">Very low</td>
+                    <td class="px-4 py-4 text-gray-700">Decades of outdoor use, greenhouses</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Pre-galvanized, painted</td>
+                    <td class="px-4 py-4 text-gray-700">Heavy</td>
+                    <td class="px-4 py-4 text-gray-700">Low</td>
+                    <td class="px-4 py-4 text-gray-700">Premium outdoor cans with brass roses</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Powder-coated steel</td>
+                    <td class="px-4 py-4 text-gray-700">Light (small sizes)</td>
+                    <td class="px-4 py-4 text-gray-700">Moderate at joints</td>
+                    <td class="px-4 py-4 text-gray-700">Indoor houseplants</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="balance" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Balance, Handles and How a Can Pours
+          </h2>
+
+          <p>
+            A can that weighs the same can feel completely different in the hand. The best designs put a long top handle over the centre of mass for carrying and a rear handle low down for pouring, so you can tip the can with your wrist straight. Haws cans and the Behrens 210 both use this two-handle layout. Single loop handles, common on cheap plastic cans, make you lift and tilt at the same time, which is where the wrist strain comes from.
+          </p>
+
+          <p>
+            Look at where the spout leaves the body. A spout that starts near the base keeps the outlet low, gives steady flow from full to almost empty, and lets you drain the can completely. A spout that starts high up means you have to tip the can almost upside down to get the last litre out.
+          </p>
+
+          <p>
+            The fill opening matters too. A wide opening fills quickly under an outdoor tap and lets you rinse out algae and fertilizer residue. A narrow one fills slowly and splashes. Very large openings on cheap cans slosh when you walk, which is why many traditional cans have a partly covered top.
+          </p>
+        </div>
+
+        <div id="sizing" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. What Size Watering Can Do You Need
+          </h2>
+
+          <p>
+            Match the can to the plants, not to the biggest number on the shelf. Houseplants rarely need more than a litre at a time, and a big outdoor can is clumsy indoors and will drip from the rose onto floors. Container gardens and balconies are the sweet spot for 1 to 1.5 gallon cans. Vegetable beds and borders far from a tap are where 2 gallons start to pay off, provided you can carry them.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Use</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Capacity</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Spout and rose</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Our pick</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Houseplants, shelves</td>
+                    <td class="px-4 py-4 text-gray-700">0.7 to 1 L</td>
+                    <td class="px-4 py-4 text-gray-700">Long thin spout, no rose</td>
+                    <td class="px-4 py-4 text-gray-700">Burgon &amp; Ball Indoor, Haws Bartley Burbler</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Hanging baskets, containers</td>
+                    <td class="px-4 py-4 text-gray-700">About 1.1 gal</td>
+                    <td class="px-4 py-4 text-gray-700">Long stem spout</td>
+                    <td class="px-4 py-4 text-gray-700">Bloem Aqua Rite 144 oz</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Seedlings and mixed garden</td>
+                    <td class="px-4 py-4 text-gray-700">1.5 gal (7 L)</td>
+                    <td class="px-4 py-4 text-gray-700">Long spout, brass rose</td>
+                    <td class="px-4 py-4 text-gray-700">Haws Cradley Deluxe</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Beds and borders, budget</td>
+                    <td class="px-4 py-4 text-gray-700">2 gal</td>
+                    <td class="px-4 py-4 text-gray-700">Removable plastic rose</td>
+                    <td class="px-4 py-4 text-gray-700">Bloem Classic</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Beds, greenhouse, long life</td>
+                    <td class="px-4 py-4 text-gray-700">2 to 2.5 gal</td>
+                    <td class="px-4 py-4 text-gray-700">Brass or fixed rose</td>
+                    <td class="px-4 py-4 text-gray-700">Haws Warley Fall, Behrens 210</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            If you only buy one can for a mixed indoor and outdoor collection, a 1 to 1.5 gallon outdoor can with a removable rose is the best compromise: pull the rose off indoors for a direct stream, put it back on outside. It will still be too big for a crowded windowsill, which is why so many plant owners end up adding a small indoor can later.
+          </p>
+
+          <p>
+            For anyone who struggles with weight, there is no shame in going smaller and making more trips. Two trips with 1 gallon is about 8 pounds each time, and that is far kinder on shoulders than one trip with 17.
+          </p>
+        </div>
+
+        <div id="care" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Making a Watering Can Last
+          </h2>
+
+          <p>
+            Most watering cans die from neglect, not wear. Water left standing in a can grows algae, leaves mineral scale in the rose and, in metal cans, sits against seams for months. Empty the can after use and store it upside down or on its side so it dries. That one habit adds years to any can, plastic or steel.
+          </p>
+
+          <p>
+            Frost is the big killer. Water expanding as it freezes splits plastic seams and can pop the solder or crimping on metal cans. Retailers selling the Haws Warley Fall specifically advise against leaving it outside over winter with water inside. Bring cans into a shed or garage once nights drop below freezing, or at minimum leave them empty and inverted.
+          </p>
+
+          <p>
+            Fertilizer is the second. Liquid feeds are often acidic or salty, and leaving them in a galvanized can attacks the zinc coating. Some Haws retailers advise against using plant food in the Warley Fall at all. If you feed regularly, keep a cheap plastic can for fertilizer and your good metal can for plain water, and rinse both after every use.
+          </p>
+
+          <p>
+            Clean a clogged rose by soaking it in white vinegar to soften scale, then clearing the holes with a pin. Brass roses tolerate this indefinitely. Plastic roses can be cleaned the same way but tend to crack at the edges after a few years, and replacements are not always sold separately, so check before you buy if spare parts matter to you.
+          </p>
+        </div>
+
+        <div id="what-not-to-buy" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            10. When a Can Is the Wrong Tool, and What Not to Buy
+          </h2>
+
+          <p>
+            A watering can is a precision tool, not a lawn irrigation system. If you are filling a can more than five or six times per session, a hose will save your back and your evening. A decent <a href="/best-garden-hose/" class="text-[#1E90FF] font-bold hover:underline">garden hose</a> with a good <a href="/best-garden-hose-nozzle/" class="text-[#1E90FF] font-bold hover:underline">hose nozzle</a> set to shower does most of what a large can does across beds, and a lightweight <a href="/best-expandable-garden-hose/" class="text-[#1E90FF] font-bold hover:underline">expandable hose</a> is easier to move around a small patio than a 2-gallon can is to carry.
+          </p>
+
+          <p>
+            Skip decorative cans with no rose, tiny spouts and no stated capacity. They pour in a heavy stream that washes soil out of pots. Skip very cheap thin-walled plastic cans with a single loop handle in the 2.5 gallon and larger sizes: the handle flexes, the water sloshes and the rose falls off. And skip any metal can sold only as steel or metal with no mention of galvanizing or powder coating, since plain painted steel will rust from the inside.
+          </p>
+
+          <p>
+            Where cans do shine is in new plantings, seed trays, containers and the feed and care jobs that pair naturally with the rest of your <a href="/best-garden-tools/" class="text-[#1E90FF] font-bold hover:underline">garden tools</a>. If you are planning new beds or containers, our <a href="/diy-garden-landscaping-ideas/" class="text-[#1E90FF] font-bold hover:underline">DIY garden landscaping ideas</a> guide covers how to lay out a space so water, by can or hose, actually reaches everything.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying the Biggest Can You Can Find</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A 2.5 gallon can holds about 21 pounds of water. Most people stop filling it halfway because it is too heavy, which wastes the capacity and still strains the wrist. Buy the size you will actually fill and carry level: often 1 to 1.5 gallons outdoors and 1 litre indoors.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using a Fixed or Coarse Rose on Seedlings</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A heavy stream washes seed out of trays and knocks over young seedlings. Use a fine rose fitted face up, so water arcs upward and falls like rain. Fixed-rose cans and cans with no rose at all are the wrong tool for anything freshly sown.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Leaving Water in the Can Over Winter</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Water expanding as it freezes splits plastic seams and damages metal cans. Empty cans after use, store them upside down or on their side, and bring them into a shed or garage once nights fall below freezing.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Storing Fertilizer in a Galvanized Can</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Liquid feeds can be acidic or salty and attack the zinc coating that keeps a galvanized can from rusting. Keep a cheap plastic can for fertilizer, use your metal can for plain water only, and rinse both after every use.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using an Outdoor Can on Houseplants</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A big outdoor can with a rose drips onto floors, sprays leaves and is awkward to aim on a shelf. Houseplants need a small can with a long, thin spout. Either buy a dedicated indoor can or pull the rose off and pour slowly.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            12. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best watering can?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most gardens, the Haws Cradley Deluxe is the best all-round can: 7 litres is a manageable full weight, and its brass rose and brass ferrule give a fine spray and long-term rose compatibility. On a budget, the Bloem Classic 2 gallon is the best value. Indoors, the Haws Bartley Burbler is the most versatile small can.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What size watering can should I get?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Around 1 litre for houseplants, about 1 to 1.5 gallons for containers and patios, and 2 to 2.5 gallons only for beds and borders close to a tap. Remember each gallon adds about 8.3 pounds. If in doubt, go smaller: two light trips are easier than one heavy one.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are metal or plastic watering cans better?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Plastic is lighter, cheaper and cannot rust, which makes it the better default. Hot-dip galvanized steel lasts longer and resists UV, but it is heavier and should never hold fertilizer. Powder-coated steel suits small indoor cans. The rose matters more than the body material for how well a can waters.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Why do gardeners turn the watering can rose upward?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Fitting a removable rose face up sends water up in a gentle arc so it falls softly, like light rain. That stops seed being washed out of trays and keeps young seedlings upright. Facing the rose forward gives a heavier shower for established plants. It only works on cans with a removable rose.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How heavy is a full 2 gallon watering can?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                The water alone weighs about 16.7 pounds, since a US gallon of water is about 8.3 pounds. Add the can itself and a full 2 gallon can is typically around 18 to 20 pounds. A 2.5 gallon can carries close to 21 pounds of water before you count the steel.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What watering can is best for indoor plants?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A small can of 0.7 to 1 litre with a long, thin spout, so you can water the soil under the leaves. The Burgon &amp; Ball Indoor can suits crowded shelves, and the Haws Bartley Burbler adds a removable rose for seedlings. Avoid large outdoor cans indoors, which drip and splash.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can you leave a watering can outside?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Plastic and galvanized cans can live outside in the growing season, but empty them after use so algae and scale do not build up. Bring them in before freezing nights, since ice splits seams. Powder-coated indoor cans are not made for outdoor storage and may rust at the joints.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Lawn & Garden Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-garden-hose/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Watering</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Garden Hoses</h3>
+              <p class="text-gray-500 text-sm mt-2">When the can runs out of road: hoses that resist kinks and last more than a season.</p>
+            </a>
+            <a href="/best-garden-hose-nozzle/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Watering</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Garden Hose Nozzles</h3>
+              <p class="text-gray-500 text-sm mt-2">Shower and mist patterns that water beds as gently as a good rose.</p>
+            </a>
+            <a href="/best-garden-tools/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#38BDF8] font-black text-xs uppercase tracking-widest mb-2">Tools</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Garden Tools</h3>
+              <p class="text-gray-500 text-sm mt-2">The trowels, pruners and hand tools worth owning alongside your can.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Choose a watering can by the weight you can carry full, not the biggest capacity on the shelf. For most gardens that means a 1 to 1.5 gallon can with a long spout and a removable brass rose, like the Haws Cradley Deluxe. Add a small long-spout can for houseplants, and keep a cheap plastic can for fertilizer.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Look after it and any of these will last for years: empty it after use, store it upside down, keep feed out of galvanized steel and bring it in before the first hard frost. When you find yourself refilling more than five or six times a session, that is the signal to reach for a hose instead.
+          </p>
+        </div>
+
+        <MoreInCategory category="Lawn & Yard Care" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
