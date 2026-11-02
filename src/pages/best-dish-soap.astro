@@ -1,0 +1,908 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Dishwashers",
+    "url": "/best-dishwasher/"
+  },
+  {
+    "title": "How Long Do Dishwashers Last?",
+    "url": "/how-long-do-dishwashers-last/"
+  },
+  {
+    "title": "Best Enzyme Cleaners",
+    "url": "/best-enzyme-cleaner/"
+  },
+  {
+    "title": "Best Under-Sink Water Filters",
+    "url": "/best-under-sink-water-filter/"
+  },
+  {
+    "title": "Best Kitchen Faucets",
+    "url": "/best-kitchen-faucet/"
+  },
+  {
+    "title": "Best Spin Mops",
+    "url": "/best-spin-mop/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-11-02", modified: "2026-11-02" });
+const title = "7 Best Dish Soaps in 2026: Grease, Sensitive Skin and Eco Picks";
+const description =
+  "The best dish soap for grease, sensitive skin and eco certification, compared by surfactants, fragrance and labels, plus why dish soap never goes in a dishwasher";
+
+const PRODUCTS = [
+  {
+    "id": "dawn-ultra",
+    "name": "Dawn Ultra Dishwashing Liquid (Original Scent)",
+    "category": "Concentrated dish soap",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "pros": [
+      "Concentrated formula, a small amount handles a full sink",
+      "Strong on grease and cooked-on fat",
+      "Full ingredient list published",
+      "Stocked almost everywhere, in large refill sizes",
+      "Free and Clear versions available"
+    ],
+    "cons": [
+      "Contains fragrance, dyes and methylisothiazolinone in the original version",
+      "No EPA Safer Choice mark"
+    ],
+    "bottomLine": "The default for most kitchens: concentrated, strong on grease and easy to buy in bulk.",
+    "description": "Dawn Ultra is the benchmark hand dish soap for a reason. Its ingredient list pairs sodium lauryl sulfate and sodium laureth sulfate with an amine oxide that the maker describes as a cleaning booster, a combination that lifts grease quickly and keeps it suspended so it rinses away. The maker's wildlife connection is not just marketing color: rescue groups use Dawn to clean birds caught in oil spills, which is a fair proxy for how well it removes oil without being harsh. Owners commonly report that a teaspoon in a sink of warm water handles a full load of dinner dishes. The weaknesses are the extras. The original scent includes fragrance, colorants and methylisothiazolinone, a known contact allergen, so people with sensitive skin should look at Dawn's Free and Clear versions or one of the fragrance-free picks below. Dawn's Platinum line is pitched as stronger again, but the maker's headline comparisons are against non-Ultra Dawn, so Ultra is enough for most households. Buy the largest refill and decant into a small dispenser to keep cost and plastic down."
+  },
+  {
+    "id": "dawn-powerwash",
+    "name": "Dawn Platinum Powerwash Dish Spray",
+    "category": "Spray dish soap",
+    "badge": "Best for Greasy Pans",
+    "amazonUrl": "#",
+    "pros": [
+      "Sprays directly onto dishes, no sink to fill",
+      "Maker says it cuts grease on contact without water",
+      "Good for a single pan or a few dishes",
+      "Refill bottles sold separately",
+      "Free and Clear version available"
+    ],
+    "cons": [
+      "Higher cost per wash than liquid",
+      "Spray mechanism can clog or fail over time, owners report"
+    ],
+    "bottomLine": "The fastest way to deal with a greasy skillet or a handful of dishes between full washes.",
+    "description": "Powerwash is a spray-format dish soap meant to change how you wash, not just what with. Instead of filling a sink, you spray it directly onto the greasy dish, let it sit briefly on heavily soiled items, then wipe and rinse. Dawn describes it as cutting through grease on contact without water, and lists it as part of its Platinum line. The maker's five-times-faster claim is measured against non-Ultra Dawn, so treat it as a marketing figure rather than a comparison with other concentrates. Where it genuinely shines is convenience: a single sheet pan, a frying pan after breakfast or a few mugs during the day, when filling a sink feels wasteful. It also suits small kitchens and people who wash as they cook. The label says it is not for use in automatic dishwashers. Cost per use is higher than pouring liquid, so most owners pair it with a regular dish soap for full loads and buy the refill bottles rather than new sprayers. A Free and Clear version is available for anyone avoiding fragrance."
+  },
+  {
+    "id": "seventh-generation-free-clear",
+    "name": "Seventh Generation Free & Clear Dish Liquid",
+    "category": "Certified eco dish soap",
+    "badge": "Best Eco-Certified",
+    "amazonUrl": "#",
+    "pros": [
+      "EPA Safer Choice certified, per the maker",
+      "USDA Certified Biobased label",
+      "No added fragrance or dyes",
+      "Plant-derived surfactants",
+      "Widely available in supermarkets"
+    ],
+    "cons": [
+      "Less concentrated than Dawn Ultra, owners report using more",
+      "Slower on heavy baked-on grease"
+    ],
+    "bottomLine": "The pick for anyone who wants an outside review of the formula, not just a green label.",
+    "description": "Seventh Generation Free and Clear is the clearest eco choice on the shelf because its claims are backed by outside programs. The company states that its dish liquids are EPA Safer Choice certified, meaning every intentionally added ingredient has been reviewed against the EPA's health and environmental criteria, and the bottle also carries the USDA Certified Biobased label, which reflects the share of plant-based carbon in the product. The Free and Clear version has no added fragrance or dyes, which makes it a strong second option for sensitive skin. The trade-off is strength. Owners commonly report that it needs a bit more product than Dawn to handle the same greasy load, and that baked-on fat benefits from a longer soak. For everyday plates, glasses and cutlery that difference barely matters. If you care about what goes down your drain and want a mark you can check yourself in the EPA's Safer Choice database, this is the bottle to buy. Confirm the logo on the exact scent you pick, since certifications can vary by variant."
+  },
+  {
+    "id": "palmolive-pure-clear",
+    "name": "Palmolive Ultra Pure + Clear (Unscented)",
+    "category": "Fragrance-free dish soap",
+    "badge": "Best for Sensitive Skin",
+    "amazonUrl": "#",
+    "pros": [
+      "Unscented version with no added fragrance",
+      "Listed as hypoallergenic, 0% dyes, parabens and phosphates",
+      "Short, published ingredient list",
+      "Concentrated Ultra formula",
+      "Easy to find in grocery stores"
+    ],
+    "cons": [
+      "Scented Pure + Clear versions look similar, easy to grab the wrong one",
+      "No third-party eco certification"
+    ],
+    "bottomLine": "A short, fragrance-free formula from a mainstream brand for hands that react to dish soap.",
+    "description": "Palmolive Ultra Pure + Clear in its unscented version is our pick for sensitive skin because its ingredient list is short and free of the usual irritants. Colgate-Palmolive's SmartLabel listing describes it as hypoallergenic with no parabens or phosphates, retailer listings note it is dye-free, and the published ingredients are water, sodium laureth sulfate, lauramidopropyl betaine, lactic acid and poloxamer 124. That is a mild, straightforward surfactant system with no added fragrance. It is still a concentrated Ultra formula, so it handles everyday grease well, though owners report heavy roasting pans need a soak. The catch is packaging. Pure + Clear also comes in scented versions such as Spring Fresh and Lavender and Eucalyptus that list fragrance, and the bottles look alike, so check for the word Unscented or Fragrance Free on the front. Nothing replaces gloves for people with hand dermatitis, but if you want a soap that is unlikely to be the problem, this is a good place to start. The label warns against using it in an automatic dishwasher."
+  },
+  {
+    "id": "method-dish-soap",
+    "name": "Method Dish Soap (Sea Minerals)",
+    "category": "Plant-based dish soap",
+    "badge": "Best Recycled Packaging",
+    "amazonUrl": "#",
+    "pros": [
+      "Maker says the bottle is made from 100% recycled plastic, excluding pump",
+      "Plant-based cleaning agents per the maker",
+      "Pump bottle dispenses a measured amount",
+      "Large refill tubs available",
+      "Sold as not tested on animals"
+    ],
+    "cons": [
+      "Scented only, no fragrance-free version",
+      "Not as strong as Dawn on heavy grease, owners report"
+    ],
+    "bottomLine": "A pleasant countertop pump bottle with a genuine recycled-packaging story.",
+    "description": "Method's dish soap is the pick for people who want a bottle they do not mind leaving on the counter and a packaging claim that holds up. The maker says the standard pump bottle, not counting the pump, is made from 100% recycled plastic, and it sells large refill tubs to cut plastic further. Its ingredient list leads with sodium lauryl sulfate, the same workhorse surfactant found in many mainstream soaps, and retailers list it as free of phosphates, chlorine bleach and triclosan. The pump dispenses a measured dose, which helps people avoid the common habit of squirting far too much onto a sponge. On heavy grease owners commonly report it is a step behind Dawn, and there is no fragrance-free version, so it is not our recommendation for sensitive skin. Method markets the formula as plant-based and not tested on animals, but it does not carry the EPA Safer Choice mark, so treat it as a good everyday soap with better packaging rather than a certified eco product."
+  },
+  {
+    "id": "mrs-meyers",
+    "name": "Mrs. Meyer's Clean Day Dish Soap",
+    "category": "Scented dish soap",
+    "badge": "Best Scented",
+    "amazonUrl": "#",
+    "pros": [
+      "Essential-oil scents such as lemon verbena, basil and lavender",
+      "Brand states it is mostly plant-derived",
+      "Includes aloe and glycerin",
+      "Sold as not tested on animals",
+      "Widely stocked"
+    ],
+    "cons": [
+      "Strong scent is a drawback for sensitive skin",
+      "No EPA Safer Choice mark on the bottle"
+    ],
+    "bottomLine": "For people who want washing up to smell good and are not sensitive to fragrance.",
+    "description": "Mrs. Meyer's Clean Day is the dish soap people buy because it makes the sink smell like a garden. It is scented with essential oils in a long rotating list of fragrances, and the brand describes the formula as mostly plant-derived, with aloe vera and glycerin added. Retailer listings put the plant-derived share at roughly 97 percent including water, though that is the brand's own figure rather than an outside certification. It cleans everyday dishes well and handles moderate grease, but owners commonly report it needs more product than Dawn for heavy roasting pans. The scent is the whole point and also the main limitation. Essential oils are still fragrance, and fragrance is one of the most common triggers of contact dermatitis, so this is not a soap for anyone with reactive skin. It also does not carry the EPA Safer Choice mark, so its eco credentials rest on the brand's own claims. Buy it for the experience, and keep a fragrance-free bottle around if anyone in the house reacts to it."
+  },
+  {
+    "id": "sal-suds",
+    "name": "Dr. Bronner's Sal Suds Biodegradable Cleaner",
+    "category": "All-purpose concentrate",
+    "badge": "Best Multi-Purpose Concentrate",
+    "amazonUrl": "#",
+    "pros": [
+      "Highly concentrated, maker gives dilutions for dishes and general cleaning",
+      "Short ingredient list built on sodium lauryl sulfate",
+      "One bottle covers dishes, floors and surfaces",
+      "Rinses clean",
+      "Available in large sizes"
+    ],
+    "cons": [
+      "Fir and spruce oil scent, no fragrance-free version",
+      "Must be diluted, used neat it is wasteful and harsh on skin"
+    ],
+    "bottomLine": "A single concentrate for dishes and most household cleaning, if you will take the time to dilute it.",
+    "description": "Sal Suds is not a true soap, and Dr. Bronner's says so: it is a synthetic detergent concentrate built on sodium lauryl sulfate, with coco-betaine and lauryl glucoside, scented with fir needle and spruce oils. The company sells it as an all-purpose cleaner and publishes dilutions for dishes, floors, surfaces and laundry, so one bottle can replace several products. For dishes the maker's guidance calls for only a small amount in a sink of water or diluted in a squeeze bottle, and owners commonly report that a large bottle lasts many months at those rates. Dr. Bronner's points out that SLS is often confused with SLES and that SLS does not carry the trace 1,4-dioxane concern that ethoxylated surfactants can. The downsides are practical. It must be diluted, it has a distinct pine scent that cannot be avoided, and it is easy to overuse if you treat it like a regular dish soap. If you want fewer bottles under the sink and do not mind measuring, it is excellent value. For grab-and-squirt simplicity, Dawn Ultra is easier."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Dish Soap",
+          item: "https://www.thehonestreviewers.com/best-dish-soap/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best dish soap overall?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most kitchens, Dawn Ultra is the best all-round dish soap. It is concentrated, strong on grease and cooked-on fat, publishes its full ingredient list and is easy to buy in large refill sizes. If you want a certified eco formula, choose Seventh Generation Free and Clear, and for sensitive skin choose Palmolive Ultra Pure + Clear Unscented."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use dish soap in my dishwasher?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Hand dish soap foams heavily, and in a dishwasher the spray arms whip it into suds that leak out of the door, strain the drain pump and can trip leak sensors. Dawn, Palmolive and most other brands say on the label not to use the product in an automatic dishwasher. Use dishwasher detergent only, and never use dishwasher detergent by hand either."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which dish soap is best for sensitive skin?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Look for a fragrance-free, dye-free formula with a short ingredient list. Palmolive Ultra Pure + Clear Unscented and Seventh Generation Free and Clear are both good choices, and Ecover Zero is another fragrance-free option. Fragrance and some preservatives are common contact allergens. Wearing gloves and using cooler water often helps more than changing brands alone."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does EPA Safer Choice mean on dish soap?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It means the EPA has reviewed every intentionally added ingredient in the product against health and environmental criteria, including toxicity to aquatic life and biodegradability, and that the maker discloses its ingredients. A separate Safer Choice Fragrance-Free mark adds a no-fragrance requirement. You can search any product in the EPA's public Safer Choice database to confirm the listing."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Dawn Platinum better than Dawn Ultra?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Dawn markets Platinum as its stronger grease-cutting line, but its headline five-times-faster claims compare Platinum with non-Ultra Dawn, not with Ultra. In practice the gap is smaller than the label suggests. Platinum is worth it if you cook with a lot of fat or roast often. For everyday dishes, Dawn Ultra is enough and usually costs less."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is dish soap safe to use as a general cleaner?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In small, diluted amounts, yes, on sealed counters, painted surfaces, many hard floors and fresh grease spots on fabric. Use a few drops per bucket and rinse well, because too much leaves a sticky film. Avoid it in steam cleaners, and use an enzyme cleaner instead for pet urine and other organic stains that surfactants cannot break down."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does my dish soap seem weaker than it used to?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Common causes are hard water, which reduces how well many surfactants work, switching to a less concentrated store brand, or washing in water that has cooled and filled with grease. Change the water when it turns cloudy and greasy, wash glasses before pans, and use a concentrated formula. Hard water may also leave spots that look like poor cleaning."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home Appliances",
+    tags: [
+      "best dish soap",
+      "dish soap",
+      "best dishwashing liquid",
+      "fragrance free dish soap",
+      "eco friendly dish soap",
+      "dish soap for sensitive skin"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            7 Products Compared
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The 7 Best <span class="text-[#38BDF8]">Dish Soaps</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Concentrated grease cutters, fragrance-free formulas for sensitive hands and soaps with a real EPA Safer Choice listing, picked from ingredient lists and labels.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#dawn-ultra"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            How We Picked
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="8.4k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-dish-soap-works" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. What Dish Soap Does</a>
+          <a href="#how-we-picked" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. How We Picked</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Our Top Picks</a>
+          <a href="#concentration" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Concentration</a>
+          <a href="#grease" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Grease and Sprays</a>
+          <a href="#sensitive-skin" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Sensitive Skin</a>
+          <a href="#eco-labels" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Eco Certifications</a>
+          <a href="#dishwasher" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Not in the Dishwasher</a>
+          <a href="#beyond-the-sink" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Beyond the Sink</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          For most kitchens the best dish soap is Dawn Ultra: concentrated, strong on grease and easy to buy in bulk. Choose Seventh Generation Free and Clear if you want a formula with EPA Safer Choice certification, and Palmolive Ultra Pure + Clear Unscented if washing up irritates your skin. Whatever you buy, keep it out of the dishwasher.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-dish-soap-works" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. What Dish Soap Actually Does
+          </h2>
+
+          <p>
+            Hand dishwashing liquid is a blend of surfactants, water and a few helpers. A surfactant molecule has one end that clings to water and one end that clings to oil, so it surrounds grease, lifts it off the plate and holds it in the rinse water so it does not settle back on the next glass. Almost every bottle on the shelf leans on the same small family of surfactants: sodium lauryl sulfate, sodium laureth sulfate, amine oxides and betaines. The brand matters less than how much of that blend is in the bottle.
+          </p>
+
+          <p>
+            Dawn Ultra's ingredient list shows the pattern clearly. It pairs sodium lauryl sulfate and sodium laureth sulfate with C10-16 alkyldimethylamine oxide, which the maker describes as a cleaning booster. Palmolive Ultra Pure + Clear uses sodium laureth sulfate with lauramidopropyl betaine. Dr. Bronner's Sal Suds uses sodium lauryl sulfate with coco-betaine and lauryl glucoside. Different marketing, overlapping chemistry. What separates them is concentration, fragrance, dyes and preservatives, and whether an outside body has reviewed the formula.
+          </p>
+
+          <p>
+            Dish soap is also a narrow product. It is designed to foam heavily, rinse clean and be gentle enough for bare hands in a sink of warm water. Those same traits make it the wrong choice for an automatic dishwasher, a pressure washer tank or a floor machine, which we cover further down. Buying well means matching the bottle to the sink, the grease load and the skin that will be in the water, not picking the loudest label.
+          </p>
+        </div>
+
+        <div id="how-we-picked" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. How We Picked
+          </h2>
+
+          <p>
+            We did not run a lab test. We built this list from ingredient disclosures, manufacturers' product pages and SmartLabel listings, the EPA Safer Choice program's public criteria, retailer label images and long-running owner reports. For each product we checked what surfactants it lists first, whether it is sold as a concentrate, whether a fragrance-free version exists, which certifications appear on the bottle itself, and what the label says about dishwashers.
+          </p>
+
+          <p>
+            Certifications are reported only where we could tie them to the product. Seventh Generation states that its dish liquids carry EPA Safer Choice certification, and its Free and Clear bottle also carries the USDA Certified Biobased label. For other brands we describe what the maker claims, such as plant-derived ingredients or cruelty-free status, without upgrading those claims into certifications. If a green logo matters to you, look for it on the exact bottle and scent, because listings change by variant.
+          </p>
+
+          <p>
+            We left out ratings and review counts because we could not verify them consistently, and we did not include prices beyond noting that every pick sits in normal grocery territory. We skipped products whose ingredient lists we could not find, novelty soaps that sell scent over cleaning, and anything marketed for both the sink and the dishwasher, because no single liquid does both jobs properly.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Our 7 Top Picks
+          </h2>
+
+          <p>
+            The picks are grouped by job. Dawn Ultra leads as the everyday grease cutter, and the Dawn Powerwash spray covers single greasy pans. Seventh Generation Free and Clear is the certified eco choice, Palmolive Ultra Pure + Clear Unscented is the sensitive-skin pick, Method wins on packaging, Mrs. Meyer's on scent, and Sal Suds is a concentrate that also handles household cleaning. Ingredients and claims come from each maker's label or product listing.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} Amazon ratings)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="concentration" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Concentration: Why Some Bottles Go Further
+          </h2>
+
+          <p>
+            The word Ultra on a dish soap bottle has a history. Decades ago the big brands concentrated their formulas so a smaller bottle did the work of a larger one, and the label stuck. Today Ultra mostly signals a concentrated formula, but the term is not regulated, and two Ultra bottles from different brands can perform very differently. The most reliable test is your own sink: if a teaspoon handles a full load of greasy dishes, the soap is concentrated enough.
+          </p>
+
+          <p>
+            Concentration matters more than price per bottle. A watery store-brand soap that needs three squirts per sinkful costs more per washed dish than a concentrated name brand that needs one. Owners commonly report that Dawn Ultra and Palmolive Ultra go noticeably further than budget house brands, and that Sal Suds, which is sold as an all-purpose concentrate, goes furthest of all when diluted the way the maker suggests.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Product</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Main surfactants listed</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Fragrance-free option</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Notable label claim</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Dawn Ultra</td>
+                    <td class="px-4 py-4 text-gray-700">SLS, SLES, amine oxide</td>
+                    <td class="px-4 py-4 text-gray-700">Dawn Free and Clear lines</td>
+                    <td class="px-4 py-4 text-gray-700">Used for oiled-wildlife cleanup</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Dawn Powerwash spray</td>
+                    <td class="px-4 py-4 text-gray-700">Spray formula</td>
+                    <td class="px-4 py-4 text-gray-700">Free and Clear version</td>
+                    <td class="px-4 py-4 text-gray-700">Works without water first</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Seventh Generation Free and Clear</td>
+                    <td class="px-4 py-4 text-gray-700">Plant-derived surfactants</td>
+                    <td class="px-4 py-4 text-gray-700">Yes, the whole product</td>
+                    <td class="px-4 py-4 text-gray-700">EPA Safer Choice, USDA Biobased</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Palmolive Ultra Pure + Clear</td>
+                    <td class="px-4 py-4 text-gray-700">SLES, betaine</td>
+                    <td class="px-4 py-4 text-gray-700">Unscented variant</td>
+                    <td class="px-4 py-4 text-gray-700">Hypoallergenic, 0% dyes</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Method</td>
+                    <td class="px-4 py-4 text-gray-700">SLS leads the list</td>
+                    <td class="px-4 py-4 text-gray-700">No</td>
+                    <td class="px-4 py-4 text-gray-700">Bottle made from recycled plastic</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Mrs. Meyer's</td>
+                    <td class="px-4 py-4 text-gray-700">Plant-derived surfactants</td>
+                    <td class="px-4 py-4 text-gray-700">No</td>
+                    <td class="px-4 py-4 text-gray-700">Essential oil scents</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Dr. Bronner's Sal Suds</td>
+                    <td class="px-4 py-4 text-gray-700">SLS, coco-betaine, lauryl glucoside</td>
+                    <td class="px-4 py-4 text-gray-700">No, fir and spruce oils</td>
+                    <td class="px-4 py-4 text-gray-700">All-purpose concentrate</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="grease" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Grease, Baked-On Food and the Spray Question
+          </h2>
+
+          <p>
+            For ordinary plates and glasses almost any decent dish soap works. The differences show up on roasting pans, sheet pans and skillets with cooked-on fat, where surfactant strength and contact time decide whether you scrub for thirty seconds or five minutes. Here Dawn's reputation is earned: its marketing leans on the fact that wildlife rescue groups use Dawn to clean birds caught in oil spills, which says something about how well the formula lifts oil without being harsh on skin or feathers.
+          </p>
+
+          <p>
+            Dawn's Platinum line is pitched as a step above Ultra for grease. Be careful with the numbers on the bottle: the maker's five-times-faster claims are measured against non-Ultra Dawn, not against Ultra itself, so the real gap between Ultra and Platinum is smaller than the label suggests. Platinum is worth it if you cook with a lot of fat; for most households Ultra is enough.
+          </p>
+
+          <p>
+            The Powerwash spray changes the method rather than the chemistry. You spray it directly on a dry or lightly wet greasy dish, wait briefly on heavily soiled items, then wipe and rinse. The maker describes it as working on contact without water. Owners commonly report it is the best format for a single greasy pan or a few dishes between full washes, because you do not fill a sink. The trade-off is cost per use, and the refill bottles are the way to keep that reasonable.
+          </p>
+        </div>
+
+        <div id="sensitive-skin" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Sensitive Skin and Fragrance-Free Formulas
+          </h2>
+
+          <p>
+            If washing dishes leaves your hands red, dry or itchy, the soap may be one cause, but rarely the only one. Hot water and long soaks strip natural oils from skin regardless of the formula, and surfactants make that worse. The American Academy of Dermatology recommends wearing gloves for wet work like dishwashing if you have hand dermatitis, and that single change usually helps more than switching brands.
+          </p>
+
+          <p>
+            When the soap itself is the problem, fragrance and preservatives are the usual suspects. Fragrance is one of the most common causes of allergic contact dermatitis, and some preservatives used in household cleaners, including methylisothiazolinone, are recognised contact allergens. Methylisothiazolinone appears in the Dawn Ultra ingredient list we reviewed. That does not make Dawn unsafe for most people, but it is a reason for anyone with known sensitivities to read labels.
+          </p>
+
+          <p>
+            For sensitive skin we point first to Palmolive Ultra Pure + Clear in its unscented version, which Colgate-Palmolive lists as hypoallergenic with no dyes, parabens or phosphates and a short ingredient list. Seventh Generation Free and Clear is the second choice, with no added fragrance or dyes and an EPA Safer Choice review behind it. Ecover's Zero dish soap is another fragrance-free option where you can find it.
+          </p>
+        </div>
+
+        <div id="eco-labels" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Eco Certifications: What the Logos Mean
+          </h2>
+
+          <p>
+            The most useful mark on a US dish soap is EPA Safer Choice. The EPA's program reviews every intentionally added ingredient against health and environmental criteria, including aquatic toxicity and biodegradability, and requires full ingredient disclosure. There is also a Safer Choice Fragrance-Free mark for products with no fragrance at all. Seventh Generation's dish liquids carry Safer Choice, which is a large part of why it is our eco pick. You can check any product in the EPA's searchable Safer Choice database.
+          </p>
+
+          <p>
+            Other marks answer narrower questions. USDA Certified Biobased tells you what share of the product's carbon comes from plants rather than petroleum, which is useful but says nothing about toxicity. Leaping Bunny certifies that no animal testing happened at any stage, including by suppliers, which is an ethical claim rather than an environmental one. Ecover holds Leaping Bunny certification for its range, and Method and Mrs. Meyer's market their products as not tested on animals.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Mark or claim</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Who checks it</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">What it tells you</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">EPA Safer Choice</td>
+                    <td class="px-4 py-4 text-gray-700">US EPA</td>
+                    <td class="px-4 py-4 text-gray-700">Every ingredient reviewed for health and environmental safety</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Safer Choice Fragrance-Free</td>
+                    <td class="px-4 py-4 text-gray-700">US EPA</td>
+                    <td class="px-4 py-4 text-gray-700">Safer Choice criteria plus no fragrance</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">USDA Certified Biobased</td>
+                    <td class="px-4 py-4 text-gray-700">USDA</td>
+                    <td class="px-4 py-4 text-gray-700">Share of plant-based carbon in the product</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Leaping Bunny</td>
+                    <td class="px-4 py-4 text-gray-700">Leaping Bunny program</td>
+                    <td class="px-4 py-4 text-gray-700">No animal testing at any stage</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Plant-based, natural, eco</td>
+                    <td class="px-4 py-4 text-gray-700">Nobody</td>
+                    <td class="px-4 py-4 text-gray-700">Marketing language only</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            Packaging is the other half of the environmental picture. Method says its standard dish soap bottle, not counting the pump, is made from 100% recycled plastic. Most brands, including Dawn, sell large refill bottles, and buying a big refill to top up a small dispenser cuts plastic per wash more than any formula change will.
+          </p>
+        </div>
+
+        <div id="dishwasher" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Never Put Dish Soap in a Dishwasher
+          </h2>
+
+          <p>
+            Hand dish soap and automatic dishwasher detergent are different products that happen to share a word. Hand soap is built to foam generously and stay mild on skin. Dishwasher detergent is built to produce almost no foam, because a dishwasher sprays water at high pressure, and it relies on enzymes, alkaline builders and oxygen bleach to break down food at higher temperatures than your hands could tolerate.
+          </p>
+
+          <p>
+            Put a squirt of hand dish soap in a dishwasher and the spray arms whip it into a volume of suds the machine was never designed to hold. Foam pours out around the door, pumps struggle to drain, and leak or flood sensors on many modern machines can trip and stop the cycle. Most dish soap labels, including Dawn's and Palmolive's, say plainly not to use the product in an automatic dishwasher. If someone in the house has already made this mistake, stop the cycle, scoop out the foam, run a rinse with the door shut and repeat until the suds are gone.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">Don't swap them</p>
+            <p class="text-xl font-bold text-white mb-3">Hand soap in the sink, dishwasher detergent in the machine</p>
+            <p class="text-gray-300 leading-relaxed m-0">Dish soap foams over in a dishwasher. Dishwasher detergent is strongly alkaline and its label warns against skin contact, so it does not belong in a sink you put your hands into either. Keep the two products in separate places so nobody grabs the wrong one.</p>
+          </div>
+        </div>
+
+        <div id="beyond-the-sink" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Beyond the Sink: Where Dish Soap Helps and Where It Hurts
+          </h2>
+
+          <p>
+            A bottle of dish soap is one of the most versatile cleaners in the house, which is exactly why it gets misused. A few drops in a bucket of warm water clean sealed counters, painted trim and many hard floors. A drop on a damp cloth lifts a fresh grease spot from fabric before laundering. Diluted heavily, it makes a mild pre-treatment for stained upholstery that tolerates water. In each case the rule is the same: use far less than you think and rinse well.
+          </p>
+
+          <p>
+            Where it goes wrong is in machines. Dish soap in a mop bucket is fine in small amounts, but heavy doses leave a sticky film that attracts dirt, and a <a href="/best-spin-mop/" class="text-[#1E90FF] font-bold hover:underline">spin mop</a> will spread that film across the whole floor. It also has no place in the water tank of a <a href="/best-steam-cleaner/" class="text-[#1E90FF] font-bold hover:underline">steam cleaner</a>, which is designed for water only. Using dish soap in a pressure washer has its own trade-offs, covered in our guide on <a href="/can-you-use-dish-soap-in-a-pressure-washer/" class="text-[#1E90FF] font-bold hover:underline">whether you can use dish soap in a pressure washer</a>.
+          </p>
+
+          <p>
+            Dish soap is also the wrong tool for organic stains and odors. Pet urine, vomit and similar messes need enzymes that break down the proteins and uric acid, which surfactants alone cannot do. For those, an <a href="/best-enzyme-cleaner/" class="text-[#1E90FF] font-bold hover:underline">enzyme cleaner</a> is the right product, and adding dish soap first can actually interfere with it.
+          </p>
+
+          <p>
+            Finally, rinse water matters more than people realise. Hard water reduces how well many surfactants work and leaves spots on glassware, so you may need more soap to get the same result. If your kitchen water is hard or tastes off, an <a href="/best-under-sink-water-filter/" class="text-[#1E90FF] font-bold hover:underline">under-sink water filter</a> improves drinking water, though a filter alone will not soften water for washing.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Putting hand dish soap in the dishwasher</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Hand dish soap is designed to foam, and a dishwasher's spray arms turn a single squirt into enough suds to pour out around the door, strain the drain pump and trip leak sensors. Use only automatic dishwasher detergent in the machine, and keep the two products stored apart so nobody grabs the wrong one by mistake.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Squirting soap straight onto the sponge</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Concentrated soap applied neat to a sponge mostly rinses down the drain and leaves more residue on the dishes to wash off. Fill a basin with warm water and add a teaspoon, or keep a pump bottle of diluted soap by the sink. You will use far less product and get the same clean result.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Judging cleaning power by suds</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Foam is a side effect of surfactants, not a measure of cleaning. Brands add foam boosters because shoppers like bubbles. A concentrated soap with modest foam can strip more grease than a watery one that piles up suds and collapses on the first greasy pan. Judge a soap by how many dishes a dose handles.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Trusting green words instead of certification marks</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Natural, plant-based and eco have no legal definition on a cleaning product. If environmental safety matters, look for an outside mark such as EPA Safer Choice on the exact bottle and scent, and check it in the EPA database. Leaping Bunny is a cruelty-free mark, not an environmental one, so read each logo for what it actually certifies.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Blaming the soap for dishwater hands</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Hot water and long soaks dry out skin whatever the formula. If your hands crack after washing up, switch to a fragrance-free soap, but also lower the water temperature, wear gloves for wet work as dermatologists advise, and moisturise afterward. Changing brands alone rarely fixes the problem if the routine stays the same.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best dish soap overall?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most kitchens, Dawn Ultra is the best all-round dish soap. It is concentrated, strong on grease and cooked-on fat, publishes its full ingredient list and is easy to buy in large refill sizes. If you want a certified eco formula, choose Seventh Generation Free and Clear, and for sensitive skin choose Palmolive Ultra Pure + Clear Unscented.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I use dish soap in my dishwasher?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                No. Hand dish soap foams heavily, and in a dishwasher the spray arms whip it into suds that leak out of the door, strain the drain pump and can trip leak sensors. Dawn, Palmolive and most other brands say on the label not to use the product in an automatic dishwasher. Use dishwasher detergent only, and never use dishwasher detergent by hand either.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Which dish soap is best for sensitive skin?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Look for a fragrance-free, dye-free formula with a short ingredient list. Palmolive Ultra Pure + Clear Unscented and Seventh Generation Free and Clear are both good choices, and Ecover Zero is another fragrance-free option. Fragrance and some preservatives are common contact allergens. Wearing gloves and using cooler water often helps more than changing brands alone.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What does EPA Safer Choice mean on dish soap?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It means the EPA has reviewed every intentionally added ingredient in the product against health and environmental criteria, including toxicity to aquatic life and biodegradability, and that the maker discloses its ingredients. A separate Safer Choice Fragrance-Free mark adds a no-fragrance requirement. You can search any product in the EPA's public Safer Choice database to confirm the listing.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is Dawn Platinum better than Dawn Ultra?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Dawn markets Platinum as its stronger grease-cutting line, but its headline five-times-faster claims compare Platinum with non-Ultra Dawn, not with Ultra. In practice the gap is smaller than the label suggests. Platinum is worth it if you cook with a lot of fat or roast often. For everyday dishes, Dawn Ultra is enough and usually costs less.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is dish soap safe to use as a general cleaner?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                In small, diluted amounts, yes, on sealed counters, painted surfaces, many hard floors and fresh grease spots on fabric. Use a few drops per bucket and rinse well, because too much leaves a sticky film. Avoid it in steam cleaners, and use an enzyme cleaner instead for pet urine and other organic stains that surfactants cannot break down.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Why does my dish soap seem weaker than it used to?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Common causes are hard water, which reduces how well many surfactants work, switching to a less concentrated store brand, or washing in water that has cooled and filled with grease. Change the water when it turns cloudy and greasy, wash glasses before pans, and use a concentrated formula. Hard water may also leave spots that look like poor cleaning.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Cleaning Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-enzyme-cleaner/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Stains and Odors</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Enzyme Cleaners</h3>
+              <p class="text-gray-500 text-sm mt-2">For pet urine and organic messes that dish soap cannot break down.</p>
+            </a>
+            <a href="/best-dishwasher/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Kitchen</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Dishwashers</h3>
+              <p class="text-gray-500 text-sm mt-2">Machines that handle detergent dosing and heavy loads properly.</p>
+            </a>
+            <a href="/can-you-use-dish-soap-in-a-pressure-washer/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#38BDF8] font-black text-xs uppercase tracking-widest mb-2">Outdoor Cleaning</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Dish Soap in a Pressure Washer?</h3>
+              <p class="text-gray-500 text-sm mt-2">When it works, when it damages the pump and what to use instead.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Dish soap is a small purchase, but the right bottle saves money, protects your hands and keeps the dishwasher from flooding the kitchen floor. Start with Dawn Ultra if you want one soap that handles everything, switch to Seventh Generation Free and Clear for a formula with an outside environmental review, and choose Palmolive Ultra Pure + Clear Unscented if your skin reacts to fragrance.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Whatever you pick, use less than you think, wash in a basin rather than under a running tap, and keep hand dish soap and dishwasher detergent in separate places. Those habits matter more than any brand on the shelf.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Appliances" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
