@@ -1,4 +1,4 @@
-import { ApiClient, TypedDefaultApi, SearchItemsRequestContent } from "amazon-creators-api";
+import { ApiClient, TypedDefaultApi, SearchItemsRequestContent, GetItemsRequestContent } from "amazon-creators-api";
 import { readFileSync, writeFileSync, existsSync } from "fs";
 import { join } from "path";
 
@@ -62,10 +62,10 @@ function isConfidentMatch(queryName, resultTitle) {
 const DELAY_MS = 1100;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-async function searchWithRetry(req, attempts = 4) {
+async function withRetry(call, attempts = 4) {
   for (let n = 1; ; n++) {
     try {
-      return await api.searchItems(client.marketplace, req);
+      return await call();
     } catch (err) {
       const throttled = err?.type === "ThrottleException" || err?.body?.type === "ThrottleException";
       if (!throttled || n >= attempts) throw err;
@@ -74,11 +74,51 @@ async function searchWithRetry(req, attempts = 4) {
   }
 }
 
+const searchWithRetry = (req) => withRetry(() => api.searchItems(client.marketplace, req));
+const getItemsWithRetry = (req) => withRetry(() => api.getItems(client.marketplace, req));
+
+const errorDetail = (err) =>
+  // API errors arrive as plain objects, so String(err) would only say "[object Object]".
+  typeof err?.message === "string" ? err.message : JSON.stringify(err?.body ?? err?.message ?? err);
+
 const images = { ...existingImages };
 const report = [];
 
+// A product that already has an ASIN (often hand-verified) but no image gets its
+// picture by ASIN lookup. A name search here would return whatever Amazon ranks
+// first and overwrite a correct ASIN with a different product or pack size.
+const byAsin = products.filter(({ id }) => asins[id] && !images[id]);
+const GET_ITEMS_BATCH = 10; // GetItems accepts at most 10 ASINs per request
+for (let i = 0; i < byAsin.length; i += GET_ITEMS_BATCH) {
+  const batch = byAsin.slice(i, i + GET_ITEMS_BATCH);
+  try {
+    const req = new GetItemsRequestContent();
+    req.partnerTag = process.env.AMAZON_CREATORS_PARTNER_TAG;
+    req.itemIds = [...new Set(batch.map(({ id }) => asins[id]))];
+    req.resources = ["itemInfo.title", "images.primary.medium"];
+    const result = await getItemsWithRetry(req);
+    const found = new Map((result?.itemsResult?.items || []).map((it) => [it.asin, it]));
+    for (const { id, name, file } of batch) {
+      const item = found.get(asins[id]);
+      const url = item?.images?.primary?.medium?.url;
+      if (url) {
+        images[id] = url;
+        report.push({ id, name, file, status: "image-by-asin", matchedTitle: item.itemInfo?.title?.displayValue, asin: asins[id] });
+      } else {
+        report.push({ id, name, file, status: "asin-not-found", asin: asins[id] });
+      }
+    }
+  } catch (err) {
+    for (const { id, name, file } of batch) report.push({ id, name, file, status: "error", error: errorDetail(err) });
+  }
+  console.log(`ASIN lookups ${Math.min(i + GET_ITEMS_BATCH, byAsin.length)}/${byAsin.length}...`);
+  await sleep(DELAY_MS);
+}
+const lookedUp = new Set(byAsin.map(({ id }) => id));
+
 for (let i = 0; i < products.length; i++) {
   const { id, name, file } = products[i];
+  if (lookedUp.has(id)) continue; // handled by the ASIN lookup above
   // Skip only when BOTH the image and the ASIN are known. Checking the image alone
   // stranded every product matched before ASIN capture existed: it has a picture, so
   // it was skipped, so it never got the /dp/ link that pays better than a search link.
@@ -98,6 +138,13 @@ for (let i = 0; i < products.length; i++) {
     const match = items.find((it) => isConfidentMatch(name, it?.itemInfo?.title?.displayValue));
 
     if (match) {
+      // Never replace a known ASIN with a search hit; only fill a missing one.
+      if (asins[id] && match.asin && match.asin !== asins[id]) {
+        report.push({ id, name, file, status: "rejected", reason: "search hit differs from known ASIN", topResultTitle: match.itemInfo.title.displayValue });
+        if (i % 10 === 0) console.log(`${i + 1}/${products.length}...`);
+        await sleep(DELAY_MS);
+        continue;
+      }
       images[id] = match.images.primary.medium.url;
       if (match.asin) asins[id] = match.asin;
       report.push({ id, name, file, status: "accepted", matchedTitle: match.itemInfo.title.displayValue, asin: match.asin });
@@ -105,9 +152,7 @@ for (let i = 0; i < products.length; i++) {
       report.push({ id, name, file, status: "rejected", topResultTitle: items[0]?.itemInfo?.title?.displayValue || null });
     }
   } catch (err) {
-    // API errors arrive as plain objects, so String(err) would only say "[object Object]".
-    const detail = typeof err?.message === "string" ? err.message : JSON.stringify(err?.body ?? err?.message ?? err);
-    report.push({ id, name, file, status: "error", error: detail });
+    report.push({ id, name, file, status: "error", error: errorDetail(err) });
   }
 
   if (i % 10 === 0) console.log(`${i + 1}/${products.length}...`);
@@ -121,4 +166,6 @@ writeFileSync(REPORT_PATH, JSON.stringify(report, null, 2));
 const accepted = report.filter((r) => r.status === "accepted").length;
 const rejected = report.filter((r) => r.status === "rejected").length;
 const errors = report.filter((r) => r.status === "error").length;
-console.log(`Done. accepted=${accepted} rejected=${rejected} errors=${errors} total_images=${Object.keys(images).length} total_asins=${Object.keys(asins).length}`);
+const byAsinOk = report.filter((r) => r.status === "image-by-asin").length;
+const byAsinMissing = report.filter((r) => r.status === "asin-not-found").length;
+console.log(`Done. accepted=${accepted} rejected=${rejected} errors=${errors} image_by_asin=${byAsinOk} asin_not_found=${byAsinMissing} total_images=${Object.keys(images).length} total_asins=${Object.keys(asins).length}`);
