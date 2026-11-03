@@ -6,6 +6,27 @@ import sitemap from '@astrojs/sitemap';
 // Buyer's guides that target high-volume search terms. They get a higher
 // sitemap priority than the 0.5 default so crawlers reach them sooner.
 const priorityGuides = new Set([
+  // November 2026: affiliate gaps from the power station keyword export.
+  'best-power-bank-for-travel',
+  'best-laptop-power-bank',
+  'best-power-bank-with-ac-outlet',
+  'best-solar-power-bank',
+  'best-battery-powered-lantern',
+  'best-ups-battery-backup',
+  'best-power-inverter',
+  'best-charging-station',
+  'best-battery-powered-heater',
+  'best-indoor-heater-for-power-outage',
+  'best-battery-powered-fan',
+  'best-narrow-window-air-conditioner',
+  'best-120v-portable-dryer',
+  'best-dryer-cord-adapter',
+  'best-battery-powered-water-pump',
+  'best-miter-saw-stand',
+  'best-portable-air-conditioner-for-car',
+  'best-air-conditioner-for-camper',
+  'best-lifepo4-rv-battery',
+  'best-12v-camping-fridge',
   // November 2026: portable power station keyword cluster with no page.
   'best-jackery-power-station',
   'best-ecoflow-power-station',
