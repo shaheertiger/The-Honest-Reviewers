@@ -6,6 +6,15 @@ import sitemap from '@astrojs/sitemap';
 // Buyer's guides that target high-volume search terms. They get a higher
 // sitemap priority than the 0.5 default so crawlers reach them sooner.
 const priorityGuides = new Set([
+  // November 2026: portable power station keyword cluster with no page.
+  'best-jackery-power-station',
+  'best-ecoflow-power-station',
+  'best-bluetti-power-station',
+  'best-anker-power-station',
+  'best-portable-power-station-for-camping',
+  'best-portable-power-station-for-home-backup',
+  'best-battery-powered-generator',
+  'best-portable-charger-for-power-outages',
   // November 2026: AI-topic opportunity queries with no page.
   'best-steam-cleaner',
   'best-crimping-tool',
