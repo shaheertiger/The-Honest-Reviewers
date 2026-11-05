@@ -1,0 +1,884 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Portable Generators",
+    "url": "/best-portable-generator/"
+  },
+  {
+    "title": "Best 240V Generators",
+    "url": "/best-240v-generator/"
+  },
+  {
+    "title": "Best 3500 Watt Generators",
+    "url": "/best-3500-watt-generator/"
+  },
+  {
+    "title": "Best Inverter Generators",
+    "url": "/best-inverter-generator/"
+  },
+  {
+    "title": "Generator Wattage Chart",
+    "url": "/generator-wattage-chart/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-11-05", modified: "2026-11-05" });
+const title = "5 Best Cheap Generators in 2026: Real Watts on a Budget";
+const description =
+  "The best cheap generators by price tier, cost per running watt and safety: which budget units have CO shutoff, what cheap models skip, and when cheap is false economy.";
+
+const PRODUCTS = [
+  {
+    "id": "westinghouse-wgen3600cv",
+    "name": "Westinghouse WGen3600cv",
+    "category": "Open-Frame, 3,600W Running / 4,650W Peak",
+    "badge": "Best Overall Budget Pick",
+    "amazonUrl": "#",
+    "pros": [
+      "3,600 running and 4,650 peak watts, rated by Westinghouse",
+      "CO sensor with automatic shutdown at this price",
+      "Built-in fuel gauge and a 4-gallon tank rated for up to 14 hours at 25% load",
+      "TT-30R RV outlet alongside household outlets",
+      "3-year limited warranty"
+    ],
+    "cons": [
+      "Recoil start only",
+      "Roughly 100 lb dry, so it rolls rather than carries",
+      "Open-frame engine noise; not a campground machine"
+    ],
+    "bottomLine": "The cheapest generator we would buy for home backup: real watts, a CO shutoff and a fuel gauge, with nothing important missing.",
+    "description": "The WGen3600cv is what a cheap generator should be. Westinghouse rates it at 3,600 running and 4,650 peak watts from a 212cc engine, which is enough to start and run a refrigerator, a sump pump and a string of lights at the same time, and it adds the two things the cheapest no-name units skip: a CO sensor that shuts the engine down when carbon monoxide builds up, and a real fuel gauge on the 4-gallon tank. Westinghouse lists up to 14 hours at 25% load. The panel includes household outlets plus a TT-30R, so it doubles as a travel-trailer generator. It is recoil start only, it weighs about 100 pounds dry, and it is loud the way every open-frame generator is loud. It does not have a 240V outlet, so it cannot feed a well pump or a whole panel through a 240V inlet. As cheap watts for a fridge, a freezer, a sump pump and lights, it is very hard to beat, and it is the model we would point most budget buyers to first."
+  },
+  {
+    "id": "champion-201183",
+    "name": "Champion 201183 2500-Watt Dual Fuel Inverter",
+    "category": "Dual Fuel Inverter, 1,850W Running / 2,500W Starting",
+    "badge": "Best Cheap Inverter",
+    "amazonUrl": "#",
+    "pros": [
+      "Runs on gasoline or propane",
+      "CO Shield automatic shutoff",
+      "Spec sheet lists under 3% THD, safe for electronics",
+      "About 39 lb",
+      "Rated 53 dBA at 23 feet"
+    ],
+    "cons": [
+      "1,850 running watts on gas (1,665 on propane) covers essentials only",
+      "Costs noticeably more per watt than an open-frame"
+    ],
+    "bottomLine": "The cheapest way to get clean inverter power, propane flexibility and a CO shutoff in one light box.",
+    "description": "If you need quiet, clean power more than you need raw watts, the 201183 is the budget inverter to buy. Champion rates it at 2,500 starting and 1,850 running watts on gasoline and 1,665 running watts on propane, from a 79cc engine. It weighs about 39 pounds, Champion lists 53 dBA at 23 feet, and the spec sheet gives under 3% total harmonic distortion, so laptops, TVs and furnace control boards are fine on it. CO Shield shuts the engine off if carbon monoxide builds up. Champion rates it for up to 11.5 hours on gasoline and up to 34 hours on a 20-lb propane tank, and propane is the bigger deal for a budget buyer: it stores for years without going stale. The catch is the cost per running watt, which is roughly two to three times what an open-frame costs. It will run a refrigerator, lights, a router and phone chargers. It will not start a well pump or central air, and nothing about it changes that."
+  },
+  {
+    "id": "westinghouse-igen2550c",
+    "name": "Westinghouse iGen2550c",
+    "category": "Inverter, 1,900W Running / 2,550W Peak",
+    "badge": "Best Cheap Inverter for RVs",
+    "amazonUrl": "#",
+    "pros": [
+      "CO sensor with automatic shutdown",
+      "TT-30R RV outlet on a 2,550W inverter",
+      "Westinghouse lists as low as 52 dBA",
+      "About 42-46 lb",
+      "Up to 11-12 hours at 25% load, per Westinghouse"
+    ],
+    "cons": [
+      "Gasoline only",
+      "Small tank of about 1.1 gallons",
+      "Some listings give 1,800 running watts, others 1,900; check the label"
+    ],
+    "bottomLine": "A light, quiet budget inverter with a CO sensor and an RV plug. A good second generator and a fine first one for an apartment-sized load.",
+    "description": "The iGen2550c is Westinghouse's budget inverter with a CO sensor. Its manual gives 2,550 peak and 1,900 running watts (some Westinghouse pages list 1,800, so check the label), and Westinghouse rates it as low as 52 dBA. Weight is roughly 42 to 46 pounds depending on the listing. The useful extra is a TT-30R RV outlet, which most small inverters leave off. A 30-amp RV plug drops straight into it, though 1,900 watts will not run a rooftop air conditioner. Westinghouse rates it for up to 11 to 12 hours at 25% load from a tank of about 1.1 gallons. The built-in CO sensor shuts the engine down if carbon monoxide builds up, and that is the reason to pick it over the cheaper no-sensor inverters. It runs on gasoline only, so if you want to store fuel for years, the dual-fuel Champion is the better buy. For quiet, clean power for a fridge, lights and electronics, it is good value."
+  },
+  {
+    "id": "duromax-xp5500hx",
+    "name": "DuroMax XP5500HX",
+    "category": "Dual Fuel Open-Frame, 4,500W Running / 5,500W Starting",
+    "badge": "Best Cheap Dual Fuel",
+    "amazonUrl": "#",
+    "pros": [
+      "4,500 running watts on gas, 4,275 on propane",
+      "Electric start",
+      "CO alert with automatic shutdown",
+      "120/240V 30A twist-lock outlet",
+      "Spec sheet lists about 8.8 hours at 50% load on gasoline"
+    ],
+    "cons": [
+      "Around 128-131 lb",
+      "Loud open-frame engine",
+      "Not sold in California, per some retailers"
+    ],
+    "bottomLine": "The most generator for the money if you want propane, push-button starting and a 240V twist-lock in one budget unit.",
+    "description": "The XP5500HX is where a cheap generator starts doing serious home-backup work. DuroMax rates it at 5,500 starting and 4,500 running watts on gasoline and 5,225 and 4,275 on propane, with electric start and a CO alert that shuts the engine off. The spec sheet lists two 120V 20A GFCI outlets, a USB port and a 120/240V 30A twist-lock outlet. That last one is unusual at this price, because it means the generator can feed a transfer switch or inlet box and run a 240V well pump. The spec sheet gives about 8.8 hours at 50% load on gasoline and 7.6 on propane. The trade-offs are the ones every budget open-frame has. It weighs roughly 130 pounds, it is loud, and DuroMax does not publish the kind of low distortion figure inverters do, so sensitive electronics belong on a UPS or a small inverter. For a fridge, freezer, sump pump, well pump and some lights through a transfer switch, it covers more than most buyers in this price range expect."
+  },
+  {
+    "id": "wen-56235i",
+    "name": "WEN 56235i",
+    "category": "Inverter, 1,900W Running / 2,350W Surge",
+    "badge": "Cheapest Inverter Worth Owning",
+    "amazonUrl": "#",
+    "pros": [
+      "1,900 rated and 2,350 surge watts",
+      "About 39 lb",
+      "WEN lists 51 dB at quarter load",
+      "Fuel shutoff lets you run the carburetor dry for storage",
+      "Parallel-capable with a WEN kit"
+    ],
+    "cons": [
+      "No CO sensor on this model (the 56235iX adds one)",
+      "1-gallon tank",
+      "2-year warranty is shorter than Champion or Westinghouse"
+    ],
+    "bottomLine": "A long-running, cheap inverter that is fine for camping and short outages. Buy the iX version if it will run anywhere near a house.",
+    "description": "The 56235i has been one of the cheapest name-brand inverter generators for years, and it is still a sensible buy if you understand what is missing. WEN rates it at 1,900 running and 2,350 surge watts, it weighs about 39 pounds, and WEN lists 51 dB at quarter load. The fuel shutoff valve sounds minor but matters for a budget generator that sits unused. Running the carburetor dry before storage prevents the gummed jets that stop most neglected small engines. It can be paired with a second WEN inverter using a parallel kit. What it gives up is the CO sensor. WEN sells a 56235iX version with a CO shutdown sensor, and for anything running near a house, the iX is worth the extra money. The 1-gallon tank means refueling during an all-night outage, and the 2-year warranty is a year shorter than Champion's or Westinghouse's. For camping, tailgating and short outages, it does the job well."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Cheap Generators",
+          item: "https://www.thehonestreviewers.com/best-cheap-generator/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the cheapest generator worth buying?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For home backup, the cheapest generator we would buy is a name-brand open-frame around 3,500 running watts with a CO shutoff, like the Westinghouse WGen3600cv. It has enough power for a refrigerator, sump pump and lights, it shuts itself off when carbon monoxide builds up, and parts and a warranty stand behind it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are cheap inverter generators any good?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Name-brand budget inverters like the Champion 201183, Westinghouse iGen2550c and WEN 56235i are good for what they are: quiet, light and clean enough for electronics. They cost more per running watt than open-frames, and around 1,800-1,900 running watts limits them to essential loads. No-name inverters are a gamble on parts and support."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many watts do I need from a cheap generator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Add up the running watts of everything you want to run at once, then add the starting surge of the largest motor load. A refrigerator, sump pump, lights and a router typically land between 2,500 and 4,000 running watts with surge. That is open-frame territory for most budget buyers."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a cheap generator safe to run in a garage?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. No generator is safe to run in a garage, even with the door open, and a CO shutoff does not change that. Run it outdoors, at least 20 feet from the house, with the exhaust pointed away from doors and windows, and keep a battery CO alarm inside."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do cheap generators damage electronics?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not usually, but budget open-frames often have higher harmonic distortion than inverters, and some electronics such as furnace boards, variable-speed appliances and some UPS units can react badly. Inverters like the Champion 201183 list under 3% THD. For sensitive gear, use an inverter, a power station or a UPS."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is dual fuel worth it on a cheap generator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Usually yes if the generator will be stored more than it is used. Propane does not go stale, so a dual-fuel unit is far more likely to start after a year in the garage. You give up a little power on propane; the DuroMax XP5500HX drops from 4,500 to 4,275 running watts, for example."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can a cheap generator power my whole house?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not in the sense most people mean. A budget generator can run essential circuits through a transfer switch or interlock, but it cannot run central air, an electric range and a water heater together. For that you need a much larger portable or a standby unit; see our whole-house generator guides."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home Emergency Preparedness",
+    tags: [
+      "cheap generators",
+      "cheap generator",
+      "inexpensive generator",
+      "inexpensive generators",
+      "budget generator"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated November 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best <span class="text-[#38BDF8]">Cheap Generators</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Five budget generators that are actually worth the money, compared on cost per running watt, CO shutoff, fuel and the corners each one cuts.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#westinghouse-wgen3600cv"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            See the Price Tiers
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="12.4k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#tiers" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Price Tiers</a>
+          <a href="#cost-per-watt" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Cost per Watt</a>
+          <a href="#corners" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Corners Cut</a>
+          <a href="#co-shutoff" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Cheapest With CO Shutoff</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Our Picks</a>
+          <a href="#open-frame" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. When Open-Frame Is Fine</a>
+          <a href="#false-economy" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. False Economy</a>
+          <a href="#thd" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. THD and Electronics</a>
+          <a href="#hidden-costs" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Hidden Costs</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          A cheap generator is a good buy when it has enough running watts for your real loads and a CO-sensing shutoff. Below about $500 you can get both. What you give up is quiet operation, electric start, clean power or 240V, and the trick is choosing which of those you can live without.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="tiers" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. What Cheap Actually Buys at Each Price Tier
+          </h2>
+
+          <p>
+            Cheap generators are not one category. The money you spend decides how many watts you get and which safety features come with them, and the jumps between tiers are steep. Prices move constantly with sales and hurricane season, so we talk in tiers instead of quoting a price that will be wrong next week. Roughly, the tiers fall around $300, around $500 and around $800, and a careful buyer can get something useful in each.
+          </p>
+
+          <p>
+            At the bottom, typically under about $300 on sale, you are buying either a 3,000-4,000 watt open-frame unit from a value brand or a small no-name inverter. The open-frames in this tier are genuinely capable. The Westinghouse WGen3600cv has dipped into this range during sales, and it pairs 3,600 running watts with a CO sensor and a fuel gauge. The no-name inverters that sell here are the risky part of the tier: thin documentation, no parts support and often no CO shutoff.
+          </p>
+
+          <p>
+            Around $500 is where budget inverters with CO shutoff live, and where open-frames gain electric start, dual fuel and, occasionally, a 240V twist-lock outlet. The Champion 201183 and Westinghouse iGen2550c are the inverters to look at. The DuroMax XP5500HX is the open-frame that adds the most for the money. This tier is the sweet spot for most households.
+          </p>
+
+          <p>
+            Around $800 you are no longer shopping cheap. You are shopping mid-range. That money buys a 4,000-5,000 watt inverter with a CO sensor or a 7,000-9,500 watt open-frame with a 50-amp outlet. If your loads genuinely need that, look at the <a href="/best-portable-generator/">best portable generators</a> or the <a href="/best-5000-watt-generator/">5,000 watt class</a> instead of stretching a budget unit past its limits.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Tier</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Typical Type</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Running Watts</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">What You Usually Give Up</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Around $300</td>
+                    <td class="px-4 py-4 text-gray-700">Open-frame, value brand</td>
+                    <td class="px-4 py-4 text-gray-700">3,000-3,600W</td>
+                    <td class="px-4 py-4 text-gray-700">Electric start, 240V, quiet operation</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Around $500</td>
+                    <td class="px-4 py-4 text-gray-700">Small inverter or dual fuel open-frame</td>
+                    <td class="px-4 py-4 text-gray-700">1,800-4,500W</td>
+                    <td class="px-4 py-4 text-gray-700">Either watts (inverter) or quiet (open-frame)</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Around $800</td>
+                    <td class="px-4 py-4 text-gray-700">Mid-size inverter or large open-frame</td>
+                    <td class="px-4 py-4 text-gray-700">3,700-9,500W</td>
+                    <td class="px-4 py-4 text-gray-700">Nothing critical; this is no longer cheap</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="cost-per-watt" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Cost per Running Watt: The Number to Compare
+          </h2>
+
+          <p>
+            The fairest way to compare cheap generators is to divide the price by running watts, not peak watts. Peak watts last a second or two while a motor starts. Running watts are what the generator sustains, and that is what decides whether your refrigerator and sump pump can run together for eight hours.
+          </p>
+
+          <p>
+            Do the arithmetic and the gap between generator types is large. An open-frame with 3,600 running watts that sells for around $400 costs roughly 11 cents per running watt. A 1,850-running-watt inverter at around $600 costs over 30 cents per running watt. The inverter is not overpriced. You are paying for quiet, clean power and low weight rather than raw capacity. But if raw capacity is what you need, an open-frame wins on value by a factor of two or three.
+          </p>
+
+          <p>
+            Cost per watt also exposes the classic budget mistake, which is buying a small inverter for home backup because it was the cheapest thing on the shelf. A 2,000-watt inverter will keep a refrigerator, lights and a router going. It will not start most well pumps, a 1/2 hp sump pump plus a fridge at the same moment, or any central air system. If you end up buying a second generator because the first one was too small, the cheap one was not cheap.
+          </p>
+
+          <p>
+            Before comparing prices, write down what you actually need to run at the same time and add the largest starting surge. Our <a href="/generator-wattage-chart/">generator wattage chart</a> lists typical running and starting figures for common appliances, and <a href="/what-size-generator-do-i-need-for-my-house/">what size generator do I need</a> walks through the math. Then compare only generators that clear that number with about 20% to spare, and pick the lowest cost per running watt among them.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE RULE</p>
+            <p class="text-xl font-bold text-white mb-3">Compare price per running watt, then check for a CO shutoff.</p>
+            <p class="text-gray-300 leading-relaxed m-0">A generator that is 20% cheaper but cannot start your sump pump is a waste of money. One without a CO shutoff costs less because it skips the feature most likely to save a life.</p>
+          </div>
+        </div>
+
+        <div id="corners" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The Corners Cheap Generators Cut
+          </h2>
+
+          <p>
+            Every generator under about $500 is missing something, and the useful question is whether the missing piece matters to you. The corners manufacturers cut are predictable, and some are much more serious than others.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">CO-sensing shutoff</h3>
+
+          <p>
+            This is the one that matters most. Carbon monoxide poisoning from portable generators kills people every year, usually because the generator was run in a garage, under a carport or near an open window. A CO-sensing shutoff kills the engine when CO builds up around the unit. Westinghouse calls it CO Sensor, Champion calls it CO Shield, DuroMax calls it CO Alert and WEN calls it Watchdog. Many of the cheapest units, including older or base versions of name-brand models, leave it out. On a generator that will run near a house, we would not save money here.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Fuel gauge</h3>
+
+          <p>
+            A missing fuel gauge sounds trivial until you are guessing at 2 a.m. whether you have enough gasoline to get to morning. Cheap open-frames often have nothing, or a cap with a tiny float. A real gauge, like the one on the WGen3600cv, lets you plan refueling around sleep instead of around a stalled engine.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Power quality (THD)</h3>
+
+          <p>
+            Total harmonic distortion measures how far the output wave strays from a clean sine wave. Inverters routinely list under 3%. Budget open-frames often do not publish a figure at all, which usually means it is high. More on what that means in practice below.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Parts, support and warranty</h3>
+
+          <p>
+            Champion and Westinghouse list 3-year limited warranties on models like the 201183 and WGen3600cv, and WEN lists 2 years on the 56235i. More important than the number is whether you can actually get a carburetor, a recoil assembly or a voltage regulator four years from now. The name brands sell parts and publish manuals. Many no-name inverters on marketplaces vanish within a season, and a generator that cannot be repaired is disposable.
+          </p>
+        </div>
+
+        <div id="co-shutoff" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. The Cheapest Generators With CO Shutoff
+          </h2>
+
+          <p>
+            If you take one thing from this page, buy a generator with a CO-sensing shutoff. The good news is that you no longer have to pay much for it. Every major value brand now sells budget models with one, and the price premium over the no-sensor version of the same machine is usually modest.
+          </p>
+
+          <p>
+            In the open-frame class, the Westinghouse WGen3600cv is the cheapest CO-sensing generator we would trust with home backup. The 'c' in Westinghouse model numbers means CO sensor, so a WGen3600v is the same generator without it. The DuroMax XP5500HX adds a CO alert shutoff to a dual-fuel, electric-start unit. In the inverter class, the Champion 201183 and Westinghouse iGen2550c both shut down on CO, and WEN's 56235iX is the CO-sensing version of the 56235i we list here.
+          </p>
+
+          <p>
+            Read model numbers carefully, because the difference is often a single letter. Retailers sell both versions side by side, and the cheaper listing is frequently the one without the sensor. Check that the listing says CO shutoff, CO Shield, CO Sensor or CO Alert, not just 'CO safe' or 'outdoor use only.'
+          </p>
+
+          <p>
+            A CO shutoff does not make a generator safe to run indoors, in a garage with the door open, or under an eave. It is a backstop for mistakes, not permission to make them. Placement is still the first line of defense, and <a href="/where-to-place-a-generator-outside/">where to place a generator outside</a> covers distance, wind direction and rain. Pair any generator with a battery CO alarm inside the house, whatever the generator's own sensor says.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">CO Shutoff Naming by Brand</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <p class="text-3xl font-black text-white">c</p>
+                <p class="text-gray-400 text-xs mt-1">Westinghouse suffix</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">CO Shield</p>
+                <p class="text-gray-400 text-xs mt-1">Champion</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-white">HX / CO Alert</p>
+                <p class="text-gray-400 text-xs mt-1">DuroMax</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">iX / Watchdog</p>
+                <p class="text-gray-400 text-xs mt-1">WEN</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. The Best Cheap Generators
+          </h2>
+
+          <p>
+            Every pick below is a current, name-brand model with published specifications, a warranty and available parts. Four of the five shut down automatically on carbon monoxide, and the one that does not has a CO-sensing sibling we name. Specs are taken from manufacturer listings and spec sheets; where sources disagree, we say so. We ranked them on cost per running watt, safety features and how well each fits a typical budget buyer, not on peak-watt claims.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="open-frame" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. When a Cheap Open-Frame Is Fine
+          </h2>
+
+          <p>
+            Open-frame generators get dismissed as loud and crude, but for many households a cheap open-frame is the right answer. If your goal is keeping a refrigerator, a freezer, a sump pump and some lights running during an outage, an open-frame gives you the most watts for the money by a wide margin.
+          </p>
+
+          <p>
+            Home backup is the clearest case. The generator sits in the yard 20 feet from the house, nobody is sleeping next to it, and noise is a minor annoyance next to a flooded basement. Refrigerators, freezers, sump pumps, well pumps and space heaters with simple controls run happily on open-frame power. Motor loads in particular need the surge capacity open-frames provide cheaply.
+          </p>
+
+          <p>
+            Job sites and workshops are the other good fit. Circular saws, compressors and corded drills are built for rough power, and the extra watts let you start a compressor without stalling. Weight matters less when the generator rides in a truck bed.
+          </p>
+
+          <p>
+            A cheap open-frame is also the right choice if you are buying your first generator for an area with occasional outages and you are not sure how much you will use it. Spending less on a capable open-frame, then adding a <a href="/best-ups-battery-backup/">UPS battery backup</a> for the computer and router, often beats spending twice as much on an inverter.
+          </p>
+
+          <p>
+            What an open-frame does not like is being judged by campground standards. If you need to run it at a campsite, beside a camper, or in a tight neighborhood where noise rules apply, look at an inverter instead. Our <a href="/best-generator-for-camping/">camping generator</a> and <a href="/best-quiet-generator/">quiet generator</a> guides cover those cases.
+          </p>
+        </div>
+
+        <div id="false-economy" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. When Cheap Is False Economy
+          </h2>
+
+          <p>
+            There are a few situations where buying the cheapest generator costs more in the end. Knowing them up front saves the second purchase.
+          </p>
+
+          <p>
+            The first is undersizing. If the generator cannot start your largest motor load, you will end up doing load rotation in the dark, switching circuits by hand every hour, or buying a second unit. A well pump or central air system needs a generator sized for its starting surge, and that rules out every small inverter on this page. <a href="/what-size-generator-runs-a-well-pump/">What size generator runs a well pump</a> gives the numbers.
+          </p>
+
+          <p>
+            The second is skipping 240V when you need it. Most cheap generators have only 120V outlets. If your house runs on a well, or you want to connect through a transfer switch to power a whole panel, you need a 120/240V outlet such as an L14-30. The DuroMax XP5500HX is the budget exception here. Our <a href="/best-240v-generator/">240V generator guide</a> covers the rest.
+          </p>
+
+          <p>
+            The third is buying a no-name inverter for long-term backup. These units can be fine new, but when the recoil spring or the inverter board fails in year three, there is often no manual, no parts and no support line. A name-brand unit at a slightly higher price is the cheaper long-term buy.
+          </p>
+
+          <p>
+            The fourth is fuel. A gasoline-only generator that sits for a year will often refuse to start because the gasoline has gone stale and gummed the carburetor. If you will mostly store the generator and use it a few times a year, a dual-fuel model that can run on propane is often the smarter budget buy, because propane does not go bad. Our <a href="/best-dual-fuel-generator/">dual fuel generator</a> and <a href="/best-propane-generator/">propane generator</a> guides go deeper.
+          </p>
+        </div>
+
+        <div id="thd" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. THD and What Cheap Power Does to Electronics
+          </h2>
+
+          <p>
+            Total harmonic distortion is the cheap-generator spec people ask about most and understand least. It describes how much the output waveform deviates from a pure sine wave. Utility power is typically low distortion, and inverter generators like the Champion 201183 list under 3%.
+          </p>
+
+          <p>
+            Conventional open-frame generators produce power directly from an alternator spinning at a fixed speed, and their waveform depends on alternator design and load. Better open-frames hold distortion reasonably low. Budget ones often do not publish a figure. That is not automatically a problem, but it means you should not assume clean power.
+          </p>
+
+          <p>
+            What actually suffers from high distortion? Resistive loads like space heaters, incandescent bulbs and coffee makers do not care. Simple induction motors in refrigerators and pumps mostly do not care either, though they can run warmer. The loads that do care are electronics with switching power supplies or sensitive control boards: some furnace igniter boards, variable-speed appliances, some battery chargers and some UPS units that reject generator power entirely.
+          </p>
+
+          <p>
+            The cheap fix is not to buy a more expensive generator for everything. Run the heavy, tolerant loads on the open-frame and put the computer, router and TV on a small inverter, a <a href="/best-portable-power-station-for-home-backup/">portable power station</a> or a UPS that the generator charges. If your furnace is picky, test it on the generator before a storm, not during one. Our <a href="/inverter-generator-vs-regular-generator/">inverter vs regular generator comparison</a> explains the difference in detail.
+          </p>
+        </div>
+
+        <div id="hidden-costs" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. The Hidden Costs of a Cheap Generator
+          </h2>
+
+          <p>
+            The price tag is only part of what a generator costs. A budget buyer should plan for the rest before checkout, because skipping these items is how cheap generators end up unused or unsafe.
+          </p>
+
+          <p>
+            Cords come first. Running a refrigerator 25 feet from the house on a thin household extension cord causes voltage drop and overheated plugs. You need a heavy-gauge outdoor cord rated for the load, and our <a href="/generator-extension-cord-size/">generator extension cord size</a> guide gives the gauges. For more than a couple of appliances, a transfer switch or interlock with an inlet box is the safe way to connect, and it costs real money to install. See <a href="/generator-transfer-switch-types-cost-and-installation/">transfer switch types and cost</a>.
+          </p>
+
+          <p>
+            Maintenance is next. Every generator needs oil, and new engines need their first oil change early. Fuel stabilizer for gasoline, a spare spark plug and a cover add up. <a href="/how-often-to-change-generator-oil/">How often to change generator oil</a> and <a href="/how-to-store-a-portable-generator/">how to store a portable generator</a> cover the routine.
+          </p>
+
+          <p>
+            Fuel is the running cost. A 4-gallon open-frame running at half load for 24 hours burns a lot of gasoline, and in a regional outage gas stations without power cannot pump. Plan to store fuel safely and rotate it. Dual-fuel models let you keep a few propane tanks on hand instead.
+          </p>
+
+          <p>
+            Add it up and a budget generator often needs another $100-$300 in accessories before it is ready for a real outage, more if you install a transfer switch. That is not a reason to skip the cheap generator. It is a reason to keep part of the budget for the cord, the oil and a CO alarm rather than spending every dollar on watts.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Comparing peak watts instead of running watts</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Budget listings put the biggest number on the box, and that is almost always peak watts. Peak lasts a second or two while a motor starts. Running watts are what the generator holds for hours. Compare price against running watts, and size against the loads you need to run at the same time plus the largest starting surge.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying the version without the CO sensor to save a little</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Many budget generators are sold in two versions that differ by one letter in the model number, and the cheaper listing usually lacks CO shutoff. The savings are small and the risk is not. Check the listing for CO Sensor, CO Shield, CO Alert or Watchdog before you buy.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Expecting a small inverter to run a well pump</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A 2,000-watt inverter is great for a fridge and lights, but most well pumps run on 240V and have a starting surge beyond what these units can deliver. If you are on a well, you need a 120/240V outlet and enough surge capacity, which means a larger open-frame or inverter.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Storing a gasoline generator full for a year</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Gasoline goes stale in months, gums the carburetor, and is the most common reason a budget generator will not start when the power goes out. Add stabilizer, run the carburetor dry with the fuel shutoff if your unit has one, or buy dual fuel and store propane instead.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Spending the whole budget on the generator</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A generator without a heavy-gauge cord, oil, a CO alarm in the house and a safe way to connect is not ready for an outage. Keep $100 to $300 of the budget for accessories, and more if you plan to install a transfer switch or interlock kit.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the cheapest generator worth buying?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For home backup, the cheapest generator we would buy is a name-brand open-frame around 3,500 running watts with a CO shutoff, like the Westinghouse WGen3600cv. It has enough power for a refrigerator, sump pump and lights, it shuts itself off when carbon monoxide builds up, and parts and a warranty stand behind it.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are cheap inverter generators any good?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Name-brand budget inverters like the Champion 201183, Westinghouse iGen2550c and WEN 56235i are good for what they are: quiet, light and clean enough for electronics. They cost more per running watt than open-frames, and around 1,800-1,900 running watts limits them to essential loads. No-name inverters are a gamble on parts and support.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How many watts do I need from a cheap generator?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Add up the running watts of everything you want to run at once, then add the starting surge of the largest motor load. A refrigerator, sump pump, lights and a router typically land between 2,500 and 4,000 running watts with surge. That is open-frame territory for most budget buyers.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a cheap generator safe to run in a garage?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                No. No generator is safe to run in a garage, even with the door open, and a CO shutoff does not change that. Run it outdoors, at least 20 feet from the house, with the exhaust pointed away from doors and windows, and keep a battery CO alarm inside.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do cheap generators damage electronics?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Not usually, but budget open-frames often have higher harmonic distortion than inverters, and some electronics such as furnace boards, variable-speed appliances and some UPS units can react badly. Inverters like the Champion 201183 list under 3% THD. For sensitive gear, use an inverter, a power station or a UPS.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is dual fuel worth it on a cheap generator?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Usually yes if the generator will be stored more than it is used. Propane does not go stale, so a dual-fuel unit is far more likely to start after a year in the garage. You give up a little power on propane; the DuroMax XP5500HX drops from 4,500 to 4,275 running watts, for example.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can a cheap generator power my whole house?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Not in the sense most people mean. A budget generator can run essential circuits through a transfer switch or interlock, but it cannot run central air, an electric range and a water heater together. For that you need a much larger portable or a standby unit; see our whole-house generator guides.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Generator Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-portable-generator/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Portable Generators</h3>
+              <p class="text-gray-500 text-sm mt-2">Our main generator ranking across sizes and budgets.</p>
+            </a>
+            <a href="/best-240v-generator/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#38BDF8] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best 240V Generators</h3>
+              <p class="text-gray-500 text-sm mt-2">When you need a well pump, dryer or whole panel on generator power.</p>
+            </a>
+            <a href="/inverter-generator-vs-regular-generator/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Comparison</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Inverter vs Regular Generator</h3>
+              <p class="text-gray-500 text-sm mt-2">Clean power, noise and cost per watt, compared.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Buy a cheap generator for watts and safety, not for the lowest price on the page. A name-brand open-frame with a CO shutoff, such as the Westinghouse WGen3600cv, is the best value for most home backup, and the DuroMax XP5500HX is the step up if you want propane, electric start and a 240V twist-lock.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            If you need quiet, clean power more than raw capacity, the Champion 201183 is the budget inverter to buy. Whatever you choose, keep part of the budget for a proper cord, oil and a CO alarm, and run the generator outdoors, well away from the house.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Emergency Preparedness" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

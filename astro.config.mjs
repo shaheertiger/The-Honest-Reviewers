@@ -6,6 +6,27 @@ import sitemap from '@astrojs/sitemap';
 // Buyer's guides that target high-volume search terms. They get a higher
 // sitemap priority than the 0.5 default so crawlers reach them sooner.
 const priorityGuides = new Set([
+  // November 2026: power generator keyword-gap batch.
+  'best-10000-watt-generator',
+  'best-12000-watt-generator',
+  'best-8000-watt-generator',
+  'best-5000-watt-generator',
+  'best-4000-watt-generator',
+  'best-3500-watt-generator',
+  'best-2000-watt-inverter-generator',
+  'best-20000-watt-generator',
+  'best-largest-portable-generator',
+  'best-generator-with-50-amp-outlet',
+  'best-240v-generator',
+  'best-electric-start-generator',
+  'best-propane-generator',
+  'best-quiet-generator',
+  'best-cheap-generator',
+  'best-generator-for-camping',
+  'best-26kw-generator',
+  'inverter-generator-vs-regular-generator',
+  'can-a-portable-power-station-run-a-gas-furnace',
+  'whole-house-ups',
   // November 2026: affiliate gaps from the power station keyword export.
   'best-power-bank-for-travel',
   'best-laptop-power-bank',
