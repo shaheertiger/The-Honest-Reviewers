@@ -1,0 +1,893 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Stud Finders",
+    "url": "/best-stud-finder/"
+  },
+  {
+    "title": "How to Find a Stud Without a Stud Finder",
+    "url": "/how-to-find-a-stud-without-a-stud-finder/"
+  },
+  {
+    "title": "Best Laser Levels",
+    "url": "/best-laser-level/"
+  },
+  {
+    "title": "Best Cordless Drill for Home Use",
+    "url": "/best-cordless-drill-for-home-use/"
+  },
+  {
+    "title": "Drill vs Impact Driver",
+    "url": "/drill-vs-impact-driver/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-11-05", modified: "2026-11-05" });
+const title = "Franklin Sensors Stud Finder Review: M210 vs 710+ vs MAX and the Rest";
+const description =
+  "Every current Franklin ProSensor compared: M210, 710+, T13, MAX, M150 and M50, with depth, wire detection, plaster and tile results, and which one to buy.";
+
+const PRODUCTS = [
+  {
+    "id": "franklin-m210",
+    "name": "Franklin Sensors ProSensor M210 13-Sensor Stud Finder",
+    "category": "13 Sensors, 1.7 in. Depth, Live Wire Detection",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "description": "The M210 is the Franklin to buy if you are buying one, and it is the reason the older 710+ is harder to recommend at full price. The Amazon listing gives it the same 13-sensor array as the 710+, deep detection of up to 1.7 inches against the 710+'s 1.6, and something the 710+ lacks: a live wire indicator. It also has a built-in bubble level and a pencil caddy, runs on two AA batteries, and is one of the few Franklins whose listing says it works with rechargeables. Franklin's materials page puts it in the top group for heavily textured drywall, plaster and lath, and ceilings. Pro Tool Reviews, testing the M210 and its Lowe's twin the X2100 on plaster, reported 100 percent on-center detection but a 33 percent false stud rate, which is the honest picture for lath walls: it finds the studs, and also some lath. The manual describes the wire feature as an indicator rather than a precise locator, so treat a yellow light as a reason to stop and investigate, not a map.",
+    "pros": [
+      "13 sensors and 1.7 in. depth, per the listing",
+      "Live wire indicator",
+      "Works with rechargeable AA batteries",
+      "Bubble level and pencil caddy"
+    ],
+    "cons": [
+      "Wire indicator is not a locator",
+      "False positives on lath, per Pro Tool Reviews",
+      "Larger than the M-series compacts"
+    ],
+    "bottomLine": "The best all-round Franklin: everything the 710+ does, slightly deeper, plus a live wire warning."
+  },
+  {
+    "id": "franklin-prosensor-710",
+    "name": "Franklin Sensors ProSensor 710+ 13-Sensor Stud Finder",
+    "category": "13 Sensors, 1.6 in. Depth, No Wire Detection",
+    "badge": "The Original",
+    "amazonUrl": "#",
+    "description": "The 710+ is the stud finder that made Franklin's name and the one most of our readers click on, and it is still a very good tool. The listing gives it 13 sensors, one always-on deep scan mode with detection up to 1.6 inches, no calibration, and an LED display that shows the full width of the stud, double studs, and a green centre LED. It adds a built-in bubble level and an integrated ruler, features the older non-plus 710 listing does not mention, so if you see both, buy the plus. Franklin's materials page groups it with the M210 and T13 for plaster and lath, tile and ceilings. The catch is the M210. It has the same sensor count, a slightly deeper rating and a live wire indicator, while the 710+ has no wire detection at all and its listing says it is not compatible with rechargeable batteries. The 710+ is worth buying when it is on sale below the M210, or if you specifically want its slim, ruler-edged body for layout work.",
+    "pros": [
+      "13 sensors, full-width stud display",
+      "Bubble level and integrated ruler",
+      "No calibration, start anywhere",
+      "Proven design with years of owner feedback"
+    ],
+    "cons": [
+      "No live wire detection",
+      "Not compatible with rechargeable batteries",
+      "M210 matches it and adds more"
+    ],
+    "bottomLine": "Still excellent, but buy it only when it costs less than the M210."
+  },
+  {
+    "id": "franklin-prosensor-max",
+    "name": "Franklin Sensors ProSensor MAX 13-Sensor Stud Finder",
+    "category": "13 Larger Sensors, 2.5 in. Depth, Two Modes",
+    "badge": "Best for Plaster and Tile",
+    "amazonUrl": "#",
+    "description": "The MAX is Franklin's answer to the walls the rest of its line struggles with. The listing describes 13 larger sensors and a maximum detection depth of 2.5 inches, through two or more layers of drywall, plaster, OSB, plywood, MDF and large tile. Unlike the always-on single-mode Franklins, it has two modes: Mode 1 for ordinary single-layer drywall and Mode 2 for deep scanning through thick or layered walls. Franklin's own materials page gives it the best results of any Franklin on plaster and lath (89 percent success, from Franklin's user reporting), on large uniform tile (95 percent) and over OSB or plywood (93 percent), where the 13-sensor M210, T13 and 710+ drop to 80, much less reliable, and 68 percent respectively. Those are Franklin's figures, not independent tests. The manual warns it may not detect through plaster with metal mesh reinforcement, and it has no wire detection. Franklin lists it at $119.99, so it is only worth buying for old houses, double drywall or tiled walls.",
+    "pros": [
+      "2.5 in. maximum depth, per the listing",
+      "Mode 2 for lath, plaster and double drywall",
+      "Franklin's best results on tile and OSB",
+      "Bubble level and green centre LED"
+    ],
+    "cons": [
+      "No live wire detection",
+      "Costs well over the M210",
+      "Cannot read through metal mesh plaster"
+    ],
+    "bottomLine": "The one Franklin built for plaster, tile and layered walls; overkill for ordinary drywall."
+  },
+  {
+    "id": "franklin-prosensor-t13",
+    "name": "Franklin Sensors ProSensor T13 13-Sensor Stud Finder",
+    "category": "13 Sensors, 1.7 in. Depth, No Wire Detection",
+    "badge": "Best 13-Sensor Without Extras",
+    "amazonUrl": "#",
+    "description": "The T13 is the quiet alternative to the 710+, and on paper it is slightly better. The listing gives it 13 sensors, always-on deep scan up to 1.7 inches, a display that shows the whole stud, double studs and irregular configurations, plus a built-in bubble level, integrated ruler and pencil caddy. It uses AA batteries, which the listing says are not compatible with rechargeables. That spec sheet matches the M210 on depth and sensor count, with two differences: the T13 has no live wire indicator, and its listing does not mention the green centre LED the 710+ and M210 listings describe. Pro Tool Reviews reviewed the 710 and T13 together and treated them as close equals for drywall. Franklin's materials page groups all three 13-sensor models together on plaster, tile and ceilings. Buy the T13 when it is the cheapest 13-sensor Franklin on the day, and you do not care about the wire warning. Otherwise the M210 is the better tool for the same body size.",
+    "pros": [
+      "13 sensors, 1.7 in. depth",
+      "Ruler, level and pencil caddy",
+      "Common AA batteries",
+      "Shows irregular stud configurations"
+    ],
+    "cons": [
+      "No live wire detection",
+      "Not compatible with rechargeables",
+      "Listing does not mention a centre LED"
+    ],
+    "bottomLine": "A full 13-sensor Franklin without the wire indicator; buy it when it undercuts the M210."
+  },
+  {
+    "id": "franklin-prosensor-m150",
+    "name": "Franklin Sensors ProSensor M150 9-Sensor Stud Finder",
+    "category": "9 Sensors, 1.5 in. Depth, AC Wire Warning",
+    "badge": "Best Compact",
+    "amazonUrl": "#",
+    "description": "The M150 is the compact Franklin with a wire warning, and for apartment-scale jobs it is enough. The listing, which also names its Lowe's version the X990, gives it 9 sensors, always-on deep scan up to 1.5 inches, a full-width display with a green centre LED, and live wire detection. It runs on two AAA batteries that the listing says must not be rechargeable. Nine sensors means a narrower window than the 13-sensor models, so you see one stud per placement rather than sometimes two, and you slide it more. That matters little for hanging a TV or a mirror and more for laying out a run of cabinets. Franklin's materials page is the honest guide to its limits: it rates the M150 and its siblings only moderate on ceilings (81 percent, against 93 for the 13-sensor models) and does not list it among the recommended models for plaster or tile. On ordinary half-inch drywall it is the right size for a kitchen drawer.",
+    "pros": [
+      "9 sensors with live wire detection",
+      "Compact for tight spots",
+      "Green centre LED",
+      "Sold as X990 at Lowe's"
+    ],
+    "cons": [
+      "Moderate on ceilings, per Franklin",
+      "Not recommended for plaster or tile",
+      "AAA batteries, no rechargeables"
+    ],
+    "bottomLine": "A good drawer stud finder for drywall homes; step up to the M210 for plaster, tile or ceilings."
+  },
+  {
+    "id": "franklin-prosensor-m50",
+    "name": "Franklin Sensors ProSensor M50 5-Sensor Stud Finder",
+    "category": "5 Sensors, 1.5 in. Depth, Live Wire Detection",
+    "badge": "Best Budget",
+    "amazonUrl": "#",
+    "description": "The M50 is the cheapest way into Franklin's multi-sensor design with a wire warning, and it is the one we would put in a first toolkit. The listing gives it 5 sensors, always-on deep scan up to 1.5 inches, wood and metal stud detection, live wire detection and a full-width LED display. It uses common AA batteries and, like most of the line, the listing says it is not compatible with rechargeables. Five sensors is the minimum that still shows a stud as a band rather than a single edge, and the window is narrow: you will slide it more than a 13-sensor model, and wide or doubled studs can look like the edge of the window rather than a full stud. It does the core Franklin trick well enough, with no calibration and no need to start off a stud. It is not the tool for plaster, tile or thick walls, where the extra sensors and depth of the M210 or MAX earn their price. For drywall, it is enough.",
+    "pros": [
+      "Live wire detection at the lowest price",
+      "No calibration, full-width display",
+      "Common AA batteries",
+      "Small enough for a kitchen drawer"
+    ],
+    "cons": [
+      "Narrow 5-sensor window",
+      "Not for plaster or tile",
+      "Not compatible with rechargeables"
+    ],
+    "bottomLine": "The budget Franklin for drywall homes; spend more only if your walls are plaster, tile or layered."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Franklin Stud Finder Review",
+          item: "https://www.thehonestreviewers.com/franklin-stud-finder-review/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "Which Franklin stud finder is best?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most homes, the ProSensor M210. Its listing gives it 13 sensors, detection up to 1.7 inches, a live wire indicator and support for rechargeable AA batteries, which beats the better-known 710+ on every listed spec. For plaster, tile or layered walls, the ProSensor MAX, with larger sensors and 2.5 inches of depth, is the better choice."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between the Franklin 710+ and M210?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Both have 13 sensors and show the full width of a stud with no calibration. The M210 lists slightly deeper detection, 1.7 inches against 1.6, adds a live wire indicator and a pencil caddy, and works with rechargeable batteries. The 710+ has an integrated ruler and no wire detection, and its listing says rechargeables are not supported."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do Franklin stud finders detect metal?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They detect metal studs, because steel is dense and lights up the display the same way wood does. They do not have a separate metal mode, so they cannot tell a steel stud from a pipe or a nail plate. Use stud spacing and scanning at several heights to tell a stud from a pipe."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do Franklin stud finders work on plaster walls?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "With caveats. Franklin's materials page reports 80 percent success on plaster and lath for the 13-sensor models and 89 percent for the MAX, from its own user reporting. Pro Tool Reviews found the M210 hit every stud centre on plaster but also produced false studs a third of the time, mostly from lath. Confirm readings with a magnet."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which Franklin stud finders have live wire detection?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Of the current models we compared, the M210, M150 and M50 include live wire detection. The 710+, T13 and MAX do not. The feature only detects energised wiring and Franklin's manual describes it as an indicator rather than a locator, so it is an early warning rather than proof a spot is safe to drill."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How deep can a Franklin stud finder detect?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Listed maximum depths are 1.5 inches for the M50 and M150, 1.6 inches for the 710+, 1.7 inches for the M210 and T13, and 2.5 inches for the MAX. Standard drywall is half an inch, so every model has plenty of depth for ordinary walls. Depth matters for double drywall, sheathing, plaster and tile over backer board."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do Franklin stud finders need calibration?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, with one exception. The multi-sensor ProSensors compare readings across the array rather than against a starting point, so you can start anywhere, even over a stud. Franklin's materials page notes that the M10, a 3-sensor centre finder, does require calibration. On the MAX, you do need to choose Mode 1 or Mode 2 for the wall type."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Tools & Equipment",
+    tags: [
+      "franklin sensors stud finder",
+      "franklin stud finder",
+      "franklin sensors prosensor m210 stud finder",
+      "franklin prosensor 710",
+      "franklin prosensor 710+",
+      "franklin prosensor max",
+      "franklin m150"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Stud Finders
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Franklin Stud Finder Review: <span class="text-[#38BDF8]">Which ProSensor to Buy</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Franklin sells six multi-sensor stud finders that look almost identical and differ in sensor count, depth and wire detection. The M210 is the best all-rounder, the MAX is the one for plaster and tile, and the famous 710+ is only worth it on sale.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#franklin-m210"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Compare the 6 Franklins
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="12.6k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#how-franklin-works" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How Multi-Sensor Works</a>
+          <a href="#lineup" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. The Lineup Decoded</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. The 6 Franklins</a>
+          <a href="#metal-and-wires" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Metal and Live Wires</a>
+          <a href="#depth" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Depth Ratings</a>
+          <a href="#plaster-and-tile" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Plaster and Tile</a>
+          <a href="#which-franklin" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Which One to Buy</a>
+          <a href="#vs-edge-finders" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Franklin vs Other Tools</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          The Franklin 710+ made the brand, but it is no longer the Franklin to buy at full price. The M210 has the same 13 sensors, a slightly deeper rating, a live wire indicator and rechargeable battery support. Buy the MAX only if your walls are plaster, tile or layered, buy the M150 or M50 to save money on plain drywall, and confirm any reading that matters with a magnet.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="how-franklin-works" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How Franklin's Multi-Sensor Design Works
+          </h2>
+
+          <p>
+            Almost every cheap electronic stud finder works the same way. One or two capacitive sensor plates measure the density of the wall beneath them, and the tool calibrates to whatever it is sitting on when you press the button. You then slide it sideways, and when the density rises past a threshold, it beeps and tells you that you have reached an edge. That approach has two weaknesses that cause most stud-finder frustration. If you happen to calibrate over a stud, the tool thinks the stud is empty wall and misreads everything after. And it only ever tells you about an edge, so finding the centre means scanning from both sides and splitting the difference.
+          </p>
+
+          <p>
+            Franklin Sensors replaced that single plate with an array. The ProSensor M210, T13 and 710+ have 13 sensors laid out across the width of the tool, the M150 has 9 and the M50 has 5. Each sensor reads the density beneath it at the same time, and a row of LEDs above the sensors lights up wherever something dense is behind the wall. Place it flat on the wall and the lights show you a band: the full width of the stud, from edge to edge. On the 710+, M210 and M150 listings, the middle LED turns green when the tool is centred on a stud.
+          </p>
+
+          <p>
+            Because the tool compares sensors against each other rather than against a calibration reading, there is no calibration step. Franklin's listings make a point of this: start anywhere, even over a stud. That is the single biggest practical advantage over an edge finder, because it removes the user error that produces most bad readings. It also means the tool can show you a double stud, two studs side by side at a window opening or wall junction, as a wider band, where an edge finder would report one stud and leave you guessing.
+          </p>
+
+          <p>
+            More sensors means a wider window, not more accuracy at a single point. A 13-sensor Franklin can show you a whole stud and sometimes the edge of the next one in a single placement. A 5-sensor M50 shows a narrower slice, so you slide it more, and a wide or doubled stud can fill the window. The underlying detection is the same density sensing. If you want the wider market, including magnetic and edge-finding tools from other brands, our <a href="/best-stud-finder/">best stud finder guide</a> compares them. This page is about choosing within the Franklin range.
+          </p>
+        </div>
+
+        <div id="lineup" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. The Current Franklin Lineup, Decoded
+          </h2>
+
+          <p>
+            Franklin's naming is confusing because the same tool can be sold under two names. The M-series models are sold at Home Depot and on Amazon, and several have Lowe's twins in an X-series: the Amazon listing for the M150 calls it the M150/X990, and Pro Tool Reviews tested the M210 alongside its Lowe's version, the X2100. Franklin's materials page groups the 13-sensor M210, X2100, T13, 710+ and original 710 together throughout, which tells you they share a sensor array. If you see an X-number at Lowe's, match it to its M-series twin by sensor count and depth before comparing prices.
+          </p>
+
+          <p>
+            The 710 and 710+ cause the most confusion. Both are 13-sensor tools with the same core design. The 710+ listing adds a built-in bubble level and integrated ruler and lists deep detection of up to 1.6 inches. Original 710 listings are still around, but the plus is the current version, and it is the one to buy if you want this body style. The T13 is a separate 13-sensor model with a ruler, level and pencil caddy and a listed depth of 1.7 inches. The M210 is the only one of the 13-sensor tools with a live wire indicator.
+          </p>
+
+          <p>
+            The T6 and T9 are Franklin's smaller T-series tools, with six and nine sensors. When we checked Amazon, the T6 appeared only in a bundle with Franklin's light level rather than on its own, so it is not one of our picks, though it is sold separately at other retailers. The M10 is a 3-sensor centre finder that Franklin's materials page notes is the one model requiring calibration. The M70 and M90 are 7 and 9-sensor tools whose listings do not mention wire detection. Then there is the MAX, a different tool altogether, with larger sensors, two modes and a much deeper rating.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Model</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Sensors</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Listed Depth</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Wire Detection</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Batteries (per listing)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">M210</td>
+                    <td class="px-4 py-4 text-gray-700">13</td>
+                    <td class="px-4 py-4 text-gray-700">1.7 in.</td>
+                    <td class="px-4 py-4 text-gray-700">Yes</td>
+                    <td class="px-4 py-4 text-gray-700">2 AA, rechargeable OK</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">710+</td>
+                    <td class="px-4 py-4 text-gray-700">13</td>
+                    <td class="px-4 py-4 text-gray-700">1.6 in.</td>
+                    <td class="px-4 py-4 text-gray-700">No</td>
+                    <td class="px-4 py-4 text-gray-700">Not rechargeable</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">T13</td>
+                    <td class="px-4 py-4 text-gray-700">13</td>
+                    <td class="px-4 py-4 text-gray-700">1.7 in.</td>
+                    <td class="px-4 py-4 text-gray-700">No</td>
+                    <td class="px-4 py-4 text-gray-700">AA, not rechargeable</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">MAX</td>
+                    <td class="px-4 py-4 text-gray-700">13 larger</td>
+                    <td class="px-4 py-4 text-gray-700">2.5 in. max</td>
+                    <td class="px-4 py-4 text-gray-700">No</td>
+                    <td class="px-4 py-4 text-gray-700">Not listed</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">M150 / X990</td>
+                    <td class="px-4 py-4 text-gray-700">9</td>
+                    <td class="px-4 py-4 text-gray-700">1.5 in.</td>
+                    <td class="px-4 py-4 text-gray-700">Yes</td>
+                    <td class="px-4 py-4 text-gray-700">2 AAA, not rechargeable</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">M50</td>
+                    <td class="px-4 py-4 text-gray-700">5</td>
+                    <td class="px-4 py-4 text-gray-700">1.5 in.</td>
+                    <td class="px-4 py-4 text-gray-700">Yes</td>
+                    <td class="px-4 py-4 text-gray-700">AA, not rechargeable</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            Read across that table and one tool stands out: the M210 matches or beats the 710+ on every listed spec and adds a wire indicator and rechargeable support. That is why it is our first pick, despite the 710+ being the better-known name.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The 6 Franklin Stud Finders, Compared
+          </h2>
+
+          <p>
+            These are the six current Franklin ProSensor models we could verify on Amazon. We did not bench-test them; sensor counts, depths and features come from Franklin's listings, manuals and materials page, and performance notes come from Pro Tool Reviews and widely reported owner experience. Franklin's success percentages are its own user-reported figures. The T6 is left out because Amazon only listed it in a bundle when we checked.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="metal-and-wires" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Metal Studs, Pipes and Live Wires
+          </h2>
+
+          <p>
+            Every Franklin listing says it finds wood and metal studs, and that is true in the sense that a steel stud is dense and lights up the display just as wood does. What no Franklin does is tell you which one it found. There is no separate metal mode, as some Zircon and Bosch scanners have, and a review of the MAX notes that it cannot distinguish a stud from a metal pipe or wire. A copper supply line or a steel gas pipe running horizontally will show up as a dense object. A vertical one directly beside a stud can make the stud look wider than it is.
+          </p>
+
+          <p>
+            The practical defence is pattern. Studs run vertically and repeat, usually 16 inches apart on centre and sometimes 24. Scan in several places up and down the wall. If a band appears at chest height but not at knee height, or does not line up with the stud spacing either side, it is something else. Pipes also tend to run near fixtures: below a sink, behind a toilet, up from a water heater. Our guide to <a href="/how-to-find-a-stud-without-a-stud-finder/">finding a stud without a stud finder</a> covers the spacing, outlet and trim-nail checks that confirm what the scanner shows.
+          </p>
+
+          <p>
+            Live wire detection is available on the M210, M150 and M50. The M210 manual describes it as a live wire meter that lights a yellow indicator when it senses live wiring, and calls it an indicator, not a precise locator. That is the right way to think of it. Non-contact AC detection reads the electric field around an energised conductor, so it only works on circuits that are switched on and drawing voltage, can be confused by shielded or deeply buried cable, and will spread its signal across several inches of wall. A switched-off circuit, or a cable in metal conduit, can be invisible to it.
+          </p>
+
+          <p>
+            So the wire indicator is useful as an early warning, and no reason to drill blind. Electrical cable in a wood-framed wall is usually stapled to the side of a stud and runs vertically from outlets and switches, or horizontally at outlet height. Avoid drilling directly above or below outlets and switches, keep fixings off the very edge of a stud, and turn off the circuit when in doubt. The 710+, T13 and MAX have no wire detection at all, which is the single most important practical difference between them and the M-series.
+          </p>
+        </div>
+
+        <div id="depth" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Depth Ratings and What They Mean
+          </h2>
+
+          <p>
+            Franklin publishes a maximum detection depth for each model: 1.5 inches for the M50 and M150, 1.6 inches for the 710+, 1.7 inches for the M210 and T13, and 2.5 inches for the MAX. Those numbers are the maximum distance through a wall surface to the stud face, and they are best read as headroom rather than a working spec. Standard residential drywall is half an inch thick, and 5/8 inch is common on ceilings and in garages. Every Franklin has plenty of depth for a single layer of either.
+          </p>
+
+          <p>
+            Depth starts to matter when walls stack up. Double drywall in home theatres, fire-rated walls and some renovations is an inch or more. Drywall laid over old plaster, paneling over drywall, or plywood shear wall sheathing behind drywall adds more. Tile over cement board can reach an inch and a half once you count the mortar. At those thicknesses, a 1.5 inch tool is near its limit and the signal from the stud gets weak relative to everything else in the wall.
+          </p>
+
+          <p>
+            Franklin's own materials page is the most useful guide here, because it reports results by wall type rather than depth alone. Over a single or double layer of OSB or plywood, it gives the MAX 93 percent success and the 13-sensor M210, T13 and 710+ group 68 percent. On ceilings, the 13-sensor group scores 93 percent, the 9-sensor M150 family 81 percent, and the basic M90 62 percent. Those are Franklin's figures from its own user reporting rather than independent tests, but the pattern is consistent: more sensors helps, and for genuinely thick or layered walls, the MAX's larger sensors and deeper rating are what move the number.
+          </p>
+
+          <p>
+            Two things improve depth performance on any Franklin. Hold the tool completely flat, because an air gap of even a millimetre under part of the sensor array reads as lower density and can hide a stud or invent one. And on the MAX, check you are in the right mode: Mode 1 for single-layer drywall, Mode 2 for layered walls. Franklin's manual lists the wrong mode as the first thing to check when readings are odd.
+          </p>
+        </div>
+
+        <div id="plaster-and-tile" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Plaster, Lath and Tile: What Owners Report
+          </h2>
+
+          <p>
+            Plaster and lath walls are where every density-based stud finder struggles, and Franklins are no exception. Lath is a row of horizontal wood strips nailed across the studs, with gaps between them that the plaster keys into. To a density sensor, a lath strip looks a lot like a stud on its side, so a scan can produce bands at stud positions and also bands between them. Plaster thickness also varies by an inch or more across a single wall in an old house, which a sensor reads as a density change.
+          </p>
+
+          <p>
+            The best independent number we found is from Pro Tool Reviews, which tested stud finders on lath and plaster and reported that the Franklin M210 and its X2100 twin achieved 100 percent on-center detection but a 33 percent false stud rate. That is a fair summary of owner reports too: the Franklins find the real studs, and they also find some things that are not studs. Forum posters with very old houses go further and report false positives and false negatives from every brand on plaster. Franklin's own figures put the 13-sensor M210, T13 and 710+ at 80 percent success on plaster and lath, and the MAX at 89 percent.
+          </p>
+
+          <p>
+            On plaster, use the pattern, not a single reading. Scan the wall at three heights and mark every band. Real studs line up vertically and repeat at a consistent spacing, often 16 inches but sometimes irregular in houses built before standard framing. Lath bands do not line up as neatly and tend to show as narrower, weaker readings. Then confirm with a small finish nail or a thin drill bit in a spot that will be hidden. The MAX's manual adds an important caveat: some plaster is reinforced with metal mesh, and through that, no Franklin can detect reliably.
+          </p>
+
+          <p>
+            Tile is the other problem surface. Franklin's materials page says the MAX performs best on large, uniform tile, at 95 percent in its reporting, while the 13-sensor models have some success but are much less reliable. Smaller tiles with more grout lines can produce false positives, because each grout line is a density change. If you are mounting a towel bar or grab bar on a tiled wall, the MAX is the Franklin to use; otherwise, plan on confirming by drilling through a grout joint with a small bit. Franklin is also clear that no electronic stud finder, its own included, works through stucco, exterior siding, brick or concrete.
+          </p>
+        </div>
+
+        <div id="which-franklin" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Which Franklin for Which House
+          </h2>
+
+          <p>
+            For most houses built since the 1960s, with half-inch drywall on wood studs, the decision is between price and convenience rather than capability. The M210 is the best single tool: 13 sensors, a wide window that often shows two studs, a wire indicator and rechargeable support. If it costs more than you want to spend, the M150 covers the same drywall jobs with a narrower window, and the M50 does it for less again. All three include the live wire indicator, which is worth having in a kitchen or anywhere near outlets.
+          </p>
+
+          <p>
+            For older houses with plaster and lath, buy a 13-sensor model at minimum, and the MAX if the plaster is thick or you hang things often. Franklin's figures and Pro Tool Reviews both point the same way: more sensors help, and the MAX's Mode 2 is designed for exactly this wall. Pair it with a magnet. A cheap magnetic stud finder that locates the nails holding the lath to the studs is a very good second opinion, because those nails only exist where a stud does.
+          </p>
+
+          <p>
+            For tiled walls, double drywall, sheathing behind drywall or basement walls finished over furring, the MAX is the only Franklin with meaningfully more depth. For ceilings, any 13-sensor model is a step up from the 9-sensor tools, by Franklin's numbers. For metal-stud commercial or basement framing, every Franklin will find the studs, but none will tell you whether a band is a stud or a pipe, so pay attention to spacing.
+          </p>
+
+          <p>
+            And if you already own a 710+ or T13, there is no reason to replace it with an M210. The wire indicator is a convenience, not a substitute for knowing where wiring runs. What is worth adding is a cheap AC voltage tester and, for big jobs, a <a href="/best-laser-level/">laser level</a> to transfer a stud line up a wall or across a row of cabinets without scanning every placement. For drilling into the studs you find, our guide to the <a href="/best-cordless-drill-for-home-use/">best cordless drill for home use</a> covers the tools that pair with this one.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Your Wall</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Buy</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Why</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Half-inch drywall, newer house</td>
+                    <td class="px-4 py-4 text-gray-700">M210 (or M150 / M50 to save)</td>
+                    <td class="px-4 py-4 text-gray-700">Full-width display plus wire indicator</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Plaster and lath</td>
+                    <td class="px-4 py-4 text-gray-700">MAX, or M210 at minimum</td>
+                    <td class="px-4 py-4 text-gray-700">Mode 2 and larger sensors; confirm with a magnet</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Tile, double drywall, sheathing</td>
+                    <td class="px-4 py-4 text-gray-700">MAX</td>
+                    <td class="px-4 py-4 text-gray-700">Only Franklin rated to 2.5 in.</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Ceilings</td>
+                    <td class="px-4 py-4 text-gray-700">Any 13-sensor model</td>
+                    <td class="px-4 py-4 text-gray-700">93 percent vs 81 for 9-sensor, per Franklin</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Already own a 710+ or T13</td>
+                    <td class="px-4 py-4 text-gray-700">Keep it</td>
+                    <td class="px-4 py-4 text-gray-700">Add a voltage tester instead</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="vs-edge-finders" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Franklin vs Edge-Finding and Magnetic Tools
+          </h2>
+
+          <p>
+            A Franklin is not the only way to find a stud, and for some people it is not the best. An edge-finding scanner from Zircon or a similar brand costs less and, in skilled hands on clean drywall, finds studs reliably. The difference is in the failure modes. An edge finder fails silently when it calibrates over a stud or a dense patch, and needs two passes to locate a centre. A Franklin cannot be miscalibrated and shows the centre in one placement. For people who hang things a few times a year and do not want to learn a technique, that is worth the extra cost.
+          </p>
+
+          <p>
+            Some edge finders and multi-mode wall scanners also do things Franklins do not. Several have a dedicated metal mode that distinguishes ferrous from non-ferrous metal, which tells you whether a band is a steel stud, a nail, or a copper pipe. Others have a stronger AC detection mode. If you work around plumbing or wiring often, a multi-mode scanner may be worth owning alongside or instead of a Franklin. Our <a href="/best-stud-finder/">stud finder guide</a> compares those tools directly.
+          </p>
+
+          <p>
+            Magnetic stud finders are the cheapest option and often the most trustworthy, because they find the steel screws or nails holding drywall or lath to the stud. There is no inference involved: if the magnet sticks, there is a fastener, and fasteners go into studs. The drawback is speed. You sweep slowly in a grid to find one fastener, then find the next one above it to confirm the line. On plaster, a magnet is often more reliable than any electronic tool.
+          </p>
+
+          <p>
+            The best setup for most homeowners is a Franklin and a magnet. Use the Franklin to see the whole wall quickly, and the magnet to confirm the one stud you are about to put a heavy TV mount or grab bar into. That combination solves the plaster false positive, the pipe-or-stud question and the doubled-stud width question for the cost of a few dollars more.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            9. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying the 710+ out of habit</h3>
+              <p class="text-gray-700 text-sm m-0">
+                The 710+ is the famous Franklin, and it is still a good tool, but the M210 matches it on sensors, beats it slightly on listed depth, adds a live wire indicator and accepts rechargeable batteries. Unless the 710+ is cheaper on the day, or you specifically want its ruler-edged body, the M210 is the better buy.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Trusting a single scan on plaster</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Lath strips read like studs to a density sensor, and Pro Tool Reviews found a 33 percent false stud rate on plaster for the M210. Scan at three heights, look for bands that line up vertically at consistent spacing, and confirm with a magnet or a small finish nail before you drill for anything heavy.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Treating the wire light as clearance</h3>
+              <p class="text-gray-700 text-sm m-0">
+                The M210 manual calls its wire feature an indicator, not a locator. Non-contact detection only sees energised circuits and can miss shielded or deeply buried cable. No light does not mean no wire. Avoid drilling directly above or below outlets and switches, and turn the circuit off when in doubt.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Holding the tool at an angle</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Franklins compare sensors across the array, so an air gap under one end reads as lower density and can hide or invent a stud. Press the whole tool flat against the wall, especially on textured or uneven plaster, and scan again if the band looks lopsided or flickers.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using rechargeables where they are not supported</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Most Franklin listings, including the 710+, T13, M150 and M50, say the tool is not compatible with rechargeable batteries; the M210 is the exception. Lower-voltage rechargeable cells can cause erratic readings or low-battery warnings. Use fresh alkaline cells in the models that require them.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Which Franklin stud finder is best?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most homes, the ProSensor M210. Its listing gives it 13 sensors, detection up to 1.7 inches, a live wire indicator and support for rechargeable AA batteries, which beats the better-known 710+ on every listed spec. For plaster, tile or layered walls, the ProSensor MAX, with larger sensors and 2.5 inches of depth, is the better choice.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the difference between the Franklin 710+ and M210?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Both have 13 sensors and show the full width of a stud with no calibration. The M210 lists slightly deeper detection, 1.7 inches against 1.6, adds a live wire indicator and a pencil caddy, and works with rechargeable batteries. The 710+ has an integrated ruler and no wire detection, and its listing says rechargeables are not supported.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do Franklin stud finders detect metal?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                They detect metal studs, because steel is dense and lights up the display the same way wood does. They do not have a separate metal mode, so they cannot tell a steel stud from a pipe or a nail plate. Use stud spacing and scanning at several heights to tell a stud from a pipe.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do Franklin stud finders work on plaster walls?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                With caveats. Franklin's materials page reports 80 percent success on plaster and lath for the 13-sensor models and 89 percent for the MAX, from its own user reporting. Pro Tool Reviews found the M210 hit every stud centre on plaster but also produced false studs a third of the time, mostly from lath. Confirm readings with a magnet.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Which Franklin stud finders have live wire detection?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Of the current models we compared, the M210, M150 and M50 include live wire detection. The 710+, T13 and MAX do not. The feature only detects energised wiring and Franklin's manual describes it as an indicator rather than a locator, so it is an early warning rather than proof a spot is safe to drill.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How deep can a Franklin stud finder detect?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Listed maximum depths are 1.5 inches for the M50 and M150, 1.6 inches for the 710+, 1.7 inches for the M210 and T13, and 2.5 inches for the MAX. Standard drywall is half an inch, so every model has plenty of depth for ordinary walls. Depth matters for double drywall, sheathing, plaster and tile over backer board.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do Franklin stud finders need calibration?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                No, with one exception. The multi-sensor ProSensors compare readings across the array rather than against a starting point, so you can start anywhere, even over a stud. Franklin's materials page notes that the M10, a 3-sensor centre finder, does require calibration. On the MAX, you do need to choose Mode 1 or Mode 2 for the wall type.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Stud Finder Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-stud-finder/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Stud Finders</h3>
+              <p class="text-gray-500 text-sm mt-2">Multi-sensor, magnetic and multi-mode scanners from every brand compared.</p>
+            </a>
+            <a href="/how-to-find-a-stud-without-a-stud-finder/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">How-To</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Find a Stud Without a Stud Finder</h3>
+              <p class="text-gray-500 text-sm mt-2">Outlets, trim nails, magnets and spacing checks that confirm any scan.</p>
+            </a>
+            <a href="/best-laser-level/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Laser Levels</h3>
+              <p class="text-gray-500 text-sm mt-2">Carry a stud line up a wall or across a cabinet run in one shot.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Franklin's multi-sensor design genuinely fixes the two problems that make cheap stud finders frustrating: calibration errors and edge guessing. Within the range, the M210 is the one to buy, because it does everything the famous 710+ does and adds a wire indicator and rechargeable support.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Buy the MAX only for plaster, tile or layered walls, save with the M150 or M50 on plain drywall, and keep a magnet in the same drawer to confirm the reading that matters before you drill.
+          </p>
+        </div>
+
+        <MoreInCategory category="Tools & Equipment" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
