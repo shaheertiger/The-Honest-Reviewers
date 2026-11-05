@@ -7,6 +7,16 @@ import sitemap from '@astrojs/sitemap';
 // sitemap priority than the 0.5 default so crawlers reach them sooner.
 const priorityGuides = new Set([
   // November 2026: power generator keyword-gap batch.
+  'best-diesel-generator',
+  'best-6500-watt-generator',
+  'best-1500-watt-generator',
+  'best-indoor-generator',
+  'best-generator-inlet-box',
+  'how-much-does-a-generator-cost',
+  'how-to-hook-up-a-generator-to-your-house',
+  'what-will-a-5000-watt-generator-run',
+  'what-can-a-3500-watt-generator-run',
+  'what-can-a-10000-watt-generator-run',
   'best-10000-watt-generator',
   'best-12000-watt-generator',
   'best-8000-watt-generator',
