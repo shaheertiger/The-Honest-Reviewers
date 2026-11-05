@@ -1,0 +1,713 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import TopPick from "../components/TopPick.astro";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Portable Generators",
+    "url": "/best-portable-generator/"
+  },
+  {
+    "title": "Best Cheap Generators",
+    "url": "/best-cheap-generator/"
+  },
+  {
+    "title": "Generac Generator Cost",
+    "url": "/generac-generator-cost/"
+  },
+  {
+    "title": "Whole-House Generator Installation Cost",
+    "url": "/whole-house-generator-installation-cost/"
+  },
+  {
+    "title": "Best Diesel Generators",
+    "url": "/best-diesel-generator/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-11-05", modified: "2026-11-05" });
+const title = "How Much Does a Generator Cost? Prices by Type, Size and Setup";
+const description =
+  "How much are generators? Typical prices by type and size, cost per running watt, and the hidden costs of inlets, transfer switches, cords, permits and fuel.";
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Guides",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "How Much Does a Generator Cost",
+          item: "https://www.thehonestreviewers.com/how-much-does-a-generator-cost/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "How much is a generator for a house?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For a portable that can run essentials or, with a 240V connection, most of a house, plan on about $600 to $1,600 for the generator and another $500 to $2,000 for a safe panel connection. An automatic standby generator typically costs $6,500 to $15,000 or more installed, depending on size, fuel and how far it sits from the panel and gas meter."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much is a portable generator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Retail listings typically show 3,500 to 5,000 running watt open-frame portables at about $400 to $900, larger 7,500 to 10,000 watt units around $800 to $1,600, and inverter portables from about $400 for small value models to $1,800 or more for mid-size premium ones. Dual fuel versions usually add $50 to $200."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much is a small generator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The smallest 1,000 to 1,200 watt gas inverters typically start around $250 to $400, and 2,000 to 2,500 watt inverters, the most useful small size for home essentials, usually run $400 to $700 from value brands and over $1,000 from premium brands. Avoid no-name units without CO shutoff or published running watts."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is it cheaper to buy or rent a generator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For more than a handful of days a year, buying is usually cheaper. Rental shops commonly charge $50 to $150 a day for a mid-size portable, and rental stock tends to sell out before storms. Renting makes sense for a one-off planned need, such as a renovation, but not as an emergency plan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does it cost to run a generator per day?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A mid-size gasoline open-frame at half load typically burns around half a gallon to a gallon an hour, so roughly $40 to $85 a day at $3.50 a gallon if it runs continuously. Inverters at light load use much less. Natural gas standby units are commonly estimated at a few dollars an hour, depending on size and local rates."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a dual fuel generator worth the extra cost?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Usually, yes. The dual fuel version of a model typically costs $50 to $200 more than the gas-only one, and propane stores indefinitely, so you avoid stale gasoline and gummed carburettors. You get about 10 percent less power on propane, so size with that in mind. For most home backup buyers it is one of the best-value upgrades."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the cheapest way to back up a whole house?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most homes, a 6,500 to 9,500 running watt portable with a 240V twist-lock, connected through an inlet box and an interlock kit installed by an electrician, is the lowest-cost way to power most circuits. It typically totals $1,800 to $3,500. You manage loads yourself and start the generator manually, which is the trade against a standby unit."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      description: description,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home Emergency Preparedness",
+    tags: [
+      "how much are generators",
+      "how much is a generator",
+      "how much is a portable generator",
+      "how much is a small generator",
+      "generator cost"
+    ],
+  }}
+  jsonLd={schema}
+  stickyCta={{
+    text: "See Our Top Portable Generator Picks",
+    link: "/best-portable-generator/",
+  }}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Cost Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Field Tested
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          How Much Does a <span class="text-[#38BDF8]">Generator Cost?</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Typical prices for every type and size, what a running watt really costs, and the connection, cord, permit and fuel costs that most budgets miss.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#price-by-type"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See the Price Table
+          </a>
+          <a
+            href="#faq"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Jump to the FAQ
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="11.3k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#price-by-type" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Prices by Type</a>
+          <a href="#by-size" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Cost per Running Watt</a>
+          <a href="#small-portable" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Small and Portable Prices</a>
+          <a href="#hidden-costs" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Hidden Costs</a>
+          <a href="#running-costs" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Running and Maintenance</a>
+          <a href="#worth-paying-for" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. What's Worth Paying For</a>
+          <a href="#used-and-rental" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Renting and Buying Used</a>
+          <a href="#total-budget" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Three Total Budgets</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Most home backup buyers spend $600 to $1,600 on the generator and another $500 to $2,000 connecting it safely to the house. Automatic standby units start around $6,500 installed. The cheapest watts are open-frame generators at roughly 10 to 20 cents per running watt; inverters cost two to four times that, and you should pay it only if you need quiet, clean power.
+        </p>
+
+        <TopPick />
+
+        <div id="price-by-type" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. Generator Prices by Type
+          </h2>
+
+          <p>
+            The short answer to <strong>how much are generators</strong> is anywhere from about $300 to well over $15,000, and the type of generator decides which end of that range you land on far more than the brand does. The ranges below are what retail listings typically show in late 2026 for new units from established brands; sales, seasons and storm demand move them, sometimes by hundreds of dollars in a week.
+          </p>
+
+          <p>
+            Conventional open-frame generators are the cheapest watts you can buy. A 3,500 to 5,000 running watt open-frame typically sells for about $400 to $900, and larger 7,500 to 10,000 watt units usually land between about $800 and $1,600. They are loud and their power is less clean than an inverter's, but for a home backup that sits in the driveway they deliver the most power per dollar.
+          </p>
+
+          <p>
+            Inverter generators cost more per watt. Small 2,000 to 2,500 watt inverters typically run from about $400 for value brands to $1,000 to $1,400 for premium Japanese brands. Mid-size 3,000 to 4,500 watt inverters usually sit between about $700 and $1,800, with premium models above that. You are paying for quieter running, cleaner power and better fuel economy at light load, which our <a href="/inverter-generator-vs-regular-generator/">inverter vs regular generator</a> comparison weighs in detail.
+          </p>
+
+          <p>
+            Dual fuel adds less than most people expect. On models sold in both versions, the dual fuel variant typically costs $50 to $200 more than the gasoline-only one, and tri-fuel units that add natural gas usually sit a little higher again. Given that propane stores indefinitely and gasoline does not, that premium is one of the better values in the category.
+          </p>
+
+          <p>
+            At the top end, portable diesels and standby units are a different market. Generac's site lists its XD5000E diesel portable from about $4,019, roughly four to five times the price of a gasoline unit with similar output; our <a href="/best-diesel-generator/">diesel generator guide</a> explains who that is worth it for. Home standby generators are covered in depth in our <a href="/generac-generator-cost/">Generac generator cost</a> breakdown, which puts typical installed prices at about $6,500 to $9,500 for 10 to 14 kW and $9,000 to $13,000 for 18 to 22 kW units.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Type</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Typical size</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Typical new price</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Best for</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Small inverter</td>
+                    <td class="px-4 py-4 text-gray-700">2,000-2,500 W</td>
+                    <td class="px-4 py-4 text-gray-700">$400-$1,400</td>
+                    <td class="px-4 py-4 text-gray-700">Camping, RV, fridge and essentials</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Mid inverter</td>
+                    <td class="px-4 py-4 text-gray-700">3,000-4,500 W</td>
+                    <td class="px-4 py-4 text-gray-700">$700-$1,800+</td>
+                    <td class="px-4 py-4 text-gray-700">Quiet home backup, RV air conditioning</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Open-frame</td>
+                    <td class="px-4 py-4 text-gray-700">3,500-5,000 W</td>
+                    <td class="px-4 py-4 text-gray-700">$400-$900</td>
+                    <td class="px-4 py-4 text-gray-700">Budget home essentials</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Large open-frame</td>
+                    <td class="px-4 py-4 text-gray-700">7,500-12,000 W</td>
+                    <td class="px-4 py-4 text-gray-700">$800-$2,000</td>
+                    <td class="px-4 py-4 text-gray-700">Well pump, 240V circuits, most of a house</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Diesel portable</td>
+                    <td class="px-4 py-4 text-gray-700">5,000 W</td>
+                    <td class="px-4 py-4 text-gray-700">$4,000+</td>
+                    <td class="px-4 py-4 text-gray-700">Farms, long runtimes</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Home standby (installed)</td>
+                    <td class="px-4 py-4 text-gray-700">10-26 kW</td>
+                    <td class="px-4 py-4 text-gray-700">$6,500-$15,000+</td>
+                    <td class="px-4 py-4 text-gray-700">Automatic whole-house backup</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="by-size" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Price by Size and Cost per Running Watt
+          </h2>
+
+          <p>
+            The fairest way to compare generator prices is cost per running watt: the price divided by the running watts the manufacturer rates it for. It strips out the marketing habit of quoting starting or peak watts in large type and shows you what you are really paying for continuous power.
+          </p>
+
+          <p>
+            Open-frame generators usually come out at roughly 10 to 20 cents per running watt. A 3,600 running watt unit at around $400 is about 11 cents; a 7,500 running watt unit at around $1,000 is about 13 cents. Large open-frames often get cheaper per watt as they get bigger, because the frame, wheels and controls cost about the same regardless of engine size.
+          </p>
+
+          <p>
+            Inverters typically sit at 25 to 60 cents per running watt. A 1,800 running watt inverter at around $600 is over 30 cents; a premium 1,800 watt model near $1,100 is around 60 cents. That gap is the price of quiet and clean power, and it is worth paying only if you need those things. Our <a href="/best-cheap-generator/">cheap generator guide</a> goes deeper on where the best value per watt sits at the budget end.
+          </p>
+
+          <p>
+            Running watts also tell you which size you need, and buying the wrong size is the most expensive mistake in the category. Too small and it will not start your well pump or furnace; too large and you pay for capacity you never use and burn extra fuel. Use our <a href="/generator-wattage-chart/">generator wattage chart</a> and <a href="/what-size-generator-do-i-need-for-my-house/">house sizing guide</a> before you price anything, and look at our breakdowns of <a href="/what-will-a-5000-watt-generator-run/">what a 5,000 watt generator will run</a> if you are near that common size.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">Typical Cost per Running Watt</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <p class="text-3xl font-black text-white">10-20¢</p>
+                <p class="text-gray-400 text-xs mt-1">Open-frame</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">25-60¢</p>
+                <p class="text-gray-400 text-xs mt-1">Inverter</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-white">80¢+</p>
+                <p class="text-gray-400 text-xs mt-1">Diesel portable</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">40¢+</p>
+                <p class="text-gray-400 text-xs mt-1">Standby, installed, per watt</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="small-portable" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. How Much Is a Small or Portable Generator?
+          </h2>
+
+          <p>
+            <strong>How much is a small generator</strong> depends on what small means to you. Retail listings for the smallest gas inverters, around 1,000 to 1,200 watts, typically start near $250 to $400 from value brands. They run a laptop, phone chargers, a CPAP machine or a few lights, and not much else, and they make sense mostly for camping and tailgating.
+          </p>
+
+          <p>
+            The 2,000 to 2,500 watt class is where most buyers who want a small generator should look. It is the size that can keep a refrigerator, a freezer, a router and some lighting going during an outage, and value-brand inverters in that range typically sell for $400 to $700. Premium models with longer warranties and better dealer support usually cost $1,000 or more.
+          </p>
+
+          <p>
+            <strong>How much is a portable generator</strong> for home backup is a different question, because most homes need more than 2,500 watts to run a furnace blower, a sump pump and a fridge at the same time. A 4,000 to 5,000 running watt open-frame with electric start and a 240V outlet typically sells for $600 to $1,000, and that is the price point where most home backup purchases end up.
+          </p>
+
+          <p>
+            Be wary of the cheapest listings in each class. Units priced far below the brand-name range often skip carbon monoxide shutoff, publish only peak watts, or come from sellers who will not be around for warranty claims. A few dollars saved there is rarely worth it; our <a href="/best-portable-generator/">best portable generators</a> list sticks to models with CO shutoff and published running watts.
+          </p>
+        </div>
+
+        <div id="hidden-costs" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. The Hidden Costs: Connection, Cords and Fuel
+          </h2>
+
+          <p>
+            The generator is rarely the whole bill. For home backup, plan for another $100 to $2,000 on top of the purchase price depending on how you connect it, and decide that before you choose a generator, because the connection method dictates which outlets the generator needs.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Connecting to the house</h3>
+
+          <p>
+            The cheapest legal whole-panel connection is usually an interlock kit and a power inlet box. Inlet boxes typically cost $50 to $150, interlock kits for common panels typically $50 to $200, and an electrician's installation commonly adds a few hundred dollars to over $1,000 depending on panel location and local rates. A manual transfer switch costs more, often $300 to $700 for the hardware alone, plus installation. Our <a href="/generator-transfer-switch-types-cost-and-installation/">transfer switch guide</a> compares the options, our guide to <a href="/how-to-hook-up-a-generator-to-your-house/">hooking a generator up to your house</a> walks through the process, and our <a href="/best-generator-inlet-box/">generator inlet box</a> picks cover the hardware.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Permits</h3>
+
+          <p>
+            Many jurisdictions require an electrical permit for an inlet and interlock or a transfer switch, and fees commonly run from about $50 to a few hundred dollars. Your electrician usually pulls it. Skipping the permit can complicate an insurance claim and a home sale, so it is cheap insurance in itself.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Cords</h3>
+
+          <p>
+            A 30 amp, four-prong generator cord to feed an inlet box typically costs $70 to $200 depending on length and gauge, and a pair of heavy-duty extension cords for running appliances directly costs $40 to $100 more. Long runs need heavier wire; our <a href="/generator-extension-cord-size/">extension cord sizing guide</a> covers the gauge.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Fuel and storage</h3>
+
+          <p>
+            Gas cans, stabiliser and oil for the first season usually add $50 to $120. Propane users need a tank or two: a filled 20 lb cylinder typically costs $50 to $70 new, then refills or exchanges. Most generators also need a cover or shelter if they will run in the rain, which is another $50 to $300.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Extra</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Typical cost</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Needed when</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Inlet box</td>
+                    <td class="px-4 py-4 text-gray-700">$50-$150</td>
+                    <td class="px-4 py-4 text-gray-700">Feeding a panel interlock or transfer switch</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Interlock kit</td>
+                    <td class="px-4 py-4 text-gray-700">$50-$200</td>
+                    <td class="px-4 py-4 text-gray-700">Cheapest whole-panel connection</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Manual transfer switch</td>
+                    <td class="px-4 py-4 text-gray-700">$300-$700 hardware</td>
+                    <td class="px-4 py-4 text-gray-700">Selected circuits, no panel interlock</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Electrician install</td>
+                    <td class="px-4 py-4 text-gray-700">$300-$1,500+</td>
+                    <td class="px-4 py-4 text-gray-700">Any panel connection</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Permit</td>
+                    <td class="px-4 py-4 text-gray-700">$50-$300</td>
+                    <td class="px-4 py-4 text-gray-700">Most jurisdictions</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">30A generator cord</td>
+                    <td class="px-4 py-4 text-gray-700">$70-$200</td>
+                    <td class="px-4 py-4 text-gray-700">Inlet box connection</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Fuel cans, stabiliser, oil</td>
+                    <td class="px-4 py-4 text-gray-700">$50-$120</td>
+                    <td class="px-4 py-4 text-gray-700">First season</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="running-costs" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Running and Maintenance Costs
+          </h2>
+
+          <p>
+            Fuel is the biggest ongoing cost, and it is easy to estimate. A 5,000 to 7,500 watt open-frame generator at half load typically burns somewhere around half a gallon to a gallon of gasoline an hour, according to published runtime figures. At $3.50 a gallon, that is roughly $40 to $85 for a full day of running. An inverter running a fridge and a few lights at light load can use a fraction of that.
+          </p>
+
+          <p>
+            Multi-day outages add up quickly. A three-day outage running a mid-size open-frame for 18 hours a day can cost $150 to $250 in gasoline alone, and that assumes you can buy fuel. Diesel generators burn less per kilowatt-hour, and natural gas standby units are commonly estimated at a few dollars an hour, which is one reason standby owners worry less about long outages.
+          </p>
+
+          <p>
+            Maintenance is cheap but not free. Oil changes on a portable typically cost $10 to $20 in oil each time, with the first change due after a short break-in period and then roughly every 50 to 100 hours depending on the manufacturer. Spark plugs and air filters are a few dollars each. Budget $30 to $75 a year for a portable that sees occasional use. Standby units need annual service, which dealers commonly charge $200 to $400 for.
+          </p>
+
+          <p>
+            The most expensive maintenance problem is avoidable. Gasoline left in a carburettor goes stale and gums it up, and a carburettor cleaning or replacement typically costs $75 to $200 at a shop. Running the carb dry or using stabilised fuel, and starting the generator monthly, prevents almost all of it.
+          </p>
+        </div>
+
+        <div id="worth-paying-for" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. What's Worth Paying For, and What Isn't
+          </h2>
+
+          <p>
+            Some features are worth every dollar. Carbon monoxide shutoff is the first: generator exhaust kills people every year, and units that shut down when CO builds up typically cost little or nothing more than those that do not. Treat it as a requirement, not an upgrade.
+          </p>
+
+          <p>
+            Electric start is worth it for most home backup buyers. Pulling a recoil on a cold engine in the dark is hard for many people, and electric start typically adds $50 to $150. A 240V twist-lock outlet, usually an L14-30R, is worth paying for if you want to run a well pump or feed your panel. Dual fuel is worth its modest premium for storage reasons. An inverter is worth its higher price if you will run it near people or neighbours, or mostly at light load.
+          </p>
+
+          <p>
+            Other features are not worth much. Peak watt figures are marketing; ignore them and compare running watts. App connectivity and Bluetooth monitoring sound useful but rarely change how you use a generator in an outage. Huge oversizing is a waste: a 12,000 watt unit costs more to buy and burns more fuel than a 6,500 watt one that covers your real load, as our <a href="/best-6500-watt-generator/">6,500 watt generator</a> guide shows for that popular middle size.
+          </p>
+
+          <p>
+            Brand matters in a specific way. Premium brands cost more mainly for engine longevity, quieter inverters and dealer support. For a generator that runs a few dozen hours a year, a well-reviewed mid-tier brand with a national parts network is usually the value buy. For a generator that will run hundreds of hours, such as on a remote property, the premium is easier to justify.
+          </p>
+        </div>
+
+        <div id="used-and-rental" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Renting, Buying Used and Other Ways to Spend Less
+          </h2>
+
+          <p>
+            Renting makes sense for a single planned need, such as a renovation without power. Equipment rental shops commonly charge from about $50 to $150 a day for a mid-size portable, so renting more than a handful of days a year usually costs more than owning. Rental stock also disappears when a storm is forecast, so it is a poor plan for emergencies.
+          </p>
+
+          <p>
+            Used generators can be good value, but inspect them carefully. Ask for the hour meter reading if it has one, start it cold, put a real load on it, and check that the outlets deliver power. Gummed carburettors are the most common problem on used units, and they are fixable, but price that in. Avoid used units without a CO shutoff.
+          </p>
+
+          <p>
+            Timing helps. Generator prices tend to be softer outside storm season and spike before and after major weather events. Buying in late winter or spring, rather than the week a hurricane is forecast, commonly saves money and guarantees stock. Price matching and open-box units from major retailers are also worth checking.
+          </p>
+
+          <p>
+            Finally, consider whether you need a generator at all. If all you want is to keep a router, CPAP and phones running for a few hours, a battery power station or UPS may cost less overall and needs no fuel. Our <a href="/portable-power-station-vs-generator/">power station vs generator</a> comparison covers when that trade makes sense.
+          </p>
+        </div>
+
+        <div id="total-budget" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Three Realistic Total Budgets
+          </h2>
+
+          <p>
+            Putting it together, here are three typical home backup budgets. All figures are typical ranges from retail listings and common contractor pricing, not quotes, and your local labour rates will move the totals.
+          </p>
+
+          <p>
+            The essentials budget is roughly $700 to $1,300. A 3,500 to 4,500 running watt open-frame with CO shutoff, a couple of heavy extension cords, fuel cans and stabiliser. You run the fridge, freezer, a few lights and phone chargers with cords through a cracked window or a cord port, and nothing is wired into the house. It works, and for short outages it is all many households need.
+          </p>
+
+          <p>
+            The connected home budget is roughly $1,800 to $3,500. A 6,500 to 9,500 running watt generator with electric start and a 240V twist-lock, an inlet box, an interlock kit or manual transfer switch installed by an electrician with a permit, and a 30 amp generator cord. This is the setup that runs a well pump, a furnace, and most of a house's circuits during an outage, and it is the best value for most homeowners who lose power several times a year.
+          </p>
+
+          <p>
+            The automatic standby budget is roughly $6,500 to $15,000 or more. A natural gas or propane standby unit, an automatic transfer switch, a pad, the gas line work and permits. Our <a href="/whole-house-generator-installation-cost/">whole house generator installation cost</a> guide details what drives that number. It is the right answer for long, frequent outages or for anyone who cannot be home to start a portable.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE BUDGET RULE</p>
+            <p class="text-xl font-bold text-white mb-3">Price the connection before you price the generator.</p>
+            <p class="text-gray-300 leading-relaxed m-0">A $700 generator with a $1,200 safe panel connection is a better home backup than a $1,500 generator run through extension cords. Decide how it connects first, then buy the generator with the outlets that connection needs.</p>
+          </div>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            9. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Budgeting only for the generator</h3>
+              <p class="text-gray-700 text-sm m-0">
+                The purchase price is often half the real cost of home backup. An inlet box, interlock or transfer switch, electrician, permit and cord can add $500 to $2,000. Decide how you will connect it first, then budget for both, so you are not stuck running extension cords through a window in the first outage.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Comparing peak watts instead of running watts</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Peak or starting watts are only available for a few seconds. Two generators with the same peak figure can differ by 1,000 running watts. Divide price by running watts to compare value fairly, and size from running watts so the generator can actually carry your load for hours.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Paying for far more generator than you need</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A 12,000 watt unit costs more to buy and burns more fuel every hour than a 6,500 watt unit that covers your real load. Add up what you need running at the same time, add the largest motor's starting surge, and buy the size that covers it with some margin.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping CO shutoff to save a little</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Carbon monoxide from generators kills people every year, and CO shutoff typically costs little or nothing extra. The cheapest units without it are a false economy. Buy a generator that shuts itself down when CO builds up, and still run it well away from the house.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying during the storm</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Prices and stock both get worse when a major storm is forecast. Buying in the off-season commonly saves money and gives you time to install an inlet, test the generator and stock fuel. A generator bought the day before a hurricane often sits in its box because there is no time to set it up safely.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How much is a generator for a house?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For a portable that can run essentials or, with a 240V connection, most of a house, plan on about $600 to $1,600 for the generator and another $500 to $2,000 for a safe panel connection. An automatic standby generator typically costs $6,500 to $15,000 or more installed, depending on size, fuel and how far it sits from the panel and gas meter.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How much is a portable generator?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Retail listings typically show 3,500 to 5,000 running watt open-frame portables at about $400 to $900, larger 7,500 to 10,000 watt units around $800 to $1,600, and inverter portables from about $400 for small value models to $1,800 or more for mid-size premium ones. Dual fuel versions usually add $50 to $200.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How much is a small generator?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                The smallest 1,000 to 1,200 watt gas inverters typically start around $250 to $400, and 2,000 to 2,500 watt inverters, the most useful small size for home essentials, usually run $400 to $700 from value brands and over $1,000 from premium brands. Avoid no-name units without CO shutoff or published running watts.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is it cheaper to buy or rent a generator?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For more than a handful of days a year, buying is usually cheaper. Rental shops commonly charge $50 to $150 a day for a mid-size portable, and rental stock tends to sell out before storms. Renting makes sense for a one-off planned need, such as a renovation, but not as an emergency plan.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How much does it cost to run a generator per day?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A mid-size gasoline open-frame at half load typically burns around half a gallon to a gallon an hour, so roughly $40 to $85 a day at $3.50 a gallon if it runs continuously. Inverters at light load use much less. Natural gas standby units are commonly estimated at a few dollars an hour, depending on size and local rates.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a dual fuel generator worth the extra cost?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Usually, yes. The dual fuel version of a model typically costs $50 to $200 more than the gas-only one, and propane stores indefinitely, so you avoid stale gasoline and gummed carburettors. You get about 10 percent less power on propane, so size with that in mind. For most home backup buyers it is one of the best-value upgrades.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the cheapest way to back up a whole house?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most homes, a 6,500 to 9,500 running watt portable with a 240V twist-lock, connected through an inlet box and an interlock kit installed by an electrician, is the lowest-cost way to power most circuits. It typically totals $1,800 to $3,500. You manage loads yourself and start the generator manually, which is the trade against a standby unit.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Generator Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-portable-generator/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Portable Generators</h3>
+              <p class="text-gray-500 text-sm mt-2">Our ranked home backup picks with CO shutoff and real running watts.</p>
+            </a>
+            <a href="/generac-generator-cost/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#38BDF8] font-black text-xs uppercase tracking-widest mb-2">Standby Cost</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Generac Generator Cost</h3>
+              <p class="text-gray-500 text-sm mt-2">Installed standby prices by size, and what the quote covers.</p>
+            </a>
+            <a href="/best-cheap-generator/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Budget Picks</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Cheap Generators</h3>
+              <p class="text-gray-500 text-sm mt-2">Where the real watts per dollar are at the budget end.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            <strong class="text-white">How much are generators</strong> in practice? About $400 to $900 for a capable open-frame, $400 to $1,800 for most inverters, $4,000 and up for a diesel portable, and $6,500 to $15,000 or more for an installed standby. The connection, cords, permit and fuel commonly add $100 to $2,000 to a portable, and that is the part most budgets forget.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Compare on cost per running watt, not peak watts, buy the size your real load needs, insist on CO shutoff, and price the house connection before you choose the generator. For most homeowners, a mid-size portable with a 240V outlet and a properly installed inlet and interlock is the best value in home backup power.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Emergency Preparedness" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
