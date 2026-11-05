@@ -7,7 +7,7 @@ Head terms such as "portable generator", "whole house generator", "inverter gene
 "dual fuel generator", "battery generator" and "solar generator" already have pages.
 What remains below has **no page**. Volume is summed across close variants.
 
-## Written in this batch
+## Written in this batch (top 20)
 
 | Slug | Primary keyword | Cluster volume | KD |
 |---|---|---:|---:|
@@ -21,11 +21,6 @@ What remains below has **no page**. Volume is summed across close variants.
 | `inverter-generator-vs-regular-generator` | generator versus inverter generator | ~3,000 | 20–21 |
 | `can-a-portable-power-station-run-a-gas-furnace` | portable power station for gas furnace | 1,600 | 24 |
 | `best-generator-with-50-amp-outlet` | generator with 50 amp | 880 | 19 |
-
-## Next candidates (not written)
-
-| Proposed slug | Keyword | Volume | KD |
-|---|---|---:|---:|
 | `best-8000-watt-generator` | 8000 watt generator | 1,600 | 24 |
 | `best-5000-watt-generator` | generator 5000 w / 5000w generator | 2,000 | 20–21 |
 | `best-2000-watt-inverter-generator` | 2000 watt inverter generator / 2000w generator | 1,600 | 19–27 |
