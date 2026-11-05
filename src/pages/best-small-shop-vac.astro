@@ -1,0 +1,962 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Shop Vacs",
+    "url": "/best-shop-vac/"
+  },
+  {
+    "title": "Best Shop Vac Attachments",
+    "url": "/best-shop-vac-attachments/"
+  },
+  {
+    "title": "Best Cordless Shop Vacs",
+    "url": "/best-cordless-shop-vac/"
+  },
+  {
+    "title": "What Size Shop Vac Do I Need?",
+    "url": "/what-size-shop-vac-do-i-need/"
+  },
+  {
+    "title": "Shop Vac CFM vs Horsepower",
+    "url": "/shop-vac-cfm-vs-horsepower/"
+  },
+  {
+    "title": "Best Shop Vac Bags",
+    "url": "/best-shop-vac-bags/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-11-05", modified: "2026-11-05" });
+const title = "7 Best Small Shop Vacs in 2026: Compact Wet/Dry Vacs for Cars, Apartments and Workshops";
+const description =
+  "The best small shop vacs from 1.5 to 5 gallons, ranked on listed CFM, sealed pressure, amps and hose size, plus wall-mount picks for garages and cars.";
+
+const PRODUCTS = [
+  {
+    "id": "ridgid-4000rv-50313",
+    "name": "RIDGID 50313 Model 4000RV 4 Gallon 5.0 Peak HP Wet/Dry Vac",
+    "category": "4 Gallon, 110 CFM, 1-7/8 in. Locking Hose",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "pros": [
+      "110 CFM rating, the highest airflow figure in this roundup",
+      "1-7/8 in. locking hose, so it takes full-size RIDGID accessories",
+      "20 ft cord reaches across a garage bay without an extension",
+      "9 amp draw leaves room on a shared 15 amp circuit",
+      "Polypropylene drum shrugs off dents and rust"
+    ],
+    "cons": [
+      "Around 14.5 to 15.7 lb depending on the listing, heavier than the 2.5 gallon units",
+      "4 gallons of drum volume means emptying often on water jobs"
+    ],
+    "bottomLine": "The small shop vac to buy if you only buy one: full-size airflow and hose in a 4 gallon body that fits on a shelf.",
+    "description": "The 4000RV is RIDGID's compact 4 gallon wet/dry vac, sold under catalog number 50313, and it is the reason a small vac no longer has to feel small. Retailer spec sheets list 110 CFM of airflow from a 5.0 peak HP motor drawing 9 amps at 120V, which is the same airflow class as many 6 gallon units. The hose is the other half of the story: listings describe a 1-7/8 inch by 8 foot locking hose, so it accepts RIDGID's full-size nozzles and the 1-7/8 inch kits in our attachments guide rather than the toy-sized tools that come with 2.5 gallon vacs. The 20 foot cord is long for this class. Weight is listed at roughly 14.5 to 15.7 lb, so it is a one-hand carry, and the polypropylene drum will not rust if you leave water in it overnight. The trade-off is capacity: four gallons of drum volume is maybe three gallons of usable water before the float shuts it off. For cars, a basement corner and a workbench, nothing else here does as much per square foot of storage."
+  },
+  {
+    "id": "dewalt-dxv04t",
+    "name": "DEWALT DXV04T 4 Gallon 5.0 Peak HP Poly Wet/Dry Vac",
+    "category": "4 Gallon Toolbox Style, 90 CFM, 1-7/8 in. Hose",
+    "badge": "Best for Workshops",
+    "amazonUrl": "#",
+    "pros": [
+      "Toolbox shape stores on a shelf or in a truck bed without tipping",
+      "1-7/8 in. x 7 ft hose that collapses to about 2 ft for storage",
+      "20 ft cord with an integrated wrap",
+      "Onboard storage for hose, cord and tools",
+      "Ships with a cartridge filter, foam filter and a disposable dust bag"
+    ],
+    "cons": [
+      "Retailers list about 90 CFM, below the RIDGID and Shop-Vac 4 gallon units",
+      "Stretch hose loses some airflow when fully extended"
+    ],
+    "bottomLine": "The compact vac for a workshop or a jobsite truck, where storage shape matters more than the last 15 CFM.",
+    "description": "The DXV04T is DEWALT's 4 gallon corded wet/dry vac in a toolbox-style body: a flat top, a carry handle across it and storage built into the shell. Retailer spec sheets list a 5 peak HP motor, about 90 CFM of airflow and a 20 foot cord with an integrated cord wrap. The hose is a 1-7/8 inch stretch hose that DEWALT describes as running from about 2 feet collapsed to 7 feet extended, and every included tool uses the 1-7/8 inch connection. One parts list includes two extension wands, a crevice nozzle, a utility nozzle, a cartridge filter, a disposable dust bag and a foam filter, which means it can handle drywall dust on day one without a separate purchase. It also converts to a blower by moving the hose to the exhaust. The case for it over the RIDGID is shape: it sits flat on a shelf, slides behind a truck seat and does not roll away. The case against is airflow, where it gives up about 20 CFM on the spec sheet, and stretch hoses always cost a little suction when pulled to full length."
+  },
+  {
+    "id": "shop-vac-5914411",
+    "name": "Shop-Vac 5914411 4 Gallon 5.5 Peak HP SVX2 Wet/Dry Vac",
+    "category": "4 Gallon, 105 CFM, 69 in. Sealed Pressure",
+    "badge": "Strongest Suction",
+    "amazonUrl": "#",
+    "pros": [
+      "Listed at 265 air watts and 69 in. of sealed pressure, the strongest lift here",
+      "105 CFM airflow figure",
+      "Doubles as a blower",
+      "20 ft cord per retailer listings"
+    ],
+    "cons": [
+      "Draws about 11.6 to 11.8 amps, so it can trip a shared 15 amp circuit with other loads",
+      "Hose diameter is described differently across listings, so check before buying accessories"
+    ],
+    "bottomLine": "The small vac for wet work and packed debris, where sealed pressure matters more than airflow.",
+    "description": "The 5914411 is Shop-Vac's 4 gallon unit built around its SVX2 motor, which Shop-Vac markets as stronger and longer-lived than its standard 5.5 peak HP motor. The spec numbers back up the claim on lift: one industrial distributor lists 105 CFM, 265 air watts and 69 inches of sealed pressure at 11.6 amps, and another lists 11.8 amps. Sealed pressure, also called water lift, is the figure that tells you how well a vac pulls water up a hose or drags wet sawdust out of a carpet, and 69 inches is well above the 40 to 53 inches the 1.5 and 2.5 gallon units in this list are rated for. The Amazon listing describes a 1.5 inch by 8 foot hose and a 20 foot cord. Hose diameter is where we would be careful: other listings describe it differently, so measure the hose cuff before ordering add-on tools. The amp draw is the other caution. At close to 12 amps it is fine on its own circuit, but in a garage where a compressor or space heater shares the 15 amp breaker, you will find the limit."
+  },
+  {
+    "id": "vacmaster-vwmb508",
+    "name": "Vacmaster VWMB508 1101 5 Gallon 5 Peak HP Remote Control Wall Mount Wet/Dry Vac",
+    "category": "5 Gallon Wall Mount, 21 ft of 1-7/8 in. Hose, Remote Switch",
+    "badge": "Best Wall Mount",
+    "amazonUrl": "#",
+    "pros": [
+      "21 ft of 1-7/8 in. hose (10 ft standard plus 11 ft flex) reaches a whole car from one spot",
+      "On/off switch in the hose handle, so you never walk back to the vac",
+      "Wall rack with a quick-release lever, so it also works as a portable",
+      "20 ft cord and a 2-year limited warranty",
+      "Vacmaster lists 68 to 69 in. of water lift and 155 air watts"
+    ],
+    "cons": [
+      "Vacmaster's own page lists 75 CFM in one place and 78 CFM in another",
+      "26.7 lb, heavy to lift off the wall and carry around"
+    ],
+    "bottomLine": "The one to buy if the vac is going to live on a garage wall and serve the car and the workbench from there.",
+    "description": "The VWMB508 is Vacmaster's current 5 gallon wall-mount vac, the successor to the long-running VWM510. Vacmaster's spec sheet lists an 8 amp, 5 peak HP motor with 155 air watts and 68 inches of water lift, plus airflow of 75 CFM in the spec table and 78 CFM in the feature list, measured at the end of the included hose. The selling point is the setup rather than the motor. It hangs on a wall rack with a quick-release lever, and the hose is 21 feet in total: a 10 foot by 1-7/8 inch standard hose and an 11 foot flex hose. That is enough to reach all four doors and the trunk of a parked car from a vac mounted on the garage wall. The hose handle has a remote on/off switch, which is the feature owners commonly say they would not give up. Included tools cover a car nozzle, crevice tool, utility nozzle, concentrator nozzle and two extension wands, and filtration is a cartridge filter plus a foam wet filter. At 26.7 lb, it is a wall unit you can move, not a portable."
+  },
+  {
+    "id": "shop-vac-9303511",
+    "name": "Shop-Vac 9303511 2.5 Gallon 2.5 Peak HP Wet/Dry Vac",
+    "category": "2.5 Gallon, 60 CFM, 1-1/4 in. Hose, Wall Mountable",
+    "badge": "Best Compact Wall Mount",
+    "amazonUrl": "#",
+    "pros": [
+      "Wall-mounted design in a 2.5 gallon body",
+      "60 CFM rating, strong for this size",
+      "8 amp draw is easy on any household circuit",
+      "Blower function"
+    ],
+    "cons": [
+      "1-1/4 in. x 4 ft hose is short for a car",
+      "Cord length is listed as both 10 ft and 12 ft by different retailers"
+    ],
+    "bottomLine": "A small wall-hung vac for a laundry room or a utility closet that will see spills and dust, not big jobs.",
+    "description": "The 9303511 is Shop-Vac's 2.5 gallon, 2.5 peak HP unit, and the Amazon listing describes it as a wall-mounted design, which makes it the smallest wall-hung option here. Retailer spec sheets list 60 CFM of airflow, 53 inches of sealed pressure and 120 peak air watts at 8 amps. Those are good numbers for 2.5 gallons; the Armor All and Craftsman units this size are rated for 49 to 53 CFM. The hose is the familiar 1-1/4 inch by 4 foot type, which is right for a utility room and a little short for a car interior, so expect to carry the vac to the door rather than leave it on the floor. Retailers disagree on the cord, listing both 10 and 12 feet. It also blows, which is useful for clearing a dryer vent or a workbench. The case for it is the spot it fills: the vac that hangs by the washer or water heater and gets grabbed for a leak. If you want it to clean a car, buy the Vacmaster wall mount instead."
+  },
+  {
+    "id": "armor-all-aa255",
+    "name": "Armor All AA255 2.5 Gallon 2 Peak HP Wet/Dry Utility Shop Vacuum",
+    "category": "2.5 Gallon, 53 CFM, 1-1/4 in. x 6 ft Hose",
+    "badge": "Best Budget for Cars",
+    "amazonUrl": "#",
+    "pros": [
+      "Usually one of the cheapest corded wet/dry vacs sold",
+      "6 ft hose is longer than most 2.5 gallon units",
+      "6 amp draw, the lightest load in this list",
+      "Converts to a blower and ships with cloth and foam filters"
+    ],
+    "cons": [
+      "53 CFM rating, half the airflow of the 4 gallon picks",
+      "10 ft cord per one retailer, short for working around a car"
+    ],
+    "bottomLine": "Buy it for occasional car cleanups and spilled cereal on a tight budget, and accept that it is not a workshop tool.",
+    "description": "The AA255 is the Armor All branded 2.5 gallon wet/dry vac, sold through Vacmaster, and it has been a cheap car-and-apartment vac for years. Vacmaster lists it at 2 peak HP, 6 amps and 53 CFM. A retailer listing describes a 1-1/4 inch by 6 foot hose and a 10 foot cord. The 6 foot hose matters more than it sounds: most 2.5 gallon vacs ship with 4 or 5 feet, and the extra foot or two is the difference between reaching the back seat footwell from the door and climbing in. It converts to a blower, has an auto shut-off float for wet pickup and ships with a cloth dry filter and a foam wet filter. The limits are what you would expect for the price. At 53 CFM it will clear sand and crumbs off car carpet, but it struggles with packed pet hair and anything heavier than sawdust. The short cord means an extension cord for most driveways. As a cheap vac that lives in a closet, it is fine. As your only shop vac, it is not."
+  },
+  {
+    "id": "vacmaster-vh105",
+    "name": "Vacmaster VH105 1.5 Gallon 2 Peak HP Wet/Dry Vac",
+    "category": "1.5 Gallon, 42 CFM, Under 5.5 lb",
+    "badge": "Smallest",
+    "amazonUrl": "#",
+    "pros": [
+      "1.5 gallon body weighing about 4.6 to 5.25 lb",
+      "Wall mountable with onboard accessory storage",
+      "5 amp motor runs off any outlet",
+      "2-year limited warranty"
+    ],
+    "cons": [
+      "42 CFM and 40 in. of water lift, the weakest ratings here",
+      "6 ft cord and 4 ft hose keep it on a short leash"
+    ],
+    "bottomLine": "The vac for an apartment closet or a boat: small enough to store anywhere, strong enough for spills and crumbs.",
+    "description": "The VH105 is about as small as a corded wet/dry vac gets: a 1.5 gallon tank, about 6 quarts, in a unit that Vacmaster lists at 5.25 lb and some retailers list at 4.59 lb. Vacmaster rates the 2 peak HP, 5 amp motor at 42 CFM and 55 air watts, and one retailer lists 40 inches of water lift. The hose is 1-1/4 inch by 4 feet and the cord is 6 feet. It can hang on a wall and stores its accessories onboard. Those numbers make its job clear. It is for the spill under the sink, the cat litter that missed the box, a dorm room, an RV or a boat, where a 4 gallon vac has nowhere to live. It is not for a car interior, where 4 feet of hose and 6 feet of cord mean working with an extension cord and the vac on the seat. If you are choosing between this and a handheld cordless vacuum, the VH105 wins on wet pickup, which a stick or handheld cannot do, and loses on convenience. Owners commonly report it is louder than its size suggests."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Small Shop Vac",
+          item: "https://www.thehonestreviewers.com/best-small-shop-vac/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best small shop vac?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most people, the RIDGID 4000RV (catalog 50313). It is a 4 gallon vac listed at 110 CFM and 9 amps, with a 1-7/8 inch by 8 foot locking hose and a 20 foot cord. That is full-size airflow and accessory compatibility in a body that fits on a shelf. If it will hang on a garage wall, the Vacmaster VWMB508 is the better choice."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a 2.5 gallon shop vac big enough?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For a car, spills and an apartment, yes, as long as you accept 50 to 60 CFM and a 1-1/4 inch hose. It will not handle wood chips, gravel or much water, because it holds about 1.5 gallons before the float closes. If you have the space for a 4 gallon vac, the jump in airflow is worth more than the extra size costs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the smallest shop vac that is still useful?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Vacmaster VH105 is about as small as useful gets: a 1.5 gallon tank, about 5 lb, 42 CFM and 40 inches of water lift. It handles spills, litter and crumbs in an apartment, RV or boat. Below that size you are into handheld territory, and handheld vacuums do not do wet pickup."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are mini shop vacs good for cars?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, with the right hose and tools. Look for at least 6 feet of hose and 15 to 20 feet of cord so the vac can stay outside the car. The RIDGID 4000RV and Vacmaster VWMB508 are the best car vacs here. A dedicated car attachment kit often improves the job more than a bigger motor."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a wall-mount shop vac worth it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In a garage, usually yes. It stays off the floor, stays plugged in so it gets used, and can carry a much longer hose. The Vacmaster VWMB508 has 21 feet of 1-7/8 inch hose and a remote switch in the handle, enough to clean a parked car from the wall. Mount it into studs at chest height so you can lift it off full."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many CFM should a small shop vac have?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Look for 90 CFM or more if it will handle garage floors, sawdust or a lot of car work; the 4 gallon picks here list 90 to 110 CFM. For spills and light cleanup, 40 to 60 CFM is fine. Check where the brand measures it: Vacmaster measures at the end of the hose, which gives lower numbers than brands that measure at the motor."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I buy a cordless or corded small shop vac?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Buy corded if the vac will mostly be used within reach of an outlet; it is cheaper, stronger and never stops for a recharge. Buy cordless if you work at the curb or in remote spots and already own batteries for that platform. Our cordless shop vac guide covers the battery models from Milwaukee, Makita, DEWALT and Craftsman."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Tools & Equipment",
+    tags: [
+      "small shop vac",
+      "mini shop vac",
+      "compact wet dry vac",
+      "small wet dry vac",
+      "wall mount shop vac",
+      "shop vac for car"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated November 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The Best <span class="text-[#38BDF8]">Small Shop Vacs</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          A 4 gallon vac with a 1-7/8 inch hose now moves as much air as many 6 gallon units. Here are the seven compact corded wet/dry vacs worth buying, from a 1.5 gallon closet vac to a 21 foot wall mount, and the spec-sheet numbers that separate them.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#ridgid-4000rv-50313"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            See the Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Shaheer Ali Khan</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Consumer Product Testing &amp; Materials Performance Specialist</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="8.6k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#what-counts" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. What Counts as Small</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. The 7 Best, Ranked</a>
+          <a href="#airflow" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Airflow vs Peak HP</a>
+          <a href="#hose" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Hose Diameter</a>
+          <a href="#cars" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. For Car Detailing</a>
+          <a href="#apartments" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Apartments and Storage</a>
+          <a href="#wall-mount" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Wall-Mount Vacs</a>
+          <a href="#workshop" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. In a Workshop</a>
+          <a href="#water" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Water Pickup</a>
+          <a href="#cordless" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Corded vs Cordless</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">12. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          A small shop vac is the one that actually gets used. It lives on a shelf, a wall or in the trunk, it is plugged in within a minute, and it handles the spills, crumbs and sawdust that are not worth dragging a 16 gallon drum out for. The catch is that small vacs vary enormously: the 1.5 gallon units list around 40 CFM through a 1-1/4 inch hose, while the best 4 gallon units list 105 to 110 CFM through a 1-7/8 inch hose. This guide ranks the seven compact corded wet/dry vacs worth buying and shows you which numbers to trust on the box.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="what-counts" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. What Counts as a Small Shop Vac
+          </h2>
+
+          <p>
+            In this guide, a small shop vac means a corded wet/dry vac with a drum of 1 to 5 gallons. That covers three classes that do quite different jobs. The 1 to 2.5 gallon units, such as the Vacmaster VH105, Armor All AA255 and Shop-Vac 9303511, run on 5 to 8 amp motors and ship with 1-1/4 inch hoses. The 4 to 5 gallon units, such as the RIDGID 4000RV, DEWALT DXV04T, Shop-Vac 5914411 and Vacmaster VWMB508, run on 8 to 12 amp motors, mostly use 1-7/8 inch hoses and post airflow figures close to full-size vacs.
+          </p>
+
+          <p>
+            The gallon figure is drum volume, not what you can collect. RIDGID says so in the small print on its own spec sheets, and it applies to every brand. The filter cage, the float and the inlet deflector take up space, so a 4 gallon vac holds roughly 3 gallons of water before the float closes, and a 2.5 gallon unit closer to 1.5. With dry debris, a filter bag or a fine dust cartridge takes up more room. Plan on emptying a small vac about twice as often as the drum size suggests.
+          </p>
+
+          <p>
+            Why buy a small one at all? Three reasons come up over and over. You have nowhere to keep a 12 or 16 gallon drum, as in an apartment, a condo storage closet or a one-car garage that already holds a car. You want a vac to keep somewhere specific, such as in the car trunk, on a boat, by the water heater or under a workbench, so you are not dragging the big one out for a five-minute job. Or you need something you can carry up a ladder or into an attic with one hand.
+          </p>
+
+          <p>
+            If none of those apply and you have the room, a 6 to 12 gallon vac costs only a little more and empties less often, and our main <a href="/best-shop-vac/">best shop vac guide</a> covers those. If you are still deciding on size, <a href="/what-size-shop-vac-do-i-need/">what size shop vac do I need</a> walks through tank, hose and airflow by job. This page assumes you already know you want something compact and corded, and it ranks the ones worth buying.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE SHORT VERSION</p>
+            <p class="text-xl font-bold text-white mb-3">Four gallons with a 1-7/8 inch hose is the sweet spot.</p>
+            <p class="text-gray-300 leading-relaxed m-0">Below 4 gallons, airflow drops to 40-60 CFM and hoses shrink to 1-1/4 inch. At 4 gallons you get 90-110 CFM and full-size accessories in a body that still fits on a shelf. Go smaller only when storage space truly forces it.</p>
+          </div>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. The 7 Best Small Shop Vacs, Ranked
+          </h2>
+
+          <p>
+            We compared corded wet/dry vacs from 1.5 to 5 gallons from RIDGID, DEWALT, Shop-Vac, Vacmaster and Armor All on listed airflow, sealed pressure, amp draw, hose diameter and length, cord length, storage and wall-mount options. Every figure below comes from the manufacturer's spec sheet or a retailer listing, and where sources disagree we say so. Battery-powered models are covered in our separate cordless guide.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="airflow" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Airflow, Not Peak HP: Reading a Small Vac's Spec Sheet
+          </h2>
+
+          <p>
+            Every vac on this list is sold on peak horsepower, and peak horsepower tells you almost nothing. It is a figure measured on a motor with the fan removed, driven to the point where it is about to stall, for an instant. Vacmaster's own fine print says peak HP does not denote the operational horsepower output of a wet/dry vac, and Shop-Vac and RIDGID carry similar footnotes. Craftsman's CMXEVBE17250, a 2.5 gallon vac we considered for this list, shows how loose the figure is: its own product page title says 1.75 peak HP, its description says 2.5 peak HP, and both describe the same machine.
+          </p>
+
+          <p>
+            The useful numbers are airflow in CFM, sealed pressure (water lift) in inches, and amps. CFM tells you how much air moves through the hose, which is what picks up light debris like sawdust, dust and crumbs. Sealed pressure tells you how hard the vac can pull against a blocked nozzle, which is what lifts water up a hose and drags packed debris out of carpet. Amps tell you how much power the motor draws, and they are the most honest of the three because the label has to be accurate for electrical safety. Our deeper explainer on <a href="/shop-vac-cfm-vs-horsepower/">shop vac CFM vs horsepower</a> covers the physics; here is what the small vacs actually list.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Model</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Drum</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Listed CFM</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Sealed Pressure</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Amps</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Hose</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">RIDGID 4000RV (50313)</td>
+                    <td class="px-4 py-4 text-gray-700">4 gal</td>
+                    <td class="px-4 py-4 text-gray-700">110</td>
+                    <td class="px-4 py-4 text-gray-700">Not listed</td>
+                    <td class="px-4 py-4 text-gray-700">9</td>
+                    <td class="px-4 py-4 text-gray-700">1-7/8 in. x 8 ft</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Shop-Vac 5914411</td>
+                    <td class="px-4 py-4 text-gray-700">4 gal</td>
+                    <td class="px-4 py-4 text-gray-700">105</td>
+                    <td class="px-4 py-4 text-gray-700">69 in.</td>
+                    <td class="px-4 py-4 text-gray-700">11.6-11.8</td>
+                    <td class="px-4 py-4 text-gray-700">Check listing</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">DEWALT DXV04T</td>
+                    <td class="px-4 py-4 text-gray-700">4 gal</td>
+                    <td class="px-4 py-4 text-gray-700">90</td>
+                    <td class="px-4 py-4 text-gray-700">Not listed</td>
+                    <td class="px-4 py-4 text-gray-700">11</td>
+                    <td class="px-4 py-4 text-gray-700">1-7/8 in. x 7 ft</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Vacmaster VWMB508</td>
+                    <td class="px-4 py-4 text-gray-700">5 gal</td>
+                    <td class="px-4 py-4 text-gray-700">75-78</td>
+                    <td class="px-4 py-4 text-gray-700">68-69 in.</td>
+                    <td class="px-4 py-4 text-gray-700">8</td>
+                    <td class="px-4 py-4 text-gray-700">1-7/8 in. x 21 ft</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Shop-Vac 9303511</td>
+                    <td class="px-4 py-4 text-gray-700">2.5 gal</td>
+                    <td class="px-4 py-4 text-gray-700">60</td>
+                    <td class="px-4 py-4 text-gray-700">53 in.</td>
+                    <td class="px-4 py-4 text-gray-700">8</td>
+                    <td class="px-4 py-4 text-gray-700">1-1/4 in. x 4 ft</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Armor All AA255</td>
+                    <td class="px-4 py-4 text-gray-700">2.5 gal</td>
+                    <td class="px-4 py-4 text-gray-700">53</td>
+                    <td class="px-4 py-4 text-gray-700">Not listed</td>
+                    <td class="px-4 py-4 text-gray-700">6</td>
+                    <td class="px-4 py-4 text-gray-700">1-1/4 in. x 6 ft</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Vacmaster VH105</td>
+                    <td class="px-4 py-4 text-gray-700">1.5 gal</td>
+                    <td class="px-4 py-4 text-gray-700">42</td>
+                    <td class="px-4 py-4 text-gray-700">40 in.</td>
+                    <td class="px-4 py-4 text-gray-700">5</td>
+                    <td class="px-4 py-4 text-gray-700">1-1/4 in. x 4 ft</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            Two cautions on that table. First, brands measure differently. Vacmaster states that its CFM, water lift and air watts are tested to an ASTM standard at the end of the included hose, which includes hose losses and gives lower numbers. Some other brands measure at the motor or the tank inlet, which flatters them. The Vacmaster VWMB508's 75 to 78 CFM through 21 feet of hose is therefore not directly comparable with a 110 CFM figure measured elsewhere.
+          </p>
+
+          <p>
+            Second, the jump from 2.5 to 4 gallons is not really about the tank. It is about the motor. Going from 6 or 8 amps to 9 to 12 amps roughly doubles listed airflow, and that is the most noticeable change you can make on a small vac. If the choice is between a 2.5 gallon unit and a 4 gallon unit that fits in the same space, buy the 4 gallon unit.
+          </p>
+
+          <p>
+            Amps also tell you whether a vac will get along with the rest of a garage circuit. A typical 15 amp garage circuit can supply about 12 amps continuously. The 5914411 at nearly 12 amps uses all of that, so a vac and a shop light can coexist but a vac and a space heater cannot. The 9 amp RIDGID and 8 amp Vacmaster leave room.
+          </p>
+        </div>
+
+        <div id="hose" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Hose Diameter on a Small Vac: 1-1/4 vs 1-7/8 Inch
+          </h2>
+
+          <p>
+            Hose diameter decides two things on a small vac: what it can swallow, and what accessories fit. A 1-1/4 inch hose, standard on the 1.5 and 2.5 gallon units, has a cross-section of about 1.2 square inches. A 1-7/8 inch hose has about 2.8 square inches, more than twice as much. Wood chips, gravel, dry leaves and pet food pass through a 1-7/8 inch hose and jam a 1-1/4 inch one. Small hoses do have one advantage: for the same motor, air moves faster through a narrow hose, so a 1-1/4 inch hose with a small nozzle works well on fine dust in car vents and seat seams.
+          </p>
+
+          <p>
+            The accessory question matters more than most buyers expect. The 1-1/4 inch tools that come with 2.5 gallon vacs are small: a short crevice tool, a brush and a utility nozzle. Upgrades exist, including RIDGID's VT2534 and Craftsman's CMXZVBE38662 car kits, both 1-1/4 inch, but the range is narrow. At 1-7/8 inch you can buy RIDGID's VT2575 12-piece kit, WORKSHOP's WS17854A homeowner kit, squeegees, gutter kits and wands with locking cuffs. Our <a href="/best-shop-vac-attachments/">shop vac attachments guide</a> covers which kits fit which hose and the adapters that bridge sizes.
+          </p>
+
+          <p>
+            Hose length matters too. The vacs here range from 4 feet (Vacmaster VH105, Shop-Vac 9303511) to 21 feet (Vacmaster VWMB508). For a car, 6 feet is the least that works without moving the vac, and 8 feet or more lets it stay on the ground outside the door. The RIDGID 4000RV's 8 foot hose and the DEWALT's 7 foot stretch hose sit at the practical minimum for car work.
+          </p>
+
+          <p>
+            Longer hoses cost airflow, which is why Vacmaster's figures measured at the end of 21 feet look low. If you are adding hose to a small vac, a longer 1-7/8 inch hose costs less airflow than a 1-1/4 inch one of the same length. RIDGID's VT1720 Tug-A-Long is a 7 foot hose that steps from 1-1/4 inch at the handle to 1-7/8 inch at the vac, so you get the larger bore over most of the length.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE RULE</p>
+            <p class="text-xl font-bold text-white mb-3">Match the hose to the debris, not the tank.</p>
+            <p class="text-gray-300 leading-relaxed m-0">Crumbs, dust and pet hair: 1-1/4 inch is fine. Sawdust, wood chips, gravel, leaves or anything you would sweep with a push broom: you want 1-7/8 inch, and that means a 4 gallon vac or larger.</p>
+          </div>
+        </div>
+
+        <div id="cars" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Small Shop Vacs for Car Detailing
+          </h2>
+
+          <p>
+            Cars are the main reason most people buy a small shop vac, and car work demands a specific set of features. You need reach more than capacity, because one car interior rarely fills more than a quart. You need a cord or hose long enough to get to the far side of the back seat with the vac outside the car, which works out to about 6 to 8 feet of hose plus 15 to 20 feet of cord in a driveway. And you need small tools: a crevice tool for seat rails, a brush for vents and a nozzle narrow enough for footwell corners.
+          </p>
+
+          <p>
+            Of the picks, the RIDGID 4000RV and the Vacmaster VWMB508 are the best car vacs. The RIDGID has 110 CFM, an 8 foot hose and a 20 foot cord, which covers a sedan from one spot. The Vacmaster on a garage wall has 21 feet of hose, which reaches the far side of the car without moving anything, plus a car nozzle in the box. Its remote switch in the handle is the feature that turns a chore into a two-minute job, because you can stop and start without walking back to the wall.
+          </p>
+
+          <p>
+            On a budget, the Armor All AA255's 6 foot hose is the most useful thing about it. Its 53 CFM will clear sand, crumbs and loose dirt but will not pull embedded pet hair out of carpet, which needs either more airflow or a rubber pet-hair brush. If pet hair is the main job, the extra money for a 4 gallon vac is well spent.
+          </p>
+
+          <p>
+            Whatever you buy, the stock tools are usually the weak point. A dedicated car kit costs less than most vacs and changes the job more than the vac does. On a 1-1/4 inch vac, RIDGID's VT2534 includes its own 10 foot hose with a flexible crevice tool and soft and stiff brushes. On a 2-1/2 inch hose, WORKSHOP's WS25052A adds a flexible crevice tool, a soft triangle brush and a claw nozzle. The <a href="/best-shop-vac-attachments/">attachments guide</a> covers both.
+          </p>
+
+          <p>
+            One last point on cars: a shop vac is not a carpet extractor. It will pick up the water you spray, but it will not rinse soap out of upholstery the way a spray-and-extract machine does. For a once-a-year deep clean, rent an extractor. For weekly sand and crumbs, a 4 gallon shop vac is better than any cordless handheld.
+          </p>
+        </div>
+
+        <div id="apartments" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Apartments and Small Spaces: Noise, Storage and Weight
+          </h2>
+
+          <p>
+            In an apartment, the questions are where the vac lives, how loud it is and whether you can carry it down a hallway. Storage first: a 1.5 gallon VH105 fits on a closet shelf, and the 2.5 gallon units fit under a sink. The 4 gallon units need about the space of a small toolbox, and the DEWALT DXV04T is the easiest of them to store because its flat top and storage-shell design sits square on a shelf with the hose and cord packed in.
+          </p>
+
+          <p>
+            Noise is the honest drawback of every vac in this class. Small universal motors spin fast and the plastic shells do little to muffle them. Spec sheets rarely list decibels; one retailer lists 76 dB for the DEWALT DXV04T and another lists 69 dB for the Craftsman CMXEVBE17250, and owners commonly report that compact vacs sound louder than their size suggests. If you live above someone, run it at a reasonable hour and do not assume a smaller vac is quieter. The quietest option is often a larger, slower two-stage vac, which this page is not about.
+          </p>
+
+          <p>
+            Weight decides whether a vac gets used. The VH105 at roughly 5 lb and the 2.5 gallon units at 8 to 11 lb are easy to carry. The 4 gallon units at 12 to 16 lb are a one-hand carry for most people when empty. A 4 gallon vac full of water is another matter: water weighs about 8.3 lb per gallon, so three gallons collected adds roughly 25 lb, and carrying that down stairs to a drain is a real job. In an apartment, plan to empty into a bathtub or toilet, not to carry it outside.
+          </p>
+
+          <p>
+            For dust in a small space, filtration matters more than suction. A plain paper or cloth cartridge lets fine dust back out the exhaust, which you then breathe. If you are cleaning up after drywall patching or sanding indoors, fit a fine dust cartridge or a collection bag. Our <a href="/shop-vac-filters-explained/">shop vac filters explained</a> guide covers which filter for which dust, and <a href="/best-shop-vac-bags/">best shop vac bags</a> covers the bags that keep fine dust out of the filter entirely.
+          </p>
+
+          <p>
+            If an apartment vac will mostly pick up dry dirt off hard floors and rugs, consider whether you need a wet/dry vac at all. A shop vac's advantage is wet pickup and coarse debris. For daily floor cleaning, a regular vacuum is quieter and has better floor tools, which is the trade-off covered in <a href="/shop-vac-vs-regular-vacuum/">shop vac vs regular vacuum</a>.
+          </p>
+        </div>
+
+        <div id="wall-mount" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Wall-Mount Shop Vacs: Worth It?
+          </h2>
+
+          <p>
+            A wall-mount shop vac is a compact vac that hangs on a bracket instead of sitting on the floor, and in a garage it is often the best design. It is off the floor, so it does not take up parking or bench space. It is always plugged in and ready, so it gets used for small jobs. And because it does not move, the maker can fit a much longer hose, which is the real advantage.
+          </p>
+
+          <p>
+            The Vacmaster VWMB508 is the model to buy here. It hangs from a wall rack with a quick-release lever, so it lifts off and works as a portable when you need it elsewhere. It comes with 21 feet of 1-7/8 inch hose in two sections, an on/off switch in the hose handle and an accessory rack. Mount it near the garage door and it reaches a parked car, the workbench and the floor in front of both. At 26.7 lb, lifting it off the wall is a deliberate act, not something you do daily.
+          </p>
+
+          <p>
+            The smaller Shop-Vac 9303511 and the Vacmaster VH105 also hang on a wall, but they are wall-storable vacs rather than wall-operated ones. Their 4 foot hoses mean you take them off the hook to use them. That suits a laundry room or a closet, where the point is to have a vac hanging by the water heater for the day it leaks.
+          </p>
+
+          <p>
+            Before you buy a wall unit, check three things. First, the stud spacing and wall material where it will hang. A 5 gallon vac full of water weighs around 60 lb, and it needs to hang from studs, not drywall anchors. Second, the outlet. A wall vac wants a dedicated outlet within reach of its cord, ideally not on the same circuit as a garage door opener or freezer. Third, emptying. You will lift the whole unit off the wall to empty water, so mount it where you can lift it at chest height, not above your head.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">WALL MOUNT CHECKLIST</p>
+            <p class="text-xl font-bold text-white mb-3">Studs, a nearby outlet and chest-height mounting.</p>
+            <p class="text-gray-300 leading-relaxed m-0">Mount into studs, keep the cord within reach of an outlet on its own circuit, and hang it low enough to lift off with water in the drum. A 21 ft hose covers a whole parked car from one wall.</p>
+          </div>
+        </div>
+
+        <div id="workshop" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Small Vacs in a Workshop
+          </h2>
+
+          <p>
+            A 4 gallon vac can be a decent workshop vac if you use it right. For floor cleanup and bench sweeping, the RIDGID 4000RV and DEWALT DXV04T are big enough for a one-person shop. Their 1-7/8 inch hoses handle sawdust and small offcuts, and a 4 gallon drum holds a fair amount of dry chips before it needs emptying.
+          </p>
+
+          <p>
+            Connecting it to power tools is where a small vac runs into limits. A random orbit sander, a track saw or a router table has a small dust port, often 1 to 1-1/2 inches, and needs an adapter. The POWERTEC 70376 hose kit, for example, pairs a 10 foot by 1-1/2 inch ID hose with quick-connect fittings from 3/4 inch to 1-1/2 inch ID. A small vac will pull dust from a sander well. It will not keep up with a table saw or planer, which throw out more chips per minute than a 4 gallon drum can hold, and which need a dust collector rather than a shop vac.
+          </p>
+
+          <p>
+            The single best upgrade for a small vac in a workshop is a cyclone separator. A separator such as the Oneida Dust Deputy DIY or the Dustopper PRO sits between the hose and the vac on top of a 5 gallon bucket, and it drops most of the dust and chips into the bucket before the air reaches the vac. That does two things: it keeps the vac's small filter from clogging, which is the main reason small vacs lose suction, and it turns a 4 gallon vac into a 5 gallon-plus collection system. The Dustopper PRO's grounding kit is designed for 5.0 HP and larger vacs, which includes all the 4 gallon picks here. The attachments guide covers both separators in detail.
+          </p>
+
+          <p>
+            If you are sanding drywall or MDF, fine dust is the real hazard. Fine dust goes straight through a standard cartridge, blinds it within minutes and comes out the exhaust. Use a fine dust cartridge and a collection bag together, and for a lot of drywall work, consider whether you need a dust extractor instead. Our <a href="/shop-vac-vs-dust-extractor/">shop vac vs dust extractor</a> page covers where that line falls. When a small vac does start losing suction, <a href="/shop-vac-losing-suction/">shop vac losing suction</a> covers the five usual causes, a clogged filter first.
+          </p>
+        </div>
+
+        <div id="water" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Water Pickup With a 1 to 5 Gallon Vac
+          </h2>
+
+          <p>
+            Every vac on this list is a wet/dry vac, and every one has a float that closes the inlet when the water level reaches the top. That float is why the usable capacity is smaller than the drum size, and it is also why you cannot overfill a small vac and pull water into the motor. When the float closes, suction drops suddenly and the motor pitch rises. That is the signal to empty it.
+          </p>
+
+          <p>
+            For a spill, a burst supply line under a sink or a washing machine overflow, a small vac is the right tool. For a flooded basement, it is not. A 4 gallon vac collects about 3 gallons per load, which is 25 lb to carry to a drain, and a basement with an inch of water across 400 square feet holds about 250 gallons. That is around 80 trips. A submersible utility pump is the right tool for standing water; the vac is for the last film the pump leaves behind.
+          </p>
+
+          <p>
+            For water work, sealed pressure is the spec to watch. The Shop-Vac 5914411's 69 inches and the Vacmaster VWMB508's 68 inches lift water up a hose and out of carpet much better than the 40 inch VH105. In carpet, the difference is big: a high-lift vac with a squeegee or a narrow nozzle pulls water out of the pad, while a low-lift vac skims the surface.
+          </p>
+
+          <p>
+            Always switch the dry filter for a foam sleeve or remove the paper filter before vacuuming water. A wet paper cartridge collapses and turns into pulp. The Vacmaster units and the Armor All AA255 ship with a foam wet filter in the box. Our guide on <a href="/how-to-vacuum-water-with-a-shop-vac/">how to vacuum water with a shop vac</a> covers the filter swap and the drain step by step. After a wet job, empty the drum, rinse it and leave the lid off to dry. A small vac left with water in it overnight smells, and the smell is hard to get out of the filter cage.
+          </p>
+        </div>
+
+        <div id="cordless" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            10. Corded vs Cordless at This Size
+          </h2>
+
+          <p>
+            This page is about corded vacs on purpose. Battery-powered wet/dry vacs are now good enough to be the first choice for some buyers, especially anyone who already owns the batteries, and they have their own guide: our <a href="/best-cordless-shop-vac/">best cordless shop vac</a> roundup covers the Milwaukee M18 FUEL 0910-20, the Makita XCV11Z, the DEWALT DCV581H and the CRAFTSMAN V20 CMCV002B among others.
+          </p>
+
+          <p>
+            The trade-off is simple. A cordless vac goes anywhere without an extension cord: the car at the curb, the boat at the dock, the attic. A corded vac runs as long as you need it to, and at this size it is usually cheaper and more powerful. A 4 gallon corded vac at 9 to 12 amps puts more power into the motor than an 18V battery vac can sustain, and it does not stop after 10 to 20 minutes for a recharge.
+          </p>
+
+          <p>
+            For most car owners, the deciding question is where the car is parked. In a garage with an outlet, buy a corded 4 gallon vac or a wall mount and run it as long as the job takes. On a street with no outlet, a cordless vac on a battery you already own is the better buy, even with less suction. If you do not own batteries from any platform, a corded vac is far cheaper: a bare cordless vac plus a battery and charger usually costs much more than the RIDGID 4000RV.
+          </p>
+
+          <p>
+            The DEWALT DCV581H is worth mentioning because it runs on both: it takes a 20V MAX battery or plugs into the wall. If you want one compact vac for the curb and the workshop, that hybrid design is the compromise, and the cordless guide covers it.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying on Peak Horsepower</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Peak HP is measured with the fan off, at stall, for an instant, and brands label it inconsistently. Craftsman lists the same 2.5 gallon vac as both 1.75 and 2.5 peak HP. Compare listed CFM, sealed pressure and amps instead, and treat a missing CFM figure as a warning sign.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Assuming the Drum Size Is the Capacity</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A 4 gallon drum holds about 3 gallons of water before the float closes, and a 2.5 gallon drum about 1.5. Filters and bags take up more room with dust. Plan to empty a small vac twice as often as the gallon rating suggests, and buy a 6 gallon vac or larger if that is a deal breaker.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Picking a 1-1/4 Inch Hose for Sawdust and Chips</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Small hoses clog on wood chips, gravel and leaves, and the accessories for them are limited. If the vac will see workshop or garage floor debris, buy a 4 gallon unit with a 1-7/8 inch hose like the RIDGID 4000RV or DEWALT DXV04T.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Vacuuming Water With the Paper Filter On</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A paper cartridge soaks through, collapses and can let water reach the motor. Swap to the foam wet filter, or remove the dry cartridge per the manual, before any wet pickup. Then dry the drum and filter cage with the lid off so it does not sour.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Hanging a Wall Vac on Drywall Anchors</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A 5 gallon vac with water in the drum weighs around 60 lb, and you will lift it off and back on the bracket. Screw the rack into studs, mount it at chest height so you can lift it full, and keep it near an outlet that does not share a circuit with a freezer or heater.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            12. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best small shop vac?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most people, the RIDGID 4000RV (catalog 50313). It is a 4 gallon vac listed at 110 CFM and 9 amps, with a 1-7/8 inch by 8 foot locking hose and a 20 foot cord. That is full-size airflow and accessory compatibility in a body that fits on a shelf. If it will hang on a garage wall, the Vacmaster VWMB508 is the better choice.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a 2.5 gallon shop vac big enough?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For a car, spills and an apartment, yes, as long as you accept 50 to 60 CFM and a 1-1/4 inch hose. It will not handle wood chips, gravel or much water, because it holds about 1.5 gallons before the float closes. If you have the space for a 4 gallon vac, the jump in airflow is worth more than the extra size costs.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the smallest shop vac that is still useful?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                The Vacmaster VH105 is about as small as useful gets: a 1.5 gallon tank, about 5 lb, 42 CFM and 40 inches of water lift. It handles spills, litter and crumbs in an apartment, RV or boat. Below that size you are into handheld territory, and handheld vacuums do not do wet pickup.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are mini shop vacs good for cars?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes, with the right hose and tools. Look for at least 6 feet of hose and 15 to 20 feet of cord so the vac can stay outside the car. The RIDGID 4000RV and Vacmaster VWMB508 are the best car vacs here. A dedicated car attachment kit often improves the job more than a bigger motor.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a wall-mount shop vac worth it?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                In a garage, usually yes. It stays off the floor, stays plugged in so it gets used, and can carry a much longer hose. The Vacmaster VWMB508 has 21 feet of 1-7/8 inch hose and a remote switch in the handle, enough to clean a parked car from the wall. Mount it into studs at chest height so you can lift it off full.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How many CFM should a small shop vac have?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Look for 90 CFM or more if it will handle garage floors, sawdust or a lot of car work; the 4 gallon picks here list 90 to 110 CFM. For spills and light cleanup, 40 to 60 CFM is fine. Check where the brand measures it: Vacmaster measures at the end of the hose, which gives lower numbers than brands that measure at the motor.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Should I buy a cordless or corded small shop vac?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Buy corded if the vac will mostly be used within reach of an outlet; it is cheaper, stronger and never stops for a recharge. Buy cordless if you work at the curb or in remote spots and already own batteries for that platform. Our cordless shop vac guide covers the battery models from Milwaukee, Makita, DEWALT and Craftsman.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Shop Vac Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-shop-vac/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Shop Vacs</h3>
+              <p class="text-gray-500 text-sm mt-2">Full-size wet/dry vacs from 5 to 16 gallons, ranked.</p>
+            </a>
+            <a href="/best-shop-vac-attachments/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Accessories</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Shop Vac Attachments</h3>
+              <p class="text-gray-500 text-sm mt-2">Car kits, adapters and cyclone separators by hose size.</p>
+            </a>
+            <a href="/best-cordless-shop-vac/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Battery Picks</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Cordless Shop Vacs</h3>
+              <p class="text-gray-500 text-sm mt-2">Battery wet/dry vacs for every major tool platform.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Buy a 4 gallon vac with a 1-7/8 inch hose unless storage space truly forces you smaller. The RIDGID 4000RV is the best all-rounder at 110 CFM, the DEWALT DXV04T stores best in a workshop or truck, and the Shop-Vac 5914411 has the most lift for wet work. If the vac will live on a garage wall, the Vacmaster VWMB508's 21 feet of hose and remote switch make it the most convenient car vac here.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Go to 2.5 gallons or smaller only for a closet, a laundry room, an RV or a boat, and expect 40 to 60 CFM and a 1-1/4 inch hose. Whatever size you buy, ignore peak horsepower, read the CFM, sealed pressure and amps, and budget for a car kit or a cyclone separator. Those add-ons change what a small vac can do more than any motor upgrade.
+          </p>
+        </div>
+
+        <MoreInCategory category="Tools & Equipment" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
