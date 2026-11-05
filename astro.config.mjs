@@ -6,6 +6,17 @@ import sitemap from '@astrojs/sitemap';
 // Buyer's guides that target high-volume search terms. They get a higher
 // sitemap priority than the 0.5 default so crawlers reach them sooner.
 const priorityGuides = new Set([
+  // November 2026: data-driven batch (Amazon clicks + Semrush).
+  'best-50-gallon-water-heater',
+  'best-40-gallon-water-heater',
+  'best-power-vent-water-heater',
+  'best-50-pint-dehumidifier',
+  'best-smart-dehumidifier',
+  'midea-cube-dehumidifier-review',
+  'ge-dehumidifier-review',
+  'rmr-141-review',
+  'foundation-armor-sx5000-review',
+  'franklin-stud-finder-review',
   // November 2026: buyer's guide batch 3.
   'best-caulk-remover',
   'best-paintable-caulk',
