@@ -6,6 +6,27 @@ import sitemap from '@astrojs/sitemap';
 // Buyer's guides that target high-volume search terms. They get a higher
 // sitemap priority than the 0.5 default so crawlers reach them sooner.
 const priorityGuides = new Set([
+  // November 2026: buyer's guide batch 3.
+  'best-caulk-remover',
+  'best-paintable-caulk',
+  'best-acoustic-caulk',
+  'best-mop-for-epoxy-garage-floor',
+  'best-small-shop-vac',
+  'best-shop-vac-attachments',
+  'best-shop-vac-bags',
+  'best-small-dehumidifier',
+  'best-glass-water-filter-pitcher',
+  'best-reverse-osmosis-water-filter-pitcher',
+  'best-residential-zero-turn-mower',
+  'best-commercial-zero-turn-mower',
+  'best-electric-zero-turn-mower',
+  'best-zero-turn-mower-with-bagger',
+  'best-42-inch-zero-turn-mower',
+  'best-sub-compact-tractor',
+  'best-solid-deck-stain',
+  'best-deck-stain-brush',
+  'best-deck-stain-sprayer',
+  'best-9500-watt-generator',
   // November 2026: power generator keyword-gap batch.
   'best-diesel-generator',
   'best-6500-watt-generator',
