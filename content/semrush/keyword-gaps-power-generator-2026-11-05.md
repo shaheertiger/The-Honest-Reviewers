@@ -31,3 +31,20 @@ What remains below has **no page**. Volume is summed across close variants.
 | `best-240v-generator` | 220v / 240v generator | 2,400 | 5–26 |
 | `best-26kw-generator` | 26 kw generator | 960 | 18–19 |
 | `whole-house-ups` | whole house ups | 390 | 27 |
+
+## Batch 2 (written 2026-11-05)
+
+`best-natural-gas-generator` already covers portable natural gas units, so they were skipped.
+
+| Slug | Primary keyword | Cluster volume | KD |
+|---|---|---:|---:|
+| `best-diesel-generator` | diesel generator | ~11,000 | 18–26 |
+| `how-much-does-a-generator-cost` | how much are generators | ~7,200 | 38–43 |
+| `best-generator-inlet-box` | generator inlet box | ~4,800 | 3–20 |
+| `best-6500-watt-generator` | 6500 watt generator | ~3,900 | 7–17 |
+| `best-indoor-generator` | indoor generators | ~3,200 | 18–24 |
+| `best-1500-watt-generator` | 1500 watt generator | ~1,800 | 11–25 |
+| `what-will-a-5000-watt-generator-run` | what will 5000 watt generator run | ~1,800 | 9–17 |
+| `how-to-hook-up-a-generator-to-your-house` | generator hookup for home | ~1,400 | 22–32 |
+| `what-can-a-3500-watt-generator-run` | what can 3500 watt generator run | ~1,100 | 7 |
+| `what-can-a-10000-watt-generator-run` | what can a 10000 watt generator run | ~900 | 13–18 |
