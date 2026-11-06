@@ -2,10 +2,62 @@ import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
+import { execSync } from 'node:child_process';
+import { readFileSync, existsSync } from 'node:fs';
+
+// Real last-modified dates for the sitemap. Stamping every URL with the build
+// time tells crawlers nothing (Bing ignores lastmod when every URL shares one),
+// so each page gets the date of its last commit, falling back to the
+// `modified` date declared on the page when git history is shallow.
+const gitModified = (() => {
+  const out = {};
+  try {
+    const raw = execSync('git log --pretty=format:%x01%cI --name-only --diff-filter=AMR -- src/pages', {
+      encoding: 'utf8',
+      maxBuffer: 128 * 1024 * 1024,
+      stdio: ['ignore', 'pipe', 'ignore'],
+    });
+    // In a shallow clone the oldest commit lists every file as added, which
+    // would date untouched pages to that commit. Skip it and let those pages
+    // fall back to their declared date.
+    const shallow = execSync('git rev-parse --is-shallow-repository', { encoding: 'utf8' }).trim() === 'true';
+    const blocks = raw.split('\x01').filter(Boolean);
+    if (shallow) blocks.pop();
+    for (const block of blocks) {
+      const [iso, ...files] = block.split('\n').filter(Boolean);
+      if (!iso) continue;
+      for (const f of files) if (!out[f]) out[f] = iso.trim();
+    }
+  } catch {
+    // no git history available
+  }
+  return out;
+})();
+
+function lastmodFor(slug) {
+  const file = slug ? `src/pages/${slug}.astro` : 'src/pages/index.astro';
+  if (gitModified[file]) return new Date(gitModified[file]).toISOString();
+  if (existsSync(file)) {
+    const m = readFileSync(file, 'utf8').match(/modified:\s*"(\d{4}-\d{2}-\d{2})"/);
+    if (m) return new Date(`${m[1]}T12:00:00Z`).toISOString();
+  }
+  return undefined;
+}
 
 // Buyer's guides that target high-volume search terms. They get a higher
 // sitemap priority than the 0.5 default so crawlers reach them sooner.
 const priorityGuides = new Set([
+  // November 2026: dehumidifier buyer's guide batch (Amazon-focused).
+  'best-commercial-dehumidifier',
+  'best-dehumidifier-for-water-damage',
+  'best-dehumidifier-for-mold',
+  'best-rv-dehumidifier',
+  'best-dehumidifier-with-drain-hose',
+  'best-desiccant-dehumidifier',
+  'best-energy-star-dehumidifier',
+  'best-attic-dehumidifier',
+  'best-quiet-dehumidifier',
+  'best-70-pint-dehumidifier',
   // November 2026: data-driven batch (Amazon clicks + Semrush).
   'best-50-gallon-water-heater',
   'best-40-gallon-water-heater',
@@ -876,229 +928,178 @@ export default defineConfig({
 
         if (url === base || url === `${base}/`) {
           item.changefreq = 'weekly';
-          item.lastmod = new Date().toISOString();
           item.priority = 1.0;
         } else if (url === `${base}/best-of`) {
           item.changefreq = 'weekly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.9;
         } else if (url === `${base}/best-mens-back-shavers`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.8;
         } else if (url === `${base}/braun-type-5544-vs-series-7`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.7;
         } else if (url === `${base}/the-brutal-truth-about-back-hair`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.7;
         } else if (url === `${base}/buzz-cut-guide`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.8;
         } else if (url === `${base}/how-to-shave-back-hair`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.8;
         } else if (url === `${base}/best-redwood-sealer`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.8;
         } else if (url === `${base}/best-basement-wall-sealer`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.8;
         } else if (url === `${base}/best-asphalt-sealer`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.8;
         } else if (url === `${base}/asphalt-repair`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.9;
         } else if (url === `${base}/best-asphalt-crack-filler`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.9;
         } else if (url === `${base}/best-concrete-sealer`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.9;
         } else if (url === `${base}/asphalt-sealcoating`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.8;
         } else if (url === `${base}/best-cinder-block-sealer-reviews`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.8;
         } else if (url === `${base}/best-paint-sprayer`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.9;
         } else if (url === `${base}/best-deck-paint`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.9;
         } else if (url === `${base}/best-ceiling-paint`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.9;
         } else if (url === `${base}/best-deck-sealant`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.9;
         } else if (url === `${base}/paint-sprayer-rental`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.9;
         } else if (url === `${base}/best-paint-brushes`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.9;
         } else if (url === `${base}/basement-crack-repair`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.9;
         } else if (url === `${base}/basement-waterproofing-cost`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.9;
         } else if (url === `${base}/polyaspartic-floor-coating`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.9;
         } else if (url === `${base}/cold-patch-asphalt`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.8;
         } else if (url === `${base}/wet-basement-solutions`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.8;
         } else if (url === `${base}/polyurea-garage-floor-coating`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.8;
         } else if (url === `${base}/can-you-stain-pressure-treated-wood`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.8;
         } else if (url === `${base}/driveway-crack-repair`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.7;
         } else if (url === `${base}/epoxy-floor-colors`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.7;
         } else if (url === `${base}/garage-floor-coating-cost`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.7;
         } else if (url === `${base}/best-garage-floor-paint`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.7;
         } else if (url === `${base}/best-deck-cleaner`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.7;
         } else if (url === `${base}/asphalt-driveway-maintenance`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.6;
         } else if (url === `${base}/garage-floor-epoxy-colors`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.6;
         } else if (url === `${base}/basement-floor-sealer`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.6;
         } else if (url === `${base}/best-gas-lawn-mowers`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.9;
         } else if (url === `${base}/interior-basement-waterproofing`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.9;
         } else if (url === `${base}/best-basement-floor-paint`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.8;
         } else if (url === `${base}/blacktop-sealer-cost`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.7;
         } else if (url === `${base}/best-oil-based-deck-stain`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.7;
         } else if (url === `${base}/best-chainsaw`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.8;
         } else if (url === `${base}/best-cordless-drills`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.8;
         } else if (url === `${base}/best-dishwasher`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.8;
         } else if (url === `${base}/best-water-softener-system`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.7;
         } else if (url === `${base}/best-water-filtration-system-for-home`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.7;
         } else if (url === `${base}/best-water-filter-pitcher`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.6;
         } else if (url === `${base}/best-ceiling-fans-with-lights`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.8;
         } else if (url === `${base}/best-air-purifier-for-home`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.8;
         } else if (url === `${base}/best-cordless-drill-for-home-use`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.6;
         } else if (url === `${base}/generac-generator-cost`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.9;
         } else if (url === `${base}/what-size-generator-do-i-need-for-my-house`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.9;
         } else if (url === `${base}/how-to-prepare-concrete-for-epoxy`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.9;
         } else if (url === `${base}/water-coming-through-basement-floor`) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.9;
         } else if (priorityGuides.has(url.slice(base.length + 1))) {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.8;
         } else {
           item.changefreq = 'monthly';
-          item.lastmod = new Date().toISOString();
           item.priority = 0.5;
         }
+
+        // The home page and the index list every new guide, so they change on
+        // every publish; everything else carries its own last-changed date.
+        const slug = url.slice(base.length + 1);
+        item.lastmod = slug === '' || slug === 'best-of' ? new Date().toISOString() : lastmodFor(slug);
 
         return item;
       },
