@@ -47,6 +47,17 @@ function lastmodFor(slug) {
 // Buyer's guides that target high-volume search terms. They get a higher
 // sitemap priority than the 0.5 default so crawlers reach them sooner.
 const priorityGuides = new Set([
+  // November 2026: dehumidifier buyer's guide batch (Amazon-focused).
+  'best-commercial-dehumidifier',
+  'best-dehumidifier-for-water-damage',
+  'best-dehumidifier-for-mold',
+  'best-rv-dehumidifier',
+  'best-dehumidifier-with-drain-hose',
+  'best-desiccant-dehumidifier',
+  'best-energy-star-dehumidifier',
+  'best-attic-dehumidifier',
+  'best-quiet-dehumidifier',
+  'best-70-pint-dehumidifier',
   // November 2026: data-driven batch (Amazon clicks + Semrush).
   'best-50-gallon-water-heater',
   'best-40-gallon-water-heater',
