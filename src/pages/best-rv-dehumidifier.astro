@@ -1,0 +1,896 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Dehumidifiers for the Home",
+    "url": "/best-dehumidifier-for-home/"
+  },
+  {
+    "title": "Best Small Dehumidifiers",
+    "url": "/best-small-dehumidifier/"
+  },
+  {
+    "title": "Midea Cube Dehumidifier Review",
+    "url": "/midea-cube-dehumidifier-review/"
+  },
+  {
+    "title": "Do You Need a Dehumidifier in Winter",
+    "url": "/do-you-need-a-dehumidifier-in-winter/"
+  },
+  {
+    "title": "How Much Electricity Does a Dehumidifier Use",
+    "url": "/how-much-electricity-does-a-dehumidifier-use/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-11-06", modified: "2026-11-06" });
+const title = "7 Best RV Dehumidifiers in 2026: What Works on 30 Amp Shore Power";
+const description =
+  "The best RV dehumidifiers for campers, trailers and motorhomes: compressor vs desiccant vs mini, amp draw on 30 amp power, drainage, storage and winter use.";
+
+const PRODUCTS = [
+  {
+    "id": "midea-cube-20-mad20s1qwt",
+    "name": "Midea Cube 20-Pint Smart Dehumidifier (MAD20S1QWT)",
+    "category": "20 Pints/Day Compressor, Nests to a 13.5 Inch Cube",
+    "badge": "Best Overall for RVs",
+    "amazonUrl": "#",
+    "pros": [
+      "Retailers list a maximum running current of about 1.9 amps",
+      "Nests down to a 13.5 inch cube for travel and storage",
+      "Large stacked tank cuts down on emptying while parked",
+      "Hose drain and bucketless mode for a shower or sink"
+    ],
+    "cons": [
+      "33 pounds empty, and the full tank is heavy to carry out of a camper",
+      "Wi-Fi app will not connect through most campground login pages"
+    ],
+    "bottomLine": "The RV dehumidifier most owners should buy: a real compressor unit with a small amp draw and a shape that stows in a shower or a basement bay between trips.",
+    "description": "The Cube 20 is the compressor dehumidifier that fits RV life best, and the reason is its shape as much as its output. Midea rates it at 20 pints per day under the current DOE test and lists the cabinet at 13.5 by 13.5 by 13.39 inches nested and 33.07 pounds. Lift and twist it and the lower half becomes the water tank, which Midea describes as much larger than a conventional bucket; our Midea review puts the fill levels at about 1.5 to 3 gallons. ENERGY STAR lists 20.16 pints a day and 249 kWh a year, and Sylvane lists a maximum running current of 1.9 amps, small enough to share a 30 amp pedestal with the air conditioner and fridge. It drains by bucket, by a gravity hose, or in bucketless mode when it sits above a drain, so a unit parked in the shower pan can run all weekend. Wi-Fi control runs through Midea's SmartHome app, which is handy at home but rarely works on campground Wi-Fi. For the full Cube line, see our <a href=\"/midea-cube-dehumidifier-review/\">Midea Cube review</a>."
+  },
+  {
+    "id": "midea-mad22c1aws",
+    "name": "Midea 22-Pint ENERGY STAR Dehumidifier (MAD22C1AWS)",
+    "category": "22 Pints/Day Compressor, Conventional Upright",
+    "badge": "Best Budget Compressor",
+    "amazonUrl": "#",
+    "pros": [
+      "ENERGY STAR lists 22.31 pints a day under the DOE test",
+      "Sylvane lists a maximum current of 2.56 amps",
+      "Usually the cheapest real compressor unit here",
+      "Wheels, timer, auto shut-off and defrost"
+    ],
+    "cons": [
+      "Taller upright shape is harder to wedge into a travel trailer",
+      "No app, so no remote humidity reading"
+    ],
+    "bottomLine": "The low-cost way to put a genuine compressor dehumidifier in a travel trailer or fifth wheel, as long as you have a spot for a 20 inch tall box.",
+    "description": "If the Cube costs more than you want to spend, the MAD22C1AWS is the same basic machine in a conventional upright cabinet. Its ENERGY STAR certification lists 22.31 pints a day of water removal and an integrated energy factor of 1.7 liters per kWh under the DOE test procedure, with 278 kWh a year of energy use. Sylvane lists a maximum current draw of 2.56 amps and a maximum noise level of 47 dB, and one retailer gives about 295 watts, which is consistent with that amperage at 115 volts. Midea rates it for spaces up to 1,500 square feet, far more floor than any RV has, so in a 30 foot trailer it will hit its target and cycle off rather than run flat out. The manual lists the cabinet at about 15.3 by 10.5 by 19.8 inches, with wheels, a 24-hour timer, auto shut-off when the bucket is full, defrost and a continuous drain outlet. What you give up against the Cube is the compact nested shape and the app. For a fifth wheel or a toy hauler with a corner to spare, that is a fair trade."
+  },
+  {
+    "id": "ivation-13-pint-desiccant-dehumidifier",
+    "name": "Ivation 13-Pint Small-Area Desiccant Dehumidifier (IVADDH06)",
+    "category": "Desiccant Rotor, Rated 33°F to 104°F, 14 lb",
+    "badge": "Best for Cold Weather",
+    "amazonUrl": "#",
+    "pros": [
+      "Listed to operate from 33°F to 104°F, where compressors struggle",
+      "Around 14 pounds, light enough to move between rooms",
+      "Continuous drain hose included",
+      "No compressor, so nothing to protect from tipping in transit"
+    ],
+    "cons": [
+      "Listed at 470 watts on high and 280 on low, more than the Cubes",
+      "Small 3.8 pint tank fills fast without the hose"
+    ],
+    "bottomLine": "The RV dehumidifier for shoulder-season and winter camping, and for a powered storage lot, where a compressor unit would sit in the cold collecting nothing.",
+    "description": "Compressor dehumidifiers lose most of their output in a cold camper, which is exactly when windows run with condensation. Ivation's IVADDH06 uses a desiccant rotor instead, and the Amazon listing rates it to operate from 33°F to 104°F. Ivation rates it at 13 pints per day at 68°F and 60% relative humidity, which is not the DOE test, so do not compare that number directly with the Midea ratings above. Coverage is listed at 270 square feet, which happens to be about the floor area of a 30 foot trailer. The trade-off is power. The listing gives 470 watts on high and 280 watts on low at 120 volts, roughly 4 amps on high, so it draws more than the Cube 20 while removing less water in warm weather. That heat is not wasted in winter, because a desiccant unit warms the air it dries. The tank holds only 3.8 pints, so use the included drain hose to a sink or shower. The listing's weight figures disagree between about 11 and 14 pounds, either of which is light for an RV."
+  },
+  {
+    "id": "ivation-ivaddh09",
+    "name": "Ivation 19-Pint Small-Area Desiccant Dehumidifier (IVADDH09)",
+    "category": "Desiccant Rotor, Rated 33°F to 104°F, 410 sq ft",
+    "badge": "Best Desiccant for Motorhomes",
+    "amazonUrl": "#",
+    "pros": [
+      "Rated at 19 pints a day at 68°F and 60% humidity",
+      "Retail listings give the same 33°F to 104°F operating range",
+      "0.75 gallon tank plus a continuous drain hose",
+      "Coverage listed at 410 square feet for longer coaches"
+    ],
+    "cons": [
+      "A third-party spec database lists about 670 watts, a heavy draw",
+      "Usually the most expensive pick here"
+    ],
+    "bottomLine": "The cold-weather pick for a Class A, a big fifth wheel or a full-timer who winters in the north, with power to spare on shore or a generator.",
+    "description": "The IVADDH09 is the larger sibling of the 13 pint Ivation, aimed at bigger spaces. Ivation rates it at 19 pints per day at 68°F and 60% relative humidity, again not the DOE test, and lists coverage of up to 410 square feet, which suits a 40 foot motorhome or a fifth wheel with slides out. Retail listings give the same 33°F to 104°F operating range as the smaller model, the tank holds 0.75 gallons and a continuous drain hose is included. The manual listing gives dimensions of 8.5 by 12.5 by 19.5 inches, so it is slim enough to stand beside a dinette. Power is the catch. Ivation's own listing we found does not give a clear wattage, and a third-party spec database lists about 670 watts, which is in line with a bigger desiccant heater. On a 30 amp pedestal that is fine with the air conditioner off, which is when you would use it, but it is not a battery or small inverter load. Ivation also sells a Wi-Fi version as the IVADDH09WIFI. It carries a 1-year limited warranty."
+  },
+  {
+    "id": "midea-cube-35-mad35s1qwt",
+    "name": "Midea Cube 35-Pint Dehumidifier (MAD35S1QWT)",
+    "category": "35 Pints/Day Compressor, Large Nesting Tank",
+    "badge": "Best for Full-Timers",
+    "amazonUrl": "#",
+    "pros": [
+      "ENERGY STAR lists 35.82 pints a day at 2.01 L/kWh",
+      "Same nesting design as the Cube 20, about 14.5 inches square",
+      "Large tank with fill levels from about 2.25 to 4.25 gallons",
+      "Sylvane lists a maximum noise level of 48 dB"
+    ],
+    "cons": [
+      "About 40 pounds, heavy for a weekend camper",
+      "Overkill for a trailer under about 25 feet"
+    ],
+    "bottomLine": "The RV dehumidifier for full-timers in humid climates and big rigs that stay put for weeks, where the Cube 20 would run without a break.",
+    "description": "The Cube 35 earns a place for owners who live in their rig, park for weeks in Florida or the Gulf Coast, or run a large Class A with several people cooking and showering aboard. ENERGY STAR lists the current revision at 35.82 pints a day and 378 kWh a year, with an efficiency of 2.01 liters per kWh, better per pint than the Cube 20. Midea lists the cabinet at 14.45 by 14.76 by 14.57 inches nested and 39.62 pounds, and our review gives the tank's fill levels as about 2.25 to 4.25 gallons, so a full tank weighs more than the unit. It has app control, two fan speeds, auto defrost and auto restart, and drains by bucket, gravity hose or bucketless mode, with no pump. The pages we found do not list its amp draw, but the annual energy figure sits between the Cube 20 and the 50, so expect it to pull noticeably more than 1.9 amps. In a small trailer it would simply hit the target and cycle off; the reason not to buy it there is the 40 pounds you have to stow every trip."
+  },
+  {
+    "id": "eva-dry-edv-2400",
+    "name": "Eva-Dry EDV-2400 Electric Dehumidifier with Humidistat",
+    "category": "Thermoelectric, About 60 Watts, Adjustable Humidistat",
+    "badge": "Best for Battery and Inverter",
+    "amazonUrl": "#",
+    "pros": [
+      "Spec sheets list about 60 watts, roughly half an amp at 120 volts",
+      "Adjustable humidistat lets it cycle off at your target",
+      "Drain hose included on the current listing",
+      "About 7.5 pounds, easy to stash in a cabinet"
+    ],
+    "cons": [
+      "Rated at only about 25 ounces a day in warm, very humid air",
+      "Output drops sharply in a cool camper"
+    ],
+    "bottomLine": "The mini dehumidifier to run off batteries or a small inverter when boondocking, for a bedroom or bathroom area rather than the whole rig.",
+    "description": "This is the one thermoelectric unit we would put in an RV, because it is the largest and the only one here with a humidistat. Eva-Dry puts it at about 25 ounces of moisture a day at 86°F and 80% relative humidity, on about 60 watts, for spaces up to 2,400 cubic feet, which is around the interior volume of a mid-size travel trailer. That 60 watt draw is the point: it is roughly half an amp from the pedestal, and a few amps from a 12 volt battery bank through an inverter, so it can run overnight while boondocking where a compressor unit would drain the bank in hours. The humidistat lets it switch off once it reaches your setting instead of running nonstop, the tank holds about 1.8 liters with auto shut-off, and the current Amazon listing notes a drain hose is included. Be realistic about output. In a cool camper it will remove a fraction of its rating, and it will not clear wet windows in a cold snap. Treat it as a bedroom or bathroom unit, not a whole-rig dehumidifier."
+  },
+  {
+    "id": "eva-dry-e-333-renewable",
+    "name": "Eva-Dry E-333 Renewable Mini Dehumidifier",
+    "category": "Silica Gel, No Power While Working",
+    "badge": "Best for Closets and Storage",
+    "amazonUrl": "#",
+    "pros": [
+      "Needs no power while it absorbs",
+      "Recharges by plugging into an outlet for several hours",
+      "Works in cold, unpowered storage",
+      "Small enough for a wardrobe or a basement bay"
+    ],
+    "cons": [
+      "Absorbs only a few ounces per cycle",
+      "Will not dry the living area of an RV"
+    ],
+    "bottomLine": "A cheap add-on for wardrobes, under-bed storage and basement bays, not a substitute for a plug-in dehumidifier in the main cabin.",
+    "description": "The E-333 is the one renewable unit on this list, and it is here because RVs are full of closed compartments that a room dehumidifier never reaches: wardrobes, under-bed storage, the pass-through bay and the space behind the shower. It is a sealed box of silica gel with indicator beads that change color as it saturates. Retailers describe it absorbing about 4 to 6 ounces over roughly 20 to 30 days, depending on humidity, for spaces up to 333 cubic feet. When the beads change, you plug it into an outlet and it heats the gel to drive the moisture off, which retailers put at around 10 to 12 hours, then it goes back to work. That makes it useful in a stored RV with no power at all, and because it absorbs chemically rather than by chilling air, it keeps working in the cold. Buy one or two for wardrobes and bays alongside a real dehumidifier for the cabin. It will not touch condensation on the windows or the humidity of the living area."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best RV Dehumidifier",
+          item: "https://www.thehonestreviewers.com/best-rv-dehumidifier/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "Do I need a dehumidifier in my RV?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most RVs benefit from one. Breathing, cooking, showers and propane use put a lot of moisture into a small space, and cold walls and windows turn it into condensation. If you see wet windows in the morning, musty cabinets or mildew in corners, ventilation alone is not keeping up, and a dehumidifier is the next step."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What size dehumidifier do I need for a camper?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most travel trailers, fifth wheels and Class C motorhomes, a 20 to 22 pint compressor unit is enough, despite the much larger coverage claims on the box. Full-timers, families and large Class A coaches in humid climates are better served by a 35 pint unit. Small vans and teardrops can manage with a 13 pint desiccant unit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I run a dehumidifier on 30 amp RV power?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. A 30 amp hookup supplies about 3,600 watts, and retailers list the Midea Cube 20 at a maximum of 1.9 amps and the MAD22C1AWS at 2.56 amps. That fits alongside the air conditioner and fridge. Larger desiccant units draw more, so run them on low while the air conditioner is on."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I run an RV dehumidifier on batteries?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only small ones for long. A 215 watt compressor unit pulls around 19 amps DC through an inverter, so a 100 amp-hour lithium battery lasts about five hours of continuous running. A 60 watt thermoelectric unit lasts most of a day. Desiccant units are best kept for shore power or a generator."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which is better for an RV, desiccant or compressor?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Compressor units remove more water per watt in warm, humid weather and suit summer campers on hookups. Desiccant units keep working in cold air, down to 33°F on the Ivation listings, and warm the air slightly, which makes them better for winter camping and powered storage. Many owners choose by the season they camp in most."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I leave a dehumidifier running in a stored RV?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only if the storage has power and stays above freezing, and only with a drain route that cannot freeze or overflow. A desiccant unit on its humidistat draining to a sink works well. Without power, use non-electric absorbers and a renewable unit in closets, and check the RV every few weeks."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where should I put a dehumidifier in an RV?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "In the main living area, near the kitchen and bathroom where moisture is produced, with clear space around the intake and outlet. A spot in or beside the shower pan lets it drain straight to the gray tank. Close doors to rooms you are not using so the unit is not trying to dry the whole rig at once."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Basement Waterproofing",
+    tags: [
+      "rv dehumidifier",
+      "dehumidifier for rv",
+      "dehumidifiers for motorhomes",
+      "dehumidifier for camper",
+      "best dehumidifier for camper",
+      "travel trailer dehumidifier"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated November 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The Best <span class="text-[#38BDF8]">RV Dehumidifiers</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Condensation on the windows, damp bedding and mildew in the cabinets are what an RV does when people live in it. Here are seven dehumidifiers that suit campers, travel trailers and motorhomes, chosen around shore power, batteries, cold weather and the space you have to stow them.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#midea-cube-20-mad20s1qwt"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            See the Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Shaheer Ali Khan</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Consumer Product Testing &amp; Materials Performance Specialist</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="5.4k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#why-rvs-get-damp" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Why RVs Get Damp</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. The 7 Best, Ranked</a>
+          <a href="#types" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Compressor vs Desiccant vs Mini</a>
+          <a href="#power" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Amp Draw on Shore Power</a>
+          <a href="#battery" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Inverter and Battery Use</a>
+          <a href="#sizing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. What Size You Need</a>
+          <a href="#drainage" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Drainage While Parked</a>
+          <a href="#winter" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Winter and Storage</a>
+          <a href="#travel" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Securing It for Travel</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          The best RV dehumidifier is not the biggest one you can fit. It is the one that runs on the power you actually have, works at the temperature your camper sits at, drains somewhere sensible while you are parked and rides safely in the shower when you move. For most owners on hookups that is a small compressor unit; for cold-weather campers it is a desiccant unit; and for boondockers on batteries it is a mini, with honest expectations.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="why-rvs-get-damp" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. Why RVs Get So Damp
+          </h2>
+
+          <p>
+            An RV is a small box with a lot of water going into it. Two people breathing overnight, a hot shower, pasta boiling on the stove and wet jackets hung by the door all release moisture into a space with a few hundred square feet of floor and a low ceiling. In a house, that water vapor spreads through thousands of cubic feet of air. In a 30 foot travel trailer, it has nowhere to go, so the relative humidity climbs fast and stays high.
+          </p>
+
+          <p>
+            The structure makes it worse. Most RV walls are thin, single-pane windows are still common, and aluminum frames, metal fasteners and the roof skin all run cold on a cool night. Warm, moist air hits those surfaces, cools below its dew point and condenses. That is why owners wake up to water running down the windows, damp bedding against an outside wall and mildew in the back corners of cabinets, even when the outside air felt dry.
+          </p>
+
+          <p>
+            Propane adds to the load. Burning propane produces water vapor, so cooking on the range adds moisture, and so does any vent-free catalytic heater used inside. A ducted RV furnace vents its combustion gases outside, but the heaters many owners add to save propane or run off-grid do not. If you rely on a catalytic heater in winter, plan for more moisture, not less.
+          </p>
+
+          <p>
+            Ventilation is always the first fix: crack a roof vent, run the bathroom fan during showers and the range hood while cooking, and keep a window open a little at the opposite end for cross flow. A dehumidifier is what you add when ventilation is not enough, which is most of the time in humid climates, in cold weather when you do not want to vent the heat away, and during storage when the RV is closed up for months. Our <a href="/best-dehumidifier-for-home/">home dehumidifier guide</a> covers the same principles for a house.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE SHORT VERSION</p>
+            <p class="text-xl font-bold text-white mb-3">On shore power in warm weather, buy a small compressor unit. In the cold, buy a desiccant one. On batteries, accept that only a mini will run for long.</p>
+            <p class="text-gray-300 leading-relaxed m-0">Ventilate first, then dehumidify. Every pick below is chosen around those three situations, plus the space you have to stow it when the wheels are moving.</p>
+          </div>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. The 7 Best RV Dehumidifiers, Ranked
+          </h2>
+
+          <p>
+            We compared compressor, desiccant and thermoelectric dehumidifiers sold on Amazon on the things that matter in an RV: rated capacity, listed amp or watt draw, the lowest operating temperature the maker lists, tank size and drain options, weight and the space each one needs when stowed. Every figure below comes from the manufacturer, a retailer spec sheet or an ENERGY STAR record, not from our own measurement, and where sources disagree we say so. The list leans on real compressor and desiccant units; there is one thermoelectric mini for battery use and one renewable silica gel box for closets.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="types" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Compressor vs Desiccant vs Peltier in an RV
+          </h2>
+
+          <p>
+            There are three kinds of dehumidifier that make sense in an RV, and they suit different seasons. A compressor dehumidifier works like a small air conditioner: a fan pulls air over a cold coil, water condenses and drips into a tank, and the air is reheated slightly before it leaves. It is the most efficient way to remove a lot of water in warm weather, which is why every 20 to 50 pint home unit uses one. The weakness is cold. Many compressor units are rated only down to about 41°F, and their output falls well before that.
+          </p>
+
+          <p>
+            A desiccant dehumidifier passes air through a slowly turning wheel coated in a moisture-absorbing material, then uses a heater to drive the water back out of the wheel into a tank. It removes less water per watt than a compressor in warm, humid air, but it keeps working when the camper is cold, and Ivation lists its units to 33°F. It also warms the air slightly, which helps in winter and hurts in summer. With no compressor inside, it is lighter and less fussy about being tipped in transit.
+          </p>
+
+          <p>
+            A Peltier or thermoelectric mini uses a small solid-state cooling plate instead of a compressor. It is quiet, light and draws very little power, but it removes a small fraction of what a compressor unit does: Eva-Dry's largest model is rated at about 25 ounces a day in warm, very humid air, against 20 pints for the Cube 20. Minis are useful on battery power and in a bedroom area. They will not clear a fogged-up trailer, which is why this guide includes only one, the EDV-2400, plus a renewable silica gel box for closets.
+          </p>
+
+          <p>
+            Most owners end up with one main unit matched to how they camp. Summer campers on hookups want a compressor unit. Shoulder-season, winter and northern campers want a desiccant one. Boondockers living on solar and batteries accept a mini for overnight use and dehumidify properly when the generator or shore power is on. Our <a href="/best-small-dehumidifier/">small dehumidifier guide</a> compares the minis and compact compressor units in more detail.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Type</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Best season</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Typical draw</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Picks here</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Compressor</td>
+                    <td class="px-4 py-4 text-gray-700">Warm and humid, about 60°F and up</td>
+                    <td class="px-4 py-4 text-gray-700">About 1.9 to 2.6 amps for 20 to 22 pints, per retailer listings</td>
+                    <td class="px-4 py-4 text-gray-700">Midea Cube 20, MAD22C1AWS, Cube 35</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Desiccant</td>
+                    <td class="px-4 py-4 text-gray-700">Cold, down to the low 30s</td>
+                    <td class="px-4 py-4 text-gray-700">About 280 to 470 watts for the 13 pint Ivation</td>
+                    <td class="px-4 py-4 text-gray-700">Ivation IVADDH06, IVADDH09</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Thermoelectric</td>
+                    <td class="px-4 py-4 text-gray-700">Warm, very humid, small spaces</td>
+                    <td class="px-4 py-4 text-gray-700">About 60 watts</td>
+                    <td class="px-4 py-4 text-gray-700">Eva-Dry EDV-2400</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Renewable silica gel</td>
+                    <td class="px-4 py-4 text-gray-700">Any, including unpowered storage</td>
+                    <td class="px-4 py-4 text-gray-700">None while absorbing</td>
+                    <td class="px-4 py-4 text-gray-700">Eva-Dry E-333</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="power" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Amp Draw on 30 Amp and 50 Amp Shore Power
+          </h2>
+
+          <p>
+            A 30 amp RV hookup gives you a single 120 volt supply, which works out to about 3,600 watts. That sounds like a lot until you add up what runs at once. A rooftop air conditioner commonly draws somewhere in the low to mid teens of amps while running, and more for a moment at startup. A microwave and an electric water heater element can each take 10 amps or more. Run all three and you have tripped the main breaker before the dehumidifier is even plugged in.
+          </p>
+
+          <p>
+            The good news is that a small compressor dehumidifier is a modest load. Sylvane lists the Midea Cube 20 at a maximum running current of 1.9 amps and the MAD22C1AWS at 2.56 amps, roughly 220 to 295 watts. That fits comfortably alongside the air conditioner and fridge on a 30 amp pedestal. The desiccant units are bigger: the Ivation 13 pint is listed at 470 watts on high, about 4 amps, and a spec database lists the 19 pint at around 670 watts, close to 6 amps. Use the low setting when the air conditioner is running.
+          </p>
+
+          <p>
+            A 50 amp hookup is a different world. It supplies two 120 volt legs at 50 amps each, about 12,000 watts in total, so any dehumidifier here is a rounding error. The only thing to watch on a 50 amp rig is which leg the outlet you use is wired to, if your energy management system sheds loads by leg. Plugging the dehumidifier into an outlet on the leg that also carries the second air conditioner is the one way to make it the thing that gets shut off.
+          </p>
+
+          <p>
+            If you camp on 15 or 20 amp household power through an adapter, the margins shrink further. A 20 amp circuit can support about 1,900 watts of continuous load. A compressor dehumidifier and the fridge are fine; add an air conditioner and you are at the limit. In that situation, run the dehumidifier while the air conditioner is off, or rely on the air conditioner itself to remove moisture, which it does as a by-product of cooling. Our guide to <a href="/how-much-electricity-does-a-dehumidifier-use/">how much electricity a dehumidifier uses</a> covers running cost at home.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">POWER AT A GLANCE</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <p class="text-3xl font-black text-white">3,600W</p>
+                <p class="text-gray-400 text-xs mt-1">Available on a 30 amp, 120 volt hookup</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">1.9A</p>
+                <p class="text-gray-400 text-xs mt-1">Midea Cube 20 maximum current, per Sylvane</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-white">470W</p>
+                <p class="text-gray-400 text-xs mt-1">Ivation 13 pint desiccant on high, per its listing</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">60W</p>
+                <p class="text-gray-400 text-xs mt-1">Eva-Dry EDV-2400, per spec sheets</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="battery" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Running a Dehumidifier on an Inverter or Battery
+          </h2>
+
+          <p>
+            Running a dehumidifier off-grid comes down to arithmetic. Divide the unit's wattage by your battery voltage to get the DC current, then add about 10% for inverter losses. A Cube 20 at roughly 215 watts pulls around 17 amps from a 12.8 volt lithium bank, or about 19 amps after inverter losses. A 100 amp-hour lithium battery would run it continuously for about five hours. A compressor unit cycles on and off with the humidistat, so real runtime is longer, but it is still a bank-draining load overnight.
+          </p>
+
+          <p>
+            The desiccant units are worse on batteries. At 470 watts, the Ivation 13 pint pulls close to 40 amps DC on high, which would flatten a single 100 amp-hour battery in about two and a half hours. That is not a reason to avoid desiccant units; it means they belong on shore power or a generator. The thermoelectric EDV-2400 is the opposite case. At about 60 watts, it pulls roughly 5 amps DC through an inverter and could run for most of a day on the same battery, which is why it is our battery pick despite its tiny output.
+          </p>
+
+          <p>
+            A compressor needs more power for a split second at startup than it does running, so size the inverter with headroom. Spec sheets for these units do not publish a surge figure, so a pure sine wave inverter of about 1,000 watts or more for a 20 to 22 pint unit is a sensible floor. Modified sine wave inverters can make compressors and their control boards run hot or hum, and some manufacturers do not support them. Check the inverter's continuous and surge ratings, not just the headline number.
+          </p>
+
+          <p>
+            True 12 volt dehumidifiers exist, but the ones we found are small thermoelectric units with outputs in the ounces per day. There is no 12 volt compressor dehumidifier we would point a reader to. The practical off-grid plan is a mini on the battery overnight, a compressor or desiccant unit run hard while the generator or solar surplus is available, and good ventilation the rest of the time. Our <a href="/best-lifepo4-rv-battery/">LiFePO4 RV battery guide</a> and <a href="/best-rv-generator/">RV generator guide</a> cover the power side.
+          </p>
+        </div>
+
+        <div id="sizing" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. What Size Dehumidifier an RV Actually Needs
+          </h2>
+
+          <p>
+            Dehumidifier coverage claims are written for houses, so ignore them in an RV. Midea rates the Cube 20 for 1,500 square feet, and a 30 foot travel trailer has well under 300 square feet of floor. On those numbers, any compressor unit is oversized. In practice, the moisture load in an RV is concentrated, comes in bursts from showers and cooking, and has to be removed from cold surfaces, so a 20 to 22 pint compressor unit is the right size for most travel trailers, fifth wheels and Class C motorhomes.
+          </p>
+
+          <p>
+            Step up to the Cube 35 when the RV is lived in full-time, holds a family, sits for weeks in a humid climate, or is a large Class A or fifth wheel with several slides. A bigger unit in a small space is not harmful; it reaches the target, switches off and runs less often. The real costs are weight, storage space and a bigger tank to carry out when it fills. A 50 pint home dehumidifier is too heavy and bulky for nearly every RV.
+          </p>
+
+          <p>
+            For desiccant units, Ivation's coverage figures are more realistic for RVs: 270 square feet for the 13 pint and 410 for the 19 pint. Those ratings are measured at 68°F and 60% humidity rather than the DOE test, so they are not directly comparable with the compressor numbers, but they do match RV floor areas. A Class B van or a teardrop camper is small enough that the 13 pint or even a mini can cope, provided you ventilate while cooking.
+          </p>
+
+          <p>
+            A simple check tells you whether your unit is big enough. Put a cheap digital hygrometer in the living area and watch it for a few days. If the dehumidifier holds the RV at 45% to 50% relative humidity and cycles off, it is the right size. If it runs nonstop and the reading stays above 55%, or the windows still fog by morning, you need more capacity, more ventilation or both. Our <a href="/how-to-choose-a-dehumidifier/">dehumidifier buying guide</a> explains capacity ratings in more depth.
+          </p>
+        </div>
+
+        <div id="drainage" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Drainage While Parked
+          </h2>
+
+          <p>
+            Emptying a bucket is a bigger chore in an RV than in a house, because you have to carry it through a narrow aisle and down the steps without slopping it on the floor. The Cube's stacked tank holds up to about 3 gallons on the 20 and about 4.25 on the 35, which means fewer trips but heavier ones: 3 gallons of water weighs about 25 pounds. A continuous drain hose is the better answer whenever you are parked for more than a night or two.
+          </p>
+
+          <p>
+            The easiest route is gravity into the shower pan or the kitchen sink, which drains to the gray tank. Camping World's advice is to set the unit on a counter above the sink so the hose runs downhill, and to keep the gray tank valve open on full hookups so the tank does not overfill. A unit sitting in the shower pan with a short hose into the drain works the same way. The Midea Cube's bucketless mode is designed for exactly this, with the unit on a surface above a drain.
+          </p>
+
+          <p>
+            On dry camping or a site without sewer, remember that every pint the dehumidifier removes is a pint in your gray tank. A Cube 20 running near its rating could add more than 2 gallons a day, so on a long boondocking stay it eats into gray tank capacity alongside dishes and showers. In that situation, letting the tank fill and emptying it outside onto the ground is often more practical, where campground rules allow it.
+          </p>
+
+          <p>
+            Some owners drill a hole through the floor and run the hose straight outside. It works, but it is a permanent modification, it can let in pests and road spray, and in freezing weather the hose outlet will ice up and back water into the unit. Use the sink or shower first. If you want a pump to send water up and out a window, our <a href="/best-dehumidifier-with-pump/">dehumidifier with pump guide</a> covers the larger units that have one.
+          </p>
+        </div>
+
+        <div id="winter" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Winter Camping and Storage Condensation
+          </h2>
+
+          <p>
+            Winter is when RV condensation gets serious. The furnace keeps the inside warm, the walls and windows stay cold, and every breath and shower ends up as water on the glass. A compressor dehumidifier helps when the camper is held at a normal indoor temperature, because the air it pulls in is warm. It struggles in a cold bedroom at the back of the rig, and in a camper left at 45°F while you are out skiing, it will collect very little.
+          </p>
+
+          <p>
+            That is where the desiccant units come in. Rated down to 33°F, the Ivation models keep pulling water from cold air, and the heat they give off is welcome. A good winter setup is the furnace set to a steady temperature, a desiccant dehumidifier draining to the shower, a roof vent cracked slightly, and a fan aimed at the worst windows. Insulated window covers or reflective panels reduce how cold the glass gets, which cuts the condensation at its source.
+          </p>
+
+          <p>
+            Storage is a separate problem. An RV closed up for the winter with no airflow can grow mildew in a few weeks if it was put away damp, and a cover that blocks the vents makes it worse. If the storage lot has power, a desiccant unit on its humidistat, draining to a sink, will keep the interior dry, but only above freezing: a drain hose or gray tank that freezes can back water into the unit. Winterized plumbing also means the sink traps hold antifreeze, so check the drain still flows.
+          </p>
+
+          <p>
+            Without power, use non-electric absorbers. Camping World recommends tubs of desiccant for unpowered storage, and a renewable unit like the E-333 works in wardrobes and bays. Put the RV away clean and dry, leave cabinet doors and the fridge propped open, and visit every few weeks to empty absorbers and air it out. Our article on <a href="/do-you-need-a-dehumidifier-in-winter/">whether you need a dehumidifier in winter</a> explains why cold weather is not automatically dry indoors.
+          </p>
+        </div>
+
+        <div id="travel" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Securing a Dehumidifier for Travel
+          </h2>
+
+          <p>
+            A dehumidifier is one of the heavier loose objects in an RV, and an unsecured 30 to 40 pound box becomes a projectile under hard braking. Before you move, empty the tank completely, disconnect the drain hose and coil it, and stow the unit low and wedged so it cannot slide. The shower stall is the most popular spot, because it is enclosed on three sides and a spilled drip goes down the drain. A ratchet strap or bungee to a grab bar keeps it from walking around on rough roads.
+          </p>
+
+          <p>
+            Keep a compressor unit upright. The compressor holds oil that can migrate into the refrigerant lines if the unit is laid on its side, and most compressor appliance manuals tell you to stand it upright for a period before switching on if it has been tipped. Check your manual for the exact wait. Desiccant and thermoelectric units have no compressor oil, which is one reason they are easier to live with in a vehicle, though they should still be stowed so they cannot fall.
+          </p>
+
+          <p>
+            Size matters more for storage than for drying. The Cube 20 nests to a 13.5 inch cube, which fits in many shower pans and some basement bays, and the Cube 35 is about 14.5 inches square. The upright MAD22C1AWS stands nearly 20 inches tall. The Ivation units are slim, at under 9 inches wide for the 19 pint. Measure the spot where it will ride before you buy, including the height under any shelf or door.
+          </p>
+
+          <p>
+            Do not mount a dehumidifier permanently unless you are prepared to plumb it. A unit screwed to a wall or shelf needs a fixed drain route, adequate airflow on its intake and outlet sides, and a dedicated outlet. Most owners are better served by a portable unit that rides in the shower and comes out at camp. For cooling and dehumidifying in one box in a small camper, our <a href="/best-air-conditioner-for-camper/">camper air conditioner guide</a> looks at units that do both.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying a compressor unit for winter camping</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Compressor dehumidifiers chill air over a coil, and many are rated only to about 41°F. In a cold camper or a bedroom at the back of the rig, output collapses. If you camp in shoulder season or winter, a desiccant unit like the Ivation, rated to 33°F, keeps working where a compressor stops.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Expecting a mini to clear foggy windows</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A thermoelectric mini removes ounces a day, not pints. Two people sleeping in a trailer can put far more moisture than that into the air overnight. Minis are fine for a closet or for battery use, but wet windows in the morning call for a compressor or desiccant unit and better ventilation.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Traveling with water in the tank</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A Cube tank can hold about 3 gallons, around 25 pounds of water, and it will slosh out on the first corner. Empty the tank fully, disconnect and coil the hose, and stow the unit low in the shower or strapped to a grab bar before the wheels move.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Running a desiccant unit on a small inverter</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Desiccant units use a heater, and the Ivation 13 pint is listed at 470 watts on high. On a 12 volt bank that is close to 40 amps DC, enough to drain a single 100 amp-hour battery in a few hours. Run desiccant units on shore power or a generator.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Draining into a gray tank that cannot take it</h3>
+              <p class="text-gray-700 text-sm m-0">
+                On dry camping, every pint the dehumidifier removes ends up in the gray tank. A compressor unit running hard can add a couple of gallons a day. On full hookups keep the gray valve open; on a long boondocking stay, empty the tank by hand instead of hosing it to the sink.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do I need a dehumidifier in my RV?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Most RVs benefit from one. Breathing, cooking, showers and propane use put a lot of moisture into a small space, and cold walls and windows turn it into condensation. If you see wet windows in the morning, musty cabinets or mildew in corners, ventilation alone is not keeping up, and a dehumidifier is the next step.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What size dehumidifier do I need for a camper?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most travel trailers, fifth wheels and Class C motorhomes, a 20 to 22 pint compressor unit is enough, despite the much larger coverage claims on the box. Full-timers, families and large Class A coaches in humid climates are better served by a 35 pint unit. Small vans and teardrops can manage with a 13 pint desiccant unit.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I run a dehumidifier on 30 amp RV power?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes. A 30 amp hookup supplies about 3,600 watts, and retailers list the Midea Cube 20 at a maximum of 1.9 amps and the MAD22C1AWS at 2.56 amps. That fits alongside the air conditioner and fridge. Larger desiccant units draw more, so run them on low while the air conditioner is on.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I run an RV dehumidifier on batteries?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Only small ones for long. A 215 watt compressor unit pulls around 19 amps DC through an inverter, so a 100 amp-hour lithium battery lasts about five hours of continuous running. A 60 watt thermoelectric unit lasts most of a day. Desiccant units are best kept for shore power or a generator.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Which is better for an RV, desiccant or compressor?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Compressor units remove more water per watt in warm, humid weather and suit summer campers on hookups. Desiccant units keep working in cold air, down to 33°F on the Ivation listings, and warm the air slightly, which makes them better for winter camping and powered storage. Many owners choose by the season they camp in most.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Should I leave a dehumidifier running in a stored RV?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Only if the storage has power and stays above freezing, and only with a drain route that cannot freeze or overflow. A desiccant unit on its humidistat draining to a sink works well. Without power, use non-electric absorbers and a renewable unit in closets, and check the RV every few weeks.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Where should I put a dehumidifier in an RV?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                In the main living area, near the kitchen and bathroom where moisture is produced, with clear space around the intake and outlet. A spot in or beside the shower pan lets it drain straight to the gray tank. Close doors to rooms you are not using so the unit is not trying to dry the whole rig at once.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Dehumidifier Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-small-dehumidifier/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Small Dehumidifiers</h3>
+              <p class="text-gray-500 text-sm mt-2">Compact compressor units and minis for small rooms, closets and campers.</p>
+            </a>
+            <a href="/midea-cube-dehumidifier-review/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#38BDF8] font-black text-xs uppercase tracking-widest mb-2">Review</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Midea Cube Dehumidifier Review</h3>
+              <p class="text-gray-500 text-sm mt-2">The 20, 35 and 50 pint Cubes compared, with tank sizes and drain options.</p>
+            </a>
+            <a href="/best-lifepo4-rv-battery/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best LiFePO4 RV Batteries</h3>
+              <p class="text-gray-500 text-sm mt-2">Lithium batteries for running appliances off-grid in a camper.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            For most RV owners on hookups, the Midea Cube 20 is the dehumidifier to buy: a real 20 pint compressor unit that retailers list at about 1.9 amps, with a large tank, a gravity drain for the shower and a nested shape that rides in the shower pan between trips. The MAD22C1AWS does the same job for less if you have room for an upright box, and full-timers in humid climates should step up to the Cube 35.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            If you camp in the cold or need to keep a stored RV dry, buy the Ivation desiccant units instead, rated to 33°F, and run them on shore power. For battery-only boondocking, the Eva-Dry EDV-2400 is the honest choice, with small output to match its small draw. Whatever you buy, ventilate first, drain to the shower and empty the tank before you drive.
+          </p>
+        </div>
+
+        <MoreInCategory category="Basement Waterproofing" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
