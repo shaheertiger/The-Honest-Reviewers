@@ -20,9 +20,24 @@ const QUARANTINED = new Set(Object.keys(QUARANTINE as Record<string, unknown>));
 // Each maps to the closest equivalent listing — same brand and product type where
 // one exists — chosen by hand. Kept separate from product-asins.json so an exact
 // match always wins and the quarantine never touches these.
-const SIMILAR_MAP = Object.fromEntries(
-  Object.entries(SIMILAR as Record<string, { asin: string }>).map(([id, v]) => [id, v.asin]),
-);
+type SimilarEntry = { asin: string; title?: string; relation?: string };
+const SIMILAR_MAP = SIMILAR as Record<string, SimilarEntry>;
+
+// A short, readable name for an alternative listing: the Amazon title up to its
+// first separator, capped so the note under a button stays one or two lines.
+function shortTitle(title: string): string {
+  const head = title.split(/\s[|–—]\s|,\s/)[0].trim();
+  return head.length > 80 ? `${head.slice(0, 77).trimEnd()}…` : head;
+}
+
+// A link to an alternative carries the alternative's name in the URL fragment
+// (#alt=...). Browsers never send the fragment to Amazon, so tracking is
+// unaffected, and Layout.astro reads it to print a note under the button telling
+// the reader the button opens a different product than the one reviewed.
+function altFragment(entry: SimilarEntry): string {
+  if (entry.relation === 'exact' || !entry.title) return '';
+  return `#alt=${encodeURIComponent(shortTitle(entry.title))}`;
+}
 
 /**
  * Resolves a product's outbound link, best option first:
@@ -34,7 +49,9 @@ const SIMILAR_MAP = Object.fromEntries(
  *      `npm run images:fetch:all`, which matches products through the Amazon
  *      Creators API and writes both the image and the ASIN.
  *   3. A direct link to the closest equivalent listing, when the exact product
- *      has no usable listing (src/data/product-similar-asins.json).
+ *      has no usable listing (src/data/product-similar-asins.json). Unless the
+ *      entry is marked "exact", the link is flagged so the page says it opens
+ *      an alternative.
  *   4. A tagged Amazon search for the product name.
  *
  * Every branch carries the tag, so the click is credited either way. The last
@@ -55,8 +72,8 @@ export function amazonLink(
     return `https://www.amazon.com/dp/${asin}?tag=${AMAZON_TAG}&linkCode=ll1`;
   }
   const similar = productId ? SIMILAR_MAP[productId] : undefined;
-  if (similar) {
-    return `https://www.amazon.com/dp/${similar}?tag=${AMAZON_TAG}&linkCode=ll1`;
+  if (similar?.asin) {
+    return `https://www.amazon.com/dp/${similar.asin}?tag=${AMAZON_TAG}&linkCode=ll1${altFragment(similar)}`;
   }
   return `https://www.amazon.com/s?k=${encodeURIComponent(productName)}&tag=${AMAZON_TAG}`;
 }

@@ -94,7 +94,7 @@ for (const { pillar, spokes: list } of ranked) {
   // Only offer a pick that resolves to a real Amazon listing, never the tagged
   // search fallback: a search for a product name is a weak thing to put in front
   // of someone who has not seen the guide.
-  const listed = (amazonUrl && amazonUrl.startsWith('http')) || (ASINS[id] && !QUARANTINE[id]) || SIMILAR[id];
+  const listed = (amazonUrl && amazonUrl.startsWith('http')) || (ASINS[id] && !QUARANTINE[id]) || SIMILAR[id]?.relation === 'exact';
   if (!listed) continue;
   pillars[pillar] = {
     id,
