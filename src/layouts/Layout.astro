@@ -594,5 +594,31 @@ const spokePick = pickPillar
         </div>
       </footer>
     </div>
+    <script is:inline>
+      // Some products are not sold on Amazon under their own model number, so their
+      // buttons open the closest alternative listing (see src/data/affiliate.ts).
+      // Those links carry the alternative's name in the URL fragment; say so under
+      // the button rather than let "Check Price" imply it opens the reviewed product.
+      (function () {
+        var links = document.querySelectorAll('a[href*="amazon.com/dp/"][href*="#alt="]');
+        for (var i = 0; i < links.length; i++) {
+          var a = links[i];
+          if (a.closest("[data-layout-sticky],[data-pick-sticky]")) continue;
+          var name;
+          try { name = decodeURIComponent(a.getAttribute("href").split("#alt=")[1]); } catch (e) { continue; }
+          if (!name) continue;
+          var note = document.createElement("span");
+          if (window.getComputedStyle(a).display === "inline") {
+            // A link inside running text: keep the note in the sentence.
+            note.className = "text-xs text-gray-500";
+            note.textContent = " (not sold on Amazon under this model; the link opens the closest alternative: " + name + ")";
+          } else {
+            note.className = "block mt-2 text-xs leading-snug text-gray-500 font-normal normal-case tracking-normal text-center";
+            note.textContent = "Not sold on Amazon under this model. The button opens the closest alternative: " + name + ".";
+          }
+          a.insertAdjacentElement("afterend", note);
+        }
+      })();
+    </script>
   </body>
 </html>
