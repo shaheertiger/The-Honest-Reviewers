@@ -1,0 +1,941 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Water Filtration System for Home",
+    "url": "/best-water-filtration-system-for-home/"
+  },
+  {
+    "title": "Best Faucet Water Filters",
+    "url": "/best-faucet-water-filter/"
+  },
+  {
+    "title": "Best Reverse Osmosis Water Filter Pitchers",
+    "url": "/best-reverse-osmosis-water-filter-pitcher/"
+  },
+  {
+    "title": "Best Water Filter Pitchers",
+    "url": "/best-water-filter-pitcher/"
+  },
+  {
+    "title": "Best Under Sink Water Filters",
+    "url": "/best-under-sink-water-filter/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-11-05", modified: "2026-11-05" });
+const title = "5 Best Countertop Water Filters in 2026: Gravity, Diverter and Certified Picks";
+const description =
+  "Five countertop water filters, from gravity units like Berkey and Culligan MaxClear to faucet-diverter systems, compared on certification, capacity, flow and filter life.";
+
+const PRODUCTS = [
+  {
+    "id": "culligan-maxclear-venture",
+    "name": "Culligan MaxClear Venture MCV702B 3-Gallon Gravity Water Filter System, 2 Filters",
+    "category": "Stainless Gravity, 3 Gallons",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "pros": [
+      "Filters certified by IAPMO R&amp;T to NSF/ANSI 42, 53, 401 and 372",
+      "Data sheet: 99.2% / 99.1% lead, 99.6% total PFAS, 96.5% microplastics",
+      "No priming; filters needn't stay wet and clean with a sponge",
+      "Five-year warranty on the stainless system"
+    ],
+    "cons": [
+      "Rated for 50 gallons per filter, 100 with two",
+      "Certified service flow of 4.0 gallons per day",
+      "Gravity height needs cabinet clearance"
+    ],
+    "description": "The MaxClear is the gravity filter for people who want a Berkey-style stainless tank with an independent health-effects certification. Culligan's performance data sheet, which covers the Venture and Scout systems, says the filters are certified by IAPMO R&amp;T to NSF/ANSI 42, 53 and 401 and to NSF/ANSI/CAN 372 for low lead. It lists chlorine reduction of 99.4%, chloramine 99.6%, lead 99.2% and 99.1% at the two test pHs, total PFAS 99.6% and microplastics 96.5%. The cost of that certification is capacity: the sheet rates one filter at 50 gallons, two at 100 and three at 150, with a certified service flow of 4.0 gallons per day and an operating range of 40 to 85°F. This MCV702B listing is the 3-gallon Venture with two ceramic and carbon filters, so plan on about 100 gallons between changes. Culligan says the filters need no priming, can be cleaned with a sponge, and fit Berkey and other gravity chambers. The stainless system carries a five-year warranty, excluding filters.",
+    "bottomLine": "The only stainless gravity filter we found with published lead and PFAS certification; budget for short filter life."
+  },
+  {
+    "id": "aquasana-clean-water-machine",
+    "name": "Aquasana Clean Water Machine AQ-CWM2-B Countertop Water Filter",
+    "category": "Plug-In Carbon Dispenser, 64 oz",
+    "badge": "Best Compact Certified",
+    "amazonUrl": "#",
+    "pros": [
+      "WQA certified to NSF/ANSI 42, 53 (incl. P473) and 401",
+      "Aquasana lists up to 99% lead and microplastics, 95% PFOA/PFOS",
+      "8 oz glass in 8 seconds, 0.5 gpm rated flow",
+      "300 gallons or six months per cartridge"
+    ],
+    "cons": [
+      "Needs a power outlet; no use in an outage",
+      "64 oz reservoir needs frequent refills",
+      "Mostly plastic body"
+    ],
+    "description": "The Clean Water Machine is a plug-in countertop dispenser, not reverse osmosis: you fill its reservoir from the tap and it pushes water through a carbon cartridge and dispenses at the press of a button. Aquasana says it is tested and certified by the Water Quality Association to NSF/ANSI 42, 53, including the P473 PFOA/PFOS protocol, and 401, and lists 78 contaminants, with up to 99% reduction of lead, microplastics, cysts and asbestos, 97% chlorine, 96% mercury and 95% PFOA/PFOS and VOCs. The data sheet gives a rated flow of 0.5 gpm, and Aquasana says it fills an 8-ounce glass in 8 seconds. The cartridge is rated for 300 gallons or six months. The reservoir holds 64 ounces, and the unit measures about 9.7 by 8 by 11.6 inches and weighs 6.2 pounds, so it fits under any cabinet. It needs a two-prong outlet, which makes it useless when the power is out, and it is the least emergency-ready unit here.",
+    "bottomLine": "Certified to the same three standards as our top pick, in a small plug-in body; skip it if you want water during outages."
+  },
+  {
+    "id": "big-berkey-phoenix",
+    "name": "Big Berkey BK4X2-PGF 2.25-Gallon System with Phoenix Gravity Elements",
+    "category": "Stainless Gravity, 2.25 Gallons",
+    "badge": "Best-Known Gravity Filter",
+    "amazonUrl": "#",
+    "pros": [
+      "Phoenix elements rated for 2,750 gallons each, 5,500 per pair",
+      "Up to 4.2 gallons per hour per pair, top chamber full",
+      "Takes up to four elements in the top chamber",
+      "AISI 304 stainless chambers nest for transport"
+    ],
+    "cons": [
+      "Elements certified only to NSF/ANSI 42 and 372",
+      "Health-contaminant claims rest on lab tests",
+      "Not sold to California or Iowa residents",
+      "19.25 inches tall in use"
+    ],
+    "description": "The Big Berkey is the filter that made countertop gravity systems mainstream, and the BK4X2-PGF listing is the version Berkey currently sells: the 2.25-gallon stainless system with two Phoenix Gravity New Millennium Edition elements, made for Berkey's maker as a replacement for Black Berkey elements after EPA's stop-sale orders. Berkey says the Phoenix elements are certified to NSF/ANSI 42 for chlorine, chloramine and particulates and NSF/ANSI/CAN 372 for lead-free materials, and rates them at 2,750 gallons each and up to 4.2 gallons per hour per pair with the top chamber full. Its reductions of VOCs, PFAS, pesticides, pharmaceuticals and some heavy metals are described as lab-tested, not certified. Berkey lists the system at 19.25 inches tall and 8.5 inches in diameter in use, nesting to 13 inches, with up to four elements in the top chamber. The listing ships with a primer and dye test for checking element seals.",
+    "bottomLine": "Big capacity and long element life, bought on Berkey's lab data; choose the MaxClear if you want certified lead and PFAS reduction."
+  },
+  {
+    "id": "waterdrop-tk-a",
+    "name": "Waterdrop WD-TK-A King Tank 2.25-Gallon Gravity Water Filter System",
+    "category": "Stainless Gravity, 2.25 Gallons",
+    "badge": "Best Budget Gravity",
+    "amazonUrl": "#",
+    "pros": [
+      "Certified to NSF/ANSI 42 and 372 per Waterdrop",
+      "Stainless steel 2.25-gallon chambers with metal spigot",
+      "Waterdrop rates the carbon filter pair at up to 6,000 gallons",
+      "Takes Berkey-size gravity filters"
+    ],
+    "cons": [
+      "No certified lead reduction despite the listing title",
+      "No published flow rate",
+      "Same height and clearance issues as any gravity unit"
+    ],
+    "description": "The TK-A is Waterdrop's take on the Berkey format: a 2.25-gallon stainless steel gravity system with two black carbon filters and a metal spigot, usually priced well below a Big Berkey. Waterdrop and its listings say it is certified to NSF/ANSI 42 for chlorine and NSF/ANSI 372 for lead-free materials, and its pages give up to 6,000 gallons for the carbon filter pair. The listing title says it reduces lead and up to 98% of chlorine; the chlorine claim is backed by NSF/ANSI 42, but we found no NSF/ANSI 53 certification behind the lead claim, so treat that part as Waterdrop's own. Waterdrop does not publish a flow rate for the TK-A. Because its chambers take standard Berkey-size elements, you can swap in certified filters such as Culligan's MaxClear if your needs change, which makes it a reasonable buy for chlorine taste now.",
+    "bottomLine": "A cheaper stainless gravity tank for chlorine taste, with room to upgrade the filters later."
+  },
+  {
+    "id": "waterdrop-ctf-01",
+    "name": "Waterdrop WD-CTF-01 Stainless Steel Countertop Faucet Water Filter",
+    "category": "Faucet-Diverter Countertop, 8,000 Gallons",
+    "badge": "Best Faucet-Diverter",
+    "amazonUrl": "#",
+    "pros": [
+      "Up to 1.6 gpm at tap pressure",
+      "Rated for 8,000 gallons or 12 months",
+      "Certified to NSF/ANSI 42 and 372 per its listings",
+      "Stainless steel housing beside the sink"
+    ],
+    "cons": [
+      "Chlorine-only certification; heavy-metal claims are uncertified",
+      "Needs a standard threaded aerator",
+      "Not for pull-out, handheld, spray or sensor faucets"
+    ],
+    "description": "The CTF-01 is a stainless steel canister that sits next to the sink and connects to a diverter valve in place of your faucet's aerator. Flip the valve and water runs through a multi-stage carbon cartridge and out of the canister's spout at tap pressure, up to 1.6 gallons per minute according to its listings. Waterdrop rates the cartridge at 8,000 gallons or 12 months, and gives an operating range of 15 to 100 psi. Its listings say it is certified to NSF/ANSI 42 for chlorine reduction and NSF/ANSI 372 for lead-free materials; claims of heavy-metal reduction in the title are not backed by an NSF/ANSI 53 certification we could find. Listings disagree on whether it is five or six stages. It shares the limits of any faucet-attached filter: Waterdrop's listings exclude pull-out, handheld, spray-style and sensor faucets. For chlorine taste at full speed with a once-a-year cartridge, it is the most convenient unit here.",
+    "bottomLine": "Fast, long-lasting chlorine filtration at tap speed for fixed-spout faucets; not a lead or PFAS filter."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Countertop Water Filter",
+          item: "https://www.thehonestreviewers.com/best-countertop-water-filter/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best countertop water filter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For certified performance, the Culligan MaxClear Venture. Its filters are certified by IAPMO R&amp;T to NSF/ANSI 42, 53 and 401, with 99.2% lead and 99.6% total PFAS reduction on the data sheet. The trade-off is a 50-gallon rating per filter. For a plug-in alternative with the same three standards, the Aquasana Clean Water Machine is certified by WQA."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are gravity water filters NSF certified?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Some are, most are not for health contaminants. Many gravity elements, including Berkey's Phoenix elements and Waterdrop's TK-A filters, are certified only to NSF/ANSI 42 for chlorine and 372 for lead-free materials. Culligan's MaxClear filters are certified to NSF/ANSI 42, 53 and 401. Always check the standard numbers, not just the NSF badge."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happened to Berkey water filters?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "From December 2022, the EPA issued stop-sale orders under FIFRA against Berkey's maker and distributors, treating Black Berkey elements as unregistered pesticides because of their silver and antimicrobial claims. Berkey's maker sued, and its request for an injunction was denied in January 2024. Berkey now sells systems with Phoenix Gravity elements, certified to NSF/ANSI 42 and 372."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a good Berkey water filter alternative?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Culligan MaxClear is the strongest one we found: a nesting stainless gravity system whose filters are certified to NSF/ANSI 42, 53 and 401, and which Culligan says fit Berkey chambers too. For a cheaper stainless tank with chlorine-only certification, the Waterdrop TK-A takes Berkey-size filters and is certified to NSF/ANSI 42 and 372."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do countertop water filters remove fluoride?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not the carbon units in this guide; none of them claims a certified fluoride reduction. Berkey and Waterdrop sell add-on fluoride filters for their gravity systems, but these are lab-tested claims. Countertop reverse osmosis is the reliable no-plumbing option for fluoride, and we cover those units in a separate guide."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How fast does a gravity water filter work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Slowly. Berkey rates the Big Berkey at up to 3.5 gallons per hour with two Black Berkey elements and up to 4.2 per hour with Phoenix elements, both with the top chamber full and slowing as it empties. Culligan's certified service flow is 4.0 gallons per day. Adding more elements, where the chamber allows, speeds it up."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will a countertop water filter work with a pull-down faucet?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A gravity filter or a plug-in dispenser will, because neither connects to the faucet. A faucet-diverter countertop unit such as the Waterdrop CTF-01 will not: its diverter replaces the aerator, and Waterdrop's listings exclude pull-out, handheld, spray-style and sensor faucets. Unscrew your aerator first to see if your faucet takes one."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home Improvement",
+    tags: [
+      "countertop water filter",
+      "countertop water filtration system",
+      "gravity water filter",
+      "countertop filter",
+      "berkey water filter alternative"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated November 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The Best <span class="text-[#38BDF8]">Countertop Water Filters</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Gravity tanks, faucet-diverter canisters and plug-in dispensers all sit on the counter, and their certifications differ far more than their looks. Here is which ones are certified, which are only lab-tested, and which to buy.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#culligan-maxclear-venture"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            See the Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Shaheer Ali Khan</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Consumer Product Testing &amp; Materials Performance Specialist</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="5.2k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#three-kinds" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Three Kinds of Countertop Filter</a>
+          <a href="#certified-vs-tested" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Certified vs Lab-Tested</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. The 5 Best, Ranked</a>
+          <a href="#berkey" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. The Berkey Question</a>
+          <a href="#capacity-flow" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Capacity and Flow</a>
+          <a href="#filter-life" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Filter Life and Cost</a>
+          <a href="#gravity-vs-diverter" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Gravity or Diverter?</a>
+          <a href="#emergencies" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Outages and Emergencies</a>
+          <a href="#care" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Setup and Care</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Most countertop water filters are sold on a long contaminant list, and most of those lists are not certifications. The Culligan MaxClear Venture is our pick because its filters carry what most gravity filters do not: IAPMO R&amp;T certification to NSF/ANSI 42, 53 and 401, including lead and total PFAS. The catch is a 50-gallon rating per filter. Big gallon numbers on this shelf tend to come with smaller certified claims, and that trade-off is the whole story of this category.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="three-kinds" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. Three Kinds of Countertop Filter, and the One This Guide Leaves Out
+          </h2>
+
+          <p>
+            Countertop water filter covers several quite different machines, and the right one depends on your faucet, your counter and whether you want filtered water when the power or the pressure is off.
+          </p>
+
+          <p>
+            Gravity filters are two stacked chambers, usually stainless steel. You pour tap water into the top, it trickles through filter elements into the bottom tank, and you draw it from a spigot. There is no connection to the plumbing and no power. They hold two to three gallons, filter a few gallons an hour, and have become the default answer for people who want a large stock of filtered water and do not want to touch the sink. Berkey made the category famous; Culligan, Waterdrop and others now sell close copies that take the same size of filter.
+          </p>
+
+          <p>
+            Faucet-diverter units are a filter canister on the counter, connected by a short hose to a diverter valve that replaces your faucet's aerator. Flip the valve and water runs through the canister and out of its own spout. They filter at tap pressure, so they are much faster than gravity, and their cartridges are larger than a faucet-mount filter's. They need a faucet with a standard threaded aerator, just like a <a href="/best-faucet-water-filter/">faucet-mount water filter</a>, which rules out most pull-down sprayers.
+          </p>
+
+          <p>
+            Plug-in dispensers are the third type: a countertop appliance you fill by hand, which pushes water through a carbon cartridge with a pump and dispenses it at the press of a button. The Aquasana Clean Water Machine is one. They are faster than gravity and need no faucet connection, at the cost of a power socket.
+          </p>
+
+          <p>
+            This guide leaves out countertop reverse osmosis units on purpose. They are a different technology for a different problem, removing dissolved solids, fluoride and nitrate, with a waste-water tank and a much higher price. If that is what your water report calls for, our <a href="/best-reverse-osmosis-water-filter-pitcher/">reverse osmosis water filter pitcher</a> guide covers the plug-in RO units properly. For whole-house problems, start with the <a href="/best-water-filtration-system-for-home/">best water filtration system for home</a> guide.
+          </p>
+        </div>
+
+        <div id="certified-vs-tested" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Certified vs Lab-Tested: The Distinction That Matters Most
+          </h2>
+
+          <p>
+            Gravity filters are where the gap between marketing and certification is widest. Many listings say a filter removes 99.9% of hundreds of contaminants, was tested to NSF standards, or exceeds NSF/ANSI 53. None of those phrases means the filter is certified.
+          </p>
+
+          <p>
+            A certification means an accredited body such as NSF, IAPMO R&amp;T or the Water Quality Association tested production units against a named NSF/ANSI standard, audits the factory, retests periodically, and lists the product in a public directory. The maker then publishes a performance data sheet with the reduction for each substance. A lab test means the maker paid a lab to run some tests, often to its own chosen protocol, once. The results may be real and even impressive, but nobody is checking that the filter you buy matches the one that was tested.
+          </p>
+
+          <p>
+            Then check which standard is certified. NSF/ANSI 42 covers chlorine taste and odor and particulates, and almost any carbon passes it. NSF/ANSI 53 covers health effects: lead, mercury, VOCs, cysts and PFAS. NSF/ANSI 401 covers emerging contaminants such as microplastics and trace pharmaceuticals. NSF/ANSI 372 only certifies that the device's materials are lead-free. A gravity filter certified to 42 and 372 is certified for chlorine taste and lead-free parts, and nothing more, even if its title says it reduces lead.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Filter</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Certifier</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Standards certified</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Claims beyond certification</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Culligan MaxClear Venture</td>
+                    <td class="px-4 py-4 text-gray-700">IAPMO R&amp;T</td>
+                    <td class="px-4 py-4 text-gray-700">42, 53, 401, 372</td>
+                    <td class="px-4 py-4 text-gray-700">Few; data sheet matches listing</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Aquasana Clean Water Machine</td>
+                    <td class="px-4 py-4 text-gray-700">WQA</td>
+                    <td class="px-4 py-4 text-gray-700">42, 53 (incl. P473), 401</td>
+                    <td class="px-4 py-4 text-gray-700">None significant</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Big Berkey, Phoenix elements</td>
+                    <td class="px-4 py-4 text-gray-700">Not named by Berkey</td>
+                    <td class="px-4 py-4 text-gray-700">42, 372</td>
+                    <td class="px-4 py-4 text-gray-700">VOCs, PFAS, pesticides, metals (lab-tested)</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Waterdrop TK-A</td>
+                    <td class="px-4 py-4 text-gray-700">Per listing</td>
+                    <td class="px-4 py-4 text-gray-700">42, 372</td>
+                    <td class="px-4 py-4 text-gray-700">Lead, up to 98-99% chlorine</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Waterdrop CTF-01</td>
+                    <td class="px-4 py-4 text-gray-700">Per listing</td>
+                    <td class="px-4 py-4 text-gray-700">42, 372</td>
+                    <td class="px-4 py-4 text-gray-700">Heavy metals</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            That table is the reason the ranking below looks the way it does. The two filters with health-effects certifications are first and second. The well-known Berkey is third, because its replacement elements are certified only for chlorine taste and lead-free materials and everything else it claims rests on lab testing. If you care about a specific contaminant, the only reliable check is to find it on a performance data sheet under NSF/ANSI 53 or 401, then confirm the listing in the certifier's online directory.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE RULE</p>
+            <p class="text-xl font-bold text-white mb-3">Tested to NSF standards is not the same as certified to them.</p>
+            <p class="text-gray-300 leading-relaxed m-0">Look for the certifier's name, the standard number and a performance data sheet. If a listing gives you only a percentage and a contaminant count, treat it as a claim.</p>
+          </div>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The 5 Best Countertop Water Filters, Ranked
+          </h2>
+
+          <p>
+            We compared countertop filters sold on Amazon in the US across three designs: stainless gravity tanks from Culligan, Berkey and Waterdrop, a plug-in carbon dispenser from Aquasana, and a faucet-diverter canister from Waterdrop. We ranked them on what each maker publishes: the certifying body and NSF/ANSI standards, rated filter life, flow and capacity. We have not tested these units ourselves. Where a claim comes from lab testing rather than a certification, we label it as such.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="berkey" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. The Berkey Question: EPA Orders and What Ships Now
+          </h2>
+
+          <p>
+            Anyone shopping for a gravity filter runs into Berkey, and into a confusing story about why it is hard to find. Here is what the public record shows.
+          </p>
+
+          <p>
+            Starting in December 2022 and through 2023, the EPA issued stop sale, use or removal orders under FIFRA, the federal pesticide law, to Berkey's maker and to several of its distributors. EPA's position was that Black Berkey elements contain silver to inhibit bacterial growth and were sold with antimicrobial claims, which makes them a pesticide that must be registered. Berkey's maker sued EPA in 2023, and according to Berkey's own support page, its request for an immediate injunction lifting the order was denied in January 2024. Berkey's site has since said Black Berkey elements are unavailable or in limited supply.
+          </p>
+
+          <p>
+            What Berkey sells now is the Big Berkey system with Phoenix Gravity New Millennium Edition elements, made for Berkey's maker as a replacement for Black Berkey elements. Berkey says they are certified to NSF/ANSI 42 for chlorine, chloramine and particulates, and NSF/ANSI/CAN 372 for lead-free materials, without naming the certifying body on that page. It says the elements were tested by accredited third-party labs to EPA guidelines and NSF protocols and are designed to reduce VOCs, PFAS, pesticides, pharmaceuticals and some heavy metals, but those reductions are not covered by the certifications it lists.
+          </p>
+
+          <p>
+            Older Big Berkey listings that still show Black Berkey BB9-2 elements turn up on Amazon. Given the stop-sale history, we recommend the Phoenix version, which is what Berkey itself currently sells, and we would be wary of any listing that cannot tell you which elements are in the box. Berkey's pages also state that its systems are not available to residents of California and Iowa.
+          </p>
+
+          <p>
+            None of this means a Berkey does not filter water well. It means you are buying it on the maker's lab data, not on an independent certification for health contaminants. If you want the Berkey format with a health-effects certification, the Culligan MaxClear filters are sold as fitting Berkey chambers, which is the most practical Berkey water filter alternative we found.
+          </p>
+        </div>
+
+        <div id="capacity-flow" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Capacity and Flow: Gallons per Hour Matter More Than Gallons in the Tank
+          </h2>
+
+          <p>
+            Gravity filters are sold on tank size: 2.25 gallons, 3 gallons, 6 gallons. Tank size tells you how much filtered water you can store. It does not tell you how fast you get it, and that is the number that decides whether a gravity filter keeps up with a family.
+          </p>
+
+          <p>
+            Berkey is unusually clear about this. It rates the Big Berkey with two Black Berkey elements at up to 3.5 gallons per hour, and with four at up to 7 gallons per hour, measured with the top chamber full, and says flow falls as the water level drops. It rates the Phoenix elements at up to 4.2 gallons per hour per pair. In practice that means refilling the top chamber once or twice a day for a household that drinks and cooks from it.
+          </p>
+
+          <p>
+            The certified numbers are slower. Culligan's MaxClear performance data sheet gives a service flow rate of 4.0 gallons per day, the rate at which its certification testing was run. That is not a hard ceiling on what comes out of the spigot, but it is the flow at which the 99% lead and PFAS reductions were verified. It is worth knowing that slower flow through carbon means more contact time, and more contact time generally means better adsorption.
+          </p>
+
+          <p>
+            The diverter and plug-in units play a different game. The Waterdrop CTF-01 is rated for a maximum of 1.6 gallons per minute at tap pressure, which fills a pot in a minute. The Aquasana Clean Water Machine is rated at 0.5 gallons per minute through its cartridge, and Aquasana says it pours an 8-ounce glass in 8 seconds, but its reservoir holds only 64 ounces, so you refill it often.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Filter</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Storage</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Rated flow (maker)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Culligan MaxClear Venture</td>
+                    <td class="px-4 py-4 text-gray-700">3 gal</td>
+                    <td class="px-4 py-4 text-gray-700">4.0 gal/day certified service flow</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Aquasana Clean Water Machine</td>
+                    <td class="px-4 py-4 text-gray-700">64 oz reservoir</td>
+                    <td class="px-4 py-4 text-gray-700">0.5 gpm; 8 oz in 8 sec</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Big Berkey, Phoenix elements</td>
+                    <td class="px-4 py-4 text-gray-700">2.25 gal</td>
+                    <td class="px-4 py-4 text-gray-700">Up to 4.2 gal/hr per pair, top full</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Waterdrop TK-A</td>
+                    <td class="px-4 py-4 text-gray-700">2.25 gal</td>
+                    <td class="px-4 py-4 text-gray-700">Not published</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Waterdrop CTF-01</td>
+                    <td class="px-4 py-4 text-gray-700">None, on demand</td>
+                    <td class="px-4 py-4 text-gray-700">Up to 1.6 gpm</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="filter-life" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Filter Life and Cost per Gallon: Where the Big Numbers Come From
+          </h2>
+
+          <p>
+            Gravity filters advertise enormous filter lives: thousands of gallons per pair. Set those numbers next to certifications and a pattern appears. The longer the claimed life, the narrower the certified claim tends to be.
+          </p>
+
+          <p>
+            Culligan rates a single MaxClear filter at 50 gallons, two at 100 and three at 150, and says to change them at that point. That sounds short until you see what it is certified to do across those gallons: 99.2% and 99.1% lead reduction, 99.6% total PFAS, 99.4% chlorine, 99.6% chloramine and 96.5% microplastics. Aquasana rates the Clean Water Machine cartridge at 300 gallons or six months, certified to NSF/ANSI 42, 53 and 401.
+          </p>
+
+          <p>
+            Berkey rates each Phoenix element at 2,750 gallons, or 5,500 for a pair. Waterdrop's pages give up to 6,000 gallons for the TK-A's carbon filter pair and 8,000 gallons or 12 months for the CTF-01. Those are long lives, but the certifications behind them are NSF/ANSI 42 for chlorine and 372 for materials. Chlorine is the easy contaminant: carbon keeps reducing it long after it has stopped capturing the harder ones. A health-effects certification has to hold up to the end of the rated life, which is why certified capacities are shorter.
+          </p>
+
+          <p>
+            To compare running costs, divide the replacement filter price by its rated gallons. As an illustration, a $50 pair of filters rated for 100 gallons is 50 cents a gallon; a $100 pair rated for 5,500 gallons is under 2 cents. Those are not like-for-like numbers, because one is buying certified lead and PFAS reduction and the other certified chlorine reduction. Decide what you need removed first, then compare cost among the filters certified for it.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Filter</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Rated filter life</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Certification over that life</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Culligan MaxClear (2 filters)</td>
+                    <td class="px-4 py-4 text-gray-700">100 gal</td>
+                    <td class="px-4 py-4 text-gray-700">42, 53, 401: lead, total PFAS, microplastics</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Aquasana Clean Water Machine</td>
+                    <td class="px-4 py-4 text-gray-700">300 gal or 6 months</td>
+                    <td class="px-4 py-4 text-gray-700">42, 53, 401</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Berkey Phoenix (pair)</td>
+                    <td class="px-4 py-4 text-gray-700">5,500 gal</td>
+                    <td class="px-4 py-4 text-gray-700">42, 372</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Waterdrop TK-A (carbon pair)</td>
+                    <td class="px-4 py-4 text-gray-700">Up to 6,000 gal</td>
+                    <td class="px-4 py-4 text-gray-700">42, 372</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Waterdrop CTF-01</td>
+                    <td class="px-4 py-4 text-gray-700">8,000 gal or 12 months</td>
+                    <td class="px-4 py-4 text-gray-700">42, 372</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            If lead or PFAS is your reason for buying, test first so you know what you are paying to remove. Our guide to the <a href="/best-water-test-kit/">best water test kit</a> covers which home tests measure lead properly.
+          </p>
+        </div>
+
+        <div id="gravity-vs-diverter" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Gravity or Faucet-Diverter: Which Suits Your Kitchen
+          </h2>
+
+          <p>
+            Choose a gravity filter if your faucet is a pull-down sprayer, if you want filtered water stored and ready, or if you want water when the taps stop. Gravity units connect to nothing, so faucet style is irrelevant, and a renter can take one to the next apartment without a wrench. The cost is counter space and height: Berkey lists the Big Berkey at 19.25 inches tall and 8.5 inches across in use, and on a stand it will not fit under most wall cabinets. Measure the gap before you buy, and remember you need room above it to pour into the top chamber.
+          </p>
+
+          <p>
+            Choose a faucet-diverter unit if your faucet has a standard aerator and you want filtered water at something close to tap speed without plumbing. The Waterdrop CTF-01 filters at up to 1.6 gpm, so filling a pot is as quick as it is from the faucet. It takes a few inches of counter beside the sink, and the hose to the diverter is always in view. It shares the faucet-mount's fit limits: Waterdrop's listings exclude pull-out, handheld, spray-style and sensor faucets.
+          </p>
+
+          <p>
+            Choose a plug-in dispenser if you want certified filtration, a small footprint and a fast glass of water, and you do not mind refilling a small reservoir. The Aquasana takes up about as much room as a coffee maker.
+          </p>
+
+          <p>
+            If your faucet will take a faucet-mount filter and you only need drinking water, a <a href="/best-faucet-water-filter/">faucet water filter</a> is cheaper than any of these and takes no counter space at all. If it will not and you would rather not see a filter at all, an <a href="/best-under-sink-water-filter/">under sink water filter</a> is the plumbed route. A pitcher, from our <a href="/best-water-filter-pitcher/">best water filter pitcher</a> guide, is the cheapest of all if you only need a few glasses a day.
+          </p>
+        </div>
+
+        <div id="emergencies" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Countertop Filters for Outages and Boil-Water Notices
+          </h2>
+
+          <p>
+            One reason gravity filters sell so well is that they keep working when nothing else does. They need no power and no water pressure, so in an outage you can pour stored water through them, or water from a well with a failed pump. That is a real advantage over under-sink, faucet-mount and plug-in units, all of which stop when the pressure or the power goes. If you are planning for outages more broadly, pair one with the preparations in our <a href="/best-home-generator-for-power-outages/">home generator for power outages</a> guide and a way to hear official notices, such as an <a href="/best-emergency-radio/">emergency radio</a>.
+          </p>
+
+          <p>
+            Be careful about what they are certified to handle in an emergency, though. None of the five filters in this guide carries a certification as a microbiological water purifier. Culligan's data sheet says its system is intended only for potable water and must not be used with water that is microbiologically unsafe or of unknown quality without disinfection before or after. Berkey's lab-tested claims about bacteria and viruses were exactly what put its Black Berkey elements on the wrong side of EPA, and the Phoenix elements are certified only to NSF/ANSI 42 and 372.
+          </p>
+
+          <p>
+            So the honest rule is this. Under a boil-water notice, boil the water or follow the utility's instructions. A gravity filter can then improve taste and remove what its certifications cover. For untreated surface water, such as a creek after a storm, treat or boil first. A certified filter is not a substitute for disinfection.
+          </p>
+
+          <p>
+            For storage, a 2.25- to 3-gallon gravity tank is a useful reserve but not a supply. Planning guidance commonly suggests about a gallon per person per day, so a family of four goes through a full Big Berkey tank in about half a day. Store water separately and use the gravity filter to make it pleasant to drink.
+          </p>
+        </div>
+
+        <div id="care" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Setup and Care: Priming, Cleaning, Stainless vs Plastic
+          </h2>
+
+          <p>
+            Gravity elements need some care to keep their flow. Berkey ships its Phoenix elements with a primer and red food coloring: priming forces water through the element to flush air and carbon fines, and the dye test confirms the element is seated and sealing, because unfiltered water bypassing a loose element is the most common gravity-filter failure. Culligan says MaxClear filters need no priming and do not need to stay wet between uses, and that the outer surface can be cleaned with a sponge to restore flow.
+          </p>
+
+          <p>
+            Clean the chambers every few weeks with mild soap and water, and keep the unit out of direct sunlight, which Culligan's manual specifically warns against because it encourages algae growth in the bottom chamber. Culligan rates the MaxClear for water between 40 and 85°F. Do not put hot water in a gravity filter.
+          </p>
+
+          <p>
+            Stainless or plastic is mostly about durability and taste. The Culligan, Berkey and Waterdrop TK-A chambers are stainless steel, which does not stain, does not hold odors and survives being dropped. The Aquasana dispenser and most diverter units are largely plastic. That is not a safety issue for a certified unit; NSF/ANSI 372 and the materials sections of the performance standards cover what touches the water. Culligan gives a five-year warranty on its Scout and Venture stainless systems, excluding the filters.
+          </p>
+
+          <p>
+            Diverter units need the same care as faucet filters: flush a new cartridge before drinking, flip the diverter to unfiltered before running hot water, and check the adapter washer if it drips. Change cartridges at the rated gallons or calendar limit, whichever comes first, and sooner if flow falls off.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying on a contaminant count</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Listings that say a gravity filter removes 200 or more contaminants are quoting lab tests, not certifications. Find the certifier's name and the NSF/ANSI standard on a performance data sheet. On this list, only the Culligan MaxClear and the Aquasana publish health-effects certifications to NSF/ANSI 53 and 401.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Reading NSF/ANSI 372 as lead removal</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Several gravity filters advertise NSF/ANSI 42 and 372 certification next to a lead claim. Standard 372 certifies that the device's own materials are lead-free; it is not a lead-reduction certification. For lead in your water, look for NSF/ANSI 53 and a published lead percentage.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Treating a gravity filter as a purifier</h3>
+              <p class="text-gray-700 text-sm m-0">
+                None of these five is certified as a microbiological purifier. Culligan's data sheet says not to use its system on microbiologically unsafe water without disinfection. Under a boil-water notice, boil first. For creek or rain water, disinfect before or after filtering.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Forgetting the height</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A Big Berkey stands 19.25 inches tall in use, and you need room above it to pour in water. On a stand it will not fit under most wall cabinets. Measure the space, including pouring clearance, before buying any gravity unit, and plan where it will live permanently.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying a Berkey listing without checking the elements</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Some Amazon listings still show Black Berkey elements, which have been under an EPA stop-sale order. Berkey's current system ships with Phoenix Gravity elements. Confirm which elements are in the box, and remember Berkey says its systems are not sold to California or Iowa residents.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best countertop water filter?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For certified performance, the Culligan MaxClear Venture. Its filters are certified by IAPMO R&amp;T to NSF/ANSI 42, 53 and 401, with 99.2% lead and 99.6% total PFAS reduction on the data sheet. The trade-off is a 50-gallon rating per filter. For a plug-in alternative with the same three standards, the Aquasana Clean Water Machine is certified by WQA.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are gravity water filters NSF certified?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Some are, most are not for health contaminants. Many gravity elements, including Berkey's Phoenix elements and Waterdrop's TK-A filters, are certified only to NSF/ANSI 42 for chlorine and 372 for lead-free materials. Culligan's MaxClear filters are certified to NSF/ANSI 42, 53 and 401. Always check the standard numbers, not just the NSF badge.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What happened to Berkey water filters?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                From December 2022, the EPA issued stop-sale orders under FIFRA against Berkey's maker and distributors, treating Black Berkey elements as unregistered pesticides because of their silver and antimicrobial claims. Berkey's maker sued, and its request for an injunction was denied in January 2024. Berkey now sells systems with Phoenix Gravity elements, certified to NSF/ANSI 42 and 372.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is a good Berkey water filter alternative?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                The Culligan MaxClear is the strongest one we found: a nesting stainless gravity system whose filters are certified to NSF/ANSI 42, 53 and 401, and which Culligan says fit Berkey chambers too. For a cheaper stainless tank with chlorine-only certification, the Waterdrop TK-A takes Berkey-size filters and is certified to NSF/ANSI 42 and 372.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do countertop water filters remove fluoride?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Not the carbon units in this guide; none of them claims a certified fluoride reduction. Berkey and Waterdrop sell add-on fluoride filters for their gravity systems, but these are lab-tested claims. Countertop reverse osmosis is the reliable no-plumbing option for fluoride, and we cover those units in a separate guide.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How fast does a gravity water filter work?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Slowly. Berkey rates the Big Berkey at up to 3.5 gallons per hour with two Black Berkey elements and up to 4.2 per hour with Phoenix elements, both with the top chamber full and slowing as it empties. Culligan's certified service flow is 4.0 gallons per day. Adding more elements, where the chamber allows, speeds it up.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Will a countertop water filter work with a pull-down faucet?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A gravity filter or a plug-in dispenser will, because neither connects to the faucet. A faucet-diverter countertop unit such as the Waterdrop CTF-01 will not: its diverter replaces the aerator, and Waterdrop's listings exclude pull-out, handheld, spray-style and sensor faucets. Unscrew your aerator first to see if your faucet takes one.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Water Filter Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-water-filtration-system-for-home/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Pillar Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Water Filtration Systems for Home</h3>
+              <p class="text-gray-500 text-sm mt-2">Whole-house, under-sink and countertop systems compared.</p>
+            </a>
+            <a href="/best-faucet-water-filter/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">On the Tap</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Faucet Water Filters</h3>
+              <p class="text-gray-500 text-sm mt-2">Faucet-mount filters ranked by certification and fit.</p>
+            </a>
+            <a href="/best-reverse-osmosis-water-filter-pitcher/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#10B981] font-black text-xs uppercase tracking-widest mb-2">Countertop RO</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Reverse Osmosis Pitchers</h3>
+              <p class="text-gray-500 text-sm mt-2">Plug-in RO for fluoride, nitrate and dissolved solids.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            If you want a gravity filter and care about lead or PFAS, buy the Culligan MaxClear Venture with two filters and budget for changing them every 100 gallons. It is the only stainless gravity system we found with a published health-effects certification. If you would rather have a small plug-in unit with the same three standards, the Aquasana Clean Water Machine is the pick.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Buy the Big Berkey or the Waterdrop TK-A only if chlorine taste is your main concern, or if you want a large stainless reserve and are comfortable relying on lab data for everything else. And whichever you choose, read the standard numbers before the contaminant count.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Improvement" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
