@@ -1,0 +1,888 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Battery Powered Lanterns",
+    "url": "/best-battery-powered-lantern/"
+  },
+  {
+    "title": "Best Solar Power Banks",
+    "url": "/best-solar-power-bank/"
+  },
+  {
+    "title": "Best Emergency Radios",
+    "url": "/best-emergency-radio/"
+  },
+  {
+    "title": "Best Portable Chargers for Power Outages",
+    "url": "/best-portable-charger-for-power-outages/"
+  },
+  {
+    "title": "Best Portable Solar Panels",
+    "url": "/best-portable-solar-panel/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-11-05", modified: "2026-11-05" });
+const title = "6 Best Solar Lanterns in 2026: Panel Size, Sun Hours and Real Runtime";
+const description =
+  "The best solar lanterns for power outages and camping, with the sun-hours math behind each panel, USB backup charging, lumens vs runtime and phone charging.";
+
+const PRODUCTS = [
+  {
+    "id": "luminaid-max-2-in-1",
+    "name": "LuminAID Max 2-in-1 Inflatable Solar Lantern & Phone Charger",
+    "category": "Inflatable, 2,000 mAh, USB-A Phone Charging",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "pros": [
+      "2,000 mAh battery with a USB-A output for phone top-ups",
+      "LuminAID lists up to 50 hours of runtime on the lowest setting",
+      "Waterproof and floats, packs flat for storage",
+      "USB recharge of about 1 to 2 hours per retailer listings"
+    ],
+    "cons": [
+      "Solar refill rated at 16 to 20 hours of direct sun, slower than the Luci range",
+      "Brightness is listed as 150 lumens on LuminAID's spec table and 200 on the Amazon listing",
+      "USB-C phones need an adapter cable"
+    ],
+    "bottomLine": "The best balance of light, battery and phone charging for an outage kit, as long as you start it full from USB.",
+    "description": "The LuminAID Max is the lantern we would put in an outage bin first. It folds flat, twists open into a diffused cube, and holds a 2,000 mAh battery that can either run the light or push a top-up into a phone through its USB-A port. LuminAID's spec table lists 150 lumens at the top setting (the current Amazon listing says 200) and a maximum runtime of 50 hours on low. The solar panel on the top face is rated to refill the battery in 16 to 20 hours of direct sun, which is three or four clear days, and retailer listings put a USB recharge at 1 to 2 hours. LuminAID says it can deliver one phone charge; in practice a full 2,000 mAh pack will add roughly a third to half of a modern phone's battery. It is waterproof and floats. The trade-offs are the slower solar rate compared with BioLite's Luci models and a USB-A port in a USB-C world, but for a light that doubles as an emergency phone charger it is the most complete package here."
+  },
+  {
+    "id": "biolite-luci-charge-150",
+    "name": "BioLite Luci Charge 150 Solar Lantern",
+    "category": "Inflatable, 2,000 mAh / 7.4 Wh, USB-C and USB-A",
+    "badge": "Best USB-C Pick",
+    "amazonUrl": "#",
+    "pros": [
+      "USB-C input plus USB-C and USB-A outputs",
+      "BioLite rates solar recharge at about 14 hours, faster than the LuminAID Max",
+      "IP67 waterproof, 6.1 ounces",
+      "Up to 50 hours on low, about 6 hours on high at 150 lumens"
+    ],
+    "cons": [
+      "Cool white clear finish only",
+      "Same 7.4 Wh battery limits phone charging to a partial top-up"
+    ],
+    "bottomLine": "The pick for a household on USB-C: same battery as the Max, a quicker solar refill and modern ports.",
+    "description": "BioLite took over the Luci line that MPOWERD built, and the Luci Charge 150 is the modern version of the Luci Pro lanterns. It has a 2,000 mAh (7.4 Wh) lithium battery, 10 cool white LEDs rated at up to 150 lumens, and runtimes BioLite lists at about 50 hours on low and 6 on high. The difference from the LuminAID Max is the charging: BioLite rates a full solar charge at about 14 hours of sun and a USB-C charge at 2 to 3 hours, and the lantern has both a USB-C and a USB-A output, so it can top up a phone with whichever cable you carry. It is IP67 rated, weighs 6.1 ounces and collapses to about an inch and a half. Phone charging is the same story as any 7.4 Wh battery, a partial top-up rather than a full charge. If you want the most efficient mid-size solar lantern with modern ports, this is it."
+  },
+  {
+    "id": "biolite-luci-charge-360",
+    "name": "BioLite Luci Charge 360 Solar Lantern",
+    "category": "Inflatable, 4,000 mAh / 14.8 Wh, 360 Lumens",
+    "badge": "Best Long Reserve",
+    "amazonUrl": "#",
+    "pros": [
+      "4,000 mAh (14.8 Wh) battery, twice the Charge 150",
+      "Up to 360 lumens from 31 warm white LEDs",
+      "BioLite lists about 110 hours on low",
+      "USB-C in and out plus USB-A, IP67 rated"
+    ],
+    "cons": [
+      "About 28 hours of sun to refill, five or six clear days",
+      "About 5 hours at full brightness",
+      "USB-C charge takes 5 to 6 hours"
+    ],
+    "bottomLine": "Buy it for a multi-day reserve and a real phone top-up, not for a fast solar refill.",
+    "description": "The Luci Charge 360 is the big inflatable in BioLite's range. Its 4,000 mAh (14.8 Wh) battery is double the Charge 150, and its 31 warm white LEDs are rated at up to 360 lumens, bright enough to light a kitchen table. BioLite lists about 110 hours on low and about 5 hours on high. The catch is the refill: the panel is rated at about 28 hours of direct sun to full, and USB-C at 5 to 6 hours, because the battery is bigger but the panel collects energy at about the same rate as the smaller Lucis. That makes the 360 a reserve tank. Charge it full before storm season, run it on low or medium, and it can carry a household through several dark evenings while still having enough left to add most of a phone charge through its USB-C or USB-A output. It weighs 10.1 ounces and is IP67 rated."
+  },
+  {
+    "id": "luminaid-survivor",
+    "name": "LuminAID Survivor Inflatable Solar Lantern & Dual Phone Charger",
+    "category": "Inflatable, 6,000 mAh, 600 Lumens, Two USB-A",
+    "badge": "Brightest / Biggest Battery",
+    "amazonUrl": "#",
+    "pros": [
+      "600-lumen lantern plus a 200-lumen flashlight",
+      "6,000 mAh battery, the largest here",
+      "Two USB-A ports to charge two devices at once",
+      "LuminAID lists up to 130 hours of maximum runtime"
+    ],
+    "cons": [
+      "LuminAID does not publish a solar recharge time",
+      "14.5 ounces, the heaviest inflatable here",
+      "The most expensive lantern on the list"
+    ],
+    "bottomLine": "The one solar lantern with enough battery to fully charge a phone, as long as you treat the panel as a top-up.",
+    "description": "The Survivor is LuminAID's answer for anyone who wants a solar lantern to double as a real power bank. LuminAID lists a 6,000 mAh battery, roughly three times the Max, a 600-lumen lantern mode, a separate 200-lumen flashlight and up to 130 hours of maximum runtime. Two USB-A ports let it charge two devices at once, and a battery that size can bring a typical phone from low to full with light to spare. What LuminAID does not publish on its product page is a solar recharge time, and with a battery this large refilling it from the lantern's own panel will take many days of sun. So the honest way to use it is to fill it from USB before an outage or trip and let solar slow the drain. It weighs 14.5 ounces and costs the most here. If phone charging matters as much as light, it is the one to buy."
+  },
+  {
+    "id": "biolite-luci-original-clear",
+    "name": "BioLite Luci Original Clear Solar Inflatable Lantern",
+    "category": "Inflatable, 1,000 mAh / 3.7 Wh, 75 Lumens",
+    "badge": "Best Budget / Best Night Light",
+    "amazonUrl": "#",
+    "pros": [
+      "Fastest solar refill here at a rated 7 hours",
+      "BioLite lists about 24 hours on low",
+      "4.4 ounces, IP67 waterproof",
+      "Cheap enough to buy one per room"
+    ],
+    "cons": [
+      "No USB output, so no phone charging",
+      "75 lumens maximum, about 6 hours on high"
+    ],
+    "bottomLine": "The cheap, light lantern to buy in multiples: one sunny day refills a night of low light.",
+    "description": "The Luci Original is the lantern that started the inflatable category, now sold under the BioLite name. It is simple: 10 cool white LEDs rated at up to 75 lumens, a 1,000 mAh (3.7 Wh) battery, and a panel BioLite rates to refill it in 7 hours of direct sun or 3 hours over USB-C. Runtime is listed at about 24 hours on low and 6 on high. That 7-hour solar figure is the key: one good day of sun on a windowsill or patio replaces a full night of low light, so a Luci Original can stay in balance with the sun indefinitely as a hallway, bathroom or tent light. It weighs 4.4 ounces and is IP67 rated. There is no USB output, so it cannot charge a phone, and 75 lumens is not enough to light a whole room. Buy three or four, not one."
+  },
+  {
+    "id": "goal-zero-crush-light-chroma",
+    "name": "Goal Zero Crush Light Chroma Collapsible Solar Lantern",
+    "category": "Collapsible, 1.85 Wh, 60 Lumens, Color Modes",
+    "badge": "Best Ultralight",
+    "amazonUrl": "#",
+    "pros": [
+      "3.2 ounces and collapses to about half an inch",
+      "Nothing to inflate or puncture",
+      "Six colors, a fade mode and a candle flicker mode",
+      "USB recharge in 2.5 hours"
+    ],
+    "cons": [
+      "Tiny 1.85 Wh battery: 3 hours on high, 35 on low",
+      "20 hours of sun to refill from the built-in panel",
+      "No phone charging"
+    ],
+    "bottomLine": "A tent and backpack light first; too small to be anyone's main outage lantern.",
+    "description": "The Crush Light is Goal Zero's collapsible solar lantern, and the Chroma version adds color. It folds like an accordion to just over half an inch, weighs 3.2 ounces and has no air bladder or valve to fail. Goal Zero rates it at 60 lumens on high for 3 hours, 25 lumens for 6 hours and 6 lumens for 35 hours, plus a candle mode at about 3.5 hours, from a 1.85 Wh (500 mAh) lithium battery. The built-in panel is rated at 20 hours to a full charge, which is slow for such a small battery, while USB takes about 2.5 hours. The color modes, six colors and a fade, make it a fun campsite or kids' tent light. As an outage lantern it is too small to light a room for long, and it cannot charge a phone, but as a pack-anywhere light that will never need batteries it does the job."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Solar Lantern",
+          item: "https://www.thehonestreviewers.com/best-solar-lantern/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "How long does a solar lantern take to charge in the sun?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on the panel and battery. BioLite rates the Luci Original at 7 hours of direct sun, the Luci Charge 150 at about 14 and the Luci Charge 360 at about 28. LuminAID lists 16 to 20 hours for the Max and Goal Zero lists 20 for the Crush Light. Those are hours of direct sun, so expect one to six clear days."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are solar lanterns good for power outages?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, especially for outages that last more than a day or two. Start them full from USB and they behave like any rechargeable lantern; after that the panel keeps a low or medium setting going indefinitely in decent weather. They do not replace a bright lantern for a whole room, but several around the house work well."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can a solar lantern charge a phone?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Some can. The LuminAID Max and Survivor and the BioLite Luci Charge 150 and 360 have USB output. A 2,000 mAh lantern adds roughly a third to half of a modern phone charge; the 6,000 mAh LuminAID Survivor is the one large enough to fully charge a typical phone."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the brightest solar lantern?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On this list, the LuminAID Survivor at a rated 600 lumens, followed by the BioLite Luci Charge 360 at 360 lumens. Both are rated for only a few hours at full brightness, so most owners run them lower. For more sustained brightness, a large rechargeable lantern charged from a power station is the better tool."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do solar lanterns work on cloudy days?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They charge, but slowly. Cloud cover can cut a panel's output to a fraction of what it produces in direct sun, so a lantern that refills in two clear days may take a week of gray weather. That is why it pays to start every lantern full from USB and use low settings when the forecast is poor."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long do solar lantern batteries last?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The built-in lithium batteries in these lanterns are not user-replaceable, and they gradually lose capacity with age and charge cycles. Several years of normal use is a reasonable expectation. Storing them partly charged at room temperature, and not leaving them baking in a hot car, helps them last longer."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Inflatable or rigid solar lantern: which is better?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For packing and emergency kits, inflatable. They fold flat, float, are rated waterproof and are light enough to keep several. Rigid lanterns stand up on their own and have no valve to fail, but most rigid solar models we found do not publish verifiable battery or charge-time specs, so we would buy a rigid rechargeable lantern instead."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Generators & Backup Power",
+    tags: [
+      "solar lantern",
+      "solar camping lantern",
+      "solar powered lantern",
+      "solar lantern for power outage",
+      "rechargeable solar lantern",
+      "inflatable solar lantern"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated November 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The Best <span class="text-[#38BDF8]">Solar Lanterns</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          A solar lantern is only as good as the sun it gets. Here are the six worth buying, ranked by what their panels can actually refill in a day, and which ones can keep a phone alive too.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#luminaid-max-2-in-1"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            See the Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="9.6k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#what-it-is" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. What a Solar Lantern Is</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. The 6 Best, Ranked</a>
+          <a href="#sun-hours" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Panel Size vs Sun Hours</a>
+          <a href="#usb-backup" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. USB Charging Backup</a>
+          <a href="#lumens-runtime" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Lumens vs Runtime</a>
+          <a href="#inflatable-vs-rigid" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Inflatable vs Rigid</a>
+          <a href="#phone-charging" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Phone Charging Output</a>
+          <a href="#power-outage" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. For Power Outages</a>
+          <a href="#camping" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. For Camping</a>
+          <a href="#storage" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Storage and Lifespan</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">12. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Every solar lantern box shows a sunny campsite and a full battery. The number that decides whether one is useful is printed much smaller: how many hours of direct sun the panel needs to refill the battery. On most of these lanterns that is between 7 and 28 hours, which is one to six clear days. Buy with that number in front of you and a solar lantern is the cheapest light you will never have to buy batteries for.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="what-it-is" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. What a Solar Lantern Is, and What It Is Not
+          </h2>
+
+          <p>
+            A solar lantern is a small LED light with a lithium battery and a solar cell built into the same body. Leave it in the sun during the day and it lights a room, a tent or a picnic table at night. That is the whole idea, and it works, but only within the limits of a panel that is roughly the size of a coaster. None of the lanterns on this list carry a panel bigger than the face of the lantern itself, which caps how much energy they can collect in a day no matter how good the electronics are.
+          </p>
+
+          <p>
+            That makes a solar lantern a different tool from the two products it is usually compared with. A <a href="/best-battery-powered-lantern/">battery powered lantern</a> runs off AA or D cells or a big internal pack you charge from the wall, and it can be much brighter for much longer, but it stops when the batteries run out. A <a href="/best-solar-power-bank/">solar power bank</a> or a folding panel is built to move energy into a phone, and it has more panel area per dollar. The solar lantern sits between them: modest light, a modest battery, and a refill that does not need an outlet or a store.
+          </p>
+
+          <p>
+            The reason to own one is the refill. In an outage that lasts a week, or on a trip where there is no outlet for days, a lantern that tops itself up on a windowsill is a light that never quite runs out. In a one-night outage it is just a rechargeable lantern, and any decent rechargeable lantern will do. Be honest about which of those situations you are actually buying for, because it decides whether you need a big battery, a fast panel or just something small and cheap.
+          </p>
+
+          <p>
+            Most of the good solar lanterns are now inflatable or collapsible. LuminAID and BioLite's Luci range fold flat to about an inch and puff up into a diffused cube or cylinder; Goal Zero's Crush Light collapses like an accordion. The flat shape is not just for packing. It is also what gives the panel its full face to the sun, which is why the rigid jar-style lanterns with a small cell on the lid tend to charge so slowly.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. The 6 Best Solar Lanterns, Ranked
+          </h2>
+
+          <p>
+            We compared the solar lanterns from LuminAID, BioLite (which now makes the Luci line that MPOWERD started) and Goal Zero on published lumens, battery capacity in watt-hours, the manufacturer's solar and USB recharge times, runtime on low and high, phone-charging output, water rating and packed weight. Every figure below is the manufacturer's rating or a retailer spec sheet; the sun-days and phone-charge numbers are arithmetic from those figures, not our own measurements. We left out generic rigid solar lanterns whose listings do not publish a battery capacity or a solar charge time we could check.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="sun-hours" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Panel Size vs Hours of Sun to a Full Charge
+          </h2>
+
+          <p>
+            The single most useful number on a solar lantern spec sheet is the solar recharge time, and it is almost always given in hours of direct sun, not hours of daylight. Those are very different things. A clear summer day in most of the US delivers something like five to six hours of strong, near-overhead sun; a clear winter day, or a day with high cloud, may deliver two to four. A lantern rated for 14 hours of sun to full is therefore a three-day refill in good weather and closer to a week in a gray December.
+          </p>
+
+          <p>
+            Divide each lantern's battery size by its rated solar time and a pattern appears. BioLite rates the Luci Original at 3.7 Wh in 7 hours, the Luci Charge 150 at 7.4 Wh in about 14 hours and the Luci Charge 360 at 14.8 Wh in about 28 hours. That is the same rate every time, roughly half a watt-hour per hour of sun, which tells you the panels are about the same size and the bigger lanterns simply have bigger tanks to fill. LuminAID's Max works out a little slower, at 7.4 Wh in 16 to 20 hours. Goal Zero's Crush Light is the outlier: 1.85 Wh in 20 hours, a deliberately tiny cell on a very light lantern.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Lantern</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Battery</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Rated solar recharge</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Clear days at ~5 sun hours</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">BioLite Luci Original Clear</td>
+                    <td class="px-4 py-4 text-gray-700">1,000 mAh / 3.7 Wh</td>
+                    <td class="px-4 py-4 text-gray-700">7 hours</td>
+                    <td class="px-4 py-4 text-gray-700">About 1.5</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">BioLite Luci Charge 150</td>
+                    <td class="px-4 py-4 text-gray-700">2,000 mAh / 7.4 Wh</td>
+                    <td class="px-4 py-4 text-gray-700">About 14 hours</td>
+                    <td class="px-4 py-4 text-gray-700">About 3</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">LuminAID Max 2-in-1</td>
+                    <td class="px-4 py-4 text-gray-700">2,000 mAh</td>
+                    <td class="px-4 py-4 text-gray-700">16-20 hours</td>
+                    <td class="px-4 py-4 text-gray-700">3 to 4</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Goal Zero Crush Light Chroma</td>
+                    <td class="px-4 py-4 text-gray-700">500 mAh / 1.85 Wh</td>
+                    <td class="px-4 py-4 text-gray-700">20 hours</td>
+                    <td class="px-4 py-4 text-gray-700">About 4</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">BioLite Luci Charge 360</td>
+                    <td class="px-4 py-4 text-gray-700">4,000 mAh / 14.8 Wh</td>
+                    <td class="px-4 py-4 text-gray-700">About 28 hours</td>
+                    <td class="px-4 py-4 text-gray-700">5 to 6</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">LuminAID Survivor</td>
+                    <td class="px-4 py-4 text-gray-700">6,000 mAh</td>
+                    <td class="px-4 py-4 text-gray-700">Not published</td>
+                    <td class="px-4 py-4 text-gray-700">n/a</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            What that means in practice is that a solar lantern's daily budget is set by the panel, not the battery. On a typical clear day the Luci panels collect around 2.5 Wh. If you use more than that each night, the battery runs down a little more every day, no matter how big it is. The big battery buys you a reserve for cloudy stretches and a phone charge; it does not buy you more light per day than the panel can replace.
+          </p>
+
+          <p>
+            The practical rule: run the lantern on low or medium most nights, and it can stay in balance with a windowsill indefinitely. Run it on high every night, and treat solar as a way to stretch the battery rather than refill it. LuminAID's own guidance also warns that charging through window glass is less efficient than outdoors, which matches what most owners find: put it outside, face up, in direct sun, whenever you can.
+          </p>
+        </div>
+
+        <div id="usb-backup" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Why USB Charging Is the Real Primary
+          </h2>
+
+          <p>
+            Every lantern on this list also charges from USB, and for everyday use that is how most owners actually fill them. BioLite rates the Luci Original at about 3 hours and the Luci Charge 150 at 2 to 3 hours on USB-C, against 7 and 14 hours of sun. Goal Zero rates the Crush Light at 2.5 hours from USB against 20 from its panel. A wall charger, a car port or a power bank fills these lanterns several times faster than the sun.
+          </p>
+
+          <p>
+            So the sensible pattern is to keep every solar lantern topped up from USB before a trip or before storm season, and let solar take over only when the outlets are gone. A lantern that starts an outage full has its whole battery as reserve on night one, and the panel only has to replace what you used. A lantern that starts empty has to earn every watt-hour from the sun first, and in bad weather it may never catch up.
+          </p>
+
+          <p>
+            Pay attention to the connector. BioLite's current Luci models charge over USB-C, which matters if your household has moved to one cable for everything. LuminAID's Max and Survivor use USB-A ports for charging out, and LuminAID notes that USB-C phones need an adapter cable. That is not a deal-breaker, but put the right cable in the bag with the lantern so you are not hunting for one in the dark.
+          </p>
+
+          <p>
+            USB charging is also how a solar lantern fits into a larger outage setup. If you already own a <a href="/best-portable-charger-for-power-outages/">portable charger for power outages</a> or a power station, a lantern is a small, efficient load to top up from it, far cheaper in watt-hours than leaving a ceiling light on a generator. In that role the solar panel is insurance for the days after everything else is flat.
+          </p>
+        </div>
+
+        <div id="lumens-runtime" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Lumens vs Runtime: Read Both Numbers
+          </h2>
+
+          <p>
+            Brightness and runtime pull against each other on every lantern, and solar lanterns make the trade-off obvious because their batteries are small. The Luci Charge 150 is rated at up to 150 lumens and about 6 hours on high, or about 50 hours on low. The Crush Light is rated at 60 lumens for 3 hours or 6 lumens for 35 hours. A headline lumen figure only tells you the top setting; the runtime at that setting is what decides whether it lasts through an evening.
+          </p>
+
+          <p>
+            For most uses you need far less light than the box suggests. Around 50 to 100 lumens of diffused light is enough to cook, read a board game or find things in a small room. Twenty to thirty lumens is a comfortable night light in a tent or hallway. The 360-lumen Luci Charge 360 and the 600-lumen LuminAID Survivor are bright enough to light a whole kitchen or a campsite table, but at full output both are rated for a handful of hours at most, and both take far more sun to refill.
+          </p>
+
+          <p>
+            Diffusion matters as much as raw lumens. An inflatable lantern spreads its LEDs across a frosted or clear surface the size of a small melon, which gives an even, low-glare light that you can look at. A bare LED with the same output feels brighter and harsher, and it throws hard shadows. That is why owners commonly report that a 75-lumen Luci feels perfectly usable for a tent where a 75-lumen bare bulb would not.
+          </p>
+
+          <p>
+            Use the low numbers to plan. If you need a light for six hours a night through a multi-day outage, look at what each lantern delivers on medium or low, then check that the panel can refill that much in one day. The Luci Original at 24 hours on low and a 7-hour solar refill is a near-perfect match for a nightly bathroom or hallway light. The 360 is the one to run brighter, with the understanding that its battery is a multi-day reserve rather than a nightly refill.
+          </p>
+        </div>
+
+        <div id="inflatable-vs-rigid" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Inflatable, Collapsible or Rigid
+          </h2>
+
+          <p>
+            Inflatable lanterns, the LuminAID and Luci designs, pack flat and weigh very little. BioLite lists the Luci Original at 4.4 ounces and the Charge 150 at 6.1 ounces; LuminAID lists the Survivor at 14.5 ounces with a much bigger battery inside. They float, they are rated waterproof (IP67 on the Luci range), and they do not break when dropped. Their weak points are the valve and the bladder: a puncture or a tired valve means a flat lantern, though it still lights.
+          </p>
+
+          <p>
+            Collapsible lanterns like the Goal Zero Crush Light use a folding plastic shell instead of air. There is nothing to puncture, it stands up on its own and it opens and closes in a second. The trade-off is a smaller panel and battery, which is why its runtime and recharge figures are the most modest on this list. It is a tent and backpack light first and an outage light second.
+          </p>
+
+          <p>
+            Rigid solar lanterns, the jar and camping-lantern shapes with a small panel in the lid or handle, are common on Amazon and look sturdier. Most of the ones we looked at either do not publish a battery capacity or a solar charge time at all, or publish numbers that do not add up for a cell that small. That is why none made this list. If you want a rigid lantern for outages, the better choice is usually a good rechargeable one from our <a href="/best-battery-powered-lantern/">battery powered lantern guide</a>, topped up from a separate panel or power bank.
+          </p>
+
+          <p>
+            The deciding question is where the lantern will live. In a bag, glovebox or emergency bin, flat-packing inflatables win easily, because you can keep three in the space one rigid lantern takes. On a porch or a kitchen counter through a long outage, a lantern that stands up and does not need inflating has real appeal. Many households end up with one of each.
+          </p>
+        </div>
+
+        <div id="phone-charging" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Phone-Charging Output: The Honest Math
+          </h2>
+
+          <p>
+            Four of these lanterns have a USB port that can charge a phone: the LuminAID Max and Survivor and the BioLite Luci Charge 150 and 360. That feature is worth having, but the amount of charge is set by the battery, and the batteries are small. A 2,000 mAh lithium cell holds about 7.4 Wh. Most current phones carry batteries of roughly 12 to 19 Wh, and every USB transfer loses a share of the energy to conversion and heat.
+          </p>
+
+          <p>
+            Run the numbers and a 2,000 mAh lantern, completely full, can typically add something like a third to half of a modern phone's battery, and nothing is left for light afterwards. LuminAID describes the Max as good for one phone charge, which is closer to true for older or smaller phones. The Luci Charge 360 at 14.8 Wh can add most of a phone charge, and the LuminAID Survivor's 6,000 mAh battery, roughly three times the Max, is the only one here big enough to bring a typical phone from low to full and still leave light.
+          </p>
+
+          <p>
+            Then add the sun. If the panel refills around 2.5 Wh on a good day, that is a fraction of one phone charge per day of sun, before you use any light at all. Phone charging from a solar lantern is therefore an emergency top-up, not a way to keep a phone running for a week. If keeping phones alive is the priority, a dedicated power bank and a folding panel do it far better, which is the subject of our <a href="/best-solar-power-bank/">solar power bank guide</a>.
+          </p>
+
+          <p>
+            Where the feature does shine is in the first day or two of an outage, when the lantern starts full from the wall. Pulling 20 or 30 percent into a phone from a lantern you were going to carry anyway can be the difference between a dead phone and a working one when the cell network comes back. Just decide in advance whether the lantern's battery is for light or for the phone, because it cannot fully do both.
+          </p>
+        </div>
+
+        <div id="power-outage" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Choosing a Solar Lantern for a Power Outage
+          </h2>
+
+          <p>
+            For outages, start with how long you are planning for. If your outages are usually a night or two, any of these lanterns charged from USB beforehand is plenty, and solar is a bonus. If you are in hurricane, ice-storm or wildfire country where a week without power is realistic, the solar refill rate starts to matter more than the battery, and the Luci Charge 150 and LuminAID Max are the sweet spot: enough battery for a phone top-up and a panel that can keep a nightly low setting going.
+          </p>
+
+          <p>
+            Plan one light per occupied room plus one for the bathroom. Inflatables are cheap enough that this is realistic, and spreading several moderate lanterns around the house gives better light than one bright one. A low-lumen lantern left on all night in a hallway is also a real safety feature, especially with children or older family members moving around in an unfamiliar dark house.
+          </p>
+
+          <p>
+            Never substitute candles or fuel lanterns indoors for an LED lantern, and do not run a generator anywhere near an open window to keep the lights on. Fire and carbon monoxide are the two big outage killers, and both are avoidable. If you do run a generator, keep it well away from the house and fit a <a href="/best-carbon-monoxide-detector/">carbon monoxide detector</a> with a battery backup on every sleeping floor. If you are planning to keep the whole house running instead, see our <a href="/best-home-generator-for-power-outages/">home generator guide</a>.
+          </p>
+
+          <p>
+            A solar lantern also pairs naturally with an <a href="/best-emergency-radio/">emergency radio</a>, which is the other outage tool that does not depend on the grid or a cell signal. Many crank radios have a flashlight and a small battery, but they are poor room lights. Let the radio handle news and weather alerts and let the lantern handle light, and charge both from the sun.
+          </p>
+        </div>
+
+        <div id="camping" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Solar Camping Lanterns: What Matters at a Campsite
+          </h2>
+
+          <p>
+            At a campsite the priorities shift toward weight, packed size and waterproofing. The Luci Original and Crush Light are the two that disappear into a pack; the Luci is IP67 rated and floats, the Crush Light is the lighter of the two and the easiest to hang from a tent loop. For a weekend, either one started full from USB will last the trip on medium without needing the sun at all.
+          </p>
+
+          <p>
+            For longer trips or car camping with a group, the Luci Charge 360 and the LuminAID Survivor make more sense. Both are bright enough to light a picnic table for cooking, and both can top up a phone or a headlamp. Strap the lantern to the top of a pack or the dashboard while you travel, and it collects sun while you move, which is the one time a solar lantern's slow panel works entirely in your favour.
+          </p>
+
+          <p>
+            Color and mode options are a camping feature more than an outage one. The Crush Light Chroma adds six colors, a fade and a flickering candle mode; Goal Zero rates the candle mode at about 3.5 hours. Red or warm modes are kinder to night vision and attract fewer insects than cool white, so a lantern with a warm option is worth having if you sit out late.
+          </p>
+
+          <p>
+            One honest caution: under heavy tree cover, a solar lantern will barely charge at all. If your camping is mostly in forest, plan on USB as the real power source and carry a small power bank, and treat the panel as a bonus for open sites, beaches and the drive in.
+          </p>
+        </div>
+
+        <div id="storage" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            10. Storage, Batteries and Lifespan
+          </h2>
+
+          <p>
+            Solar lanterns are a good emergency-kit item precisely because they can sit unused for months, but the lithium batteries inside still self-discharge. Goal Zero lists a three to six month shelf life on the Crush Light's battery. In practice, charge every lantern fully before storing it, and put it in the sun or on USB at least every few months, ideally when you change the clocks or test the smoke alarms.
+          </p>
+
+          <p>
+            Store them somewhere that does not bake. A lantern left on a car dashboard in summer, or stuffed in a hot attic, will lose battery capacity faster than one kept at room temperature. For the same reason, do not leave an inflatable in direct sun once it is fully charged for days on end; the panel does no more good and the plastic ages.
+          </p>
+
+          <p>
+            Inflatables last longest when you deflate them gently and let them dry before packing. Sand and grit in the valve are the usual cause of a lantern that will not hold air. A rigid or collapsible lantern needs less care, but keep the panel clean: a layer of dust or pollen on a coaster-sized cell cuts its output noticeably, and it already has very little to spare.
+          </p>
+
+          <p>
+            None of these lanterns has a user-replaceable battery, which is the honest limit on lifespan. Expect several years of normal use before the runtime drops enough to notice. At these prices that is a reasonable trade, but it is one more reason to keep a few lanterns spread across the household rather than relying on a single expensive one.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Reading sun hours as daylight hours</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A rating of 14 hours to full means 14 hours of strong, direct sun. Most clear days deliver five or six of those, and winter or cloudy days far fewer. Plan on two to five days to refill a mid-size lantern from empty by solar alone.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Charging through a window</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Window glass cuts the light reaching the cell, and LuminAID itself advises against relying on indoor window charging. Put the lantern outside, face up, in direct sun, and bring it in before dark. A coaster-sized panel needs every bit of light it can get.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Storing it empty</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A lantern that goes into the emergency bin flat has to earn its first night from the sun, which may never happen in a storm. Charge every solar lantern fully from USB before storing it, and top it up every few months.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Expecting it to keep a phone alive</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A 2,000 mAh lantern holds about 7.4 Wh, which is roughly a third to half of a modern phone charge after losses. Treat phone charging as an emergency top-up and buy a real power bank if phones are the priority.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Running it on high every night</h3>
+              <p class="text-gray-700 text-sm m-0">
+                High mode on most of these lanterns lasts three to six hours and uses more energy than the panel can replace in a day. Low or medium keeps the lantern in balance with the sun and still gives plenty of light for a room or tent.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            12. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long does a solar lantern take to charge in the sun?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It depends on the panel and battery. BioLite rates the Luci Original at 7 hours of direct sun, the Luci Charge 150 at about 14 and the Luci Charge 360 at about 28. LuminAID lists 16 to 20 hours for the Max and Goal Zero lists 20 for the Crush Light. Those are hours of direct sun, so expect one to six clear days.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are solar lanterns good for power outages?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes, especially for outages that last more than a day or two. Start them full from USB and they behave like any rechargeable lantern; after that the panel keeps a low or medium setting going indefinitely in decent weather. They do not replace a bright lantern for a whole room, but several around the house work well.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can a solar lantern charge a phone?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Some can. The LuminAID Max and Survivor and the BioLite Luci Charge 150 and 360 have USB output. A 2,000 mAh lantern adds roughly a third to half of a modern phone charge; the 6,000 mAh LuminAID Survivor is the one large enough to fully charge a typical phone.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the brightest solar lantern?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                On this list, the LuminAID Survivor at a rated 600 lumens, followed by the BioLite Luci Charge 360 at 360 lumens. Both are rated for only a few hours at full brightness, so most owners run them lower. For more sustained brightness, a large rechargeable lantern charged from a power station is the better tool.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do solar lanterns work on cloudy days?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                They charge, but slowly. Cloud cover can cut a panel's output to a fraction of what it produces in direct sun, so a lantern that refills in two clear days may take a week of gray weather. That is why it pays to start every lantern full from USB and use low settings when the forecast is poor.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long do solar lantern batteries last?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                The built-in lithium batteries in these lanterns are not user-replaceable, and they gradually lose capacity with age and charge cycles. Several years of normal use is a reasonable expectation. Storing them partly charged at room temperature, and not leaving them baking in a hot car, helps them last longer.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Inflatable or rigid solar lantern: which is better?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For packing and emergency kits, inflatable. They fold flat, float, are rated waterproof and are light enough to keep several. Rigid lanterns stand up on their own and have no valve to fail, but most rigid solar models we found do not publish verifiable battery or charge-time specs, so we would buy a rigid rechargeable lantern instead.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Power Outage Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-battery-powered-lantern/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Battery Powered Lanterns</h3>
+              <p class="text-gray-500 text-sm mt-2">Brighter rechargeable and D-cell lanterns for whole rooms.</p>
+            </a>
+            <a href="/best-solar-power-bank/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Solar Charging</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Solar Power Banks</h3>
+              <p class="text-gray-500 text-sm mt-2">The panel and power bank pairings that actually keep phones charged.</p>
+            </a>
+            <a href="/best-emergency-radio/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Outage Kit</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Emergency Radios</h3>
+              <p class="text-gray-500 text-sm mt-2">Crank, solar and NOAA weather alert radios that work without the grid.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Buy a solar lantern for the days after the outlets are gone, and pick it by its solar recharge time as much as its lumens. The LuminAID Max 2-in-1 is the best all-round choice for outages, with a phone-charging battery and a panel that keeps up with moderate use. The BioLite Luci Charge 150 is the best USB-C alternative, the Luci Charge 360 is the one for a long, bright reserve, and the Luci Original is the cheap, light nightly lantern to buy in multiples.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Whatever you choose, charge it from USB before you store it, run it on low or medium, and keep a real power bank for the phones. A solar lantern does one job very well: it keeps giving you light long after everything else has gone flat.
+          </p>
+        </div>
+
+        <MoreInCategory category="Generators & Backup Power" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

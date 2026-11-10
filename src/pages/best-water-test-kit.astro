@@ -1,0 +1,972 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Water Filtration Systems for Home",
+    "url": "/best-water-filtration-system-for-home/"
+  },
+  {
+    "title": "Best Water Softener Systems",
+    "url": "/best-water-softener-system/"
+  },
+  {
+    "title": "Best Under Sink Water Filters",
+    "url": "/best-under-sink-water-filter/"
+  },
+  {
+    "title": "Best Countertop Water Filters",
+    "url": "/best-countertop-water-filter/"
+  },
+  {
+    "title": "Why Does My Water Smell Like Rotten Eggs",
+    "url": "/why-does-my-water-smell-like-rotten-eggs/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-11-05", modified: "2026-11-05" });
+const title = "6 Best Water Test Kits in 2026: Strips, Well Kits and Certified Labs";
+const description =
+  "The best water test kits for city and well water, from 17-in-1 strips to certified mail-in lab panels, and which contaminants each type can actually detect.";
+
+const PRODUCTS = [
+  {
+    "id": "tap-score-advanced-home-water-test",
+    "name": "Tap Score Advanced Home Water Test Kit",
+    "category": "Mail-In Lab Panel, 116 Analytes, Well or City",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "pros": [
+      "116 analytes, including lead, copper, other metals, minerals, hardness and alkalinity",
+      "Samples go to EPA-certified drinking water labs, per the listing",
+      "Works for both well and city water",
+      "Report compares each result with health-based benchmarks rather than just a pass/fail line"
+    ],
+    "cons": [
+      "PFAS is a separate Tap Score test, not part of this panel",
+      "Costs many times more than a strip kit",
+      "You must ship samples promptly, which rules out a Friday-night sample"
+    ],
+    "bottomLine": "The test to buy if you want one answer about your drinking water before spending money on a filter. Add the PFAS test only if you live near a known source.",
+    "description": "Tap Score is the consumer brand of SimpleLab, which sells sampling kits and routes the samples to partner labs. The Advanced Home Water Test is its broad baseline panel: the Amazon listing puts it at 116 analytes, including lead, copper, hardness and alkalinity, analysed by EPA-certified drinking water labs, and it is sold for well or city water. You fill the supplied bottles, ship them back and get a report online that sets each result against health guidelines and explains what kind of treatment would address anything that is elevated. That last part is the real value, because it turns a list of numbers into a filter decision. The panel does not include PFAS, which Tap Score sells as a separate, more expensive test, so it is not the whole story for homes near military bases, airports or industrial sites. For most households on a well or an older city service line, though, it covers the contaminants that actually drive treatment choices."
+  },
+  {
+    "id": "safe-home-ultimate-water-test-kit",
+    "name": "Safe Home ULTIMATE Drinking Water Test Kit SH-UWT1",
+    "category": "Mail-In Lab Panel, 200 Parameters",
+    "badge": "Most Comprehensive",
+    "amazonUrl": "#",
+    "pros": [
+      "Listed at 200 parameters, the broadest panel on this list",
+      "Tested at Safe Home's EPA-certified laboratory, per the listing",
+      "Covers metals, minerals, volatile organic compounds and physical properties",
+      "A sensible choice before installing a whole-house system"
+    ],
+    "cons": [
+      "The most expensive kit here",
+      "More parameters does not mean more useful results for a typical city home",
+      "Bacteria and PFAS coverage should be confirmed against the current listing before buying"
+    ],
+    "bottomLine": "Buy it when you need the widest net, such as a new well, a home near industry or before a large treatment purchase. Overkill for most city water.",
+    "description": "Safe Home's ULTIMATE kit, model SH-UWT1, is the widest single panel we found sold on Amazon: the listing describes testing at Safe Home's EPA-certified laboratory for 200 parameters. Review coverage describes the bulk of those as volatile organic compounds, with metals, minerals and physical properties such as pH and hardness making up the rest. That breadth matters in specific cases: a newly drilled well, a property near a fuel spill, farmland or a manufacturing site, or a house where you are about to spend thousands on a whole-house treatment system and want to size it once. For a typical home on treated municipal water it is more test than you need, because your utility already monitors most of those organics and publishes the results. It costs several times what a targeted kit does, so match it to the risk rather than buying it for reassurance. Check the current listing for exactly which categories are included, as panel contents change over time."
+  },
+  {
+    "id": "tap-score-lead-and-copper-water-test",
+    "name": "Tap Score Lead & Copper in Water Test Kit",
+    "category": "Mail-In Lab Test, Lead and Copper",
+    "badge": "Best for Lead",
+    "amazonUrl": "#",
+    "pros": [
+      "Lab analysis for lead and copper at a fraction of the cost of a full panel",
+      "Sold for well or city water",
+      "Full written report, per the listing",
+      "The right test for an older home with possible lead solder or a lead service line"
+    ],
+    "cons": [
+      "Covers only lead, copper and a basic water parameter or two",
+      "Results depend on following the sampling instructions exactly"
+    ],
+    "bottomLine": "The cheapest honest answer to the lead question. Buy this instead of trusting a strip's lead pad.",
+    "description": "If lead is your actual worry, this is the kit to buy. Tap Score's Lead & Copper test sends a sample from your tap to an EPA-certified lab and returns a full report, according to the listing, and it costs a fraction of the broad panels. Lab analysis matters here more than anywhere else, because the levels that matter for lead are in the low parts per billion, and that is precisely where strip pads and colour charts lose resolution. Copper comes along in the same analysis, which is useful because both metals leach from household plumbing, and high copper can point to corrosive water that is also pulling lead from older solder or fixtures. It is the right test for homes built before the 1986 federal ban on lead solder and pipes, homes with a known or suspected lead service line, and anyone feeding infant formula with tap water. It will not tell you anything about bacteria, nitrates or PFAS, so pair it with a well kit if you are on a private well."
+  },
+  {
+    "id": "watersafe-ws425w-well-water-test-kit",
+    "name": "Watersafe WS-425W Well Water Test Kit",
+    "category": "DIY Reagent Kit, Bacteria, Lead, Nitrate, Pesticides",
+    "badge": "Best DIY Well Kit",
+    "amazonUrl": "#",
+    "pros": [
+      "Includes a coliform bacteria vial, the test well owners need most",
+      "Lead test is designed to detect dissolved lead below the 15 ppb EPA action level",
+      "Nitrate and nitrite strip read against the 10 ppm and 1 ppm EPA limits",
+      "Also checks pesticides, iron, copper, pH, hardness and chlorine"
+    ],
+    "cons": [
+      "Single-use: one test of each",
+      "Bacteria result takes 48 hours and is presence or absence only",
+      "Colour matching is a judgement call near the threshold"
+    ],
+    "bottomLine": "The best at-home kit for a quick well screen between annual lab tests. A positive result means call a certified lab, not pour bleach and hope.",
+    "description": "The Watersafe WS-425W is a one-time kit built around the tests a private well needs. Inside are a bacteria vial for total coliform, a lead and pesticide packet, a nitrate and nitrite packet, a pH, hardness and chlorine packet, and packets for iron and copper. Watersafe states that the lead test detects dissolved lead below the EPA action level of 15 parts per billion, and the nitrate strip is read against the EPA limits of 10 ppm for nitrate and 1 ppm for nitrite. Most results take a few minutes; the bacteria vial incubates for 48 hours, and turns from purple to yellow if coliform bacteria are present. That makes it a good screen after flooding, a new pump or a change in taste or colour, and a reasonable annual check between full lab tests. It is still a screen: a positive bacteria or nitrate result should be confirmed by a state-certified lab before you treat or abandon the well, and a negative lead result tells you the level is below the action level, not that it is zero."
+  },
+  {
+    "id": "varify-17-in-1-water-test-kit",
+    "name": "Varify 17-in-1 Complete Water Test Kit",
+    "category": "Test Strips, 100 Strips Plus 2 Bacteria Tests",
+    "badge": "Best Test Strips",
+    "amazonUrl": "#",
+    "pros": [
+      "100 strips, enough to test several taps or retest after installing a filter",
+      "Includes two bacteria test kits",
+      "Covers hardness, chlorine, iron, copper, fluoride, zinc, lead and more on one strip",
+      "Results in a few minutes for a tiny cost per test"
+    ],
+    "cons": [
+      "Lead and arsenic pads are screening tools, not quantitative measurements",
+      "Colour reading varies with lighting and the person doing it",
+      "Cannot detect PFAS, VOCs or most pesticides"
+    ],
+    "bottomLine": "Buy it to set a softener, check a filter is working or get a rough picture of hardness and chlorine. Do not use it to rule out lead.",
+    "description": "Varify's 17-in-1 kit is a typical multi-pad strip kit done well: 100 strips and two bacteria test kits in one box, according to the listing, with pads for lead, chlorine, hardness, iron, fluoride, copper, zinc and other common parameters. Dip a strip, wait, and match each pad against the colour chart. Strips are genuinely useful for the parameters that come in big numbers and change in obvious steps: hardness for sizing or setting a water softener, free chlorine for deciding whether a carbon filter is worth it, iron for orange staining and pH for corrosion. With 100 strips you can test before and after a filter and keep testing every few months to know when a cartridge is spent. Where strips fall down is anything that matters at parts-per-billion levels. The lead pad can flag a high result, but it cannot tell 3 ppb from 12 ppb reliably, and no strip can detect PFAS or volatile organic compounds at all. Use it for the plumbing questions, and a lab for the health ones."
+  },
+  {
+    "id": "hm-digital-tds-3",
+    "name": "HM Digital TDS-3 Handheld TDS Meter",
+    "category": "Digital TDS Meter, 0-9,990 ppm",
+    "badge": "Best TDS Meter",
+    "amazonUrl": "#",
+    "pros": [
+      "Rated 0 to 9,990 ppm range with 1 ppm resolution",
+      "Listed readout accuracy of plus or minus 2%",
+      "Reusable for years, ideal for checking reverse osmosis output",
+      "Includes a carrying case"
+    ],
+    "cons": [
+      "Measures only total dissolved solids, not what those solids are",
+      "A low reading does not mean the water is safe",
+      "Cannot detect lead, bacteria, PFAS or organics"
+    ],
+    "bottomLine": "The right tool for checking that a reverse osmosis system is still working. The wrong tool for deciding whether water is safe to drink.",
+    "description": "The HM Digital TDS-3 is the meter most reverse osmosis owners end up with. HM Digital rates it for 0 to 9,990 ppm with 1 ppm resolution and plus or minus 2% readout accuracy, and it ships with a carrying case. It measures electrical conductivity and converts it to an estimate of total dissolved solids, which makes it fast and repeatable for one job: comparing tap water with filtered water. A healthy RO system typically removes the large majority of dissolved solids, so if your tap reads 300 ppm and the RO faucet reads 15, the membrane is working; if the RO reading creeps toward the tap reading, it is time for a membrane. What it cannot do is tell you what the dissolved solids are. Calcium and magnesium raise the number; lead, arsenic, PFAS and bacteria barely move it, if at all. Sellers who pair a TDS meter with a filter demo are exploiting that confusion. Buy it as a maintenance tool alongside an RO system, not as a safety test."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Water Test Kit",
+          item: "https://www.thehonestreviewers.com/best-water-test-kit/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the most accurate home water test kit?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A mail-in lab test is the most accurate option, because a laboratory measures contaminants with instruments and reports numbers with detection limits. The Tap Score Advanced panel and Safe Home ULTIMATE both send samples to EPA-certified labs, per their listings. Strips and reagent kits are screening tools: good for hardness, chlorine and pH, weak for lead at low levels, and blind to PFAS."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can a water test kit detect lead?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Some can, with limits. Strips with a lead pad give a rough screen, and the Watersafe WS-425W is designed to show whether dissolved lead is above the EPA's 15 ppb action level. Neither can measure low single-digit ppb levels reliably. For an actual lead number, use a lab test such as Tap Score's Lead & Copper kit with a first-draw sample."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How often should I test well water?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The CDC recommends at least once a year for total coliform bacteria, nitrates, total dissolved solids and pH. Test again after flooding, after work on the well or pump, if anyone in the house gets a stomach illness that might be waterborne, or when taste, smell or colour changes. Test once for arsenic, uranium and other local geology-driven contaminants."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do water test strips detect bacteria?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Standard strips do not. Bacteria testing needs a culture, where water sits in a growth medium for 24 to 48 hours and changes colour if coliforms are present. Kits like the Varify 17-in-1 and Watersafe WS-425W include separate bacteria vials for this. A positive at-home bacteria result should be confirmed by a certified lab before you disinfect."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I test for PFAS at home?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not with a strip or reagent kit. PFAS limits are measured in parts per trillion, which requires laboratory mass spectrometry. Lab services such as Tap Score and Safe Home sell dedicated PFAS kits that you sample at home and mail in. Check your utility's water quality report first, because many larger systems now publish PFAS results."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a TDS meter a good water test?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Only for one job. A TDS meter estimates dissolved minerals and is excellent for confirming a reverse osmosis membrane is still working. It cannot detect lead, bacteria, PFAS or pesticides, and a high reading often just means hard, mineral-rich water. Never buy a treatment system on the strength of a TDS reading alone."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I test city water if my utility already tests it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Read your utility's Consumer Confidence Report first. It covers the water leaving the plant and in the mains, not your house plumbing. If your home was built before 1986 or has a lead service line, test your own tap for lead and copper. Otherwise, strips for chlorine and hardness are usually enough to choose a filter."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home Improvement",
+    tags: [
+      "water test kit",
+      "home water test kit",
+      "drinking water test kit",
+      "well water test kit",
+      "water testing kit for lead",
+      "lab water test"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated November 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          The Best <span class="text-[#38BDF8]">Water Test Kits</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          A strip kit tells you about hardness and chlorine in two minutes. It cannot tell you about PFAS, arsenic at the levels that matter, or lead below the action level. Here is which test answers which question, and the six kits worth buying.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#tap-score-advanced-home-water-test"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            See the Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="9.6k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#what-it-detects" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. What Each Kit Detects</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. The 6 Best, Ranked</a>
+          <a href="#strips-vs-lab" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Strips vs Lab Tests</a>
+          <a href="#lead" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Testing for Lead</a>
+          <a href="#well-water" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Well Water Testing</a>
+          <a href="#city-water" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. City Water: Read the CCR First</a>
+          <a href="#pfas" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. PFAS and What Strips Miss</a>
+          <a href="#tds" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. What a TDS Meter Tells You</a>
+          <a href="#certified-lab" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. When to Pay for a Certified Lab</a>
+          <a href="#after-results" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. What to Do With Results</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">12. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Most people buy a water test kit to answer one question: is the water from my tap safe to drink, and do I need a filter? A $20 pack of test strips can answer part of that question and a $300 lab panel can answer most of it, but the two are not interchangeable, and the cheap kit's blind spots are exactly the contaminants you most want to know about. This guide sorts the kits by what they can actually detect, so you buy the test that fits your water source and your worry, then buy a filter for the problem you found rather than the one you guessed.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="what-it-detects" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. What Each Type of Water Test Kit Can Detect
+          </h2>
+
+          <p>
+            There are four kinds of home water test, and the price gap between them reflects what they can see. Test strips are paper or plastic sticks with reagent pads that change colour. Reagent kits, like Watersafe's, use separate packets and vials for individual tests, including a bacteria culture that incubates for a day or two. Handheld meters measure one physical property, usually total dissolved solids. Mail-in lab tests ship your sample to a laboratory that uses instruments such as ICP-MS for metals and chromatography for organics, and they report numbers rather than colours.
+          </p>
+
+          <p>
+            The useful way to think about it is resolution. Hardness is measured in the tens or hundreds of parts per million, and a colour pad can tell 50 ppm from 250 ppm without trouble. Lead matters at single-digit parts per billion, a thousand times smaller. PFAS matters at parts per trillion, a million times smaller. Colour chemistry that works fine for hardness has no hope at those levels, which is why every serious health question about drinking water ends at a lab.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Contaminant</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Test strips</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Reagent kit</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">TDS meter</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Certified lab</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Hardness, pH, chlorine</td>
+                    <td class="px-4 py-4 text-gray-700">Yes</td>
+                    <td class="px-4 py-4 text-gray-700">Yes</td>
+                    <td class="px-4 py-4 text-gray-700">No</td>
+                    <td class="px-4 py-4 text-gray-700">Yes</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Iron, copper</td>
+                    <td class="px-4 py-4 text-gray-700">Yes, rough</td>
+                    <td class="px-4 py-4 text-gray-700">Yes</td>
+                    <td class="px-4 py-4 text-gray-700">No</td>
+                    <td class="px-4 py-4 text-gray-700">Yes</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Nitrate / nitrite</td>
+                    <td class="px-4 py-4 text-gray-700">Yes, near limit</td>
+                    <td class="px-4 py-4 text-gray-700">Yes</td>
+                    <td class="px-4 py-4 text-gray-700">No</td>
+                    <td class="px-4 py-4 text-gray-700">Yes</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Coliform bacteria</td>
+                    <td class="px-4 py-4 text-gray-700">Add-on vial</td>
+                    <td class="px-4 py-4 text-gray-700">Yes, 24-48 hrs</td>
+                    <td class="px-4 py-4 text-gray-700">No</td>
+                    <td class="px-4 py-4 text-gray-700">Yes</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Lead at low ppb</td>
+                    <td class="px-4 py-4 text-gray-700">Screen only</td>
+                    <td class="px-4 py-4 text-gray-700">Above action level</td>
+                    <td class="px-4 py-4 text-gray-700">No</td>
+                    <td class="px-4 py-4 text-gray-700">Yes</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Arsenic</td>
+                    <td class="px-4 py-4 text-gray-700">Screen only</td>
+                    <td class="px-4 py-4 text-gray-700">Some kits</td>
+                    <td class="px-4 py-4 text-gray-700">No</td>
+                    <td class="px-4 py-4 text-gray-700">Yes</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">PFAS</td>
+                    <td class="px-4 py-4 text-gray-700">No</td>
+                    <td class="px-4 py-4 text-gray-700">No</td>
+                    <td class="px-4 py-4 text-gray-700">No</td>
+                    <td class="px-4 py-4 text-gray-700">Specialist test</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">VOCs, most pesticides</td>
+                    <td class="px-4 py-4 text-gray-700">No</td>
+                    <td class="px-4 py-4 text-gray-700">Limited</td>
+                    <td class="px-4 py-4 text-gray-700">No</td>
+                    <td class="px-4 py-4 text-gray-700">Yes</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            Read that table before you buy anything. If your question is about hardness for a softener, chlorine taste or whether a filter cartridge is spent, strips are the right and cheapest tool. If your question is whether your water is safe for a baby, a pregnant household member or anyone drinking it every day for years, the answer comes from a lab, and the strip kit is at best a reason to order one.
+          </p>
+
+          <p>
+            A good home testing routine often uses more than one type: a lab panel once to establish a baseline, a targeted lab test for lead if the house is old, and strips or a TDS meter for routine checks on the equipment you install as a result. That combination costs less over five years than repeatedly buying cheap kits that never answer the question.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. The 6 Best Water Test Kits, Ranked
+          </h2>
+
+          <p>
+            We compared mail-in lab panels from Tap Score and Safe Home, a DIY well kit from Watersafe, a strip kit from Varify and a handheld TDS meter from HM Digital on what each can detect, whether results come from a certified lab, how many parameters are covered, and whether the kit handles well water, city water or both. Analyte counts and specs are taken from the manufacturers' listings and product pages; we have not run these kits ourselves, and we say where a claim comes from the seller. Every kit below is sold on Amazon US under the product name shown.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} reviews)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="strips-vs-lab" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Test Strips vs Reagent Kits vs Mail-In Lab Tests
+          </h2>
+
+          <p>
+            Test strips win on speed, cost per test and convenience. A 100-strip kit costs about the same as a takeaway lunch, gives results in a couple of minutes and lets you test every tap in the house, before and after a filter, as often as you like. The weaknesses are colour judgement, which varies with lighting and eyesight, and the coarse steps on the colour chart. Two people reading the same strip in different rooms can easily land one step apart on the chart.
+          </p>
+
+          <p>
+            Reagent kits like the Watersafe WS-425W are a step up for specific tests. Each parameter has its own packet or vial and instructions, and the bacteria test is a real culture: you add water to a growth medium, wait 48 hours and read a colour change. They are single-use and more fiddly than strips, but they are designed around regulatory limits, so the lead test is built to show whether dissolved lead is above or below the EPA's 15 ppb action level rather than estimating an exact number.
+          </p>
+
+          <p>
+            Mail-in lab tests give you numbers with detection limits. You fill bottles following the instructions, which usually specify a first-draw sample for lead, ship them back in the prepaid box and get a report in about a week or two. The cost is higher, from tens of dollars for a lead test to several hundred for a 200-parameter panel, and the sampling instructions matter: a sample that sat too long in a warm truck, or was taken after running the tap for five minutes, gives a misleading answer.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Which one to buy first</h3>
+
+          <p>
+            If you have never tested your water, buy a lab test first, not strips. One good lab result tells you which parameters to keep an eye on, and then strips or a meter become useful for tracking those specific numbers. Buying strips first usually ends with a vague result on the lead pad, a worried household and a lab test anyway, so you pay twice.
+          </p>
+
+          <p>
+            The exception is a pure plumbing question. If you only want to know how hard your water is so you can set a softener's regeneration, a strip kit gives you the grains-per-gallon figure you need in two minutes, and a lab test would be a waste of money. Our <a href="/best-water-softener-system/">water softener guide</a> explains how to turn that hardness figure into a softener size.
+          </p>
+        </div>
+
+        <div id="lead" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Testing for Lead: Why Strips Are Not Enough
+          </h2>
+
+          <p>
+            Lead gets into drinking water almost entirely from plumbing, not from the source. Lead service lines, lead-based solder on copper pipe joints and older brass fixtures release it as water sits in the pipes. That has two consequences for testing. First, the level varies from tap to tap and from hour to hour. Second, the sample that matters is the first water out of the tap after it has sat unused for at least six hours, which is how labs and utilities sample for it.
+          </p>
+
+          <p>
+            The EPA's long-standing action level for lead in public water systems is 15 parts per billion, and its 2024 Lead and Copper Rule Improvements lower that to 10 ppb for utilities over the next few years. The EPA's health goal for lead is zero, because there is no known safe level for children. That is the problem with strip testing: the decisions you care about sit between 0 and 15 ppb, and a colour pad cannot place a result inside that range with any confidence.
+          </p>
+
+          <p>
+            Use the strip's lead pad, if it has one, as a smoke alarm. A clear positive on a strip is a reason to stop drinking from that tap and order a lab test immediately. A negative strip result is not reassurance. The Tap Score Lead & Copper kit or a state-certified local lab is the right test for any house built before 1986, when the federal ban on lead pipe and solder took effect, and for any home with a known lead service line.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE RULE</p>
+            <p class="text-xl font-bold text-white mb-3">Sample lead first thing in the morning, before anyone runs the tap.</p>
+            <p class="text-gray-300 leading-relaxed m-0">Lead builds up as water sits in the pipes overnight. A sample taken after showers and coffee will read lower than what you actually drink first thing, which is the number the lab is trying to catch.</p>
+          </div>
+
+          <p>
+            If the lab result is elevated, the fixes in order of cost are: run the cold tap for a minute or two before drinking until you have a long-term fix, use only cold water for drinking and cooking, fit a filter certified to NSF/ANSI Standard 53 for lead reduction at the kitchen tap, and contact your utility about service line replacement. Our guides to the <a href="/best-faucet-water-filter/">best faucet water filters</a> and <a href="/best-under-sink-water-filter/">under-sink water filters</a> both flag which models carry lead certification.
+          </p>
+        </div>
+
+        <div id="well-water" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Well Water Testing: What and How Often
+          </h2>
+
+          <p>
+            Private wells are not covered by the federal Safe Drinking Water Act. Nobody tests your well for you, and nobody tells you when it changes. The CDC recommends that well owners test at least once a year for total coliform bacteria, nitrates, total dissolved solids and pH, and more often after flooding, after work on the well or pump, or when the water's taste, smell or colour changes.
+          </p>
+
+          <p>
+            Bacteria is the first priority because it is the most immediate health risk. A coliform test is a presence or absence test: coliforms themselves are usually harmless, but their presence means surface water or soil is getting into the well, and that path can carry pathogens such as E. coli. A positive result means confirm it with a certified lab, then shock-chlorinate the well and retest, and look for the cause: a cracked cap, poor grading around the casing or a nearby septic problem.
+          </p>
+
+          <p>
+            Nitrate is the second priority, especially in farm country. The EPA limit is 10 mg/L as nitrogen, and high levels are a specific risk for infants fed formula made with well water. Nitrate comes from fertiliser, manure and septic systems, it rises after heavy spring rain, and it is not removed by boiling. Strip and reagent kits read nitrate reasonably well near the 10 ppm limit, which makes them a fair screen between lab tests.
+          </p>
+
+          <p>
+            Beyond those, test once for arsenic, uranium, manganese and radon in water if your region is known for them, which your state geological survey or health department will tell you. These are geology problems, they do not usually change year to year, and only a lab can measure them at the levels that matter. A rotten-egg smell points to hydrogen sulphide or sulphate-reducing bacteria; our guide on <a href="/why-does-my-water-smell-like-rotten-eggs/">why water smells like rotten eggs</a> covers that diagnosis.
+          </p>
+
+          <p>
+            A practical schedule for a well: a broad lab panel like the Tap Score Advanced when you buy the house or drill the well, then a coliform and nitrate test every year, either through your county health department, which often offers well tests at low cost, or with a reagent kit like the Watersafe WS-425W, and a fresh lab test after any flood or major repair.
+          </p>
+        </div>
+
+        <div id="city-water" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. City Water: Read the Consumer Confidence Report First
+          </h2>
+
+          <p>
+            If you are on municipal water, you already have free test results. Every community water system in the US must publish an annual Consumer Confidence Report, usually by July 1, listing the regulated contaminants it detected, the levels found and how those compare with federal limits. Search your utility's name plus "consumer confidence report" or "water quality report" and you will usually find it as a PDF.
+          </p>
+
+          <p>
+            The CCR tells you about water as it leaves the treatment plant and at sampled points in the distribution system. It cannot tell you about the pipes between the street and your tap, which is exactly where lead and copper come from. It also reports averages and ranges across the system, so a single high reading in your neighbourhood can be hidden in a range.
+          </p>
+
+          <p>
+            So for city water, a sensible test plan is narrow: read the CCR, then test your own tap for lead and copper if the house is older, and use strips for chlorine and hardness if you are choosing a filter for taste or scale. A 200-parameter panel on treated city water mostly confirms what the utility already measured. If your CCR shows a contaminant near its limit, or reports a violation, a targeted lab test for that specific contaminant is worth more than a broad one.
+          </p>
+
+          <p>
+            Chlorine and chloramine are the most common taste complaint on city water, and a strip kit shows you how much free chlorine is there. Chloramine is more stable and harder to remove than chlorine, so it is worth knowing which your utility uses before buying a carbon filter. The CCR usually says which disinfectant is used, and the <a href="/best-countertop-water-filter/">best countertop water filters</a> and <a href="/best-water-filter-pitcher/">water filter pitchers</a> differ a lot in how well they handle it.
+          </p>
+        </div>
+
+        <div id="pfas" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. PFAS and the Other Things Strips Cannot See
+          </h2>
+
+          <p>
+            PFAS, the so-called forever chemicals, are the clearest example of a contaminant no home kit can detect. The EPA set enforceable limits of 4 parts per trillion for PFOA and PFOS in 2024. A part per trillion is roughly one drop in twenty Olympic swimming pools. Detecting that requires liquid chromatography with mass spectrometry in a laboratory using an EPA method such as 533 or 537.1, and careful sampling, because PFAS are in many household products and can contaminate a sample.
+          </p>
+
+          <p>
+            Any strip or home kit that claims to detect PFAS at health-relevant levels should be treated with suspicion. Tap Score, Safe Home and other lab services sell dedicated PFAS tests, and they are among the most expensive tests in their catalogues because the analysis is expensive. Check whether your utility already tests for PFAS, since many larger systems now publish those results, before paying for one yourself.
+          </p>
+
+          <p>
+            The same logic applies to volatile organic compounds such as benzene and solvents, to most pesticides and herbicides, and to radiological contaminants such as uranium and radium. These are lab-only tests. They are worth paying for when there is a reason to suspect them: a well near a petrol station, a landfill, an industrial site, intensive agriculture or a known regional problem. They are not worth paying for out of general anxiety on treated city water.
+          </p>
+
+          <p>
+            The practical takeaway is that a cheap kit coming back clean on every pad tells you nothing about any of these contaminants. That is not a flaw in the kit; it is outside what colour chemistry can do. Buy the cheap kit for what it can measure, and know what it cannot.
+          </p>
+        </div>
+
+        <div id="tds" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. What a TDS Meter Tells You, and What It Does Not
+          </h2>
+
+          <p>
+            Total dissolved solids meters are cheap, quick and widely misused. A TDS meter measures how well water conducts electricity and converts that into an estimate of dissolved mineral content in parts per million. Calcium, magnesium, sodium, bicarbonate and chloride make up most of that number in typical tap water. The EPA's secondary, non-enforceable guideline for TDS is 500 mg/L, which is about taste and scale, not health.
+          </p>
+
+          <p>
+            Where a meter earns its place is reverse osmosis maintenance. An RO membrane removes most dissolved solids, so comparing tap water with RO water gives you a quick reading on whether the membrane is still doing its job. Measure both when the system is new, write the numbers down, and test every month or two. When the percentage removed drops noticeably, the membrane or pre-filters are due. Our <a href="/best-reverse-osmosis-water-filter-pitcher/">reverse osmosis pitcher guide</a> uses the same approach.
+          </p>
+
+          <p>
+            Where it fails is safety. Lead at 50 ppb, which is more than three times the EPA action level, is 0.05 ppm and does not move a TDS reading meaningfully. Bacteria, PFAS, pesticides and most organics barely register. Meanwhile, perfectly safe hard water from limestone can read 400 ppm. A high reading does not mean danger, and a low one does not mean safety.
+          </p>
+
+          <p>
+            Be particularly wary of in-home sales demonstrations that use a TDS meter, or an electrolysis device that turns water brown, to show that your water is contaminated. Both effects come mainly from harmless minerals and the device itself. If someone is selling you a treatment system based on a TDS reading, ask for a certified lab result instead.
+          </p>
+        </div>
+
+        <div id="certified-lab" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. When to Pay for a Certified Lab
+          </h2>
+
+          <p>
+            A certified lab test is worth the money in six situations: you are buying a house with a private well, there is a baby or pregnant person in the household, the house was built before 1986 and you have never tested for lead, your well has flooded or had major work, a strip or reagent kit returned a positive for bacteria, nitrate or lead, or you are about to spend serious money on a whole-house treatment system and need to size it correctly.
+          </p>
+
+          <p>
+            You have two routes. Consumer services such as Tap Score and Safe Home sell kits on Amazon, handle the shipping and translate the results into plain language with treatment advice. Your state or county health department can point you to state-certified drinking water labs, which are sometimes cheaper, sometimes free for basic well tests, and are often what a mortgage lender or local regulation requires. Before choosing a consumer kit, confirm the lab it uses is certified for the specific analytes you need.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Your situation</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Test to buy</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Why</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">City water, old house</td>
+                    <td class="px-4 py-4 text-gray-700">Lead & copper lab test</td>
+                    <td class="px-4 py-4 text-gray-700">Lead comes from your pipes, not the plant</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">City water, taste or scale</td>
+                    <td class="px-4 py-4 text-gray-700">Strips</td>
+                    <td class="px-4 py-4 text-gray-700">Chlorine and hardness only</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Private well, first test</td>
+                    <td class="px-4 py-4 text-gray-700">Broad lab panel plus bacteria</td>
+                    <td class="px-4 py-4 text-gray-700">Establishes your baseline</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Private well, annual</td>
+                    <td class="px-4 py-4 text-gray-700">Coliform and nitrate</td>
+                    <td class="px-4 py-4 text-gray-700">CDC minimum for wells</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Near industry or airport</td>
+                    <td class="px-4 py-4 text-gray-700">PFAS lab test</td>
+                    <td class="px-4 py-4 text-gray-700">Only a lab can see ppt levels</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">RO system maintenance</td>
+                    <td class="px-4 py-4 text-gray-700">TDS meter</td>
+                    <td class="px-4 py-4 text-gray-700">Tracks membrane performance</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            Sampling technique decides whether a lab result is useful. Follow the kit's instructions on the letter: which tap, whether to run it first, whether to remove the aerator, how to keep the sample cool and when to ship. Most kits ask you to sample early in the week so the bottles do not sit in a depot over a weekend. A rushed or wrong sample wastes the most expensive part of the process.
+          </p>
+
+          <p>
+            Finally, test the water you actually drink. If you already have a filter, test the unfiltered tap to understand the source and the filtered tap to confirm the filter works. Testing only the filtered water hides the problem the day the cartridge is exhausted.
+          </p>
+        </div>
+
+        <div id="after-results" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            10. What to Do With Your Results
+          </h2>
+
+          <p>
+            The point of testing is to buy the right treatment, or none. Match each finding to a fix: lead calls for a filter certified to NSF/ANSI 53 for lead at the drinking tap; hardness calls for a softener or a scale-reduction system; chlorine taste calls for activated carbon; nitrate and high TDS call for reverse osmosis; coliform bacteria calls for fixing the well and possibly UV disinfection. Our <a href="/best-water-filtration-system-for-home/">water filtration system guide</a> covers the whole-house options in detail.
+          </p>
+
+          <p>
+            Look at the certification, not the marketing. A filter that claims to remove lead should list NSF/ANSI 53 for lead reduction, and one that claims to reduce PFAS should list NSF/ANSI 53 or 58 for PFOA and PFOS. Many filters reduce chlorine taste and nothing else, which is fine if that is your only problem.
+          </p>
+
+          <p>
+            Then retest. Test again after installing any treatment to prove it works on your water, and set a schedule: strips or a TDS meter monthly or quarterly for equipment checks, an annual bacteria and nitrate test for a well, and a lead retest after any plumbing work. Keep the lab reports; they are useful when selling the house and when comparing results over the years.
+          </p>
+
+          <p>
+            If nothing was found, that is a result too. Plenty of households test, find their water is fine, and save the cost of a filter they did not need. That is the best outcome a water test can give you.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Trusting a Negative Lead Strip</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Strip lead pads cannot reliably separate 2 ppb from 12 ppb, and the decisions that matter sit in that range. Treat a positive as a reason to order a lab test and a negative as no information. For any house built before 1986, a lab lead test is the only answer that counts.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Sampling Lead After Running the Tap</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Lead accumulates while water sits in household plumbing, so a sample taken mid-afternoon after the tap has run all day understates what you drink first thing in the morning. Take a first-draw sample after at least six hours of no use, exactly as the kit instructions specify.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using a TDS Meter as a Safety Test</h3>
+              <p class="text-gray-700 text-sm m-0">
+                TDS meters measure dissolved minerals. Lead, bacteria, PFAS and pesticides barely change the reading, and safe hard water can read high. Use a meter to check a reverse osmosis membrane, never to decide whether water is safe to drink or to justify buying a system.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping the Annual Well Test</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Nobody regulates a private well, and nitrate and bacteria can change after heavy rain, flooding or nearby construction. The CDC recommends testing at least once a year for coliform bacteria, nitrates, TDS and pH, plus after any flood or repair. A clean result five years ago is not a clean result today.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Paying for a 200-Parameter Panel on City Water</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Your utility already monitors regulated contaminants and publishes the results in its Consumer Confidence Report. On treated city water, a targeted lead and copper test of your own tap usually tells you more for far less money. Save the broad panels for wells and special risks.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            12. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the most accurate home water test kit?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A mail-in lab test is the most accurate option, because a laboratory measures contaminants with instruments and reports numbers with detection limits. The Tap Score Advanced panel and Safe Home ULTIMATE both send samples to EPA-certified labs, per their listings. Strips and reagent kits are screening tools: good for hardness, chlorine and pH, weak for lead at low levels, and blind to PFAS.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can a water test kit detect lead?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Some can, with limits. Strips with a lead pad give a rough screen, and the Watersafe WS-425W is designed to show whether dissolved lead is above the EPA's 15 ppb action level. Neither can measure low single-digit ppb levels reliably. For an actual lead number, use a lab test such as Tap Score's Lead & Copper kit with a first-draw sample.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How often should I test well water?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                The CDC recommends at least once a year for total coliform bacteria, nitrates, total dissolved solids and pH. Test again after flooding, after work on the well or pump, if anyone in the house gets a stomach illness that might be waterborne, or when taste, smell or colour changes. Test once for arsenic, uranium and other local geology-driven contaminants.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do water test strips detect bacteria?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Standard strips do not. Bacteria testing needs a culture, where water sits in a growth medium for 24 to 48 hours and changes colour if coliforms are present. Kits like the Varify 17-in-1 and Watersafe WS-425W include separate bacteria vials for this. A positive at-home bacteria result should be confirmed by a certified lab before you disinfect.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I test for PFAS at home?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Not with a strip or reagent kit. PFAS limits are measured in parts per trillion, which requires laboratory mass spectrometry. Lab services such as Tap Score and Safe Home sell dedicated PFAS kits that you sample at home and mail in. Check your utility's water quality report first, because many larger systems now publish PFAS results.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a TDS meter a good water test?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Only for one job. A TDS meter estimates dissolved minerals and is excellent for confirming a reverse osmosis membrane is still working. It cannot detect lead, bacteria, PFAS or pesticides, and a high reading often just means hard, mineral-rich water. Never buy a treatment system on the strength of a TDS reading alone.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Should I test city water if my utility already tests it?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Read your utility's Consumer Confidence Report first. It covers the water leaving the plant and in the mains, not your house plumbing. If your home was built before 1986 or has a lead service line, test your own tap for lead and copper. Otherwise, strips for chlorine and hardness are usually enough to choose a filter.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Water Quality Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-water-filtration-system-for-home/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Water Filtration Systems</h3>
+              <p class="text-gray-500 text-sm mt-2">Whole-house and point-of-use systems matched to what your test found.</p>
+            </a>
+            <a href="/best-water-softener-system/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Hard Water</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Water Softeners</h3>
+              <p class="text-gray-500 text-sm mt-2">Turn a hardness reading into the right softener size.</p>
+            </a>
+            <a href="/best-faucet-water-filter/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Lead Results</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Faucet Water Filters</h3>
+              <p class="text-gray-500 text-sm mt-2">Tap-mounted filters, including models certified for lead.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Start with the question, not the kit. For lead in an older home, buy the Tap Score Lead & Copper lab test and take a first-draw sample. For a private well or a first-ever baseline, the Tap Score Advanced panel covers the contaminants that drive treatment choices, and the Watersafe WS-425W is a good annual screen for bacteria and nitrate in between. The Safe Home ULTIMATE is for wells and homes with a specific industrial or agricultural risk.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Keep strips and a TDS meter for what they do well: hardness, chlorine, pH and checking that the filter you bought is still working. They are maintenance tools. The health questions belong to a certified lab, and the answer it gives you is what tells you which filter to buy, or that you do not need one.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Improvement" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
