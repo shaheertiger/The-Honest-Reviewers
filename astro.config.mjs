@@ -47,6 +47,17 @@ function lastmodFor(slug) {
 // Buyer's guides that target high-volume search terms. They get a higher
 // sitemap priority than the 0.5 default so crawlers reach them sooner.
 const priorityGuides = new Set([
+  // November 2026: Amazon buyer's guide batch 5.
+  'best-brad-nailer',
+  'best-carbon-monoxide-detector',
+  'best-concrete-degreaser',
+  'best-cordless-tool-combo-kit',
+  'best-countertop-water-filter',
+  'best-emergency-radio',
+  'best-faucet-water-filter',
+  'best-oil-absorbent',
+  'best-solar-lantern',
+  'best-water-test-kit',
   // November 2026: dehumidifier buyer's guide batch (Amazon-focused).
   'best-commercial-dehumidifier',
   'best-dehumidifier-for-water-damage',
