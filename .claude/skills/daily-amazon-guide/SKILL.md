@@ -97,7 +97,17 @@ Fix until both pass. Never weaken a validator. If the guide cannot reach 2,500 h
 words, pick a different product category.
 
 Then `npm run images:status`; if credentials exist run `npm run images:fetch:all` and
-`npm run images:review` and drop low-confidence wrong matches. If not, skip and say so.
+`npm run images:review`. That fetch touches products across the **whole site**, so:
+
+- Commit matches for **today's products only**. Restore everything else
+  (`git checkout -- src/data/product-asins.json src/data/product-images.json scripts/product-image-asins.json scripts/all-products-match-report.json`)
+  and re-add just today's ids to the two `src/data` files.
+- Check each of today's matched Amazon titles names the **exact model** in the guide.
+  The matcher happily returns a sibling model (TT20 for TC20, HL 5-X for HL-X), a
+  newer variant (EDC27 UHi for EDC27) or an accessory (a charging cable). Drop any
+  of those; a tagged search for the right product beats a confident wrong link.
+
+If there are no credentials, skip it and say so.
 
 ## 6. Record and publish
 
