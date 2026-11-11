@@ -1,0 +1,942 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Solar Power Banks",
+    "url": "/best-solar-power-bank/"
+  },
+  {
+    "title": "Best Battery Powered Lanterns",
+    "url": "/best-battery-powered-lantern/"
+  },
+  {
+    "title": "Best Solar Lanterns",
+    "url": "/best-solar-lantern/"
+  },
+  {
+    "title": "Best Emergency Radios",
+    "url": "/best-emergency-radio/"
+  },
+  {
+    "title": "Best Portable Chargers for Power Outages",
+    "url": "/best-portable-charger-for-power-outages/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-11-11", modified: "2026-11-11" });
+const title = "6 Best Rechargeable Flashlights: Battery Size, Real Runtime and USB-C Charging";
+const description =
+  "The best rechargeable flashlights for power outages and everyday carry, compared on battery size, USB-C charging, sustained output and replaceable cells.";
+
+const PRODUCTS = [
+  {
+    "id": "fenix-pd36r-v2",
+    "name": "Fenix PD36R V2.0 Rechargeable Flashlight",
+    "category": "1,700 Lumens, 5,000 mAh 21700, USB-C, IP68",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "pros": [
+      "Rated at 1,700 lumens on turbo with a 5,000 mAh 21700 cell included",
+      "USB-C charging port built into the body",
+      "IP68 rated and impact rated by Fenix at 2 meters",
+      "Removable, standard-size battery you can replace or swap"
+    ],
+    "cons": [
+      "Mode cycling takes a few uses to learn",
+      "Turbo steps down after a short burst, like every light this size",
+      "Not the brightest light on this list"
+    ],
+    "bottomLine": "The one to buy if you want a single rechargeable flashlight that does outages, the car and the garage without fuss.",
+    "description": "The PD36R V2.0 is the light we would hand to someone who wants one rechargeable flashlight and does not want to think about it again. Fenix rates it at 1,700 lumens on turbo and ships it with a 5,000 mAh 21700 lithium-ion cell, which is about 18 watt-hours of stored energy and the largest battery class you will find in a pocketable flashlight. It charges through a USB-C port on the body, so the cable that charges your phone charges this. Fenix lists IP68 water resistance and a 2-meter impact rating. The interface uses a tail switch for on and off and a side button for brightness, which is easy once learned. Its most important feature for outage use is boring: the cell is a standard 21700, so when it wears out in a few years you replace a battery, not a flashlight."
+  },
+  {
+    "id": "olight-warrior-3s",
+    "name": "Olight Warrior 3S Rechargeable Tactical Flashlight",
+    "category": "2,300 Lumens, 5,000 mAh 21700, Magnetic Charging",
+    "badge": "Best Tactical / EDC",
+    "amazonUrl": "#",
+    "pros": [
+      "Rated at 2,300 lumens with a 5,000 mAh 21700 cell",
+      "Proximity sensor dims turbo when the head is blocked",
+      "Dual switch: tail for tactical use, side for everyday modes",
+      "Magnetic tail charging is quick to connect in the dark"
+    ],
+    "cons": [
+      "Magnetic charging cable is proprietary; lose it and you cannot charge",
+      "Priced well above the Fenix",
+      "Tactical styling is more than many households need"
+    ],
+    "bottomLine": "The brightest compact 21700 light here and genuinely well made, as long as you keep track of the charging cable.",
+    "description": "The Warrior 3S is Olight's flagship tactical light and the brightest compact 21700 flashlight on this list. Olight rates it at 2,300 lumens on turbo and pairs it with a 5,000 mAh cell, the same battery class as the Fenix. Two details set it apart. A proximity sensor in the head drops the output when something blocks the beam, which stops the light from cooking a pocket lining or a table. And it charges from a magnetic cable that snaps onto the tail cap, which is fast and works by feel in a dark room. That cable is also the main downside: it is proprietary, so a lost cable means a light you cannot charge until a replacement arrives. Buy a second cable on day one and keep it in the outage bin, and the Warrior 3S is an excellent light."
+  },
+  {
+    "id": "thrunite-tc20-v2",
+    "name": "ThruNite TC20 V2 Rechargeable Flashlight",
+    "category": "4,068 Lumens (Listed), 26650 Battery, USB-C",
+    "badge": "Most Light for the Money",
+    "amazonUrl": "#",
+    "pros": [
+      "ThruNite lists 4,068 lumens on turbo, by far the brightest here",
+      "Large 26650 cell included",
+      "USB-C charging",
+      "Usually priced well below the premium brands"
+    ],
+    "cons": [
+      "Bigger and heavier than the 21700 lights; not a pocket light",
+      "Turbo heats up and steps down quickly",
+      "Peak lumens are a burst figure, not a sustained one"
+    ],
+    "bottomLine": "The pick for lighting a yard, a driveway or a breaker panel across a dark basement, at a fair price.",
+    "description": "The TC20 V2 is about raw output for the money. ThruNite lists 4,068 lumens on turbo, more than double the Olight, from a large 26650 lithium-ion cell. That is enough flood to light a backyard, check a fence line or walk a dark driveway after a storm. It charges over USB-C, and it is usually priced well below the Fenix and Olight. The honest caveats are physics: a light this bright in a body this size gets hot, so turbo steps down within a short time, and the sustained output you live with is a fraction of the headline number. It is also too big for a pocket. Treat it as the household's big light, kept on a shelf by the door, and pair it with something smaller for carrying."
+  },
+  {
+    "id": "streamlight-protac-hl-x-usb",
+    "name": "Streamlight ProTac HL-X USB Rechargeable Flashlight",
+    "category": "1,000 Lumens, 18650 or 2x CR123A, USB Rechargeable",
+    "badge": "Best for Outage Backup",
+    "amazonUrl": "#",
+    "pros": [
+      "Runs on its rechargeable 18650 or on two CR123A lithium cells",
+      "CR123A cells store for years, so a dead battery is never the end",
+      "Rated at 1,000 lumens",
+      "Simple tail-switch programs, made by a long-standing US flashlight brand"
+    ],
+    "cons": [
+      "Lower peak output than the 21700 lights",
+      "18650 battery holds less than a 21700",
+      "Charging port is on the battery, not the light, on many versions"
+    ],
+    "bottomLine": "The light to buy if the outage that worries you is the long one, because it keeps running on stored lithium primaries when recharging is not an option.",
+    "description": "The ProTac HL-X USB earns its place for one reason: it runs on more than one kind of battery. Streamlight ships it with a rechargeable 18650 cell, and it also accepts two CR123A lithium primary cells. That matters in a long outage. Rechargeable lights are only as good as your ability to recharge them, and if the power stays out for days and your power bank is empty, a pack of CR123A cells in a drawer gives you a working light anyway. Those cells also have a long shelf life, which is why they are common in emergency kits. Streamlight rates it at 1,000 lumens, less than the 21700 lights here but plenty for indoor use. If you only buy one flashlight for storm season, this is the safest bet."
+  },
+  {
+    "id": "nitecore-edc27",
+    "name": "Nitecore EDC27 Rechargeable EDC Flashlight",
+    "category": "3,000 Lumens, Built-In Battery, USB-C, Flat Body",
+    "badge": "Best Pocket Light",
+    "amazonUrl": "#",
+    "pros": [
+      "Rated at 3,000 lumens burst from a flat, pocket-friendly body",
+      "USB-C charging",
+      "OLED display shows remaining battery",
+      "Very thin, rides in a pocket like a pen"
+    ],
+    "cons": [
+      "Built-in battery is not user-replaceable",
+      "Battery is much smaller than a 21700, so long-burn runtime is shorter",
+      "Turbo is a brief burst"
+    ],
+    "bottomLine": "The most convenient light to actually carry every day, but not the one to rely on for a multi-day outage.",
+    "description": "The EDC27 is designed for carrying, not for a drawer. Nitecore rates it at 3,000 lumens in a burst, from a flat, slim body that sits in a pocket like a pen. It charges over USB-C, and a small display shows remaining battery as a number, which takes the guessing out of whether it will last the night. The trade-off is the battery. It is built in, so when it ages out you replace the light, and it holds much less energy than a 21700 cell, so long burns on medium run out sooner than on the Fenix or Olight. For outages that makes it the second light, the one in your pocket when the power goes out, while a bigger light sits in the kit."
+  },
+  {
+    "id": "anker-bolder-lc40",
+    "name": "Anker Bolder LC40 Rechargeable Flashlight",
+    "category": "400 Lumens, Rechargeable, IPX5, Budget",
+    "badge": "Best Budget",
+    "amazonUrl": "#",
+    "pros": [
+      "Low price makes it easy to put one in every room",
+      "Rechargeable, with a zoomable head",
+      "IPX5 water resistance",
+      "Simple single-button operation"
+    ],
+    "cons": [
+      "Rated at only 400 lumens",
+      "Built-in battery and modest capacity",
+      "Build quality is fine, not premium"
+    ],
+    "bottomLine": "The cheap way to put a rechargeable light in the kitchen, bedroom and car so nobody is hunting in the dark.",
+    "description": "The Bolder LC40 is here for the household that needs more than one flashlight. Anker rates it at 400 lumens with a zoomable head, which is enough to walk a hallway, find the breaker panel or read a meter. It is rechargeable and rated IPX5 against rain. It is not bright, its battery is modest, and nobody will mistake it for a Fenix. But the most common outage failure is not a dim flashlight, it is no flashlight where you need one. At its price you can put one in the kitchen drawer, one by the bed and one in the car, and keep a better light in the main kit."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Rechargeable Flashlights",
+          item: "https://www.thehonestreviewers.com/best-rechargeable-flashlight/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best rechargeable flashlight overall?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most households the Fenix PD36R V2.0 is the best balance. It pairs a 5,000 mAh 21700 cell with USB-C charging, IP68 water resistance and a battery you can replace when it ages. It is bright enough for every indoor and outdoor job and simple enough for anyone in the house to use."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are rechargeable flashlights good for power outages?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, as long as you can recharge them. A large 21700 light runs for hours at medium output, and a power bank or power station can refill it several times. For long outages, a light that also takes CR123A primary cells, like the Streamlight ProTac HL-X USB, keeps working when recharging is not possible."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does a rechargeable flashlight battery last?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Runtime per charge depends on the mode; check the maker's runtime chart for medium output, not turbo. Over the long term, a lithium-ion cell typically lasts several hundred charge cycles before capacity drops noticeably. A light with a removable cell can be renewed with a new battery; a built-in battery means replacing the light."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is 1,000 lumens bright enough?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For nearly everything a household does, yes. Walking around indoors needs 50 to 150 lumens and working at a panel or cooking needs a few hundred. A thousand lumens lights a yard well. Higher figures are useful outdoors at distance, but they are short bursts and drain the battery quickly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between an 18650 and a 21700 battery?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They are both lithium-ion cells named for their size. A 21700 is wider and longer, so it holds more energy, typically 4,000 to 5,000 mAh against 3,000 to 3,500 for an 18650. In a flashlight that means longer runtime at the same brightness, at the cost of a slightly larger body."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I charge a rechargeable flashlight from a power bank?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Any light with a USB-C port charges from a power bank, a car USB outlet or a portable power station, which is exactly how you keep it running during an outage. Lights with a proprietary magnetic cable can do the same, but only with that specific cable, so keep a spare."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I keep spare batteries for a rechargeable flashlight?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For lights with removable cells, a charged spare is the simplest way to double your runtime without charging. Store spares in a plastic case away from keys and coins. If your light also accepts CR123A primaries, a sealed pack of those is the best long-term emergency backup because they store for years."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Generators & Backup Power",
+    tags: [
+      "rechargeable flashlight",
+      "best rechargeable flashlight",
+      "usb c flashlight",
+      "flashlight for power outage",
+      "21700 flashlight",
+      "tactical flashlight"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Buyer's Guide
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best <span class="text-[#38BDF8]">Rechargeable Flashlights</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Lumens sell flashlights. Battery size, USB-C charging and a replaceable cell decide whether yours works on the third night of an outage.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#fenix-pd36r-v2"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Jump to the Rankings
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="14.8k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#what-matters" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. What Actually Matters</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. The 6 Best, Ranked</a>
+          <a href="#battery-sizes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Battery Sizes Explained</a>
+          <a href="#lumens-vs-runtime" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Lumens vs Runtime</a>
+          <a href="#charging" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Charging in an Outage</a>
+          <a href="#power-outage" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. An Outage Flashlight Kit</a>
+          <a href="#tactical-vs-everyday" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Tactical vs Everyday</a>
+          <a href="#brightness-needs" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. How Bright Is Enough</a>
+          <a href="#battery-care" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Battery Care and Safety</a>
+          <a href="#verdict" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Which to Buy</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">12. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          The brightest flashlight is rarely the best one. The light worth owning has a big removable battery, charges from the same USB-C cable as your phone, and still works when the power has been out for three days.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="what-matters" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. What Actually Matters in a Rechargeable Flashlight
+          </h2>
+
+          <p>
+            Most flashlight listings lead with lumens, and most buyers compare on lumens, and that is the wrong place to start. Lumens describe how much light comes out at the very top setting, for a short time, measured with a fully charged cell. The number that decides whether you can see through a four-hour outage is battery capacity, and the number that decides whether the light still works next year is whether that battery can be replaced. A 1,700-lumen light with a large, removable cell is a better household tool than a 4,000-lumen light with a small one built in.
+          </p>
+
+          <p>
+            The second thing that matters is how it charges. A rechargeable flashlight with a USB-C port charges from the same cable, wall plug, power bank and car outlet as your phone. A light with a proprietary magnetic cable charges only from that cable. In normal life that is a small inconvenience. In an outage, when you are charging everything from a <a href="/best-solar-power-bank/">solar power bank</a> or a power station, it is the difference between topping up the light and leaving it dead.
+          </p>
+
+          <p>
+            Third is the interface. A flashlight you use once a month should turn on with one obvious press and give you a sensible medium output, not strobe. Most good lights now remember the last mode used and keep strobe behind a deliberate double or triple click. Check this before you buy, because the people grabbing the light in a dark house will not have read the manual.
+          </p>
+
+          <p>
+            Last is water and drop resistance. An IPX4 rating survives rain; IP68 survives a dunk. For a light that lives in a car, a garage or a storm kit, aim for IPX5 or better and a stated impact rating. Every light on this list meets that bar, which is why the rest of this guide is about batteries, charging and runtime.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. The 6 Best Rechargeable Flashlights, Ranked
+          </h2>
+
+          <p>
+            Every light below is a current model sold on Amazon. Lumen figures are the manufacturer's rated or listed peak output; battery figures are what ships in the box. We ranked them for household and outage use first, everyday carry second.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="battery-sizes" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Battery Sizes Explained: 18650, 21700, 26650 and Built-In
+          </h2>
+
+          <p>
+            Rechargeable flashlights mostly run on cylindrical lithium-ion cells named for their size: an 18650 is 18 mm wide and 65 mm long, a 21700 is 21 by 70, and a 26650 is 26 by 65. Bigger cells hold more energy. A typical 18650 holds around 3,000 to 3,500 mAh, a 21700 around 4,000 to 5,000 mAh, and a 26650 in a similar range to a large 21700 but in a fatter body. At a nominal 3.6 volts, a 5,000 mAh 21700 stores about 18 watt-hours, which is the same energy as a small phone power bank.
+          </p>
+
+          <p>
+            That stored energy is what you are really buying. On a medium setting of a couple of hundred lumens, a 21700 light can run for many hours; the manufacturer's runtime chart will give the figure for each mode. On turbo, the same battery empties in a fraction of the time, which is why every light on this list steps down from turbo on its own. Read the runtime chart before the lumen headline: it tells you how long the light lasts at the brightness you will actually use.
+          </p>
+
+          <p>
+            Built-in batteries are the trade-off on slim lights like the Nitecore EDC27 and budget lights like the Anker LC40. They make the light thinner, cheaper or both, but when the cell wears out after a few hundred cycles the light is done. A removable 18650 or 21700 can be replaced in seconds, and you can keep a charged spare in the kit, which doubles your runtime with no extra charging during an outage.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Cell</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Typical capacity</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Approx. energy</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Found in</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">18650</td>
+                    <td class="px-4 py-4 text-gray-700">3,000-3,500 mAh</td>
+                    <td class="px-4 py-4 text-gray-700">11-13 Wh</td>
+                    <td class="px-4 py-4 text-gray-700">Streamlight ProTac HL-X USB</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">21700</td>
+                    <td class="px-4 py-4 text-gray-700">4,000-5,000 mAh</td>
+                    <td class="px-4 py-4 text-gray-700">14-18 Wh</td>
+                    <td class="px-4 py-4 text-gray-700">Fenix PD36R V2.0, Olight Warrior 3S</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">26650</td>
+                    <td class="px-4 py-4 text-gray-700">4,000-5,000 mAh</td>
+                    <td class="px-4 py-4 text-gray-700">14-18 Wh</td>
+                    <td class="px-4 py-4 text-gray-700">ThruNite TC20 V2</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Built-in</td>
+                    <td class="px-4 py-4 text-gray-700">Varies, usually smaller</td>
+                    <td class="px-4 py-4 text-gray-700">Varies</td>
+                    <td class="px-4 py-4 text-gray-700">Nitecore EDC27, Anker LC40</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            One more option matters for emergencies: lights that also accept CR123A primary cells. The Streamlight ProTac HL-X USB runs on its rechargeable 18650 or on two CR123A cells. Primaries cannot be recharged, but they store for years without losing much charge, so they are the cheapest insurance against the scenario where the outage outlasts every battery you charged.
+          </p>
+        </div>
+
+        <div id="lumens-vs-runtime" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Lumens vs Runtime: Reading the Spec Sheet Honestly
+          </h2>
+
+          <p>
+            Flashlight makers rate output and runtime under the ANSI FL1 standard, and the standard is more forgiving than most buyers realise. The peak lumen figure is measured shortly after switching on with a fresh cell. Runtime is measured until output falls to 10 percent of the starting value. So a light can be listed at a big lumen number and a long runtime, but spend most of that runtime at a level far below the headline.
+          </p>
+
+          <p>
+            The practical rule is to ignore turbo when comparing lights and look at the medium mode instead. Somewhere between 100 and 400 lumens is what you use indoors to walk around, cook by and check on kids. A good 21700 light can sustain that kind of output for hours. Turbo is for looking across a yard or finding a pet outside, and you will use it for seconds at a time.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE RULE</p>
+            <p class="text-xl font-bold text-white mb-3">Buy on the medium-mode runtime, not the turbo lumens.</p>
+            <p class="text-gray-300 leading-relaxed m-0">Turbo is a burst. The setting you live with in an outage is medium, and the runtime chart for that mode is the honest comparison between lights.</p>
+          </div>
+
+          <p>
+            Heat is why turbo steps down. A small aluminium body can only shed so much heat, and LEDs and cells both suffer when hot. Every reputable maker builds in thermal or timed step-down, and a light that claims to hold 4,000 lumens for an hour from a handheld body is not telling the truth. The ThruNite TC20 V2 makes the most light here, and it too drops to a lower sustained level after a short burst.
+          </p>
+
+          <p>
+            Beam shape matters as much as lumen count. A light with a deep reflector throws a tight beam far down a road; a shallow reflector or TIR optic floods a wide area close up. For indoor outage use, flood is more useful. For a yard, a driveway or checking a roof line, throw helps. The zoom head on the Anker LC40 is a cheap way to get both from one light.
+          </p>
+        </div>
+
+        <div id="charging" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. USB-C, Magnetic Cables and Charging During an Outage
+          </h2>
+
+          <p>
+            USB-C charging is the single most practical feature to look for. Every light on this list charges over USB-C except the Olight, which uses a magnetic tail cable. USB-C means the light charges from whatever you are already using to keep phones alive: a wall charger while the power is on, then a power bank, a <a href="/best-portable-charger-for-power-outages/">portable charger</a>, a car outlet or a power station once it is off.
+          </p>
+
+          <p>
+            Charging time depends on the cell and the light's charging circuit, and a big 21700 or 26650 cell commonly takes a few hours from empty. That is fine in normal use but worth planning around in an outage. Charge lights first thing in the morning from your power bank or station, not at night when you need them, and rotate two lights so one is always charging while the other is in use.
+          </p>
+
+          <p>
+            Magnetic charging, as on the Olight Warrior 3S, has real advantages. It is quick to attach, works by feel and leaves the light sealed against water. The weakness is that the cable is proprietary. If it is lost or left in a car, there is no borrowing a phone cable instead. Anyone who buys an Olight should buy a spare charging cable and keep it with the outage supplies.
+          </p>
+
+          <p>
+            Some larger lights can also act as a small power bank, pushing charge out to a phone. It is a nice feature but a poor trade in an outage, because every watt-hour you move from the flashlight to the phone is light you no longer have. A dedicated power bank or <a href="/best-solar-lantern/">solar lantern</a> with a USB output is a better phone charger, and leaves the flashlight's battery for light.
+          </p>
+        </div>
+
+        <div id="power-outage" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Building a Flashlight Kit for a Power Outage
+          </h2>
+
+          <p>
+            A flashlight is the first thing anyone reaches for when the power goes out, and the most common failure is simple: nobody can find one, or the one they find is dead. The fix is more lights in more places, charged on a routine. A good household kit has one main light, a carry light per adult and a cheap light in every room people sleep in.
+          </p>
+
+          <p>
+            For the main light, pick something with a large removable cell and, ideally, a backup battery type. The Streamlight ProTac HL-X USB is our pick for this job because it keeps working on CR123A primaries after the rechargeable cell is flat. The Fenix PD36R V2.0 is the alternative if you want a bigger rechargeable battery and plan to recharge from a power bank or station.
+          </p>
+
+          <p>
+            Flashlights are the wrong tool for lighting a room. A flashlight pointed at a ceiling works for an hour, but for an evening of cooking, reading and playing cards you want a lantern, which spreads light evenly and runs far longer at room-level output. Pair your flashlights with a <a href="/best-battery-powered-lantern/">battery lantern</a> or two, and keep the flashlights for moving around, going outside and checking equipment.
+          </p>
+
+          <p>
+            Then plan the charging. A mid-size power bank holds several times the energy of a 21700 cell, so one power bank can recharge every flashlight in the house more than once. For outages that run for days, a power station or a <a href="/best-home-generator-for-power-outages/">home generator</a> covers recharging easily, and an <a href="/best-emergency-radio/">emergency radio</a> with a hand crank keeps you informed when everything else is flat.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Role</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">What to buy</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Why</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Main kit light</td>
+                    <td class="px-4 py-4 text-gray-700">Streamlight ProTac HL-X USB or Fenix PD36R V2.0</td>
+                    <td class="px-4 py-4 text-gray-700">Removable cell; Streamlight also runs on CR123A</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Carry light</td>
+                    <td class="px-4 py-4 text-gray-700">Nitecore EDC27 or Olight Warrior 3S</td>
+                    <td class="px-4 py-4 text-gray-700">Small enough to be on you when the lights go out</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Yard and driveway</td>
+                    <td class="px-4 py-4 text-gray-700">ThruNite TC20 V2</td>
+                    <td class="px-4 py-4 text-gray-700">Most light for checking outside after a storm</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Every bedroom and the car</td>
+                    <td class="px-4 py-4 text-gray-700">Anker Bolder LC40</td>
+                    <td class="px-4 py-4 text-gray-700">Cheap enough to own several</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="tactical-vs-everyday" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Tactical vs Everyday Flashlights
+          </h2>
+
+          <p>
+            Tactical flashlights are built around a tail switch that gives instant full output with a press, often with strobe close at hand. They are designed for police, security and weapon-mounted use, and the Olight Warrior 3S and Streamlight ProTac HL-X are both built in that tradition. Their advantage for ordinary buyers is that they are tough, simple to turn on and very predictable.
+          </p>
+
+          <p>
+            Everyday flashlights put more emphasis on low and medium modes, memory and comfort in a pocket. The Fenix PD36R V2.0 sits in between, with a tactical-style tail switch for on and off and a side switch for stepping through the modes. The Nitecore EDC27 is clearly an everyday light, built thin for a pocket, with its brightest output saved for a deliberate press.
+          </p>
+
+          <p>
+            For a household, the deciding factor is who will use the light. A tactical light that comes on at full blast is unpleasant indoors and can dazzle the person you are trying to help. A light that starts on low or remembers medium is kinder in a dark bedroom. Most modern tactical lights offer a way to change which mode the tail switch starts in, and it is worth setting that up when the light arrives.
+          </p>
+
+          <p>
+            Strobe deserves a mention because it is the most misunderstood feature. It is useful for signalling, and on some lights it is a selling point for self-defence. In everyday use it is a nuisance, and a light that drops into strobe from an accidental double press will be put in a drawer and forgotten. Lights that keep strobe behind a deliberate sequence are the better choice for families.
+          </p>
+        </div>
+
+        <div id="brightness-needs" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. How Bright Do You Actually Need?
+          </h2>
+
+          <p>
+            For walking around a dark house, 50 to 150 lumens is plenty. For cooking, working at a breaker panel or reading, 150 to 400 lumens on a reflected surface is comfortable. For looking across a yard, checking a roof line or finding a pet in the dark, 1,000 lumens and up starts to earn its keep, and only then does the headline lumen figure matter.
+          </p>
+
+          <p>
+            That is why a 400-lumen light like the Anker Bolder LC40 is genuinely useful despite looking weak on a comparison chart. Most of what people do with a flashlight in an outage needs less than 400 lumens, and a modest light that is in the right drawer is worth more than a powerful one that is in the car.
+          </p>
+
+          <p>
+            Very high output costs runtime, heat and sometimes eyesight. A 3,000 or 4,000-lumen burst indoors is painfully bright and leaves you with no night vision for a minute afterwards. Save those modes for outdoors and use the lowest setting that does the job indoors. The battery will last much longer and the people around you will thank you.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">Rated Peak Output</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <p class="text-3xl font-black text-white">4,068</p>
+                <p class="text-gray-400 text-xs mt-1">ThruNite TC20 V2 (listed)</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">3,000</p>
+                <p class="text-gray-400 text-xs mt-1">Nitecore EDC27</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-white">2,300</p>
+                <p class="text-gray-400 text-xs mt-1">Olight Warrior 3S</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">1,700</p>
+                <p class="text-gray-400 text-xs mt-1">Fenix PD36R V2.0</p>
+              </div>
+            </div>
+          </div>
+
+          <p>
+            If you are torn between two lights, choose the one with the bigger battery and the better low mode over the one with the bigger lumen figure. You will use the low and medium modes every time and the turbo mode now and then.
+          </p>
+        </div>
+
+        <div id="battery-care" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Battery Care, Storage and Safety
+          </h2>
+
+          <p>
+            Lithium-ion cells last longest when they are not stored full and hot or empty for months. For a light that lives in an emergency kit, the simplest routine is to charge it fully at the start of each storm season, use it now and then, and top it up every few months. A light that sits for a year untouched may still work, but it will not have the runtime you expect.
+          </p>
+
+          <p>
+            Removable cells need a little care. Use the cell the maker supplies or a reputable replacement of the same type, and check whether the light needs a button-top or flat-top cell, and whether it uses a cell with a built-in charging port. Cheap unbranded cells with inflated capacity claims are common and worth avoiding.
+          </p>
+
+          <p>
+            Do not carry loose lithium-ion cells in a pocket or a bag with keys or coins. A short circuit across the terminals can heat a cell fast. Spare cells should travel in a plastic case. The same caution applies to CR123A primaries, which store a lot of energy in a small package.
+          </p>
+
+          <p>
+            Heat is the enemy of every battery, so the glove box in midsummer is a poor home for a flashlight. If you keep one in the car, accept that its battery will age faster and check it more often. A budget light like the LC40 is a sensible choice for the car because it costs little to replace when the heat finally kills the cell.
+          </p>
+        </div>
+
+        <div id="verdict" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            10. Which One Should You Buy?
+          </h2>
+
+          <p>
+            If you want one rechargeable flashlight and do not want to think about it, buy the Fenix PD36R V2.0. It has the large 21700 cell, USB-C charging, a sensible interface and a battery you can replace, and it is bright enough for every household job.
+          </p>
+
+          <p>
+            If your main worry is a long outage, buy the Streamlight ProTac HL-X USB and a pack of CR123A cells. It is the one light here that keeps working when recharging is impossible, which is exactly the scenario an emergency light is for.
+          </p>
+
+          <p>
+            If you want the most light per dollar for the yard and driveway, the ThruNite TC20 V2 is the answer. If you want something you will actually carry every day, the Nitecore EDC27 is the thinnest bright light here. If you want the best-built tactical light and will keep track of its cable, the Olight Warrior 3S is excellent.
+          </p>
+
+          <p>
+            And whatever you buy as the main light, add a couple of Anker Bolder LC40s for the bedrooms and the car. Most outage stories that end with a stubbed toe or a fall on the stairs start with a flashlight that was in a different room.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying on the lumen number</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Peak lumens last seconds before the light steps down. Compare lights on battery size and the runtime at medium output, which is the mode you will use for hours. A bigger battery at 1,700 lumens beats a small one claiming 4,000 for almost every household job.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Owning one flashlight for the whole house</h3>
+              <p class="text-gray-700 text-sm m-0">
+                The most common outage problem is not a weak light, it is no light in the room you are standing in. Put a cheap rechargeable light in every bedroom, the kitchen and the car, and keep the good one in the main kit.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Relying on a proprietary charging cable</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Magnetic cables are convenient until one goes missing. If your light uses one, buy a spare and store it with the outage supplies. Otherwise prefer USB-C, which charges from any phone cable and power bank in the house.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Storing it and forgetting it</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A lithium-ion light left untouched for a year will not deliver its rated runtime when you need it. Charge every flashlight at the start of storm season and top it up every few months. It takes minutes and avoids a dead light in the dark.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using a flashlight as room lighting</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A flashlight aimed at the ceiling drains fast and lights a room poorly. For cooking, reading and evenings in an outage, use a lantern and save the flashlight's battery for moving around, going outside and checking equipment.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            12. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best rechargeable flashlight overall?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most households the Fenix PD36R V2.0 is the best balance. It pairs a 5,000 mAh 21700 cell with USB-C charging, IP68 water resistance and a battery you can replace when it ages. It is bright enough for every indoor and outdoor job and simple enough for anyone in the house to use.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are rechargeable flashlights good for power outages?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes, as long as you can recharge them. A large 21700 light runs for hours at medium output, and a power bank or power station can refill it several times. For long outages, a light that also takes CR123A primary cells, like the Streamlight ProTac HL-X USB, keeps working when recharging is not possible.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long does a rechargeable flashlight battery last?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Runtime per charge depends on the mode; check the maker's runtime chart for medium output, not turbo. Over the long term, a lithium-ion cell typically lasts several hundred charge cycles before capacity drops noticeably. A light with a removable cell can be renewed with a new battery; a built-in battery means replacing the light.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is 1,000 lumens bright enough?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For nearly everything a household does, yes. Walking around indoors needs 50 to 150 lumens and working at a panel or cooking needs a few hundred. A thousand lumens lights a yard well. Higher figures are useful outdoors at distance, but they are short bursts and drain the battery quickly.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the difference between an 18650 and a 21700 battery?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                They are both lithium-ion cells named for their size. A 21700 is wider and longer, so it holds more energy, typically 4,000 to 5,000 mAh against 3,000 to 3,500 for an 18650. In a flashlight that means longer runtime at the same brightness, at the cost of a slightly larger body.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I charge a rechargeable flashlight from a power bank?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes. Any light with a USB-C port charges from a power bank, a car USB outlet or a portable power station, which is exactly how you keep it running during an outage. Lights with a proprietary magnetic cable can do the same, but only with that specific cable, so keep a spare.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Should I keep spare batteries for a rechargeable flashlight?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For lights with removable cells, a charged spare is the simplest way to double your runtime without charging. Store spares in a plastic case away from keys and coins. If your light also accepts CR123A primaries, a sealed pack of those is the best long-term emergency backup because they store for years.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Outage and Backup Power Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-solar-power-bank/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Solar Power Banks</h3>
+              <p class="text-gray-500 text-sm mt-2">Keep phones and flashlights charged when the grid is down, and why folding panels beat built-in ones.</p>
+            </a>
+            <a href="/best-battery-powered-lantern/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#38BDF8] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Battery Powered Lanterns</h3>
+              <p class="text-gray-500 text-sm mt-2">Room lighting for outages and camping, compared on lumens and runtime.</p>
+            </a>
+            <a href="/best-home-generator-for-power-outages/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Home Generators for Power Outages</h3>
+              <p class="text-gray-500 text-sm mt-2">Standby, portable, inverter and battery backup for keeping the whole house running.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            A rechargeable flashlight is only as good as its battery and your habit of charging it. Buy on battery size, USB-C charging and a replaceable cell, then put cheap lights where people actually are when the power goes out.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            For most homes that means a Fenix PD36R V2.0 or Streamlight ProTac HL-X USB in the main kit, a couple of Anker Bolder LC40s around the house, and a power bank to keep them all topped up through a long outage.
+          </p>
+        </div>
+
+        <MoreInCategory category="Generators & Backup Power" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
