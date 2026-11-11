@@ -47,6 +47,19 @@ function lastmodFor(slug) {
 // Buyer's guides that target high-volume search terms. They get a higher
 // sitemap priority than the 0.5 default so crawlers reach them sooner.
 const priorityGuides = new Set([
+  // November 2026: concrete crack repair cluster.
+  'concrete-crack-repair',
+  'basement-floor-crack-repair',
+  'concrete-popping-out',
+  'concrete-repair-kit',
+  'concrete-repair-products',
+  'cracked-concrete-patio',
+  'sealing-cracks-in-driveway',
+  'basement-crack-sealer',
+  'concrete-wall-crack-repair',
+  'garage-floor-crack-repair',
+  'self-leveling-concrete-crack-filler',
+  'magic-crack-filler-reviews',
   // November 2026: Amazon buyer's guide batch 5.
   'best-brad-nailer',
   'best-carbon-monoxide-detector',
