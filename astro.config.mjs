@@ -71,6 +71,7 @@ const priorityGuides = new Set([
   'best-oil-absorbent',
   'best-solar-lantern',
   'best-rechargeable-flashlight',
+  'best-headlamp',
   'best-water-test-kit',
   // November 2026: dehumidifier buyer's guide batch (Amazon-focused).
   'best-commercial-dehumidifier',

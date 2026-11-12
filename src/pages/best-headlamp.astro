@@ -1,0 +1,918 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Rechargeable Flashlights",
+    "url": "/best-rechargeable-flashlight/"
+  },
+  {
+    "title": "Best Battery Powered Lanterns",
+    "url": "/best-battery-powered-lantern/"
+  },
+  {
+    "title": "Best Solar Power Banks",
+    "url": "/best-solar-power-bank/"
+  },
+  {
+    "title": "Best Emergency Radios",
+    "url": "/best-emergency-radio/"
+  },
+  {
+    "title": "Best Solar Lanterns",
+    "url": "/best-solar-lantern/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-11-12", modified: "2026-11-12" });
+const title = "5 Best Headlamps: Rechargeable vs AAA, Real Runtime and Comfort";
+const description =
+  "The best headlamps for power outages, home repairs and the outdoors, compared on battery type, AAA backup, beam modes, comfort and water resistance.";
+
+const PRODUCTS = [
+  {
+    "id": "petzl-actik-core",
+    "name": "Petzl ACTIK CORE Rechargeable Headlamp",
+    "category": "600 Lumens, CORE Rechargeable or 3x AAA, Red Light",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "pros": [
+      "Rated at 600 lumens by Petzl (the current Amazon listing says 650), with a mix of flood and focused beam",
+      "Runs on the included CORE rechargeable pack or on three AAA batteries",
+      "Red light mode for preserving night vision",
+      "Reflective headband and a simple single-button interface"
+    ],
+    "cons": [
+      "CORE pack charges over a micro-USB port on older stock; check the listing",
+      "Not as bright as the Fenix",
+      "Button takes a firm press with gloves"
+    ],
+    "bottomLine": "The best all-round headlamp for a household, because it keeps running on AAA batteries when the rechargeable pack is flat.",
+    "description": "The ACTIK CORE is the headlamp we would put in an outage kit first, and the reason is its battery design. Petzl calls it hybrid: it ships with the CORE rechargeable pack, and the same compartment takes three standard AAA batteries. In normal life you charge it like a phone. In an outage that runs longer than your power bank, a pack of AAAs from the drawer keeps it working. Petzl rates it at 600 lumens (the current Amazon listing says 650), with a beam that mixes flood for close work and a focused centre for walking, plus a red mode that keeps your night vision and does not dazzle the person you are talking to. The headband is comfortable for hours and reflective. It is not the brightest headlamp here, but for cooking, fixing and moving around a dark house it is the most dependable."
+  },
+  {
+    "id": "fenix-hm65r",
+    "name": "Fenix HM65R Rechargeable Headlamp",
+    "category": "1,400 Lumens, 18650, USB-C, Dual Spot and Flood",
+    "badge": "Brightest",
+    "amazonUrl": "#",
+    "pros": [
+      "Rated at 1,400 lumens combined from separate spot and flood LEDs",
+      "Runs on a removable 18650 cell, included",
+      "USB-C charging",
+      "Magnesium body, IP68 rated by Fenix"
+    ],
+    "cons": [
+      "Heaviest headlamp here because of the 18650",
+      "Two buttons take a minute to learn",
+      "More light than most indoor jobs need"
+    ],
+    "bottomLine": "The headlamp for working outside after a storm: clearing branches, checking a generator, walking a property line.",
+    "description": "The HM65R is a serious headlamp. Fenix rates it at 1,400 lumens from two separate emitters, a spot for distance and a flood for close work, each with its own button, so you can light the path ahead and your hands at the same time. It runs on a removable 18650 lithium-ion cell, which holds far more energy than the built-in packs in lighter headlamps, and it charges over USB-C. Fenix lists IP68 water resistance and builds the body from magnesium to keep the weight down. It is still the heaviest headlamp on this list, and you notice it after an hour. For indoor outage use it is more than you need. For outdoor work after a storm, refuelling a <a href=\"/best-home-generator-for-power-outages/\">generator</a> in the dark or checking a sump pit, it is the one to have."
+  },
+  {
+    "id": "black-diamond-spot-400",
+    "name": "Black Diamond Spot 400 Headlamp",
+    "category": "400 Lumens, 3x AAA, IPX8",
+    "badge": "Best AAA Headlamp",
+    "amazonUrl": "#",
+    "pros": [
+      "Rated at 400 lumens on three AAA batteries",
+      "IPX8 waterproof rating",
+      "PowerTap: tap the side of the housing to jump between full and dimmed output",
+      "Lock mode stops it turning on in a bag"
+    ],
+    "cons": [
+      "Disposable or separately charged AAA batteries",
+      "Interface has a lot of modes",
+      "Runtime drops quickly on full power with alkaline cells"
+    ],
+    "bottomLine": "The simple, cheap-to-run headlamp for a kit that should work out of the drawer with fresh batteries.",
+    "description": "The Spot 400 is the classic AAA headlamp and still one of the best. Black Diamond rates it at 400 lumens from three AAA batteries, with an IPX8 waterproof rating and a feature called PowerTap: tap the side of the housing and it jumps between full brightness and a dimmed level, which is handy when you need a quick burst of light without cycling modes. It has a lock mode so it does not switch on in a bag and drain the batteries, and a red light. The case for AAA in an outage kit is simple. Batteries store for years, every shop sells them, and you can run it on rechargeable AAA cells day to day and swap in alkalines when the grid is down. Black Diamond also sells a rechargeable version, the Spot 400-R, if you prefer a built-in battery."
+  },
+  {
+    "id": "nitecore-nu25-ul",
+    "name": "Nitecore NU25 UL Rechargeable Headlamp",
+    "category": "400 Lumens, Built-In Battery, USB-C, Ultralight",
+    "badge": "Lightest",
+    "amazonUrl": "#",
+    "pros": [
+      "Very light, so it is easy to forget you are wearing it",
+      "Rated at 400 lumens with spot, flood and red light",
+      "USB-C charging",
+      "Shock-cord band rather than a wide elastic strap"
+    ],
+    "cons": [
+      "Small built-in battery, so long nights on medium need a recharge",
+      "Battery cannot be replaced",
+      "Thin band is less secure for heavy work"
+    ],
+    "bottomLine": "The pick for wearing for hours around the house, with a power bank to top it up.",
+    "description": "The NU25 UL is built to be light. Nitecore rates it at 400 lumens, with a spot, a flood and a red light, from a small built-in battery that charges over USB-C, and it rides on a thin shock-cord band rather than a wide strap. The result is a headlamp you can wear through a whole evening of cooking and putting children to bed without noticing it. The trade-off is the battery. It is small and cannot be replaced, so in a long outage you will be topping it up from a <a href=\"/best-solar-power-bank/\">power bank</a> every day or two, and when it eventually wears out the headlamp is done. For comfort it is the best here. For a kit that may sit in a drawer for a year, pair it with something that takes AAA batteries."
+  },
+  {
+    "id": "biolite-headlamp-425",
+    "name": "BioLite HeadLamp 425 Rechargeable Headlamp",
+    "category": "425 Lumens, Built-In Battery, USB-C, No-Bounce Fit",
+    "badge": "Most Comfortable Fit",
+    "amazonUrl": "#",
+    "pros": [
+      "Rated at 425 lumens with spot, flood and red light",
+      "Flat, low-profile front that sits flush on the forehead",
+      "USB-C charging",
+      "Moisture-wicking band with the battery at the back to balance weight"
+    ],
+    "cons": [
+      "Built-in battery cannot be swapped",
+      "Costs more than the Black Diamond",
+      "Less light than the Fenix for outdoor work"
+    ],
+    "bottomLine": "The most comfortable rechargeable headlamp for long wear, if you do not need AAA backup.",
+    "description": "BioLite's HeadLamp 425 is about fit. The light itself is a flat panel that sits flush against the forehead, with the battery moved to the back of the band so the weight is balanced and the lamp does not bounce or tip down. BioLite rates it at 425 lumens with spot, flood and red modes, and it charges over USB-C. For anyone who has worn a front-heavy headlamp for an evening, the difference is obvious. The battery is built in, so as with the Nitecore you are relying on a power bank in a long outage and replacing the whole lamp when the cell ages. It is a comfort-first choice, and a very good one."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Headlamps",
+          item: "https://www.thehonestreviewers.com/best-headlamp/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best headlamp for power outages?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Petzl ACTIK CORE is the best all-round choice because it runs on its rechargeable pack or on three AAA batteries. You charge it like a phone day to day, and if an outage outlasts your power bank, a pack of AAAs keeps it working. It is bright enough for every indoor job."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a rechargeable or AAA headlamp better?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Rechargeable is better for everyday use because you never buy batteries. AAA is better for long outages because batteries store for years and are easy to buy. A hybrid headlamp that accepts both gives you the advantages of each, which is why we rank one first."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many lumens do I need in a headlamp?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For close work, cooking and reading, 50 to 150 lumens is enough. For walking around, 100 to 300 is plenty. Only searching at distance or fast movement outdoors needs more than 400. Most of the time you will use a low setting, which saves the battery."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do headlamps have a red light?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Red light preserves your night vision, so you can still see by moonlight when you switch the lamp off, and it does not dazzle the people around you. In an outage it is useful for checking on sleeping children or talking face to face without blinding anyone."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does a headlamp battery last?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on the battery and the mode. Check the manufacturer's runtime chart for the medium setting rather than the peak. Larger cells like the 18650 in the Fenix HM65R run far longer than small built-in packs, and a spare cell doubles runtime without needing power."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I charge a headlamp from a power bank?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Any headlamp with a USB-C port charges from a power bank, power station or car USB socket. During an outage, charge headlamps in the morning so they are full by dusk. One small power bank can keep several headlamps topped up for days."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a headlamp better than a flashlight?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For anything that needs both hands, yes: cooking, repairs, carrying things or helping someone. For lighting at distance, a flashlight throws much further. Most outage kits benefit from both, plus a lantern for room lighting, because each does a different job well."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Generators & Backup Power",
+    tags: [
+      "headlamp",
+      "best headlamp",
+      "rechargeable headlamp",
+      "headlamp for power outage",
+      "aaa headlamp",
+      "led headlamp"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Buyer's Guide
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best <span class="text-[#38BDF8]">Headlamps</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          A headlamp gives you both hands back when the power goes out. The battery it runs on decides whether it still works on the third night.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#petzl-actik-core"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Jump to the Rankings
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="12.9k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#why-headlamp" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Why a Headlamp</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. The 5 Best, Ranked</a>
+          <a href="#batteries" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Rechargeable vs AAA</a>
+          <a href="#lumens" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. How Many Lumens</a>
+          <a href="#red-light" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Red Light and Modes</a>
+          <a href="#comfort" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Fit and Comfort</a>
+          <a href="#outage-plan" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Outage Plan</a>
+          <a href="#weather" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Water Resistance</a>
+          <a href="#care" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Battery Care</a>
+          <a href="#verdict" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Which to Buy</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">12. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          The best headlamp is not the brightest one. It is the one that is comfortable enough to wear all evening and still runs when every rechargeable in the house is flat.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="why-headlamp" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. Why a Headlamp Belongs in Every Outage Kit
+          </h2>
+
+          <p>
+            The first thing anyone does when the power goes out is grab a flashlight, and the second thing they discover is that a flashlight takes a hand. You cannot carry a pot of water, reset a breaker, read the manual on a <a href="/best-home-generator-for-power-outages/">generator</a> or hold a child's hand while holding a flashlight. A headlamp puts the light where you are looking and gives you both hands back.
+          </p>
+
+          <p>
+            It is also the most efficient way to light a task. A flashlight on a table lights the table. A headlamp lights exactly what you are doing, at a short distance, so a few hundred lumens is plenty and the battery lasts far longer than a flashlight lighting a whole room. For cooking, first aid, fixing a sump pump or reading, it is the right tool.
+          </p>
+
+          <p>
+            Headlamps are not room lighting. For an evening of sitting together, a <a href="/best-battery-powered-lantern/">lantern</a> spreads soft light across a room and does not shine in anyone's eyes. And for looking across a yard or down a road, a good <a href="/best-rechargeable-flashlight/">rechargeable flashlight</a> throws light much further. The headlamp sits between the two: the light you wear while you work.
+          </p>
+
+          <p>
+            That is why the best outage kits have one headlamp per adult. They are cheap enough, light enough and useful enough that sharing one is a false economy, and the evening an outage starts is exactly when everyone needs their hands free at once.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. The 5 Best Headlamps, Ranked
+          </h2>
+
+          <p>
+            Every headlamp below is a current model sold on Amazon. Lumen figures are the manufacturer's rated peak output. We ranked them for household and power-outage use first, outdoor work second.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="batteries" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Rechargeable, AAA or Hybrid: The Battery Decision
+          </h2>
+
+          <p>
+            The most important choice in a headlamp is how it is powered, and there are three options. Built-in rechargeable headlamps, like the Nitecore NU25 UL and BioLite 425, are light and convenient and charge over USB-C. AAA headlamps, like the Black Diamond Spot 400, run on batteries you can buy anywhere and store for years. Hybrid headlamps, like the Petzl ACTIK CORE, take a rechargeable pack or AAA batteries in the same compartment.
+          </p>
+
+          <p>
+            For everyday use, rechargeable wins. You charge it from the same cable as your phone and never buy batteries. For an emergency kit, the question is what happens on day three of an outage when your power bank is empty. A built-in battery headlamp is dark until you find power. A hybrid or AAA headlamp keeps going on a pack of batteries from the drawer.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE RULE</p>
+            <p class="text-xl font-bold text-white mb-3">At least one headlamp in the house should run on AAA batteries.</p>
+            <p class="text-gray-300 leading-relaxed m-0">Rechargeable is better day to day. AAA is better on day three. A hybrid like the Petzl ACTIK CORE gives you both in one lamp.</p>
+          </div>
+
+          <p>
+            Larger headlamps like the Fenix HM65R use a removable 18650 lithium-ion cell. That holds much more energy than a built-in pack or three AAAs, which is why it can deliver far more light for longer. You can also keep a spare charged 18650 in the kit and swap it in seconds, which doubles runtime without needing any power at all.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Battery type</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Example</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Best for</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Weak point</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Built-in rechargeable</td>
+                    <td class="px-4 py-4 text-gray-700">Nitecore NU25 UL, BioLite 425</td>
+                    <td class="px-4 py-4 text-gray-700">Light weight, daily use</td>
+                    <td class="px-4 py-4 text-gray-700">Dead when the power bank is</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">3x AAA</td>
+                    <td class="px-4 py-4 text-gray-700">Black Diamond Spot 400</td>
+                    <td class="px-4 py-4 text-gray-700">Long storage, easy to resupply</td>
+                    <td class="px-4 py-4 text-gray-700">Ongoing battery cost</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Hybrid (pack or AAA)</td>
+                    <td class="px-4 py-4 text-gray-700">Petzl ACTIK CORE</td>
+                    <td class="px-4 py-4 text-gray-700">Both daily use and long outages</td>
+                    <td class="px-4 py-4 text-gray-700">Slightly heavier than built-in</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Removable 18650</td>
+                    <td class="px-4 py-4 text-gray-700">Fenix HM65R</td>
+                    <td class="px-4 py-4 text-gray-700">Most light and runtime</td>
+                    <td class="px-4 py-4 text-gray-700">Heaviest</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="lumens" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. How Many Lumens a Headlamp Really Needs
+          </h2>
+
+          <p>
+            Because a headlamp lights what is a metre or two in front of you, it needs far less output than a flashlight. Reading, cooking and fixing things up close is comfortable at 50 to 150 lumens. Walking around a dark house or garden is fine at 100 to 300. Only searching at distance, working outside in rain or moving fast over rough ground calls for more than 400.
+          </p>
+
+          <p>
+            That is why the 400-lumen headlamps on this list are genuinely enough for most people, and why the Fenix's 1,400 lumens are aimed at outdoor work. On a headlamp, very high output also means bouncing glare off anything close to you and blinding anyone you turn to face. Most of the time you will use the lowest mode that does the job, and the battery will last much longer for it.
+          </p>
+
+          <p>
+            Like flashlights, headlamps are rated under the ANSI FL1 standard, so the peak lumen figure is a short burst with fresh batteries. Most headlamps step down from their top mode to protect the LED and battery. Compare models on their medium-mode runtime in the manufacturer's chart, not the headline lumens, because medium is where you will spend the evening.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-4">Rated Peak Output</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+              <div>
+                <p class="text-3xl font-black text-white">1,400</p>
+                <p class="text-gray-400 text-xs mt-1">Fenix HM65R</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">600</p>
+                <p class="text-gray-400 text-xs mt-1">Petzl ACTIK CORE</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-white">425</p>
+                <p class="text-gray-400 text-xs mt-1">BioLite HeadLamp 425</p>
+              </div>
+              <div>
+                <p class="text-3xl font-black text-[#38BDF8]">400</p>
+                <p class="text-gray-400 text-xs mt-1">Black Diamond Spot 400 / Nitecore NU25 UL</p>
+              </div>
+            </div>
+          </div>
+
+          <p>
+            If you are torn between two headlamps, the better low mode and the better battery matter more than the bigger number. A headlamp that runs all night on low is more useful in an outage than one that runs for an hour on high.
+          </p>
+        </div>
+
+        <div id="red-light" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Red Light, Beam Shape and Modes
+          </h2>
+
+          <p>
+            Almost every good headlamp now has a red light mode, and it is more useful in an outage than most people expect. Red light preserves your eyes' dark adaptation, so you can still see by moonlight when you switch it off. It also does not dazzle the person you are talking to, which matters when everyone is wearing a headlamp around a kitchen table or you are checking on a sleeping child.
+          </p>
+
+          <p>
+            Beam shape is the next thing to look at. A flood beam spreads light widely and evenly, which is what you want for cooking, reading and close work. A spot beam throws light further for walking and searching. The best headlamps, including every one on this list, offer both, and some, like the Fenix HM65R and Nitecore NU25 UL, let you run them together.
+          </p>
+
+          <p>
+            Then look at how the modes are arranged. A headlamp you use a few times a year should come on in a sensible low or medium mode with one press, not blast you with full power or strobe. The Black Diamond Spot 400's PowerTap, where a tap on the side jumps between full and dimmed, is a good example of a feature that makes a headlamp easier to use, not harder.
+          </p>
+
+          <p>
+            A lock mode is worth having in a kit headlamp. Without it, a headlamp in a drawer or bag can be switched on by something pressing the button, and you discover a flat battery exactly when you need it. Most modern headlamps lock with a long press or a twist, and it is worth learning when the lamp arrives.
+          </p>
+        </div>
+
+        <div id="comfort" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Fit and Comfort for Hours of Wear
+          </h2>
+
+          <p>
+            In an outage you may wear a headlamp for hours at a time, so comfort matters more than it does for a quick trip to the garage. The two things that make a headlamp uncomfortable are weight at the front, which tips the lamp down and pulls on the band, and a narrow strap that presses into the head.
+          </p>
+
+          <p>
+            The BioLite HeadLamp 425 solves the first problem by moving the battery to the back of the band so the weight balances. The Nitecore NU25 UL solves it by being so light that balance hardly matters. The Fenix HM65R, with its 18650 cell up front, is the heaviest here and is best worn for working rather than all evening.
+          </p>
+
+          <p>
+            Band width and material matter too. A wide, soft band spreads the pressure. A shock-cord band, like the Nitecore's, is lighter but can feel tight and less secure on a long day. If you wear glasses or a hat, try the headlamp with them, because some lamps sit awkwardly over a peak or press frames into your temples.
+          </p>
+
+          <p>
+            Children need their own headlamp, sized for a smaller head and with a simple interface. A headlamp makes an outage far less frightening for a child, because they control their own light. Buy something cheap, rechargeable and easy to switch on and off, and keep it with the rest of the kit.
+          </p>
+        </div>
+
+        <div id="outage-plan" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. A Headlamp Plan for Power Outages
+          </h2>
+
+          <p>
+            The simplest plan is one headlamp per person, kept in the same place as the rest of the outage supplies, and charged at the start of each storm season. Make at least one of them a hybrid or AAA model, and keep a sealed pack of AAA batteries with it. That covers the scenario where an outage outlasts every rechargeable in the house.
+          </p>
+
+          <p>
+            Charge rechargeable headlamps first thing in the morning during an outage, from a <a href="/best-solar-power-bank/">power bank</a> or power station, so they are full by dusk. A small power bank holds many times the energy of a headlamp battery, so one bank can keep several headlamps topped up for days. Do not leave charging until it is dark and everyone needs their lamp.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Person or job</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">What to buy</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Why</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Main kit headlamp</td>
+                    <td class="px-4 py-4 text-gray-700">Petzl ACTIK CORE</td>
+                    <td class="px-4 py-4 text-gray-700">Rechargeable day to day, AAA on day three</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Outdoor work after a storm</td>
+                    <td class="px-4 py-4 text-gray-700">Fenix HM65R</td>
+                    <td class="px-4 py-4 text-gray-700">Most light, removable 18650</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Spare or kit backup</td>
+                    <td class="px-4 py-4 text-gray-700">Black Diamond Spot 400</td>
+                    <td class="px-4 py-4 text-gray-700">Runs on stored AAA batteries</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">All-evening wear</td>
+                    <td class="px-4 py-4 text-gray-700">BioLite HeadLamp 425 or Nitecore NU25 UL</td>
+                    <td class="px-4 py-4 text-gray-700">Most comfortable for hours</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            A headlamp also makes it safer to deal with the jobs that come with an outage. Refuelling a generator, checking a sump pump, finding the main breaker or carrying a candle or heater safely are all easier with both hands free. Use the headlamp, not a phone torch, and save the phone battery for calls and news.
+          </p>
+
+          <p>
+            Pair the headlamps with a lantern for the room and an <a href="/best-emergency-radio/">emergency radio</a> for updates, and the lighting side of an outage is covered. None of it is expensive, and all of it works better if it is already in a box you can find in the dark.
+          </p>
+        </div>
+
+        <div id="weather" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Water Resistance and Durability
+          </h2>
+
+          <p>
+            Outages often come with storms, so a headlamp that might be used outside in rain needs a real water rating. IPX4 means it survives splashing and rain. IPX7 and IPX8 mean it survives being dropped in water. The Black Diamond Spot 400 is rated IPX8 and the Fenix HM65R IP68, which covers anything short of deliberate diving.
+          </p>
+
+          <p>
+            Durability matters for a lamp that might be dropped on concrete in a basement or knocked against a tree. Metal-bodied headlamps like the Fenix shrug off knocks. Plastic headlamps are lighter and mostly fine, but check that the battery door closes firmly and that the hinge between lamp and bracket is solid, because those are the parts that fail.
+          </p>
+
+          <p>
+            Cold matters too. Lithium-ion and lithium AAA cells perform better in the cold than alkaline AAA cells, which lose much of their capacity below freezing. If your outages tend to be winter ice storms, run AAA headlamps on lithium AAA cells for the kit, or keep the headlamp in an inside pocket until you need it.
+          </p>
+
+          <p>
+            Finally, keep it clean and dry between uses. Wipe the lens, let the band dry if it gets wet, and store it with the battery charged or the batteries removed. A headlamp left with corroding alkaline cells in it for a year is a common way to find a dead light when you need it.
+          </p>
+        </div>
+
+        <div id="care" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Battery Care and Storage
+          </h2>
+
+          <p>
+            Rechargeable headlamps last longest when charged every few months rather than left full and hot or flat for a long time. A good routine is to charge every headlamp in the house at the start of storm season and again at the start of winter, and to use them now and then in between.
+          </p>
+
+          <p>
+            For AAA headlamps in a kit, either store the batteries outside the lamp or use lithium AAA cells, which resist leaking far better than alkalines and hold their charge for years. Write the date on the pack. If you use rechargeable AAA cells, choose low self-discharge types so they are still mostly full when you need them.
+          </p>
+
+          <p>
+            For headlamps with a removable 18650, use the cell the maker supplies or a reputable replacement of the same type, and carry spares in a plastic case away from keys and coins. A short circuit across loose cells can heat them quickly, and that risk is easy to avoid.
+          </p>
+
+          <p>
+            Built-in batteries cannot be replaced, so treat those headlamps as having a finite life of a few years of regular use. That is fine for a light, comfortable everyday lamp. It is the reason the kit's backup should be a headlamp with a battery you can change.
+          </p>
+        </div>
+
+        <div id="verdict" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            10. Which Headlamp Should You Buy?
+          </h2>
+
+          <p>
+            For one headlamp that does everything, buy the Petzl ACTIK CORE. It charges like a phone, runs on AAA batteries when it has to, and gives enough light for every indoor job and most outdoor ones. It is the safest single choice for a household.
+          </p>
+
+          <p>
+            If you will be working outside after storms, clearing branches or running a generator, add the Fenix HM65R. Its separate spot and flood, removable 18650 and metal body make it the most capable lamp here.
+          </p>
+
+          <p>
+            For a cheap, simple spare that works from stored batteries, the Black Diamond Spot 400 is hard to beat. And if comfort over a long evening matters most, choose the BioLite HeadLamp 425 or the Nitecore NU25 UL, and keep a power bank to top them up.
+          </p>
+
+          <p>
+            Whichever you choose, buy one per adult, keep them with the outage supplies and charge them before storm season. A headlamp you can find in the dark is worth more than any feature on the spec sheet.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Making every headlamp rechargeable</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Built-in batteries are convenient until the outage outlasts your power bank. Make sure at least one headlamp in the house runs on AAA batteries, or buy a hybrid like the Petzl ACTIK CORE, and keep a sealed pack of AAAs with it.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying on peak lumens</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Peak output lasts a short time and is far more than you need a metre from your face. Compare headlamps on battery type, the medium-mode runtime and the quality of the low mode, which is where you will spend most of an evening.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Storing alkaline batteries inside the lamp</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Alkaline AAA cells left in a headlamp for a year can leak and corrode the contacts. Store them outside the lamp or use lithium AAA cells, which resist leaking and hold their charge far longer, and date the pack.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Sharing one headlamp between the household</h3>
+              <p class="text-gray-700 text-sm m-0">
+                The moment an outage starts is exactly when everyone needs their hands free. Headlamps are cheap enough to buy one per adult, plus a simple one for each child, and keep them all in the same box.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using a headlamp to light a room</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A headlamp lights what you are looking at and shines in everyone's eyes when you turn. For sitting together, use a lantern and switch headlamps to red or off. Save headlamp batteries for tasks that need both hands.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            12. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best headlamp for power outages?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                The Petzl ACTIK CORE is the best all-round choice because it runs on its rechargeable pack or on three AAA batteries. You charge it like a phone day to day, and if an outage outlasts your power bank, a pack of AAAs keeps it working. It is bright enough for every indoor job.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a rechargeable or AAA headlamp better?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Rechargeable is better for everyday use because you never buy batteries. AAA is better for long outages because batteries store for years and are easy to buy. A hybrid headlamp that accepts both gives you the advantages of each, which is why we rank one first.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How many lumens do I need in a headlamp?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For close work, cooking and reading, 50 to 150 lumens is enough. For walking around, 100 to 300 is plenty. Only searching at distance or fast movement outdoors needs more than 400. Most of the time you will use a low setting, which saves the battery.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Why do headlamps have a red light?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Red light preserves your night vision, so you can still see by moonlight when you switch the lamp off, and it does not dazzle the people around you. In an outage it is useful for checking on sleeping children or talking face to face without blinding anyone.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long does a headlamp battery last?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It depends on the battery and the mode. Check the manufacturer's runtime chart for the medium setting rather than the peak. Larger cells like the 18650 in the Fenix HM65R run far longer than small built-in packs, and a spare cell doubles runtime without needing power.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I charge a headlamp from a power bank?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes. Any headlamp with a USB-C port charges from a power bank, power station or car USB socket. During an outage, charge headlamps in the morning so they are full by dusk. One small power bank can keep several headlamps topped up for days.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a headlamp better than a flashlight?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For anything that needs both hands, yes: cooking, repairs, carrying things or helping someone. For lighting at distance, a flashlight throws much further. Most outage kits benefit from both, plus a lantern for room lighting, because each does a different job well.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Outage and Backup Power Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-rechargeable-flashlight/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Rechargeable Flashlights</h3>
+              <p class="text-gray-500 text-sm mt-2">For lighting at distance: battery size, USB-C charging and sustained output compared.</p>
+            </a>
+            <a href="/best-solar-power-bank/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#38BDF8] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Solar Power Banks</h3>
+              <p class="text-gray-500 text-sm mt-2">Keep headlamps and phones charged when the grid is down.</p>
+            </a>
+            <a href="/best-home-generator-for-power-outages/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Home Generators for Power Outages</h3>
+              <p class="text-gray-500 text-sm mt-2">Standby, portable, inverter and battery backup for keeping the house running.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            A headlamp is the cheapest piece of outage gear that makes the biggest difference, because it gives you both hands back in the dark. Buy on battery type, comfort and a good low mode, not on peak lumens.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            For most homes that means a Petzl ACTIK CORE per adult, a Fenix HM65R for outdoor work, and a sealed pack of AAA batteries in the kit, all charged before storm season starts.
+          </p>
+        </div>
+
+        <MoreInCategory category="Generators & Backup Power" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

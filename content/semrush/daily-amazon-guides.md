@@ -6,3 +6,4 @@ One roundup a day, picked from the last 7 days of Vercel Web Analytics
 | Date | Slug | Primary keyword | Chosen next to (7-day visitors) |
 |---|---|---|---|
 | 2026-11-11 | `best-rechargeable-flashlight` | rechargeable flashlight | `/best-solar-power-bank` (278), `/best-home-generator-for-power-outages` (220) |
+| 2026-11-12 | `best-headlamp` | headlamp | `/best-solar-power-bank` (287), `/best-home-generator-for-power-outages` (211) |
