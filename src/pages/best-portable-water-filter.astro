@@ -1,0 +1,847 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Water Filtration Systems for Home",
+    "url": "/best-water-filtration-system-for-home/"
+  },
+  {
+    "title": "Best Countertop Water Filters",
+    "url": "/best-countertop-water-filter/"
+  },
+  {
+    "title": "Best Water Filter Pitchers",
+    "url": "/best-water-filter-pitcher/"
+  },
+  {
+    "title": "Best Headlamps",
+    "url": "/best-headlamp/"
+  },
+  {
+    "title": "Best Emergency Radios",
+    "url": "/best-emergency-radio/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-11-13", modified: "2026-11-13" });
+const title = "5 Best Portable Water Filters: Filter vs Purifier, Flow Rate and Emergency Use";
+const description =
+  "The best portable water filters for outages, boil notices and camping, with the filter vs purifier difference explained and flow, capacity and care compared.";
+
+const PRODUCTS = [
+  {
+    "id": "sawyer-squeeze",
+    "name": "Sawyer Squeeze Water Filtration System",
+    "category": "0.1 Micron Hollow Fiber, Squeeze Pouches, Backflushable",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "pros": [
+      "0.1-micron hollow fiber membrane that Sawyer rates to remove bacteria and protozoa",
+      "Threads onto standard disposable water bottles as well as the included pouches",
+      "Backflushable with the included syringe to restore flow",
+      "Light, small and inexpensive for what it does"
+    ],
+    "cons": [
+      "A filter, not a purifier: Sawyer does not rate it to remove viruses",
+      "The squeeze pouches wear out before the filter does",
+      "Must be kept from freezing once wet"
+    ],
+    "bottomLine": "The most useful portable filter for the money: small enough for a kit, flexible enough to fill a pot, and easy to keep flowing.",
+    "description": "The Sawyer Squeeze is the filter we would put in an emergency kit first. It is a small hollow-fiber cartridge with a 0.1-micron membrane that Sawyer rates to remove bacteria and protozoa, the organisms behind most waterborne illness from rivers and lakes. You fill a pouch with untreated water, screw the filter on and squeeze clean water into a bottle or pot, and the filter also threads onto ordinary disposable water bottles, which makes it far more flexible than a straw. When flow slows, you backflush it with the included syringe and most of the flow comes back. It is light, it is cheap and it lasts a long time with care. It is a filter, not a purifier, so it is not rated for viruses; read the section below on when that matters. And once it has been wet it must be kept from freezing, which can crack the fibers."
+  },
+  {
+    "id": "katadyn-befree-1l",
+    "name": "Katadyn BeFree 1.0L Water Filter",
+    "category": "0.1 Micron Hollow Fiber, 1L Soft Flask, Fast Flow",
+    "badge": "Fastest Flow",
+    "amazonUrl": "#",
+    "pros": [
+      "0.1-micron hollow fiber filter that Katadyn rates to remove bacteria and protozoa",
+      "Fast flow that makes it pleasant to drink straight from the flask",
+      "Cleans by shaking or swishing, no backflush syringe",
+      "Collapsible flask packs very small"
+    ],
+    "cons": [
+      "Not rated to remove viruses",
+      "Soft flask is less durable than a hard bottle",
+      "Filter is specific to the flask's wide mouth, so it is less flexible than the Sawyer"
+    ],
+    "bottomLine": "The pick if you want to scoop, drink and go with the least effort, accepting a less versatile setup.",
+    "description": "The BeFree is built around speed and convenience. It is a 1-litre soft flask with a hollow-fiber filter in the cap, and Katadyn rates the 0.1-micron membrane to remove bacteria and protozoa. Its standout feature is flow: water comes through quickly enough that drinking straight from the flask feels natural, where many filters make you work for every sip. Cleaning is simple, too. You shake or swish the filter in clean water rather than backflushing it with a syringe. The trade-offs are the flask and the fit. The soft flask is less tough than a hard bottle, and the filter is designed for this wide-mouth flask, so it is less adaptable than the Sawyer for filling pots or other containers. Like the Sawyer, it is a filter, not a purifier, and is not rated for viruses."
+  },
+  {
+    "id": "grayl-geopress",
+    "name": "GRAYL GeoPress Water Purifier Bottle",
+    "category": "Purifier, 24 oz, Press Design",
+    "badge": "Best Purifier",
+    "amazonUrl": "#",
+    "pros": [
+      "GRAYL rates it as a purifier: viruses, bacteria and protozoa",
+      "Also lists reduction of some chemicals, heavy metals and microplastics",
+      "Press design purifies a full bottle in seconds rather than squeezing or sucking",
+      "Hard, durable bottle"
+    ],
+    "cons": [
+      "Heaviest and bulkiest option here",
+      "Cartridges have a much shorter life than hollow-fiber filters and cost more",
+      "Pressing takes real force, especially as the cartridge ages"
+    ],
+    "bottomLine": "The one to buy if virus risk matters to you: flood water, travel, or a boil notice when you cannot boil.",
+    "description": "The GeoPress is the only purifier on this list, and that is the reason to buy it. GRAYL rates it to remove viruses as well as bacteria and protozoa, and lists reduction of some chemicals, heavy metals and microplastics too, which hollow-fiber filters do not claim. It works like a coffee press: fill the outer cup, push the inner cup down through the cartridge, and a full 24-ounce bottle is ready in seconds. That speed and the virus rating come at a cost. It is heavier and bulkier than every other filter here, its cartridges are rated for far fewer litres than a hollow-fiber filter and cost more to replace, and pressing takes real force, more so as the cartridge clogs. For a household kit it is the right tool for the dirtiest water, used alongside a cheaper filter for everything else."
+  },
+  {
+    "id": "platypus-gravityworks-4l",
+    "name": "Platypus GravityWorks 4.0L Water Filter System",
+    "category": "Gravity, 0.2 Micron Hollow Fiber, Two 4L Reservoirs",
+    "badge": "Best for a Family",
+    "amazonUrl": "#",
+    "pros": [
+      "Gravity does the work: hang the dirty bag and clean water fills the clean bag",
+      "Two 4-litre reservoirs filter enough for a household in one go",
+      "0.2-micron hollow fiber that Platypus rates for bacteria and protozoa",
+      "Easy to backflush by lifting the clean bag above the dirty one"
+    ],
+    "cons": [
+      "Not rated to remove viruses",
+      "Needs somewhere to hang the bag",
+      "Bulkier than a squeeze filter"
+    ],
+    "bottomLine": "The best way to filter water for several people at once without pumping, squeezing or power.",
+    "description": "The GravityWorks is the household-sized option. It comes with two 4-litre reservoirs and a hollow-fiber filter in the hose between them. You fill the dirty bag, hang it from a hook, a door or a branch, and gravity pushes water through the 0.2-micron filter into the clean bag while you do something else. Platypus rates the filter to remove bacteria and protozoa. That hands-free operation is what makes it right for a family: eight litres at a time covers drinking and cooking for a small household for a day, and nobody has to squeeze a pouch for twenty minutes. Backflushing is as simple as raising the clean bag above the dirty one. It is bulkier than a squeeze filter and is not rated for viruses, but for volume without power it is the best tool here."
+  },
+  {
+    "id": "lifestraw-personal",
+    "name": "LifeStraw Personal Water Filter",
+    "category": "0.2 Micron Hollow Fiber, Straw Design, No Moving Parts",
+    "badge": "Best Budget / Backup",
+    "amazonUrl": "#",
+    "pros": [
+      "Very cheap, light and simple, with nothing to break",
+      "LifeStraw rates the 0.2-micron membrane to remove bacteria and parasites",
+      "LifeStraw lists a capacity of about 4,000 litres",
+      "No batteries, no chemicals, no setup"
+    ],
+    "cons": [
+      "You can only drink through it; it cannot fill a pot or a bottle",
+      "Not rated to remove viruses or chemicals",
+      "Hard to share between people hygienically"
+    ],
+    "bottomLine": "The backup to put in every car, bag and kit, not the main way to supply a household.",
+    "description": "The LifeStraw Personal is the simplest filter there is. It is a straw with a hollow-fiber membrane inside that LifeStraw rates to remove bacteria and parasites, and LifeStraw lists its capacity at about 4,000 litres. You put one end in the water and drink through the other. There are no moving parts, no batteries and nothing to assemble, and it costs little enough to put one in every car, backpack and go-bag. The limitation is just as simple: it only works for drinking directly from a source. You cannot use it to fill a cooking pot, a baby bottle or a container for later, and sharing one straw between several people is awkward. It is the right backup and the wrong main filter."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Portable Water Filters",
+          item: "https://www.thehonestreviewers.com/best-portable-water-filter/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best portable water filter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most people the Sawyer Squeeze is the best all-round choice. Its 0.1-micron hollow fiber is rated for bacteria and protozoa, it threads onto pouches and ordinary bottles, it can be backflushed to restore flow, and it is small and inexpensive enough to keep in every emergency kit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do portable water filters remove viruses?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most do not. Hollow-fiber filters like the Sawyer, Katadyn BeFree, Platypus GravityWorks and LifeStraw Personal are rated for bacteria and protozoa. A purifier, such as the GRAYL GeoPress, is rated for viruses too. When viruses are a risk, boil the water or use a purifier."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use a portable water filter during a boil water notice?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Follow your local health authority's instructions first; if they say boil, boil. A standard filter is not rated for viruses, so it does not replace boiling. A purifier rated for viruses, or a filter followed by chemical treatment, is the backup when boiling is impossible."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can a portable filter make flood water safe?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It is not recommended. Flood water can carry viruses, chemicals, fuel and sewage, and no filter on this list removes all of those. Use stored water, bottled water or water from your hot water tank instead, and treat flood water as unsafe to drink."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does a portable water filter last?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Hollow-fiber filters are rated for hundreds to thousands of litres, and usually outlast their pouches and bags with care. Purifier cartridges are rated for far less. Freezing, heavy sediment and poor cleaning shorten any filter's life, so pre-filter and backflush as recommended."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a gravity filter better than a squeeze filter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For a family, a gravity filter is easier because it treats litres at a time without effort. For one person or a kit bag, a squeeze filter is smaller and more flexible. Many households keep a gravity filter at home and squeeze or straw filters in cars and go-bags."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do portable water filters remove chlorine or lead?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most hollow-fiber filters do not, because those contaminants are dissolved in the water and pass through a membrane sized for organisms. GRAYL lists reduction of some chemicals and heavy metals for the GeoPress. For everyday tap water, use a certified home water filter."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home Improvement",
+    tags: [
+      "portable water filter",
+      "best portable water filter",
+      "emergency water filter",
+      "water purifier bottle",
+      "gravity water filter bag",
+      "backpacking water filter"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Buyer's Guide
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best <span class="text-[#38BDF8]">Portable Water Filters</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          A filter that works without power turns questionable water into drinking water when the tap stops. Knowing whether you need a filter or a purifier matters more than the brand.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#sawyer-squeeze"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Jump to the Rankings
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Shaheer Ali Khan</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Consumer Product Testing &amp; Materials Performance Specialist</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="11.6k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#why-portable" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Why One at Home</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. The 5 Best, Ranked</a>
+          <a href="#filter-vs-purifier" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. Filter vs Purifier</a>
+          <a href="#types" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Choosing a Type</a>
+          <a href="#outage-plan" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Outages and Boil Notices</a>
+          <a href="#flow-capacity" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Flow and Capacity</a>
+          <a href="#care" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Storage and Care</a>
+          <a href="#tap-water" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Portable vs Home Filters</a>
+          <a href="#verdict" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Which to Buy</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Most portable water filters are sold for camping, but the place you are most likely to need one is at home, during an outage, a broken main or a boil notice when you cannot boil.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="why-portable" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. Why a Portable Water Filter Belongs in a Home Kit
+          </h2>
+
+          <p>
+            Most people think of portable water filters as camping gear, and most of them are sold that way. But the situations where a household is most likely to need one are at home: a storm knocks out power to a well pump, a water main breaks, or the local utility issues a boil water notice and the power is out so you cannot boil. In each of those cases, a filter that works without electricity turns a bucket of questionable water into something you can drink.
+          </p>
+
+          <p>
+            A home system does not cover these cases. Under-sink and countertop filters, including the gravity units in our <a href="/best-countertop-water-filter/">countertop water filter guide</a>, are designed to improve treated tap water. They reduce chlorine, taste and some contaminants, but most are not rated to make untreated water from a creek, a rain barrel or a flooded well safe. A portable filter is built for exactly that job.
+          </p>
+
+          <p>
+            They are also cheap, small and long-lasting. A good hollow-fiber filter costs about the same as a case of bottled water, fits in a drawer, and can filter hundreds or thousands of litres. Bottled water is still the first line of defence for an outage, but a filter means you are not limited to what you stored.
+          </p>
+
+          <p>
+            This guide covers five filters that each suit a different job: a flexible squeeze filter, a fast drink-through flask, a true purifier for the worst water, a gravity system for a family, and a cheap straw for every bag. Most homes need one or two of them, not all five.
+          </p>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. The 5 Best Portable Water Filters, Ranked
+          </h2>
+
+          <p>
+            Every filter below is a current model sold on Amazon. Removal claims are the manufacturer's ratings. We ranked them for emergency use at home first and outdoor use second.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="filter-vs-purifier" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. Filter vs Purifier: The Distinction That Matters Most
+          </h2>
+
+          <p>
+            The most important thing to understand before buying is the difference between a filter and a purifier. In the outdoor industry, a filter removes bacteria, such as E. coli and salmonella, and protozoa, such as giardia and cryptosporidium. A purifier also removes viruses, such as norovirus and hepatitis A, which are far smaller and pass straight through most hollow-fiber membranes.
+          </p>
+
+          <p>
+            Four of the five products here are filters. The Sawyer Squeeze, Katadyn BeFree, Platypus GravityWorks and LifeStraw Personal all use hollow-fiber membranes rated for bacteria and protozoa, not viruses. The GRAYL GeoPress is the one purifier, and its manufacturer rates it for viruses as well.
+          </p>
+
+          <div class="bg-gray-900 text-white rounded-2xl p-6 lg:p-8 my-8">
+            <p class="text-xs font-black uppercase tracking-widest text-[#38BDF8] mb-3">THE RULE</p>
+            <p class="text-xl font-bold text-white mb-3">Use a filter for clear wild water. Use a purifier, or boil, when sewage or flood water could be involved.</p>
+            <p class="text-gray-300 leading-relaxed m-0">In North American backcountry water, protozoa and bacteria are the main risks and a filter covers them. Viruses come mainly from human waste, which is exactly what flood water and broken mains can carry.</p>
+          </div>
+
+          <p>
+            Why does this matter at home? Because the water you are most likely to be filtering in an emergency is not a clear mountain stream. Flood water, water from a contaminated well and water during a boil notice can all carry viruses. In those cases, follow your local health authority's instructions. If they say boil, boil when you can. A purifier, or a filter followed by chemical treatment, is the backup when you cannot.
+          </p>
+
+          <p>
+            None of these devices remove dissolved salt, and most hollow-fiber filters do not reduce chemicals, fuel or heavy metals. Water that smells of petrol or chemicals, or that has been in contact with flood debris from industrial sites, is not made safe by any filter on this list. Use stored water instead.
+          </p>
+        </div>
+
+        <div id="types" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Squeeze, Straw, Bottle and Gravity: Choosing a Type
+          </h2>
+
+          <p>
+            Portable filters come in four main designs, and the design decides how useful the filter is in practice. Squeeze filters, like the Sawyer, screw onto a pouch or bottle of dirty water and you squeeze clean water out. They are versatile: you can drink from them, fill a bottle or fill a cooking pot.
+          </p>
+
+          <p>
+            Straw filters, like the LifeStraw Personal, are the simplest and cheapest, but you can only drink through them directly from the source. Bottle filters, like the Katadyn BeFree and GRAYL GeoPress, combine a container and a filter, so you fill and drink, but they hold a fixed volume at a time.
+          </p>
+
+          <p>
+            Gravity filters, like the Platypus GravityWorks, use a hanging bag of dirty water and let gravity push it through the filter into a clean bag. They take a little setting up, but they filter litres at a time while you get on with other things, which is what a family needs.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Type</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Example</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Best for</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Weak point</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Squeeze</td>
+                    <td class="px-4 py-4 text-gray-700">Sawyer Squeeze</td>
+                    <td class="px-4 py-4 text-gray-700">Flexibility: drink, fill bottles and pots</td>
+                    <td class="px-4 py-4 text-gray-700">Pouches wear out</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Bottle (filter)</td>
+                    <td class="px-4 py-4 text-gray-700">Katadyn BeFree</td>
+                    <td class="px-4 py-4 text-gray-700">Scoop and drink quickly</td>
+                    <td class="px-4 py-4 text-gray-700">Fixed volume, less versatile</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Bottle (purifier)</td>
+                    <td class="px-4 py-4 text-gray-700">GRAYL GeoPress</td>
+                    <td class="px-4 py-4 text-gray-700">Dirtiest water, viruses</td>
+                    <td class="px-4 py-4 text-gray-700">Heavy, short cartridge life</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Gravity</td>
+                    <td class="px-4 py-4 text-gray-700">Platypus GravityWorks</td>
+                    <td class="px-4 py-4 text-gray-700">Families, large volumes</td>
+                    <td class="px-4 py-4 text-gray-700">Needs a place to hang</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Straw</td>
+                    <td class="px-4 py-4 text-gray-700">LifeStraw Personal</td>
+                    <td class="px-4 py-4 text-gray-700">Cheap backup in every bag</td>
+                    <td class="px-4 py-4 text-gray-700">Drink-only</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>
+            For most households, the best combination is a gravity filter for volume at home and a squeeze or straw filter for each bag or car. Add a purifier if your area floods or relies on well water.
+          </p>
+        </div>
+
+        <div id="outage-plan" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Water Planning for Outages and Boil Notices
+          </h2>
+
+          <p>
+            The usual guidance for emergency water is at least one gallon per person per day, for several days, stored before you need it. Stored water is still the foundation. A filter does not replace it; it extends it, by letting you use other sources once stored water runs low.
+          </p>
+
+          <p>
+            Think about where that other water would come from. Homes on a well lose water when the power goes out unless the pump is on a <a href="/best-home-generator-for-power-outages/">generator</a> or battery backup. Homes on city water may keep pressure but lose safety if a main breaks or a treatment plant is flooded. Rain barrels, pools, hot water tanks and nearby streams are all possible sources, each with different risks.
+          </p>
+
+          <p>
+            Water in your hot water tank is usually the cleanest emergency source in the house, because it came from the treated supply before the problem started. Pool and rain barrel water is fine to filter for washing and, with a purifier or boiling, for drinking in a real emergency. Flood water is the worst source of all and should be avoided for drinking even with a filter.
+          </p>
+
+          <p>
+            Keep the filter with the rest of the outage supplies: <a href="/best-headlamp/">headlamps</a>, a <a href="/best-emergency-radio/">radio</a>, batteries and a <a href="/best-solar-power-bank/">power bank</a>. A filter in a hiking bag in the garage is no help if you cannot find it in the dark.
+          </p>
+        </div>
+
+        <div id="flow-capacity" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Flow Rate and Capacity: What the Numbers Mean
+          </h2>
+
+          <p>
+            Two numbers dominate portable filter listings: flow rate and capacity. Flow rate tells you how quickly clean water comes out, usually in litres per minute when new. Capacity tells you how many litres the filter can treat before it needs replacing. Both are measured under ideal conditions, with clear water and a new filter.
+          </p>
+
+          <p>
+            In real use, flow drops as the filter clogs with sediment. Clear water barely slows a hollow-fiber filter; muddy water can slow it to a trickle within a few litres. That is why backflushing or shaking matters: it pushes the trapped sediment back out and restores most of the flow. Filters that cannot be cleaned, like the GRAYL cartridge, slow down for good as they load.
+          </p>
+
+          <p>
+            Capacity figures for hollow-fiber filters are large, from hundreds to thousands of litres, and for most households the filter will outlast its pouches or bags. Purifier cartridges are rated for far less, often a few hundred uses, so budget for replacements if you choose a purifier for regular use.
+          </p>
+
+          <p>
+            The single best thing you can do for any filter's flow and life is to pre-filter dirty water. Let it settle in a bucket and pour the clearer water off the top, or pour it through a clean cloth or coffee filter first. It takes a minute and can double the useful life of the filter.
+          </p>
+        </div>
+
+        <div id="care" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Storage, Freezing and Maintenance
+          </h2>
+
+          <p>
+            Hollow-fiber filters have one serious weakness: freezing. Once a filter has been wet, water trapped in the fibers can expand as it freezes and crack them, leaving a filter that looks fine but lets bacteria through. If a wet filter may have frozen, the safe course is to replace it. In winter, keep it in an inside pocket or a warm room.
+          </p>
+
+          <p>
+            New, dry filters can be stored for years. For a kit filter, the simplest approach is to leave it sealed in its packaging until you need it. For a filter you also use for camping, backflush it with clean water after each trip, let it dry fully, and store it in a sealed bag.
+          </p>
+
+          <p>
+            Pouches and bags are the parts that wear out first. Squeeze pouches crack at the seams after heavy use, and gravity bags can puncture. Buy a spare pouch or bag for the kit, and inspect them before storm season.
+          </p>
+
+          <p>
+            Keep dirty and clean sides separate. The quickest way to defeat a good filter is to let dirty water drip onto the clean outlet or the mouth of the clean bottle. Mark the dirty bag or pouch, keep the clean side capped, and wash your hands before handling the clean side.
+          </p>
+        </div>
+
+        <div id="tap-water" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Can a Portable Filter Replace a Home Water Filter?
+          </h2>
+
+          <p>
+            No, and it is worth being clear about why. Portable filters are designed to remove microorganisms from untreated water. Home filters, such as <a href="/best-water-filter-pitcher/">pitcher filters</a>, under-sink systems and whole-house systems, are designed to reduce chlorine, taste, odour and specific contaminants such as lead from treated tap water. They solve different problems.
+          </p>
+
+          <p>
+            Most hollow-fiber portable filters do little for chlorine taste, lead or PFAS, because those are dissolved in the water and pass straight through a membrane that is sized to catch organisms. The GRAYL is the partial exception, because GRAYL lists reduction of some chemicals and heavy metals, but it is still not a substitute for a certified home system for everyday use.
+          </p>
+
+          <p>
+            So the right setup for most homes is both. A certified home filter, chosen from our <a href="/best-water-filtration-system-for-home/">home water filtration guide</a>, for everyday drinking water, and a portable filter in the emergency kit for when the tap stops or the supply is compromised.
+          </p>
+
+          <p>
+            If you only have room in the budget for one emergency purchase, stored water comes first, then a gravity filter for the household, then a purifier if your area floods. Each step covers a scenario the one before it does not.
+          </p>
+        </div>
+
+        <div id="verdict" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Which Portable Water Filter Should You Buy?
+          </h2>
+
+          <p>
+            For one filter that covers most situations, buy the Sawyer Squeeze. It is small, cheap and long-lasting, and it can drink, fill bottles and fill pots. Add a spare pouch and it is ready for a kit.
+          </p>
+
+          <p>
+            For a family, add the Platypus GravityWorks. Filtering eight litres at a time without effort is what makes a multi-day outage manageable.
+          </p>
+
+          <p>
+            If you live somewhere that floods, rely on a well, or travel to places with uncertain water, buy the GRAYL GeoPress as well, because it is the only option here rated for viruses. And put a LifeStraw Personal in every car and go-bag as a cheap last resort.
+          </p>
+
+          <p>
+            Whatever you buy, keep it with your stored water and outage supplies, keep it from freezing once used, and follow your local health authority's advice during any boil notice.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Assuming every filter removes viruses</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Most hollow-fiber filters are rated for bacteria and protozoa only. Viruses come mainly from human waste, which flood water and broken mains can carry. For that water, boil it, treat it chemically after filtering, or use a purifier rated for viruses.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Letting a used filter freeze</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Water trapped in a wet hollow-fiber filter can crack the fibers as it freezes, leaving a filter that looks fine but lets bacteria through. Keep used filters warm in winter, and replace any wet filter that may have frozen.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Filtering muddy water without pre-filtering</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Sediment clogs a filter fast and shortens its life. Let dirty water settle in a bucket and pour off the clearer top, or pour it through a cloth first. A minute of preparation can double how much water a filter treats.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Expecting a portable filter to fix tap water taste</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Portable filters target organisms, not chlorine, lead or other dissolved contaminants. For everyday tap water, a certified pitcher, faucet or under-sink filter does the job. Keep the portable filter for emergencies and untreated sources.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Treating a filter as a substitute for stored water</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A filter extends your stored water; it does not replace it. Store at least a gallon per person per day for several days, and use the filter once that runs low or for washing and cooking water.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best portable water filter?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most people the Sawyer Squeeze is the best all-round choice. Its 0.1-micron hollow fiber is rated for bacteria and protozoa, it threads onto pouches and ordinary bottles, it can be backflushed to restore flow, and it is small and inexpensive enough to keep in every emergency kit.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do portable water filters remove viruses?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Most do not. Hollow-fiber filters like the Sawyer, Katadyn BeFree, Platypus GravityWorks and LifeStraw Personal are rated for bacteria and protozoa. A purifier, such as the GRAYL GeoPress, is rated for viruses too. When viruses are a risk, boil the water or use a purifier.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I use a portable water filter during a boil water notice?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Follow your local health authority's instructions first; if they say boil, boil. A standard filter is not rated for viruses, so it does not replace boiling. A purifier rated for viruses, or a filter followed by chemical treatment, is the backup when boiling is impossible.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can a portable filter make flood water safe?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It is not recommended. Flood water can carry viruses, chemicals, fuel and sewage, and no filter on this list removes all of those. Use stored water, bottled water or water from your hot water tank instead, and treat flood water as unsafe to drink.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long does a portable water filter last?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Hollow-fiber filters are rated for hundreds to thousands of litres, and usually outlast their pouches and bags with care. Purifier cartridges are rated for far less. Freezing, heavy sediment and poor cleaning shorten any filter's life, so pre-filter and backflush as recommended.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a gravity filter better than a squeeze filter?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For a family, a gravity filter is easier because it treats litres at a time without effort. For one person or a kit bag, a squeeze filter is smaller and more flexible. Many households keep a gravity filter at home and squeeze or straw filters in cars and go-bags.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do portable water filters remove chlorine or lead?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Most hollow-fiber filters do not, because those contaminants are dissolved in the water and pass through a membrane sized for organisms. GRAYL lists reduction of some chemicals and heavy metals for the GeoPress. For everyday tap water, use a certified home water filter.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Water and Outage Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-water-filtration-system-for-home/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Water Filtration Systems for Home</h3>
+              <p class="text-gray-500 text-sm mt-2">Certified whole-house, under-sink and countertop systems for everyday tap water.</p>
+            </a>
+            <a href="/best-countertop-water-filter/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#38BDF8] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Countertop Water Filters</h3>
+              <p class="text-gray-500 text-sm mt-2">Gravity and faucet-diverter units compared on certification, capacity and flow.</p>
+            </a>
+            <a href="/best-solar-power-bank/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Solar Power Banks</h3>
+              <p class="text-gray-500 text-sm mt-2">Keep phones and lights charged through a long outage.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            A portable water filter is cheap insurance against the day the tap stops or the supply cannot be trusted. Buy on the job it needs to do: a filter for bacteria and protozoa, a purifier when viruses are possible, and a gravity system when a whole family needs water.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            For most homes that means a Sawyer Squeeze or Platypus GravityWorks in the outage kit, a LifeStraw in each car, and a GRAYL if your area floods, all stored next to the water you already keep.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Improvement" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
