@@ -169,3 +169,21 @@ gate results, and anything skipped. Never push a guide that failed a gate.
 - **One guide per run.** Never more.
 - Never edit an existing article except to add links to the new guide.
 - If today's guide already exists on `main` (the task fired twice), stop and report.
+
+## 8. Daily format catch-up (after the guide is live)
+
+`content/format-queue.json` lists existing pages that do not yet match the
+best-ranking format, highest traffic first. Each daily run, after the new guide is
+published:
+
+1. Take the first **20** slugs from the queue. Split them into two lists of 10 and
+   give each to a subagent with `.claude/skills/daily-amazon-guide/restructure-brief.md`
+   as its instructions (files are disjoint, so they can run in parallel; they must not
+   build, commit or push).
+2. When both report back, check `git diff --numstat` (changes should be almost all
+   additions), run `npm run validate:all` and the build, then commit, merge to `main`
+   and confirm the deploy, exactly as for the guide.
+3. Remove the finished slugs from `content/format-queue.json` in the same commit.
+   If a page could not be fixed, leave it at the end of the queue and say why in the
+   report.
+4. Include "format catch-up: N pages done, M left in queue" in the daily report.
