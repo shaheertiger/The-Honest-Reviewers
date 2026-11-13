@@ -63,6 +63,41 @@ article spec from `.claude/skills/daily-publish/SKILL.md` plus `products` and
 `picksAfter`. Each product needs `id, name, category, badge, rating, reviewCount,
 description, pros, cons, bottomLine, amazonUrl`.
 
+### Format to follow: the pages that hold their rankings
+
+Model every guide on `src/pages/best-vinyl-plank-flooring.astro`,
+`src/pages/best-gas-water-heater.astro` and `src/pages/how-to-get-oil-out-of-concrete.astro`.
+These are the site's best-ranking pages and they hold position. **Read at least one of
+them before writing.** What they do that generic roundups don't:
+
+- **Every H2 answers its own search query.** Sections are the questions people search
+  next to the main keyword: "X vs Y", "Is X waterproof?", "How to install X", "How to
+  clean X", "What size X do I need", "Why X fails and how to delay it". The heading
+  states the answer: "Wear Layer: The Only Durability Number That Matters",
+  "Is Vinyl Plank Waterproof? Yes, With One Caveat", "Fresh Spills: The First 30 Minutes".
+- **H3 subsections inside most H2s.** 2-5 per section: one per type ("SPC", "WPC",
+  "How to Choose"), per household size ("One to Two People", "Five or More"), or per
+  step ("Step 1: Blot, Never Wipe"). Use `{ "type": "h3" }` blocks. A section that is
+  just four paragraphs with no H3s is the old format, so don't write it that way.
+- **One explainer before the picks when the buyer needs it to choose.** The gas water
+  heater page puts "First Hour Rating" and venting types before the rankings
+  (`picksAfter: 2`); vinyl plank puts picks first (`picksAfter: 0`) and a comparison
+  table straight after. Pick whichever order lets the reader understand the ranking.
+- **A comparison table of the picks** (Product / Type / Key spec / Best for) as a
+  `table` block at the end of the section just before the picks, so the reader sees all the picks at a
+  glance.
+- **7 products where the category supports 7 real ones** (5 minimum). Each gets **5
+  pros, 3 cons** and a **200-235 word description**: who it is for, the one spec
+  that matters and why, the real trade-off, and when to buy something else.
+- **Title pattern:** `<N> Best <Product> in <year>: <the deciding factor>`, e.g.
+  "7 Best Gas Water Heaters in 2026: Tank Models Tested". Our daily guides have **no
+  lab data**, so never write "Tested" or "Tested & Ranked". Use the deciding factor
+  instead: "...in 2026: Wear Layer, Core and Real Waterproofing".
+- **FAQ is 6-7 real People-Also-Ask questions**, each answer 50-70 words, the first
+  one always "What is the best <product>?". **Mistakes: 4-5**, each named after
+  the behaviour ("Shopping by Gallons Instead of First Hour Rating").
+- **About 2,750-2,900 words of body prose**, the same as those pages.
+
 Rules (same house rules as `daily-publish`):
 
 - `published` is today. Section, voice and title pattern follow the cluster's pillar.
