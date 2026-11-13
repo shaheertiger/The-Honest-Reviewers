@@ -1,0 +1,922 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Refrigerator Brands",
+    "url": "/best-refrigerator-brands/"
+  },
+  {
+    "title": "Standard Refrigerator Dimensions",
+    "url": "/standard-refrigerator-dimensions/"
+  },
+  {
+    "title": "What Temperature Should a Refrigerator Be?",
+    "url": "/what-temperature-should-a-refrigerator-be/"
+  },
+  {
+    "title": "Best Countertop Ice Makers",
+    "url": "/best-countertop-ice-maker/"
+  },
+  {
+    "title": "Best Dishwashers",
+    "url": "/best-dishwasher/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-11-13", modified: "2026-11-13" });
+const title = "6 Most Reliable Refrigerator Brands in 2026: Simple Wins";
+const description =
+  "The most reliable refrigerator brands for 2026, with one simple model per brand and why layout, ice makers and compressor warranties matter more than the logo.";
+
+const PRODUCTS = [
+  {
+    "id": "ge-gte18gtnrww",
+    "name": "GE 17.5 cu. ft. Top-Freezer Refrigerator (GTE18GTNRWW)",
+    "category": "Top-Freezer, 28 in. Wide, 17.5 cu. ft.",
+    "badge": "Most Reliable Overall",
+    "amazonUrl": "#",
+    "pros": [
+      "Top-freezer layout with no door dispenser and no factory ice maker to fail",
+      "28-inch width fits older kitchens and apartments built around narrow openings",
+      "ENERGY STAR certified, per GE",
+      "GE parts and authorized service are easy to find in most of the country",
+      "Upfront temperature controls and LED lighting without a complicated control board"
+    ],
+    "cons": [
+      "17.5 cubic feet is tight for a family of four or more",
+      "Freezer on top means bending down for fresh food",
+      "Standard limited warranty is short, so read the coverage before you buy"
+    ],
+    "bottomLine": "The lowest-risk refrigerator from a major brand: a simple top-freezer with nothing extra to break and parts everywhere.",
+    "description": "If the only thing you care about is a refrigerator that keeps working, this is the shape it should take. The GE GTE18GTNRWW is a plain top-freezer with one compressor, two doors and no through-the-door ice or water. GE lists it at 17.5 cubic feet in a 28-inch-wide cabinet about 67 3/8 inches tall and 32 5/8 inches deep, which makes it one of the few full-size models that still fits the narrow openings in older kitchens, condos and rentals. Owners commonly report that this style of GE runs for years with nothing more than a coil cleaning, and when something does go wrong, GE has one of the largest service networks and parts supplies in the country, so a repair is usually a visit rather than a saga. The trade-off is space and convenience. At 17.5 cubic feet it suits one to three people, and the fresh food section sits low. There is no ice maker from the factory, which is a feature here rather than a flaw, since ice makers are among the most common service calls on any refrigerator. If you need more room, step up to a 30-inch top-freezer like the LG below; if you hate bending, the Whirlpool bottom-freezer gives you the same simplicity with fresh food at eye level."
+  },
+  {
+    "id": "lg-ltcs20020s",
+    "name": "LG 20 cu. ft. Top-Freezer Refrigerator (LTCS20020S)",
+    "category": "Top-Freezer, 30 in. Wide, Inverter Compressor",
+    "badge": "Best Compressor Warranty",
+    "amazonUrl": "#",
+    "pros": [
+      "Smart Inverter compressor that LG backs with a 10-year parts warranty, per LG",
+      "20.2 cubic feet in a standard 30-inch-wide opening",
+      "Simple top-freezer layout with no door dispenser",
+      "ENERGY STAR certified, per LG",
+      "Optional ice maker kit lets you decide whether to add the most service-prone part"
+    ],
+    "cons": [
+      "The long compressor warranty covers parts only, so labor is on you after year one",
+      "Amazon availability for large appliances comes and goes",
+      "Fewer storage options inside than pricier LG models"
+    ],
+    "bottomLine": "A simple top-freezer with a longer stated compressor warranty than most, for buyers who want 20 cubic feet without extra complexity.",
+    "description": "The LG LTCS20020S takes the most reliable layout, a top-freezer with no dispenser, and adds the one feature that LG puts its money behind: an inverter compressor. LG lists it at 20.2 cubic feet total, with about 14.7 cubic feet of fresh food and 5.5 cubic feet of freezer, in a 30-inch-wide cabinet. An inverter compressor ramps its speed up and down instead of switching hard on and off, and LG backs the Smart Inverter compressor with a 10-year parts warranty, which is far longer than the one-year coverage most refrigerators carry on everything else. Read that warranty carefully. It covers the compressor part, not the labor to replace it, and the rest of the refrigerator has the usual short limited warranty. LG has had well-publicized complaints about some of its earlier linear compressors in more complex models, so we lean toward this simple layout rather than LG's dispenser-heavy French doors when reliability is the goal. The ice maker is an optional kit, so you can leave it out entirely. Buy this if you want a 30-inch top-freezer with more room than the GE; buy the Frigidaire if the price gap matters more to you than the longer compressor warranty."
+  },
+  {
+    "id": "whirlpool-wrb329dmbm",
+    "name": "Whirlpool 30-inch Bottom-Freezer Refrigerator (WRB329DMBM)",
+    "category": "Bottom-Freezer, 30 in. Wide, About 18.7 cu. ft.",
+    "badge": "Best Bottom-Freezer",
+    "amazonUrl": "#",
+    "pros": [
+      "Fresh food at eye level without the extra doors and dispensers of a French door",
+      "Standard 30-inch width that drops into most top-freezer openings",
+      "No through-the-door dispenser to leak or jam",
+      "Whirlpool parts are widely stocked and shared across its Maytag and Amana brands",
+      "SpillGuard glass shelves contain small spills"
+    ],
+    "cons": [
+      "Pull-out freezer drawer has less usable space than its cubic feet suggest",
+      "Taller than many 30-inch top-freezers, so check under cabinets",
+      "Standard depth sticks out past the counters"
+    ],
+    "bottomLine": "The reliability-first way to get fresh food at eye level: a plain bottom-freezer from a brand with parts everywhere.",
+    "description": "A bottom-freezer is the next most reliable layout after a top-freezer, and the Whirlpool WRB329DMBM is a straightforward example. Whirlpool lists it as a 30-inch-wide bottom-freezer at about 18.7 cubic feet, with a pull-out freezer drawer below a single fresh food door. Retailer dimension guides put it at roughly 67 inches tall and about 33 3/8 inches deep including handles, so it is a little taller than many 30-inch top-freezers and it will stand proud of a standard countertop. The appeal for reliability is what is missing. There is one fresh food door rather than two, no through-the-door ice and water, and no extra convertible drawer with its own fan and controls. Whirlpool, which also owns Maytag, Amana and KitchenAid, shares many parts across those brands, and owners commonly report that common parts such as door gaskets, fans and thermistors are easy to get. The compromise is the freezer. Pull-out drawers swallow fewer boxes than a top-freezer shelf, and you will dig for things at the bottom. If you want more room in a 33-inch opening, Whirlpool sells a 22 cubic foot sibling, the WRB322DMBM. If you never bend for produce and rarely use the freezer, this is the reliability-first layout to buy."
+  },
+  {
+    "id": "frigidaire-fftr1835vw",
+    "name": "Frigidaire 18.3 cu. ft. Top-Freezer Refrigerator (FFTR1835VW)",
+    "category": "Top-Freezer, 30 in. Wide, Ice Maker Ready",
+    "badge": "Best Value",
+    "amazonUrl": "#",
+    "pros": [
+      "Simple top-freezer layout at one of the lowest prices from a major brand",
+      "18.3 cubic feet split into 13.4 fresh food and 4.9 freezer, per the spec sheet",
+      "Ice maker ready, so you add one only if you want it",
+      "30-inch width and about 66 3/8 inches tall fit most standard openings",
+      "Frigidaire parts and service are widely available"
+    ],
+    "cons": [
+      "One-year parts and labor warranty, per the maker's listing",
+      "Basic shelving and bins",
+      "Some listings mix up this model with the similar FFHT1835VW, so check the suffix"
+    ],
+    "bottomLine": "The budget route to a reliable layout: simple, widely serviced and cheap enough that a repair is rarely a crisis.",
+    "description": "Frigidaire is the value brand of Electrolux, and its basic top-freezers are the refrigerators landlords tend to buy by the dozen because they are simple, cheap and easy to service. The FFTR1835VW is the plain version of Frigidaire's 18.3 cubic foot top-freezer. The spec sheet splits that into 13.4 cubic feet of fresh food and 4.9 of freezer, in a cabinet 30 inches wide and about 66 3/8 inches tall with the hinge, and roughly 30 3/8 inches deep with the door. It ships without an ice maker but is ice maker ready, which is the arrangement we prefer on a reliability guide: you can live without the most service-prone part, or add the kit later. The warranty is the usual one year on parts and labor, so this is not the pick for buyers who want long written coverage; the LG above has a much longer compressor warranty. What you get instead is a low purchase price and a design with very little to go wrong. Owners commonly report that this style of Frigidaire runs quietly for years with only coil cleaning. Some Amazon listings blur this model with the near-identical FFHT1835VW, so confirm the model number before you order. Buy it for a rental, a second fridge or a tight budget."
+  },
+  {
+    "id": "amana-art318ffds",
+    "name": "Amana 18.2 cu. ft. Top-Freezer Refrigerator (ART318FFDS)",
+    "category": "Top-Freezer, 30 in. Wide, Stainless",
+    "badge": "Best Simple Stainless",
+    "amazonUrl": "#",
+    "pros": [
+      "Whirlpool-built top-freezer with very few features to fail",
+      "About 29 3/4 inches wide, 65 7/8 inches tall and 31 3/8 inches deep, per Amana",
+      "Stainless finish on an otherwise basic, low-cost design",
+      "Shares parts with the wider Whirlpool family",
+      "Optional ice maker kit rather than a factory unit"
+    ],
+    "cons": [
+      "Amana's spec sheet calls for a 15 or 20 amp circuit and planning clearances, like any fridge",
+      "Wire freezer shelf and basic bins",
+      "Fresh food section is only about 13 cubic feet"
+    ],
+    "bottomLine": "The plainest stainless top-freezer you can buy from a major parent company, with Whirlpool parts behind it.",
+    "description": "Amana is the entry brand of Whirlpool, and the ART318FFDS is about as stripped down as a full-size refrigerator gets. Retailers list roughly 18.2 cubic feet total, with about 13 cubic feet of fresh food and 5 of freezer, and Amana's own spec sheet gives the cabinet as about 65 7/8 inches tall, 29 3/4 inches wide and 31 3/8 inches deep, with the door needing almost 60 inches of depth when opened to 90 degrees. That last number is the one people forget when they plan a narrow galley kitchen, and it is a good example of why our guide to <a href=\"/standard-refrigerator-dimensions/\">standard refrigerator dimensions</a> tells you to measure the door swing as well as the box. The reliability case is the same as for the GE and Frigidaire: one compressor, a top freezer, mechanical simplicity and no dispenser. The advantage of Amana specifically is that it sits inside the Whirlpool parts system, so many common parts are shared with Whirlpool and Maytag models. It is not a premium product. Shelves are basic and the bins are plain. Buy it if you want a stainless top-freezer that does the job without paying for features, and skip it if you need more than about 13 cubic feet of fresh food."
+  },
+  {
+    "id": "bosch-b36cl80sns",
+    "name": "Bosch 800 Series 36-inch Counter-Depth French Door (B36CL80SNS)",
+    "category": "4-Door French Door, Counter-Depth, Dual Evaporators",
+    "badge": "Best Counter-Depth",
+    "amazonUrl": "#",
+    "pros": [
+      "Counter-depth cabinet that sits close to flush with standard counters",
+      "Dual evaporators keep fridge and freezer air separate, per Bosch",
+      "Internal water dispenser instead of a through-the-door unit",
+      "Bosch's reputation for solid build and quiet operation",
+      "Flex drawer for drinks or deli items"
+    ],
+    "cons": [
+      "Far more parts than any top- or bottom-freezer on this list",
+      "Service network is thinner than GE or Whirlpool in rural areas",
+      "Expensive, and counter-depth means less capacity, about 20.5 cubic feet"
+    ],
+    "bottomLine": "If you need counter-depth and French doors, this is the reliability-minded way to buy one: an internal dispenser and a premium build, accepting more complexity.",
+    "description": "Not everyone can live with a top-freezer. If your kitchen design calls for a counter-depth French door, the question becomes which version of a complex refrigerator carries the least risk, and the Bosch 800 Series B36CL80SNS is a reasonable answer. Bosch lists it at about 20.5 cubic feet in a 36-inch-wide, 72-inch-tall cabinet, with a four-door layout that includes a flex drawer. Two choices help reliability. The water dispenser is inside the fresh food compartment rather than through the door, so there is no door-mounted chute and heater to fail and no leak path through the door. And Bosch uses dual evaporators, which Bosch says keep freezer air out of the fresh food section. Even so, this refrigerator has more doors, more drawers, more fans and more electronics than anything else here, so it cannot be as simple as a top-freezer. Bosch's own warranty statement is in the Use and Care guide; retailers list one year of full coverage, with longer coverage on the sealed system, so confirm the terms before you buy. Service is the real caveat. Bosch technicians are common in cities and scarcer in rural areas. Our <a href=\"/best-refrigerator-brands/\">refrigerator brand guide</a> covers the Bosch 500 Series too, if you want a cheaper French door."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Most Reliable Refrigerator Brands",
+          item: "https://www.thehonestreviewers.com/most-reliable-refrigerator-brands/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the most reliable refrigerator brand?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No single brand wins every year or every style. For reliability, choose a simple layout from a brand with strong local service: GE, Whirlpool, Amana and Frigidaire top-freezers are the low-risk choices, and LG backs its inverter compressor with a long parts warranty. Our top pick is the GE GTE18GTNRWW, a plain top-freezer with no ice maker or dispenser."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which refrigerator style is the most reliable?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Top-freezer refrigerators are generally the most reliable because they have the fewest parts: two doors, one compressor and usually no dispenser. Bottom-freezers come next. Side-by-side and French door models usually add through-the-door ice and water dispensers and extra doors, which owners and repair technicians commonly link to more service calls."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are ice makers really that unreliable?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Ice makers are among the most common reasons a refrigerator needs service, because they rely on a water valve, fill tube, motor, heater and sensor. Hard water and low water pressure make problems more likely. If reliability matters most, buy a model without one or an ice maker ready model and add a kit only if you need it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is LG or Samsung more reliable for refrigerators?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Both brands sell many complex French door and four-door models with dispensers, and both have faced owner complaints about ice makers on some models. If you buy either brand for reliability, choose a simpler layout such as a top-freezer or bottom-freezer, compare compressor warranty terms and check whether an authorized technician is available near you."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long should a refrigerator last?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Many basic refrigerators run well past a decade with routine care such as cleaning the condenser coils and keeping door gaskets in good shape. Simpler layouts tend to last longer than feature-heavy ones. Repair costs, energy use and the age of the unit decide whether fixing an older refrigerator makes more sense than replacing it."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does a longer compressor warranty mean a more reliable refrigerator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Not necessarily, but it shows the maker's confidence and reduces your risk on the costliest part. Read the terms closely. Many long compressor warranties cover parts only, so you still pay the technician to open and recharge the sealed system. Compare parts and labor coverage separately for each model you are considering."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I buy an extended warranty on a refrigerator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on complexity. On a simple top-freezer with few parts, an extended plan rarely pays off. On a French door or side-by-side with a dispenser and ice maker, it can make more sense. Before buying, check who performs repairs, the deductible, and whether the plan replaces the unit after repeated failures."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Home Appliances",
+    tags: [
+      "most reliable refrigerator brands",
+      "most reliable refrigerator brand",
+      "most reliable refrigerators 2026",
+      "best refrigerator brands for reliability",
+      "reliable top freezer refrigerator",
+      "refrigerator compressor warranty"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Buyer's Guide
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Most Reliable <span class="text-[#38BDF8]">Refrigerator Brands</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          The most reliable refrigerator is usually the simplest one. Here are six brands and the one model from each that keeps the parts count low and the warranty clear.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#ge-gte18gtnrww"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Jump to the Rankings
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Shaheer Ali Khan</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Consumer Product Testing &amp; Materials Performance Specialist</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="9.4k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#what-makes-reliable" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. What Makes One Reliable</a>
+          <a href="#brand-by-brand" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Brand by Brand</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. The 6 Most Reliable, Ranked</a>
+          <a href="#most-reliable-style" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Most Reliable Style</a>
+          <a href="#compressors-warranty" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Compressors and Warranty</a>
+          <a href="#ice-makers" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Ice Makers</a>
+          <a href="#warranty-service" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Warranty and Service</a>
+          <a href="#make-it-last" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Make It Last</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Reliability in a refrigerator comes down to fewer parts: fewer doors, no dispenser, an optional ice maker, a clear compressor warranty and a technician nearby. Brand matters, but layout matters more.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="what-makes-reliable" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. What Makes a Refrigerator Reliable: Fewer Parts, Not a Badge
+          </h2>
+
+          <p>
+            Shoppers ask which brand is most reliable, but the honest answer starts with what is inside the box. A refrigerator is a sealed cooling loop, a compressor, a couple of fans, a defrost system and a control board. Every feature you add on top of that, an ice maker, a door dispenser, a fourth door, a Wi-Fi module, adds another part that can fail. A plain refrigerator from an average brand usually outlives a feature-heavy refrigerator from a good one.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Layout Matters More Than Logo</h3>
+
+          <p>
+            Top-freezer refrigerators have the simplest construction of any full-size style: one fresh food door, one freezer door, and cold air that falls naturally from the freezer into the fresh food section. Bottom-freezers add a drawer slide. Side-by-sides and French doors add more doors, more gaskets, more fans and, almost always, a through-the-door dispenser. Owners commonly report that the simpler the layout, the fewer service calls they see over the life of the appliance.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Ice Makers and Dispensers</h3>
+
+          <p>
+            If one feature explains most of the gap between a reliable refrigerator and an unreliable one, it is the ice and water system. Ice makers involve a water valve, a fill tube that can freeze, a motor, a heater and sensors, and dispensers add a door chute, a flap, a heater and another water line. Repair technicians consistently name ice makers and water valves among the most common refrigerator service calls. Every pick in this guide either skips the ice maker or makes it optional.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Compressor Type</h3>
+
+          <p>
+            Most refrigerators use either a conventional single-speed compressor or an inverter compressor that varies its speed. Inverter designs run more smoothly and use less energy, and some makers back them with long parts warranties. A conventional compressor is a mature, well-understood part that is easy for any technician to diagnose. Neither is automatically more reliable; what matters is the warranty that comes with it and whether a local technician can fix it.
+          </p>
+        </div>
+
+        <div id="brand-by-brand" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Most Reliable Refrigerator Brands, Brand by Brand
+          </h2>
+
+          <p>
+            We are not going to rank brands with invented failure percentages. Reliability surveys exist, but they change year to year and they vary by style within a single brand. What we can tell you is how each major brand's lineup is built, what its warranty covers and how easy it is to get serviced. For a broader look at every brand by kitchen type, see our guide to the <a href="/best-refrigerator-brands/">best refrigerator brands</a>; this page narrows the question to dependability.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">GE</h3>
+
+          <p>
+            GE Appliances sells everything from basic top-freezers to Monogram built-ins, and its simple models have a long reputation for running for years. GE's biggest reliability advantage is service: it has one of the largest technician networks in the country and parts are widely stocked. Its plain top-freezers are the safest choice in its lineup.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Whirlpool, Maytag and Amana</h3>
+
+          <p>
+            Whirlpool Corporation owns Whirlpool, Maytag, Amana and KitchenAid, and many parts are shared across those brands. That shared parts pool is a real advantage when something breaks. Amana is the stripped-down entry brand, Whirlpool the mainstream one, and Maytag leans on longer marketed warranties on some models, so read the specific model's terms.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Frigidaire</h3>
+
+          <p>
+            Frigidaire is the value brand of Electrolux. Its basic top-freezers are some of the cheapest full-size refrigerators from a major maker, and they are popular with landlords for exactly that reason. Its more complex models get more mixed owner reports, so the simple models are the ones to buy.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">LG and Samsung</h3>
+
+          <p>
+            LG and Samsung lead in features, styling and capacity, and both sell many French door and four-door models with dispensers, which raises the number of parts that can fail. LG backs its inverter compressors with long parts warranties. Both brands have faced owner complaints about ice makers on some complex models, so if you buy either for reliability, buy a simpler layout.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Bosch</h3>
+
+          <p>
+            Bosch focuses on counter-depth French doors with a premium build. Its refrigerators are well regarded for build quality and quiet running, but its service network is thinner than GE or Whirlpool outside major metro areas. Check for an authorized technician near you before buying.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Product</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Type</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Key spec</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Best for</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">GE GTE18GTNRWW</td>
+                    <td class="px-4 py-4 text-gray-700">Top-freezer</td>
+                    <td class="px-4 py-4 text-gray-700">17.5 cu. ft., 28 in. wide</td>
+                    <td class="px-4 py-4 text-gray-700">Lowest risk, narrow openings</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">LG LTCS20020S</td>
+                    <td class="px-4 py-4 text-gray-700">Top-freezer</td>
+                    <td class="px-4 py-4 text-gray-700">20.2 cu. ft., inverter compressor</td>
+                    <td class="px-4 py-4 text-gray-700">Longest compressor warranty</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Whirlpool WRB329DMBM</td>
+                    <td class="px-4 py-4 text-gray-700">Bottom-freezer</td>
+                    <td class="px-4 py-4 text-gray-700">About 18.7 cu. ft., 30 in. wide</td>
+                    <td class="px-4 py-4 text-gray-700">Fresh food at eye level</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Frigidaire FFTR1835VW</td>
+                    <td class="px-4 py-4 text-gray-700">Top-freezer</td>
+                    <td class="px-4 py-4 text-gray-700">18.3 cu. ft., ice maker ready</td>
+                    <td class="px-4 py-4 text-gray-700">Tight budgets and rentals</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Amana ART318FFDS</td>
+                    <td class="px-4 py-4 text-gray-700">Top-freezer</td>
+                    <td class="px-4 py-4 text-gray-700">18.2 cu. ft., stainless</td>
+                    <td class="px-4 py-4 text-gray-700">Simple stainless</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Bosch B36CL80SNS</td>
+                    <td class="px-4 py-4 text-gray-700">French door, counter-depth</td>
+                    <td class="px-4 py-4 text-gray-700">About 20.5 cu. ft., internal dispenser</td>
+                    <td class="px-4 py-4 text-gray-700">Counter-depth kitchens</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The 6 Most Reliable Refrigerators, One per Brand
+          </h2>
+
+          <p>
+            Each pick is a current model sold on Amazon, chosen as the simplest, lowest-risk refrigerator in its brand's lineup. Specs and warranty terms are the maker's or the listing's; we did not test these refrigerators.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="most-reliable-style" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Which Refrigerator Style Is Most Reliable? Top-Freezer, Then Bottom-Freezer
+          </h2>
+
+          <p>
+            If you are willing to choose a style for reliability rather than looks, the order is fairly consistent across what owners and repair technicians report. It follows the parts count almost exactly.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Top-Freezer</h3>
+
+          <p>
+            The top-freezer is the simplest and usually the cheapest to buy and to fix. One compressor, one evaporator, two doors and usually no dispenser. The downsides are ergonomics and capacity: fresh food sits low, and most top-freezers top out around 21 cubic feet.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Bottom-Freezer</h3>
+
+          <p>
+            A bottom-freezer puts fresh food at eye level and the freezer in a pull-out drawer. It adds drawer slides and a slightly more complex air path, but most models skip the door dispenser, so it stays close to a top-freezer for simplicity.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Side-by-Side</h3>
+
+          <p>
+            Side-by-sides almost always come with a through-the-door ice and water dispenser, and the ice maker sits inside a narrow freezer door. That combination brings more service calls. They make sense for narrow aisles because each door is half width, but they are not the reliability pick.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">French Door and Four-Door</h3>
+
+          <p>
+            French doors are the most popular style today and the most complex: two fresh food doors with a sealing flap between them, a freezer drawer, often an ice maker in the fresh food section and frequently a dispenser. If you want one, choose a model with an internal water dispenser or no dispenser at all, and treat a fourth door or flex drawer as another part that can fail.
+          </p>
+        </div>
+
+        <div id="compressors-warranty" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Inverter vs Conventional Compressors: What the Warranty Tells You
+          </h2>
+
+          <p>
+            The compressor is the heart of a refrigerator and the most expensive single part to replace. The type matters less than people think; the coverage matters more.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Conventional Compressors</h3>
+
+          <p>
+            A conventional compressor runs at one speed and cycles on and off. It is a proven design that any appliance technician can diagnose, and replacement parts are standard. Most basic top-freezers use one.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Inverter and Linear Compressors</h3>
+
+          <p>
+            Inverter compressors change speed to match the cooling load, which smooths temperatures and saves energy. LG, Samsung and others use them widely, and makers often back them with long parts-only warranties. LG, for example, states a 10-year parts warranty on its Smart Inverter compressor on the LTCS20020S.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Parts Only Versus Parts and Labor</h3>
+
+          <p>
+            A long compressor warranty usually covers the part, not the labor, and replacing a compressor means opening the sealed system and recharging refrigerant. That labor can be a large share of the repair bill. When you compare warranties, read whether each term covers parts, labor or both, and for how long.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">The Sealed System</h3>
+
+          <p>
+            Many makers give the sealed system, meaning the compressor, condenser, evaporator and tubing, longer coverage than the rest of the refrigerator. The length varies by brand and by model, so look at the warranty statement for the exact model number rather than the brand in general.
+          </p>
+        </div>
+
+        <div id="ice-makers" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Ice Makers: The Part Most Likely to Need Service
+          </h2>
+
+          <p>
+            If you want the single most effective reliability decision, skip the built-in ice maker or make it optional. It is the feature that owners and technicians most often name when a refrigerator needs a visit.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Why Ice Makers Fail</h3>
+
+          <p>
+            An ice maker depends on a water inlet valve, a fill tube that can freeze over, an ejector motor, a heater that frees the cubes and a sensor arm or optical sensor. Hard water scales up the valve and fill tube, and poor water pressure leaves cubes small or hollow. When an in-door ice maker is involved, door seals and heaters add more ways to fail.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Ice Maker Ready Is a Good Compromise</h3>
+
+          <p>
+            Several picks here, including the Frigidaire and the LG, are sold ice maker ready with an optional kit. You can run the refrigerator for years without one, and if you change your mind you can add it later. If the kit fails, the rest of the refrigerator keeps working.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">A Separate Ice Maker</h3>
+
+          <p>
+            Many households that skip the built-in unit use a countertop ice maker for parties and summer. It is cheaper to replace than a refrigerator repair, and it does not put a water line behind your fridge. Our guide to the <a href="/best-countertop-ice-maker/">best countertop ice makers</a> covers the options.
+          </p>
+        </div>
+
+        <div id="warranty-service" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Warranty and Service: Reliability Includes Getting It Fixed
+          </h2>
+
+          <p>
+            A reliable refrigerator is one that rarely breaks and gets fixed quickly when it does. The second half of that sentence depends on the brand's warranty and on who services it near you.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Standard Coverage</h3>
+
+          <p>
+            Most refrigerators carry a one-year limited warranty on parts and labor, with longer coverage on some parts. Frigidaire's FFTR1835VW, for example, lists one year on parts and labor. Read the exact model's warranty, not a brand summary, because coverage changes between product lines.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Local Technicians</h3>
+
+          <p>
+            Before you buy, search for an authorized service provider for that brand in your zip code. GE, Whirlpool and Frigidaire have broad networks; premium and imported brands may have only a few technicians in a region, which can stretch a repair from days to weeks.
+          </p>
+        </div>
+
+        <div id="make-it-last" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. How to Make Any Refrigerator Last Longer
+          </h2>
+
+          <p>
+            Brand and layout set the odds. Maintenance and installation decide a lot of the outcome. A few habits extend the life of any refrigerator, simple or complex.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Clean the Condenser Coils</h3>
+
+          <p>
+            Dust on the condenser coils makes the compressor run longer and hotter. Many makers recommend cleaning them periodically; check your manual for the location and interval, unplug the refrigerator first, and use a coil brush or vacuum attachment.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Give It the Clearance the Maker Asks For</h3>
+
+          <p>
+            Spec sheets commonly ask for a small gap at the sides and top and an inch or so at the back so heat can escape. A refrigerator jammed into an opening with no air space works harder. Our guide to <a href="/standard-refrigerator-dimensions/">standard refrigerator dimensions</a> explains how to measure for these gaps and for door swing.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Level It and Check the Gaskets</h3>
+
+          <p>
+            A refrigerator that leans forward may not close fully, and a torn or dirty door gasket lets warm air in. Level the unit per the installation guide and clean gaskets with mild soapy water. Close a dollar bill in the door; if it slides out easily, the seal needs attention.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Set the Right Temperature and Mind the Garage</h3>
+
+          <p>
+            Keep the fresh food section at the setting the maker recommends; our guide to <a href="/what-temperature-should-a-refrigerator-be/">what temperature a refrigerator should be</a> covers the targets. Garages that get very hot or cold can push a refrigerator outside its rated range unless the maker rates the model for garage use, so check the manual before you move one out there.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Repair or Replace</h3>
+
+          <p>
+            A failed fan, sensor, gasket or ice maker on a younger refrigerator is usually worth fixing. A sealed system failure on an old, out-of-warranty unit often is not. The same logic of simple designs and good service applies to other kitchen appliances; see our guides to the <a href="/best-dishwasher/">best dishwashers</a> and <a href="/how-long-do-dishwashers-last/">how long dishwashers last</a>.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            9. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying on Brand Name Alone</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Every major brand sells simple models and complex ones, and the complex ones break more often whatever the badge. Choose the layout first, then the brand. A plain top-freezer from an average brand is usually a safer bet than a four-door French door from a well-regarded one.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Paying for an Ice Maker You Rarely Use</h3>
+              <p class="text-gray-700 text-sm m-0">
+                If you buy a bag of ice twice a year, a built-in ice maker and dispenser add a water line, valve and motor that can fail and leak. Choose an ice maker ready model, or keep a countertop ice maker for parties, and leave the most service-prone part out of your refrigerator.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Reading the Compressor Warranty as Full Coverage</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A ten-year compressor warranty often covers the part only. The labor to replace a compressor and recharge the sealed system is a large share of the bill. Read whether each warranty term covers parts, labor or both, and keep the paperwork with the model and serial numbers.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring Who Will Fix It</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A reliable brand with no technician in your area turns a simple repair into weeks without a refrigerator. Before you buy, look up authorized service for that brand in your zip code. Brands with large service networks get you back up and running faster.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Jamming It Into the Opening</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Squeezing a refrigerator into a cabinet with no air gap makes the compressor run longer and hotter. Follow the clearance on the spec sheet for sides, top and back, and measure the door swing too. Ventilation is cheap insurance for the most expensive part.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the most reliable refrigerator brand?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                No single brand wins every year or every style. For reliability, choose a simple layout from a brand with strong local service: GE, Whirlpool, Amana and Frigidaire top-freezers are the low-risk choices, and LG backs its inverter compressor with a long parts warranty. Our top pick is the GE GTE18GTNRWW, a plain top-freezer with no ice maker or dispenser.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Which refrigerator style is the most reliable?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Top-freezer refrigerators are generally the most reliable because they have the fewest parts: two doors, one compressor and usually no dispenser. Bottom-freezers come next. Side-by-side and French door models usually add through-the-door ice and water dispensers and extra doors, which owners and repair technicians commonly link to more service calls.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are ice makers really that unreliable?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Ice makers are among the most common reasons a refrigerator needs service, because they rely on a water valve, fill tube, motor, heater and sensor. Hard water and low water pressure make problems more likely. If reliability matters most, buy a model without one or an ice maker ready model and add a kit only if you need it.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is LG or Samsung more reliable for refrigerators?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Both brands sell many complex French door and four-door models with dispensers, and both have faced owner complaints about ice makers on some models. If you buy either brand for reliability, choose a simpler layout such as a top-freezer or bottom-freezer, compare compressor warranty terms and check whether an authorized technician is available near you.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long should a refrigerator last?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Many basic refrigerators run well past a decade with routine care such as cleaning the condenser coils and keeping door gaskets in good shape. Simpler layouts tend to last longer than feature-heavy ones. Repair costs, energy use and the age of the unit decide whether fixing an older refrigerator makes more sense than replacing it.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Does a longer compressor warranty mean a more reliable refrigerator?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Not necessarily, but it shows the maker's confidence and reduces your risk on the costliest part. Read the terms closely. Many long compressor warranties cover parts only, so you still pay the technician to open and recharge the sealed system. Compare parts and labor coverage separately for each model you are considering.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Should I buy an extended warranty on a refrigerator?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It depends on complexity. On a simple top-freezer with few parts, an extended plan rarely pays off. On a French door or side-by-side with a dispenser and ice maker, it can make more sense. Before buying, check who performs repairs, the deductible, and whether the plan replaces the unit after repeated failures.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Refrigerator Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-refrigerator-brands/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Refrigerator Brands</h3>
+              <p class="text-gray-500 text-sm mt-2">Seven refrigerators across every layout, ranked by kitchen type.</p>
+            </a>
+            <a href="/standard-refrigerator-dimensions/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Sizing</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Standard Refrigerator Dimensions</h3>
+              <p class="text-gray-500 text-sm mt-2">Typical width, height and depth by style, and how to measure your space.</p>
+            </a>
+            <a href="/what-temperature-should-a-refrigerator-be/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#10B981] font-black text-xs uppercase tracking-widest mb-2">How-To</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">What Temperature Should a Refrigerator Be?</h3>
+              <p class="text-gray-500 text-sm mt-2">The settings that keep food safe without overworking the compressor.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The most reliable refrigerator brands are the ones that still sell simple refrigerators and stand behind them with parts and service. GE, Whirlpool, Amana and Frigidaire top-freezers are the low-risk choices; LG adds a long compressor warranty; Bosch is the reliability-minded way to go counter-depth.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Whatever you buy, skip features you will not use, read the warranty for your exact model, leave the clearance the maker asks for and clean the coils. Those choices do more for a refrigerator's lifespan than the badge on the door. For the full brand comparison, see our guide to the <a href="/best-refrigerator-brands/">best refrigerator brands</a>.
+          </p>
+        </div>
+
+        <MoreInCategory category="Home Appliances" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>

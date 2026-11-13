@@ -1,0 +1,915 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Mattresses",
+    "url": "/best-mattress/"
+  },
+  {
+    "title": "Best Mattress Protectors",
+    "url": "/best-mattress-protector/"
+  },
+  {
+    "title": "Best Mattress for Back Pain",
+    "url": "/best-mattress-for-back-pain/"
+  },
+  {
+    "title": "Best Mattress for Side Sleepers",
+    "url": "/best-mattress-for-side-sleepers/"
+  },
+  {
+    "title": "Best Mattress Brands",
+    "url": "/best-mattress-brands/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-11-13", modified: "2026-11-13" });
+const title = "6 Best Mattress Toppers in 2026: Material, Thickness and Feel";
+const description =
+  "The best mattress toppers compared on material, thickness and firmness, with picks for back pain, side sleepers and hot sleepers, and when a topper cannot help.";
+
+const PRODUCTS = [
+  {
+    "id": "viscosoft-select-high-density",
+    "name": "ViscoSoft Select High Density 3 Inch Memory Foam Topper",
+    "category": "3-Inch Memory Foam, Medium-Firm, Removable Cover",
+    "badge": "Best Overall",
+    "amazonUrl": "#",
+    "pros": [
+      "The listing specifies memory foam at over 3 lb per cubic foot, denser than most budget toppers",
+      "Described as medium-firm, so it adds pressure relief without a sunk-in feel",
+      "Removable, machine-washable cover fitted to the foam",
+      "Slip-resistant bottom and adjustable elastic straps help keep it in place",
+      "Sold from Twin through Cal King, plus Short King for RVs"
+    ],
+    "cons": [
+      "Still memory foam, so hot sleepers may want latex instead",
+      "Heavy and awkward to move once unrolled",
+      "Too firm for people who want a cloud-like feel"
+    ],
+    "bottomLine": "The most balanced foam topper: dense enough to last and support, soft enough to ease pressure points, with a cover that stays put.",
+    "description": "The ViscoSoft Select High Density is the topper we would point most people toward first, because it gets the one spec that predicts how a foam topper ages right: density. The listing specifies memory foam at over 3 pounds per cubic foot, which is noticeably denser than the 2 to 2.5 pound foam in many budget toppers. Denser foam holds its shape longer and does a better job of spreading weight instead of letting hips and shoulders punch straight through to the mattress below. ViscoSoft describes the feel as medium-firm, which sits in the middle of the range: enough give to soften a firm mattress, enough resistance that back and stomach sleepers do not end up in a hammock. The removable cover is machine washable, and the slip-resistant base and adjustable elastic straps address the most common complaint about foam toppers, which is that they creep toward the foot of the bed. It ships in Twin through Cal King, plus an RV-friendly Short King. The trade-off is heat. Dense memory foam holds warmth, and if you already wake up sweaty, a latex topper will suit you better. And if your mattress has a real dip in the middle, no topper of any density will level it; see the section on sagging mattresses below before you buy."
+  },
+  {
+    "id": "tempur-adapt-cooling",
+    "name": "Tempur-Pedic TEMPUR-Adapt + Cooling 3-Inch Topper",
+    "category": "3-Inch TEMPUR-ES Memory Foam, Medium, Cooling Cover",
+    "badge": "Best Premium Memory Foam",
+    "amazonUrl": "#",
+    "pros": [
+      "Three inches of Tempur-Pedic's own TEMPUR-ES material",
+      "Removable, machine-washable knit cover the listing markets as cooling",
+      "Corner straps to anchor it to the mattress",
+      "Sold in every common size from Twin to California King",
+      "Tempur-Pedic lists a 10-year limited warranty"
+    ],
+    "cons": [
+      "Costs several times as much as a basic foam topper",
+      "Owners commonly report it still sleeps warm for very hot sleepers",
+      "The foam core itself cannot be washed"
+    ],
+    "bottomLine": "The closest you can get to a Tempur-Pedic feel without buying the mattress, at a price that only makes sense if you will keep it for years.",
+    "description": "The TEMPUR-Adapt + Cooling is for the buyer who wants the Tempur-Pedic feel without replacing the mattress. It is three inches of TEMPUR-ES, the softer of the brand's proprietary memory foams, under a knit cover that the Amazon listing markets as a cooling upgrade over the standard topper. Tempur-Pedic describes the feel as medium, and the slow, close-hugging response is the reason people pay for it: shoulders and hips sink in gradually and the foam fills the gaps around the waist, which many side sleepers find comfortable on a mattress that feels too hard. The cover is removable and machine washable, though the foam core is not, and corner straps keep the topper from drifting. The brand lists a 10-year limited warranty, which is long for a topper and worth weighing against the price. That price is the main trade-off. It costs several times what the ViscoSoft does, and owners are split on temperature: the cooling cover helps at first touch, but the foam underneath is still memory foam, and some hot sleepers report it warms up through the night. If you run hot, look at the latex pick. If you want a firmer, more supportive surface for back pain, the ViscoSoft or a firm latex topper is the better fit for less money."
+  },
+  {
+    "id": "pure-green-latex",
+    "name": "Sleep On Latex Pure Green Natural Latex Topper",
+    "category": "Natural Latex, 1 to 3 Inch, Soft, Medium or Firm",
+    "badge": "Best Latex",
+    "amazonUrl": "#",
+    "pros": [
+      "Natural latex that the maker says contains no synthetic latex or fillers",
+      "GOLS organic certification, with Greenguard Gold and Oeko-Tex Standard 100 cited on the listings",
+      "Choice of soft, medium or firm in 1, 2 or 3 inch thicknesses",
+      "Springy, responsive feel that is easy to move on",
+      "Latex holds less heat than dense memory foam"
+    ],
+    "cons": [
+      "Owners note a natural rubber smell that takes time to fade",
+      "Base versions come without a cover, so plan for one",
+      "Not for anyone with a latex allergy"
+    ],
+    "bottomLine": "The best topper for hot sleepers and combination sleepers, and the only pick with a true firm option for back support.",
+    "description": "The Pure Green topper is the pick for people who have tried memory foam and disliked it. Natural latex feels different: instead of slowly sinking in, you get a buoyant, springy surface that pushes back, so turning over takes no effort and you never feel stuck. That responsiveness suits combination sleepers, and because latex is an open-celled material that does not soften with body heat, it generally sleeps cooler than dense memory foam. Sleep On Latex says the foam is made from natural latex with no synthetic latex or fillers, and the listings cite GOLS organic certification along with Greenguard Gold and Oeko-Tex Standard 100. The useful part is the range. It comes in soft, medium and firm, in 1, 2 and 3 inch thicknesses, and some listings add an organic cotton or jersey cover. That makes it the most flexible pick here: a 2 inch soft topper for a side sleeper on a firm bed, or a 2 or 3 inch firm topper for someone whose too-soft mattress leaves the lower back unsupported. The trade-offs are practical. Owners commonly mention a rubber smell that fades over days to weeks, the bare topper needs a cover or a protector, and it is not an option in a home where anyone has a latex allergy. It also costs more than foam."
+  },
+  {
+    "id": "sleep-innovations-dual-layer",
+    "name": "Sleep Innovations Dual Layer 4 Inch Gel Memory Foam Topper",
+    "category": "4-Inch, Gel Memory Foam Plus Fiberfill Pillow Top",
+    "badge": "Best 4-Inch",
+    "amazonUrl": "#",
+    "pros": [
+      "Four inches total: gel memory foam plus a fiberfill pillow-top cover",
+      "Offered as Ultra Soft (3 inch foam, 1 inch cover) or Medium Support (2 inch foam, 2 inch cover)",
+      "Removable, washable cover stretches over the bed like a fitted sheet",
+      "CertiPUR-US certified foam, per the listings",
+      "Listings state a 10-year manufacturer warranty"
+    ],
+    "cons": [
+      "Four inches of soft material is too much for most back and stomach sleepers",
+      "Needs deep-pocket sheets",
+      "Several versions with different layer splits, so it is easy to order the wrong one"
+    ],
+    "bottomLine": "The biggest change in feel for the money: it turns a hard mattress into a plush one, as long as you want plush.",
+    "description": "The Sleep Innovations Dual Layer is the topper to buy when the goal is a dramatic change, usually turning a firm guest bed, dorm mattress or aging innerspring into something plush. It stacks two parts: a layer of cooling gel memory foam and a quilted fiberfill pillow-top cover that fits over the foam and the mattress like a fitted sheet. Read the listing before ordering, because there are two main versions. The Ultra Soft pairs 3 inches of gel foam with a 1 inch fluffy cover, and the Medium Support pairs 2 inches of foam with a 2 inch cover; the second is the better choice for most adults. The listings describe the foam as CertiPUR-US certified and state a 10-year manufacturer warranty, and the cover is removable and washable, which matters on a topper this thick. The trade-off is the thickness itself. Four inches of soft material lets heavier hips sink well below the shoulders, and some owners report back discomfort for exactly that reason. Side sleepers and lighter adults tend to like it most. Back and stomach sleepers, and anyone buying a topper for back pain, should look at a thinner, firmer option instead. You will also need deep-pocket sheets to cover the added height."
+  },
+  {
+    "id": "linenspa-3-inch-gel",
+    "name": "Linenspa 3 Inch Gel Memory Foam Mattress Topper",
+    "category": "3-Inch Gel-Infused Memory Foam, Plush",
+    "badge": "Best Budget",
+    "amazonUrl": "#",
+    "pros": [
+      "One of the least expensive ways to add 3 inches of memory foam",
+      "Gel-infused foam that the maker says helps manage heat",
+      "CertiPUR-US certified foam",
+      "Sold in odd sizes including Full XL, Short Queen and Cot",
+      "Linenspa lists a 3-year limited warranty"
+    ],
+    "cons": [
+      "Plush feel is too soft for back pain or heavier sleepers",
+      "Lower-density foam is likely to soften faster than the ViscoSoft",
+      "Gel infusion does not stop memory foam from warming up"
+    ],
+    "bottomLine": "The right buy for a guest room, a dorm or a short-term fix, not for a primary bed you will sleep on for years.",
+    "description": "The Linenspa 3 inch gel topper is the budget pick, and it earns that spot by doing the basic job at a low price. It is a single layer of gel-infused memory foam that Linenspa describes as plush, meaning it hugs the body and gives a firm mattress a softer, sink-in surface. The foam is CertiPUR-US certified, it ships compressed and the maker says to allow 24 to 48 hours for it to reach full height, and it comes in more unusual sizes than most toppers, including Full XL, Short Queen and Cot. Linenspa also sells a 2 inch version, which it suggests for people who want a less conforming feel. Linenspa lists a 3-year limited warranty, shorter than the premium picks, and that is a fair signal of expected life. A topper at this price is not built from the dense foam in the ViscoSoft, so expect it to soften and develop impressions sooner, especially under heavier sleepers. The gel helps the surface feel cooler at first, but memory foam still holds heat. Buy it for a guest bed, a college dorm, a rental, or to test whether a topper fixes your problem before spending more. For your main bed, or for back pain, the extra money for a denser or firmer topper is well spent."
+  },
+  {
+    "id": "hyprest-pillow-top",
+    "name": "HYPREST Pillow Top Mattress Topper (Down Alternative)",
+    "category": "Fiber Fill Pillow Top, 400 Thread Count Cotton Top",
+    "badge": "Best Fiber Topper",
+    "amazonUrl": "#",
+    "pros": [
+      "Down-alternative fiber fill that the listing rates at 1300 GSM",
+      "100% cotton, 400 thread count top fabric",
+      "Deep elastic skirt the listing says fits mattresses up to 24 inches",
+      "No foam smell, no off-gassing period and no heat-trapping foam",
+      "Easy to lift, shake out and reposition"
+    ],
+    "cons": [
+      "Adds softness, not support, and compresses with use",
+      "The listing states it is not water resistant",
+      "Needs regular fluffing to stay even"
+    ],
+    "bottomLine": "A soft, breathable pillow top for people who dislike foam, best used to take the edge off a mattress that is only slightly too firm.",
+    "description": "Fiber toppers, sometimes called fiberbeds or pillow tops, are the third main type, and the HYPREST is a good example of what they do well. Instead of foam, it is a quilted cover filled with down-alternative polyester fiber, which the listing rates at 1300 GSM, a measure of how much fill is packed in per square meter. The top fabric is 100% cotton at 400 thread count, and a deep elastic skirt holds it on mattresses the listing says can be up to 24 inches deep. The result is a soft, airy layer that feels like sleeping on a thick duvet. It has no foam smell, needs no time to expand, and because fiber does not trap body heat the way memory foam does, it is a reasonable choice for people who sleep warm and only want a little extra softness. The trade-off is that fiber adds comfort, not support. It compresses under the heaviest parts of the body and over time it flattens, so it needs regular shaking and fluffing to stay even. It will not help a mattress that sags, and it is not the answer for back pain. The listing also states it is not water resistant, so put a protector over it. If you want softness and support together, a foam or latex topper is the better tool."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Mattress Toppers",
+          item: "https://www.thehonestreviewers.com/best-mattress-topper/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best mattress topper?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most people the best mattress topper is the ViscoSoft Select High Density 3 inch. Its memory foam is listed at over 3 pounds per cubic foot, it has a medium-firm feel that suits most sleeping positions, and its washable cover has straps and a non-slip base. Hot sleepers should choose the Pure Green latex topper instead."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the best mattress topper for back pain?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Many people with back pain prefer a medium-firm to firm topper about 2 to 3 inches thick, because it keeps the hips from sinking too far. A firm Pure Green latex topper or the dense ViscoSoft are good options. Avoid thick, plush toppers, which let the hips sink and can leave the lower back unsupported."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the best mattress topper for side sleepers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Side sleepers usually do best with a softer 3 inch memory foam or soft latex topper that lets the shoulder and hip sink in. The Tempur-Pedic TEMPUR-Adapt is the premium choice and the ViscoSoft the value choice. Lighter side sleepers on a very firm mattress may like the 4 inch Sleep Innovations Dual Layer."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a 2 or 3 inch mattress topper better?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A 3 inch topper suits most people, especially side sleepers who want pressure relief. A 2 inch topper is better if you like your mattress and want only a small change, if you sleep on your back or stomach, or if you are choosing a firm latex topper for added support. Four inches is for a dramatic softening."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can a mattress topper fix a sagging mattress?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. A topper takes the shape of the mattress beneath it, so it sinks into the same dip. It can make a firm or slightly worn mattress more comfortable, but it cannot restore support. If a straight edge laid across the bed shows a gap of more than about an inch and a half, replacement is usually the answer."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do cooling mattress toppers really work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Partly. Gel, graphite and cooling covers make the surface feel cooler when you first lie down, but owners commonly report the effect fades once memory foam warms up. Latex and fiber toppers are the more reliable choice for hot sleepers, because they hold less heat and let more air move through them."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Consumer Reports rate mattress toppers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We do not quote Consumer Reports results here. Instead, check the things any careful evaluation looks at: foam density, firmness, certifications such as CertiPUR-US or GOLS, how the topper stays in place, a washable cover, and a return window long enough to judge the feel over several weeks of normal sleep."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Bedroom & Sleep",
+    tags: [
+      "best mattress toppers",
+      "best mattress topper",
+      "best mattress topper for back pain",
+      "best mattress topper for side sleepers",
+      "best mattress toppers consumer reports",
+      "memory foam vs latex mattress topper"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Buyer's Guide
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          Best <span class="text-[#38BDF8]">Mattress Toppers</span>
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          A good topper can rescue a mattress that feels too firm, too warm or a little worn. The material and thickness decide whether it works, and no topper can fix a mattress that sags.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#viscosoft-select-high-density"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Jump to the Rankings
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="9.8k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#types" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. Memory Foam vs Latex vs Fiber</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. The 6 Best, Ranked</a>
+          <a href="#thickness" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. 2 vs 3 vs 4 Inch</a>
+          <a href="#sagging" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Can a Topper Fix Sagging?</a>
+          <a href="#back-side" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. Back Pain and Side Sleepers</a>
+          <a href="#cooling" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. Cooling Toppers</a>
+          <a href="#what-to-look-for" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. What to Check on the Label</a>
+          <a href="#verdict" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. Which to Buy</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          A mattress topper is the cheapest way to change how a bed feels, and one of the easiest to get wrong. Pick the material for your main complaint, the thickness for your body and sleeping position, and be honest about whether the mattress underneath is still sound.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="types" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. Memory Foam vs Latex vs Fiber Toppers: Pick the Material First
+          </h2>
+
+          <p>
+            The single biggest decision with a mattress topper is the material, because it decides how the bed feels, how warm it sleeps and how long the topper lasts. There are three main types, and each solves a different problem.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Memory Foam: Slow Sink and Close Contouring</h3>
+
+          <p>
+            Memory foam softens with body heat and pressure, so it molds slowly around shoulders and hips. That close contouring is why it is the most popular topper material, and why many side sleepers like it on a firm mattress. The downsides are heat, since the same heat-softening property means it holds warmth, and a slightly stuck feeling when you change position. Density is the spec to check. Foam at 3 pounds per cubic foot or more generally keeps its shape far longer than the 2 to 2.5 pound foam in budget toppers.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Latex: Buoyant, Responsive and Cooler</h3>
+
+          <p>
+            Latex is made from rubber tree sap (natural latex) or synthetic rubber, and it feels springy rather than slow. You sink in a little, but the material pushes back, so turning over is easy. It does not soften with heat, it generally sleeps cooler than memory foam, and natural latex tends to outlast most foams. It costs more, it is heavy, and it is not an option for anyone with a latex allergy. Latex is also the easiest material to find in a true firm, which matters for back support.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Fiber and Down Alternative: Soft Comfort, Little Support</h3>
+
+          <p>
+            Fiber toppers are quilted covers stuffed with polyester fill, sometimes sold as fiberbeds or pillow tops. They feel like sleeping on a thick comforter, they breathe well and they have no foam smell. They add plushness but almost no support, and they flatten with use, so they work best on a mattress that is only slightly too firm.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">How the Picks Compare</h3>
+
+          <p>
+            The table sets out every pick by material, key spec and the sleeper it suits.
+          </p>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Product</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Type</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Key spec</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Best for</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">ViscoSoft Select High Density</td>
+                    <td class="px-4 py-4 text-gray-700">Memory foam</td>
+                    <td class="px-4 py-4 text-gray-700">3 in, over 3 lb/ft³ density</td>
+                    <td class="px-4 py-4 text-gray-700">Most sleepers</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Tempur-Pedic TEMPUR-Adapt + Cooling</td>
+                    <td class="px-4 py-4 text-gray-700">Memory foam</td>
+                    <td class="px-4 py-4 text-gray-700">3 in TEMPUR-ES, medium</td>
+                    <td class="px-4 py-4 text-gray-700">Side sleepers wanting a premium feel</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Pure Green Natural Latex</td>
+                    <td class="px-4 py-4 text-gray-700">Latex</td>
+                    <td class="px-4 py-4 text-gray-700">1-3 in, soft, medium or firm</td>
+                    <td class="px-4 py-4 text-gray-700">Hot sleepers and back support</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Sleep Innovations Dual Layer</td>
+                    <td class="px-4 py-4 text-gray-700">Memory foam plus fiber</td>
+                    <td class="px-4 py-4 text-gray-700">4 in total</td>
+                    <td class="px-4 py-4 text-gray-700">Softening a very hard bed</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Linenspa 3 Inch Gel</td>
+                    <td class="px-4 py-4 text-gray-700">Memory foam</td>
+                    <td class="px-4 py-4 text-gray-700">3 in, plush</td>
+                    <td class="px-4 py-4 text-gray-700">Guest rooms and dorms</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">HYPREST Pillow Top</td>
+                    <td class="px-4 py-4 text-gray-700">Fiber</td>
+                    <td class="px-4 py-4 text-gray-700">1300 GSM fill, cotton top</td>
+                    <td class="px-4 py-4 text-gray-700">Light softness without foam</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. The 6 Best Mattress Toppers, Ranked
+          </h2>
+
+          <p>
+            Every topper below is a current model sold on Amazon. Specs come from the maker's listing, and we ranked them for the most common job a topper does: making a sound but uncomfortable mattress feel right.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="thickness" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. 2 vs 3 vs 4 Inch Toppers: Thickness Decides How Much the Bed Changes
+          </h2>
+
+          <p>
+            Thickness is the second decision, and it controls how much of the original mattress you still feel. A thin topper fine-tunes the surface. A thick one replaces it. Most buyers are best served by 2 or 3 inches, and 4 inches is a specialist choice.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">2 Inch: A Tweak, Not a Transformation</h3>
+
+          <p>
+            Two inches is enough to take the hard edge off a firm mattress or add a little give at the shoulders while keeping the support of the bed underneath. It is the right thickness for back and stomach sleepers, for a latex topper in a firm grade, and for anyone who mostly likes their mattress and wants a small change. It also adds the least height, so standard sheets usually still fit.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">3 Inch: The Default for Most People</h3>
+
+          <p>
+            Three inches is where most memory foam toppers sit, and for good reason. It is thick enough that side sleepers feel real pressure relief at the hips and shoulders, and thin enough that the mattress below still provides support. If you are unsure, a 3 inch topper in a medium feel is the safest starting point.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">4 Inch: For a Big Change in Feel</h3>
+
+          <p>
+            Four-inch toppers are for turning a hard mattress into a plush one, or for lightweight side sleepers who want deep cushioning. The risk is that heavier body parts sink too far, so the hips drop below the shoulders and the spine bends. Back and stomach sleepers and heavier adults usually do better with a thinner, firmer topper. Four inches also needs deep-pocket sheets.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Match Thickness to Body Weight</h3>
+
+          <p>
+            As a rough rule, lighter sleepers need more thickness to feel any difference, because they do not compress the foam much. Heavier sleepers compress a topper further and are more likely to bottom out through a soft one, so a denser material matters more than extra inches. Our guide to the <a href="/best-mattress-for-heavy-people/">best mattress for heavy people</a> covers why support has to come from the mattress, not the topper.
+          </p>
+        </div>
+
+        <div id="sagging" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Can a Topper Fix a Sagging Mattress? No, and Here Is Why
+          </h2>
+
+          <p>
+            This is the most common reason people shop for a topper, and the honest answer is that a topper cannot fix a sagging mattress. It can change how the surface feels. It cannot change the shape of what is underneath it.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Why a Topper Follows the Dip</h3>
+
+          <p>
+            A topper is a soft layer laid on top of the mattress, so it takes the shape of the surface below. If the mattress has a body impression or a trough in the middle, the topper sinks into the same dip, and you still roll toward it. A thick soft topper can even make it worse, because it lets you sink further into the low spot.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">What a Topper Can Fix</h3>
+
+          <p>
+            A topper is the right tool when the mattress is structurally sound but feels wrong: too firm, too bouncy, a little worn on top, or too warm. It can also stretch a flat but tired mattress for a year or two.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">How to Check for Real Sag</h3>
+
+          <p>
+            Strip the bed and lay a broom handle or a straight board across the mattress where you sleep. Measure the gap between the board and the surface. A gap of more than about an inch and a half usually means the mattress is past saving, and many warranties set their own sag limits, so check yours. Also check the foundation, since a broken slat or a bowed box spring can look like a sagging mattress.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">When It Is Time to Replace</h3>
+
+          <p>
+            If the mattress sags, a new mattress is the fix. Our <a href="/best-mattress/">best mattress guide</a> covers the main types and how to choose, and <a href="/mattress-prices-and-deals/">mattress prices and deals</a> explains what a fair price looks like and when the big sales tend to run.
+          </p>
+        </div>
+
+        <div id="back-side" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. Toppers for Back Pain and Side Sleepers: Firm for One, Soft for the Other
+          </h2>
+
+          <p>
+            Back pain and side sleeping call for close to opposite toppers, which is why one topper rarely suits both. The goal in both cases is a straight, neutral spine.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Back Pain: Support First</h3>
+
+          <p>
+            For back pain, many people prefer a medium-firm to firm topper that stops the hips sinking too far. If your mattress is too soft and you wake with a sore lower back, a 2 or 3 inch firm latex topper or a dense medium-firm memory foam like the ViscoSoft may help by adding a more supportive surface. A thick, plush topper usually makes this worse. Toppers are a comfort aid, not a treatment, so talk to your doctor or physical therapist about persistent pain. Our <a href="/best-mattress-for-back-pain/">best mattress for back pain</a> guide covers the mattress side of the question.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Side Sleepers: Room for the Shoulder and Hip</h3>
+
+          <p>
+            Side sleepers put most of their weight through two narrow points, the shoulder and the hip. On a firm mattress those points press hard and the waist hangs unsupported. A softer 3 inch memory foam topper, or a soft latex topper, lets the shoulder and hip sink in so the spine stays level. See our <a href="/best-mattress-for-side-sleepers/">best mattress for side sleepers</a> guide if the mattress itself is the problem.
+          </p>
+        </div>
+
+        <div id="cooling" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. Cooling Toppers: Material Matters More Than Gel
+          </h2>
+
+          <p>
+            Heat is the most common complaint about mattress toppers, and almost all of it is about memory foam.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Why Memory Foam Sleeps Warm</h3>
+
+          <p>
+            Memory foam works by softening with body heat, and dense foam has small cells that let little air through. You sink in, the foam closes around you and holds warmth against your body.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">What Gel, Copper and Cooling Covers Do</h3>
+
+          <p>
+            Gel beads, graphite and copper infusions, and cooling covers can make the surface feel cooler to the touch when you first lie down. Owners commonly report the effect fades once the foam has warmed through. They help a little, but they do not turn memory foam into a cool material.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">The Cooler Choices</h3>
+
+          <p>
+            If you sleep hot, choose latex or fiber. Latex has an open structure, does not soften with heat and does not hug the body as closely, so air moves more freely. Fiber toppers breathe well too. Breathable bedding and a cool bedroom matter as much as the topper; a room that is too humid feels warmer, and our <a href="/best-dehumidifier-for-bedroom/">bedroom dehumidifier guide</a> covers that side of it.
+          </p>
+        </div>
+
+        <div id="what-to-look-for" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Mattress Toppers and Consumer Reports: What to Check on the Label Instead
+          </h2>
+
+          <p>
+            Many shoppers search for the best mattress toppers from Consumer Reports. We have not used any Consumer Reports results in this guide, and we do not quote ratings from it. What we can do is explain the things any careful product evaluation looks at, so you can judge a listing yourself.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Density and Firmness</h3>
+
+          <p>
+            For memory foam, density in pounds per cubic foot is the best predictor of durability: 3 pounds or more is a good sign, and makers who state it are usually confident in it. Firmness is described in words such as plush, medium or firm, and those terms are not standardized between brands, so read them as a rough guide and check the return policy.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Certifications</h3>
+
+          <p>
+            CertiPUR-US covers foam made without certain chemicals and with limits on emissions. GOLS covers organic latex, and Oeko-Tex Standard 100 covers textiles tested for harmful substances. Greenguard Gold covers chemical emissions. None of them tells you how comfortable or durable a topper is, but they are a useful filter.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Fit, Straps and Covers</h3>
+
+          <p>
+            A topper that slides is a topper you will stop using. Look for elastic straps, a fitted skirt or a non-slip base, and a removable, washable cover. Check the thickness against your sheet pocket depth, and put a protector over the topper, not under it, since most foam cores cannot be washed. Our <a href="/best-mattress-protector/">best mattress protector guide</a> covers which types breathe well over foam.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Returns and Warranty</h3>
+
+          <p>
+            Feel is personal, so the return window matters more than almost any spec. Amazon's return policy and the maker's own trial can differ, so read both. Warranty length, from about 3 years on budget foam to 10 years on premium toppers, is a rough signal of how long the maker expects it to last.
+          </p>
+        </div>
+
+        <div id="verdict" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Which Mattress Topper Should You Buy?
+          </h2>
+
+          <p>
+            Start from the problem you are trying to solve, not the price.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">If Your Mattress Is Too Firm</h3>
+
+          <p>
+            Buy the ViscoSoft Select High Density for a balanced upgrade, or the Tempur-Pedic TEMPUR-Adapt if you want the softest, closest hug and will keep it for years. The Sleep Innovations Dual Layer is the choice for a dramatic change.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">If You Sleep Hot or Want Back Support</h3>
+
+          <p>
+            Buy the Pure Green latex topper: soft for side sleepers, firm for back support. If you only want a little extra softness without foam, the HYPREST pillow top breathes well and costs less.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">If It Is for a Guest Room or Dorm</h3>
+
+          <p>
+            The Linenspa 3 inch gel topper does the job for little money. And if the mattress sags, skip the topper and read our <a href="/best-mattress-brands/">best mattress brands</a> guide before you shop for a replacement.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            9. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying a Topper to Fix a Sagging Mattress</h3>
+              <p class="text-gray-700 text-sm m-0">
+                A topper follows the shape of the mattress beneath it, so it sinks into the same dip. Check for sag with a straight edge first. If the gap is more than about an inch and a half, the money is better spent toward a new mattress.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Choosing the Thickest, Softest Topper for Back Pain</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Thick, plush toppers let the hips sink below the shoulders, which many people with back pain find makes mornings worse. A thinner medium-firm or firm topper usually suits back and stomach sleepers better.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Paying Extra for Gel and Expecting a Cool Bed</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Gel and cooling covers make memory foam feel cooler at first touch, but the foam still warms up. If you sleep hot, latex or fiber is the more reliable fix.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Ignoring Foam Density</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Two toppers with the same thickness can last very different lengths of time. Look for the stated density, and treat a listing that hides it with some caution.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Skipping the Protector</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Most foam cores cannot be washed. Without a protector over the topper, sweat and spills soak straight into the foam, and that is usually the end of it.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best mattress topper?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most people the best mattress topper is the ViscoSoft Select High Density 3 inch. Its memory foam is listed at over 3 pounds per cubic foot, it has a medium-firm feel that suits most sleeping positions, and its washable cover has straps and a non-slip base. Hot sleepers should choose the Pure Green latex topper instead.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best mattress topper for back pain?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Many people with back pain prefer a medium-firm to firm topper about 2 to 3 inches thick, because it keeps the hips from sinking too far. A firm Pure Green latex topper or the dense ViscoSoft are good options. Avoid thick, plush toppers, which let the hips sink and can leave the lower back unsupported.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best mattress topper for side sleepers?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Side sleepers usually do best with a softer 3 inch memory foam or soft latex topper that lets the shoulder and hip sink in. The Tempur-Pedic TEMPUR-Adapt is the premium choice and the ViscoSoft the value choice. Lighter side sleepers on a very firm mattress may like the 4 inch Sleep Innovations Dual Layer.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a 2 or 3 inch mattress topper better?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A 3 inch topper suits most people, especially side sleepers who want pressure relief. A 2 inch topper is better if you like your mattress and want only a small change, if you sleep on your back or stomach, or if you are choosing a firm latex topper for added support. Four inches is for a dramatic softening.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can a mattress topper fix a sagging mattress?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                No. A topper takes the shape of the mattress beneath it, so it sinks into the same dip. It can make a firm or slightly worn mattress more comfortable, but it cannot restore support. If a straight edge laid across the bed shows a gap of more than about an inch and a half, replacement is usually the answer.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do cooling mattress toppers really work?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Partly. Gel, graphite and cooling covers make the surface feel cooler when you first lie down, but owners commonly report the effect fades once memory foam warms up. Latex and fiber toppers are the more reliable choice for hot sleepers, because they hold less heat and let more air move through them.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Does Consumer Reports rate mattress toppers?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                We do not quote Consumer Reports results here. Instead, check the things any careful evaluation looks at: foam density, firmness, certifications such as CertiPUR-US or GOLS, how the topper stays in place, a washable cover, and a return window long enough to judge the feel over several weeks of normal sleep.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Mattress and Sleep Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-mattress/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Mattresses</h3>
+              <p class="text-gray-500 text-sm mt-2">Foam, hybrid and innerspring mattresses compared, and how to choose the right firmness.</p>
+            </a>
+            <a href="/best-mattress-protector/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#38BDF8] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Mattress Protectors</h3>
+              <p class="text-gray-500 text-sm mt-2">Waterproof, breathable and encasement protectors to keep a topper and mattress clean.</p>
+            </a>
+            <a href="/best-mattress-for-back-pain/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Mattress for Back Pain</h3>
+              <p class="text-gray-500 text-sm mt-2">Firmness and support for back and stomach sleepers.</p>
+            </a>
+            <a href="/best-mattress-for-side-sleepers/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#38BDF8] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Mattress for Side Sleepers</h3>
+              <p class="text-gray-500 text-sm mt-2">Pressure relief at the shoulder and hip without losing support.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            A mattress topper is a good fix for a sound mattress that feels too firm, too warm or a little tired. Choose the material for your main complaint, keep the thickness to 2 or 3 inches unless you want a dramatic change, and put a protector over it.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            For most beds that means the ViscoSoft Select High Density, a Pure Green latex topper for hot sleepers or back support, and a new mattress, not a topper, when the old one sags.
+          </p>
+        </div>
+
+        <MoreInCategory category="Bedroom & Sleep" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
