@@ -1,4 +1,5 @@
 import { execSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 
 /**
  * Publication and modification dates taken from git history at build time, so
@@ -16,14 +17,30 @@ interface Entry {
 function readGitDates(): Record<string, Entry> {
   const out: Record<string, Entry> = {};
   try {
-    const raw = execSync(
-      'git log --pretty=format:%x01%cI --name-only --diff-filter=AMR -- src/pages',
-      { encoding: 'utf8', maxBuffer: 128 * 1024 * 1024, stdio: ['ignore', 'pipe', 'ignore'] },
-    );
+    const run = (cmd: string) =>
+      execSync(cmd, { encoding: 'utf8', maxBuffer: 128 * 1024 * 1024, stdio: ['ignore', 'pipe', 'ignore'] });
+    // In a shallow clone (Vercel's default) the oldest commit has no parent, so
+    // git reports every file that existed then as "added" in that commit. Those
+    // dates are false: without this guard every page claimed to be published and
+    // modified on the day of the boundary commit. Skip boundary commits; files
+    // last touched before them fall back to the dates declared on the page.
+    const boundary = new Set<string>();
+    try {
+      if (run('git rev-parse --is-shallow-repository').trim() === 'true') {
+        const shallowFile = run('git rev-parse --git-path shallow').trim();
+        for (const sha of readFileSync(shallowFile, 'utf8').split('\n')) {
+          if (sha.trim()) boundary.add(sha.trim());
+        }
+      }
+    } catch {
+      // not shallow, or no shallow file: nothing to skip
+    }
+    const raw = run('git log --pretty=format:%x01%H%x20%cI --name-only --diff-filter=AMR -- src/pages');
     for (const block of raw.split('\x01')) {
       const lines = block.split('\n').filter(Boolean);
       if (lines.length === 0) continue;
-      const iso = lines[0].trim();
+      const [sha, iso = ''] = lines[0].trim().split(' ');
+      if (boundary.has(sha)) continue;
       const date = iso.slice(0, 10);
       if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) continue;
       for (const file of lines.slice(1)) {
