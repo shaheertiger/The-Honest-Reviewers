@@ -74,6 +74,7 @@ const priorityGuides = new Set([
   'best-headlamp',
   'best-portable-water-filter',
   'best-generator-cover',
+  'best-water-filter-for-well-water',
   'best-water-test-kit',
   // November 2026: dehumidifier buyer's guide batch (Amazon-focused).
   'best-commercial-dehumidifier',
