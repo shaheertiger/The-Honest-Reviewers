@@ -79,6 +79,7 @@ const priorityGuides = new Set([
   'best-whole-house-water-filter',
   'best-cordless-vacuum-for-hardwood-floors',
   'best-handheld-vacuum',
+  'best-gas-tankless-water-heater',
   'best-water-test-kit',
   // November 2026: dehumidifier buyer's guide batch (Amazon-focused).
   'best-commercial-dehumidifier',
