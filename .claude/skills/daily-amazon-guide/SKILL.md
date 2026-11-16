@@ -34,6 +34,18 @@ and do not fall back to an old CSV.
 
 ## 2. Pick the niche and the guide
 
+**Seed keywords first.** `content/semrush/seed-keywords.csv` holds Semrush-researched
+"best X" gaps (cluster volume, KD, notes), ranked by priority. Take the
+highest-priority row with `status` = `open` whose niche is getting traffic this
+week (generators/outage power, cordless tools, and so on). Re-check that the slug and
+the primary keyword are still free (`ls src/pages`, `grep -rlF '"<keyword>"' src/pages`),
+read the row's `notes`, and confirm at least 5 real products are sold on Amazon. If
+so, that is today's guide: use the primary keyword as `tags[0]` and work the
+`top_variants` into H2s and FAQs. In the same commit as the guide, set the row's
+`status` to `done <date>`. If the row fails a check, set `status` to
+`skipped: <reason>` and try the next row. Only when no open row fits, fall back to
+the traffic-gap method below.
+
 1. Take the top pages in order. For each, its niche is the product category it is
    about (`/best-solar-power-bank` → solar / outage power; `/how-to-get-oil-out-of-concrete`
    → oil on concrete; `/milwaukee-vs-dewalt` → cordless tools).
