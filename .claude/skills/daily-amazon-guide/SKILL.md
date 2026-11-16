@@ -41,7 +41,10 @@ week (generators/outage power, cordless tools, and so on). Re-check that the slu
 the primary keyword are still free (`ls src/pages`, `grep -rlF '"<keyword>"' src/pages`),
 read the row's `notes`, and confirm at least 5 real products are sold on Amazon. If
 so, that is today's guide: use the primary keyword as `tags[0]` and work the
-`top_variants` into H2s and FAQs. In the same commit as the guide, set the row's
+`top_variants` into H2s and FAQs. If the row has a `keyword_file` (a full Semrush export
+for that guide), read it: use its highest-volume variants for H2s and its question
+keywords (what/how/is/are/do/can...) for the FAQ, and stay inside the row's `notes`
+so sibling pages are not cannibalised. In the same commit as the guide, set the row's
 `status` to `done <date>`. If the row fails a check, set `status` to
 `skipped: <reason>` and try the next row. Only when no open row fits, fall back to
 the traffic-gap method below.
