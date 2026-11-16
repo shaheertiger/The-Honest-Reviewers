@@ -603,18 +603,58 @@ const spokePick = pickPillar
         var links = document.querySelectorAll('a[href*="amazon.com/dp/"][href*="#alt="]');
         for (var i = 0; i < links.length; i++) {
           var a = links[i];
-          if (a.closest("[data-layout-sticky],[data-pick-sticky]")) continue;
+          if (a.closest("[data-layout-sticky],[data-pick-sticky],[data-qp-sticky]")) continue;
           var name;
           try { name = decodeURIComponent(a.getAttribute("href").split("#alt=")[1]); } catch (e) { continue; }
           if (!name) continue;
           var note = document.createElement("span");
+          var parent = a.parentElement;
           if (window.getComputedStyle(a).display === "inline") {
             // A link inside running text: keep the note in the sentence.
             note.className = "text-xs text-gray-500";
             note.textContent = " (not sold on Amazon under this model; the link opens the closest alternative: " + name + ")";
-          } else {
-            note.className = "block mt-2 text-xs leading-snug text-gray-500 font-normal normal-case tracking-normal text-center";
-            note.textContent = "Not sold on Amazon under this model. The button opens the closest alternative: " + name + ".";
+            a.insertAdjacentElement("afterend", note);
+            continue;
+          }
+          note.className = "block mt-2 text-xs leading-snug text-gray-500 font-normal normal-case tracking-normal text-center";
+          note.textContent = "Not sold on Amazon under this model. The button opens the closest alternative: " + name + ".";
+          if (parent && parent.hasAttribute("data-alt-note-row")) {
+            // A compact row (e.g. the picks box) opts in to showing the note on its
+            // own full-width line under the row, so it never squeezes the name.
+            note.className = "basis-full m-0 text-xs leading-snug text-gray-500 font-normal normal-case tracking-normal";
+            parent.appendChild(note);
+            continue;
+          }
+          var pcs = parent ? window.getComputedStyle(parent) : null;
+          if (pcs && /flex/.test(pcs.display) && pcs.flexDirection.indexOf("row") === 0) {
+            // A button in a flex row: a bare sibling note would become another
+            // column and crush its neighbours. Where the row sits in normal block
+            // flow, put the note on its own line right under the row.
+            var gp = parent.parentElement;
+            var gcs = gp ? window.getComputedStyle(gp) : null;
+            if (gcs && gcs.display === "block" && !/^(UL|OL|DL|TABLE|TBODY|TR)$/.test(gp.tagName)) {
+              note.className = "block mt-2 text-xs leading-snug text-gray-500 font-normal normal-case tracking-normal";
+              parent.insertAdjacentElement("afterend", note);
+              continue;
+            }
+            // Otherwise stack button and note in a wrapper
+            // that takes the button's place and sizing, and keep the note from
+            // widening it: it wraps at the button's width.
+            var cs = window.getComputedStyle(a);
+            var wrap = document.createElement("span");
+            wrap.style.display = "flex";
+            wrap.style.flexDirection = "column";
+            wrap.style.flexGrow = cs.flexGrow;
+            wrap.style.flexShrink = cs.flexShrink;
+            wrap.style.flexBasis = cs.flexBasis;
+            wrap.style.alignSelf = cs.alignSelf;
+            wrap.style.minWidth = "0";
+            note.style.width = "0";
+            note.style.minWidth = "100%";
+            parent.insertBefore(wrap, a);
+            wrap.appendChild(a);
+            wrap.appendChild(note);
+            continue;
           }
           a.insertAdjacentElement("afterend", note);
         }
