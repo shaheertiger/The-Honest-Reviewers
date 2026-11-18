@@ -82,6 +82,7 @@ const priorityGuides = new Set([
   'best-gas-tankless-water-heater',
   'best-air-compressor',
   'best-gas-string-trimmer',
+  'best-oil-filled-radiator-heater',
   'best-water-test-kit',
   // November 2026: dehumidifier buyer's guide batch (Amazon-focused).
   'best-commercial-dehumidifier',
