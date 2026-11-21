@@ -53,16 +53,22 @@ function loadPages() {
   return pages;
 }
 const words = (s) => s.toLowerCase().replace(/[^a-z0-9 ]+/g, ' ').split(/\s+/)
-  .filter((w) => w && !['best', 'the', 'for', 'a', 'of', 'to', 'in', 'and', 'top', 'rated', '2025', '2026', 'reviews', 'review'].includes(w))
-  .map((w) => (w.length > 3 && w.endsWith('s') && !w.endsWith('ss') ? w.slice(0, -1) : w));
+  .filter((w) => w && !['best', 'the', 'for', 'a', 'of', 'to', 'in', 'and', 'top', 'rated', '2025', '2026', '2027', 'reviews', 'review', 'reviewed', 'most', 'reliable', 'highest', 'good', 'cheap', 'budget', 'buy', 'what', 'is', 'which', 'new', 'home', 'use'].includes(w))
+  .map((w) => (w.length > 3 && w.endsWith('s') && !w.endsWith('ss') ? w.slice(0, -1) : w))
+  .map((w) => ({ purifier: 'filter', purifiers: 'filter', vac: 'vacuum', weedeater: 'trimmer' }[w] || w));
+// A query is "covered" when every distinctive word in it appears in a page's slug or first
+// tag; one soft word (cost, price, kit...) may differ. Prefer the most specific page.
+const SOFT = new Set(['cost', 'price', 'installation', 'installed', 'system', 'unit', 'machine', 'kit', 'brand', 'model', 'deal', 'sale']);
 function ownerPage(query, pages) {
-  const q = new Set(words(query));
-  if (!q.size) return null;
+  const q = [...new Set(words(query))];
+  if (!q.length) return null;
   let best = null;
   for (const p of pages) {
     const pw = new Set([...words(p.slug.replace(/-/g, ' ')), ...words(p.tag)]);
-    const hit = [...q].filter((w) => pw.has(w)).length / q.size;
-    if (hit >= 0.75 && (!best || hit > best.hit)) best = { slug: p.slug, hit };
+    const missing = q.filter((w) => !pw.has(w));
+    if (missing.length > 1 || (missing.length === 1 && !SOFT.has(missing[0]))) continue;
+    const extra = pw.size - (q.length - missing.length);
+    if (!best || missing.length < best.missing || (missing.length === best.missing && extra < best.extra)) best = { slug: p.slug, missing: missing.length, extra };
   }
   return best ? best.slug : null;
 }
