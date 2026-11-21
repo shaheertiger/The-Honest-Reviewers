@@ -86,6 +86,10 @@ const priorityGuides = new Set([
   'best-furnace-filter',
   'best-gas-leaf-blower',
   'best-gas-can',
+  'best-kerosene-heater',
+  'best-gas-snow-blower',
+  'best-hot-water-recirculating-pump',
+  'best-heat-tape-for-pipes',
   'best-water-test-kit',
   // November 2026: dehumidifier buyer's guide batch (Amazon-focused).
   'best-commercial-dehumidifier',
