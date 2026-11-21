@@ -74,6 +74,16 @@ Commit the two Bing files with the day's guide. If the script exits 2 (no key) o
 
 ## 2. Pick the niche and the guide
 
+**Seasons first.** Each seed row has a `season` (winter, winter-holidays, fall-winter,
+spring-summer, summer, fall or all). Capitalize on what is in season: from November to
+February write winter rows first (heating, water heaters, frozen pipes, snow, outages,
+car batteries), then all-season rows; hold summer and spring-summer rows (grills, AC,
+pressure washers) until about six weeks before their season (March to April for summer)
+and skip them otherwise. Rotate by month: fall rows in August to October, spring-summer
+from February. Seasonal pages need lead time to rank, so write them before the peak.
+When the Vercel or Bing data shows a seasonal page rising (for example best-gas-water-heater
+climbing since September), treat its niche as in season and add more guides in it.
+
 **Seed keywords first.** `content/semrush/seed-keywords.csv` holds Semrush-researched
 "best X" gaps (cluster volume, KD, notes), ranked by priority. Take the
 highest-priority row with `status` = `open` whose niche is getting traffic this
