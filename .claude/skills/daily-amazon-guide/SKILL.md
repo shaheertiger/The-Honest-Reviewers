@@ -5,7 +5,10 @@ description: The daily traffic-led Amazon buyer's guide. Pulls the last 7 days o
 
 # Daily Amazon buyer's guide
 
-One roundup a day, placed next to whatever readers are actually reading this week.
+**Four roundups a day**, placed next to whatever readers are actually reading this week.
+Each of the four goes through the full process below (Amazon checks, format, word count,
+wiring); never trade checks for volume. If fewer than four honest guides are available
+(no verifiable products, slug or keyword taken), write as many as pass and say why in the report.
 Traffic decides the niche; the guide is a product the readers of that page would
 plausibly buy next on Amazon.
 
@@ -59,7 +62,7 @@ Double down on what works:
    and write it today. Check slug and tags[0] are free first, as in section 2.
 2. **Then the best Bing niche.** Otherwise, when choosing between open seed rows, prefer
    the one in the niche ranked highest in `topNiches` / `working`, ahead of Vercel order.
-3. **Link from what works.** Link today's guide from the page that earns the most Bing
+3. **Link from what works.** Link each of today's guides from the page that earns the most Bing
    clicks in that niche (a card in its related grid), so the new page inherits authority.
 4. **Report it.** Add a "Bing" line to the daily report: total impressions and clicks
    versus the previous period, the top 3 working queries, the top rising query, and any
@@ -77,7 +80,7 @@ highest-priority row with `status` = `open` whose niche is getting traffic this
 week (generators/outage power, cordless tools, and so on). Re-check that the slug and
 the primary keyword are still free (`ls src/pages`, `grep -rlF '"<keyword>"' src/pages`),
 read the row's `notes`, and confirm at least 5 real products are sold on Amazon. If
-so, that is today's guide: use the primary keyword as `tags[0]` and work the
+so, it is one of today's guides: use the primary keyword as `tags[0]` and work the
 `top_variants` into H2s and FAQs. If the row has a `keyword_file` (a full Semrush export
 for that guide), read it: use its highest-volume variants for H2s and its question
 keywords (what/how/is/are/do/can...) for the FAQ, and stay inside the row's `notes`
@@ -97,7 +100,8 @@ the traffic-gap method below.
 3. Also check the last few `content/semrush/*.md` batch notes and
    `git log --oneline -15` so you do not re-cover something written recently.
 4. If the top niche has no honest gap left, move to the next niche down. Pick
-   **one** guide. Prefer a real commercial query ("best X", "best X for Y") with an
+   **four** guides (the four highest-priority rows that pass the checks; spread them across
+   at least two niches where possible so one niche does not get four near-duplicates). Prefer a real commercial query ("best X", "best X for Y") with an
    obvious Amazon category behind it.
 
 ## 3. Write it
@@ -161,6 +165,16 @@ Rules (same house rules as `daily-publish`):
 - `amazonUrl`: use the tagged search format the other roundups use until an exact
   ASIN is matched (copy it from an existing roundup).
 
+### Writing four guides
+
+Pick the four seed rows first, then write them in parallel: one subagent per guide, each
+given its seed row, keyword file, the "Format to follow" rules above and
+`content/semrush/seed-keywords.csv` notes, and told to create only its own spec and page,
+verify every product on Amazon (Amazon Creators API in the environment) and not to build,
+commit or push. The lead then checks each page (word count, format audit, products,
+claims), adds ASINs and images, wires all four in, runs the gates and the build once,
+and commits each guide as its own commit before one merge to `main`.
+
 ## 4. Wire it in
 
 - Link it from the **top-traffic page that chose it** (one sentence + link in the body,
@@ -218,9 +232,10 @@ gate results, and anything skipped. Never push a guide that failed a gate.
 
 ## Guardrails
 
-- **One guide per run.** Never more.
+- **Four guides per run.** Never more. Each must be a distinct product category with its own
+  primary keyword; never split one topic into near-duplicate pages to hit the number.
 - Never edit an existing article except to add links to the new guide.
-- If today's guide already exists on `main` (the task fired twice), stop and report.
+- If today's guides already exist on `main` (the task fired twice), stop and report.
 
 ## 8. Daily format catch-up (after the guide is live)
 
