@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 // Daily Bing Webmaster Tools pull: what is working on Bing, and where to double down.
 //
-// Reads the API key from the BING_WEBMASTER_API_KEY environment variable (Bing's API takes
-// the key as a URL parameter, so it cannot be injected as a header). Never commit the key.
+// Reads the API key from the BING_WEBMASTER_API_KEY environment variable, or from `apikey`
+// (the name the owner saved the Bing Webmaster key under in this environment). Bing's API takes
+// the key as a URL parameter, so it cannot be injected as a header. Never print or commit the key.
 //
 // Writes:
 //   content/analytics/bing-queries-<date>.csv   latest week of query stats
@@ -15,12 +16,12 @@ import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync } from 
 import { join } from 'node:path';
 
 const SITE = 'https://www.thehonestreviewers.com/';
-const KEY = (process.env.BING_WEBMASTER_API_KEY || '').trim();
+const KEY = (process.env.BING_WEBMASTER_API_KEY || process.env.apikey || '').trim();
 const ROOT = new URL('..', import.meta.url).pathname;
 const today = new Date().toISOString().slice(0, 10);
 
 if (!KEY) {
-  console.log('[bing] BING_WEBMASTER_API_KEY is not set: skipping the Bing pull. Add it in the environment settings (Bing Webmaster Tools > Settings > API access).');
+  console.log('[bing] No Bing key found (BING_WEBMASTER_API_KEY or apikey): skipping the Bing pull. Add it in the environment settings (Bing Webmaster Tools > Settings > API access).');
   process.exit(2);
 }
 

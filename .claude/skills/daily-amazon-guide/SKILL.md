@@ -41,7 +41,7 @@ what we write next. Every run:
 node scripts/bing-report.mjs
 ```
 
-It reads `BING_WEBMASTER_API_KEY` from the environment (never commit the key), pulls
+It reads the Bing Webmaster API key from the environment (`BING_WEBMASTER_API_KEY`, or `apikey`, the name it is saved under in this environment; never print or commit the key), pulls
 query stats from the Bing Webmaster API, and writes
 `content/analytics/bing-queries-<date>.csv` and `bing-summary-<date>.json` with:
 
