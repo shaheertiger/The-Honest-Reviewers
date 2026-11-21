@@ -39,6 +39,32 @@ is worth spending on:
 The topic picker already accounts for demand if `demand.json` exists, so you do not
 need to second-guess which cluster it chose.
 
+### Pull Bing data every run
+
+About 98% of the site's search traffic comes from Bing-powered engines, so check Bing
+before writing:
+
+```bash
+node scripts/bing-report.mjs
+```
+
+It reads the key from `BING_WEBMASTER_API_KEY` or `apikey` (never print or commit it) and
+writes `content/analytics/bing-queries-<date>.csv` and `bing-summary-<date>.json`. If the
+Amazon guide run already wrote today's files, read those instead of pulling again. Use
+the summary to shape the batch:
+
+- **zeroClick** (top-10 position, impressions, no clicks): if one of these pages is in
+  today's cluster, improving it is worth one of the five slots, as with IMPROVE FIRST.
+  Otherwise list it in the report for the owner.
+- **rising** and **gaps** (queries with no page): if one fits today's cluster as a
+  supporting article (not a "best X" roundup: those belong to the Amazon guide run),
+  write it as one of the five intents. Check the slug is free first.
+- **working**: link the new articles from the page that earns the most Bing clicks in
+  the cluster, where it fits naturally.
+
+If the script exits 2 (no key) or 3 (API error), say so in the report and carry on with
+the topic brief.
+
 ## 2. Turn each intent into a real article
 
 For each of the five intents, decide the actual title, slug and angle. Rules:
@@ -184,7 +210,9 @@ IndexNow automatically. No PR — that is the configured workflow.
 ## 7. Report
 
 End the run with: the cluster worked, the five slugs published, the gate results,
-and anything skipped and why. If the run failed, say exactly which gate and what is
+and anything skipped and why. Add a "Bing" line: total impressions and clicks versus
+the previous period, the top 3 working queries, the top rising query, and zero-click
+queries in the top 5 positions. Commit the Bing files with the batch. If the run failed, say exactly which gate and what is
 needed — never push a partial batch.
 
 ## Guardrails
