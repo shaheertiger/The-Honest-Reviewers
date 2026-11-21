@@ -32,6 +32,43 @@ and `/`. That file is the record of what the run worked from — see
 If the Vercel call fails (auth, not found), stop and report it. Do not guess traffic
 and do not fall back to an old CSV.
 
+## 1b. Pull Bing data every day and double down on what works
+
+About 98% of the site's search traffic comes from Bing-powered engines, so Bing decides
+what we write next. Every run:
+
+```bash
+node scripts/bing-report.mjs
+```
+
+It reads `BING_WEBMASTER_API_KEY` from the environment (never commit the key), pulls
+query stats from the Bing Webmaster API, and writes
+`content/analytics/bing-queries-<date>.csv` and `bing-summary-<date>.json` with:
+
+- **working**: queries that got clicks (and the page they land on),
+- **rising**: queries whose impressions grew since the previous period,
+- **zeroClick**: queries ranking in the top 10 with impressions but no clicks,
+- **gaps**: "best X" / review / vs queries with impressions and no matching page,
+- **topNiches**: the niches scoring highest on clicks and impression growth.
+
+Double down on what works:
+
+1. **Gaps first.** If `gaps` has a buyer's-guide query (real Amazon products exist) in a
+   niche from `topNiches`, add it to `content/semrush/seed-keywords.csv` as the first open
+   row (`notes`: "From the Bing API, <date>: <impressions> impressions at position <x>")
+   and write it today. Check slug and tags[0] are free first, as in section 2.
+2. **Then the best Bing niche.** Otherwise, when choosing between open seed rows, prefer
+   the one in the niche ranked highest in `topNiches` / `working`, ahead of Vercel order.
+3. **Link from what works.** Link today's guide from the page that earns the most Bing
+   clicks in that niche (a card in its related grid), so the new page inherits authority.
+4. **Report it.** Add a "Bing" line to the daily report: total impressions and clicks
+   versus the previous period, the top 3 working queries, the top rising query, and any
+   zero-click queries in the top 5 positions (list these for the owner; do not edit
+   existing pages' titles without being asked).
+
+Commit the two Bing files with the day's guide. If the script exits 2 (no key) or 3
+(API error), say so in the report and carry on with Vercel traffic and the seed list.
+
 ## 2. Pick the niche and the guide
 
 **Seed keywords first.** `content/semrush/seed-keywords.csv` holds Semrush-researched
