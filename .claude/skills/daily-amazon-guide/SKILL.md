@@ -96,7 +96,11 @@ for that guide), read it: use its highest-volume variants for H2s and its questi
 keywords (what/how/is/are/do/can...) for the FAQ, and stay inside the row's `notes`
 so sibling pages are not cannibalised. In the same commit as the guide, set the row's
 `status` to `done <date>`. If the row fails a check, set `status` to
-`skipped: <reason>` and try the next row. Only when no open row fits, fall back to
+`skipped: <reason>` and try the next row. When fewer than 8 open rows are left,
+refill the list from `content/semrush/keywords/` (see its README): mine the `niche-*.csv`
+exports for commercial "best X" keywords (volume 500+, KD under 40) that no page owns,
+add them as new open rows with `keyword_file` pointing at the niche export, and commit.
+Only when no open row fits and the exports have no gap left, fall back to
 the traffic-gap method below.
 
 1. Take the top pages in order. For each, its niche is the product category it is
