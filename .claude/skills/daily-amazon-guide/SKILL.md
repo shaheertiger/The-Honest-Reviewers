@@ -5,10 +5,10 @@ description: The daily traffic-led Amazon buyer's guide. Pulls the last 7 days o
 
 # Daily Amazon buyer's guide
 
-**Four roundups a day**, placed next to whatever readers are actually reading this week.
-Each of the four goes through the full process below (Amazon checks, format, word count,
-wiring); never trade checks for volume. If fewer than four honest guides are available
-(no verifiable products, slug or keyword taken), write as many as pass and say why in the report.
+**One or two roundups a day** (owner's call, Nov 22: "just publish 1 or 2 per day"), placed next to whatever readers are actually reading this week.
+Write two when two honest in-season guides pass every check; otherwise write one. Each goes through the full process below (Amazon checks, format, word count,
+wiring); never trade checks for volume. If no honest guide is available
+(no verifiable products, slug or keyword taken), write none and say why in the report.
 Traffic decides the niche; the guide is a product the readers of that page would
 plausibly buy next on Amazon.
 
@@ -114,8 +114,8 @@ the traffic-gap method below.
 3. Also check the last few `content/semrush/*.md` batch notes and
    `git log --oneline -15` so you do not re-cover something written recently.
 4. If the top niche has no honest gap left, move to the next niche down. Pick
-   **four** guides (the four highest-priority rows that pass the checks; spread them across
-   at least two niches where possible so one niche does not get four near-duplicates). Prefer a real commercial query ("best X", "best X for Y") with an
+   **one or two** guides (the highest-priority rows that pass the checks; when writing two, use
+   two different niches where possible so one niche does not get near-duplicates). Prefer a real commercial query ("best X", "best X for Y") with an
    obvious Amazon category behind it.
 
 ## 3. Write it
@@ -179,14 +179,14 @@ Rules (same house rules as `daily-publish`):
 - `amazonUrl`: use the tagged search format the other roundups use until an exact
   ASIN is matched (copy it from an existing roundup).
 
-### Writing four guides
+### Writing two guides
 
-Pick the four seed rows first, then write them in parallel: one subagent per guide, each
+Pick the seed rows first; for two, write them in parallel: one subagent per guide, each
 given its seed row, keyword file, the "Format to follow" rules above and
 `content/semrush/seed-keywords.csv` notes, and told to create only its own spec and page,
 verify every product on Amazon (Amazon Creators API in the environment) and not to build,
 commit or push. The lead then checks each page (word count, format audit, products,
-claims), adds ASINs and images, wires all four in, runs the gates and the build once,
+claims), adds ASINs and images, wires them in, runs the gates and the build once,
 and commits each guide as its own commit before one merge to `main`.
 
 ## 4. Wire it in
@@ -246,7 +246,7 @@ gate results, and anything skipped. Never push a guide that failed a gate.
 
 ## Guardrails
 
-- **Four guides per run.** Never more. Each must be a distinct product category with its own
+- **One or two guides per run.** Never more than two. Each must be a distinct product category with its own
   primary keyword; never split one topic into near-duplicate pages to hit the number.
 - Never edit an existing article except to add links to the new guide.
 - If today's guides already exist on `main` (the task fired twice), stop and report.
