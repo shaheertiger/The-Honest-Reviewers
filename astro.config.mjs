@@ -91,6 +91,8 @@ const priorityGuides = new Set([
   'best-hot-water-recirculating-pump',
   'best-heat-tape-for-pipes',
   'best-battery-maintainer',
+  'best-camping-power-bank',
+  'best-pipe-insulation',
   'best-single-stage-snow-blower',
   'best-outdoor-faucet-cover',
   'best-car-jump-starter',
