@@ -95,6 +95,7 @@ const priorityGuides = new Set([
   'best-pipe-insulation',
   'best-dji-power-station',
   'best-smart-thermostat',
+  'best-cheap-portable-power-station',
   'best-heated-driveway-mat',
   'best-roof-rake',
   'best-single-stage-snow-blower',
