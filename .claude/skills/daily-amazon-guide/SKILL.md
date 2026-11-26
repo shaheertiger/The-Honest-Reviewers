@@ -65,7 +65,9 @@ Double down on what works:
 3. **Link from what works.** Link each of today's guides from the page that earns the most Bing
    clicks in that niche (a card in its related grid), so the new page inherits authority.
 4. **Report it.** Add a "Bing" line to the daily report: total impressions and clicks
-   versus the previous period, the top 3 working queries, the top rising query, and any
+   versus the previous period, taken from the script's "site totals" line (the daily
+   GetRankAndTrafficStats sums for the last 7 days vs the 7 before; the weekly query table
+   lags and only counts listed queries, so never report its totals as the site's), the top 3 working queries, the top rising query, and any
    zero-click queries in the top 5 positions (list these for the owner; do not edit
    existing pages' titles without being asked).
 

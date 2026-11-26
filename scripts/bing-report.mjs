@@ -128,12 +128,45 @@ try {
   const csv = ['Query,Impressions,Clicks,CTR,Position,ImpressionsChange,Page',
     ...list.map((q) => [JSON.stringify(q.query), q.impressions, q.clicks, q.ctr, q.position ?? '', q.impressionsChange, q.page ?? ''].join(','))].join('\n');
   writeFileSync(join(outDir, `bing-queries-${today}.csv`), csv + '\n');
+  // Site-wide daily totals (GetRankAndTrafficStats) are fresher than the weekly query table
+  // and count every impression, not only the queries Bing lists one by one.
+  let siteTotals = null;
+  try {
+    const daily = (await call('GetRankAndTrafficStats'))
+      .map((d) => ({ date: toDate(d.Date).toISOString().slice(0, 10), impressions: d.Impressions, clicks: d.Clicks }))
+      .sort((x, y) => (x.date < y.date ? -1 : 1));
+    const last7 = daily.slice(-7), prev7 = daily.slice(-14, -7);
+    const sum = (a, k) => a.reduce((t, d) => t + d[k], 0);
+    if (last7.length) siteTotals = {
+      from: last7[0].date, to: last7.at(-1).date,
+      impressions: sum(last7, 'impressions'), clicks: sum(last7, 'clicks'),
+      previous: prev7.length ? { from: prev7[0].date, to: prev7.at(-1).date, impressions: sum(prev7, 'impressions'), clicks: sum(prev7, 'clicks') } : null,
+      daily: daily.slice(-14),
+    };
+  } catch (e) { console.log(`[bing] daily totals unavailable: ${String(e.message || e).split('\n')[0]}`); }
+  // Top pages by clicks for the latest weekly period (GetPageStats).
+  let topPages = [];
+  try {
+    const pages = await call('GetPageStats');
+    const pk = (r) => toDate(r.Date).toISOString().slice(0, 10);
+    const lastP = [...new Set(pages.map(pk))].sort().at(-1);
+    topPages = pages.filter((r) => pk(r) === lastP).sort((x, y) => y.Clicks - x.Clicks || y.Impressions - x.Impressions)
+      .slice(0, 10).map((r) => ({ page: String(r.Query).replace(SITE, '/'), clicks: r.Clicks, impressions: r.Impressions, period: lastP }));
+  } catch (e) { console.log(`[bing] page stats unavailable: ${String(e.message || e).split('\n')[0]}`); }
   const summary = { pulledAt: new Date().toISOString(), period: latest, previousPeriod: prev ?? null,
+    siteTotals, topPages,
     totals: { impressions: list.reduce((s, q) => s + q.impressions, 0), clicks: list.reduce((s, q) => s + q.clicks, 0) },
     working, rising, zeroClick, gaps, topNiches };
   writeFileSync(join(outDir, `bing-summary-${today}.json`), JSON.stringify(summary, null, 2) + '\n');
 
-  console.log(`[bing] period ${latest} vs ${prev ?? 'n/a'}: ${summary.totals.impressions} impressions, ${summary.totals.clicks} clicks`);
+  if (siteTotals) {
+    const pv = siteTotals.previous;
+    const pct = (n, o) => (o ? `${n >= o ? '+' : ''}${Math.round(((n - o) / o) * 100)}%` : 'n/a');
+    console.log(`[bing] site totals ${siteTotals.from}..${siteTotals.to}: ${siteTotals.impressions} impressions, ${siteTotals.clicks} clicks` +
+      (pv ? ` (previous 7 days ${pv.impressions} / ${pv.clicks}: ${pct(siteTotals.impressions, pv.impressions)} impressions, ${pct(siteTotals.clicks, pv.clicks)} clicks)` : ''));
+  }
+  if (topPages.length) console.log(`[bing] top pages by clicks (week of ${topPages[0].period}):`, topPages.slice(0, 5).map((p) => `${p.page} (${p.clicks})`).join('; '));
+  console.log(`[bing] query table, week of ${latest} vs ${prev ?? 'n/a'} (listed queries only): ${summary.totals.impressions} impressions, ${summary.totals.clicks} clicks`);
   console.log('[bing] working (most clicks):', working.slice(0, 5).map((q) => `${q.query} (${q.clicks})`).join('; '));
   console.log('[bing] rising:', rising.slice(0, 5).map((q) => `${q.query} (+${q.impressionsChange})`).join('; '));
   console.log('[bing] top niches:', topNiches.map((n) => n.niche).join(', '));
