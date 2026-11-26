@@ -48,3 +48,5 @@ Batch of 2026-11-25, by niche:
 - **Water heaters** (linked from `/best-gas-water-heater`): `best-water-heater-blanket`, `best-water-heater-anode-rod`
 - **Cordless tools** (linked from `/milwaukee-vs-dewalt`): `best-cordless-ratchet` (seed #43), `best-finish-nailer` (seed #37), `best-cordless-tire-inflator` (seed #30)
 - **Firewood** (linked from `/best-log-splitter`): `best-splitting-maul`
+| 2026-11-26 | `best-air-mattress` | air mattress | Seed list #27 (best air mattress 9.9k, for guests 2.4k; keyword file used). Holiday guest-bed season. Linked from best-mattress. All 7 products confirmed via the Amazon Product API |
+| 2026-11-26 | `best-generator-battery` | battery for generator | Seed list #31 (KD 8). Generators are the niche earning the most Bing clicks; linked from best-home-generator-for-power-outages, the top Bing page. Window insulation kit (#24) was already written by another session on Nov 25. All 7 products confirmed via the Amazon Product API |
