@@ -9,6 +9,25 @@ Five supporting articles a day, all into **one** cluster — the thinnest one on
 site. Finishing a cluster beats scattering pages, and the topic picker enforces it
 so no one has to keep a list.
 
+## 0. Owner rules (Nov 27, 2026) — these override anything below
+
+1. **No Google data.** Bing (API) and Vercel only; skip the Search Console steps below.
+2. **Only work clusters whose guide brings clicks.** Before writing, check the pillar the
+   topic brief names against Bing clicks for the last 30 days (`working` in today's
+   `bing-summary-<date>.json`, or Bing `GetPageStats`). If the pillar earned no Bing clicks,
+   skip it (`npm run topics -- --json --skip 1`) until the brief names a pillar that does.
+   Supporting articles exist to lift guides that already earn clicks, not to fill quiet
+   clusters.
+3. **Never touch the top 40.** Pull 30 days of Vercel pageviews by `requestPath`; the top
+   40 paths are frozen. No edits and no added links on those pages, even when one of them is
+   the pillar: link new articles from the pillar's other spokes and from `MANUAL_LINKS`
+   hosts outside the top 40.
+4. **Check Bing demand** for each article's primary keyword with
+   `node scripts/bing-keyword-volume.mjs "<keyword>"`; replace any with no Bing data.
+5. **Titles and openings** follow the winners: a specific hook after the colon, a description
+   and a lede that open with the one truth readers get wrong (see rule 0.5 in
+   `.claude/skills/daily-amazon-guide/SKILL.md`).
+
 ## 1. Get the brief
 
 ```bash
@@ -145,7 +164,7 @@ attribute it instead ("rated for", "the label specifies", "owners commonly repor
 
 An unlinked page is an orphan and the gate will fail it. For every article:
 
-1. **Pillar → spoke.** Add a card to the pillar's cluster grid (the
+1. **Pillar → spoke** (skip if the pillar is a top-40 page; rule 0.3). Add a card to the pillar's cluster grid (the
    "Everything Else About …" block; create it before the `<!-- Related Guides -->`
    comment if the pillar has none yet) and refresh the pillar's `moreInCategory`.
 2. **Spoke → pillar.** Handled by `ctaLink` plus at least one body link.
