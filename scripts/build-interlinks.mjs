@@ -344,6 +344,23 @@ for (const [guide, spokes] of spokesOf) {
 const planQuestions = slugs.filter((s) => /<PlanTheJob\s*\/>/.test(source.get(s))).sort();
 
 const sortKeys = (o) => Object.fromEntries(Object.entries(o).sort(([a], [b]) => a.localeCompare(b)));
+// ---------------------------------------------------------------------------
+// 5. Frozen pages keep the blocks they already have
+// ---------------------------------------------------------------------------
+// scripts/frozen-pages.json lists pages the owner does not want changed (the top 40 by
+// 30-day pageviews). Their "More in" and cluster blocks are carried over from the last
+// interlinks.json, dropping only links to pages that no longer exist, so new pages and
+// link changes elsewhere never alter them.
+const FROZEN = new Set(JSON.parse(readFileSync(join(import.meta.dirname, 'frozen-pages.json'), 'utf8')).pages);
+let previous = { more: {}, cluster: {} };
+try { previous = JSON.parse(readFileSync(OUT, 'utf8')); } catch { /* first run */ }
+const live = (list) => list.filter((l) => meta.has(l.url.slice(1, -1)));
+for (const slug of FROZEN) {
+  if (previous.more?.[slug] && more[slug]) more[slug] = live(previous.more[slug]);
+  if (previous.cluster?.[slug]) cluster[slug] = live(previous.cluster[slug]);
+  else if (cluster[slug] && previous.more?.[slug]) delete cluster[slug];
+}
+
 writeFileSync(OUT, JSON.stringify({ pillarOf: sortKeys(pillarOf), more: sortKeys(more), cluster: sortKeys(cluster), planQuestions }, null, 2) + '\n');
 
 const weak = slugs.filter((s) => inbound.get(s).size < MIN_INBOUND);
