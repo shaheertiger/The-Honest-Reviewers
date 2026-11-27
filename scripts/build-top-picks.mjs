@@ -161,6 +161,21 @@ for (const { pillar, spokes: list } of ranked) {
     .sort((a, b) => priority(a.slug) - priority(b.slug) || a.slug.localeCompare(b.slug));
   if (items.length) questions[pillar] = items;
 }
+// Frozen pages (scripts/frozen-pages.json: the owner's top 40) keep their "Before You
+// Buy" box exactly as it was: their question list, and the labels of the guides it shows.
+{
+  const frozen = JSON.parse(readFileSync(join(import.meta.dirname, 'frozen-pages.json'), 'utf8')).pages;
+  let prev = { titles: {}, questions: {} };
+  try { prev = JSON.parse(readFileSync(LINKS_OUT, 'utf8')); } catch { /* first run */ }
+  const related = JSON.parse(readFileSync(join(import.meta.dirname, '..', 'src', 'data', 'related-guides.json'), 'utf8'));
+  for (const page of frozen) {
+    if (prev.questions?.[page]) questions[page] = prev.questions[page];
+    else delete questions[page];
+    for (const guide of related[page] ?? []) {
+      if (prev.titles?.[guide]) titles[guide] = prev.titles[guide];
+    }
+  }
+}
 writeFileSync(LINKS_OUT, JSON.stringify({ titles, questions }, null, 2) + '\n');
 console.log(`[guide-links] ${Object.keys(questions).length} guides with supporting questions`);
 console.log(`[top-picks] ${Object.keys(pillars).length} guides with a #1 pick, ${Object.keys(spokes).length} supporting pages mapped`);
