@@ -61,7 +61,7 @@ const MANUAL_LINKS = {
   'best-miter-saw': ['best-framing-nailer'],
   'best-cordless-circular-saw': ['best-framing-nailer'],
   'best-table-saw': ['best-framing-nailer'],
-  'best-garage-door-opener': ['best-home-security-cameras'],
+  'best-garage-door-opener': ['best-home-security-cameras', 'best-garage-door-bottom-seal'],
   'best-whole-house-surge-protector': ['best-home-security-cameras'],
   'best-home-battery-backup-system': ['best-home-security-cameras'],
   'best-under-sink-water-filter': ['best-kitchen-faucet', 'best-shower-head-filter'],
@@ -92,7 +92,7 @@ const MANUAL_LINKS = {
   'best-chainsaw-sharpener': ['how-tight-should-a-chainsaw-chain-be'],
   'best-wood-chipper': ['hookaroon-vs-pickaroon'],
   'best-log-splitter': ['hookaroon-vs-pickaroon'],
-  'best-cordless-tool-brand': ['rockwell-tools-review'],
+  'best-cordless-tool-brand': ['rockwell-tools-review', 'best-heated-vest'],
   'milwaukee-vs-ryobi': ['rockwell-tools-review'],
   'ryobi-tools-review': ['rockwell-tools-review'],
   'best-electric-kettle': ['best-espresso-machine', 'best-countertop-ice-maker'],
@@ -100,19 +100,63 @@ const MANUAL_LINKS = {
   'best-dishwasher': ['best-countertop-ice-maker', 'best-food-dehydrator'],
   'best-robot-vacuum': ['best-carpet-cleaner'],
   'best-plasma-cutter': ['best-welder-for-beginners'],
-  'best-tekton-hand-tools': ['how-to-prevent-rust-on-hand-tools'],
+  'best-tekton-hand-tools': ['how-to-prevent-rust-on-hand-tools', 'best-torque-wrench'],
   'rust-converter-vs-rust-remover': ['how-to-prevent-rust-on-hand-tools'],
   'christmas-gifts-for-men-under-50': ['christmas-gifts-for-men-who-have-everything'],
   'best-drain-snake': ['best-kitchen-faucet', 'best-sump-pump', 'best-under-sink-water-filter'],
   'best-drill-press': ['best-cordless-drills', 'best-bench-vise', 'best-band-saw'],
   'best-harness-for-zipline-riding': ['best-crash-pad-for-bouldering-outdoors'],
-  'best-ski-gloves': ['best-crash-pad-for-bouldering-outdoors'],
-  'best-home-security-cameras': ['best-garage-door-opener', 'best-whole-house-surge-protector'],
+  'best-ski-gloves': ['best-crash-pad-for-bouldering-outdoors', 'best-heated-gloves', 'best-hand-warmers'],
+  'best-home-security-cameras': ['best-garage-door-opener', 'best-whole-house-surge-protector', 'best-smart-lock'],
   'best-stud-finder': ['best-laser-level'],
   'best-wire-stripper': ['best-circuit-breaker-finder', 'best-stud-finder'],
   'braun-type-5544-vs-series-7': ['buzz-cut-guide', 'how-to-shave-back-hair'],
   'buzz-cut-guide': ['braun-type-5544-vs-series-7', 'how-to-shave-back-hair'],
   'hookaroon-vs-pickaroon': ['best-chainsaw', 'best-log-splitter', 'best-wood-chipper'],
+  // Bing (Nov 2026): send links from pages Bing already clicks to related "best" pages
+  // that rank on page 1-2 but have half the inbound links of the pages that win.
+  'how-much-does-it-cost-to-seal-a-driveway': ['driveway-sealer-home-depot'],
+  'sealing-asphalt-driveway-pros-and-cons': ['driveway-sealer-home-depot'],
+  'best-stamped-concrete-sealer': ['best-brick-sealer-reviews'],
+  'best-cinder-block-sealer-reviews': ['best-brick-sealer-reviews'],
+  'best-paver-sealer': ['best-polymeric-sand-for-pavers', 'best-brick-sealer-reviews'],
+  'best-water-based-paver-sealer-reviews': ['best-polymeric-sand-for-pavers'],
+  'best-natural-stone-sealer': ['best-granite-sealer'],
+  'best-marble-sealer': ['best-granite-sealer'],
+  'best-deck-stain-reviews': ['best-fence-stain', 'best-deck-paint'],
+  'best-deck-stain-for-pressure-treated-wood': ['best-fence-stain', 'best-deck-paint', 'best-wood-filler'],
+  'best-deck-cleaner': ['best-surface-cleaner-for-pressure-washer', 'best-pressure-washer'],
+  'best-porch-paint': ['best-paint-sprayer', 'best-deck-paint'],
+  'best-flooring-for-basement': ['best-laminate-flooring'],
+  'best-gutter-guards': ['leaf-filter-reviews'],
+  'best-cordless-leaf-blower': ['best-leaf-vacuum'],
+  'best-impact-wrench': ['best-torque-wrench'],
+  'best-crabgrass-preventer': ['best-weed-killer'],
+  'best-carpet-cleaner': ['best-enzyme-cleaner'],
+  'best-video-doorbell': ['best-smart-lock'],
+  // Nov 27 2026 winter guides: linked only from pages outside the top 40 (frozen-pages.json).
+  'best-electric-space-heater': ['best-heated-blanket', 'best-infrared-heater', 'best-baseboard-heater'],
+  'best-battery-powered-heater': ['best-heated-blanket', 'best-hand-warmers'],
+  'best-portable-power-station-for-home-backup': ['best-heated-blanket', 'best-pellet-stove'],
+  'best-humidifier-for-bedroom': ['best-heated-blanket'],
+  'best-camping-power-bank': ['best-hand-warmers'],
+  'best-rechargeable-flashlight': ['best-hand-warmers'],
+  'best-snow-shovel': ['best-hand-warmers', 'best-heated-gloves', 'best-heated-vest'],
+  'best-kerosene-heater': ['best-wood-stove', 'best-pellet-stove'],
+  'best-carbon-monoxide-detector': ['best-wood-stove', 'best-pellet-stove'],
+  'best-electric-fireplace': ['best-wood-stove', 'best-pellet-stove'],
+  'best-wood-stove': ['best-pellet-stove'],
+  'best-pellet-stove': ['best-wood-stove'],
+  'best-snow-blower': ['best-heated-vest', 'best-heated-gloves'],
+  'best-heated-gloves': ['best-heated-vest', 'best-hand-warmers'],
+  'best-heated-vest': ['best-heated-gloves'],
+  'best-hand-warmers': ['best-heated-gloves'],
+  'best-garage-heater': ['best-infrared-heater'],
+  'best-oil-filled-radiator-heater': ['best-infrared-heater', 'best-baseboard-heater'],
+  'best-smart-thermostat': ['best-baseboard-heater'],
+  'best-infrared-heater': ['best-baseboard-heater'],
+  'best-baseboard-heater': ['best-infrared-heater'],
+  'best-heated-blanket': ['best-hand-warmers'],
 };
 // Below this similarity a guide is not a confident home for an article.
 const MIN_PILLAR_SIM = 0.2;
@@ -294,11 +338,14 @@ for (const slug of slugs) {
 for (const [host, targets] of Object.entries(MANUAL_LINKS)) {
   for (const t of [host, ...targets]) if (!more[t]) throw new Error(`MANUAL_LINKS names a page that does not exist: ${t}`);
   const list = more[host];
+  // When the block is full, each manual link takes the next slot up from the end, so
+  // a second manual link never overwrites the first (slot 0, the guide, is kept).
+  let slot = list.length - 1;
   for (const t of targets) {
     if (list.some((l) => l.url === `/${t}/`)) continue;
     const entry = { title: shortTitle(t), url: `/${t}/` };
     if (list.length < MAX_MORE) list.push(entry);
-    else list[list.length - 1] = entry;
+    else if (slot > 0) list[slot--] = entry;
   }
 }
 recount();
@@ -320,6 +367,23 @@ for (const [guide, spokes] of spokesOf) {
 const planQuestions = slugs.filter((s) => /<PlanTheJob\s*\/>/.test(source.get(s))).sort();
 
 const sortKeys = (o) => Object.fromEntries(Object.entries(o).sort(([a], [b]) => a.localeCompare(b)));
+// ---------------------------------------------------------------------------
+// 5. Frozen pages keep the blocks they already have
+// ---------------------------------------------------------------------------
+// scripts/frozen-pages.json lists pages the owner does not want changed (the top 40 by
+// 30-day pageviews). Their "More in" and cluster blocks are carried over from the last
+// interlinks.json, dropping only links to pages that no longer exist, so new pages and
+// link changes elsewhere never alter them.
+const FROZEN = new Set(JSON.parse(readFileSync(join(import.meta.dirname, 'frozen-pages.json'), 'utf8')).pages);
+let previous = { more: {}, cluster: {} };
+try { previous = JSON.parse(readFileSync(OUT, 'utf8')); } catch { /* first run */ }
+const live = (list) => list.filter((l) => meta.has(l.url.slice(1, -1)));
+for (const slug of FROZEN) {
+  if (previous.more?.[slug] && more[slug]) more[slug] = live(previous.more[slug]);
+  if (previous.cluster?.[slug]) cluster[slug] = live(previous.cluster[slug]);
+  else if (cluster[slug] && previous.more?.[slug]) delete cluster[slug];
+}
+
 writeFileSync(OUT, JSON.stringify({ pillarOf: sortKeys(pillarOf), more: sortKeys(more), cluster: sortKeys(cluster), planQuestions }, null, 2) + '\n');
 
 const weak = slugs.filter((s) => inbound.get(s).size < MIN_INBOUND);

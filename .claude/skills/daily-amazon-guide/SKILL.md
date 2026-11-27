@@ -12,6 +12,47 @@ wiring); never trade checks for volume. If no honest guide is available
 Traffic decides the niche; the guide is a product the readers of that page would
 plausibly buy next on Amazon.
 
+## 0. Owner rules (Nov 27, 2026) — these override anything below
+
+These come from the analysis of the Nov 6-17 traffic jump: what made it, and what did not.
+
+1. **No Google data.** Use Bing (API) and Vercel only. Do not use Search Console exports
+   or Google tools to choose, write or report.
+2. **Never touch the top 40.** Before any edit, pull 30 days of Vercel pageviews by
+   `requestPath` (limit 50) and treat the top 40 paths (excluding `/`) as frozen: no edits
+   to their files, no links added to them, nothing in `MANUAL_LINKS` with one of them as
+   the host. Link new guides from related pages *outside* the top 40 instead.
+3. **Check Bing demand before writing.** Run
+   `node scripts/bing-keyword-volume.mjs "<head term>" "best <head term>"`. The jump came
+   from guides on terms Bing actually searches (`heated blanket` ~3,100 a month,
+   `best solar power bank` ~270). If the head term shows no Bing data, pick another topic.
+4. **No near-duplicate variants.** 109 of the 131 pages published Oct 30 - Nov 10 got zero
+   Bing impressions in 30 days: the wattage generators (3500, 4000, 5000, 8000, 9500...),
+   dehumidifier sizes (50-pint, 70-pint...), water-heater sizes. Do not write a size,
+   wattage or brand variant of a guide that already exists; make it an H2 in that guide.
+5. **Write the way the winners are written.** The pages behind the jump
+   (`best-solar-power-bank` 11.8% Bing CTR, `best-indoor-heater-for-power-outage` 15.5%)
+   all do three things — copy them:
+   - **Title** `<N> Best <Product> in 2026: <specific hook>`, 60 characters max. The hook is
+     the buyer's real deciding factor or the honest angle: "The Honest List", "Safe Picks",
+     "Which to Buy, Which to Skip", "Simple Wins". Generic "Tested & Ranked" or a list of
+     product types ("Basket, Dual-Zone and Oven-Style") is what the low-CTR pages use.
+   - **Description** opens with the one truth buyers get wrong, then what the page gives.
+   - **Hero paragraph** under the H1 leads with that truth: "The little solar panel on a
+     power bank looks like free, endless power. It adds a few percent a day. Here is what
+     actually keeps phones charged off grid: ..."
+   - Frame it around the buyer's situation (outage, cold house, your door, your yard), not
+     around product categories.
+6. **Only build next to guides that bring clicks** (owner, Nov 27). Every new guide must sit
+   in the niche of an existing guide that earned Bing clicks in the last 30 days: the
+   `working` list in today's `bing-summary-<date>.json`, or Bing page stats
+   (`GetPageStats`) for the last 4 weeks. Name that guide and its clicks in the report. If
+   no click-earning guide has an honest, distinct gap next to it, write nothing today and say
+   so; a seed row or a Semrush volume alone is not a reason to write.
+7. **Season decides.** Write in the niche that is about to peak (winter outage and heating
+   from November to February; driveway, deck and lawn from February to April). Bing and
+   DuckDuckGo reward guides that are live before the peak.
+
 ## 1. Pull 7 days of traffic from Vercel
 
 Use the Vercel MCP tool `aggregate_pageviews` (load it with ToolSearch if needed):
@@ -63,7 +104,8 @@ Double down on what works:
 2. **Then the best Bing niche.** Otherwise, when choosing between open seed rows, prefer
    the one in the niche ranked highest in `topNiches` / `working`, ahead of Vercel order.
 3. **Link from what works.** Link each of today's guides from the page that earns the most Bing
-   clicks in that niche (a card in its related grid), so the new page inherits authority.
+   clicks in that niche **outside the top 40** (a card in its related grid), so the new page
+   inherits authority. Never add it to a top-40 page (rule 0.2).
 4. **Report it.** Add a "Bing" line to the daily report: total impressions and clicks
    versus the previous period, taken from the script's "site totals" line (the daily
    GetRankAndTrafficStats sums for the last 7 days vs the 7 before; the weekly query table
@@ -161,10 +203,11 @@ them before writing.** What they do that generic roundups don't:
 - **7 products where the category supports 7 real ones** (5 minimum). Each gets **5
   pros, 3 cons** and a **200-235 word description**: who it is for, the one spec
   that matters and why, the real trade-off, and when to buy something else.
-- **Title pattern:** `<N> Best <Product> in <year>: <the deciding factor>`, e.g.
-  "7 Best Gas Water Heaters in 2026: Tank Models Tested". Our daily guides have **no
-  lab data**, so never write "Tested" or "Tested & Ranked". Use the deciding factor
-  instead: "...in 2026: Wear Layer, Core and Real Waterproofing".
+- **Title pattern:** `<N> Best <Product> in <year>: <specific hook>` (see rule 0.5), e.g.
+  "7 Best Solar Power Banks and Chargers in 2026: The Honest List", "7 Best Indoor Heaters
+  for Power Outages in 2026: Safe Picks". Our daily guides have **no lab data**, so never
+  write "Tested" or "Tested & Ranked". The description and the hero paragraph lead with the
+  one truth the buyer gets wrong (rule 0.5).
 - **FAQ is 6-7 real People-Also-Ask questions**, each answer 50-70 words, the first
   one always "What is the best <product>?". **Mistakes: 4-5**, each named after
   the behaviour ("Shopping by Gallons Instead of First Hour Rating").
@@ -193,8 +236,10 @@ and commits each guide as its own commit before one merge to `main`.
 
 ## 4. Wire it in
 
-- Link it from the **top-traffic page that chose it** (one sentence + link in the body,
-  or a card in its related block) and from the cluster pillar's cluster grid.
+- Link it from the **closest related page outside the top 40** (one sentence + link in the
+  body, or a card in its related block, or a `MANUAL_LINKS` entry in
+  `scripts/build-interlinks.mjs`) and from the cluster pillar's cluster grid if the pillar is
+  outside the top 40. Never edit a top-40 page (rule 0.2).
 - The guide links to the pillar, the top-traffic page and at least one more sibling.
 - Add a row to the matching category in `src/pages/best-of.astro`.
 - Add the slug to `priorityGuides` in `astro.config.mjs`.
@@ -250,7 +295,8 @@ gate results, and anything skipped. Never push a guide that failed a gate.
 
 - **One or two guides per run.** Never more than two. Each must be a distinct product category with its own
   primary keyword; never split one topic into near-duplicate pages to hit the number.
-- Never edit an existing article except to add links to the new guide.
+- Never edit an existing article except to add links to the new guide, and never edit a
+  top-40 page at all (rule 0.2).
 - If today's guides already exist on `main` (the task fired twice), stop and report.
 
 ## 8. Daily format catch-up (after the guide is live)
@@ -259,7 +305,8 @@ gate results, and anything skipped. Never push a guide that failed a gate.
 best-ranking format, highest traffic first. Each daily run, after the new guide is
 published:
 
-1. Take the first **20** slugs from the queue. Split them into two lists of 10 and
+1. Take the first **20** slugs from the queue **that are not in the top 40** (rule 0.2;
+   leave top-40 slugs in the queue untouched). Split them into two lists of 10 and
    give each to a subagent with `.claude/skills/daily-amazon-guide/restructure-brief.md`
    as its instructions (files are disjoint, so they can run in parallel; they must not
    build, commit or push).

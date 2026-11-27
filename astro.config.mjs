@@ -47,6 +47,14 @@ function lastmodFor(slug) {
 // Buyer's guides that target high-volume search terms. They get a higher
 // sitemap priority than the 0.5 default so crawlers reach them sooner.
 const priorityGuides = new Set([
+  'best-heated-blanket',
+  'best-heated-vest',
+  'best-hand-warmers',
+  'best-wood-stove',
+  'best-pellet-stove',
+  'best-heated-gloves',
+  'best-infrared-heater',
+  'best-baseboard-heater',
   // November 2026: concrete crack repair cluster.
   'concrete-crack-repair',
   'basement-floor-crack-repair',

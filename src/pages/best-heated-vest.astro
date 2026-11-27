@@ -1,0 +1,971 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MoreInCategory from "../components/MoreInCategory.astro";
+import { authorSchema, authorName } from "../data/authors";
+import AuthorAvatar from "../components/AuthorAvatar.astro";
+import QuickPicks from "../components/QuickPicks.astro";
+import PlanTheJob from "../components/PlanTheJob.astro";
+import AuthorBio from "../components/AuthorBio.astro";
+import { amazonLink } from "../data/affiliate";
+import TrustBadge from "../components/TrustBadge.astro";
+import SocialProof from "../components/SocialProof.astro";
+import productImages from "../data/product-images.json";
+import { pageDates } from "../data/dates";
+
+const moreInCategory = [
+  {
+    "title": "Best Cordless Tool Brand",
+    "url": "/best-cordless-tool-brand/"
+  },
+  {
+    "title": "Milwaukee vs DeWalt",
+    "url": "/milwaukee-vs-dewalt/"
+  },
+  {
+    "title": "Best Snow Shovels",
+    "url": "/best-snow-shovel/"
+  },
+  {
+    "title": "Best Snow Blowers",
+    "url": "/best-snow-blower/"
+  }
+];
+const dates = pageDates(Astro.url.pathname, { published: "2026-11-27", modified: "2026-11-27" });
+const title = "7 Best Heated Vests in 2026: Tool Battery or Power Bank";
+const description =
+  "A heated vest is only as warm as its battery. The best heated vests for working outside, from Milwaukee M12, DeWalt and Makita to Ororo and Venustas, compared.";
+
+const PRODUCTS = [
+  {
+    "id": "milwaukee-m12-axis-heated-vest",
+    "name": "Milwaukee M12 Heated AXIS Vest Kit with 2.0Ah Battery (303B-21)",
+    "category": "Tool Battery, M12 12V, Front and Back Heat Zones, Kit with 2.0Ah Pack",
+    "badge": "Best Overall for Tool Owners",
+    "amazonUrl": "#",
+    "pros": [
+      "Runs on the same M12 batteries as Milwaukee's 12V drills, drivers and lights",
+      "Kit includes a 2.0Ah M12 battery, so it works out of the box",
+      "Front and back heat zones, per the listing",
+      "Quilted AXIS shell fits under a work coat or over a hoodie",
+      "Vest-only versions are sold for owners who already have M12 packs"
+    ],
+    "cons": [
+      "Priced well above power-bank vests, roughly $250-$300 for the kit",
+      "The included 2.0Ah pack is small; a larger M12 pack runs longer but adds weight",
+      "Only worth it if you own or plan to own M12 tools"
+    ],
+    "bottomLine": "The heated vest to buy if you already run Milwaukee M12 tools: spare batteries you own become spare hours of heat.",
+    "description": "If there is already a bag of red M12 batteries in your truck or garage, this is the heated vest to buy. The AXIS vest runs on Milwaukee's 12V M12 packs, the same batteries that power its compact drills, impact drivers, lights and inflators, and that changes the runtime question completely. A power-bank vest gives you whatever its one or two packs hold. This vest gives you every charged M12 battery you own, which on a long day of shoveling or a winter job site is the difference between warm until lunch and warm until you pack up. The listing for this kit names a 2.0Ah battery and front and back heat zones, and the quilted AXIS shell is thin enough to wear under a work coat or over a hoodie. A 2.0Ah M12 pack holds about 24 watt-hours, which is modest, so treat the included battery as the starter and use a larger M12 pack from your tool kit when you will be out all day. Milwaukee also sells this vest without a battery for people who already own M12 packs, which is the better value if that is you. The trade-off is price. The kit sits around $250 to $300, two to three times a good power-bank vest. If you own no M12 tools and do not plan to, buy the Ororo or Venustas below instead."
+  },
+  {
+    "id": "ororo-4-zone-heated-vest",
+    "name": "ORORO Men's Heated Vest, Lightweight 4-Zone Battery Puffer Vest",
+    "category": "Power Bank, 4 Heat Zones, Water- and Wind-Resistant Puffer Shell",
+    "badge": "Best Power-Bank Heated Vest",
+    "amazonUrl": "#",
+    "pros": [
+      "Four heat zones in a classic puffer cut, per the listing",
+      "Water- and wind-resistant shell for snow and wind on the driveway",
+      "Battery pack is included, so no tool platform is needed",
+      "Insulated, so it keeps some warmth even when the heat is off",
+      "Matching women's version from the same brand"
+    ],
+    "cons": [
+      "One battery limits a full workday unless you buy a spare",
+      "Puffer bulk can feel warm under a heavy work coat while shoveling",
+      "Proprietary pack, so it does not share batteries with your tools"
+    ],
+    "bottomLine": "The best heated vest for most people who do not own a tool battery platform: insulated, weather-resistant, and sold with its battery.",
+    "description": "If you do not own a cordless tool platform, or you want a vest you can also wear to the store, the Ororo 4-zone puffer is the one we would start with. Ororo is one of the longest-running heated apparel brands on Amazon, and this vest is its classic model. The listing describes four heat zones, an insulated puffer design and a water- and wind-resistant shell, which is the right combination for standing in a driveway in blowing snow. The insulation matters more than it sounds. A heated vest with a thin shell loses its heat to the wind almost as fast as it makes it, while a puffer holds the warmth against your body and keeps you reasonably comfortable even after the battery runs flat. The battery pack is sold with the vest, so there is nothing else to buy to get started, though a second pack is the first thing we would add if you plan to be outside for more than a morning. The trade-off is the battery itself. It is Ororo's own pack, not a tool battery, so your drill batteries cannot top it up mid-shift. The puffer cut is also warm enough that, under a heavy work coat during hard shoveling, many people will run it on low or off. If you own M12, DeWalt or Makita tools, buy their vest instead."
+  },
+  {
+    "id": "dewalt-dchv095-heated-puffer-vest",
+    "name": "DEWALT DCHV095BD1 Cold Weather Men's Heated Puffer Vest Kit with Battery",
+    "category": "Tool Battery, DeWalt Platform, Puffer Vest, Kit with Battery",
+    "badge": "Best for DeWalt Owners",
+    "amazonUrl": "#",
+    "pros": [
+      "Kit includes a DeWalt battery, per the listing",
+      "Puffer construction keeps some warmth with the heat off",
+      "Lets DeWalt owners share charged packs between tools and vest",
+      "Usually priced below the Milwaukee kit, roughly $190-$230",
+      "Part of DeWalt's Cold Weather line, so jackets and hoodies are sold to match"
+    ],
+    "cons": [
+      "The listing title does not state the voltage of the included pack, so confirm it before buying spares",
+      "Puffer bulk is less ideal as a thin mid-layer",
+      "Little reason to buy it without other DeWalt tools"
+    ],
+    "bottomLine": "The DeWalt owner's answer to the M12 AXIS vest: a puffer vest kit that turns the tool batteries you already charge into heat.",
+    "description": "DeWalt owners should buy this vest for the same reason Milwaukee owners should buy the AXIS: the batteries already sitting on your chargers become extra hours of heat. The DCHV095BD1 is a kit, so it arrives with a DeWalt battery, and it is a puffer vest rather than a thin quilted layer, which means it keeps you warmer when the heat is switched off or the pack runs down. That makes it a good fit for standing work, such as feeding a snow blower, holding a ladder or waiting on a delivery at a cold job site, where you are not generating much heat of your own. DeWalt's heated gear runs on its tool batteries; its jacket kits, for example, are listed as working with 20V and 12V MAX packs. The Amazon title for this vest kit does not state the voltage of the included battery, so check the product details before you buy spare packs for it, and expect a bigger pack to run longer than the one in the box. On price, this kit has usually listed below Milwaukee's AXIS kit, roughly $190 to $230 depending on size. The trade-offs are bulk and lock-in. A puffer under a heavy coat can be too warm during hard shoveling, and the vest only makes sense if DeWalt is your platform. If you are still choosing a platform, read our Milwaukee vs DeWalt comparison first."
+  },
+  {
+    "id": "venustas-20-hour-heated-vest",
+    "name": "Venustas Men's Heated Vest with Battery, Up to 20 Hours of Warmth",
+    "category": "Power Bank, 6 Heat Zones, Rated Up to 20 Hours, Water-Resistant",
+    "badge": "Longest Rated Runtime",
+    "amazonUrl": "#",
+    "pros": [
+      "Rated for up to 20 hours of warmth, per the listing",
+      "Six heat zones, more coverage than most four-zone vests",
+      "Water-resistant fabric with a silver mylar lining",
+      "Lightweight FELLEX insulation, per the listing",
+      "Battery listed as recharging in about 3 hours"
+    ],
+    "cons": [
+      "The 20-hour figure is a best-case low-setting rating, not high heat",
+      "Priced near the top of the power-bank vests",
+      "Proprietary battery, not shared with tools"
+    ],
+    "bottomLine": "The power-bank vest to pick for the longest day outside, as long as you read its 20-hour rating as a low-setting number.",
+    "description": "If your problem is running out of heat before you run out of work, the Venustas 20-hour vest is the power-bank model to look at. The listing rates it for up to 20 hours of warmth, the longest runtime claim among the vests we picked, and gives it six heat zones, a water-resistant shell, a silver mylar lining and lightweight FELLEX insulation. Six zones usually means heat beyond the chest and back, which helps when you are bent over a shovel and the wind gets at your sides. Read the runtime claim the way you would read any battery rating. Twenty hours is what the brand rates at its lowest setting. On high, every heated vest burns through its battery several times faster, so plan on far less than 20 hours if you crank it up. Even so, a vest rated this long on low will comfortably cover a full day of yard cleanup or a weekend of snow removal at medium. The battery is listed as recharging in about three hours, so it is ready again by the next storm. The trade-offs are price and lock-in. It sits near the top of the power-bank vests, and its pack does not share with your tools. If you own M12, DeWalt or Makita tools and keep several batteries charged, the tool-platform vests will usually give you more total hours for the money."
+  },
+  {
+    "id": "makita-dcv200z-heated-vest",
+    "name": "Makita DCV200Z 18V LXT Lithium-Ion Cordless Heated Vest, Vest Only",
+    "category": "Tool Battery, Makita 18V LXT, Vest Only (Battery Sold Separately)",
+    "badge": "Best for Makita Owners",
+    "amazonUrl": "#",
+    "pros": [
+      "Runs on Makita 18V LXT batteries, per the listing",
+      "Vest-only pricing suits owners who already have LXT packs",
+      "18V packs store more energy than 12V packs of the same amp-hours",
+      "Sold in sizes up to 3X-Large",
+      "Lets you swap in a charged tool battery mid-job"
+    ],
+    "cons": [
+      "No battery or charger in the box",
+      "An 18V pack is heavier to carry than a power-bank battery",
+      "Pointless without Makita LXT batteries"
+    ],
+    "bottomLine": "For Makita 18V LXT owners, the cheapest way into a heated vest that can run all day on packs you already own.",
+    "description": "Makita's DCV200Z is the vest for people who already have a shelf of 18V LXT batteries. It is sold as vest only, with no battery or charger, which keeps the price in the low-to-mid $200s and means you pay only for the garment. What you get in return is the energy of an 18V tool pack. At the same amp-hour rating, an 18V battery stores half again as many watt-hours as a 12V one, so a common 5.0Ah LXT pack holds roughly 90 watt-hours, more than double the power bank that comes with a typical heated vest. That is why tool-platform vests make sense for long cold shifts: you are not limited to one pack, and the packs are big. The listing offers sizes up to 3X-Large, which helps if you wear it over a hoodie. Makita also sells a newer DCV202Z vest listed for both 18V and 14.4V LXT packs, worth a look if you still run older 14.4V batteries. The trade-offs are weight and lock-in. An 18V pack in a pocket is heavier than a slim power bank, so most people clip it where it rides at the hip. And without Makita batteries, the vest is a costly piece of fabric. If you are on Milwaukee or DeWalt, buy their vests; if you own no tools, an Ororo or Venustas kit is cheaper and complete."
+  },
+  {
+    "id": "venustas-heated-fleece-vest",
+    "name": "Venustas Men's Heated Fleece Vest with 6 Heating Zones and Battery Pack",
+    "category": "Power Bank, 6 Heat Zones incl. Collar and Shoulders, Fleece Mid-Layer",
+    "badge": "Best Mid-Layer Under a Work Coat",
+    "amazonUrl": "#",
+    "pros": [
+      "Six heat zones including the collar and shoulders, per the listing",
+      "Soft fleece is thin enough to wear under a work jacket",
+      "Rated for up to 10 hours of runtime",
+      "Battery listed as recharging in about 2.5 hours",
+      "Usually one of the cheaper complete kits from a known brand"
+    ],
+    "cons": [
+      "Fleece is not wind- or water-resistant on its own: it needs a shell",
+      "Shorter rated runtime than the 20-hour Venustas",
+      "Proprietary battery"
+    ],
+    "bottomLine": "The heated vest to wear under the coat you already own, with collar heat for the wind on your neck.",
+    "description": "Not everyone needs another outer layer. If you already own a good work coat or ski shell, the smarter buy is a thin heated layer that goes underneath it, and the Venustas fleece vest is built for that job. The listing describes six heat zones including the collar and shoulders, a soft fleece body, a rated runtime of up to 10 hours and a battery that recharges in about two and a half hours. Collar heat is the detail that sells it for snow work. The back of your neck is where cold wind bites first when you are bent over a shovel or walking behind a snow blower, and most vests leave it alone. Fleece also breathes better than a puffer, which matters when you are working hard enough to sweat: trapped sweat is what chills you once you stop. Wear it over a base layer and under a windproof coat and you get warmth without the bulk. The trade-off is that fleece is not a shell. Worn alone in wind or wet snow, it will lose heat quickly and soak through, so this is a layer, not a jacket replacement. The rated runtime is also half that of the 20-hour Venustas, so carry a spare pack for long days. It usually lists below the brand's puffer vests. If you want one vest to wear on its own, choose the Ororo puffer instead."
+  },
+  {
+    "id": "ororo-womens-5-zone-heated-vest",
+    "name": "ORORO Women's Heated Vest, Lightweight 5-Zone Water Resistant Vest",
+    "category": "Power Bank, 5 Heat Zones, Water-Resistant, Women's Cut",
+    "badge": "Best for Women",
+    "amazonUrl": "#",
+    "pros": [
+      "Cut for women rather than a resized men's vest",
+      "Five heat zones, per the listing",
+      "Water-resistant shell for wet snow",
+      "Lightweight enough for active work like shoveling and raking",
+      "Battery included, with no tool platform needed"
+    ],
+    "cons": [
+      "One included battery, so buy a spare for long days",
+      "Not compatible with tool batteries",
+      "Priced like the men's Ororo puffer, around $110"
+    ],
+    "bottomLine": "The best heated vest for women doing outdoor work: a real women's fit, five zones and a water-resistant shell.",
+    "description": "A heated vest only works if the heat panels sit against your body, and a men's vest sized down rarely fits well enough for that. The Ororo women's 5-zone vest is cut for women, and the listing describes five heat zones, a lightweight build and a water-resistant shell. That combination makes it the pick for women who shovel, clear walks or do winter yard work, where a loose vest lets cold air in at the hem and armholes and moves the heat panels away from the back and chest. Five zones is one more than Ororo's classic four-zone vest, and the lightweight construction is easier to move in than a heavy puffer when you are swinging a shovel or carrying bags of ice melt. The water-resistant shell handles the wet, heavy snow that soaks a fleece vest. The battery comes in the box, and like every power-bank vest it is the limit on a long day, so a second pack is a sensible add-on. The trade-offs are the same as the men's Ororo: the battery does not share with your tools, and the price, around $110, is high for a vest you only need on the coldest days. Milwaukee also sells a women's M12 heated AXIS vest, which is the better buy if you already own M12 tools. Ororo makes a matching men's 5-zone vest for a household that wants two."
+  }
+];
+
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: "https://www.thehonestreviewers.com/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Best Lists",
+          item: "https://www.thehonestreviewers.com/best-of/",
+        },
+        {
+          "@type": "ListItem",
+          position: 3,
+          name: "Best Heated Vest",
+          item: "https://www.thehonestreviewers.com/best-heated-vest/",
+        },
+      ],
+    },
+    {
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          "name": "What is the best heated vest?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For most people working outside who already own Milwaukee M12 tools, the M12 Heated AXIS Vest is the best heated vest, because every charged M12 battery becomes extra hours of heat. If you do not own a tool platform, the Ororo 4-zone puffer is the best all-round choice: insulated, wind- and water-resistant, and sold complete with its battery pack."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long do heated vests last on one charge?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It depends on the battery and the setting. Listings quote best-case low-setting figures, typically 8 to 10 hours, and some models such as the Venustas 20-hour vest are rated longer. On high heat, expect a fraction of that, often a few hours. Cold batteries also give less, so keep the pack inside the vest and carry a spare."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is a heated vest or heated jacket better?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For active work such as shoveling, raking or construction, a heated vest is usually better. It warms your core, leaves your arms free to move and layers under the coat you already own. A heated jacket is better for standing still in serious cold for hours, because it heats more of your body and replaces your outer layer."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I use my Milwaukee or DeWalt tool batteries in a heated vest?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, if you buy the matching brand's vest. Milwaukee's M12 heated vests run on M12 batteries, Makita's DCV200Z runs on 18V LXT packs and DeWalt sells heated vests on its tool batteries. Batteries are not interchangeable between brands without third-party adapters, which we do not recommend for heated gear. Check the exact model before buying spares."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are heated vests safe to wear all day?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Heated vests from established brands are low voltage and safe for most people when worn over a base layer rather than bare skin. Use lower settings for long wear to avoid low-temperature burns, use only the brand's own battery and charger, and talk to a doctor first if you have reduced sensation in your skin, such as from diabetic neuropathy."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you wash a heated vest in the washing machine?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most heated vests from known brands can be washed if the care label allows it. Remove the battery, zip the connector into its pocket, close all zippers and use a gentle cycle with mild detergent, ideally in a mesh laundry bag. Air dry the vest and make sure the connector is fully dry before reconnecting the battery."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do heated vests work in wet snow?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A heated vest with a water-resistant shell, such as the Ororo or Venustas puffer models, handles wet snow and light precipitation, but no heated vest is fully waterproof gear. Wear a waterproof shell on top in heavy wet snow or rain. If the vest gets soaked, switch it off, remove the battery and dry it before using it again."
+          }
+        }
+      ],
+    },
+    {
+      "@type": "Article",
+      headline: title,
+      author: authorSchema(Astro.url.pathname),
+      datePublished: dates.published,
+      dateModified: dates.modified,
+      publisher: { "@type": "Organization", name: "The Honest Reviewers" },
+    },
+    {
+      "@type": "ItemList",
+      name: title,
+      numberOfItems: PRODUCTS.length,
+      itemListElement: PRODUCTS.map((product, index) => ({
+        "@type": "ListItem",
+        position: index + 1,
+        name: product.name,
+        url: new URL(`#${product.id}`, Astro.url).toString(),
+      })),
+    },
+    ...PRODUCTS.map((product) => ({
+      "@type": "Product",
+      name: product.name,
+      description: product.description,
+      brand: {
+        "@type": "Brand",
+        name: product.name.split(" ")[0],
+      },
+    })),
+  ],
+};
+---
+
+<Layout
+  title={title}
+  description={description}
+  ogType="article"
+  article={{
+    publishedTime: dates.published,
+    modifiedTime: dates.modified,
+    author: authorName(Astro.url.pathname),
+    section: "Tools & Equipment",
+    tags: [
+      "best heated vest",
+      "heated vest",
+      "heated jacket",
+      "heated vest for men",
+      "milwaukee heated vest",
+      "dewalt heated vest",
+      "heated vest for work"
+    ],
+  }}
+  jsonLd={schema}
+>
+  <article class="relative overflow-hidden">
+    <!-- Hero Section -->
+    <div class="bg-gray-900 py-16 lg:py-24 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 20% 20%, #38BDF8 0, transparent 45%), radial-gradient(circle at 80% 60%, #FF4500 0, transparent 40%);"></div>
+      <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+        <div class="flex justify-center mb-6">
+          <TrustBadge />
+        </div>
+        <div class="flex justify-center gap-3 mb-6">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#FF4500]/20 text-[#FF4500] text-xs font-black uppercase tracking-widest border border-[#FF4500]/30">
+            Buyer's Guide
+          </span>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-500/10 text-green-400 text-xs font-bold uppercase tracking-widest border border-green-500/20">
+            Updated for Winter 2026
+          </span>
+        </div>
+        <h1 class="text-4xl lg:text-6xl font-black text-white leading-tight mb-8">
+          7 Best <span class="text-[#38BDF8]">Heated Vests</span> for Working Outside
+        </h1>
+        <p class="text-xl text-gray-300 leading-relaxed mb-8 max-w-3xl mx-auto">
+          Heat zones get the attention, but the battery decides whether a heated vest is still warm at hour three. For shoveling, yard work and job sites, buy a vest that runs on tool batteries you already own, or a power-bank vest with a spare pack.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a
+            href="#milwaukee-m12-axis-heated-vest"
+            class="px-8 py-4 bg-[#FF4500] hover:bg-[#E63E00] text-white font-black rounded-xl shadow-lg transition-all no-underline"
+          >
+            See Our #1 Pick
+          </a>
+          <a
+            href="#top-picks"
+            class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/10 no-underline"
+          >
+            Compare the Picks
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Author & Meta -->
+    <div class="max-w-3xl mx-auto px-4 pt-12">
+      <div class="flex items-center gap-6 border-b border-gray-100 pb-8">
+        <div class="flex items-center gap-3">
+          <AuthorAvatar size={48} />
+          <div>
+            <p class="text-sm font-bold text-gray-900">Alex Rivers</p>
+            <p class="text-xs text-gray-500 uppercase tracking-widest">Home Improvement Editor</p>
+          </div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 hidden sm:block"></div>
+        <div class="hidden sm:block">
+          <p class="text-sm font-bold text-gray-900">Last Updated</p>
+          <p class="text-xs text-gray-500">{dates.display}</p>
+        </div>
+        <div class="hidden sm:block ml-auto">
+          <SocialProof users="11.4k" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="max-w-3xl mx-auto px-4 py-10">
+      <div class="bg-gray-50 border border-gray-200 rounded-2xl p-6 lg:p-8">
+        <h2 class="text-lg font-black text-gray-900 mb-4 flex items-center gap-2">
+          In This Guide
+        </h2>
+        <nav class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a href="#runtime" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">1. How Long a Vest Lasts</a>
+          <a href="#platform" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">2. Tool Battery or Power Bank</a>
+          <a href="#top-picks" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">3. The 7 Best Heated Vests</a>
+          <a href="#vest-vs-jacket" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">4. Heated Vest vs Heated Jacket</a>
+          <a href="#layering" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">5. How to Wear One for Work</a>
+          <a href="#sizing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">6. What Size to Buy</a>
+          <a href="#safety" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">7. Are Heated Vests Safe?</a>
+          <a href="#washing" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">8. How to Wash One</a>
+          <a href="#worth-it" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">9. Are They Worth It?</a>
+          <a href="#mistakes" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">10. Common Mistakes</a>
+          <a href="#faq" class="text-sm text-gray-600 hover:text-[#1E90FF] no-underline py-1 font-medium">11. FAQ</a>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="max-w-3xl mx-auto px-4 pb-16 lg:pb-24">
+      <div class="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
+        <p class="text-2xl font-medium text-gray-900 mb-8 italic">
+          Heated vest listings compete on heat zones, and buyers compare them that way. But zones only decide where the warmth goes. The battery decides how long it lasts, and for anyone clearing a driveway, raking a yard or working a cold job site, that is the number that matters. If you already own Milwaukee M12, DeWalt or Makita tools, the best heated vest is the one that runs on those batteries, because every charged pack becomes extra hours of heat. If you do not, an insulated power-bank vest from Ororo or Venustas, plus a spare battery, is the better buy. Below we explain runtime, compare the two kinds, then rank seven real vests from Amazon.
+        </p>
+
+        <QuickPicks products={PRODUCTS} />
+
+        <div id="runtime" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            1. How Long Does a Heated Vest Last? The Battery Decides, Not the Heat Zones
+          </h2>
+
+          <p>
+            Heated vest listings lead with heat zones: four, six, fifteen, twenty-one. Zones tell you where the heat goes. They tell you almost nothing about how long it lasts, and for anyone working outside the second question is the one that matters. A vest that is toasty for ninety minutes and then goes cold halfway through clearing the driveway is worse than a plain fleece, because you dressed for the heat and now it is gone.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Watt-Hours Are the Real Fuel Gauge</h3>
+
+          <p>
+            Every heated vest runs on a battery, and the honest measure of a battery is watt-hours: volts multiplied by amp-hours. A typical power-bank vest pack of 7.4 volts and 5,000mAh holds about 37 watt-hours. A Milwaukee M12 2.0Ah pack holds about 24 watt-hours, while a common 18V 5.0Ah tool battery holds about 90. More watt-hours means more hours of heat at the same setting. Zone count can actually work against runtime, because more heated area draws more power from the same pack.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Runtime Claims Are Low-Setting Numbers</h3>
+
+          <p>
+            When a listing says up to 10 or up to 20 hours, it means the lowest heat setting. High heat typically draws several times as much power as low, so the same vest might last a full day on low and a few hours on high. Plan around medium. If a vest is rated for 10 hours, expect roughly half that at a setting you can actually feel on a windy, sub-freezing morning.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Cold Batteries Give Less</h3>
+
+          <p>
+            Lithium batteries deliver less energy when they are cold. Keep the pack in its inside pocket rather than clipped outside, store spares inside your coat or in the truck cab, and charge them indoors. A pack that starts the day warm will run noticeably longer than one pulled from a freezing garage shelf.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">The Real Fix: A Second Battery</h3>
+
+          <p>
+            The single best upgrade to any heated vest is a spare battery. For power-bank vests, that means buying a second pack from the same brand. For tool-platform vests, you probably already own several, which is the whole case for them.
+          </p>
+        </div>
+
+        <div id="platform" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            2. Tool Battery or Power Bank Vest? Buy the One That Runs on Batteries You Already Own
+          </h2>
+
+          <p>
+            Heated vests split into two families, and for this site's readers the choice is usually made before you look at a single listing. If you already own a cordless tool platform, buy that brand's heated vest. If you do not, buy a power-bank vest and a spare pack.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Tool-Platform Vests: Milwaukee M12, DeWalt and Makita</h3>
+
+          <p>
+            Milwaukee, DeWalt and Makita all sell heated vests that run on the same batteries as their drills and drivers. They cost more, often $200 to $300, but the batteries you already charge become spare hours of heat. Swap a fresh pack in at lunch and the vest runs until dark. Tool packs are also tough, built for job sites, and the bigger ones store far more energy than any power-bank vest battery. If you are still choosing a platform, our <a href="/best-cordless-tool-brand/">best cordless tool brand</a> guide and <a href="/milwaukee-vs-dewalt/">Milwaukee vs DeWalt</a> comparison cover the wider picture; a heated vest is a small reason to pick one, but a real one if you work outside all winter.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Power-Bank Vests: Ororo and Venustas</h3>
+
+          <p>
+            Power-bank vests from brands like Ororo and Venustas come complete with a small 7.4V-class battery that clips into an inside pocket. They are lighter, cheaper (roughly $90 to $145 in the listings we checked) and look like ordinary vests, so they double as everyday wear. The catch is that each battery is a proprietary pack, so runtime is limited to the packs you buy for it.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">What About Ryobi ONE+?</h3>
+
+          <p>
+            Ryobi has sold heated gear on its ONE+ 18V platform, but we could not find a Ryobi ONE+ heated vest listed on Amazon when we checked, so it is not in our picks. Ryobi owners can choose a power-bank vest, or check Ryobi's own retail channels.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">The Picks at a Glance</h3>
+
+          <div class="overflow-hidden border border-gray-200 rounded-2xl my-8">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-50 border-b border-gray-200">
+                  <tr>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Product</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Power</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Key spec (per listing)</th>
+                    <th class="px-4 py-4 font-bold text-gray-600 text-sm">Best for</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Milwaukee M12 AXIS Vest Kit</td>
+                    <td class="px-4 py-4 text-gray-700">M12 12V tool battery</td>
+                    <td class="px-4 py-4 text-gray-700">Front and back zones, 2.0Ah pack included</td>
+                    <td class="px-4 py-4 text-gray-700">M12 tool owners</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Ororo 4-Zone Puffer</td>
+                    <td class="px-4 py-4 text-gray-700">Power bank</td>
+                    <td class="px-4 py-4 text-gray-700">4 zones, water- and wind-resistant shell</td>
+                    <td class="px-4 py-4 text-gray-700">Most people without a tool platform</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">DeWalt DCHV095BD1 Puffer Kit</td>
+                    <td class="px-4 py-4 text-gray-700">DeWalt tool battery</td>
+                    <td class="px-4 py-4 text-gray-700">Puffer vest kit with battery</td>
+                    <td class="px-4 py-4 text-gray-700">DeWalt tool owners</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Venustas 20-Hour Vest</td>
+                    <td class="px-4 py-4 text-gray-700">Power bank</td>
+                    <td class="px-4 py-4 text-gray-700">6 zones, rated up to 20 hours</td>
+                    <td class="px-4 py-4 text-gray-700">The longest days outside</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Makita DCV200Z</td>
+                    <td class="px-4 py-4 text-gray-700">18V LXT tool battery</td>
+                    <td class="px-4 py-4 text-gray-700">Vest only, sizes to 3XL</td>
+                    <td class="px-4 py-4 text-gray-700">Makita LXT owners</td>
+                  </tr>
+                  <tr class="bg-gray-50 border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Venustas Fleece Vest</td>
+                    <td class="px-4 py-4 text-gray-700">Power bank</td>
+                    <td class="px-4 py-4 text-gray-700">6 zones incl. collar, up to 10 hours</td>
+                    <td class="px-4 py-4 text-gray-700">A layer under a work coat</td>
+                  </tr>
+                  <tr class="bg-white border-b border-gray-100">
+                    <td class="px-4 py-4 font-black text-gray-900">Ororo Women's 5-Zone</td>
+                    <td class="px-4 py-4 text-gray-700">Power bank</td>
+                    <td class="px-4 py-4 text-gray-700">5 zones, water-resistant, women's cut</td>
+                    <td class="px-4 py-4 text-gray-700">Women doing outdoor work</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Picks -->
+        <div id="top-picks" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            3. The 7 Best Heated Vests
+          </h2>
+
+          <p>
+            Every vest below is a current Amazon listing from a recognised brand. We have not lab-tested these vests, so specs come from the listings and manufacturers, and we say so. Tool-platform vests come first for tool owners; the power-bank vests suit everyone else.
+          </p>
+
+          {PRODUCTS.map((product, index) => (
+            <div id={product.id} class="scroll-mt-24 mt-12 first:mt-8">
+              <div class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div class="bg-gray-900 px-6 py-4 flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <span class="bg-[#FF4500] text-white w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">
+                      {index + 1}
+                    </span>
+                    {productImages[product.id] && (
+                      <img
+                        src={productImages[product.id]}
+                        alt={product.name}
+                        loading="lazy"
+                        width="40"
+                        height="40"
+                        class="w-10 h-10 rounded-lg bg-white object-contain p-1 shrink-0"
+                      />
+                    )}
+                    <div>
+                      <h3 class="text-white font-black text-lg leading-snug m-0"><span class="block text-[#38BDF8] text-xs font-bold uppercase tracking-wide mb-1 sm:hidden">{product.badge}</span>{product.name}</h3>
+                      <p class="text-gray-400 text-xs">{product.category}</p>
+                    </div>
+                  </div>
+                  <span class="bg-[#38BDF8]/20 text-[#38BDF8] px-3 py-1 rounded-full text-xs font-bold hidden sm:block">
+                    {product.badge}
+                  </span>
+                </div>
+                <div class="p-6">
+                  {product.rating && product.reviewCount && (
+                  <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-yellow-400">
+                      {[...Array(5)].map((_, i) => (
+                        <svg
+                          class={`w-4 h-4 ${i < Math.floor(product.rating) ? "fill-current" : "text-gray-200"}`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                      ))}
+                    </div>
+                    <span class="text-gray-500 text-sm font-bold">{product.rating}</span>
+                    <span class="text-gray-400 text-xs">({product.reviewCount.toLocaleString()} ratings)</span>
+                  </div>
+                  )}
+
+                  <p class="text-gray-700 leading-relaxed mb-6">{product.description}</p>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    <div class="bg-green-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-green-700 mb-3">Pros</p>
+                      <ul class="space-y-2">
+                        {product.pros.map((pro) => (
+                          <li class="flex items-start gap-2 text-sm text-green-800">
+                            <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            {pro}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div class="bg-red-50 rounded-xl p-4">
+                      <p class="text-xs font-black uppercase tracking-widest text-red-700 mb-3">Cons</p>
+                      <ul class="space-y-2">
+                        {product.cons.map((con) => (
+                          <li class="flex items-start gap-2 text-sm text-red-800">
+                            <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            {con}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                    <p class="text-xs font-black uppercase tracking-widest text-gray-500 mb-1">The Bottom Line</p>
+                    <p class="text-gray-900 font-bold">{product.bottomLine}</p>
+                  </div>
+
+                  <a
+                    href={amazonLink(product.amazonUrl, product.name, product.id)}
+                    target="_blank"
+                    rel="sponsored nofollow noopener"
+                    class="mt-6 block bg-[#FF4500] hover:bg-[#E63E00] text-white text-center py-4 rounded-xl font-black no-underline transition-colors uppercase tracking-widest text-sm"
+                  >
+                    Check Price &rarr;
+                  </a>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div id="vest-vs-jacket" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            4. Heated Vest vs Heated Jacket: A Vest Is Better for Shoveling and Yard Work
+          </h2>
+
+          <p>
+            More people search for heated vests than heated jackets, and for outdoor work they are right to. A heated jacket puts more heat in more places, but for active jobs the vest usually wins.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Why a Vest Suits Hard Work</h3>
+
+          <p>
+            Your core is what a heated garment should warm. Keep your chest and back warm and your body keeps sending warm blood to your hands and feet. A vest does exactly that and leaves your arms free, so shoveling, raking, swinging a hammer or pulling a starter cord does not fight a stiff sleeve. It also layers: wear it under the work coat you already own, or over a hoodie on milder days. And because it heats a smaller area, the same battery tends to run longer than it would in a jacket.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">When a Heated Jacket Wins</h3>
+
+          <p>
+            A jacket makes more sense when you are standing still in real cold: a long wait at a job site, ice fishing, watching a game or riding in an open vehicle. It heats more of you, usually including the hand pockets, and replaces your outer layer rather than adding one. Milwaukee and DeWalt both sell heated jackets on the same batteries as their vests. The trade-off is that a jacket is bulkier, costs more and is overkill for an hour of heavy shoveling, when you will make plenty of heat yourself.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">The Simple Rule</h3>
+
+          <p>
+            If you are moving, buy a vest. If you are mostly standing still in the cold for hours, consider a jacket. If you do both, a vest under a good insulated coat covers more situations than a heated jacket alone.
+          </p>
+        </div>
+
+        <div id="layering" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            5. How to Wear a Heated Vest for Outdoor Work: Base Layer, Vest, Shell
+          </h2>
+
+          <p>
+            A heated vest only works if the heat panels sit close to your body and the warmth is not blown away. Get the layering right and even a modest vest feels warm; get it wrong and a premium one feels weak.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Put It Over a Thin Base Layer</h3>
+
+          <p>
+            Wear the vest over a thin long-sleeve base layer, not over a thick sweater. Heat passes through a thin layer easily and barely through a thick one. A synthetic or wool base layer also moves sweat away from your skin, which matters because damp clothing is what makes you cold once you stop.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Cover It With a Windproof Shell</h3>
+
+          <p>
+            Wind strips heat away from any vest. A windproof or insulated coat on top traps the warmth, and that is also why puffer vests with a wind-resistant shell work better on their own than fleece ones.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Shoveling: Start Low or Off</h3>
+
+          <p>
+            Shoveling is hard work, and most people overheat within ten minutes. Start with the vest on low or off, let your own effort warm you, and turn it up when you pause or finish. It saves battery, and it saves you from sweating through your base layer and then freezing. If the snow is deep enough that you are out for an hour or more, our <a href="/best-snow-shovel/">best snow shovel</a> and <a href="/best-snow-blower/">best snow blower</a> guides cover the tools that shorten the job.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Job Sites and Standing Work</h3>
+
+          <p>
+            For work where you stand still, such as running a snow blower or holding material, start on medium or high and keep a charged spare pack in an inside pocket where it stays warm.
+          </p>
+        </div>
+
+        <div id="sizing" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            6. What Size Heated Vest Should You Buy? Snug Enough for the Panels to Touch
+          </h2>
+
+          <p>
+            Sizing matters more for a heated vest than for an ordinary one, because the heat only reaches you where the panels touch.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Size for What You Wear Under It</h3>
+
+          <p>
+            Measure your chest over the base layer you will actually wear underneath. If the vest will go over a hoodie, size for that. Most brands publish a size chart, and it is worth checking against your measurements rather than ordering your usual shirt size.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Too Big Wastes Heat</h3>
+
+          <p>
+            A loose vest leaves a gap between the panels and your back, and cold air moves through it. You feel less warmth and the battery drains faster as you turn the heat up to compensate. If you are between sizes and will wear it as a mid-layer, size down.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Women's Fit</h3>
+
+          <p>
+            Women's heated vests are cut shorter in the body and narrower at the shoulders, with more room at the hips. That shape keeps the back panel against the lower back, where a resized men's vest tends to gap. Ororo, Venustas and Milwaukee all sell women's versions, so there is no need to settle for a men's small.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Room for the Battery</h3>
+
+          <p>
+            The battery sits in a pocket, usually at the hip or lower back. Tool-platform vests carry a full tool battery, which is heavier, so check that the pocket sits where it will not dig in when you bend to shovel or kneel.
+          </p>
+        </div>
+
+        <div id="safety" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            7. Are Heated Vests Safe? Yes, With a Few Rules
+          </h2>
+
+          <p>
+            Heated vests from established brands run at low voltage and are widely used. The real risks are low-grade burns, battery problems and cheap clones.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Low-Temperature Burns</h3>
+
+          <p>
+            A heated panel pressed against skin for hours can cause burns at temperatures that do not feel dangerous. Wear the vest over a base layer, not on bare skin, and use lower settings for long wear. Anyone with reduced sensation, such as people with diabetic neuropathy, should talk to their doctor before using heated clothing, and children should not wear adult heated gear unsupervised.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Batteries: Use the Brand's Own</h3>
+
+          <p>
+            Use only the battery and charger the manufacturer specifies. Cheap replacement packs and adapters are where heated apparel fires and failures usually start. Do not charge a pack that is swollen, cracked or wet, and charge indoors on a hard surface.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Wet Snow and Rain</h3>
+
+          <p>
+            Water-resistant shells handle wet snow, but a vest is not waterproof gear. If it gets soaked, switch it off, remove the battery and let it dry before using it again.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Flying With a Heated Vest</h3>
+
+          <p>
+            Under U.S. airline rules, spare lithium batteries must travel in carry-on bags, not checked luggage. Most heated vest power banks are well under the 100 watt-hour limit, but check the label.
+          </p>
+        </div>
+
+        <div id="washing" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            8. Can You Wash a Heated Vest? Usually Yes, Battery Out and Gentle Cycle
+          </h2>
+
+          <p>
+            Most heated vests from known brands are designed to be washed, which surprises people who assume anything with wires must be dry-cleaned. Always follow the care label first, because methods differ by brand.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Before Washing</h3>
+
+          <p>
+            Remove the battery, disconnect the cable and tuck the connector back into its pocket and zip it closed. Close every zipper on the vest so nothing snags.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">How to Wash It</h3>
+
+          <p>
+            Where the label allows machine washing, use a gentle cycle, cold or warm water, mild detergent and a mesh laundry bag. Skip bleach and fabric softener. Hand washing is the safest choice for any vest whose label is unclear.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Drying</h3>
+
+          <p>
+            Air dry flat or hang it unless the label says otherwise. Do not wring it or tumble dry on high heat, which can stress the heating wires. Make sure the connector is completely dry before reconnecting the battery.
+          </p>
+        </div>
+
+        <div id="worth-it" class="scroll-mt-24">
+          <h2 class="text-3xl font-black text-gray-900 mt-16 mb-6">
+            9. Are Heated Vests Worth It? Yes for Long Cold Stints, No for Ten-Minute Jobs
+          </h2>
+
+          <p>
+            A heated vest is worth it if you spend an hour or more outside in the cold at a time: clearing a long driveway, winter yard cleanup, contracting work, hunting or a cold commute. It lets you wear fewer, lighter layers and stay warm when you stop moving, which is the moment ordinary clothing fails.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">When It Is Not Worth It</h3>
+
+          <p>
+            If your outdoor winter work is ten minutes with a shovel on a short walk, a good insulated jacket and gloves do the job, and a heated vest will spend most of its life uncharged in a drawer.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">A Good Gift for the Person Who Clears the Snow</h3>
+
+          <p>
+            Heated vests are one of the more useful winter gifts for whoever in the house does the shoveling or works outside. If they own cordless tools, check the battery brand on their drill before you buy, and buy the vest-only version if they already have packs. If not, a complete power-bank kit is the safer choice.
+          </p>
+
+          <h3 class="text-2xl font-bold text-gray-900 mt-10 mb-4">Where the Money Goes</h3>
+
+          <p>
+            Power-bank vests from Ororo and Venustas listed at roughly $90 to $145 when we checked, battery included. Tool-platform vests cost more, around $200 to $300, but if you already own the batteries, the extra money buys a vest that can run all day. That is the honest summary: the best heated vest is the one whose battery you will actually have charged and on hand.
+          </p>
+        </div>
+
+        <!-- Common Mistakes -->
+        <div id="mistakes" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            10. Common Mistakes to Avoid
+          </h2>
+
+          <div class="space-y-6 my-8">
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying by Heat Zone Count</h3>
+              <p class="text-gray-700 text-sm m-0">
+                More zones mean heat in more places, not more heat for longer. A 20-zone vest on a small battery can run out sooner than a four-zone vest. Compare battery size in watt-hours and the rated runtime at a stated setting, then look at where the zones sit on the chest, back and collar.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Buying a Power-Bank Vest When You Own Tool Batteries</h3>
+              <p class="text-gray-700 text-sm m-0">
+                If you already own Milwaukee M12, DeWalt or Makita LXT tools, a vest on that platform turns every charged pack into spare heat. Buying a separate power-bank vest means one or two small batteries and another charger, which is exactly what runs out halfway through a long day outside.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Running It on High While Shoveling</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Shoveling makes plenty of body heat. Running a vest on high from the first scoop leads to sweat, a damp base layer and a hard chill when you stop. Start on low or off, turn it up when you pause, and you also save battery for the end of the job.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Wearing It Over a Thick Sweater</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Heat panels need to sit close to your body. A heated vest pulled over a thick sweater or bulky hoodie loses most of its warmth before it reaches you. Wear it over a thin base layer and put your insulated or windproof coat on top.
+              </p>
+            </div>
+            <div class="bg-red-50 border border-red-100 rounded-2xl p-6">
+              <h3 class="text-lg font-bold text-red-900 mt-0 mb-2">Using Cheap Replacement Batteries</h3>
+              <p class="text-gray-700 text-sm m-0">
+                Unbranded replacement packs and adapters are where heated apparel failures usually start. Use the battery and charger the vest maker specifies, keep packs dry, and stop using any pack that is swollen or damaged. A spare from the original brand costs more and is worth it.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <PlanTheJob />
+
+        <!-- FAQ -->
+        <div id="faq" class="scroll-mt-24 mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">
+            11. Frequently Asked Questions
+          </h2>
+
+          <div class="space-y-6">
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">What is the best heated vest?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For most people working outside who already own Milwaukee M12 tools, the M12 Heated AXIS Vest is the best heated vest, because every charged M12 battery becomes extra hours of heat. If you do not own a tool platform, the Ororo 4-zone puffer is the best all-round choice: insulated, wind- and water-resistant, and sold complete with its battery pack.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">How long do heated vests last on one charge?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                It depends on the battery and the setting. Listings quote best-case low-setting figures, typically 8 to 10 hours, and some models such as the Venustas 20-hour vest are rated longer. On high heat, expect a fraction of that, often a few hours. Cold batteries also give less, so keep the pack inside the vest and carry a spare.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Is a heated vest or heated jacket better?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                For active work such as shoveling, raking or construction, a heated vest is usually better. It warms your core, leaves your arms free to move and layers under the coat you already own. A heated jacket is better for standing still in serious cold for hours, because it heats more of your body and replaces your outer layer.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can I use my Milwaukee or DeWalt tool batteries in a heated vest?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Yes, if you buy the matching brand's vest. Milwaukee's M12 heated vests run on M12 batteries, Makita's DCV200Z runs on 18V LXT packs and DeWalt sells heated vests on its tool batteries. Batteries are not interchangeable between brands without third-party adapters, which we do not recommend for heated gear. Check the exact model before buying spares.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Are heated vests safe to wear all day?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Heated vests from established brands are low voltage and safe for most people when worn over a base layer rather than bare skin. Use lower settings for long wear to avoid low-temperature burns, use only the brand's own battery and charger, and talk to a doctor first if you have reduced sensation in your skin, such as from diabetic neuropathy.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Can you wash a heated vest in the washing machine?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                Most heated vests from known brands can be washed if the care label allows it. Remove the battery, zip the connector into its pocket, close all zippers and use a gentle cycle with mild detergent, ideally in a mesh laundry bag. Air dry the vest and make sure the connector is fully dry before reconnecting the battery.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100">
+              <h3 class="text-lg font-bold text-gray-900 mb-2">Do heated vests work in wet snow?</h3>
+              <p class="text-gray-700 text-sm leading-relaxed">
+                A heated vest with a water-resistant shell, such as the Ororo or Venustas puffer models, handles wet snow and light precipitation, but no heated vest is fully waterproof gear. Wear a waterproof shell on top in heavy wet snow or rain. If the vest gets soaked, switch it off, remove the battery and dry it before using it again.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Related Guides -->
+        <div class="mt-16">
+          <h2 class="text-3xl font-black text-gray-900 mb-6">Related Tool and Winter Guides</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <a href="/best-cordless-tool-brand/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#FF4500] font-black text-xs uppercase tracking-widest mb-2">Buyer's Guide</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Cordless Tool Brand</h3>
+              <p class="text-gray-500 text-sm mt-2">Choosing a battery platform? Milwaukee, DeWalt, Makita, Ryobi and more, ranked.</p>
+            </a>
+            <a href="/milwaukee-vs-dewalt/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-[#1E90FF] font-black text-xs uppercase tracking-widest mb-2">Comparison</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Milwaukee vs DeWalt</h3>
+              <p class="text-gray-500 text-sm mt-2">The two biggest platforms compared on tools, batteries and value.</p>
+            </a>
+            <a href="/best-snow-shovel/" class="bg-gray-50 border border-gray-200 rounded-2xl p-6 hover:shadow-md transition-shadow no-underline group">
+              <p class="text-green-600 font-black text-xs uppercase tracking-widest mb-2">Winter</p>
+              <h3 class="text-gray-900 font-bold text-lg group-hover:text-[#1E90FF] transition-colors">Best Snow Shovels</h3>
+              <p class="text-gray-500 text-sm mt-2">The shovels that make clearing the driveway faster and easier on your back.</p>
+            </a>
+          </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="mt-16 bg-gray-900 text-white rounded-2xl p-8">
+          <h2 class="text-2xl font-black text-white mb-4">The Bottom Line</h2>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            The best heated vest is the one whose battery you will actually have charged when the snow starts. For Milwaukee M12 owners, that is the M12 Heated AXIS Vest; for DeWalt and Makita owners, their own platform vests. Everyone else should start with the Ororo 4-zone puffer, or the Venustas 20-hour vest for the longest days.
+          </p>
+          <p class="text-gray-300 leading-relaxed mb-4">
+            Wear it over a thin base layer, under a windproof coat, start on low when you are working hard, and buy a second battery. That last step does more for warmth than any extra heat zone.
+          </p>
+        </div>
+
+        <MoreInCategory category="Tools & Equipment" links={moreInCategory} />
+
+        <AuthorBio />
+      </div>
+    </div>
+  </article>
+</Layout>
