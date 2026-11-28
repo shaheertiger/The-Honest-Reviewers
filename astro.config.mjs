@@ -106,6 +106,8 @@ const priorityGuides = new Set([
   'best-cheap-portable-power-station',
   'best-generator-battery',
   'best-gas-fire-pit',
+  'best-firewood-rack',
+  'best-camping-stove',
   'best-weatherstripping-for-doors',
   'best-air-mattress',
   'best-heated-driveway-mat',
